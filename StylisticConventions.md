@@ -10,6 +10,10 @@
 
 All code is in `typewriter text`.
 
+### Packages 
+
+**R** packages are printed in *italics*.
+
 ### Variable Names
 
 Variable names are printed in *italics*.

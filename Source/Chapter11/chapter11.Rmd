@@ -5,5 +5,61 @@
  Updated 
 --->
 
-\chapter{Chapter 11:}
+\chapter{Chapter 11: Presenting with \LaTeX}
+
+
+# The Basics
+
+## The Header
+
+## Headings
+
+## Footnotes & Bibliographies
+
+### Footnotes
+
+Plain, non-bibliographic footnotes are easy to create in \LaTeX. Simply place `\footnote{` where you would like the footnote number to apear in the text. Then type in the footnote's text and of course remember to close it with a `}`. \LaTeX does the rest, including formatting and numbering.
+
+### Bibliographies
+
+
+#### Citing R Packages with \BibTeX
+
+Researchers are pretty good about consistently citing others' articles and data. However, citing the **R** packages used in an analysis is very inconsistent. This is unfortunate not only because correct attribution is not being given but also because it makes reproducibility harder because it obscures important steps that were taken in the research process. Fortunately, **R** actually includes the tools to quickly generate citations, including the version of the package you are using. It can also add them directly to an existing bibliography file.
+
+You can automatically create citations for **R** packages using the `citation` command in *base* **R**. For example if we want the citation information for the `Zelig` package we would simply type:
+
+ ```{r} 
+citation("Zelig")
+```
+This gives us both the plain citation as well as the \BibTeX version for use in \LaTeX and **MultiMarkdown** documents. 
+
+If you are  creating a \LaTeX article and only want the \BibTeX version of the citation we can use the `toBibtex` command in the *utils* package. 
+
+```{r}
+toBibtex(citation("Zelig")
+```
+You can append the citation to your existing \BibTeX file using the `sink` command in *base* **R**. This command diverts our output and/or the messages to a file.
+
+Imagine that our existing \BibTeX file is called `bibliography.bib`. To add the *Zelig* package citation:
+
+```{r}
+sink(file = "bibliography.bib", append = TRUE, type = c("output"))
+     toBibtex(citation("Zelig"))
+sink()
+```
+
+This places the citation at the end of our `bibliography.bib` file.
+
+It is very important to include the argument `append = TRUE`. If you don't you will erase the existing file. The argument `type = c("output")` tells **R** to include only the output, not the messages. 
+
+An even faster way to add citations to a bibliography is with `write.bibtex` command in the *knitcitations* package. To add the *Zelig* citation to our `bibliography.bib` file we only need to enter:
+
+```{r}
+library(knitcitations)
+write.bibtex(entry = c("Zelig"), file = "bibliography.bib", append = TRUE)
+```
+
+The `write.bibtex` approach is especially nice because it automatically creates a \BibTeX cite key--the packages name.
+
 
