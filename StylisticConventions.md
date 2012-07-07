@@ -14,8 +14,13 @@ All code is in `typewriter text`.
 
 Variable names are printed in *italics*.
 
+### Individual variable values
+
+Individual variable values mentioned in the text are in **bold**.
+
 ### Computer Programs
 
 The names of computer programs are in **bold**.
+
 
 

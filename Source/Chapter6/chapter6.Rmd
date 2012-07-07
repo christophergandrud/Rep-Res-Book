@@ -2,18 +2,24 @@
  Chapter Chapter 6 For Reproducible Research in R and RStudio
  Christopher Gandrud
  Created 28/06/2012 05:48:16 pm KST
- Updated 29 June 2012
+ Updated 7 July 2012
 --->
 
-\chapter{Chapter 6: Storing, Versioning, Collaborating, and Accessing Files}
+\chapter{Chapter 6: Storing, Collaborating, Accessing Files, Versioning}
 
 A stumbling block to actually reproducing a piece of research is getting a hold of the datasets and the codebooks that describe the data used in an analysis. <!-- Complete -->
 
 Researchers often face a number of data management issues that, beyond making their research difficult to reproduce, can make doing the initial research difficult.
 
-First, there is the problem of **storing** the data so that it is protected against computer failure--virus infections, dropping your laptop on the floor, and so on. 
+First, there is the problem of **storing** the data so that it is protected against computer failure--virus infections, spilling coffee on your laptop, and so on.
 
-Second, when 
+
+
+
+
+Fourth, we almost never create a data set or write a paper perfectly all at once. We may make changes and then realize that we liked an earlier version, or parts of an earlier version better. This is a particularly important issue in data management where we may transform our data in unintended ways and want to go back to an earlier version. Collaborative projects can have regular incidents of one author accidentally deleting something in a file that another author needed, for example.
+
+To deal with these issues we need to store our data in a system that has **version control**. Version control systems keep track of changes we make to our files and allow us to access previous versions if we like. 
 
 
  the data set can often grow and become disorganized. Perhaps even during a data transformation  This creates problems  
@@ -22,11 +28,12 @@ You can solve all of these problems in a couple of different ways using free or 
 
 - storage,
 
-- version control,
-
 - accessing, 
 
-- and collaboration.
+- collaboration,
+
+- version control.
+
 
 # Saving data in reproducible formats
 
@@ -36,12 +43,18 @@ Before getting into the details of cloud-based data storage, lets just consider 
 
 # Storing data in the cloud
 
+Storing data locally--on your computer--or on a flash drive is generally more prone to loss than storing data on remote servers, often referred to as 'the cloud'. 
+
 
 # Dropbox
 
 Probably the easiest types of cloud storage for your research are services like **Dropbox** and **Google Drive**. These services typically involve a folder based on your computer's hard drive that is automatically synced with a similar folder on a cloud-based server. Typically you can sign up for the service for free and receive a limited amount of storage space (usually a few gigabytes worth, which should be plenty if your research is made up of text files.).
 
 Most of these services not only store your data in the cloud, but also provide some way to share files and maybe even includes basic version control. I am going to focus on using **Dropbox** because it currently offers a complete set of features that allow you to store, version, collaborate, and access your data.
+
+## Version control
+
+**Dropbox** has a simple version control system. Every time you save a document on **Dropbox** a new version is created. One the **Dropbox** website 
 
 <!-- Complete -->
 
@@ -59,7 +72,12 @@ Specifically, **GitHub**'s key features for us include:
 
 - **Git** is directly integrated into **RStudio** projects (**RStudio** also supports the **subversion** version control system, but I don't cover that here). 
 
-- **Dropbox**'s version control system just lets you open old versions of your files. **git**'s version control system actually tracks every change you make. The **GitHub** website and GUI programs for Mac and Windows provide a nice interface for examining these changes.
+- **Dropbox**'s version control system just lets you open old versions of your files. It also creates a new version every time you save a file, which can make it difficult to actually find the version you want. **git**'s version control system only creates a new version when you tell it to. It also, tracks every change you make in a way that makes it relatively easy to find the version you want. The **GitHub** website and GUI programs for Mac and Windows provide a nice interface for examining these changes.
 
-- Ability to note and discuss issues you might have while doing your research.
+- Ability to note and discuss issues you have while doing your research.
+
+
+### Version Control in GitHub
+
+**GitHub**'s version control system is much more comprehensive than **Dropbox**'. However, it also has a steeper learning curve. 
 
