@@ -4,5 +4,7 @@
 
 ---
 
-PackagesCited <- c("ggplot2", "knitr", "knitcitations", "foreign")
+> Use `knitcitations` to add package bibliographic details to the bibliography.
+
+PackagesCited <- c("ggplot2", "knitr", "knitcitations", "foreign", "Zelig", "xtable", "texreg", "apsrtable")
 

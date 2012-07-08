@@ -14,6 +14,10 @@ All code is in `typewriter text`.
 
 **R** packages are printed in *italics*.
 
+### Objects
+
+Objects are printed in *italics*.
+
 ### Variable Names
 
 Variable names are printed in *italics*.
