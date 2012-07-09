@@ -2,11 +2,64 @@
  Chapter Chapter 8 For Reproducible Research in R and RStudio
  Christopher Gandrud
  Created 28/06/2012 05:48:16 pm KST
- Updated 
+ Updated 9 July 2012
 --->
 
 \chapter{Chapter 8: Statistical Modelling and `knitr`}
 
 
+# Incorporating analyses into the markup
 
-<!--- Add save function from Zelig for saving replication data sets (see issue on GitHub --->
+## Full code in the main document
+
+### \LaTeX  
+
+## Markdown
+
+## Sourcing R code from another file
+
+There are a number of reasons that you might want to have your **R** source code located in a separate file from your markup even if you plan to compile them together with `knitr`.
+
+First, it can be unwieldy to edit both your markup and long **R** source code chunks in the same document, even with **RStudio**'s handy `knitr` code collapsing and chunk management options. There are just too many things going on in one document. 
+
+Second, you may want to use the same code in multiple documents--an article and presentation for example. It is nice to not have to copy and paste the same code into multiple places, but have multiple documents link to the same source code. Plus if you make changes to the source code, these changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
+
+Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled files it is easier for these researchers to find the specific bits of code that they are interested compared to digging through long markup files.
+
+### Source from a local file 
+
+Usually in the early stages of research you may want to source analysis files located on your computer. Doing this is simple. The `knitr` syntax is the same as above. The only change is that instead of writing all of our code in the chunk we save it to its own file and use the `source` command in *base* **R** to access it. For example:
+
+<!--- Fill In --->
+
+### Source from a non-secure URL (`http`)
+
+Sourcing from your local computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to replicate your code, you need to use another method.[^sourceCaveat] 
+
+The simplest solution to these issues is to host the replication code in your **Dropbox** public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the `source` command the same way as before. For example:
+
+<!--- Fill in Example --->
+
+### Source from a secure URL (`https`) 
+
+If you are using **GitHub** or another service that uses secure URLs the steps are generally the same, but you need to use the `secure_url` command in the *devtools* package. For **GitHub** based source code find the file's URL the same way we did in Chapter 6. Remember to get the URL for the *raw* version of the file.  
+
+<!--- Fill in Example --->
+
+
+
+# Saving output objects for future use
+
+
+<!--- Add save function from Zelig for saving replication data sets (see issue #8 on GitHub --->
+
+# Including highlighted syntax in the output
+
+## \LaTeX
+
+## Markdown/HTML
+
+# Debugging
+
+
+[^sourceCaveat]: Sure you can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a pain if you are collaborating and each author has to constantly change the directories.
