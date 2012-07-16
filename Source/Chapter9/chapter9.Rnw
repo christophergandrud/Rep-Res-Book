@@ -1,7 +1,91 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
-% Created: 16/07/2012 05:10:00 pm CEST
+% Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 
 
-\chapter{Chapter 9:}
+\chapter{Chapter 9: Showing Results with Tables}
+
+Graphs and other visual methods, discussed in the next chapter, can
+often be a more affective way to present results than tables.\footnote{This
+  is especially true of the small-print, high-density coefficient
+  estimate tables that are sometimes descriptively called `train
+  schedule' tables.} However, tables of results, descriptive statistics,
+and so on can sometimes still be an important part of communicating
+research.
+
+Creating tables by hand can be tedious no matter what program you are
+using to type up your results. Even more tedious is making changes to
+hand-created tables when you make changes to your data and models.
+Creating these tables can actually introduce new
+errors--post-analysis!--if you incorrectly copy what is in your
+\textbf{R} output. This is a very real possibility. The mind can go numb
+doing that sort of work. Also, creating tables by hand is not very
+reproducible.
+
+Fortunately, we don't actually need to create tables by hand. There are
+many ways to have \textbf{R} do the work for us. The goal of this
+chapter is to learn how to how to \textbf{automate table creation} for
+documents produced with both \LaTeX and Markdown/HTML. There are a
+number of ways to turn \textbf{R} objects into tables written in
+\LaTeX or HTML markup. In this chapter I mostly focus on the
+\texttt{xtable} and \texttt{texreg} packages. \texttt{xtable} can
+created tables for both of these markup languages. \texttt{texreg} only
+produces output for \LaTeX. \texttt{knitr} allows us to incorporate
+these tables directly into our documents.
+
+\textbf{Warning:} Automating table creation removes the possibility of
+adding errors to our analyses by incorrectly copying \textbf{R} output,
+which is a big potential problem in hand-created tables. Be warned, it
+is not an error free process. We could easily create inaccurate tables
+through coding errors. For example, we may incorrectly merge together
+columns in so that our id variables no longer match the data they are
+supposed to.
+
+So, as always, it is important to `eyeball' the output. Does it make
+sense? If we picked a couple values in the \textbf{R} output do the
+match what is in our final table? If not, we need to go back to the code
+and see where things have gone wrong. With that caveat, lets start
+making tables.
+
+\section{Table Basics}
+
+Before getting into the details of how to create tables from \textbf{R}
+objects we need to first learn how generic tables are created in
+\LaTeX and Markdown.
+
+\subsection{Tables in \LaTeX}
+
+\subsection{Tables in Markdown}
+
+\section{Creating tables from R objects}
+
+\subsection{\texttt{xtable} \& \texttt{texreg} basics with supported
+class objects}
+
+\subsubsection{\texttt{xtable} for \LaTeX}
+
+\subsubsection{\texttt{xtable} for Markdown}
+
+\subsection{\texttt{xtable} with non-supported class objects}
+
+\subsection{Basic \texttt{knitr} syntax for tables}
+
+The most important \texttt{knitr} chunk option for showing the markup
+created by these packages as tables is \texttt{results}. The
+\texttt{results} option can have three values:
+
+\begin{itemize}
+\item
+  \texttt{markup},
+\item
+  \texttt{asis},
+\item
+  \texttt{hide}.
+\end{itemize}
+\texttt{hide} clearly hides the results of whatever we have in our code
+chunk; no results show up.
+
+\section{Tables with \texttt{apsrtable}}
+
+\section{}
 

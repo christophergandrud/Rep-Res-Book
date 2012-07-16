@@ -2,7 +2,7 @@
 # Shell script to create directories & files for Reproducible Research in R/RStudio
 # With LaTeX
 # Christopher Gandrud
-# Updated 28 June 2012
+# Updated 16 July 2012
 # Helpful information found in "The Linux Command Line: A Complete Introduction" (Shotts 2012)
 ##########
 
@@ -15,9 +15,9 @@ mkdir Source
 cd /git_repositories/Rep-Res-Book/Source
 
 ## Create 15 chapters and add main source files and image directories
-## Use loops for 15 Chapters
+## Use loops for 14 Chapters
 
-for i in `seq 1 15`;
+for i in `seq 1 14`;
 do
 
     cd /git_repositories/Rep-Res-Book/Source
@@ -40,8 +40,6 @@ cat > chapter$i.Rnw << _EOF_
 % Christopher Gandrud
 % Created: $CURRENT_TIME
 % Updated: 
-
-\chapter{$CHAPTER:}
 
 _EOF_
 

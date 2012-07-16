@@ -8,3 +8,14 @@
 #!/bin/bash
 
 cd /git_repositories/Rep-Res-Book
+
+# Use Pandoc to convert markdown files to LaTeX then append to new LaTeX Source files
+
+for i in `seq 1 14`;
+do
+
+pandoc -f markdown -t latex SourceOld/Chapter$i/chapter$i.Rmd >> Source/Chapter$i/chapter$i.Rnw
+
+done 
+
+echo "Finished"
