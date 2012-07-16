@@ -1,5 +1,6 @@
 ##########
 # Shell script to create directories & files for Reproducible Research in R/RStudio
+# With Markdown
 # Christopher Gandrud
 # Updated 28 June 2012
 # Helpful information found in "The Linux Command Line: A Complete Introduction" (Shotts 2012)

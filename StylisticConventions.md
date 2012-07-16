@@ -18,13 +18,23 @@ All code is in `typewriter text`.
 
 Objects are printed in *italics*.
 
+Camelback is used for objects.
+
 ### Variable Names
 
 Variable names are printed in *italics*.
 
+Camelback is used for individual variable names.
+
 ### Individual variable values
 
 Individual variable values mentioned in the text are in **bold**.
+
+### Filenames and Directories
+
+Filenames and directories more generally are printed in *italics*.
+
+Camelback is used for file and directory names.
 
 ### Computer Programs
 

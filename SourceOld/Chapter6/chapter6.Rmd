@@ -48,7 +48,7 @@ Storing data locally--on your computer--or on a flash drive is generally more pr
 
 # Dropbox
 
-Probably the easiest types of cloud storage for your research are services like **Dropbox** and **Google Drive**. These services typically involve a folder based on your computer's hard drive that is automatically synced with a similar folder on a cloud-based server. Typically you can sign up for the service for free and receive a limited amount of storage space (usually a few gigabytes worth, which should be plenty if your research is made up of text files.).
+The easiest types of cloud storage for your research are services like **Dropbox** and **Google Drive**. These services typically involve a folder based on your computer's hard drive that is automatically synced with a similar folder on a cloud-based server. Typically you can sign up for the service for free and receive a limited amount of storage space (usually a few gigabytes, which should be plenty if your research is made up of text files.).
 
 Most of these services not only store your data in the cloud, but also provide some way to share files and maybe even includes basic version control. I am going to focus on using **Dropbox** because it currently offers a complete set of features that allow you to store, version, collaborate, and access your data.
 
@@ -56,6 +56,22 @@ Most of these services not only store your data in the cloud, but also provide s
 
 **Dropbox** has a simple version control system. Every time you save a document on **Dropbox** a new version is created. One the **Dropbox** website 
 
+## Accessing Data
+
+There are two similar, but importantly different ways to access data stored on **Dropbox**. All files stored on **Dropbox** have a URL address through which they can be access from computer connected to the internet. Some of these files can be easily loaded directly into **R**, while others must me manually (point-and-click) downloaded onto your computer and then loaded into **R**. The key factor is whether or not the files are located in your **Dropbox**'s *Public* folder. Files in the *Public* folder can be downloaded directly into *R*. Files not in the *Public* folder have to be downloaded manually.[^scrapeDropbox] 
+
+Either way you find a file's URL address by first right-clicking on the file icon in you *Dropbox* folder. If the file is stored in the *Public* folder, you go to **Dropbox** then **Copy Public Link**. This copies the URL into your clipboard from where you can paste it into your **R** source code (or wherever). Once you have the URL you can load the file directly into **R** using the `read.table` command for dataframes or the `source` command for source files. This was covered in more detail in chapter GET.  
+
+
+If the file is not in your *Public* folder you also go to **Dropbox** after right-clicking. Then choose **Get Link**. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar. 
+
+You can also get these URL links through the online version of your **Dropbox**. First log into the **Dropbox** website. When you hover your curser over a file (or folder) name you will see a chain icon appear on the far right. Clicking on this icon will get you the link.
+
+<!--- Image? --->
+
+Storing files in the *Public* folder clearly makes replication easier because the files can be downloaded and run directly in **R**. 
+
+Note that you cannot save files through the URL link. You must save files in the **Dropbox** folder on your computer. 
 <!-- Complete -->
 
 # GitHub
@@ -90,11 +106,13 @@ There are a number of ways to set up **GitHub** on your computer. I will briefly
 
 **GitHub**'s version control system is much more comprehensive than **Dropbox**'. However, it also has a steeper learning curve. 
 
+#### More Practice 
+
+If you want more practice setting up **GitHub** in the command line, **GitHub** and the website Code School have an interactive tutorial that you might find interesting. You can find it at: <http://try.github.com/levels/1/challenges/4>.
 
 
 [^GUI]: Graphical User Interface, i.e. not the command line version, but the one with windows that you navigate with your mouse.
 
+[^scrapeDropbox]: This is not completely true. It is possible to create a web scraper (see Chapter GET) that could download a data file from a file not in your *Public* folder. However, this is kind of a hassle and not practical, especially since the accessing files from the *Public* folder is so easy.
 
-#### More Practice 
 
-If you want more practice setting up **GitHub** in the command line, **GitHub** and the website Code School have an interactive tutorial that you might find interesting. You can find it at: <http://try.github.com/levels/1/challenges/4>.
