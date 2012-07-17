@@ -43,6 +43,8 @@ cat > chapter$i.Rnw << _EOF_
 
 _EOF_
 
+done
+
 ## Create BibTeX file 
 cat > rep-res-book.bib << _EOF_
 % Bibliography For Reproducible Research in R and RStudio
@@ -51,6 +53,5 @@ cat > rep-res-book.bib << _EOF_
 
 _EOF_
 
-done
 
 echo "Finished"
