@@ -43,6 +43,14 @@ cat > chapter$i.Rnw << _EOF_
 
 _EOF_
 
+## Create BibTeX file 
+cat > rep-res-book.bib << _EOF_
+% Bibliography For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: $CURRENT_TIME
+
+_EOF_
+
 done
 
 echo "Finished"

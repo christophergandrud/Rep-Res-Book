@@ -17,6 +17,31 @@
 
 \subsection{Data from secure (\texttt{https}) URLs}
 
+\subsection{Compressed data stored online}
+
+Sometimes data files can be very large, making them difficult to store and download without compressing them. There are a number of compression methods such as Zip and tar archives. Zip files have the extension {\tt{.zip}} and tar archives use extensions such as {\tt{.tar}} and {\tt{.gz}}. In most cases\footnote{Some formats that require the {\emph{foreign}} package to open are more difficult. This is because functions such as {\tt{read.dta}} for opening Stata {\tt{.dta}} files only accept file names or URLs as arguments, not connections, which we create for unzipped files.} we can easily download, decompress, and create dataframe objects from these files directly in {\bf{{R}}. 
+
+To do this we need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes#tab-top}}, accessed 16 July 2012.}
+
+\begin{itemize}
+    \item create a temporary file with {\tt{tempfile}} to store the zipped file which we will remove with the {\tt{unlink command}} at the end,
+    \item download the file with {\tt{download.file}},
+    \item decompress the file with one of the {\tt{connections}} commands in {\emph{base}} {\bf{R}},\footnote{To find a full list of commands type {\tt{?connections}} in to {\bf{R}}.}
+    \item read the file {\tt{read.table}}. 
+\end{itemize}
+
+The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain more than one file as well as metadata.
+
+Let's download a compressed file called {\emph{uds_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds_summary.csv.gz}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}
+
+<<tidy=TRUE>>=
+url <- "http://www.unified-democracy-scores.org/files/uds_summary.csv.gz"
+temp <- tempfile()
+download.file(url, temp)
+data <- read.csv(gzfile(temp, "uds_summary.csv"))
+unlink(temp)
+@ 
+
 \subsection{Data APIs \& feeds}
 
 There are growing number of commands that can gather data directly from
@@ -28,13 +53,9 @@ files and fiddle around with them before even getting the data into
 much more straightforward. Some examples include:
 
 \begin{itemize}
-\item
-  The \emph{openair} package, which beyond providing a number of tools
-  for analysing air quality data also has the ability to directly gather
-  data directly from sources such as Kings College London's London Air
-  (\url{http://www.londonair.org.uk/}) database with the
-  \texttt{importKCL} command.
+    \item The \emph{openair} package, which beyond providing a number of tools for analysing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
 \end{itemize}
+
 \section{Basic web scraping}
 
 \subsection{Scraping tables}
