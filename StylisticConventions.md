@@ -20,6 +20,10 @@ Objects are printed in *italics*.
 
 Camelback is used for objects.
 
+### Object Classes
+
+Object classes are in `typewriter text`.
+
 ### Variable Names
 
 Variable names are printed in *italics*.

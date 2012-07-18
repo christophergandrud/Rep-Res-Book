@@ -13,9 +13,9 @@
 
 \section{Importing data sets from the internet}
 
-\subsection{Data from non-secure (\texttt{http}) URLs}
+\subsection{Data from non-secure ({\tt{http}}) URLs}
 
-\subsection{Data from secure (\texttt{https}) URLs}
+\subsection{Data from secure ({\tt{https}}) URLs}
 
 \subsection{Compressed data stored online}
 
@@ -26,7 +26,7 @@ To do this we need to:\footnote{The description of this process is based on a St
 \begin{itemize}
     \item create a temporary file with {\tt{tempfile}} to store the zipped file which we will remove with the {\tt{unlink command}} at the end,
     \item download the file with {\tt{download.file}},
-    \item decompress the file with one of the {\tt{connections}} commands in {\emph{base}} {\bf{R}},\footnote{To find a full list of commands type {\tt{?connections}} in to {\bf{R}}.}
+    \item decompress the file with one of the {\tt{connections}} commands in {\emph{base}} {\bf{R}},\footnote{To find a full list of commands type {\tt{?connections}} in to the {\bf{R}} console.}
     \item read the file with {\tt{read.table}}. 
 \end{itemize}
 
@@ -35,10 +35,20 @@ The reason that we have to go through so many extra steps is that compressed fil
 Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}
 
 <<tidy=TRUE>>=
+# For simplicity, store the URL in an object called 'url'.
 url <- "http://www.unified-democracy-scores.org/files/uds_summary.csv.gz"
+
+# Create a temporary file called 'temp' to put the zip file into.
 temp <- tempfile()
+
+# Download the compressed file into the temporary file.
 download.file(url, temp)
+
+# Decompress the file and convert it into a dataframe
+# class object called 'data'.
 data <- read.csv(gzfile(temp, "uds_summary.csv"))
+
+# Delete the temporary file.
 unlink(temp)
 @ 
 
