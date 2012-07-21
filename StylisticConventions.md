@@ -40,9 +40,6 @@ Filenames and directories more generally are printed in *italics*.
 
 Camelback is used for file and directory names.
 
-### Computer Programs
-
-The names of computer programs are in **bold**.
 
 
 
