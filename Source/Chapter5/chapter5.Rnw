@@ -11,7 +11,26 @@ There are many practical issues involved in gathering data that can make replica
 
 Before getting into the details of using R to automate data gathering, lets's start from where all data gathering should start: a plan to organize the process. Clearly organizing your data gathering process from the start of a research project improves the possibility of replicability and can save significant effort over the course of the project. 
 
-A key principle of replicatable data gathering with R, like replicatable research in general is segmenting the process into discrete files that can be run by a common Make file.
+A key principle of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common Make file. The Make file's output is the data set(s) that we use in the statistical analyses. There are two types of files that the Make file runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merge with data from the other sources. Some of the R tools for data clean up were covered in Chapter 3. In this chapter we mostly cover the ways to bring raw data into R. We don't explicitly cover the process of merging data sets together in this book GET CITE. Merging files are executed by the Make file after it runs the clean up files.
+
+Data gathering Make files usually only need one or two commands {\tt{setwd}} and {\tt{source}}. As we talked about in the previous chapter, {\tt(setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in some file.\footnote{The {\tt{source}} command is used more in the Chapter 8.} 
+
+If we plan to gather data from two different data sources--DATA1 and DATA2--stored in the directory DIRECTORY our Make file might look like this:
+
+<<Ch5ExampleMake, error=FALSE, eval=FALSE>>=
+# Example Make file
+setwd("~/DIRECTORY/")
+
+# Clean up raw data files.
+source("CleanDATA1.R")
+source("CleanDATA2.R")
+    
+# Merge cleaned data files
+source("MergeDATA1.DATA2.R)
+
+@
+
+You can save the output data set using the {\tt{write.table}} command placed in the merge file or the Make file.
 
 \section{Importing locally stored data sets}
 
