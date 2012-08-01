@@ -1,0 +1,82 @@
+% Chapter Chapter 11 For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: 16/07/2012 05:45:03 pm CEST
+% Updated: 
+
+<<set-parent11, echo=FALSE, cache=FALSE>>=
+set_parent('/git_repositories/Source/Parent/Rep-Res-Parent.Rnw')
+@
+
+\chapter{Presenting with \LaTeX}
+
+\section{The Basics}
+
+\subsection{Editors}
+
+\subsection{The Header}
+
+\subsection{Headings}
+
+\subsection{Footnotes \& Bibliographies}
+
+\subsubsection{Footnotes}
+
+Plain, non-bibliographic footnotes are easy to create in \LaTeX. Simply
+place \texttt{\textbackslash{}footnote\{} where you would like the
+footnote number to apear in the text. Then type in the footnote's text
+and of course remember to close it with a \texttt{\}}. \LaTeX does the
+rest, including formatting and numbering.
+
+\subsubsection{Bibliographies}
+
+\paragraph{Citing R Packages with \BibTeX}
+
+Researchers are pretty good about consistently citing others' articles
+and data. However, citing the \textbf{R} packages used in an analysis is
+very inconsistent. This is unfortunate not only because correct
+attribution is not being given but also because it makes reproducibility
+harder because it obscures important steps that were taken in the
+research process. Fortunately, \textbf{R} actually includes the tools to
+quickly generate citations, including the version of the package you are
+using. It can also add them directly to an existing bibliography file.
+
+You can automatically create citations for \textbf{R} packages using the
+\texttt{citation} command in \emph{base} \textbf{R}. For example if we
+want the citation information for the \texttt{Zelig} package we would
+simply type:
+
+\texttt{\{r\}  citation("Zelig")} This gives us both the plain citation
+as well as the \BibTeX version for use in \LaTeX and
+\textbf{MultiMarkdown} documents.
+
+If you are creating a \LaTeX article and only want the \BibTeX version
+of the citation we can use the \texttt{toBibtex} command in the
+\emph{utils} package.
+
+\texttt{\{r, message=FALSE\} toBibtex(citation("Zelig"))} You can append
+the citation to your existing \BibTeX file using the \texttt{sink}
+command in \emph{base} \textbf{R}. This command diverts our output
+and/or the messages to a file.
+
+Imagine that our existing \BibTeX file is called
+\texttt{bibliography.bib}. To add the \emph{Zelig} package citation:
+
+\texttt{\{r, message=FALSE, tidy=TRUE\} sink(file = "bibliography.bib", append = TRUE, type = c("output"))      toBibtex(citation("Zelig")) sink()}
+
+This places the citation at the end of our \texttt{bibliography.bib}
+file.
+
+It is very important to include the argument \texttt{append = TRUE}. If
+you don't you will erase the existing file. The argument
+\texttt{type = c("output")} tells \textbf{R} to include only the output,
+not the messages.
+
+An even faster way to add citations to a bibliography is with
+\texttt{write.bibtex} command in the \emph{knitcitations} package. To
+add the \emph{Zelig} citation to our \texttt{bibliography.bib} file we
+only need to enter:
+
+\texttt{\{r, message=FALSE\} library(knitcitations) write.bibtex(entry = c("Zelig"), file = "bibliography.bib", append = TRUE)}
+
+In Chapter 13 we'll look at the \texttt{knitcitations} package in more
+detail.

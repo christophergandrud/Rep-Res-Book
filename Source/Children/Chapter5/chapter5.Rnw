@@ -1,0 +1,105 @@
+% Chapter Chapter 5 For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: 16/07/2012 05:45:03 pm CEST
+% Updated: 26 July 2012
+
+<<set-parent5, echo=FALSE, cache=FALSE>>=
+set_parent('/git_repositories/Source/Parent/Rep-Res-Parent.Rnw')
+@
+
+\chapter{Gathering Data with R}
+
+There are many practical issues involved in gathering data that can make replication easier or harder. As with all of the steps in this book: document everything. Replication will be easier if your documentation--source code--can be understood and executed by a computer. Of course there are data gathering situations that simply require manually pointing and clicking, talking with subjects in an experiment, and so on. The best we can do in these situations is just describe our data gathering process in detail CITE. Nonetheless, R's automated data gathering capabilities are extensive and often under utilized. Learning how to take full advantage of them greatly increases replicability and can even save researchers considerable time and effort.
+
+\section{Organize Your Data Gathering}
+
+Before getting into the details of using R to automate data gathering, lets's start from where all data gathering should start: a plan to organize the process. Clearly organizing your data gathering process from the start of a research project improves the possibility of replicability and can save significant effort over the course of the project. 
+
+A key principle of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common Make file. The Make file's output is the data set(s) that we use in the statistical analyses. There are two types of files that the Make file runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merge with data from the other sources. Some of the R tools for data clean up were covered in Chapter 3. In this chapter we mostly cover the ways to bring raw data into R. We don't explicitly cover the process of merging data sets together in this book GET CITE. Merging files are executed by the Make file after it runs the clean up files.
+
+Data gathering Make files usually only need one or two commands {\tt{setwd}} and {\tt{source}}. As we talked about in the previous chapter, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in some file.\footnote{The {\tt{source}} command is used more in the Chapter 8.} 
+
+If we plan to gather data from two different data sources--DATA1 and DATA2--stored in the directory DIRECTORY our Make file might look like this:
+
+<<Ch5ExampleMake, error=FALSE, eval=FALSE, tidy=FALSE>>=
+# Example Make file
+setwd("~/DIRECTORY/")
+
+# Clean up raw data files.
+source("CleanDATA1.R")
+source("CleanDATA2.R")
+    
+# Merge cleaned data files
+source("MergeDATA1.DATA2.R)
+
+@
+
+You can save the output data set using the {\tt{write.table}} command placed in the merge file or the Make file.
+
+\section{Importing locally stored data sets}
+
+\subsection{Single files}
+
+\subsection{Looping through multiple files}
+
+\section{Importing data sets from the internet}
+
+\subsection{Data from non-secure ({\tt{http}}) URLs}
+
+\subsection{Data from secure ({\tt{https}}) URLs}
+
+\subsection{Compressed data stored online}
+
+Sometimes data files can be very large, making them difficult to store and download without compressing them. There are a number of compression methods such as Zip and tar archives. Zip files have the extension {\tt{.zip}} and tar archives use extensions such as {\tt{.tar}} and {\tt{.gz}}. In most cases\footnote{Some formats that require the {\emph{foreign}} package to open are more difficult. This is because functions such as {\tt{read.dta}} for opening Stata {\tt{.dta}} files only accept file names or URLs as arguments, not connections, which we create for unzipped files.} we can easily download, decompress, and create dataframe objects from these files directly in {\bf{R}}. 
+
+To do this we need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes\#tab-top}}, accessed 16 July 2012.}
+
+\begin{itemize}
+    \item create a temporary file with {\tt{tempfile}} to store the zipped file which we will remove with the {\tt{unlink command}} at the end,
+    \item download the file with {\tt{download.file}},
+    \item decompress the file with one of the {\tt{connections}} commands in {\emph{base}} {\bf{R}},\footnote{To find a full list of commands type {\tt{?connections}} in to the {\bf{R}} console.}
+    \item read the file with {\tt{read.table}}. 
+\end{itemize}
+
+The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain more than one file as well as metadata.
+
+Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}
+
+<<tidy=TRUE>>=
+# For simplicity, store the URL in an object called 'url'.
+url <- "http://www.unified-democracy-scores.org/files/uds_summary.csv.gz"
+
+# Create a temporary file called 'temp' to put the zip file into.
+temp <- tempfile()
+
+# Download the compressed file into the temporary file.
+download.file(url, temp)
+
+# Decompress the file and convert it into a dataframe
+# class object called 'data'.
+data <- read.csv(gzfile(temp, "uds_summary.csv"))
+
+# Delete the temporary file.
+unlink(temp)
+@ 
+
+\subsection{Data APIs \& feeds}
+
+There are growing number of commands that can gather data directly from
+their sources and import them into \textbf{R}. Needless to say, this is
+great for reproducible research since it not only makes the data
+gathering process easier (you don't have to download a ton of Excel
+files and fiddle around with them before even getting the data into
+\textbf{R}), but it also makes replicating the data gathering process
+much more straightforward. Some examples include:
+
+\begin{itemize}
+    \item The \emph{openair} package, which beyond providing a number of tools for analysing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
+\end{itemize}
+
+\section{Basic web scraping}
+
+\subsection{Scraping tables}
+
+\subsection{Gathering and parsing text}
+

@@ -1,0 +1,1236 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%  krantz_single.sty
+%%
+%%  written by Sean Davey
+%%  
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{krantz_single}[2002/01/04 3.0 CRC Dictionary Document Style]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newif\if@numbysec
+\DeclareOption{numbysec}{\@numbysectrue}
+\newif\if@numberinsequence
+\DeclareOption{numberinsequence}{\@numberinsequencetrue}
+\newif\if@sevenbyten
+\DeclareOption{sevenbyten}{\@sevenbytentrue}
+\newif\if@cip
+\DeclareOption{cip}{\@ciptrue}
+\newif\if@times
+\DeclareOption{times}{\@timestrue}
+\newif\if@chapnumonly
+\DeclareOption{chapnumonly}{\@chapnumonlytrue}
+\newif\if@ChapterResetsPage
+\DeclareOption{ChapterResetsPage}{\@ChapterResetsPagetrue}
+\newif\if@ChapterTOCs
+\DeclareOption{ChapterTOCs}{\@ChapterTOCstrue}
+\newif\if@EOCRefs
+\DeclareOption{EOCRefs}{\@EOCRefstrue}%
+\newif\if@SuperscriptCites
+\DeclareOption{SuperscriptCites}{\@SuperscriptCitestrue}%
+\newif\if@UnnumberedReferences
+\DeclareOption{UnnumberedReferences}{\@UnnumberedReferencestrue}%
+\newif\if@pdf
+\DeclareOption{pdf}{\@pdftrue}
+\ProcessOptions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\if@times
+  \RequirePackage{times}
+  \newfont{\AbstractFont}{tib at 10\p@}
+  \newfont{\AffiliationFont}{tii at 8pt}
+  \newfont{\bit}{tibi at 9pt}
+  \newfont{\CaptionFont}{hvo at 8pt}
+  \newfont{\ChapNumFont}{tibi at 24pt}
+  \newfont{\ChapTitleFont}{tibi at 18pt}
+  \newfont{\ContributorAffiliationFont}{tir at 8pt}
+  \newfont{\ContributorNameFont}{tib at 10\p@}
+  \newfont{\ExampleHeadFont}{tibi at 10pt}
+  \newfont{\ExampleBodyFont}{tir at 10pt}
+  \newfont{\FigCapFont}{tib at 10pt}
+  \newfont{\FigCapBIFont}{tibi at 10pt}
+  \newfont{\FMHeadFont}{tibi at 18pt}
+  \newfont{\FootnoteFont}{tir at 8pt}
+  \newfont{\HeadFont}{tib at 14pt}
+  \newfont{\LogoFont}{tii at 9pt}
+  \newfont{\NameFont}{tii at 10pt}
+  \newfont{\SeriesPageHeadFont}{tib at 10pt}
+  \newfont{\SeriesPageSeriesFont}{tii at 20pt}
+  \newfont{\SeriesPageTitleFont}{tir at 10pt}
+  \newfont{\SeriesTitleFont}{tir at 10pt} % for half title page
+  \newfont{\TableColHeadFont}{tib at 9\p@}
+  \newfont{\TableTitleFont}{tir at 10\p@}
+  \newfont{\TitlePageTitleFont}{tibi at 24pt}
+  \newfont{\ChapTOCHeadFont}{tib at 10pt}
+  \newfont{\ChapTOCBodyFont}{tir at 10pt}
+  \newfont{\CopyrightFont}{tir at 6pt}
+  \newfont{\PTLCHeadFont}{tibi at 10pt}
+  \newfont{\PTLCBodyFont}{tii at 10pt}
+  \newfont{\QDHeadFont}{tibi at 10pt}
+  \newfont{\QDBodyFont}{tii at 10pt}
+  \newfont{\PRHeadFont}{tib at 10pt}
+  \newfont{\PRBodyFont}{tir at 10pt}
+  \newfont{\EqNumFont}{tir at 10pt}
+  \newfont{\TableNumberFont}{tib at 11pt}
+  \newfont{\TableSubheadFont}{tii at 9pt}
+  \newfont{\TableBodyFont}{tir at 9pt}
+  \newfont{\TableFootnoteFont}{tir at 8pt}
+\else
+  \newfont{\AbstractFont}{cmbx10}
+  \newfont{\AffiliationFont}{cmti8}
+  \newfont{\bit}{cmbxsl10 at 9pt}
+  \newfont{\CaptionFont}{cmsl10 at 8pt}
+  \newfont{\ChapNumFont}{cmbxsl10 at 24pt}
+  \newfont{\ChapTitleFont}{cmbxsl10 at 18pt}
+  \newfont{\ContributorAffiliationFont}{cmr10 at 8pt}
+  \newfont{\ContributorNameFont}{cmbx10}
+  \newfont{\ExampleHeadFont}{cmbxsl10}
+  \newfont{\ExampleBodyFont}{cmr10}
+  \newfont{\FigCapFont}{cmbx10}
+  \newfont{\FigCapBIFont}{cmbxsl10}
+  \newfont{\FMHeadFont}{cmbxsl10 at 18pt}
+  \newfont{\FootnoteFont}{cmr10 at 8pt}
+  \newfont{\HeadFont}{cmbx10 at 14pt}
+  \newfont{\LogoFont}{cmti9}
+  \newfont{\NameFont}{cmti10}
+  \newfont{\TableColHeadFont}{cmbx9}
+  \newfont{\TableTitleFont}{cmr10}
+  \newfont{\TitlePageTitleFont}{cmbxsl10 at 24pt}
+  \newfont{\SeriesPageHeadFont}{cmbx10}
+  \newfont{\SeriesPageSeriesFont}{cmti10 at 20pt}
+  \newfont{\SeriesPageTitleFont}{cmr10}
+  \newfont{\SeriesTitleFont}{cmr10} % for half title page
+  \newfont{\ChapTOCHeadFont}{cmbx10}
+  \newfont{\ChapTOCBodyFont}{cmr10}
+  \newfont{\CopyrightFont}{cmr6}
+  \newfont{\PTLCHeadFont}{cmbxsl10}
+  \newfont{\PTLCBodyFont}{cmti10}
+  \newfont{\QDHeadFont}{cmbxsl10}
+  \newfont{\QDBodyFont}{cmti10}
+  \newfont{\PRHeadFont}{cmbx10}
+  \newfont{\PRBodyFont}{cmr10}
+  \newfont{\EqNumFont}{cmr10}
+  \newfont{\TableNumberFont}{cmbx10 at 11pt}
+  \newfont{\TableSubheadFont}{cmti9}
+  \newfont{\TableBodyFont}{cmr9}
+  \newfont{\TableFootnoteFont}{cmr8}
+\fi
+\def\PageNumFont{}
+\def\RunningHeadFont{\it}
+%\def\SectionHeadFont{\fontseries{bx}\fontsize{12}{14pt}\selectfont}
+%\def\SubsectionHeadFont{\fontseries{bx}\fontsize{11}{12pt}\selectfont}
+%\def\SubsubsectionHeadFont{\fontseries{bx}\selectfont}
+
+\def\ContributorAffiliationFont{\fontsize{8}{10}\selectfont}
+\def\ContributorNameFont{\fontsize{8}{10}\bfseries\selectfont}
+\def\TitlePageTitleFont{\fontsize{24}{24}\bfseries\itshape\selectfont}
+\def\ChapNumFont{\fontsize{24}{24}\bfseries\selectfont}
+\def\ChapTitleFont{\fontsize{18}{20}\itshape\selectfont}
+\def\SectionHeadFont{\fontsize{12}{14}\bfseries\selectfont}
+\def\SubsectionHeadFont{\fontsize{11}{12}\bfseries\selectfont}
+\def\SubsubsectionHeadFont{\fontsize{10}{12}\bfseries\selectfont}
+\def\TableBodyFont{\fontsize{9}{11}\selectfont}
+\def\TableNumberFont{\fontsize{11}{11}\bfseries\selectfont}
+\def\TableSubheadFont{\fontsize{9}{11}\selectfont}
+\def\TableFootnoteFont{\fontsize{8}{10}\selectfont}
+\def\TableTitleFont{\fontsize{10}{12}\selectfont}
+\def\FigCapFont{\fontsize{10}{12}\bfseries\selectfont}%
+\def\FigCapBIFont{\fontsize{10}{12}\bfseries\itshape\selectfont}
+\def\FMHeadFont{\fontsize{18}{18}\bfseries\itshape\selectfont}
+
+
+\newcounter{shared}[chapter]
+\def\refstep@counter#1{%
+  \if@numberinsequence\refstepcounter{shared}\else\refstepcounter{#1}\fi}
+\def\step@counter#1{%
+  \if@numberinsequence\stepcounter{shared}\else\stepcounter{#1}\fi}
+\def\cleardoublepage{%
+  \clearpage
+  \if@twoside
+    \ifodd\c@page
+    \else
+      \hbox{}%
+      \pagestyle{empty}%
+      \newpage
+      \if@twocolumn
+        \hbox{}%
+        \newpage\fi\fi\fi}
+\newdimen\htrim
+\newdimen\vtrimtop
+\newdimen\vtrimbot
+\if@sevenbyten
+  \textwidth33pc
+  \textheight51pc
+  \topmargin0in
+  \oddsidemargin.5in
+  \evensidemargin.5in
+  \htrim.75in
+  \vtrimtop.8607in
+  \vtrimbot1.027in
+  \hoffset-.49in
+  \voffset-.63in%.04in
+\else
+  \textwidth28pc
+  \textheight45pc
+  \topmargin0in
+  \oddsidemargin1.1875in
+  \evensidemargin1.1875in
+  \htrim.7365in
+  \vtrimtop1.068in
+  \vtrimbot1.068in
+  \hoffset-5pt
+  \voffset39pt\fi
+\newsavebox\ul@box
+\newsavebox\ur@box
+\newsavebox\ll@box
+\newsavebox\lr@box
+\def\top@cornermarks{%
+  \hskip-\htrim
+  \vbox to 0\p@{\vskip-\vtrimtop\llap{\copy\ul@box}\vss}%
+  \vbox to 0\p@{\vskip-\vtrimtop\rlap{\hskip\textwidth\hskip2\htrim\copy\ur@box}\vss}%
+  \vbox to 0\p@{\vskip\textheight\vskip\vtrimbot\llap{\copy\ll@box}\vss}%
+  \vbox to 0\p@{\vskip\textheight\vskip\vtrimbot\rlap{\hskip\textwidth\hskip2\htrim\copy\lr@box}\vss}%
+  \hskip\htrim}
+\def\make@cornermarks{%
+  \sbox\ul@box{\rule{18\p@}{.25\p@}\hskip8\p@\hbox to.25\p@{\vbox to26\p@{\noindent\rule{.25\p@}{18\p@}}}}%
+  \sbox\ur@box{\hbox to.25\p@{\vbox to26\p@{\noindent\rule{.25\p@}{18\p@}}}\hskip8\p@\rule{18\p@}{.25\p@}}%
+  \sbox\ll@box{\rule{18\p@}{.25\p@}\hskip8\p@\lower34\p@\hbox to.25\p@{\vbox to26\p@{\noindent\rule{.25\p@}{18\p@}}}}%
+  \sbox\lr@box{\lower34\p@\hbox to.25\p@{\vbox to26\p@{\noindent\rule{.25\p@}{18\p@}}}\hskip8\p@\rule{18\p@}{.25\p@}}}
+\def\even@head{%
+\top@cornermarks
+    \@the@page
+{\RunningHeadFont
+\hfil
+{%\MakeUppercase
+\leftmark
+}
+    }}%\hfil
+\def\odd@head{%
+\top@cornermarks
+  {\RunningHeadFont
+{%\MakeUppercase
+\rightmark
+}
+    }
+\hfil
+    \@the@page
+  }
+\def\@the@page{{\PageNumFont\thepage}}
+\def\ps@empty{%
+  \let\@mkboth\@gobbletwo
+  \if@pdf
+    \let\@evenhead\@empty
+    \let\@oddhead\@empty
+    \def\@oddfoot{\@cip\hfil}%
+    \def\@evenfoot{\@cip\hfil}%
+  \else
+    \make@cornermarks
+    \let\@oddhead\top@cornermarks
+    \let\@evenhead\top@cornermarks
+    \let\@oddfoot\@empty
+    \let\@evenfoot\@empty
+  \fi
+  }
+\def\ps@folio{%
+  \let\@mkboth\@gobbletwo
+  \if@pdf
+    \let\@evenhead\@empty
+    \let\@oddhead\@empty
+    \def\@oddfoot{\@cip\hfil}%
+    \def\@evenfoot{\@cip\hfil}%
+  \else
+\let\@oddhead\top@cornermarks
+    \def\@oddfoot{%
+      \parindent\z@
+      \baselineskip7\p@
+      \hbox{%
+        \textwidth\@ciprulewidth
+        \vbox{%
+          \if@cip\rule{\@ciprulewidth}{.25pt}\par
+            \hbox{\vbox{\noindent\copy\@cipboxa\par\noindent\copy\@cipboxb}}\fi}}
+      \hfill\@the@page}
+    \let\@evenhead\odd@head
+    \let\@evenfoot\@oddfoot
+  \fi
+  }
+\def\ps@headings{%
+  \let\@mkboth\@gobbletwo
+  \if@pdf
+    \let\@evenhead\@empty
+    \let\@oddhead\@empty
+    \def\@oddfoot{\@cip\hfil}%
+    \def\@evenfoot{\@cip\hfil}%
+  \else
+\let\@oddfoot\@empty
+\let\@evenfoot\@empty
+    \let\@evenhead\even@head
+    \let\@oddhead\odd@head
+  \fi
+  }
+\def\ps@opening{%
+  \let\@mkboth\@gobbletwo
+  \if@pdf
+    \let\@evenhead\@empty
+    \let\@oddhead\@empty
+    \def\@oddfoot{\@cip\hfil}%
+    \def\@evenfoot{\@cip\hfil}%
+  \else
+    \make@cornermarks
+    \let\@oddhead\top@cornermarks
+    \let\@evenhead\top@cornermarks
+    \def\@oddfoot{%
+      \parindent\z@
+      \baselineskip7\p@
+      \hbox{%
+        \textwidth\@ciprulewidth
+        \vbox{%
+          \if@cip\rule{\@ciprulewidth}{.25pt}\par
+            \hbox{\vbox{\noindent\copy\@cipboxa\par\noindent\copy\@cipboxb}}\fi}}
+      \hfill\@the@page}
+    \let\@evenfoot\@oddfoot
+  \fi
+  }
+\def\HeadingsBookChapter{%
+  \def\chaptermark##1{%
+    \markboth{\@title}{%
+      ##1}}%
+  \def\sectionmark##1{}}
+\def\HeadingsChapterSection{%
+  \def\chaptermark##1{%
+    \markboth{%
+      ##1}{}}%
+  \def\sectionmark##1{%
+    \markright{%
+      ##1}}}
+\def\pdfon{\@pdftrue}
+\def\pdfoff{\@pdffalse}
+\if@pdf
+  \def\@cip{{\fontsize{6\p@}{8\p@}\selectfont\copyright 2001 by CRC Press LLC}}
+\else
+  \newsavebox\@cipboxa
+  \newsavebox\@cipboxb
+  \newdimen\@ciprulewidth
+  \def\@cip#1#2{%
+    \sbox\@cipboxa{\fontsize{6\p@}{8\p@}\selectfont #1}%
+    \sbox\@cipboxb{\fontsize{6\p@}{8\p@}\selectfont #2}%
+    \@ciprulewidth\wd\@cipboxa
+    \ifnum\@ciprulewidth<\wd\@cipboxb\@ciprulewidth\wd\@cipboxb\fi}%
+\fi
+\if@pdf
+\else
+%  \AtBeginDocument{%
+%    \@cip{\rule{0pt}{9pt}0-8493-0052-5/00/\$0.00+\$.50}%
+%      {\copyright\ \ 2001 by CRC Press LLC}}%
+\fi
+\newcounter{numauthors}
+\newif\if@break
+\newif\if@firstauthor
+\def\tableofcontents{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse\fi
+  \chapter*{\contentsname
+    \@mkboth{\MakeUppercase\contentsname}{\MakeUppercase\contentsname}}%
+  {\let\break\space
+    \let\author\toc@author
+    \reset@authors
+    \let\toc@draw\relax
+    \@starttoc{toc}
+    \toc@draw}
+  \if@restonecol\twocolumn\fi}
+\def\l@chapter#1#2{%
+  \toc@draw
+  \gdef\toc@draw{\draw@chapter{#1}{#2}}}
+\def\draw@chapter#1#2{%
+  \addpenalty{-\@highpenalty}%
+  \vskip 1.0em plus\p@
+  \@tempdima 1.5em
+  \begingroup
+    \parindent\z@\rightskip\@pnumwidth
+    \parfillskip-\@pnumwidth
+    \bf
+    \leavevmode
+    \advance\leftskip\@tempdima
+    \hskip -\leftskip
+    {#1\hfil}\nobreak
+      \if@pdf
+      \else
+        \hfil\nobreak\hbox to\@pnumwidth{\hss #2}%
+\fi
+    \par
+    {\it\draw@authors}%
+    \penalty\@highpenalty\endgroup}
+\def\toc@author#1#2{%
+  \if@firstauthor
+    \@firstauthorfalse
+  \else
+    \ifx\@authors\@empty
+      \xdef\@authors{\last@author}%
+    \else
+      \@cons{\@authors}{, \last@author}\fi\fi
+  \stepcounter{numauthors}%
+  \gdef\last@author{#1 {\rm\fontsize{9\p@}{11\p@}\selectfont #2}}}
+\def\draw@authors{%
+  \let\@t\@authors
+  \ifx\@t\@empty
+    \let\@t\last@author\fi
+  \ifx\@t\@empty\else
+    \hskip\leftskip
+    \ifx\@authors\@empty
+    \else
+      \@authors
+      \ifnum\c@numauthors>2,\fi
+      \if@break\break\fi
+      \ and \fi
+    \last@author\break\fi
+  \reset@authors}
+\def\reset@authors{%
+  \gdef\@authors{}%
+  \gdef\last@author{}%
+  \@firstauthortrue
+  \setcounter{numauthors}{0}}
+\def\l@section#1#2{%
+  \toc@draw
+  \gdef\toc@draw{\draw@section{#1}{#2}}}
+%\def\draw@section#1#2{%
+%  \@dottedtocline{1}{1.5em}{2.3em}{{#1} {\it\draw@authors}}{{\let\tenbf\tenrm\relax #2}}}
+\def\draw@section#1#2{%
+  \@dottedtocline{1}{1.5em}{2.7em}{#1 {\it\draw@authors}}{{\let\tenbf\tenrm\relax #2}}}
+\def\l@subsection#1#2{%
+  \toc@draw
+  \gdef\toc@draw{\draw@subsection{#1}{#2}}}
+%\def\draw@subsection#1#2{%
+%  \@dottedtocline{2}{3.8em}{3.2em}{#1}{{\let\tenbf\tenrm\relax #2}}}
+\def\draw@subsection#1#2{%
+  \@dottedtocline{2}{4.2em}{3.5em}{#1}{{\let\tenbf\tenrm\relax #2}}}
+\def\l@subsubsection#1#2{%
+  \toc@draw
+  \gdef\toc@draw{\draw@subsubsection{#1}{#2}}}
+\def\draw@subsubsection#1#2{%
+  \@dottedtocline{3}{7.0em}{4.1em}{#1}{{\let\tenbf\tenrm\relax #2}}}
+\def\l@paragraph#1#2{%
+  \toc@draw
+  \gdef\toc@draw{\draw@paragraph{#1}{#2}}}
+\def\draw@paragraph#1#2{%
+  \@dottedtocline{4}{10em}{5em}{#1}{{\let\tenbf\tenrm\relax #2}}}
+\def\l@subparagraph#1#2{%
+  \toc@draw
+  \gdef\toc@draw{\draw@subparagraph{#1}{#2}}}
+\def\draw@subparagraph#1#2{%
+  \@dottedtocline{5}{12em}{6em}{#1}{{\let\tenbf\tenrm\relax #2}}}
+\def\@dottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@tocdepth
+  \else
+    \vskip \z@ \@plus.2\p@
+    {\leftskip #2\relax\rightskip\@tocrmarg\parfillskip -\rightskip
+      \parindent #2\relax\@afterindenttrue
+      \interlinepenalty\@M
+      \leavevmode
+      \@tempdima #3\relax
+      \advance\leftskip\@tempdima\null\hskip -\leftskip
+      {#4\hfil}\nobreak
+      \if@pdf
+      \else
+        \leaders\hbox{$\m@th\mkern\@dotsep mu\hbox{.}\mkern\@dotsep mu$}\hfill
+        \nobreak
+        \hb@xt@\@pnumwidth{\hfil\normalfont\normalcolor #5}%
+\fi
+      \par}\fi}
+\def\abstract{{\AbstractFont\noindent Abstract\hskip 12bp}}
+\def\contributor#1#2#3{{%
+  \ContributorNameFont #1\par
+  \ContributorAffiliationFont #2\vskip-1\p@
+  #3\vskip10\p@}}
+\def\contributors{%
+  \twocolumn[\contributorshead]
+  \pagestyle{empty}
+  \leftskip1pc
+  \parindent-1pc}
+\def\contributorshead{%
+  \vbox{}\vskip2pc
+  {\centering\HeadFont Contributors\vskip2\p@}
+  \noindent\rule{\textwidth}{1\p@}\vskip25\p@}
+\def\chapter@author{}
+\def\chapter@affiliation{}
+\setcounter{secnumdepth}{4}
+\if@ChapterTOCs
+  \newwrite\@chaptoc
+  \def\secnumwidth{21pt}\def\subsecnumwidth{30pt}\fi
+\long\def\@trplarg#1{\@ifnextchar[{\@xtrplarg{#1}}{\@ztrplarg{#1}}}
+\long\def\@xtrplarg#1[#2]{\@ifnextchar[{#1[#2]}{\@ytrplarg{#1}[{#2}]}}
+\long\def\@ytrplarg#1[#2]#3{#1[{#2}][{#2}]{#3}}
+\long\def\@ztrplarg#1#2{#1[{#2}][{#2}]{#2}}
+\def\chapter{%
+  \make@cornermarks
+  \cleardoublepage
+  \if@ChapterTOCs\if@filesw\immediate\closeout\@chaptoc\fi\fi
+  \pagestyle{headings}%
+  \thispagestyle{folio}%
+\if@ChapterResetsPage\global\c@page\@ne\fi
+  \global\@topnum\z@
+  %\gdef\chapterauthor{\@ca}%
+  \gdef\endchapterauthors{\end@cas}%
+  \@afterindentfalse
+  \@ifstar{\@schapter}{\@trplarg{\@chapter}}}
+\def\@chapter[#1][#2]#3{%
+  \ifnum\c@secnumdepth>\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+    \else
+      \addcontentsline{toc}{chapter}{#1}\fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}\fi
+  \chaptermark{%
+    #2}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#3}]%
+  \else
+    \@makechapterhead{#3}%
+    \@afterheading\fi
+  \if@ChapterTOCs\if@filesw\immediate\openout\@chaptoc\thechapter.toc\fi\fi
+}
+\if@ChapterTOCs\let\chaptocbreak\space\fi
+\def\make@chaptoc{%
+  {\parindent\z@
+  \def\FolioBoldFont{}%
+  \def\'{\noexpand\'}%
+  \def\`{\noexpand\`}%
+  \def\"{\noexpand\"}%
+  \let\@b\bullet
+  \def\bullet{\raisebox{2pt}{$\scriptscriptstyle\@b$}}%
+  \let\SubsectionItalicFont\it
+  \ifx\chapter@author\@empty\else{\bf\chapter@author}\vskip4\p@\fi
+  \ifx\chapter@affiliation\@empty\else{\it\fontsize{10\p@}{12\p@}\selectfont\chapter@affiliation}\par\fi
+  \gdef\chapter@author{}\gdef\chapter@affiliation{}%
+  \vskip 19.3\p@
+  \vbox{{\leftskip\secnumwidth\def\author##1##2{}\vskip-6pt\subsection*{\hskip-1.8pc CONTENTS}\@input{\thechapter.toc}\par}}%
+  }}
+\def\@makechapterhead#1{%
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \vbox{
+    \vskip -2\p@
+    {\ChapNumFont
+%\if@chapnumonly\else
+%    \@chapapp\
+%\fi
+    \thechapter}
+    \vskip 9\p@
+    \chap@rule
+    \vskip 6\p@
+    {\baselineskip 20\p@\lineskip 20\p@\ChapTitleFont #1\par}%
+    \vskip32\p@
+    \if@ChapterTOCs
+      \make@chaptoc
+    \else
+      {\bf \chapter@author}\par\gdef\chapter@author{}\gdef\chapter@affiliation{}\fi
+    \vskip 19.3\p@}}%
+    \def@theequation}
+\def\@makeschapterhead#1{%
+  {\parindent \z@ \raggedright \baselineskip 6\p@ \lineskip \z@ \parskip \z@
+    \vbox{
+    \vskip 22\p@
+    \chap@rule
+    \vskip 7\p@
+    \FMHeadFont #1
+    \vskip 45\p@}}%
+  \def\theequation{\arabic{equation}}}
+%\def\chapterauthors{%
+%  \def\break{\string\break\ }%
+%  \def\protect##1{\string ##1 }}
+\def\end@cas{}
+\def\end@casplusone{\vskip4pt\@doendpe}
+\def\@ca#1#2{%
+  \def\chapter@author{#1}%
+  \def\chapter@affiliation{#2}%
+  \if@filesw
+    \if@ChapterTOCs\edef\reserved@a{\write\@chaptoc{\string\author{#1}{#2}}}\reserved@a\fi
+    \write\@auxout{\string\@writefile{toc}{\string\author{#1}{#2}}}%
+  \fi}
+\def\@caplusone{\@ifstar{\@scaplusone}{\@ifnextchar[{\@xcaplusone}{\@xcaplusone[]}}}
+\def\@xcaplusone[#1]#2#3{%
+  \def\@@empty{#1}\ifx\@empty\@@empty\@ca{#2}{#3}\else\@ca{#2}{#1}\fi\@scaplusone{#2}{#3}}
+\def\@scaplusone#1#2{%
+  \ifhmode\vskip-12pt\fi
+  \noindent\hskip3pc{\CAPlusOneFont\baselineskip14pt #1\def\@t{#2}\ifx\@t\@empty\else,\fi}\hskip6pt{\CAAPlusOneFont #2}\par}
+%\def\chapterauthoronly#1#2{\@ca{#1}{}\@scaplusone{#1}{#2}}
+\def\myaddcontentsline#1#2#3{%
+  \if@filesw
+    \begingroup
+    \let\label\@gobble\let\index\@gobble\let\glossary\@gobble
+    \def\break{\ }%
+    \def\protect##1{\string ##1 }%
+    \@temptokena{\thepage}%
+    \edef\@tempa{\write#1{\string\chapcontentsline{#2}{\string\raggedright\space #3}{\the\@temptokena}}}\@tempa
+    \if@nobreak\ifvmode\nobreak\fi\fi
+    \endgroup
+  \fi}
+\def\chapcontentsline#1{\csname l@#1\endcsname}
+\def\l@chapsection{\@mydottedtocline{1}{\z@}{6pt}}
+\def\l@chapsubsection{\@mydottedtocline{2}{\secnumwidth}{6pt}}
+\newcount\c@chaptocdepth
+\setcounter{chaptocdepth}{1}
+\def\@mytocline#1#2#3#4#5{%
+  \ifnum #1>\c@chaptocdepth
+  \else
+    \vskip 2pt plus.2\p@
+    \ifnum #1=1\ifnum\c@chaptocdepth>1\addvspace{12pt}\fi\fi
+    {\leftskip #2\relax% \rightskip \@tocrmarg \parfillskip -\rightskip
+      \interlinepenalty\@M
+      \leavevmode
+      \@tempdima #3\relax
+      \rightskip\z@
+      \vbox{\ChapTOCFont #4\nobreak}%
+      \par}\fi}
+\def\@mydottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@chaptocdepth
+  \else
+    \vskip 2pt plus.2\p@
+{%\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+     % \parindent #2\relax\@afterindenttrue
+      \interlinepenalty\@M
+      \leavevmode
+      \def\@dotsep{1.2}%
+      \@tempdima #3\relax
+      \rightskip\z@
+      \advance\hsize-\secnumwidth
+      \vbox{\hskip-\secnumwidth\fontsize{9.5\p@}{\baselineskip}\selectfont #4
+        \if@pdf
+          \hfill
+        \else
+          \nobreak\leaders\hbox{$\m@th\mkern\@dotsep mu.\mkern\@dotsep mu$}\hfill\nobreak
+          \hbox to24\p@{\fontsize{9.5\p@}{\baselineskip}\selectfont\hfil #5}\fi}
+      \par}\fi}
+\def\@startsection#1#2#3#4#5#6{%
+  \if@noskipsec\leavevmode\fi
+  \par
+  \@tempskipa #4\relax
+  \@afterindenttrue
+  \ifdim \@tempskipa <\z@
+    \@tempskipa -\@tempskipa \@afterindentfalse
+  \fi
+  \if@nobreak
+    \everypar{}%
+  \else
+    \addpenalty\@secpenalty\addvspace\@tempskipa
+  \fi
+  \@ifstar
+    {\@ssect{#1}{#3}{#4}{#5}{#6}}%
+    {\@trplarg{\@sect{#1}{#2}{#3}{#4}{#5}{#6}}}}
+\def\@ssect#1#2#3#4#5#6{%
+  \@tempskipa #4\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #5{%
+        \@hangfrom{\hskip #2}%
+          \interlinepenalty \@M #6\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#6}%
+  \else
+    \def\@svsechd{#5{\hskip #2\relax #6}\csname #1mark\endcsname{#6}}%
+  \fi
+  \@xsect{#4}}
+\def\@sect#1#2#3#4#5#6[#7][#8]#9{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+    \refstepcounter{#1}%
+\protected@edef\@svsec{\@seccntformat{#1}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+\@hangfrom{\hskip #3\relax\@svsec}\interlinepenalty \@M %
+          #9\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{%
+      #8}%
+    \addcontentsline{toc}{#1}{%
+      \ifnum #2>\c@secnumdepth \else
+        \protect\numberline{\csname the#1\endcsname}%
+      \fi
+      #7}%
+  \else
+    \def\@svsechd{%
+      #6{\hskip #3\relax
+      \@svsec #9}%
+      \csname #1mark\endcsname{%
+        #8}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+\def\section{%
+  %\gdef\chapterauthor{\@caplusone}%
+  \gdef\endchapterauthors{\end@casplusone}%
+  \@ifstar{\@ssection}{\@trplarg{\@section}}}
+\def\@ssection#1{%
+  \if@ChapterTOCs
+    \myaddcontentsline{\@chaptoc}{chapsection}{\string\makebox[\secnumwidth][l]{}#1}\fi
+  \@startsection{section}{1}{\z@}{-30\p@}{6\p@}{\sec@rule\nopagebreak\vskip13.5\p@\nopagebreak\SectionHeadFont}*{#1}}
+\def\@section[#1][#2]#3{%
+  \if@ChapterTOCs
+    \addtocounter{section}{1}%
+    \myaddcontentsline{\@chaptoc}{chapsection}{\string\makebox[\secnumwidth][l]{\thesection}#1}%
+    \addtocounter{section}{-1}\fi
+  \@startsection{section}{1}{\z@}{-30\p@}{6\p@}{\sec@rule\nopagebreak\vskip13.5\p@\nopagebreak\SectionHeadFont}[#2]{#3}}
+\def\sectionauthor#1{\hfill{\ChapTOCAuthorFont #1}}
+\def\subsection{\@ifstar{\@ssubsection}{\@trplarg{\@subsection}}}
+\def\@ssubsection#1{%
+  \if@ChapterTOCs
+    \myaddcontentsline{\@chaptoc}{chapsubsection}{\string\makebox[\subsecnumwidth][l]{}#1}\fi
+  \@startsection{subsection}{2}{\z@}{-18\p@}{6\p@}{%
+    \SubsectionHeadFont}*{#1}}
+\def\@subsection[#1][#2]#3{%
+  \if@ChapterTOCs
+    \addtocounter{subsection}{1}%
+    \myaddcontentsline{\@chaptoc}{chapsubsection}{\string\makebox[\subsecnumwidth][l]{\thesubsection}#1}%
+    \addtocounter{subsection}{-1}\fi
+  \@startsection{subsection}{2}{\z@}{-18\p@}{6\p@}{%
+    \SubsectionHeadFont}[#2]{#3}}
+\def\subsubsection{%
+  \@startsection{subsubsection}{4}{\z@}{-12\p@}{6\p@}{\SubsubsectionHeadFont}}
+\newcounter{Example}[chapter]
+\def\theExample{\thechapter.\arabic{Example}}
+\def\Example{Example}
+\def\example{\@ifnextchar[{\@example}{\@example[]}}
+\def\@example[#1]{%
+  \refstepcounter{Example}%
+  \let\do@box\clear@box
+  \ifhmode\par\fi
+  \addvspace{18bp}
+  \noindent
+  {\ExampleHeadFont\Example\ \theExample}
+  \def\@t{#1}\ifx\@t\empty\else\ #1\fi
+  \nopagebreak\par
+  \noindent\bgroup\ExampleBodyFont\ignorespaces}
+\def\endexample{%
+  \egroup
+  \do@box\par\addvspace{12bp}}
+\def\@eqnnum{{\EqNumFont (\theequation)}}
+\if@numbysec\@addtoreset{equation}{section}\fi
+\arraycolsep 1.5bp
+\if@numberinsequence
+  \newcounter{subequation}[shared]
+\else
+  \newcounter{subequation}[equation]\fi
+\def\thesubequation{\theequation\alph{subequation}}
+\def\def@theequation{%
+  \if@numberinsequence
+    \def\theequation{%
+\if@numbysec\thesection\else\thechapter\fi.%
+\@arabic\c@shared}%
+  \else
+    \def\theequation{%
+\if@numbysec\thesection\else\thechapter\fi.%
+\@arabic\c@equation}\fi}
+\def\equation{$$\refstep@counter{equation}}
+\def\@eqnnumlet{{\reset@font\rm (\theequation\alph{subequation})}}
+\def\eqnletarray{%
+  \ifnum\c@subequation=0
+    \step@counter{equation}\fi
+  \stepcounter{subequation}\let\@currentlabel\thesubequation
+  \global\@eqnswtrue\m@th
+  \global\@eqcnt\z@\tabskip\@centering\let\\\@eqnletcr
+  $$\halign to\displaywidth\bgroup\@eqnsel\hskip\@centering
+  $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne
+  \hskip 2\arraycolsep \hfil${##}$\hfil
+  &\global\@eqcnt\tw@ \hskip 2\arraycolsep $\displaystyle\tabskip\z@{##}$\hfil
+   \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+\def\endeqnletarray{\@@eqnletcr\egroup$$\global\advance\c@subequation-1\global\@ignoretrue}
+\def\@eqnletcr{{\ifnum0=`}\fi\@ifstar{\global\@eqpen\@M
+    \@yeqnletcr}{\global\@eqpen\interdisplaylinepenalty \@yeqnletcr}}
+\def\@yeqnletcr{\@ifnextchar [{\@xeqnletcr}{\@xeqnletcr[\z@]}}
+\def\@xeqnletcr[#1]{\ifnum0=`{\fi}\@@eqnletcr
+   \noalign{\penalty\@eqpen\vskip\jot\vskip #1\relax}}
+\def\@@eqnletcr{\let\@tempa\relax
+    \ifcase\@eqcnt \def\@tempa{& & &}\or \def\@tempa{& &}%
+      \else \def\@tempa{&}\fi
+     \@tempa \if@eqnsw\@eqnnumlet\stepcounter{subequation}\fi
+     \global\@eqnswtrue\global\@eqcnt\z@\cr}
+\def\reseteqnletter{\setcounter{subequation}{0}}
+\def\eqnarray{%
+  \stepcounter{equation}%
+  \let\@currentlabel\theequation\@eqnarray}
+\def\@eqnarray{%
+\global\@eqnswtrue\m@th
+\global\@eqcnt\z@\tabskip\@centering\let\\\@eqncr
+$$\halign to\displaywidth\bgroup\@eqnsel\hskip\@centering
+  $\displaystyle\tabskip\z@{##}$&\global\@eqcnt\@ne
+  \hskip 2\arraycolsep \hfil${##}$\hfil
+  &\global\@eqcnt\tw@ \hskip 2\arraycolsep $\displaystyle\tabskip\z@{##}$\hfil
+   \tabskip\@centering&\llap{##}\tabskip\z@\cr}
+\def\endeqnarray{\end@eqnarray\global\advance\c@equation\m@ne}
+\def\end@eqnarray{\@@eqncr\egroup$$\global\@ignoretrue}
+\@namedef{eqnarray*}{\def\@eqncr{\nonumber\@seqncr}\@eqnarray}
+\@namedef{endeqnarray*}{\nonumber\end@eqnarray}
+\def\the@environment#1{\thechapter.\if@numberinsequence\arabic{shared}\else\arabic{#1}\fi}
+\def\@environment#1#2#3#4#5{%
+  \@ifnextchar[{\@@environment{#1}{#2}{#3}{#4}{#5}}{\@@environment{#1}{#2}{#3}{#4}{#5}[]}}
+\def\@@environment#1#2#3#4#5[#6]{%
+  \ifnum#2=1\refstepcounter{#1}\fi
+  \ifhmode\par\fi
+  \addvspace{18\p@}%
+  \noindent
+  {#3 #1\ifnum#2=1\ \csname the#1\endcsname\fi\def\@t{#6}\ifx\@t\empty\else\ #6\fi}
+  \ifnum#4=1\nopagebreak\par\noindent\else\hskip10\p@\fi
+  \bgroup
+  #5}
+\def\end@environment#1{%
+  \egroup
+  \ifnum#1=1\do@box\par\else\ifhmode\par\fi\fi
+  \addvspace{12\p@}}
+\def\defenvironment#1{\@ifnextchar[{\def@environment{#1}}{\def@environment{#1}[#1]}}
+\def\def@environment#1[#2]#3#4#5#6#7{
+  \@namedef{#1}{\@environment{#2}{#3}{#4}{#5}{#6}}
+  \@namedef{end#1}{\end@environment{#7}}
+  \ifnum#3=1
+    \newcounter{#2}[chapter]
+    \@namedef{the#2}{\the@environment{#2}}\fi}
+\def\do@@box{%
+\hspace{16\p@}%
+  \rule{4\p@}{10\p@}}
+\def\eqbox{%
+  \rlap{%
+    \do@box}\nobox}
+\def\dobox{\do@box\nobox}
+\def\clearbox{\clear@box\nobox}
+\def\clear@box{%
+\hskip16\p@%
+  {\fboxrule.5\p@\raisebox{3\p@}{\framebox[4\p@]{\rule{\z@}{3\p@}}}}}
+\let\do@box\do@@box
+\def\nobox{\gdef\do@box{\global\let\do@box\do@@box}}
+\RequirePackage{floatflt}
+\newcounter{subfigure}[figure]
+\newdimen\@captionwidth
+\def\figurenumber{\noindent{\FigCapFont\fnum@figure}}
+\def\figurenumberlet{%
+  \refstepcounter{subfigure}%
+  \noindent{{\FigCapFont\fnum@figure\alph{subfigure}}}}
+\def\caption{\@ifnextchar[{\@xcaption}{\@captionwidth\textwidth\@ycaption}}
+\def\@xcaption[#1]{\@captionwidth#1\@ycaption}
+\def\@ycaption#1{%
+  \refstepcounter\@captype
+  {%\baselineskip10bp\lineskip10bp      % to avoid extra space with superscr.
+    \vskip3bp plus9bp
+    \let\it\FigCapBIFont
+    \noindent\parbox{\@captionwidth}{\figurenumber}%
+    \vskip2bp
+    \noindent{#1}\par}%\bf
+  \addcontentsline{\ext@figure}{figure}{\protect\numberline{\thefigure}{#1}}}
+\def\captionlet{\@ifnextchar[{\@xcaptionlet}{\@captionwidth\textwidth\@ycaptionlet}}
+\def\@xcaptionlet[#1]{\@captionwidth#1\@ycaptionlet}
+\def\@ycaptionlet#1{%
+  \ifnum\c@subfigure=0\stepcounter{figure}\fi
+  \let\@currentlabel\thesubfigure
+  {\baselineskip10bp\lineskip10bp
+    \vskip3bp plus9bp
+    \let\it\FigCapBIFont
+    \noindent\parbox{\textwidth}{\figurenumberlet}%
+    \vskip2bp
+    \noindent{#1}\par}%\bf
+  \addcontentsline{\ext@figure}{figure}{\protect\numberline{\thefigure}{#1}}}
+\def\thefigure{%
+\if@numbysec\thesection\else
+\thechapter.%
+\fi
+\@arabic\c@figure}
+\def\thesubfigure{%
+\if@numbysec\thesection\else
+\thechapter.%
+\fi
+\@arabic\c@figure\alph{subfigure}}
+\def\resetfigureletter{\setcounter{subfigure}{0}}
+\if@numbysec\@addtoreset{figure}{section}\fi
+\footnotesep0pt
+\skip\footins18pt plus9pt
+\skip\@mpfootins\skip\footins
+\def\footnotestrut{\rule{0pt}{12pt}}
+\def\footnoterule{%
+  \kern-3pt
+  \noindent
+  \hbox to 72pt{\hrulefill}
+  \kern 2.6pt}
+\def\@makefnmark{%
+  \hbox{$^{\@fnsymbol\@thefnmark}\m@th$}}
+\long\def\@makefntext#1{%
+  \parindent0\p@\noindent
+  \@makefnmark#1}
+
+\def\colrule{\\[-9.5pt]\hline\\[-8pt]}
+\tabcolsep 5pt
+\arrayrulewidth .5pt
+\doublerulesep 1pt
+%\newcounter{subtable}[table]
+\newif\if@tablerules\@tablerulestrue
+\newif\if@centertable\@centertabletrue
+\newif\if@centertabletitle\@centertabletitletrue
+\newbox\@tablebox
+\newbox\@tabletitlebox
+\newdimen\@tablewidth
+\newdimen\@tabletitlewidth
+\newdimen\max@tablewidth
+\def\automaticrules{\@tablerulestrue}
+\def\noautomaticrules{\@tablerulesfalse}
+\def\thetable{%
+\thechapter.%
+\@arabic\c@table}
+\def\thesubtable{%
+\thechapter.%
+\@arabic\c@table\alph{subtable}}
+\def\resettableletter{\setcounter{subtable}{0}}
+\def\@Tabletitle{}
+\def\tabletitle{\@ifnextchar[{\@xtabletitle}{\@tabletitlewidth\z@\@ytabletitle}}
+\def\@@tabletitle{}
+\newif\ifshorttabletitle
+\global\shorttabletitlefalse
+%\def\@xtabletitle#1{\@tabletitlewidth#1\@ytabletitle}
+%
+\def\@xtabletitle[#1]#2{%
+  \gdef\@@tabletitle{#1}%
+  \gdef\@tabletitle{#2}%
+  \let\@Tabletitle\@TableTitle
+  \refstepcounter{table}%
+  {\let\footnotemark\@empty
+    \let\footnote\@gobble
+    \addcontentsline{\ext@table}{table}{\protect\numberline{\thetable}{\@@tabletitle}}}}
+%%%%
+%\long\def\@xtabletitle[#1]#2{%
+%  \setbox\@ttbox\hbox{#1}\global\shorttabletitletrue
+%  \def\@@tabletitle{\ifx\@ttbox\@empty\else#1\fi}%
+%  \def\@tabletitle{#2}%
+%  \let\@Tabletitle\@TableTitle
+%  \refstepcounter{table}%
+%  {\let\footnotemark\@empty
+%    \let\footnote\@gobble
+%    \addcontentsline{\ext@table}{table}{\protect\numberline{\thetable}{%
+%\ifshorttabletitle\@@tabletitle\else\@tabletitle\fi}}}}
+
+%%%
+%
+\long\def\@ytabletitle#1{%
+  \def\@tabletitle{#1}%
+  \let\@Tabletitle\@TableTitle
+  \refstepcounter{table}%
+  {\let\footnotemark\@empty
+    \let\footnote\@gobble
+    \addcontentsline{\ext@table}{table}{\protect\numberline{\thetable}{\@tabletitle}}}}
+\def\tabletitlelet{\@ifnextchar[{\@xtabletitlelet}{\@tabletitlewidth\z@\@ytabletitlelet}}
+\def\@xtabletitlelet[#1]{\@tabletitlewidth#1\@ytabletitlelet}
+\long\def\@ytabletitlelet#1{%
+  \def\@tabletitle{#1}%
+  \let\@Tabletitle\@TableTitle
+  \ifnum\c@subtable=0\stepcounter{table}\fi
+  \let\@currentlabel\thesubtable
+  {\let\footnotemark\@empty
+    \let\footnote\@gobble
+    \addcontentsline{\ext@table}{table}{\protect\numberline{\thetable}{\@tabletitle}}}}
+\def\@TableTitle{%
+  \noindent
+  \vbox{%
+    {{\small\bf TABLE\ \thetable\par}}\@tabletitle}}%%%% modified by sanjay
+\def\table{%
+  %\long\def\caption##1{\tabletitle{##1}\@TableTitle\par}%
+  \@float{table}}
+\@namedef{table*}{%
+  \long\def\caption##1{\tabletitle{##1}\@TableTitle\par}%
+  \@dblfloat{table}}
+\def\@tabular{%
+  \leavevmode
+  \if@centertable\hfil\fi
+  \vbox\bgroup
+  \setbox\@tablebox\hbox\bgroup
+  \baselineskip11pt
+  \global\let\@fn\@empty
+  \def\footnote##1{\footnotemark\gdef\@fn{##1}}
+  \renewcommand{\arraystretch}{.916666666667}%
+  $\let\@acol\@tabacol
+  \let\@classz\@tabclassz
+  \let\@classiv\@tabclassiv
+  \let\\\@tabularcr
+  \@tabarray}
+\def\endtabular{%
+  \crcr\egroup\egroup $\egroup
+  \@tablewidth\wd\@tablebox
+  \ifnum\@tabletitlewidth>0
+    {\hsize\@tabletitlewidth\raggedright\global\setbox\@tabletitlebox\vbox{\@Tabletitle}}%
+  \else
+    \setbox\@tabletitlebox\hbox{\@Tabletitle}%
+    \ifnum\wd\@tabletitlebox>\@tablewidth
+      {\hsize\@tablewidth\raggedright\global\setbox\@tabletitlebox\vbox{\@Tabletitle}}\fi
+    \@tabletitlewidth\wd\@tabletitlebox\fi
+  \ifnum\@tabletitlewidth>0
+    \ifnum\@tabletitlewidth>\@tablewidth\@tablewidth\@tabletitlewidth\fi
+    \hbox to\@tabletitlewidth{\if@centertabletitle\hfil\fi\box\@tabletitlebox\hfil}\par\fi
+  \max@tablewidth\@tablewidth
+  \ifnum\@tabletitlewidth>\max@tablewidth\max@tablewidth\@tabletitlewidth\fi
+  \if@tablerules
+    \ifnum\@tabletitlewidth>0\vskip-6pt\fi
+    \hbox to\max@tablewidth{\if@centertable\hfil\fi\rule{\@tablewidth}{1pt}\hfil}\par\fi
+  \hbox to\max@tablewidth{\if@centertable\hfil\fi\box\@tablebox\hfil}\vskip1pt
+  \if@tablerules\hbox to\max@tablewidth{\if@centertable\hfil\fi\rule{\@tablewidth}{1pt}\hfil}\par\fi
+  \ifx\@fn\@empty\else\FootnoteFont\parindent\z@\noindent\@makefnmark\@fn\par\fi
+  \egroup\hfil
+  \vskip 0pt plus 12pt
+  \gdef\@Tabletitle{}}
+\def\tch#1{\TableColHeadFont #1\llstrut\hfill}
+\def\tsh#1{\TableSubheadFont #1\hfill}
+\def\llstrut{\rule[-6pt]{0pt}{14pt}}
+\def\flstrut{\rule{0pt}{10pt}}
+\def\tabletitlestrut{\rule{0pt}{20pt}}
+\def\tablefootnotestrut{\rule{0pt}{18pt}}
+\def\source#1{\vskip-\lastskip\noindent\TableFootnoteFont #1\vskip\z@ plus 18\p@}
+
+\def\bibliohead{%
+\if@EOCRefs
+  \section*{\bibname}%
+  \vskip18pt
+\else
+  \cleardoublepage
+  \pagestyle{headings}%
+  \markboth{\bibname}{\bibname}%
+  \thispagestyle{folio}%
+  \global\@topnum\z@
+  \@afterindentfalse
+  \@makeschapterhead{\bibname}%
+  \addcontentsline{toc}{chapter}{\protect\numberline{\bibname}}
+  \fi
+  }%
+\def\bibname{References}%
+\def\thebibliography#1{%
+  \list
+  {\@biblabel{\arabic{enumiv}}}{\settowidth\labelwidth{\@biblabel{#1}}%
+  \ifdim\labelwidth<18pt\labelwidth18pt\fi
+  \leftmargin\labelwidth
+  \labelsep6pt
+  \advance\leftmargin\labelsep
+  \parsep2pt
+  \usecounter{enumiv}%
+  \let\p@enumiv\@empty
+  \def\labelenumiv{\theenumiv.}%
+  \def\theenumiv{\arabic{enumiv}}}%
+  \def\makelabel##1{\hss\llap{##1}}%
+  \def\newblock{\hskip .11em plus.33em minus.07em}%
+  \sloppy\clubpenalty4000\widowpenalty4000
+  \sfcode`\.=\@m}%
+\def\endthebibliography{%
+  \def\@noitemerr{\@warning{Empty `thebibliography' environment}}%
+  \endlist}
+\DeclareRobustCommand{\citerange}[2]{%
+  \if@filesw\immediate\write\@auxout{\string\citation{#1}}%
+    \immediate\write\@auxout{\string\citation{#2}}\fi
+  \edef\@citea{\expandafter\@firstofone{#1}\@empty}%
+  \edef\@citeb{\expandafter\@firstofone{#2}\@empty}%
+  \if@SuperscriptCites$^\bgroup\mbox\bgroup\else[\fi
+  \@ifundefined{b@\@citea}{\mbox{\reset@font\bfseries ?}%
+     \G@refundefinedtrue
+     \@latex@warning{Citation `\@citea' on page \thepage \space undefined}}%
+     {\hbox{\csname b@\@citea\endcsname}}%
+  --\@ifundefined{b@\@citeb}{\mbox{\reset@font\bfseries ?}%
+     \G@refundefinedtrue
+     \@latex@warning{Citation `\@citeb' on page \thepage \space undefined}}%
+     {\hbox{\csname b@\@citeb\endcsname}}%
+  \if@SuperscriptCites\egroup\egroup$\else]\fi}
+\if@SuperscriptCites\def\@cite#1#2{$^{#1\if@tempswa , #2\fi}$}\fi
+\if@UnnumberedReferences\def\@biblabel#1{}\fi
+\topmargin3.5pc
+\headheight1pc
+\headsep1pc
+\topskip12pt
+\footskip36pt
+\oddsidemargin6pc
+\evensidemargin\oddsidemargin
+\columnsep18\p@
+\clubpenalty20000\widowpenalty20000
+\parindent10pt
+\parskip\z@ plus1pt
+\arraycolsep1.5pt
+\intextsep24pt
+\def\crcrule{\hbox to\textwidth{\rlap{\rule[-3.5\p@]{84\p@}{4\p@}}\rule{\textwidth}{.5\p@}}}
+\def\chap@rule{\crcrule}
+\def\sec@rule{\crcrule}
+\def\@affiliate[#1]{\gdef\@affiliation{#1}}
+\def\@affiliation{}
+\def\and{\ and\ }
+\def\seriespage#1#2{
+  \clearpage
+  \thispagestyle{empty}%
+  \global\@topnum\z@
+  \@afterindentfalse
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \vbox{
+    \vskip 22bp
+    \SeriesPageSeriesFont\SeriesTitle
+    \vskip 24bp
+    \crcrule
+    \vskip 24bp
+    \SeriesPageHeadFont Series Editor
+    \vskip 12bp
+    \NameFont\uppercase{#1}
+    \vskip 6bp
+    \AffiliationFont #2
+    \vskip 25bp
+    \SeriesPageHeadFont Editorial Board
+    \vskip 7bp}}}
+\def\boardmembers#1#2#3#4{
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \NameFont\makebox[156bp][l]{#1} #3
+    \vskip 6bp
+    \AffiliationFont\makebox[156bp][l]{#2} #4
+    \vskip 10bp}}
+\def\boardmember#1#2{
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \NameFont #1
+    \vskip 6bp
+    \AffiliationFont #2
+    \vskip 10bp}}
+\def\titleshead{
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \vskip 12bp
+    \SeriesPageHeadFont Titles Included in the Series
+    \vskip 8bp}}
+\def\includedtitle#1#2{
+  {\parindent \z@ \raggedright \baselineskip 3bp \lineskip 3bp \parskip \z@
+    \begin{list}{}{\leftmargin 10bp\itemindent -10bp\partopsep 6bp}\item[]
+    \SeriesPageTitleFont #1, \NameFont #2
+    \end{list}}}
+\def\dedication#1{
+ \cleardoublepage
+  \thispagestyle{empty}
+  \global\@topnum\z@
+  \@afterindentfalse
+  {\vbox{
+    \vskip 50bp
+    \centering{\it #1}}}}
+\def\first@mark{\firstmark}%
+\def\author#1{\gdef\@author{\fontsize{10}{12}\itshape\selectfont #1}\@ifnextchar[{\@affiliate}{}}
+\def\maketitle{
+  \make@cornermarks
+  \pagestyle{empty}
+  \cleardoublepage
+  \thispagestyle{empty}%
+  \global\@topnum\z@
+  \@afterindentfalse
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \vbox{
+    \vskip -7bp
+    {\baselineskip 10bp\lineskip 10bp\NameFont\uppercase{\@author}\par}
+    \vskip 6bp
+    \AffiliationFont \@affiliation
+    \vskip 10bp
+    \crcrule
+    \vskip 26bp
+    {\baselineskip 24bp\lineskip 24bp\TitlePageTitleFont\@title\par}}}
+  %%%%%%
+  % the following rigamarole is to allow text to be added on the
+  % title page.  originally this was for the dedication, which has
+  % since been moved to its own page.
+  %%%%%%
+  \let\@clearpage=\clearpage
+  \let\@cleardoublepage=\cleardoublepage
+  \def\clearpage{
+    \vfill
+    {\noindent\LogoFont CRC PRESS\\
+    Boca Raton \hskip 10bp Ann Arbor \hskip 10bp London \hskip 10bp Tokyo}
+    \let\clearpage=\@clearpage
+    \let\cleardoublepage=\@cleardoublepage
+    \clearpage}
+  \def\cleardoublepage{
+    \vfill
+    {\noindent\LogoFont CRC PRESS\\
+    Boca Raton \hskip 10bp Ann Arbor \hskip 10bp London \hskip 10bp Tokyo}
+    \let\clearpage=\@clearpage
+    \let\cleardoublepage=\@cleardoublepage
+    \cleardoublepage}}
+\def\SeriesTitle{Studies in Advanced Mathematics}
+\def\halftitlepage{
+  \make@cornermarks
+  \thispagestyle{empty}
+  \global\@topnum\z@
+  \@afterindentfalse
+  {\parindent \z@ \raggedright \baselineskip \z@ \lineskip \z@ \parskip \z@
+    \vbox{
+    \vskip -7bp
+    \SeriesTitleFont\SeriesTitle
+    \vskip 24bp
+
+    \crcrule
+    \vskip 26bp
+    {\baselineskip 24bp\lineskip 24bp\TitlePageTitleFont\@title\par}}}}
+\def\contributor#1{\vskip -20bp{\ContributorNameFont\noindent #1\vskip -1bp}}
+\def\affiliation#1{{\AffiliationFont\noindent #1\vskip 36bp}}
+\def\@normalsize{
+  \@setsize\normalsize{12bp}\xpt\@xpt
+  \abovedisplayskip 12bp plus 2bp minus 2bp
+  \abovedisplayshortskip 0bp plus 2bp minus 2bp
+  \jot16bp
+  \belowdisplayskip 18bp plus 2bp minus 2bp
+  \belowdisplayshortskip 9bp plus 2bp minus 2bp}
+\parindent10bp
+\parskip\z@ plus 1bp
+\clubpenalty500
+\widowpenalty500
+\def\@Chapter#1{{\bf\thechapter}-\@arabic\c@page}
+\def\hang#1{\leftskip#1\parindent-#1}
+\newsavebox{\copyrightbox}
+\def\Copyright#1{\sbox{\copyrightbox}
+  {\CopyrightFont\noindent #1\vskip -5bp\noindent\copyright CRC Press, Inc.}
+  \def\footmark{\usebox{copyrightbox}\def\footmark{}}}
+\def\numlist{%
+  \list{\numlistlabel}{\usecounter{numlist}\def\makelabel##1{\hss\llap{##1}}\numlistdef}}
+\let\endnumlist =\endlist
+\newcounter{numlist}
+\def\numlistdef{%
+  \leftmargin 34bp
+  \labelsep 10bp
+  \labelwidth\leftmargin\advance\labelwidth-\labelsep
+  \parsep 0bp
+  \topsep 12bp plus 2bp minus 1bp
+  \itemsep 6bp}
+\def\numlistlabel{\thenumlist.}
+\def\thenumlist{\arabic{numlist}}
+\def\@listi{%
+  \leftmargin 32bp
+  \labelsep 10bp
+  \labelwidth\leftmargin\advance\labelwidth-\labelsep
+  \parsep 0bp
+  \topsep 12bp plus 2bp minus 1bp
+  \itemsep 6bp}
+\footnotesep8\p@
+\def\footmark{}
+\newdimen\dwidth
+\newdimen\dheight
+\def\showtiff#1#2#3{%
+  \dwidth=#2\dheight=#3
+  \edef\width{\number\dwidth}%
+  \edef\height{\number\dheight}%
+  \vbox to\dheight{\vfill\hbox to\dwidth{\special{insertimage: #1 \width\space\height}\hfill}}}
+\def\fig#1#2#3{\centerline{\showtiff{#1}{#2}{#3}}}
+\def\figurename{FIGURE}
+\def\Proof{PROOF}
+\defenvironment{algorithm}[ALGORITHM]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{application}[APPLICATION]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{case}[CASE]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{claim}[CLAIM]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{corollary}[COROLLARY]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{definition}[DEFINITION]{1}{\QDHeadFont}{0}{\QDBodyFont}{0}
+\defenvironment{formula}[FORMULA]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{lemma}[LEMMA]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{proof}[PROOF]{0}{\PRHeadFont}{0}{\PRBodyFont}{1}
+\defenvironment{proposition}[PROPOSITION]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{question}[QUESTION]{1}{\QDHeadFont}{0}{\QDBodyFont}{0}
+\defenvironment{remark}[REMARK]{1}{\PRHeadFont}{0}{\PRBodyFont}{1}
+\defenvironment{solution}[SOLUTION]{0}{\PRHeadFont}{0}{\PRBodyFont}{1}
+\defenvironment{test}[TEST]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\defenvironment{theorem}[THEOREM]{1}{\PTLCHeadFont}{1}{\PTLCBodyFont}{0}
+\@centertabletitlefalse
+\HeadingsBookChapter
+\endinput
+%%
+%% End of file `krantz_single.sty'.

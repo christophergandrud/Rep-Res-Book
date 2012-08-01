@@ -16,7 +16,7 @@ read -p "Please enter the number of the chapter you want to compile -> " i
 
     
     # Delete \chapter command which is undefined for article class documents.
-    cp /git_repositories/Rep-Res-Book/Source/Chapter$i/chapter$i.Rnw chapter$i.Rnw
+    cp /git_repositories/Rep-Res-Book/Source/Children/Chapter$i/chapter$i.Rnw chapter$i.Rnw
     sed '1,6d' chapter$i.Rnw > chapterNoChapter$i.Rnw
 
     # Combine the header main document and footer
