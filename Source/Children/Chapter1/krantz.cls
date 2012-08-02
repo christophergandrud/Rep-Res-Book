@@ -334,15 +334,15 @@
 \def\even@head{%
 \top@cornermarks
   {\@the@page\RunningHeadFont
-    \hfil
+    \hfill
 \leftmark
-    }\hfil}
+    }}
 \def\odd@head{%
 \top@cornermarks
   \hfil{\RunningHeadFont
 \rightmark
     }
-\hfil
+\hfill
     \@the@page
   }
 \def\@the@page{{\PageNumFont\thepage}}
@@ -554,7 +554,7 @@
 \renewcommand \thechapter {\@arabic\c@chapter}
 \renewcommand \thesection {\thechapter.\@arabic\c@section}
 \renewcommand\thesubsection   {\thesection.\@arabic\c@subsection}
-\renewcommand\thesubsubsection{\thesubsection .\@arabic\c@subsubsection}
+\renewcommand\thesubsubsection{\thesubsection.\@arabic\c@subsubsection}
 \renewcommand\theparagraph    {\thesubsubsection.\@arabic\c@paragraph}
 \renewcommand\thesubparagraph {\theparagraph.\@arabic\c@subparagraph}
 \newcommand\@chapapp{\chaptername}
@@ -642,10 +642,8 @@
   \thispagestyle{folio}%
 \if@ChapterResetsPage\global\c@page\@ne\fi
                     \global\@topnum\z@
-                      \gdef\chapterauthor{\@ca}%
-  \gdef\endchapterauthors{\end@cas}%
                     \@afterindentfalse
-%                    \secdef\@chapter\@schapter
+                    \secdef\@chapter\@schapter
                      \@ifstar{\@schapter}{\@trplarg{\@chapter}}}
 
 
@@ -683,8 +681,9 @@
     \vskip -15\p@
     \chap@rule
     \vskip 6\p@
-    {\baselineskip 20\p@\lineskip 20\p@\ChapTitleFont #1\par}%
-    \vskip32\p@}
+    {\baselineskip 20\p@\lineskip 20\p@\ChapTitleFont #1\par\vskip-15pt}%
+    \noindent\hbox{\vrule height.5pt width84pt}
+    \vskip28\p@}
             \if@ChapterTOCs
       \make@chaptoc
     \else
@@ -704,9 +703,10 @@
   {\parindent \z@ \raggedright \baselineskip 6\p@ \lineskip \z@ \parskip \z@
     \vbox{
     \vskip 22\p@
-    \chap@rule
+    \unnumchap@rule
     \vskip 5\p@
-    \FMHeadFont #1
+    \FMHeadFont #1\par\vskip-12pt
+    \noindent\hbox{\vrule height.5pt width84pt}
     \vskip 41\p@}}%
   \def\theequation{\thechapter.\arabic{equation}}}
 
@@ -1467,6 +1467,8 @@
 \else
   \onecolumn
 \fi
+\newcommand\unnumcrcrule{\hbox to\textwidth{\rlap{\rule[-3.5\p@]{84\p@}{4\p@}}}}
+\newcommand\unnumchap@rule{\unnumcrcrule}
 \newcommand\crcrule{\hbox to\textwidth{\rlap{\rule[-3.5\p@]{84\p@}{4\p@}}\rule{\textwidth}{.5\p@}}}
 \newcommand\chap@rule{\crcrule}
 \newcommand\sec@rule{\crcrule}
@@ -1569,7 +1571,7 @@
 \def\@TableTitle{%
   \noindent
   {%
-    {{\TableNumberFont TABLE\ \thetable\par}}\TableTitleFont\@tabletitle}}
+    \vbox{{\TableNumberFont TABLE\ \thetable}}\par\TableTitleFont\@tabletitle}}
 \def\table{%
   %\long\def\caption##1{\tabletitle{##1}\@TableTitle\par}%
   \@float{table}}

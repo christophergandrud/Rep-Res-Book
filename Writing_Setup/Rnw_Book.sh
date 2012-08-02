@@ -44,14 +44,6 @@ cat > Rep-Res-Parent.Rnw << _EOF_
 \frenchspacing
 \tolerance=5000
 
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks,
-    citecolor=black,
-    filecolor=black,
-    linkcolor=cyan,
-    urlcolor=cyan
-}
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{url}
@@ -143,8 +135,8 @@ _EOF_
 ## Forward
 
 cat > Foreword.Rnw << _EOF_
-<<set-parentForeword, echo=FALSE, cache=FALSE>>=
-set_parent('/git_repositories/Source/Parent/Rep-Res-Parent.Rnw')
+<<set-parentForeword, echo=FALSE, results='hide', cache=FALSE>>=
+set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
 \chapter*{Forward}
@@ -154,8 +146,8 @@ _EOF_
 ## Preface
 
 cat > Preface.Rnw << _EOF_
-<<set-parentPreface, echo=FALSE, cache=FALSE>>=
-set_parent('/git_repositories/Source/Parent/Rep-Res-Parent.Rnw')
+<<set-parentPreface, echo=FALSE, results='hide', cache=FALSE>>=
+set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
 \chapter*{Preface}
@@ -190,8 +182,8 @@ do
     CHAPTER="Chapter $i"
 
 cat > chapter$i.Rnw << _EOF_
-<<set-parent$i, echo=FALSE, cache=FALSE>>=
-set_parent('/git_repositories/Source/Parent/Rep-Res-Parent.Rnw')
+<<set-parent$i, echo=FALSE, results='hide', cache=FALSE>>=
+set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
 %%%%%
