@@ -1,11 +1,102 @@
+
+
+
+\documentclass[ChapterTOCs,krantz1]{krantz}
+\usepackage{graphicx, color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
+\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
+\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
+\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
+\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
+\newcommand{\hlslot}[1]{\textit{#1}}%
+\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\newcommand{\SweaveOpts}[1]{}  % do not interfere with LaTeX
+\newcommand{\SweaveInput}[1]{} % because they are not real TeX commands
+\newcommand{\Sexpr}[1]{}       % will only be parsed by R
+
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfigure}
+%\usepackage{epsfig}
+\usepackage{makeidx}
+%\usepackage{showidx}
+\usepackage{multicol}
+\frenchspacing
+\tolerance=5000
+
+\usepackage{dcolumn}
+\usepackage{booktabs}
+\usepackage{url}
+\usepackage{todonotes}
+\usepackage{tikz}
+
+\makeatletter
+
+
+\makeatother
+
+\makeindex
+
+
+
+\begin{document}
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 
 
-<<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Statistical Modelling and knitr}
 
@@ -23,36 +114,49 @@ Sometimes we want to have some R code or output to show up in the text of our do
 
 \subsubsection{LaTeX}
 
-\paragraph{Inline static code}
+\paragraph{inline static code}
 
 If we just want to include a code snippet in out text we can simply use the \LaTeX command  \texttt{\textbackslash{}tt}. This sets our text to `typewriter' font, the standard font for inline code in \LaTeX (I use it in this book, as you have probably noticed).
 
-\paragraph(Inline dynamic code}
+\paragraph{inline dynamic code}
 
 If we want to dynamically show the results of some R code in our text we can use the  \texttt{\textbackslash Sexpr} command. This is a pseudo \LaTeX command. Its structure is more like a \LaTeX command's structure than \texttt{knitr} in that we enclose our R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for code chunks.
 
-For example, imagine that we wanted to include the mean--\Sexpr{round(mean(rivers), digits = 0)}--in the text of our document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. We can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
+For example, imagine that we wanted to include the mean--591--in the text of our document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. We can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
 
-<<Ch8MeanRivers>>=
-round(mean(rivers), digits = 0)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), digits = 0)
+\end{alltt}
+\begin{verbatim}
+## [1] 591
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent To have just the output show up inline with the text of our document we would type something like:
 
-<<CH8MeanRiversSexpr, eval=FALSE>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 The mean length of 141 major rivers in North America
-is \Sexpr{round(mean(rivers), digits = 0)} miles. 
-@
+is \textbackslash{}Sexpr\{\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), digits = 0)\} miles. 
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent This will produce the sentence:
 
 \begin{quote}
-    The mean length of 141 major rivers in North America is \Sexpr{round(mean(rivers), digits = 0)} miles. 
+    The mean length of 141 major rivers in North America is 591 miles. 
 \end{quote}
 
 \subsubsection{Markdown}
 
-\paragraph{Inline static code}
+\paragraph{inline static code}
 
 To include static code inline in an R Markdown document we enclose the code in single backticks (\` \`). For example typing \`\ MeanRiver \textless- mean(rivers) \`\ produces {\tt{MeanRiver \textless- mean(rivers)}}.
 
@@ -115,3 +219,4 @@ the file.
 
 \section{Debugging}
 
+\end{document}

@@ -1,4 +1,8 @@
-
+%%%%%%%%%%%%%%%
+% Parent document for the book Reproducible Research with R and RStudio
+% Christopher Gandrud
+% Updated: 22 August 2012
+%%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
 
@@ -75,6 +79,9 @@
 \usepackage{todonotes}
 \usepackage{tikz}
 
+
+
+
 \makeatletter
 
 
@@ -111,6 +118,19 @@ FILL IN
 
 FILL IN
 
+
+\chapter*{Stylistic Conventions}\label{StylisticConventions}
+\begin{noindent}
+
+
+
+
+\input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
+
+%<<ChildStylisticConventionDelete>>=
+%unlink("/git_repositories/Rep-Res-Book/temp.tex")
+%@
+\end{noindent}
 
 \listoffigures
 \listoftables
@@ -196,7 +216,7 @@ and show you a preview.
 
 \section{Book overview}
 
-\subsection{What this book is not.}
+\subsection{What this book is not.}\label{WhatNot}
 
 This book describes a workflow for reproducible research primarily using
 R and RStudio. It is designed to give you the
@@ -302,35 +322,98 @@ pushes forward knowledge in the scientific community.
 
 \section{Practical tips for reproducible research}
 
-\subsection{Document everything}
+To help you  is good to keep a few over
 
-We'll discuss this more later in this chapter, but one important part of
-reproducible research with \textbf{R} is to \emph{record your session
-info}. Many things in \textbf{R} stay the same over time, which makes it
-easy to recreate for future researchers to recreate what was done in the
-past. However, things do change from one version of \textbf{R} to
-another. Also, the way \textbf{R} functions may be slightly different on
-different operating systems. Finally, you may have \textbf{R} set to
-load packages by default. These packages might be necessary to run your
-code, but other people might not be able to easily know this from just
-looking at your source code. The \texttt{sessionInfo} command prints a
-record of all of these things.
+\subsection{Document everything!}
+
+In order to reproduce your research others must be able to know what you did. You have to tell them what you did by documenting as much of your research process as possible. Ideally, you should tell your readers how you gathered your data, analyzed it, and presented the results.
+
+The other tips and Many of the other One important part of documenting everything with R is to \emph{record your \index{session info}}. Many things in R stay the same over time, which makes it easy for future researchers to recreate what was done in the past. However, things--syntax in particular--do can change from one version of R to another. Also, the way R functions may be handled slightly different on different operating systems. Finally, you may have R set to load packages by default. These packages might be necessary to run your code, but other people might not be able know what packages were loaded from just looking at your source code. The \texttt{sessionInfo} command prints a record of all of these things. The information from the session I used to create this book up until this chapter is:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{sessionInfo}()
+\end{alltt}
+\begin{verbatim}
+## R version 2.15.1 (2012-06-22)
+## Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+## 
+## locale:
+## [1] C/en_US.UTF-8/C/C/C/C
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets 
+## [6] methods   base     
+## 
+## other attached packages:
+## [1] knitr_0.7
+## 
+## loaded via a namespace (and not attached):
+## [1] digest_0.5.2   evaluate_0.4.2 formatR_0.6   
+## [4] plyr_1.7.1     stringr_0.6.1  tools_2.15.1  
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent It is good practice to include make output of the session info available either in the main document or in a separate text file. If you want to nicely format the information for a \LaTeX document simply use the {\tt{toLatex}} command.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{toLatex}(\hlfunctioncall{sessionInfo}())
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Otherwise, you can use the {\tt{print}} command. 
+
+\subsection{All files should be human readable}
+
+Treat all of your research documents as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. 
+
+\paragraph{Commenting}
+In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a \index{comment declaration} You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# A complete comment line}
+2 + 2  \hlcomment{# A comment after R code}
+\end{alltt}
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}.
+
+\paragraph{Style guides}
+In natural language writing you don't necessarily need to follow a \index{style guide} for things such as punctuation. People could probably figure out what you are saying. But it would be a lot easier for your readers if you use consistent rules. The same is true when writing R code. It's good to follow consistent rules for formatting your code so that:
+
+\begin{itemize}
+    \item it's easier for others to understand,
+    \item it's easier for you to understand.
+\end{itemize}
+
+There are a number of R style guides. Most of them are similar to the Google R Style Guide (\url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}). Hadley Wickham has a nicely presented style guide. You can find it at \url{https://github.com/hadley/devtools/wiki/Style}. You can use the package \index{\tt{formatR}} to automatically reformat your code so that it is easier to read.
 
 \subsection{Work hard so you can be lazy}
 
 \subsection{Everything is a (text) file}
-
-\subsection{All files should be human readable}
 
 \subsection{Research projects are many files tied together}
 
 \subsection{Have a plan to organize, store, and make your files
 available}
 
-\section{Introduction to the tools of reproducible research covered in
-this book}
+\section{The tools of reproducible research covered in this book}
 
-\subsection{\textbf{R}/\textbf{RStudio}}
+\subsection{R/RStudio}
 
 \subsection{\texttt{knitr}}
 
@@ -343,12 +426,62 @@ this book}
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 22 August 2012
 
 
 
 
-\chapter{Chapter 3:}
+\chapter{Getting Started with R and RStudio}
+
+If you have rarely or never used R before the first two sections of this chapter give you enough information that you should be able to get started and understand the code I use in this book. For more details about R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research.
+
+\section{Installing R and RStudio}
+
+R and RStudio are open source programs and can be easily downloaded for free. Both are available for Windows, Mac, and Unix. They should run well on most modern computers. 
+
+You should install R before installing RStudio. You can down load the programs from the following websites:
+
+\begin{itemize}
+    \item {\bf{R}}: \url{http://www.r-project.org/},
+    \item {\bf{RStudio}}: \url{http://rstudio.org/download/}.
+\end{itemize}
+
+\noindent The download webpages for these programs have comprehensive information on how to install them, so please refer to those pages for more information.
+
+\paragraph{Installing markup languages}
+
+If you are planning on creating \LaTeX documents you need to install a \index{\LaTeX distribution}. They are also open source and available for Windows, Mac, and Unix. They can be found at: \url{http://www.latex-project.org/ftp.html}. Please refer to that site for more installation information.
+
+If you want to create markdown documents you will need to install the the \index{{\emph{markdown}} package} in R. You can do this the same way that you install any package in R, with the {\tt{install.packages}} command.\footnote{The exact command is: {\tt{install.packages("markdown")}}.} 
+
+\section{Using R: the basics}
+
+\subsection{Objects \& Assignment}
+
+\subsection{Component Selection}
+
+\subsection{Functions, Commands, and Arguments}
+
+\section{Using RStudio}
+
+When you first open RStudio you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as 
+
+\begin{figure}[t]
+    \caption{RStudio Startup Panel}
+    \label{BlankMain}
+
+    \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankMainPanel.png}
+\end{figure}
+
+
+\section{Tips}
+
+Here are a few tips that make using R and RStudio a little easier.
+
+\paragraph{Autocomplete}
+
+In R and RStudio you do not have to type out every command, argument, or object name. On Mac and Unix based versions of R after you start typing a command or object name you can hit the ``tab" key to automatically complete what you are typing. The \index{autocomplete} function is particularly good in RStudio. Not only does it give you a list of words to choose from, but it also shows you an abbreviated version of the help file for commands and arguments.
+
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
@@ -438,17 +571,23 @@ Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pem
 \hlcomment{# For simplicity, store the URL in an object called \hlstring{'url'}.}
 url <- \hlstring{"http://www.unified-democracy-scores.org/files/uds_summary.csv.gz"}
 
-\hlcomment{# Create a temporary file called \hlstring{'temp'} to put the zip file into.}
+\hlcomment{# Create a temporary file called \hlstring{'temp'} to put the zip file}
+\hlcomment{# into.}
 temp <- \hlfunctioncall{tempfile}()
 
 \hlcomment{# Download the compressed file into the temporary file.}
 \hlfunctioncall{download.file}(url, temp)
+\end{alltt}
+\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: unable to resolve \\ 
+\#\# 'www.unified-democracy-scores.org'}\end{flushleft}\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: cannot open URL \\ 
+\#\# 'http://www.unified-democracy-scores.org/files/uds\_summary.csv.gz'}\end{flushleft}\begin{alltt}
 
-\hlcomment{# Decompress the file and convert it into a dataframe class object called}
-\hlcomment{# \hlstring{'data'}.}
+\hlcomment{# Decompress the file and convert it into a dataframe class}
+\hlcomment{# object called \hlstring{'data'}.}
 data <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
 \end{alltt}
-\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal error}\end{flushleft}\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal error}\end{flushleft}\begin{alltt}
+\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal \\ 
+\#\# error}\end{flushleft}\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no lines available in input}\end{flushleft}\begin{alltt}
 
 \hlcomment{# Delete the temporary file.}
 \hlfunctioncall{unlink}(temp)
@@ -485,10 +624,9 @@ much more straightforward. Some examples include:
 
 
 
-\chapter{Storing, Collaborating, Accessing Files, Versioning}
+\chapter{Storing, Collaborating, Accessing Files, Versioning}\label{Storing}
 
-A stumbling block to actually reproducing a piece of research is getting
-a hold of the datasets and the codebooks that describe the data used in
+A stumbling block to actually reproducing a piece of research is getting a hold of the datasets and the codebooks that describe the data used in
 an analysis.
 
 Researchers often face a number of data management issues that, beyond
@@ -520,15 +658,12 @@ free or low cost cloud-based storage formats. In this chapter we will
 learn how to use Dropbox and GitHub for data:
 
 \begin{itemize}
-\item
-  storage,
-\item
-  accessing,
-\item
-  collaboration,
-\item
-  version control.
+    \item storage,
+    \item accessing,
+    \item collaboration,
+    \item version control.
 \end{itemize}
+
 \section{Saving data in reproducible formats}
 
 Before getting into the details of cloud-based data storage, lets just
@@ -672,7 +807,7 @@ relative to Dropbox for reproducible research:
   this is an interactive to-do list for your research project.
 \end{itemize}
 
-\subsubsection{Setting Up GitHub}
+\subsection{Setting Up GitHub}
 
 There are a number of ways to set up GitHub on your computer. I
 will briefly cover both the command line version (available for Windows,
@@ -681,7 +816,7 @@ Mac, and Linux) and the GUI\footnote{Graphical User Interface, i.e.~not
   with your mouse.} version currently available only for Windows and
 Mac.
 
-\subsubsection{Version Control in GitHub}
+\subsection{Version Control in GitHub}
 
 GitHub's version control system is much more comprehensive than Dropbox's. However, it also has a steeper learning curve.
 
@@ -730,7 +865,7 @@ tutorial that you might find interesting. You can find it at:
 
 
 
-\chapter{CStatistical Modelling and `knitr`}
+\chapter{Statistical Modelling and knitr}
 
 \section{Incorporating analyses into the markup}
 
@@ -738,59 +873,69 @@ tutorial that you might find interesting. You can find it at:
 
 \subsubsection{\LaTeX  }
 
-\subsubsection{~Markdown}
+\subsubsection{Markdown}
 
 \subsection{Showing code \& results inline}
 
-Sometimes we want to have some \textbf{R} code or output to show up in
-the text of our documents. We may want to include stylized code in our
-text when we discuss how we did an analysis. We may want to report the
-mean of some variable in our text.
+Sometimes we want to have some R code or output to show up in the text of our documents. We may want to include stylized code in our text when we discuss how we did an analysis. We may want to report the mean of some variable in our text.
 
-\subsubsection{\LaTeX  }
+\subsubsection{LaTeX}
 
-\paragraph{Static code}
+\paragraph{Inline static code}
 
-If we just want to include a code snippet in out text we can simply use
-the \LaTeX command \texttt{\textbackslash{}tt}. This sets our text to
-`typewriter' font, the standard font for inline code in \LaTeX (I use it
-in this book, as you've probably noticed).
+If we just want to include a code snippet in out text we can simply use the \LaTeX command  \texttt{\textbackslash{}tt}. This sets our text to `typewriter' font, the standard font for inline code in \LaTeX (I use it in this book, as you have probably noticed).
 
-\paragraph{Dynamic code}
+\paragraph(Inline dynamic code}
 
-If we want to dynamically show the results of some \textbf{R} code in
-our text we can use the \texttt{\textbackslash{}Sexpr} command. This is
-a pseudo-\LaTeX command. Its structure is more like a \LaTeX command's
-structure than \texttt{knitr} in that we enclose our \textbf{R} code in
-curly brackets (\texttt{\{\}}) rather than the usual
-`\texttt{\textless{}\textless{}\textgreater{}\textgreater{}= . . . @}
-syntax for code chunks.
+If we want to dynamically show the results of some R code in our text we can use the  \texttt{\textbackslash Sexpr} command. This is a pseudo \LaTeX command. Its structure is more like a \LaTeX command's structure than \texttt{knitr} in that we enclose our R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for code chunks.
 
-For example
+For example, imagine that we wanted to include the mean--591--in the text of our document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. We can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
 
-\subsubsection{~Markdown}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), digits = 0)
+\end{alltt}
+\begin{verbatim}
+## [1] 591
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
-\paragraph{Static code}
 
-To include static code inline in an \textbf{R Markdown} document we
-enclose the code in single backticks (``).
+\noindent To have just the output show up inline with the text of our document we would type something like:
 
-\paragraph{Dynamic code}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+The mean length of 141 major rivers in North America
+is \textbackslash{}Sexpr\{\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), digits = 0)\} miles. 
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
-To include dynamic code in an \textbf{R Markdown} document we use the
-backticks as be fore but include a the letter \texttt{r} after the first
-one.
+
+\noindent This will produce the sentence:
+
+\begin{quote}
+    The mean length of 141 major rivers in North America is 591 miles. 
+\end{quote}
+
+\subsubsection{Markdown}
+
+\paragraph{Inline static code}
+
+To include static code inline in an R Markdown document we enclose the code in single backticks (\` \`). For example typing \`\ MeanRiver \textless- mean(rivers) \`\ produces {\tt{MeanRiver \textless- mean(rivers)}}.
+
+\paragraph{inline dynamic code}
+
+To include dynamic code in an R Markdown document we use the backticks as be fore but include a the letter \texttt{r} after the first one.
 
 \subsection{Sourcing R code from another file}
 
-There are a number of reasons that you might want to have your
-\textbf{R} source code located in a separate file from your markup even
-if you plan to compile them together with \texttt{knitr}.
+There are a number of reasons that you might want to have your R source code located in a separate file from your markup even if you plan to compile them together with \emph{knitr}.
 
-First, it can be unwieldy to edit both your markup and long \textbf{R}
-source code chunks in the same document, even with \textbf{RStudio}'s
-handy \texttt{knitr} code collapsing and chunk management options. There
-are just too many things going on in one document.
+First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code collapsing and chunk management options. There are just too many things going on in one document.
 
 Second, you may want to use the same code in multiple documents--an
 article and presentation for example. It is nice to not have to copy and
@@ -817,21 +962,10 @@ example:
 
 \subsubsection{Source from a non-secure URL (\texttt{http})}
 
-Sourcing from your local computer is fine if you are working alone and
-do not want others to access your code. Once you start collaborating and
-generally wanting people to be able to replicate your code, you need to
-use another method.\footnote{Sure you can make the replication code
-  accessible for download and either instruct others to change the
-  working directory to the replication file or have them change the
-  directory information as necessary. However, this usually just adds an
-  extra complicating step that makes replication harder. It is also a
-  pain if you are collaborating and each author has to constantly change
-  the directories.}
+Sourcing from your local computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to replicate your code, you need to
+use another method.\footnote{You can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a   pain if you are collaborating and each author has to constantly change the directories.}
 
-The simplest solution to these issues is to host the replication code in
-your \textbf{Dropbox} public folder. You can find the file's public URL
-the same way we did in Chapter 6. Now use the \texttt{source} command
-the same way as before. For example:
+The simplest solution to these issues is to host the replication code in your \textbf{Dropbox} public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the \texttt{source} command the same way as before. For example:
 
 \subsubsection{Source from a secure URL (\texttt{https})}
 
@@ -959,8 +1093,8 @@ Using the {\tt{class}} command we found that the model output object is an {\tt{
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no applicable method for 'xtable' applied to an object of class \\ 
-\#\# "MCMCZelig"}\end{flushleft}\end{kframe}
+\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no applicable method for 'xtable' applied to an \\ 
+\#\# object of class "MCMCZelig"}\end{flushleft}\end{kframe}
 \end{knitrout}
 
 
@@ -973,8 +1107,7 @@ First, let's create a summary of our output object {\emph{NBModel}}:
 \begin{alltt}
 NBModelSum <- \hlfunctioncall{summary}(NBModel)
 \end{alltt}
-\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: closing unused connection 4 \\ 
-\#\# (/var/folders/bf/fgxf1t3x6\_b\_cbb6fjkw9gf80000gn/T//RtmpBOY1iM/file1ca1261c0f57)}\end{flushleft}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 
@@ -1008,7 +1141,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Thu Aug  2 18:19:24 2012
+% Wed Aug 22 19:10:51 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1103,8 +1236,8 @@ You can automatically create citations for R packages using the \texttt{citation
 ## 
 ## To cite ggplot2 in publications, please use:
 ## 
-##   H. Wickham. ggplot2: elegant graphics for data analysis.
-##   Springer New York, 2009.
+##   H. Wickham. ggplot2: elegant graphics for data
+##   analysis. Springer New York, 2009.
 ## 
 ## A BibTeX entry for LaTeX users is
 ## 
@@ -1181,15 +1314,52 @@ An even faster way to add citations to a bibliography is with \texttt{write.bibt
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 22 August 2012
 
 
 
 
-\chapter{Chapter 12:}
+\chapter{Large \LaTeX Documents: Theses, Books, \& Batch Reports}
 
-\subsection{Editors}
+\section{Planning large documents}
 
+\subsection{Planning theses and books}
+
+\subsection{Planning batch reports}
+
+
+\section{Combining Chapters}
+
+\subsection{Parent documents}
+
+\subsection{Child documents}
+
+\subsubsection{Child documents in the same format}
+
+\subsubsection{Child documents in a different format}
+
+You can use the \index{Pandoc} command line program and to convert child documents that are in a different markup language into the primary markup language you are using for your document. ADD DETAILS ON HOW TO INSTALL. If you have Pandoc installed on your computer, you can call it directly from your parent document with R's {\tt{system}} command. 
+
+For example, the \ref{StylisticConventions} part of this book is written in Markdown. The file is called {\emph{StylisticConventions.md}} It was simply faster to write the list of conventions using the simpler Markdown syntax than \LaTeX, which as we saw has a more complicated way of creating lists. However, I want to include this list in my \LaTeX produced book. Pandoc can convert the Markdown document into a \LaTeX file. This file can then be input into my main document with the \LaTeX command {\tt{\\input}}.
+
+Imagine that my parent and {\emph{StylisticConventions.md}} documents are in the same directory. In the parent document I added the following code to convert the Markdown syntax to \LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{kframe}
+\begin{verbatim}
+%<<StyleTeX, echo=FALSE, results='hide'>>=
+system("pandoc StylisticConventions.md
+        -f markdown -t latex -o StyleTemp.tex",
+        intern = TRUE)
+%@
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Creating Batch Reports}
+
+\subsection{stich}
 % Chapter Chapter 13 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST

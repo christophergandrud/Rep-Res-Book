@@ -1,4 +1,8 @@
-
+%%%%%%%%%%%%%%%
+% Parent document for the book Reproducible Research with R and RStudio
+% Christopher Gandrud
+% Updated: 22 August 2012
+%%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
 
@@ -19,6 +23,10 @@
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage{tikz}
+
+<<echo=FALSE>>=
+  options(width=60)
+@
 
 \makeatletter
 
@@ -41,6 +49,20 @@
 
 <<ChildFrontMatter, child=c('/git_repositories/Rep-Res-Book/Source/FrontMatter/Author.tex', '/git_repositories/Rep-Res-Book/Source/FrontMatter/Foreword.Rnw', '/git_repositories/Rep-Res-Book/Source/FrontMatter/Preface.Rnw'), eval=TRUE, message=FALSE>>=
 @
+
+\chapter*{Stylistic Conventions}\label{StylisticConventions}
+\begin{noindent}
+
+<<ChildStylisticConventions, echo=FALSE, messages=FALSE, results='hide'>>=
+system("pandoc /git_repositories/Rep-Res-Book/StylisticConventions.md -t latex -o /git_repositories/Rep-Res-Book/Temp/StyleTemp.tex", intern = TRUE)
+@
+
+\input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
+
+%<<ChildStylisticConventionDelete>>=
+%unlink("/git_repositories/Rep-Res-Book/temp.tex")
+%@
+\end{noindent}
 
 \listoffigures
 \listoftables

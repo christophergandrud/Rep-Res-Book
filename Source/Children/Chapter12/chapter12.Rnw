@@ -1,13 +1,50 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 22 August 2012
 
 <<set-parent12, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
-\chapter{Chapter 12:}
+\chapter{Large \LaTeX Documents: Theses, Books, \& Batch Reports}
 
-\subsection{Editors}
+\section{Planning large documents}
 
+\subsection{Planning theses and books}
+
+\subsection{Planning batch reports}
+
+
+\section{Combining Chapters}
+
+\subsection{Parent documents}
+
+\subsection{Child documents}
+
+\subsubsection{Child documents in the same format}
+
+\subsubsection{Child documents in a different format}
+
+You can use the \index{Pandoc} command line program and to convert child documents that are in a different markup language into the primary markup language you are using for your document. ADD DETAILS ON HOW TO INSTALL. If you have Pandoc installed on your computer, you can call it directly from your parent document with R's {\tt{system}} command. 
+
+For example, the \ref{StylisticConventions} part of this book is written in Markdown. The file is called {\emph{StylisticConventions.md}} It was simply faster to write the list of conventions using the simpler Markdown syntax than \LaTeX, which as we saw has a more complicated way of creating lists. However, I want to include this list in my \LaTeX produced book. Pandoc can convert the Markdown document into a \LaTeX file. This file can then be input into my main document with the \LaTeX command {\tt{\\input}}.
+
+Imagine that my parent and {\emph{StylisticConventions.md}} documents are in the same directory. In the parent document I added the following code to convert the Markdown syntax to \LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\begin{kframe}
+\begin{verbatim}
+%<<StyleTeX, echo=FALSE, results='hide'>>=
+system("pandoc StylisticConventions.md
+        -f markdown -t latex -o StyleTemp.tex",
+        intern = TRUE)
+%@
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+\section{Creating Batch Reports}
+
+\subsection{stich}
