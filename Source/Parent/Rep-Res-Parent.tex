@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 22 August 2012
+% Updated: 27 August 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -75,6 +75,7 @@
 
 \usepackage{dcolumn}
 \usepackage{booktabs}
+\usepackage{pdflscape}
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage{tikz}
@@ -164,9 +165,9 @@ Incorporating high reproducibility into your research is important for science a
 
 \subsection{For You}
 
-Working to make your research reproducible from the start makes the research process easier. A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Virtually no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, and so on. Whether these changes are because of journal reviewers' or conference participants comments or we discovery that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes.
+Working to make your research reproducible from the start makes the research process easier. A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Virtually no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, and so on. Whether these changes are because of journal reviewers' and conference participants comments or we discover that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes. 
 
-Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. 
+Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves" \citeparyear{Bowers2011}.
 
 COMPLETE
 
@@ -347,11 +348,11 @@ The other tips and Many of the other One important part of documenting everythin
 ## [6] methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_0.7
+## [1] knitr_0.7.9
 ## 
 ## loaded via a namespace (and not attached):
 ## [1] digest_0.5.2   evaluate_0.4.2 formatR_0.6   
-## [4] plyr_1.7.1     stringr_0.6.1  tools_2.15.1  
+## [4] plyr_1.7.1     stringr_0.6.1  tools_2.15.1
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -375,7 +376,7 @@ The other tips and Many of the other One important part of documenting everythin
 Treat all of your research documents as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. 
 
 \paragraph{Commenting}
-In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a \index{comment declaration} You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
+In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a comment declaration \index{comment declaration}. You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -400,20 +401,56 @@ In natural language writing you don't necessarily need to follow a \index{style 
     \item it's easier for you to understand.
 \end{itemize}
 
-There are a number of R style guides. Most of them are similar to the Google R Style Guide (\url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}). Hadley Wickham has a nicely presented style guide. You can find it at \url{https://github.com/hadley/devtools/wiki/Style}. You can use the package \index{\tt{formatR}} to automatically reformat your code so that it is easier to read.
+There are a number of R style guides. Most of them are similar to the Google R Style Guide \index{Google R Style Guide} (\url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}). Hadley Wickham \index{Hadley Wickham} has a nicely presented style guide. You can find it at \url{https://github.com/hadley/devtools/wiki/Style}. You can also use the {\tt{formatR}} \index{\tt{formatR}} package to automatically reformat your code so that it is easier to read.
 
-\subsection{Work hard so you can be lazy}
+\paragraph{Literate programming}
+
+For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \citep[see][]{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
 \subsection{Everything is a (text) file}
 
-\subsection{Research projects are many files tied together}
+When people go to reproduce your research, they will generally encounter a set of files. These files include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible that is human readable to store this information. We should try our best to use the humble text file for everything.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
+
+Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values (\tt{.csv}}} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
+
+The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research.
+
+Text files are also very easy to search and manipulate with a wide range of programs--such as R--that can find and replace text characters as well as merge and separate files. They have a number of clear benefits for reproducible research including enabling versioning and track changes in programs such as Git (see Chapter \ref{Storing}).   
+
+\subsection{Reproducible research projects are many files explicitly tied together}
+
+If everything is just a text file then research projects can be thought of as individual text files that have a relationship with one another. A data file is used as input for an analysis file. The results of an analysis are shown and discussed in a markup file that is used to create a slideshow or PDF document. Researchers often do not explicitly document the relationships between files that they used in their research. For example, the results of an analysis--a table or figure--may be copied and pasted into a presentation document. It will be very difficult for future researchers to trace the results table or figure back to a particular analysis and a particular data set. Therefore, it is important to make the links between your files explicit. 
+
+The most dynamic way to do this is to explicitly link your files together using what I'll call {\bf{tie commands}}. \index{tie commands} These commands instruct the computer program you are using to gather data, run an analysis, or compile a presentation document to use information from another file. I have compiled the main tie commands used in this book in Table \ref{TableTieCommands}.
+
+\begin{landscape}
+\begin{table}
+    \caption{Commands for Tying Together Your Research Files}
+    \label{TableTieCommands}
+    \vspace{0.3cm}
+    \begin{tabular}{l c  c  c c}
+        \hline
+        Command & Language & Description & Chapters for Further Information \\  
+        \hline \hline
+        {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
+        {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
+        
+        \hline 
+        
+    
+    \end{tabular}
+\end{table}
+\end{landscape}
+
 
 \subsection{Have a plan to organize, store, and make your files
 available}
 
 \section{The tools of reproducible research covered in this book}
 
-\subsection{R/RStudio}
+\subsection{R}
+
+\subsection{RStudio}
 
 \subsection{\texttt{knitr}}
 
@@ -480,7 +517,7 @@ Here are a few tips that make using R and RStudio a little easier.
 
 \paragraph{Autocomplete}
 
-In R and RStudio you do not have to type out every command, argument, or object name. On Mac and Unix based versions of R after you start typing a command or object name you can hit the ``tab" key to automatically complete what you are typing. The \index{autocomplete} function is particularly good in RStudio. Not only does it give you a list of words to choose from, but it also shows you an abbreviated version of the help file for commands and arguments.
+In R and RStudio you do not have to type out every command, argument, object, or even directory name. After you start typing a command/argument/object/directory name you can hit the ``tab" key to automatically complete the word you started. The \index{autocomplete} function is particularly good in RStudio. Not only does it give you a list of words to choose from, but it also shows you an abbreviated version of the help file for commands and arguments.
 
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
@@ -503,7 +540,7 @@ In R and RStudio you do not have to type out every command, argument, or object 
 
 
 
-\chapter{Gathering Data with R}
+\chapter{Gathering Data with R}\label{DataGather}
 
 There are many practical issues involved in gathering data that can make replication easier or harder. As with all of the steps in this book: document everything. Replication will be easier if your documentation--source code--can be understood and executed by a computer. Of course there are data gathering situations that simply require manually pointing and clicking, talking with subjects in an experiment, and so on. The best we can do in these situations is just describe our data gathering process in detail CITE. Nonetheless, R's automated data gathering capabilities are extensive and often under utilized. Learning how to take full advantage of them greatly increases replicability and can even save researchers considerable time and effort.
 
@@ -522,7 +559,6 @@ If we plan to gather data from two different data sources--DATA1 and DATA2--stor
 \begin{alltt}
 \hlcomment{# Example Make file}
 \hlfunctioncall{setwd}(\hlstring{"~/DIRECTORY/"})
-
 \hlcomment{# Clean up raw data files.}
 \hlfunctioncall{source}(\hlstring{"CleanDATA1.R"})
 \hlfunctioncall{source}(\hlstring{"CleanDATA2.R"})
@@ -577,17 +613,16 @@ temp <- \hlfunctioncall{tempfile}()
 
 \hlcomment{# Download the compressed file into the temporary file.}
 \hlfunctioncall{download.file}(url, temp)
-\end{alltt}
-\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: unable to resolve \\ 
-\#\# 'www.unified-democracy-scores.org'}\end{flushleft}\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: cannot open URL \\ 
-\#\# 'http://www.unified-democracy-scores.org/files/uds\_summary.csv.gz'}\end{flushleft}\begin{alltt}
 
 \hlcomment{# Decompress the file and convert it into a dataframe class}
 \hlcomment{# object called \hlstring{'data'}.}
 data <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
 \end{alltt}
-\begin{flushleft}\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal \\ 
-\#\# error}\end{flushleft}\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no lines available in input}\end{flushleft}\begin{alltt}
+
+
+{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal error}}
+
+{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal error}}\begin{alltt}
 
 \hlcomment{# Delete the temporary file.}
 \hlfunctioncall{unlink}(temp)
@@ -865,7 +900,7 @@ tutorial that you might find interesting. You can find it at:
 
 
 
-\chapter{Statistical Modelling and knitr}
+\chapter{Statistical Modelling and knitr} \label{StatsModel}
 
 \section{Incorporating analyses into the markup}
 
@@ -885,7 +920,7 @@ Sometimes we want to have some R code or output to show up in the text of our do
 
 If we just want to include a code snippet in out text we can simply use the \LaTeX command  \texttt{\textbackslash{}tt}. This sets our text to `typewriter' font, the standard font for inline code in \LaTeX (I use it in this book, as you have probably noticed).
 
-\paragraph(Inline dynamic code}
+\paragraph{Inline dynamic code}
 
 If we want to dynamically show the results of some R code in our text we can use the  \texttt{\textbackslash Sexpr} command. This is a pseudo \LaTeX command. Its structure is more like a \LaTeX command's structure than \texttt{knitr} in that we enclose our R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for code chunks.
 
@@ -1093,8 +1128,9 @@ Using the {\tt{class}} command we found that the model output object is an {\tt{
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{flushleft}\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no applicable method for 'xtable' applied to an \\ 
-\#\# object of class "MCMCZelig"}\end{flushleft}\end{kframe}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no applicable method for 'xtable' applied to an object of class "MCMCZelig"}}\end{kframe}
 \end{knitrout}
 
 
@@ -1141,7 +1177,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Wed Aug 22 19:10:51 2012
+% Mon Aug 27 17:23:56 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1249,7 +1285,6 @@ You can automatically create citations for R packages using the \texttt{citation
 ##     isbn = {978-0-387-98140-6},
 ##     url = {http://had.co.nz/ggplot2/book},
 ##   }
-## 
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -1311,51 +1346,87 @@ An even faster way to add citations to a bibliography is with \texttt{write.bibt
 
 
 \noindent In Chapter 13 we'll look at the \texttt{knitcitations} package in more detail.
+
+\section{Presentations with Beamer}
+
+You can make slideshow presentations with \LaTeX. FILL IN WITH INTRO
+
+{\emph{knitr}} largely the works the same way in in \LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
+
+\paragraph{Results}
+
+By default {\emph{knitr}} hides the results or a code chunk. If you want to show the results in your slideshow simply set the {\tt{results}} option to {\tt{'asis'}}.
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 August 2012
+% Updated: 27 August 2012
 
 
 
 
 \chapter{Large \LaTeX Documents: Theses, Books, \& Batch Reports}
 
+In the previous chapter we learned the basics of how to create \LaTeX documents to present our research findings. So far we have only covered basic short documents, like articles. For longer and more complex documents like books we can take advantage of \LaTeX and {\emph{knitr}} options that allow us to separate our files into manageable pieces. The pieces are usually called \index{child files}, which are combined using a \index{parent document}.
+
+These methods can also be used in the creation of \index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want create individual reports of answers to survey questions from interviewees with a specific age. In this chapter we will rely on {\emph{knitr}} and shell scripts to create batch reports. 
+
 \section{Planning large documents}
+
+Before discussing the specifics of each of these methods, it's worth taking some time to carefully plan the structure of our child and parent documents.
 
 \subsection{Planning theses and books}
 
+Books and theses have a natural parent-child structure, i.e. they are single documents comprise of multiple chapters. They often include other child-like features such as title pages, bibliographies, figures, and appendices. We could include most of these features directly into one markup file. Clearly this file would become very large and unwieldy. It would be difficult to find one part or section to edit. If of your presentation markup are are difficult to find, they are difficult to reproduce.  
+
 \subsection{Planning batch reports}
 
+COMPLETE
 
 \section{Combining Chapters}
 
+We will cover three methods for including child documents into our parent documents. The first is very simple and uses the \LaTeX command \index{{\tt{\\input}}}. The second using {\emph{knitr}} is slightly more complex, but gives us much more flexibility. The final method is a special case of {\tt{\\input}} that uses the command line program \index{Pandoc} to convert and include child documents written in non-\LaTeX markup languages. 
+
 \subsection{Parent documents}
+
+
 
 \subsection{Child documents}
 
-\subsubsection{Child documents in the same format}
+\paragraph{Child documents in the same markup language}
 
-\subsubsection{Child documents in a different format}
+\paragraph{Child documents in a different markup language}
 
-You can use the \index{Pandoc} command line program and to convert child documents that are in a different markup language into the primary markup language you are using for your document. ADD DETAILS ON HOW TO INSTALL. If you have Pandoc installed on your computer, you can call it directly from your parent document with R's {\tt{system}} command. 
+You can use the \index{Pandoc} command line program and to convert child documents that are in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document with R's {\tt{system}} command. 
 
 For example, the \ref{StylisticConventions} part of this book is written in Markdown. The file is called {\emph{StylisticConventions.md}} It was simply faster to write the list of conventions using the simpler Markdown syntax than \LaTeX, which as we saw has a more complicated way of creating lists. However, I want to include this list in my \LaTeX produced book. Pandoc can convert the Markdown document into a \LaTeX file. This file can then be input into my main document with the \LaTeX command {\tt{\\input}}.
 
-Imagine that my parent and {\emph{StylisticConventions.md}} documents are in the same directory. In the parent document I added the following code to convert the Markdown syntax to \LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
+Imagine that my parent and {\emph{StylisticConventions.md}} documents are in the same directory. In the parent document I add a code chunk with the options {\tt{echo=FALSE}} and {\tt{results=`hide'}}. In this code chunk I add the following command to convert the Markdown syntax in {\emph{StylisticConventions.md}} to \LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\begin{kframe}
-\begin{verbatim}
-%<<StyleTeX, echo=FALSE, results='hide'>>=
-system("pandoc StylisticConventions.md
-        -f markdown -t latex -o StyleTemp.tex",
-        intern = TRUE)
-%@
-\end{verbatim}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{system}("pandoc StylisticConventions.md
+        -f markdown -t latex -o StyleTemp.tex")
+\end{alltt}
 \end{kframe}
 \end{knitrout}
+
+
+\noindent The options {\tt{-f markdown}} and {\tt{-t latex}} tell Pandoc to convert {\emph{StylisticConventions.md}} from Markdown to \LaTeX syntax. {\tt{-o StyleTemp.tex}} instructs Pandoc to save the resulting \LaTeX markup to a new file called {\emph{StyleTemp.tex}}. 
+
+After this code chunk we need to tell our parent document to include the converted text. To do this we follow the code chunk with the {\tt{\\input}} command like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textbackslash{}input\{StyleTemp.tex\}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
+
 
 \section{Creating Batch Reports}
 

@@ -44,7 +44,7 @@ toLatex(sessionInfo())
 Treat all of your research documents as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. 
 
 \paragraph{Commenting}
-In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a \index{comment declaration} You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
+In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a comment declaration \index{comment declaration}. You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
 
 <<Ch2CommentHash>>=
 # A complete comment line
@@ -61,20 +61,56 @@ In natural language writing you don't necessarily need to follow a \index{style 
     \item it's easier for you to understand.
 \end{itemize}
 
-There are a number of R style guides. Most of them are similar to the Google R Style Guide (\url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}). Hadley Wickham has a nicely presented style guide. You can find it at \url{https://github.com/hadley/devtools/wiki/Style}. You can use the package \index{\tt{formatR}} to automatically reformat your code so that it is easier to read.
+There are a number of R style guides. Most of them are similar to the Google R Style Guide \index{Google R Style Guide} (\url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}). Hadley Wickham \index{Hadley Wickham} has a nicely presented style guide. You can find it at \url{https://github.com/hadley/devtools/wiki/Style}. You can also use the {\tt{formatR}} \index{\tt{formatR}} package to automatically reformat your code so that it is easier to read.
 
-\subsection{Work hard so you can be lazy}
+\paragraph{Literate programming}
+
+For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \citep[see][]{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
 \subsection{Everything is a (text) file}
 
-\subsection{Research projects are many files tied together}
+When people go to reproduce your research, they will generally encounter a set of files. These files include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible that is human readable to store this information. We should try our best to use the humble text file for everything.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
+
+Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values (\tt{.csv}}} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
+
+The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research.
+
+Text files are also very easy to search and manipulate with a wide range of programs--such as R--that can find and replace text characters as well as merge and separate files. They have a number of clear benefits for reproducible research including enabling versioning and track changes in programs such as Git (see Chapter \ref{Storing}).   
+
+\subsection{Reproducible research projects are many files explicitly tied together}
+
+If everything is just a text file then research projects can be thought of as individual text files that have a relationship with one another. A data file is used as input for an analysis file. The results of an analysis are shown and discussed in a markup file that is used to create a slideshow or PDF document. Researchers often do not explicitly document the relationships between files that they used in their research. For example, the results of an analysis--a table or figure--may be copied and pasted into a presentation document. It will be very difficult for future researchers to trace the results table or figure back to a particular analysis and a particular data set. Therefore, it is important to make the links between your files explicit. 
+
+The most dynamic way to do this is to explicitly link your files together using what I'll call {\bf{tie commands}}. \index{tie commands} These commands instruct the computer program you are using to gather data, run an analysis, or compile a presentation document to use information from another file. I have compiled the main tie commands used in this book in Table \ref{TableTieCommands}.
+
+\begin{landscape}
+\begin{table}
+    \caption{Commands for Tying Together Your Research Files}
+    \label{TableTieCommands}
+    \vspace{0.3cm}
+    \begin{tabular}{l c  c  c c}
+        \hline
+        Command & Language & Description & Chapters for Further Information \\  
+        \hline \hline
+        {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
+        {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
+        
+        \hline 
+        
+    
+    \end{tabular}
+\end{table}
+\end{landscape}
+
 
 \subsection{Have a plan to organize, store, and make your files
 available}
 
 \section{The tools of reproducible research covered in this book}
 
-\subsection{R/RStudio}
+\subsection{R}
+
+\subsection{RStudio}
 
 \subsection{\texttt{knitr}}
 
