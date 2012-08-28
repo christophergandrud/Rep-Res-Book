@@ -111,7 +111,13 @@
 
 \chapter*{Forward}
 
-FILL IN
+This book would not have been possible without the advice and support of a great many people.
+
+The developer and blogging community has been incredibly important for making this book possible. Foremost among among these people is Yihui Xie. He is the developer of the {\emph{knitr}} package (among others) and also an avid writer and reader of blogs. Without him the ability to do reproducible research would be much harder and the blogging community that spreads knowledge about how to do these things would be poorer. 
+
+Other important bloggers include Carl Boettiger (who also developed the {\emph{knitcitations}} package), Markus Gesmann (who developed {\emph{GoogleVis}}), Jeromy Anglim.
+
+The vibrant and very helpful community at Stack Overflow \url{http://stackoverflow.com/} is always very helpful for finding answers to small problems that plague any coder. Importantly it makes it easy for others to find these answers.
 
 
 
@@ -151,7 +157,7 @@ FILL IN
 
 
 
-\chapter{Introducing Reproducible Research}
+\chapter{Introducing Reproducible Research}\label{Intro}
 
 FILL IN
 
@@ -167,11 +173,13 @@ Incorporating high reproducibility into your research is important for science a
 
 Working to make your research reproducible from the start makes the research process easier. A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Virtually no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, and so on. Whether these changes are because of journal reviewers' and conference participants comments or we discover that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes. 
 
-Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves" \citeparyear{Bowers2011}.
+Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves" \cite{Bowers2011}.
 
 COMPLETE
 
 \section{Who should read this book?}
+
+This book is intended primarily for upper-level undergraduate and graduate students and professional researchers who want to develop a more systematic workflow that encourages reproducibility.
 
 \subsection{Students}
 
@@ -182,7 +190,7 @@ COMPLETE
 \section{Why use R/RStudio for reproducible research?}
 
 \paragraph{R}
-Why use a statistical programming language like R for reproducible research? R is more than just a statistics program, like \index{SAS}, Stata, or SPSS. It can be used to integrate all stages of the research process not just the statistical analysis stage. COMPLETE
+Why use a statistical programming language like R for reproducible research? R is more than just a statistics program, like \index{SAS}, Stata\index{Stata}, or SPSS\index{SPSS}. It can be used to integrate all stages of the research process not just the statistical analysis stage. COMPLETE
 
 The way we interact with R or any other programming and markup language promotes reproducibility more than our interactions with Graphical User Interface (GUI) programs like SPSS\footnote{I know you can write scripts in statistical programs like SPSS, but doing so is not encouraged by the interface and we often have to learn multiple languages just to write scripts that run analyses, create graphics, and deal with matrices.} and Microsoft Word. When we write (and save) R code we are being forced to explicitly express the steps we take to accomplish a goal in an easily documented way. When we achieve a goal by clicking through drop down menus in GUI programs, the steps we take are lost. To document them requires considerable extra effort.
 
@@ -405,11 +413,11 @@ There are a number of R style guides. Most of them are similar to the Google R S
 
 \paragraph{Literate programming}
 
-For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \citep[see][]{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
+For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
 \subsection{Everything is a (text) file}
 
-When people go to reproduce your research, they will generally encounter a set of files. These files include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible that is human readable to store this information. We should try our best to use the humble text file for everything.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
+When people go to reproduce your research, they will generally encounter a set of files. These files include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible that is human readable to store this information: use the humble text file for everything possible.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
 
 Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values (\tt{.csv}}} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
 
@@ -430,14 +438,14 @@ The most dynamic way to do this is to explicitly link your files together using 
     \vspace{0.3cm}
     \begin{tabular}{l c  c  c c}
         \hline
-        Command & Language & Description & Chapters for Further Information \\  
+        Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline
+        {\emph{knitr}} & R & Ties R commands into presentation documents & Discussed throughout the book \\
         {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
         {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
         
         \hline 
         
-    
     \end{tabular}
 \end{table}
 \end{landscape}
@@ -463,14 +471,14 @@ available}
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 August 2012
+% Updated: 28 August 2012
 
 
 
 
-\chapter{Getting Started with R and RStudio}
+\chapter{Getting Started with R, RStudio, and knitr}
 
-If you have rarely or never used R before the first two sections of this chapter give you enough information that you should be able to get started and understand the code I use in this book. For more details about R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research.
+If you have rarely or never used R before the first two sections of this chapter give you enough information to be able to get started and understand the code I use in this book. For more detailed introductions to R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package and how it is integrated into RStudio.
 
 \section{Installing R and RStudio}
 
@@ -487,37 +495,141 @@ You should install R before installing RStudio. You can down load the programs f
 
 \paragraph{Installing markup languages}
 
-If you are planning on creating \LaTeX documents you need to install a \index{\LaTeX distribution}. They are also open source and available for Windows, Mac, and Unix. They can be found at: \url{http://www.latex-project.org/ftp.html}. Please refer to that site for more installation information.
+If you are planning on creating \LaTeX documents you need to install a \LaTeX distribution\index{\LaTeX distribution}. They are also open source and available for Windows, Mac, and Unix. They can be found at: \url{http://www.latex-project.org/ftp.html}. Please refer to that site for more installation information.
 
 If you want to create markdown documents you will need to install the the \index{{\emph{markdown}} package} in R. You can do this the same way that you install any package in R, with the {\tt{install.packages}} command.\footnote{The exact command is: {\tt{install.packages("markdown")}}.} 
 
 \section{Using R: the basics}
 
+This section covers some of the very basic syntax in R to get you started. If you have little experience with R, reading this section will make it much easier for you to follow along with the examples in the book. I cover the key components of the R language including:
+
+\begin{itemize}
+    \item objects \& assignment,
+    \item component selection,
+    \item functions, commands, and arguments,
+    \item libraries.
+\end{itemize}
+
 \subsection{Objects \& Assignment}
+
+You will probably have read that `R is an object-oriented language'.  What are objects? Objects are like the R language's nouns. They are things, such as a list of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing things to objects
 
 \subsection{Component Selection}
 
+We often want to extract something from an object. We can do this with the dollar sign ({\tt{\$}}). This is called the component selection\index{component selection}, because we use it to select a component from an object.
+
+This will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
+
 \subsection{Functions, Commands, and Arguments}
+
+\subsection{Loading new commands from libraries}
+
+Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. 
 
 \section{Using RStudio}
 
-When you first open RStudio you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as 
+As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as 
 
-\begin{figure}[t]
+\begin{figure}[ht]
     \caption{RStudio Startup Panel}
     \label{BlankMain}
 
     \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankMainPanel.png}
 \end{figure}
 
+\paragraph{Compile Notebook}
 
-\section{Tips}
+RStudio integrates a number of different methods for literate programming. The most basic is 
 
-Here are a few tips that make using R and RStudio a little easier.
+\section{Using knitr: the basics}
+
+For more advanced literate programming in R we can use the {\emph{knitr}}\index{{\emph{knitr}}} package.\footnote{The RStudio notebook actually also uses {\emph{knitr}}.} This package is highly integrated into RStudio. Throughout much of the book we cover many details about how to use {\emph{knitr}}. This section gives you a basic introduction to get started.
+
+\subsection{Code Chunks}
+
+\subsection{Code Chunk Options Markup Language Specific Syntax}
+
+The code chunk options discussed so are specifically for presentation documents written in Markdown syntax. 
+
+\paragraph{Code Chunks in Markdown}
+
+\paragraph{Code Chunks in \LaTeX}
+
+\subsection{Global Options}
+
+\subsection{knitr \& Rstudio}
+
+\subsection{knitr \& R}
+
+As an R package, you can of course knit documents in regular R (or using the console in RStudio). All of the syntax in the document you are knitting is the same as before. But instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button we use is {\tt{knit}} command. To knit our example Markdown file {\emph{Example.Rmd}} we first set the working directory (see Chapter \ref{DirectoriesChapter}) to the the folder where your {\emph{Example.Rmd}} file is located with the {\tt{setwd}} command. In this example I have it on my desktop.\footnote{Using the directory name {\tt{~/Desktop/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{setwd}(\hlstring{"~/Desktop/"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Then I knit my file:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{knit}(input = \hlstring{"Example.Rmd"}, output = \hlstring{"Example.md"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Note that if you do not specify the output file {\emph{knitr}} will determine what the file should be. In this example it would come up with the same name and location.
+
+If you try this example, you find that the {\emph{knit}} command only created a Markdown file and not an HTML file like clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic \LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}} command from the {\emph{markdown}} package, i.e.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{mardownToHTML}(file = \hlstring{"Example.md"}, output = \hlstring{"Example.html"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both \LaTeX and \BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using \BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{texi2pdf}(file = \hlstring{"Example.tex"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+ 
+\section{R/RStudio Tips}
+
+Finally, here are a few other tips that make using R and RStudio a little easier.
+
+\paragraph{Getting Help}
+
+You can quickly access the help file for any command. In R/the Rstudio console simply type {\tt{?}} before any command. For example, to get the help file for the {\tt{mean}} command just type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+?mean
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent In RStudio you can click on the {\bf{Help}} pane (by default at the lower right, see Figure \ref{BlankMain}) and enter the command you want help with into the search field.
 
 \paragraph{Autocomplete}
 
 In R and RStudio you do not have to type out every command, argument, object, or even directory name. After you start typing a command/argument/object/directory name you can hit the ``tab" key to automatically complete the word you started. The \index{autocomplete} function is particularly good in RStudio. Not only does it give you a list of words to choose from, but it also shows you an abbreviated version of the help file for commands and arguments.
+
 
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
@@ -527,7 +639,9 @@ In R and RStudio you do not have to type out every command, argument, object, or
 
 
 
-\chapter{Chapter 4:}
+\chapter{Getting Started with File Management}\label{DirectoriesChapter}
+
+
 
 
 \part{Data Gathering and Storage}
@@ -1029,7 +1143,7 @@ the file.
 
 
 
-\chapter{Showing Results with Tables}
+\chapter{Showing Results with Tables}\ref{TablesChapter}
 
 Graphs and other visual methods, discussed in the next chapter, can
 often be a more effective way to present results than tables.\footnote{This
@@ -1177,7 +1291,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Mon Aug 27 17:23:56 2012
+% Tue Aug 28 17:34:45 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1238,7 +1352,7 @@ The most important \texttt{knitr} chunk option for showing the markup created by
 
 
 
-\chapter{Presenting with \LaTeX}
+\chapter{Presenting with \LaTeX}\ref{LatexChapter}
 
 \section{The Basics}
 
