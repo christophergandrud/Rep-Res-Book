@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 29 August 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,23 +9,46 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with Reproducible Research}
 
+Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process and continuing to follow a few simple guidelines throughout your research can help solve these problems. 
+
+This chapter first gives you a big picture overview of the reproducible research process: a workflow for reproducible research. Then it covers some of the key guidelines that can help make your research more reproducible.
+
 \section{The Big Picture: A workflow for reproducible research}
+
+To make our research accurately reproducible we should start thinking at the beginning--the data gathering stage--about how other researchers and ourselves will be able to reproduce our results. This book teaches the tools for an integrated workflow for reproducible research. It covers tools that we can use across the three basic stages that most researchers--especially quantitative researchers--go through to answer their research questions:
+
+\begin{itemize}
+    \item data gathering,
+    \item data analysis,
+    \item results presentation.
+\end{itemize}
 
 \subsection{Data Gathering}
 
+It is common in many disciplines (I know this is true in political science, my discipline) to 
+
 \subsection{Data Analysis}
 
-\subsection{Data Presentation}
+\subsection{Results Presentation}
 
 \section{Practical tips for reproducible research}
 
-To help you  is good to keep a few over
+Before we start learning the details of reproducible research with R and RStudio it is useful to cover a few broad tips that will help us organize our research process and put these skills in perspective. The tips are:
+
+\begin{enumerate}
+    \item Document everything!,
+    \item Everything is a file,
+    \item All files should be human readable,
+    \item Reproducible research projects are many files explicitly tied together,
+    \item Have a plan to organize, store, and make your files available.
+    
+\end{enumerate}
 
 \subsection{Document everything!}
 
 In order to reproduce your research others must be able to know what you did. You have to tell them what you did by documenting as much of your research process as possible. Ideally, you should tell your readers how you gathered your data, analyzed it, and presented the results.
 
-The other tips and Many of the other One important part of documenting everything with R is to \emph{record your \index{session info}}. Many things in R stay the same over time, which makes it easy for future researchers to recreate what was done in the past. However, things--syntax in particular--do can change from one version of R to another. Also, the way R functions may be handled slightly different on different operating systems. Finally, you may have R set to load packages by default. These packages might be necessary to run your code, but other people might not be able know what packages were loaded from just looking at your source code. The \texttt{sessionInfo} command prints a record of all of these things. The information from the session I used to create this book up until this chapter is:
+The other tips and Many of the other One important part of documenting everything with R is to \emph{record your session info\index{session info}}. Many things in R stay the same over time, which makes it easy for future researchers to recreate what was done in the past. However, things--syntax in particular--do can change from one version of R to another. Also, the way R functions may be handled slightly different on different operating systems. Finally, you may have R set to load packages by default. These packages might be necessary to run your code, but other people might not be able know what packages were loaded from just looking at your source code. The \texttt{sessionInfo} command prints a record of all of these things. The information from the session I used to create this book up until this chapter is:
 
 <<Ch2SessionInfoPlain, tidy=TRUE>>=
 sessionInfo()
@@ -39,9 +62,19 @@ toLatex(sessionInfo())
 
 \noindent Otherwise, you can use the {\tt{print}} command. 
 
+\subsection{Everything is a (text) file}
+
+Your documentation is stored in files that include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible to store this information. Usually the simplest file format is the the humble, but versatile, text file is the simplest file format.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
+
+Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values (\tt{.csv}}} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
+
+The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research.
+
+Text files are also very easy to search and manipulate with a wide range of programs--such as R--that can find and replace text characters as well as merge and separate files. They have a number of clear benefits for reproducible research including enabling versioning and track changes in programs such as Git (see Chapter \ref{Storing}).   
+
 \subsection{All files should be human readable}
 
-Treat all of your research documents as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. 
+Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. 
 
 \paragraph{Commenting}
 In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a comment declaration \index{comment declaration}. You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
@@ -67,16 +100,6 @@ There are a number of R style guides. Most of them are similar to the Google R S
 
 For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
-\subsection{Everything is a (text) file}
-
-When people go to reproduce your research, they will generally encounter a set of files. These files include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible that is human readable to store this information: use the humble text file for everything possible.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
-
-Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values (\tt{.csv}}} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
-
-The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research.
-
-Text files are also very easy to search and manipulate with a wide range of programs--such as R--that can find and replace text characters as well as merge and separate files. They have a number of clear benefits for reproducible research including enabling versioning and track changes in programs such as Git (see Chapter \ref{Storing}).   
-
 \subsection{Reproducible research projects are many files explicitly tied together}
 
 If everything is just a text file then research projects can be thought of as individual text files that have a relationship with one another. A data file is used as input for an analysis file. The results of an analysis are shown and discussed in a markup file that is used to create a slideshow or PDF document. Researchers often do not explicitly document the relationships between files that they used in their research. For example, the results of an analysis--a table or figure--may be copied and pasted into a presentation document. It will be very difficult for future researchers to trace the results table or figure back to a particular analysis and a particular data set. Therefore, it is important to make the links between your files explicit. 
@@ -88,13 +111,14 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  c  c c}
+    \begin{tabular}{l c  p{6cm}  p{4cm}}
         \hline
         Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline
         {\emph{knitr}} & R & Ties R commands into presentation documents & Discussed throughout the book \\
         {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
         {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
+        {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\
         
         \hline 
         
@@ -103,20 +127,5 @@ The most dynamic way to do this is to explicitly link your files together using 
 \end{landscape}
 
 
-\subsection{Have a plan to organize, store, and make your files
-available}
-
-\section{The tools of reproducible research covered in this book}
-
-\subsection{R}
-
-\subsection{RStudio}
-
-\subsection{\texttt{knitr}}
-
-\subsection{Cloud storage \& versioning}
-
-\subsection{The command line}
-
-\subsection{Markup languages: \LaTeX \& Markdown/HTML}
+\subsection{Have a plan to organize, store, and make your files available}
 

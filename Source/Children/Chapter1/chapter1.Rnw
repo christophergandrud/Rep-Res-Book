@@ -1,7 +1,7 @@
 % Chapter Chapter 1 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 August 2012
+% Updated: 29 August 2012
 
 <<set-parent1, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,21 +9,22 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Introducing Reproducible Research}\label{Intro}
 
-FILL IN
-
+Most people encounter research as a neat and very abridged package. This package is usually in the form of a conference presentation, journal article, book, or maybe even a website. These presentation documents announce the results of some research project and try to convince us that the results are correct.\cite{Mesirov2010}. However, the article, slideshow, or book is not the research. 
 \section{What is reproducible research?}
+
+FILL IN
 
 \section{Why should research be reproducible?}
 
-Incorporating high reproducibility into your research is important for science and it also makes the research process easier for the researcher. 
+Incorporating high reproducibility into your research is important for science and it can also make your life as a researcher easier. 
 
 \subsection{For Science}
 
 \subsection{For You}
 
-Working to make your research reproducible from the start makes the research process easier. A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Virtually no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, and so on. Whether these changes are because of journal reviewers' and conference participants comments or we discover that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes. 
+Working to make your research reproducible from the start has a number of knock on benefits that make the research process easier {\emph{for the researcher}}. A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Virtually no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, and so on. Whether these changes are because of journal reviewers' and conference participants comments or we discover that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes. 
 
-Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves" \cite{Bowers2011}.
+Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves".\cite{Bowers2011}
 
 COMPLETE
 
@@ -37,127 +38,108 @@ This book is intended primarily for upper-level undergraduate and graduate stude
 
 \subsection{Industry practitioners}
 
+Industry practitioners may or may not want to make their work easily reproducible outside of their organization. However, that does not mean that significant benefits cannot be gained from using the methods of reproducible research. First, even if public reproducibility is ruled out to guard proprietary information, making your research reproducible to members of your organization can save and pass on valuable information about how analyses were done and data collected. Just as a lack of reproducibility hinders the spread of information in the scientific community, it can hinder it inside of a private organization. COMPLETE
+
+\section{The Tools of Reproducible Research}
+
+This book will teach you the tools you need to make your research highly reproducible. Reproducible (quantitative) research involves two broad sets of tools. The first is a {\bf{reproducible research environment}} that includes the statistical tools you need to run your analyses as well as ``the ability to automatically track the provenance of data, analyses, and results and to package them (or pointers to persistant versions of them) for redistribution". The second set of tools is a {\bf{reproducible research publisher}} that prepares documents to present the results and is easily linked to the reproducible research environment.\cite{Mesirov2010}
+
+In this book I we will focus on learning how to use widely available and highly flexible reproducible research environment--R/RStudio. R/RStudio can be linked to numerous reproducible research publishers with Yihui Xie's {\emph{knitr}} package. The full list of tools tools covered in this book include:
+
+\begin{itemize}
+    \item {\bf{R}}: a programming language primarily for statistics and graphics. It can also be used for data gathering and creating presentation documents.
+    
+    \item {\bf{{\emph{knitr}}}}: an R package for literate programming\index{literate programming}, i.e. it allows us to combine our statistical analysis and the presentation of the results into one document.
+    
+    \item {\bf{Markup languages}}: instructions for how to format a presentation document. In this book we cover \LaTeX and Markdown.  
+    
+    \item {\bf{RStudio}}: an integrated developer environment (IDE)\index{integrated developer environment} for R that tightly integrates R, {\emph{knitr}}, and markup languages.
+    
+    \item {\bf{Cloud storage \& versioning}}: Services such as Dropbox and Github that can store research, save and document previous versions, and make this information widely available.
+    
+    \item {\bf{Unix-like command lines and shell scripts}}: These tools are useful for setting up and working with large research projects. They also allow us to use command line tools like Pandoc for converting documents from one markup language to another.
+\end{itemize}
+
 \section{Why use R/RStudio for reproducible research?}
 
-\paragraph{R}
-Why use a statistical programming language like R for reproducible research? R is more than just a statistics program, like \index{SAS}, Stata\index{Stata}, or SPSS\index{SPSS}. It can be used to integrate all stages of the research process not just the statistical analysis stage. COMPLETE
+\paragraph{Why R?}
+Why use a statistical programming language like R for reproducible research? R is more than just a statistics program, like \index{SAS}, Stata\index{Stata}, or SPSS\index{SPSS}. It can be used to integrate all stages of the research process not just the statistical analysis stage. As we will see in this book, R can be used to gather data, run statistical analyses, and we can use the {\emph{knitr}} R package to connect our analysis to our presentation documents created with markup languages\index{markup language} such as \LaTeX, Markdown, and HTML we can dynamically present our results in articles, slideshows, and webpages.\footnote{When we use these types of markup languages to create presentation documents what we write is text plus the instructions for how to turn this into a final document. The instructions are written using a markup language. Part IV of this book (Presentation Documents) discusses how to use the \LaTeX and Markdown languages for reproducible research.} 
 
-The way we interact with R or any other programming and markup language promotes reproducibility more than our interactions with Graphical User Interface (GUI) programs like SPSS\footnote{I know you can write scripts in statistical programs like SPSS, but doing so is not encouraged by the interface and we often have to learn multiple languages just to write scripts that run analyses, create graphics, and deal with matrices.} and Microsoft Word. When we write (and save) R code we are being forced to explicitly express the steps we take to accomplish a goal in an easily documented way. When we achieve a goal by clicking through drop down menus in GUI programs, the steps we take are lost. To document them requires considerable extra effort.
+The way we interact with R or any other programming and markup language promotes reproducibility more than our interactions with Graphical User Interface (GUI) programs like SPSS\footnote{I know you can write scripts in statistical programs like SPSS, but doing so is not encouraged by the interface and we often have to learn multiple languages just to write scripts that run analyses, create graphics, and deal with matrices.} and Microsoft Word. When we write (and save) R code and embed it in documents using markup languages we are being forced to explicitly express the steps we take to do our research. When we do research clicking through drop down menus in GUI programs, the steps we take are lost. Or at least documenting them requires considerable extra effort.
 
-\paragraph{RStudio}
-Why use an Integrated Development Environment (IDE), especially RStudio for reproducible research? RStudio allows us to have all of the R's advantages, but in a more visually navigable way. Think of it a as happy medium between R's text-based interface and a pure GUI. COMPLETE
+\paragraph{Why RStudio?}
+\index{RStudio}Why use the RStudio integrated development environment for reproducible research? R by itself has the capability to gather data, analyse it, and with a little help from {\emph{knitr}} and markup languages, present results in a way that is highly reproducible. RStudio allows us to do all of these things, but simplifies many of these tasks and allows you to navigate them in a more visual way. It is a as happy medium between R's text-based interface and a pure GUI. 
 
-RStudio also has a very tight integration with technologies such as {\tt{knitr}} and \LaTeX that makes the presentation of reproducible presentation of results. 
+{\emph{RStudio is designed for reproducible research}}. RStudio is very tightly integrated with technologies such as {\tt{knitr}}, Markdown, and \LaTeX that enable us to present reproducible results. Compiling \LaTeX PDF documents or HTML webpages in RStudio requires many fewer steps than doing the same thing in plain R. 
 
-\subsection{Complete integration of data gathering, analysis, and
-presentation.}
+Not only does RStudio do many of the things that R can do, but more easily it is very good stand alone editor for writing documents with \LaTeX, Markdown, HTML. There are many \LaTeX editors available, both open source and paid, as well as other ways to compile \LaTeX documents, including directly through the command line. RStudio is currently the best program for creating reproducible \LaTeX, Markdown, and HTML documents. It has full syntax highlighting, even for documents with \texttt{knitr} code (which it can collapse when you just
+want to work on the text). It can spell check \LaTeX documents. It handles \texttt{knitr} code chunks beautifully making it easy to navigate through complex documents and run individual chunks. For \LaTeX documents it can, for example, insert common commands like \texttt{\textbackslash{}section*\{\}} for unnumbered sections or set up lists. 
 
-\subsubsection{Presentation}
+Finally, RStudio not only has tight integration with various markup languages, it also integrates other tools such as CSS, JavaScript, and a few other programming languages as well as being closely integrated with the version control programs git and SVN. Both of these programs allow you to keep track of the changes you make to your documents. This is important for reproducible research since the version control program is documenting many of the the steps you took to make your project. As with many tools of reproducible research, version control has other benefits for making researchers' lives easier. Maybe most importantly, when you keep your documents under version control you can go back to older versions. This is useful if you accidentally delete an important paragraph, for example.
 
-There are many \LaTeX editors available, both open source and paid, as
-well as other ways to compile \LaTeX documents, including directly
-through the command line. \textbf{R} is capable of compiling
-\LaTeX documents through .
+\subsection{Installing the Software}
 
-\textbf{RStudio} is actually as a very nice \LaTeX editor. For creating
-documents that integrate markup and \textbf{R} code, at the moment it
-pretty much can't be beat. It has full syntax highlighting, even for
-documents with \texttt{knitr} code (which it can collapse when you just
-want to work on the text). It can spell check \LaTeX documents. It
-handles \texttt{knitr} code chunks beautifully making it easy to
-navigate through complex documents and run individual chunks.
+Before you read this book you should install the software. All of the software covered in detail in this book is open source programs and can be easily downloaded for free. It is available for Windows\index{Windows}, Mac\index{Mac}, and Unix\index{Unix}. They should run well on most modern computers. 
 
-Even if you aren't creating documents that integrate \textbf{R} code,
-\emph{R} is still a decent full functioning \LaTeX editor. It can insert
-common commands like \texttt{\textbackslash{}section*\{\}} for
-unnumbered sections. Most importantly it easily compile \LaTeX documents
-and show you a preview.
+You should install R before installing RStudio. You can down load the programs from the following websites:
+
+\begin{itemize}
+    \item {\bf{R}}: \url{http://www.r-project.org/},
+    \item {\bf{RStudio}}: \url{http://rstudio.org/download/}.
+\end{itemize}
+
+\noindent The download webpages for these programs have comprehensive information on how to install them, so please refer to those pages for more information.
+
+\paragraph{Installing markup languages}
+
+If you are planning on creating \LaTeX documents you need to install a \LaTeX distribution\index{\LaTeX distribution}. They are also open source and available for Windows, Mac, and Unix. They can be found at: \url{http://www.latex-project.org/ftp.html}. Please refer to that site for more installation information.
+
+If you want to create markdown documents you will need to install the the \index{{\emph{markdown}} package} in R. You can do this the same way that you install any package in R, with the {\tt{install.packages}} command.\footnote{The exact command is: {\tt{install.packages("markdown")}}.} 
+
+\paragraph{The command line}
+
+\paragraph{Cloud storage \& versioning}
 
 \section{Book overview}
 
+The purpose of this book is to give you the tools that you will need to do reproducible research with R and RStudio. 
+
 \subsection{What this book is not.}\label{WhatNot}
 
-This book describes a workflow for reproducible research primarily using
-R and RStudio. It is designed to give you the
-necessary tools to use this workflow for your own research. It is not
-designed to be a complete introduction to R, RStudio,
-GitHub, the command line, or any other program that is a part
-of this workflow. Instead it shows you how these tools can fit together
-to make yourß research more reproducible.
+This book describes a workflow for reproducible research primarily using R and RStudio. It is designed to give you the necessary tools to use this workflow for your own research. It is not designed to be a complete introduction to R, RStudio, GitHub, the command line, or any other program that is a part of this workflow. Instead it shows you how these tools can fit together to make yourß research more reproducible.
 
-To get the most out of these individual programs I point you to other
-resources that cover these programs in more detail.
+To get the most out of these individual programs I point you to other resources that cover these programs in more detail.
 
-That being said, my goal in this for this book to be self-sufficient to
-the extent that a reader without a detailed understanding of these
-programs will be able to understand and use the commands and procedures
-I cover in this book. While learning how to use R and the other
-programs I often encountered examples that included commands, variables,
-and other things that were not well explained in the texts that I was
-reading. This caused me to waste many hours trying to figure out, for
-example, what the \texttt{\$} is used for (preview: it's the 'component selector'). I hope to save
-you from this wasted time by either providing a brief explanation of
-these possibly frustratingly mysterious conventions and/or pointing you
-in the direction of a good explanation.
+That being said, my goal in this for this book to be self-sufficient to the extent that a reader without a detailed understanding of these programs will be able to understand and use the commands and procedures
+I cover in this book. While learning how to use R and the other programs I often encountered examples that included commands, variables, and other things that were not well explained in the texts that I was reading. This caused me to waste many hours trying to figure out, for example, what the \texttt{\$} is used for (preview: it's the `component selector'). I hope to save you from this wasted time by either providing a brief explanation of
+these possibly frustratingly mysterious conventions and/or pointing you in the direction of a good explanation.
 
-To that end, I can recommend a number of books for that cover more of
-the nitty-gritty of R and the command line.
+To that end, I can recommend a number of books for that cover more of the nitty-gritty of R and the command line.
 
 \begin{itemize}
-\item
-  Michael J. Crawley's encyclopaedic R book, appropriately
-  titled, \textbf{The R Book} published by Wiley.
-\item
-  Norman Matloff's tour through the programming language aspects of
-  R called \textbf{The Art of R Programming: A Tour of
-  Statistical Design Software} published by No Starch Press.
-\item
-  For an excellent introduction to the command line in Linux and Mac,
-  though with pretty clear implications for Windows users if they are
-  running PowerShell (see Chapter 2) see William E. Shotts
-  Jr.'s book \emph{The Linux Command Line: A Complete Introduction} also
-  published by No Starch Press.
-\item
-  The RStudio website (\url{http://rstudio.org/docs/}) has a
-  number of useful tutorials on how to use \texttt{knitr} with
-  \LaTeX and Markdown.
+    \item Michael J. Crawley's encyclopaedic R book, appropriately   titled, \textbf{The R Book} published by Wiley.
+    
+    \item Norman Matloff's tour through the programming language aspects of  R called \textbf{The Art of R Programming: A Tour of Statistical Design Software} published by No Starch Press.
+    
+    \item For an excellent introduction to the command line in Linux and Mac, though with pretty clear implications for Windows users if they are running PowerShell (see Chapter 2) see William E. Shotts Jr.'s book \textbf{The Linux Command Line: A Complete Introduction} also published by No Starch Press.
+    
+    \item The RStudio website (\url{http://rstudio.org/docs/}) has a
+  number of useful tutorials on how to use {\emph{knitr}} with \LaTeX and Markdown.
 \end{itemize}
+
 \subsection{How to read this book.}
 
-This book tells a story. It has a beginning, middle, and end. So, unlike
-a reference book it can and should be read like a novel, taking you
-through an empirical research processes from an empty folder maybe
-called \texttt{Research Paper} to a completed set of documents that
-showcase your findings.
+This book tells a story. It has a beginning, middle, and end. So, unlike a reference book it can and should be read like a novel, taking you through an empirical research processes from an empty folder maybe called {\emph{ResearchPaper}} to a completed set of documents that showcase your findings.
 
-That being said, readers with more experience using tools like
-R or \LaTeX) may want to
-skip over the nitty-gritty parts of the book that describe how to
-manipulate data frames or compile a \LaTeX) document into a PDF. Please feel free to do
-this.
+That being said, readers with more experience using tools like R or \LaTeX) may want to skip over the nitty-gritty parts of the book that describe how to manipulate data frames or compile a \LaTeX) document into a PDF. Please feel free to do this.
 
-If you are experienced with R in particular you may want to
-skip over Chapter 3: Getting Started with R/RStudio.
+If you are experienced with R in particular you may want to skip over the first two sections of Chapter \ref{GettingStarted}: Getting Started with R/RStudio. The latter part of this chapter contains important basic information on the {\emph{knitr}} package. 
 
 \subsection{How this book was written}
 
-This book practices what it preaches. It can be reproduced. It was
-written using the programs and methods that it describes. Full
-documentation and source files can be found at the Book's
-\textbf{GitHub} repository.
+This book practices what it preaches. It can be reproduced. It was written using the programs and methods that it describes. Full documentation and source files can be found at the Book's \textbf{GitHub} repository. Feel free to read and even copy (within reason and with attribution, of course) the Book's source code. You can find it at \url{https://github.com/christophergandrud/Rep-Res-Book}. This is especially useful if you want to know how to do something in the book that I don't directly cover in the text.
 
-Feel free to read and even copy (within reason and with attribution, of
-course) the Book's source code. You can find it at
-\url{https://github.com/christophergandrud/Rep-Res-Book}. This is
-especially useful if you want to know how to do something in the book
-that I don't directly cover in the text.
-
-In the same spirit, I encourage you to make your research files--not
-just data, but analysis code and markup--available for other researchers
-to learn from.
-
-Not only does reproducibility help us evaluate past work, but it also
-pushes forward knowledge in the scientific community.
+In the same spirit, I encourage you to make your research files--not just data, but analysis code and markup--available for other researchers to learn from. Not only does reproducibility help us evaluate past work, but it also pushes forward knowledge in the scientific community.
 
 \subsection{Contents overview.}
 

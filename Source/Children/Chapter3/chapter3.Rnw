@@ -7,28 +7,9 @@
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
-\chapter{Getting Started with R, RStudio, and knitr}
+\chapter{Getting Started with R, RStudio, and knitr}\label{GettingStarted}
 
 If you have rarely or never used R before the first two sections of this chapter give you enough information to be able to get started and understand the code I use in this book. For more detailed introductions to R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package and how it is integrated into RStudio.
-
-\section{Installing R and RStudio}
-
-R and RStudio are open source programs and can be easily downloaded for free. Both are available for Windows, Mac, and Unix. They should run well on most modern computers. 
-
-You should install R before installing RStudio. You can down load the programs from the following websites:
-
-\begin{itemize}
-    \item {\bf{R}}: \url{http://www.r-project.org/},
-    \item {\bf{RStudio}}: \url{http://rstudio.org/download/}.
-\end{itemize}
-
-\noindent The download webpages for these programs have comprehensive information on how to install them, so please refer to those pages for more information.
-
-\paragraph{Installing markup languages}
-
-If you are planning on creating \LaTeX documents you need to install a \LaTeX distribution\index{\LaTeX distribution}. They are also open source and available for Windows, Mac, and Unix. They can be found at: \url{http://www.latex-project.org/ftp.html}. Please refer to that site for more installation information.
-
-If you want to create markdown documents you will need to install the the \index{{\emph{markdown}} package} in R. You can do this the same way that you install any package in R, with the {\tt{install.packages}} command.\footnote{The exact command is: {\tt{install.packages("markdown")}}.} 
 
 \section{Using R: the basics}
 
@@ -41,13 +22,57 @@ This section covers some of the very basic syntax in R to get you started. If yo
     \item libraries.
 \end{itemize}
 
-\subsection{Objects \& Assignment}
+Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\greaterthan}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} Now that we have a new R session open we can get started. 
 
-You will probably have read that `R is an object-oriented language'.  What are objects? Objects are like the R language's nouns. They are things, such as a list of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing things to objects
+\begin{figure}[th!]
+    \caption{R Startup Console}
+    \label{RBlankMain}
+
+    \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankRConsole.png}
+\end{figure}
+
+\subsection{Objects}
+
+You will probably have read that `R is an object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, such as a list of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section. For now let's create a few objects.
+
+\paragraph{Numeric, String, Vector \& Dataframe Objects}
+
+Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\lessthan-}}. Let's assign the number 10 to our Number object.
+
+<<Ch3NumericObject>>=
+Number <- 10
+@
+
+\noindent To see the contents of our object, just type its name.
+
+<<Ch3NumberSee>>=
+Number
+@
+
+\noindent Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".
+
+<<Ch3CharacterObject>>=
+Words <- "Hello World"
+@
+
+
+An object's class is important to keep in mind as it determines what things we can do to it. For example you cannot take the mean of a character class object like the {\emph{Words}} object we created earlier:
+
+<<Ch3ClassError>>=
+mean(Words)
+@
+
+\noindent Trying to find the mean of our {\emph{Words}} object gave us an error message and returned the value {\tt{NA}}\index{\textt{NA}}: not applicable. You can also think of {\tt{NA}} to mean missing. To find out what class an object has use the {\tt{class}} command. For example:
+
+<<Ch3ClassCommand>>=
+class(Words)
+@
 
 \subsection{Component Selection}
 
-We often want to extract something from an object. We can do this with the dollar sign ({\tt{\$}}). This is called the component selection\index{component selection}, because we use it to select a component from an object.
+Smaller objects can be combined into larger objects. For example, a data set with two variables may be merged into a larger data set. We will touch on some of these issues, like how to use the {\tt{merge}} command in Chapter \ref{DataGather}. Sometimes we may want to do the opposite task: extract a smaller object from a larger one. We can do this with the dollar sign ({\tt{\$}}). This is called the component selection\index{component selection}, because we use it to select a component from an object.
+
+For example, 
 
 This will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
 
@@ -59,7 +84,7 @@ Commands are stored in R libraries\index{R libraries}. R automatically loads a n
 
 \section{Using RStudio}
 
-As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as 
+As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. 
 
 \begin{figure}[ht]
     \caption{RStudio Startup Panel}

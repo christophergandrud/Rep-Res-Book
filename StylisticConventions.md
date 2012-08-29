@@ -1,5 +1,7 @@
 %% Stylistic Conventions for Reproducible Research with R and RStudio
 
+I use the following conventions throughout this book to format computer code and actions:
+
 - Abstract Variables
 
 Abstract variables, i.e. variables that do not represent specific objects in an example, are in `ALL CAPS TYPWRITER TEXT`. 
