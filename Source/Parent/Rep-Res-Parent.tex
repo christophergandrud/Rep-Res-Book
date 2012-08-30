@@ -481,7 +481,7 @@ This section covers some of the very basic syntax in R to get you started. If yo
     \item libraries.
 \end{itemize}
 
-Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\greaterthan}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} Now that we have a new R session open we can get started. 
+Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreaterthan}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
 
 \begin{figure}[th!]
     \caption{R Startup Console}
@@ -750,7 +750,15 @@ In this chapter we cover the basics of file path naming conventions\index{file p
 
 \section{File paths \& naming conventions}
 
-All of the operating systems\index{operating systems} covered in this book use organize files in in hierarchical directories\index{directories}. To a large extent, `directories' can be thought of as the folders you usually see on your Windows or Mac desktop. They are called `hierarchical' because directories are located inside of other directories. Figure GET shows the hierarchical directory structure for a simple research project.
+All of the operating systems\index{operating systems} covered in this book use organize files in in hierarchical directories\index{directories} (or file trees). To a large extent, `directories' can be thought of as the folders you usually see on your Windows or Mac desktop. They are called `hierarchical' because directories are located inside of other directories. Figure \ref{ExampleTree} shows the hierarchical directory structure for a simple research project that is presented using an article and slideshow.
+
+\begin{figure}[th!]
+    \caption{Example Research Project File Tree}
+    \label{ExampleTree}
+    
+    %\input{/images3/ExampleFilePath.tex}
+    
+\end{figure}
 
 \subsection{Root directories}
 
@@ -765,6 +773,16 @@ All of the operating systems\index{operating systems} covered in this book use o
 \paragraph{Windows}
 
 \section{File navigation in RStudio}
+
+The RStudio {\bf{Files}} pane allows us to navigate and do some basic file manipulations. Figure \ref{FilesPane} shows us what this pane looks like.
+
+\begin{figure}[t!]
+    \caption{The RStudio Files Pane} \\[0.25cm]
+    \label{FilesPane}
+    \begin{center}    
+        \includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter4/images4/RStudioFiles.png}
+    \end{center}
+\end{figure}
 
 \section{R file manipulation commands}
 
@@ -784,9 +802,26 @@ You can use the {\tt{unlink}} command to delete a file, files, or directories.
 
 \section{Unix-like shell commands} 
 
+Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program to manipulate files in large projects. A command line shell program is simply a program that allows you to type commands to interact with your computer's operating system.\cite{ShottsJr2012} We will especially return to shell commands near the end of the book when we discuss Make files\index{Make files} for compiling large documents, and batch reports\index{batch reports}. We don't have enough space to properly get started with shell programs. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line\cite{ShottsJr2012} and for Windows users Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}.
+
+The one piece of general instruction I will give now is to highlight an important difference in the syntax between R and shell commands. In shell commands you don't need to put parentheses around your arguments. For example if we want to change our working directory to my Mac Desktop in a shell using the {\tt{cd}} command we simply type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+cd ~/Desktop
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\paragraph{{\tt{cd}}}
+
+As we just saw, to change the working directory in the shell can just use the {\tt{cd}}\index{cd} (change directory) command.
+
 \paragraph{{\tt{rm}}}
 
-The {\tt{rm}} command is similar to R's {\tt{unlink}} command. It deletes files or directories.
+The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It deletes files or directories.
 
 
 \part{Data Gathering and Storage}
@@ -1441,7 +1476,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Thu Aug 30 15:34:13 2012
+% Thu Aug 30 17:20:37 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}

@@ -22,7 +22,15 @@ In this chapter we cover the basics of file path naming conventions\index{file p
 
 \section{File paths \& naming conventions}
 
-All of the operating systems\index{operating systems} covered in this book use organize files in in hierarchical directories\index{directories}. To a large extent, `directories' can be thought of as the folders you usually see on your Windows or Mac desktop. They are called `hierarchical' because directories are located inside of other directories. Figure GET shows the hierarchical directory structure for a simple research project.
+All of the operating systems\index{operating systems} covered in this book use organize files in in hierarchical directories\index{directories} (or file trees). To a large extent, `directories' can be thought of as the folders you usually see on your Windows or Mac desktop. They are called `hierarchical' because directories are located inside of other directories. Figure \ref{ExampleTree} shows the hierarchical directory structure for a simple research project that is presented using an article and slideshow.
+
+\begin{figure}[th!]
+    \caption{Example Research Project File Tree}
+    \label{ExampleTree}
+    
+    %\input{/images3/ExampleFilePath.tex}
+    
+\end{figure}
 
 \subsection{Root directories}
 
@@ -37,6 +45,16 @@ All of the operating systems\index{operating systems} covered in this book use o
 \paragraph{Windows}
 
 \section{File navigation in RStudio}
+
+The RStudio {\bf{Files}} pane allows us to navigate and do some basic file manipulations. Figure \ref{FilesPane} shows us what this pane looks like.
+
+\begin{figure}[t!]
+    \caption{The RStudio Files Pane} \\[0.25cm]
+    \label{FilesPane}
+    \begin{center}    
+        \includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter4/images4/RStudioFiles.png}
+    \end{center}
+\end{figure}
 
 \section{R file manipulation commands}
 
@@ -56,6 +74,18 @@ You can use the {\tt{unlink}} command to delete a file, files, or directories.
 
 \section{Unix-like shell commands} 
 
+Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program to manipulate files in large projects. A command line shell program is simply a program that allows you to type commands to interact with your computer's operating system.\cite{ShottsJr2012} We will especially return to shell commands near the end of the book when we discuss Make files\index{Make files} for compiling large documents, and batch reports\index{batch reports}. We don't have enough space to properly get started with shell programs. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line\cite{ShottsJr2012} and for Windows users Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}.
+
+The one piece of general instruction I will give now is to highlight an important difference in the syntax between R and shell commands. In shell commands you don't need to put parentheses around your arguments. For example if we want to change our working directory to my Mac Desktop in a shell using the {\tt{cd}} command we simply type:
+
+<<Ch4ShellIntroExample, eval=FALSE>>=
+cd ~/Desktop
+@
+
+\paragraph{{\tt{cd}}}
+
+As we just saw, to change the working directory in the shell can just use the {\tt{cd}}\index{cd} (change directory) command.
+
 \paragraph{{\tt{rm}}}
 
-The {\tt{rm}} command is similar to R's {\tt{unlink}} command. It deletes files or directories.
+The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It deletes files or directories.
