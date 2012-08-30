@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 30 August 2012
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -62,9 +62,9 @@ To include dynamic code in an R Markdown document we use the backticks as be for
 
 \subsection{Sourcing R code from another file}
 
-There are a number of reasons that you might want to have your R source code located in a separate file from your markup even if you plan to compile them together with \emph{knitr}.
+There are a number of reasons that you might want to have your R source code located in a separate file from your markup even if you plan to compile them together with {\emph{knitr}}.
 
-First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code collapsing and chunk management options. There are just too many things going on in one document.
+First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy {\emph{knitr}} code collapsing and chunk management options. There are just too many things going on in one document.
 
 Second, you may want to use the same code in multiple documents--an
 article and presentation for example. It is nice to not have to copy and
@@ -82,32 +82,33 @@ compared to digging through long markup files.
 
 \subsubsection{Source from a local file}
 
-Usually in the early stages of research you may want to source analysis
-files located on your computer. Doing this is simple. The \texttt{knitr}
-syntax is the same as above. The only change is that instead of writing
-all of our code in the chunk we save it to its own file and use the
-\texttt{source} command in \emph{base} \textbf{R} to access it. For
-example:
+Usually in the early stages of research you may want to source analysis iles located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as above. The only change is that instead of writing all of our code in the chunk we save it to its own file and use the \texttt{source} command in \emph{base} R to access it. For example:
 
 \subsubsection{Source from a non-secure URL (\texttt{http})}
 
 Sourcing from your local computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to replicate your code, you need to
 use another method.\footnote{You can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a   pain if you are collaborating and each author has to constantly change the directories.}
 
-The simplest solution to these issues is to host the replication code in your \textbf{Dropbox} public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the \texttt{source} command the same way as before. For example:
+The simplest solution to these issues is to host the replication code in your Dropbox public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the \texttt{source} command the same way as before. For example:
 
 \subsubsection{Source from a secure URL (\texttt{https})}
 
-If you are using \textbf{GitHub} or another service that uses secure
-URLs the steps are generally the same, but you need to use the
-\texttt{source\_url} command in the \emph{devtools} package. For
-\textbf{GitHub} based source code we find the file's URL the same way we
-did in Chapter 6. Remember to get the URL for the \emph{raw} version of
-the file.
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files the steps are generally the same, but you need to use the \texttt{source\_url} command in the {\emph{devtools}} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatter plot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatter plot using {\tt{source\_url}} we simply type:
+
+<<Ch8SourceURLExample, messages=FALSE, warning=FALSE, fig.path='images8/', fig.width=3, fig.height=3>>=
+# Load library
+library(devtools)
+
+# Create object to hold URL
+URL <- "http://bit.ly/Ny1n6b"
+
+# Run the source code to create the scatter plot
+source_url(URL)
+@
 
 \section{Saving output objects for future use}
 
-\section{Including highlighted syntax in the output}
+\section{Literate Programming: Including highlighted syntax in the output}
 
 \subsection{\LaTeX}
 

@@ -11,6 +11,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 If you have rarely or never used R before the first two sections of this chapter give you enough information to be able to get started and understand the code I use in this book. For more detailed introductions to R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package and how it is integrated into RStudio.
 
+%%%%%%%%%%%%% Using R
 \section{Using R: the basics}
 
 This section covers some of the very basic syntax in R to get you started. If you have little experience with R, reading this section will make it much easier for you to follow along with the examples in the book. I cover the key components of the R language including:
@@ -37,7 +38,7 @@ You will probably have read that `R is an object-oriented\index{object-oriented}
 
 \paragraph{Numeric, String, Vector \& Dataframe Objects}
 
-Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\lessthan-}}. Let's assign the number 10 to our Number object.
+Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
 
 <<Ch3NumericObject>>=
 Number <- 10
@@ -82,6 +83,7 @@ This will be especially useful when we discuss making tables for presentation do
 
 Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. 
 
+%%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
 
 As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. 
@@ -97,21 +99,55 @@ As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio}
 
 RStudio integrates a number of different methods for literate programming. The most basic is 
 
+%%%%%%%%%%%%% Using knitr
 \section{Using knitr: the basics}
 
 For more advanced literate programming in R we can use the {\emph{knitr}}\index{{\emph{knitr}}} package.\footnote{The RStudio notebook actually also uses {\emph{knitr}}.} This package is highly integrated into RStudio. Throughout much of the book we cover many details about how to use {\emph{knitr}}. This section gives you a basic introduction to get started.
 
 \subsection{Code Chunks}
 
+\paragraph{Code chunk labels}
+
+\paragraph{Code chunk options}
+
+For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+
 \subsection{Code Chunk Options Markup Language Specific Syntax}
 
-The code chunk options discussed so are specifically for presentation documents written in Markdown syntax. 
+The code chunk options discussed so far are specifically for presentation documents written in Markdown syntax. Though the syntax for {\emph{knitr}} options is the same regardless of the markup language we use 
 
 \paragraph{Code Chunks in Markdown}
 
 \paragraph{Code Chunks in \LaTeX}
 
 \subsection{Global Options}
+
+So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks. If we want an option to apply to all of the chunks in our document we can set {\bf{global chunk options}}\index{global chunk options}. They options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure I set the option globally.
+
+To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the {\tt{\\begin{document}}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+
+Here is an example of how we could have all of the figures in a Markdown document created by {\emph{knitr}} code chunks center aligned. We place the following code at the beginning of the document:
+
+<<Ch3KnitGloabalOpt, eval=FALSE>>=
+```{r GlobalFigOpts, echo=FALSE}
+# Center align all knitr figures
+opts_chunk$set(fig.align='center')
+```
+@
+
+\subsection{knitr package options}
+
+Chunk options determine how we want to treat code chunks. We can also set package options\index{package options} that affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not we want a progress bar to be displayed when we knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+
+We set package options in a similar way to global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
+
+<<Ch3KnitPackageOpt, eval=FALSE>>=
+```{r GlobalFigOpts, echo=FALSE}
+# Turn off knitr progress bar
+opts_knit$set(progress=FALSE)
+```
+@
+
 
 \subsection{knitr \& Rstudio}
 

@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 27 August 2012
+% Updated: 30 August 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -114,9 +114,7 @@
 
 This book would not have been possible without the advice and support of a great many people.
 
-The developer and blogging community has been incredibly important for making this book possible. Foremost among among these people is Yihui Xie. He is the developer of the {\emph{knitr}} package (among others) and also an avid writer and reader of blogs. Without him the ability to do reproducible research would be much harder and the blogging community that spreads knowledge about how to do these things would be poorer. 
-
-Other important bloggers include Carl Boettiger (who also developed the {\emph{knitcitations}} package), Markus Gesmann (who developed {\emph{GoogleVis}}), Jeromy Anglim.
+The developer and blogging community has been incredibly important for making this book possible. Foremost among among these people is Yihui Xie. He is the developer of the {\emph{knitr}} package (among others) and also an avid writer and reader of blogs. Without him the ability to do reproducible research would be much harder and the blogging community that spreads knowledge about how to do these things would be poorer. Other great bloggers include Carl Boettiger (who also developed the {\emph{knitcitations}} package), Markus Gesmann (who developed {\emph{GoogleVis}}), Jeromy Anglim.
 
 The vibrant and very helpful community at Stack Overflow \url{http://stackoverflow.com/} is always very helpful for finding answers to small problems that plague any coder. Importantly it makes it easy for others to find these answers.
 
@@ -135,9 +133,6 @@ FILL IN
 
 \input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
 
-%<<ChildStylisticConventionDelete>>=
-%unlink("/git_repositories/Rep-Res-Book/temp.tex")
-%@
 \end{noindent}
 
 \listoffigures
@@ -208,7 +203,7 @@ In this book I we will focus on learning how to use widely available and highly 
     
     \item {\bf{Cloud storage \& versioning}}: Services such as Dropbox and Github that can store research, save and document previous versions, and make this information widely available.
     
-    \item {\bf{Unix-like command lines and shell scripts}}: These tools are useful for setting up and working with large research projects. They also allow us to use command line tools like Pandoc for converting documents from one markup language to another.
+    \item {\bf{Unix-like shell programs}}: These tools are useful for setting up and working with large research projects.\footnote{In this book I cover the Bash shell for Linux and Mac as well as Windows PowerShell.} They also allow us to use command line tools like Pandoc for converting documents from one markup language to another.
 \end{itemize}
 
 \section{Why use R/RStudio for reproducible research?}
@@ -302,7 +297,7 @@ In the same spirit, I encourage you to make your research files--not just data, 
 
 
 
-\chapter{Getting Started with Reproducible Research}
+\chapter{Getting Started with Reproducible Research}\label{GettingStarted}
 
 Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process and continuing to follow a few simple guidelines throughout your research can help solve these problems. 
 
@@ -389,7 +384,7 @@ The other tips and Many of the other One important part of documenting everythin
 
 Your documentation is stored in files that include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible to store this information. Usually the simplest file format is the the humble, but versatile, text file is the simplest file format.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
 
-Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values (\tt{.csv}}} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
+Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values6} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
 
 The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research.
 
@@ -397,7 +392,7 @@ Text files are also very easy to search and manipulate with a wide range of prog
 
 \subsection{All files should be human readable}
 
-Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. 
+Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. For especially important piece of code you should use {\bf{literate programming}} so that it is very clear to others how you accomplished a piece of research.
 
 \paragraph{Commenting}
 In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a comment declaration \index{comment declaration}. You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
@@ -442,14 +437,16 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  p{6cm}  p{4cm}}
+    \begin{tabular}{l c  p{6.5cm}  p{4cm}}
         \hline
         Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline
-        {\emph{knitr}} & R & Ties R commands into presentation documents & Discussed throughout the book \\
+        {\emph{knitr}} & R & R package with functions for tying R commands into presentation documents & Discussed throughout the book \\
         {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
         {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
+        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\
         {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\
+        {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\
         
         \hline 
         
@@ -472,6 +469,7 @@ The most dynamic way to do this is to explicitly link your files together using 
 
 If you have rarely or never used R before the first two sections of this chapter give you enough information to be able to get started and understand the code I use in this book. For more detailed introductions to R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package and how it is integrated into RStudio.
 
+%%%%%%%%%%%%% Using R
 \section{Using R: the basics}
 
 This section covers some of the very basic syntax in R to get you started. If you have little experience with R, reading this section will make it much easier for you to follow along with the examples in the book. I cover the key components of the R language including:
@@ -498,7 +496,7 @@ You will probably have read that `R is an object-oriented\index{object-oriented}
 
 \paragraph{Numeric, String, Vector \& Dataframe Objects}
 
-Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\lessthan-}}. Let's assign the number 10 to our Number object.
+Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -579,6 +577,7 @@ This will be especially useful when we discuss making tables for presentation do
 
 Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. 
 
+%%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
 
 As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. 
@@ -594,21 +593,65 @@ As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio}
 
 RStudio integrates a number of different methods for literate programming. The most basic is 
 
+%%%%%%%%%%%%% Using knitr
 \section{Using knitr: the basics}
 
 For more advanced literate programming in R we can use the {\emph{knitr}}\index{{\emph{knitr}}} package.\footnote{The RStudio notebook actually also uses {\emph{knitr}}.} This package is highly integrated into RStudio. Throughout much of the book we cover many details about how to use {\emph{knitr}}. This section gives you a basic introduction to get started.
 
 \subsection{Code Chunks}
 
+\paragraph{Code chunk labels}
+
+\paragraph{Code chunk options}
+
+For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+
 \subsection{Code Chunk Options Markup Language Specific Syntax}
 
-The code chunk options discussed so are specifically for presentation documents written in Markdown syntax. 
+The code chunk options discussed so far are specifically for presentation documents written in Markdown syntax. Though the syntax for {\emph{knitr}} options is the same regardless of the markup language we use 
 
 \paragraph{Code Chunks in Markdown}
 
 \paragraph{Code Chunks in \LaTeX}
 
 \subsection{Global Options}
+
+So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks. If we want an option to apply to all of the chunks in our document we can set {\bf{global chunk options}}\index{global chunk options}. They options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure I set the option globally.
+
+To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the {\tt{\\begin{document}}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+
+Here is an example of how we could have all of the figures in a Markdown document created by {\emph{knitr}} code chunks center aligned. We place the following code at the beginning of the document:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r GlobalFigOpts, echo=FALSE\}
+\hlcomment{# Center align all knitr figures}
+opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
+```
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{knitr package options}
+
+Chunk options determine how we want to treat code chunks. We can also set package options\index{package options} that affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not we want a progress bar to be displayed when we knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+
+We set package options in a similar way to global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r GlobalFigOpts, echo=FALSE\}
+\hlcomment{# Turn off knitr progress bar}
+opts_knit$\hlfunctioncall{set}(progress=FALSE)
+```
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
 
 \subsection{knitr \& Rstudio}
 
@@ -687,14 +730,63 @@ In R and RStudio you do not have to type out every command, argument, object, or
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 30 August 2012
 
 
 
 
 \chapter{Getting Started with File Management}\label{DirectoriesChapter}
 
+Careful file management is crucial for reproducible research. Apart from the fleeting situations where you have am email exchange (or even meet in person) someone interested in reproducing your research, the main information other researchers will have is stored across many files: data files, analysis files, and presentation files. If these files are well organized then replication will be easier. File management is also important for you as a researcher, because if your files are well organized you will be able to understand your work more easily. Remember two of the guidelines from Chapter \ref{GettingStarted}:
 
+\begin{itemize}
+    \item Reproducible research projects are many files explicitly tied together,
+    \item Have a plan to organize, store, and make your files available. 
+\end{itemize}
+
+Using tools such as R and markup languages like \LaTeX requires a bit more knowledge of how files are located--their {\bf{path}}\index{file path}--in your computer and on the internet than just knowing which graphical folder they are located in. Though more difficult to use at first than the typical point-and-click graphical user interface file handling systems you are probably familiar, R and Unix-like shell programs allow us to control files--creating, deleting, moving them--in powerful and reproducible ways. 
+
+In this chapter we cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to navigate through files in RStudio in the {\bf{Files}} pane as well as some basic R and Unix-like shell commands for manipulating files. The skills we learn in this chapter will be heavily used in the next Chapter (Gathering Data with R) and throughout the book.
+
+\section{File paths \& naming conventions}
+
+All of the operating systems\index{operating systems} covered in this book use organize files in in hierarchical directories\index{directories}. To a large extent, `directories' can be thought of as the folders you usually see on your Windows or Mac desktop. They are called `hierarchical' because directories are located inside of other directories. Figure GET shows the hierarchical directory structure for a simple research project.
+
+\subsection{Root directories}
+
+\subsection{Working directories}
+
+\section{Operating system-specific naming conventions}
+
+\paragraph{Unix}
+
+\paragraph{Mac}
+
+\paragraph{Windows}
+
+\section{File navigation in RStudio}
+
+\section{R file manipulation commands}
+
+All of the tasks we can accomplish in RStudio's {\bf{Files}} pane can also be accomplished using command line R. This allows us to more easily replicate our actions. 
+
+\paragraph{{\tt{setwd}}}
+
+The {\tt{setwd}} command sets the working directory.
+
+\paragraph{{\tt{dir.create}}}
+
+Sometimes we may want to create a new directory. We can use the {\tt{dir.create}} command to do this.
+
+\paragraph{{\tt{unlink}}}
+
+You can use the {\tt{unlink}} command to delete a file, files, or directories. 
+
+\section{Unix-like shell commands} 
+
+\paragraph{{\tt{rm}}}
+
+The {\tt{rm}} command is similar to R's {\tt{unlink}} command. It deletes files or directories.
 
 
 \part{Data Gathering and Storage}
@@ -766,30 +858,23 @@ To do this we need to:\footnote{The description of this process is based on a St
 
 The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain more than one file as well as metadata.
 
-Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}
+Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, but I shortened it\footnote{I used the website \url{bitly.com} to shorten the URL.} to \url{http://bit.ly/S0vxk2} to cut down on the text I have to include in the code.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcomment{# For simplicity, store the URL in an object called \hlstring{'url'}.}
-url <- \hlstring{"http://www.unified-democracy-scores.org/files/uds_summary.csv.gz"}
+url <- \hlstring{"http://bit.ly/S0vxk2"}
 
-\hlcomment{# Create a temporary file called \hlstring{'temp'} to put the zip file}
-\hlcomment{# into.}
+\hlcomment{# Create a temporary file called \hlstring{'temp'} to put the zip file into.}
 temp <- \hlfunctioncall{tempfile}()
 
 \hlcomment{# Download the compressed file into the temporary file.}
 \hlfunctioncall{download.file}(url, temp)
 
-\hlcomment{# Decompress the file and convert it into a dataframe class}
-\hlcomment{# object called \hlstring{'data'}.}
+\hlcomment{# Decompress the file and convert it into a dataframe}
+\hlcomment{# class object called \hlstring{'data'}.}
 data <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
-\end{alltt}
-
-
-{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal error}}
-
-{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: seek on a gzfile connection returned an internal error}}\begin{alltt}
 
 \hlcomment{# Delete the temporary file.}
 \hlfunctioncall{unlink}(temp)
@@ -1062,7 +1147,7 @@ tutorial that you might find interesting. You can find it at:
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 30 August 2012
 
 
 
@@ -1135,9 +1220,9 @@ To include dynamic code in an R Markdown document we use the backticks as be for
 
 \subsection{Sourcing R code from another file}
 
-There are a number of reasons that you might want to have your R source code located in a separate file from your markup even if you plan to compile them together with \emph{knitr}.
+There are a number of reasons that you might want to have your R source code located in a separate file from your markup even if you plan to compile them together with {\emph{knitr}}.
 
-First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code collapsing and chunk management options. There are just too many things going on in one document.
+First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy {\emph{knitr}} code collapsing and chunk management options. There are just too many things going on in one document.
 
 Second, you may want to use the same code in multiple documents--an
 article and presentation for example. It is nice to not have to copy and
@@ -1155,32 +1240,44 @@ compared to digging through long markup files.
 
 \subsubsection{Source from a local file}
 
-Usually in the early stages of research you may want to source analysis
-files located on your computer. Doing this is simple. The \texttt{knitr}
-syntax is the same as above. The only change is that instead of writing
-all of our code in the chunk we save it to its own file and use the
-\texttt{source} command in \emph{base} \textbf{R} to access it. For
-example:
+Usually in the early stages of research you may want to source analysis iles located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as above. The only change is that instead of writing all of our code in the chunk we save it to its own file and use the \texttt{source} command in \emph{base} R to access it. For example:
 
 \subsubsection{Source from a non-secure URL (\texttt{http})}
 
 Sourcing from your local computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to replicate your code, you need to
 use another method.\footnote{You can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a   pain if you are collaborating and each author has to constantly change the directories.}
 
-The simplest solution to these issues is to host the replication code in your \textbf{Dropbox} public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the \texttt{source} command the same way as before. For example:
+The simplest solution to these issues is to host the replication code in your Dropbox public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the \texttt{source} command the same way as before. For example:
 
 \subsubsection{Source from a secure URL (\texttt{https})}
 
-If you are using \textbf{GitHub} or another service that uses secure
-URLs the steps are generally the same, but you need to use the
-\texttt{source\_url} command in the \emph{devtools} package. For
-\textbf{GitHub} based source code we find the file's URL the same way we
-did in Chapter 6. Remember to get the URL for the \emph{raw} version of
-the file.
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files the steps are generally the same, but you need to use the \texttt{source\_url} command in the {\emph{devtools}} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatter plot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatter plot using {\tt{source\_url}} we simply type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load library}
+\hlfunctioncall{library}(devtools)
+
+\hlcomment{# Create object to hold URL}
+URL <- \hlstring{"http://bit.ly/Ny1n6b"}
+
+\hlcomment{# Run the source code to create the scatter plot}
+\hlfunctioncall{source_url}(URL)
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{images8/Ch8SourceURLExample} 
+
+}
+
+
+\end{knitrout}
+
 
 \section{Saving output objects for future use}
 
-\section{Including highlighted syntax in the output}
+\section{Literate Programming: Including highlighted syntax in the output}
 
 \subsection{\LaTeX}
 
@@ -1344,7 +1441,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Wed Aug 29 17:23:34 2012
+% Thu Aug 30 15:34:13 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1555,7 +1652,8 @@ We will cover three methods for including child documents into our parent docume
 
 \subsection{Parent documents}
 
-
+\paragraph{knitr global options}
+{\emph{knitr}} global chunk options\index{global chunk options} and package options\index{package options} should be set at the beginning of the parent document if you want them to apply to the entire presentation document. 
 
 \subsection{Child documents}
 
