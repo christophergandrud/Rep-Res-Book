@@ -80,6 +80,8 @@
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage{tikz}
+\usetikzlibrary{trees}
+
 
 
 
@@ -444,9 +446,9 @@ In R everything on a line after a {\tt{#}} hash (number) character is ignored by
 \end{knitrout}
 
 
-Because on the first line the {\tt{\#}} is placed at the very beginning, the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation {\tt{2 + 2}}. R runs the equation as usual and fines the answer {\tt{4}}. But it ignores all of the words after the {\tt{\#}}. 
+Because on the first line the {\tt{\#}} is placed at the very beginning, the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation {\tt{2 + 2}}. R runs the equation as usual and fines the answer {\tt{4}}, but it ignores all of the words after the hash. 
 
-\noindent Different languages have different comment declaration characters. In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
+Different languages have different comment declaration characters. In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
 
 \paragraph{Style guides}
 In natural language writing you don't necessarily need to follow a \index{style guide} for things such as punctuation. People could probably figure out what you are saying. But it would be a lot easier for your readers if you use consistent rules. The same is true when writing R code. It's good to follow consistent rules for formatting your code so that:
@@ -820,9 +822,11 @@ The RStudio {\bf{Files}} pane allows us to navigate and do some basic file manip
 \begin{figure}[t!]
     \caption{The RStudio Files Pane} \\[0.25cm]
     \label{FilesPane}
-    \begin{center}    
+    \begin{landscape}
+        \begin{center}    
         \includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter4/images4/RStudioFiles.png}
-    \end{center}
+        \end{center}
+    \end{landscape}
 \end{figure}
 
 \section{R file manipulation commands}
@@ -1515,7 +1519,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Fri Aug 31 12:12:36 2012
+% Fri Aug 31 12:53:49 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}

@@ -1,33 +1,50 @@
 \documentclass{article}
 
 \usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{pdflscape}
+
 
 \begin{document}
+\begin{landscape}
 
 %%%%%% Example 
 
-\tikzstyle{DirBox} = [draw=black, rectangle, minimum width=5em, thick]
+\tikzstyle{DirBox} = [draw=black, rectangle, minimum width=5em, very thick]
+\tikzstyle{every node} = [draw=gray, thin, anchor=west]
   
-\begin{tikzpicture}
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
   % Root Directory
   \node (root) at (5, 10) [DirBox]{Root};
   
   % Project Directory
-  \node (project) at (5, 8.5) [DirBox]{Project};
+  \node (project) at (4.55, 8.5) [DirBox]{ExampleProject};
   
   % Main Project sub-directories
-  \node (data) at (2, 7) [DirBox]{Data};
+  \node (data) at (-3, 7) [DirBox]{Data};
   \node (analysis) at (5, 7) [DirBox]{Analysis};
   \node (presentation) at (8, 7) [DirBox]{Presentation};
   
   % Data subdirectories/files
-  \node (dataGatherSource) at (-0.5, 6) [DirBox]{GatherSource};  
-  \node (dataFiles) at (2, 6) [DirBox]{DataFiles};
-  
-  \node (dataMake) at (-0.5, 5.25) {{\small{DataMakeFile.R}}};
-  
-  \node(dataGather) at (-0.5, 4.5) [DirBox]{IndvDataGather};
-  \node (dataGather1) at (-0.5, 3.5) {{\small{DataGather1.R}}};
+  \node (dataGatherSource) at (-6, 6) [DirBox]{GatherSource}
+        child {node {{\small{DataMakeFile.R}}}}  
+        child {node [DirBox]{IndvDataGather}
+          child {node {{\small{Gather1.R}}}}
+          child {node {{\small{Gather2.R}}}}
+          child {node {{\small{Gather3.R}}}}
+          };
+          
+  \node (dataFiles) at (0, 6) [DirBox]{DataFiles}
+        child {node {{\small{MainData.csv}}}}
+        child {node [DirBox]{IndvData}
+          child {node {{\small{Data1.csv}}}}
+          child {node {{\small{Data2.csv}}}}
+          child {node {{\small{Data3.csv}}}}
+          };
+
   
   % Analysis subdirectores/files
   
@@ -41,11 +58,10 @@
   
   %% Data connect boxes
   \draw (data) -| (dataGatherSource);
-  \draw (data) -- (dataFiles);
-  \draw (dataGatherSource) -- (dataMake);
+  \draw (data) -| (dataFiles);
   
 \end{tikzpicture}
 
 
-
+\end{landscape}
 \end{document}
