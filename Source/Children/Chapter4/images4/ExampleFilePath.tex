@@ -6,10 +6,44 @@
 
 %%%%%% Example 
 
-\tikzstyle{DirectoryBox} = [draw=rectangle, thick]
+\tikzstyle{DirBox} = [draw=black, rectangle, minimum width=5em, thick]
   
 \begin{tikzpicture}
-
+  % Root Directory
+  \node (root) at (5, 10) [DirBox]{Root};
+  
+  % Project Directory
+  \node (project) at (5, 8.5) [DirBox]{Project};
+  
+  % Main Project sub-directories
+  \node (data) at (2, 7) [DirBox]{Data};
+  \node (analysis) at (5, 7) [DirBox]{Analysis};
+  \node (presentation) at (8, 7) [DirBox]{Presentation};
+  
+  % Data subdirectories/files
+  \node (dataGatherSource) at (-0.5, 6) [DirBox]{GatherSource};  
+  \node (dataFiles) at (2, 6) [DirBox]{DataFiles};
+  
+  \node (dataMake) at (-0.5, 5.25) {{\small{DataMakeFile.R}}};
+  
+  \node(dataGather) at (-0.5, 4.5) [DirBox]{IndvDataGather};
+  \node (dataGather1) at (-0.5, 3.5) {{\small{DataGather1.R}}};
+  
+  % Analysis subdirectores/files
+  
+  % Presentation subdirectories/files
+  
+  % Connect boxes
+  \draw (root) -- (project);
+  \draw (project) -| (data);
+  \draw (project) -- (analysis);
+  \draw (project) -| (presentation);
+  
+  %% Data connect boxes
+  \draw (data) -| (dataGatherSource);
+  \draw (data) -- (dataFiles);
+  \draw (dataGatherSource) -- (dataMake);
+  
 \end{tikzpicture}
 
 

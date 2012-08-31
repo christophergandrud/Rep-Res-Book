@@ -77,14 +77,16 @@ Text files are also very easy to search and manipulate with a wide range of prog
 Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. For especially important piece of code you should use {\bf{literate programming}} so that it is very clear to others how you accomplished a piece of research.
 
 \paragraph{Commenting}
-In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a comment declaration \index{comment declaration}. You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
+In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{#}} to place comments telling other people what you are doing. Here are some examples:
 
 <<Ch2CommentHash>>=
 # A complete comment line
 2 + 2 # A comment after R code
 @
 
-\noindent In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}.
+Because on the first line the {\tt{\#}} is placed at the very beginning, the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation {\tt{2 + 2}}. R runs the equation as usual and fines the answer {\tt{4}}, but it ignores all of the words after the hash. 
+
+Different languages have different comment declaration characters. In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
 
 \paragraph{Style guides}
 In natural language writing you don't necessarily need to follow a \index{style guide} for things such as punctuation. People could probably figure out what you are saying. But it would be a lot easier for your readers if you use consistent rules. The same is true when writing R code. It's good to follow consistent rules for formatting your code so that:
@@ -111,7 +113,7 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  p{6.5cm}  p{4cm}}
+    \begin{tabular}{l c  p{6.5cm}  m{4cm}}
         \hline
         Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline

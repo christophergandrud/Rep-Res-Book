@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 July 2012
+% Updated: 31 August 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -17,9 +17,7 @@ Before getting into the details of using R to automate data gathering, lets's st
 
 A key principle of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common Make file. The Make file's output is the data set(s) that we use in the statistical analyses. There are two types of files that the Make file runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merge with data from the other sources. Some of the R tools for data clean up were covered in Chapter 3. In this chapter we mostly cover the ways to bring raw data into R. We don't explicitly cover the process of merging data sets together in this book GET CITE. Merging files are executed by the Make file after it runs the clean up files.
 
-Data gathering Make files usually only need one or two commands {\tt{setwd}} and {\tt{source}}. As we talked about in the previous chapter, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in some file.\footnote{The {\tt{source}} command is used more in the Chapter 8.} 
-
-If we plan to gather data from two different data sources--DATA1 and DATA2--stored in the directory DIRECTORY our Make file might look like this:
+Data gathering Make files usually only need one or two commands {\tt{setwd}} and {\tt{source}}. As we talked about in the previous chapter, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in some file.\footnote{The {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  If we plan to gather data from two different data sources--DATA1 and DATA2--stored in the directory DIRECTORY our Make file might look like this:
 
 <<Ch5ExampleMake, error=FALSE, eval=FALSE, tidy=FALSE>>=
 # Example Make file

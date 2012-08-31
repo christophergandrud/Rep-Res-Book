@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 30 August 2012
+% Updated: 31 August 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -57,10 +57,13 @@
 \begin{noindent}
 
 <<ChildStylisticConventions, echo=FALSE, messages=FALSE, results='hide'>>=
-system("pandoc /git_repositories/Rep-Res-Book/StylisticConventions.md -t latex -o /git_repositories/Rep-Res-Book/Temp/StyleTemp.tex", intern = TRUE)
+system("pandoc /git_repositories/Rep-Res-Book/Source/FrontMatter/StylisticConventions.md -t latex -o /git_repositories/Rep-Res-Book/Temp/StyleTemp.tex", intern = TRUE)
 @
 
 \input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
+
+<<ChildFrontPackages, child=c('/git_repositories/Rep-Res-Book/Source/FrontMatter/Packages.Rnw')>>=
+@
 
 \end{noindent}
 
@@ -95,7 +98,7 @@ system("pandoc /git_repositories/Rep-Res-Book/StylisticConventions.md -t latex -
 
 
 \bibliographystyle{plain}
-\bibliography{/git_repositories/Rep-Res-Book/Source/rep-res-book.bib}
+\bibliography{/git_repositories/Rep-Res-Book/Source/rep-res-book.bib,/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib}
 
 \clearpage
 \printindex

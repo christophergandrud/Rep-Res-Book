@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 August 2012
+% Updated: 31 August 2012
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -23,13 +23,14 @@ This section covers some of the very basic syntax in R to get you started. If yo
     \item libraries.
 \end{itemize}
 
-Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreaterthan}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
+Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreater}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
 
 \begin{figure}[th!]
     \caption{R Startup Console}
     \label{RBlankMain}
-
-    \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankRConsole.png}
+    \begin{center}
+    \includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankRConsole.png}
+    \end{center}
 \end{figure}
 
 \subsection{Objects}
@@ -63,7 +64,7 @@ An object's class is important to keep in mind as it determines what things we c
 mean(Words)
 @
 
-\noindent Trying to find the mean of our {\emph{Words}} object gave us an error message and returned the value {\tt{NA}}\index{\textt{NA}}: not applicable. You can also think of {\tt{NA}} to mean missing. To find out what class an object has use the {\tt{class}} command. For example:
+\noindent Trying to find the mean of our {\emph{Words}} object gave us a warning message and returned the value {\tt{NA}}\index{NA}: not applicable. You can also think of {\tt{NA}} to mean missing. To find out what class an object has use the {\tt{class}} command. For example:
 
 <<Ch3ClassCommand>>=
 class(Words)
@@ -81,6 +82,8 @@ This will be especially useful when we discuss making tables for presentation do
 
 \subsection{Loading new commands from libraries}
 
+You can install new user-written packages using the {\tt{install.packages}} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. To install all of the package libraries used in this book see \ref{ReqPackages}.
+
 Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. 
 
 %%%%%%%%%%%%%%% Using RStudio
@@ -91,8 +94,9 @@ As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio}
 \begin{figure}[ht]
     \caption{RStudio Startup Panel}
     \label{BlankMain}
-
+    \begin{center}
     \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankMainPanel.png}
+    \end{center}
 \end{figure}
 
 \paragraph{Compile Notebook}
@@ -137,7 +141,7 @@ opts_chunk$set(fig.align='center')
 
 \subsection{knitr package options}
 
-Chunk options determine how we want to treat code chunks. We can also set package options\index{package options} that affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not we want a progress bar to be displayed when we knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+Chunk options determine how we want to treat code chunks. We can also set package options\index{package options} that affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not we want a progress bar\index{progress bar} to be displayed when we knit a code chunk.\footnote{The {\emph{knitr}} progress bar looks like this {\tt{|>>>>>>| 100\%}} and indicates how much of a code chunk has been run.} You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
 We set package options in a similar way to global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
 

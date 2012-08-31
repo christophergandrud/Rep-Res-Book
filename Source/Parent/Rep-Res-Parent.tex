@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 30 August 2012
+% Updated: 31 August 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -133,6 +133,35 @@ FILL IN
 
 \input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
 
+
+
+
+\chapter*{Required R Packages}\label{ReqPackages}
+
+This book discusses how to use a number of user-written R packages for reproducible research. These are not included in the default R installation (see Section \ref{InstallR}). They need to be installed installed separately. To install all of the user-written packages discussed in this book use the following code:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{install.packages}(\hlstring{"apsrtable"}, 
+                \hlstring{"devtools"}, 
+                \hlstring{"ggplot2"}, 
+                \hlstring{"knitr"}, 
+                \hlstring{"knitcitations"}, 
+                \hlstring{"markdown"}, 
+                \hlstring{"openair"}, 
+                \hlstring{"texreg"},                     
+                \hlstring{"xtable"}, 
+                \hlstring{"Zelig"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+
+
+
+
 \end{noindent}
 
 \listoffigures
@@ -190,7 +219,7 @@ Industry practitioners may or may not want to make their work easily reproducibl
 
 This book will teach you the tools you need to make your research highly reproducible. Reproducible (quantitative) research involves two broad sets of tools. The first is a {\bf{reproducible research environment}} that includes the statistical tools you need to run your analyses as well as ``the ability to automatically track the provenance of data, analyses, and results and to package them (or pointers to persistant versions of them) for redistribution". The second set of tools is a {\bf{reproducible research publisher}} that prepares documents to present the results and is easily linked to the reproducible research environment.\cite{Mesirov2010}
 
-In this book I we will focus on learning how to use widely available and highly flexible reproducible research environment--R/RStudio. R/RStudio can be linked to numerous reproducible research publishers with Yihui Xie's {\emph{knitr}} package. The full list of tools tools covered in this book include:
+In this book I we will focus on learning how to use widely available and highly flexible reproducible research environment--R/RStudio. R/RStudio can be linked to numerous reproducible research publishers with Yihui Xie's {\emph{knitr}} package\cite{knitr}. The full list of tools tools covered in this book include:
 
 \begin{itemize}
     \item {\bf{R}}: a programming language primarily for statistics and graphics. It can also be used for data gathering and creating presentation documents.
@@ -223,7 +252,7 @@ want to work on the text). It can spell check \LaTeX documents. It handles \text
 
 Finally, RStudio not only has tight integration with various markup languages, it also integrates other tools such as CSS, JavaScript, and a few other programming languages as well as being closely integrated with the version control programs git and SVN. Both of these programs allow you to keep track of the changes you make to your documents. This is important for reproducible research since the version control program is documenting many of the the steps you took to make your project. As with many tools of reproducible research, version control has other benefits for making researchers' lives easier. Maybe most importantly, when you keep your documents under version control you can go back to older versions. This is useful if you accidentally delete an important paragraph, for example.
 
-\subsection{Installing the Software}
+\subsection{Installing the Software}\lable{InstallR}
 
 Before you read this book you should install the software. All of the software covered in detail in this book is open source programs and can be easily downloaded for free. It is available for Windows\index{Windows}, Mac\index{Mac}, and Unix\index{Unix}. They should run well on most modern computers. 
 
@@ -235,6 +264,8 @@ You should install R before installing RStudio. You can down load the programs f
 \end{itemize}
 
 \noindent The download webpages for these programs have comprehensive information on how to install them, so please refer to those pages for more information.
+
+After installing R and RStudio you will probably want to additionally install a number of user-written packages that are covered in this book. To install all of these user-written packages, please see the \ref{ReqPackages}.
 
 \paragraph{Installing markup languages}
 
@@ -357,11 +388,14 @@ The other tips and Many of the other One important part of documenting everythin
 ## [6] methods   base     
 ## 
 ## other attached packages:
-## [1] knitr_0.7.9
+## [1] knitcitations_0.1-0 bibtex_0.3-0       
+## [3] knitr_0.7.9        
 ## 
 ## loaded via a namespace (and not attached):
-## [1] digest_0.5.2   evaluate_0.4.2 formatR_0.6   
-## [4] plyr_1.7.1     stringr_0.6.1  tools_2.15.1
+##  [1] RCurl_1.91-1    XML_3.9-4       codetools_0.2-8
+##  [4] digest_0.5.2    evaluate_0.4.2  formatR_0.6    
+##  [7] pkgmaker_0.8    plyr_1.7.1      stringr_0.6.1  
+## [10] tools_2.15.1    xtable_1.7-0
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -395,7 +429,7 @@ Text files are also very easy to search and manipulate with a wide range of prog
 Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. For especially important piece of code you should use {\bf{literate programming}} so that it is very clear to others how you accomplished a piece of research.
 
 \paragraph{Commenting}
-In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. This is called a comment declaration \index{comment declaration}. You can use the {\tt{#}} to place comments telling other people what you are doing.\footnote{The hash character is also used this way in shell scripts.} Here are some examples:
+In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{#}} to place comments telling other people what you are doing. Here are some examples:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -410,7 +444,9 @@ In R everything on a line after a {\tt{#}} hash (number) character is ignored by
 \end{knitrout}
 
 
-\noindent In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}.
+Because on the first line the {\tt{\#}} is placed at the very beginning, the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation {\tt{2 + 2}}. R runs the equation as usual and fines the answer {\tt{4}}. But it ignores all of the words after the {\tt{\#}}. 
+
+\noindent Different languages have different comment declaration characters. In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
 
 \paragraph{Style guides}
 In natural language writing you don't necessarily need to follow a \index{style guide} for things such as punctuation. People could probably figure out what you are saying. But it would be a lot easier for your readers if you use consistent rules. The same is true when writing R code. It's good to follow consistent rules for formatting your code so that:
@@ -437,7 +473,7 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  p{6.5cm}  p{4cm}}
+    \begin{tabular}{l c  p{6.5cm}  m{4cm}}
         \hline
         Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline
@@ -460,7 +496,7 @@ The most dynamic way to do this is to explicitly link your files together using 
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 August 2012
+% Updated: 31 August 2012
 
 
 
@@ -481,13 +517,14 @@ This section covers some of the very basic syntax in R to get you started. If yo
     \item libraries.
 \end{itemize}
 
-Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreaterthan}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
+Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreater}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
 
 \begin{figure}[th!]
     \caption{R Startup Console}
     \label{RBlankMain}
-
-    \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankRConsole.png}
+    \begin{center}
+    \includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankRConsole.png}
+    \end{center}
 \end{figure}
 
 \subsection{Objects}
@@ -549,7 +586,7 @@ An object's class is important to keep in mind as it determines what things we c
 \end{knitrout}
 
 
-\noindent Trying to find the mean of our {\emph{Words}} object gave us an error message and returned the value {\tt{NA}}\index{\textt{NA}}: not applicable. You can also think of {\tt{NA}} to mean missing. To find out what class an object has use the {\tt{class}} command. For example:
+\noindent Trying to find the mean of our {\emph{Words}} object gave us a warning message and returned the value {\tt{NA}}\index{NA}: not applicable. You can also think of {\tt{NA}} to mean missing. To find out what class an object has use the {\tt{class}} command. For example:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -575,6 +612,8 @@ This will be especially useful when we discuss making tables for presentation do
 
 \subsection{Loading new commands from libraries}
 
+You can install new user-written packages using the {\tt{install.packages}} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. To install all of the package libraries used in this book see \ref{ReqPackages}.
+
 Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. 
 
 %%%%%%%%%%%%%%% Using RStudio
@@ -585,8 +624,9 @@ As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio}
 \begin{figure}[ht]
     \caption{RStudio Startup Panel}
     \label{BlankMain}
-
+    \begin{center}
     \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/BlankMainPanel.png}
+    \end{center}
 \end{figure}
 
 \paragraph{Compile Notebook}
@@ -636,7 +676,7 @@ opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
 
 \subsection{knitr package options}
 
-Chunk options determine how we want to treat code chunks. We can also set package options\index{package options} that affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not we want a progress bar to be displayed when we knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+Chunk options determine how we want to treat code chunks. We can also set package options\index{package options} that affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not we want a progress bar\index{progress bar} to be displayed when we knit a code chunk.\footnote{The {\emph{knitr}} progress bar looks like this {\tt{|>>>>>>| 100\%}} and indicates how much of a code chunk has been run.} You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
 We set package options in a similar way to global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
 
@@ -755,9 +795,10 @@ All of the operating systems\index{operating systems} covered in this book use o
 \begin{figure}[th!]
     \caption{Example Research Project File Tree}
     \label{ExampleTree}
+    \begin{center}
     
     %\input{/images3/ExampleFilePath.tex}
-    
+    \end{center}
 \end{figure}
 
 \subsection{Root directories}
@@ -829,7 +870,7 @@ The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It dele
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 July 2012
+% Updated: 31 August 2012
 
 
 
@@ -844,9 +885,7 @@ Before getting into the details of using R to automate data gathering, lets's st
 
 A key principle of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common Make file. The Make file's output is the data set(s) that we use in the statistical analyses. There are two types of files that the Make file runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merge with data from the other sources. Some of the R tools for data clean up were covered in Chapter 3. In this chapter we mostly cover the ways to bring raw data into R. We don't explicitly cover the process of merging data sets together in this book GET CITE. Merging files are executed by the Make file after it runs the clean up files.
 
-Data gathering Make files usually only need one or two commands {\tt{setwd}} and {\tt{source}}. As we talked about in the previous chapter, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in some file.\footnote{The {\tt{source}} command is used more in the Chapter 8.} 
-
-If we plan to gather data from two different data sources--DATA1 and DATA2--stored in the directory DIRECTORY our Make file might look like this:
+Data gathering Make files usually only need one or two commands {\tt{setwd}} and {\tt{source}}. As we talked about in the previous chapter, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in some file.\footnote{The {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  If we plan to gather data from two different data sources--DATA1 and DATA2--stored in the directory DIRECTORY our Make file might look like this:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1300,9 +1339,7 @@ URL <- \hlstring{"http://bit.ly/Ny1n6b"}
 \hlcomment{# Run the source code to create the scatter plot}
 \hlfunctioncall{source_url}(URL)
 \end{alltt}
-
-
-{\ttfamily\noindent\itshape\textcolor{messagecolor}{\#\# Find out what's changed in ggplot2 with\\\#\# news(Version == "0.9.1", package = "ggplot2")}}\end{kframe}
+\end{kframe}
 
 {\centering \includegraphics[width=\maxwidth]{images8/Ch8SourceURLExample} 
 
@@ -1478,7 +1515,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Thu Aug 30 17:33:32 2012
+% Fri Aug 31 12:12:36 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1803,7 +1840,7 @@ For example,
 
 
 \bibliographystyle{plain}
-\bibliography{/git_repositories/Rep-Res-Book/Source/rep-res-book.bib}
+\bibliography{/git_repositories/Rep-Res-Book/Source/rep-res-book.bib,/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib}
 
 \clearpage
 \printindex
