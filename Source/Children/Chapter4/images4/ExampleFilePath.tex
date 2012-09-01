@@ -1,14 +1,8 @@
-\documentclass{article}
-
-\usepackage{tikz}
-\usetikzlibrary{trees}
-\usepackage{pdflscape}
-
-
-\begin{document}
-\begin{landscape}
-
-%%%%%% Example 
+%%%%%%%%%%%%%%
+% Example research project file path
+% Christopher Gandrud
+% Updated 1 September 2012
+%%%%%%%%%%%%%%
 
 \tikzstyle{DirBox} = [draw=black, rectangle, minimum width=5em, very thick]
 \tikzstyle{every node} = [draw=gray, thin, anchor=west]
@@ -24,12 +18,20 @@
   \node (project) at (4.55, 8.5) [DirBox]{ExampleProject};
   
   % Main Project sub-directories
-  \node (data) at (-3, 7) [DirBox]{Data};
-  \node (analysis) at (5, 7) [DirBox]{Analysis};
-  \node (presentation) at (8, 7) [DirBox]{Presentation};
+  \node (data) at (0, 7) [DirBox]{Data};
+  \node (presentation) at (11.5, 7) [DirBox]{Presentation};
   
+  % Analysis subdirectores/files
+  \node (analysis) at (5, 7) [DirBox]{Analysis}
+          child {node {{\small{MainAnalysis.R}}}}
+          child { node [DirBox]{ResultsFigures}
+            child {node {{\small{Figure1.R}}}}
+            child {node {{\small{Figure2.R}}}}
+            child {node {{\small{Figure3.R}}}}
+            };
+
   % Data subdirectories/files
-  \node (dataGatherSource) at (-6, 6) [DirBox]{GatherSource}
+  \node (dataGatherSource) at (-2.5, 6) [DirBox]{GatherSource}
         child {node {{\small{DataMakeFile.R}}}}  
         child {node [DirBox]{IndvDataGather}
           child {node {{\small{Gather1.R}}}}
@@ -37,20 +39,34 @@
           child {node {{\small{Gather3.R}}}}
           };
           
-  \node (dataFiles) at (0, 6) [DirBox]{DataFiles}
+  \node (dataFiles) at (2, 6) [DirBox]{DataFiles}
         child {node {{\small{MainData.csv}}}}
         child {node [DirBox]{IndvData}
           child {node {{\small{Data1.csv}}}}
           child {node {{\small{Data2.csv}}}}
           child {node {{\small{Data3.csv}}}}
           };
-
-  
-  % Analysis subdirectores/files
   
   % Presentation subdirectories/files
+  \node (article) at (9.5, 6) [DirBox]{Article}
+          child {node {{\small{Paper.Rnw}}}}
+          child {node {{\small{Bibliograph.bib}}}}
+          child {node [DirBox]{figures}
+            child {node {{\small{Figure1.pdf}}}}
+            child {node {{\small{Figure2.pdf}}}}
+            child {node {{\small{Figure3.pdf}}}}
+          };
   
-  % Connect boxes
+  \node (other) at (13.5, 6) [DirBox]{Other}
+        child {node [DirBox]{Slideshow}
+          child {node {{\small{Slideshow.Rnw}}}}}
+        child [missing] {}
+        child {node [DirBox]{Website}
+          child {node {{\small{Website.md}}}}
+          child {node {{\small{Website.html}}}}
+          };
+  
+  % Connect boxes that are not explicit children
   \draw (root) -- (project);
   \draw (project) -| (data);
   \draw (project) -- (analysis);
@@ -60,8 +76,8 @@
   \draw (data) -| (dataGatherSource);
   \draw (data) -| (dataFiles);
   
+  %% Presentation connect boxes
+  \draw (presentation) -| (article);
+  \draw (presentation) -| (other);
+  
 \end{tikzpicture}
-
-
-\end{landscape}
-\end{document}
