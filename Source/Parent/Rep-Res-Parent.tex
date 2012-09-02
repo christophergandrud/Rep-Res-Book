@@ -656,6 +656,12 @@ The code chunk options discussed so far are specifically for presentation docume
 
 \paragraph{Code Chunks in \LaTeX}
 
+\LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}}.\cite{Leisch2002} More recent versions of {\tt{knitr}} support files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
+
+\noindent {\bf{.Rnw-style}} \\[0.25cm]
+
+\noindent {\bf{.Rtex-style}} \\[0.25cm]
+
 \subsection{Global Options}
 
 So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks. If we want an option to apply to all of the chunks in our document we can set {\bf{global chunk options}}\index{global chunk options}. They options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure I set the option globally.
@@ -1184,18 +1190,10 @@ temp <- \hlfunctioncall{tempfile}()
 
 \hlcomment{# Download the compressed file into the temporary file.}
 \hlfunctioncall{download.file}(url, temp)
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: cannot open URL 'http://bit.ly/S0vxk2'}}\begin{alltt}
 
 \hlcomment{# Decompress the file and convert it into a dataframe}
 \hlcomment{# class object called \hlstring{'data'}.}
 data <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no lines available in input}}\begin{alltt}
 
 \hlcomment{# Delete the temporary file.}
 \hlfunctioncall{unlink}(temp)
@@ -1380,9 +1378,13 @@ URL <- \hlstring{"http://bit.ly/Ny1n6b"}
 \hlcomment{# Run the source code to create the scatter plot}
 \hlfunctioncall{source_url}(URL)
 \end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{images8/Ch8SourceURLExample} 
+
+}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: Could not resolve host: bit.ly; nodename nor servname provided, or not known}}\end{kframe}
 \end{knitrout}
 
 
@@ -1552,7 +1554,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Sun Sep  2 14:33:54 2012
+% Sun Sep  2 18:46:26 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1617,7 +1619,7 @@ The most important \texttt{knitr} chunk option for showing the markup created by
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 2 September 2012
 
 
 
@@ -1628,7 +1630,31 @@ The most important \texttt{knitr} chunk option for showing the markup created by
 
 \subsection{Editors}
 
-\subsection{The Header}
+As I mentioned earlier, RStudio is an fully functional \LaTeX editor as well as an integrated development environment for R. Of course it is oriented towards combining R and \LaTeX. If you want to create a new \LaTeX document you can go to {\tt{File}} \rightarrow {\tt{New}} \rightarrow {\tt{R Sweave}}. 
+
+Remember from Chapter \ref{GettingStarted} that R Sweave\index{R Sweave} files are basically \LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular \LaTeX files in RStudio even if they do not include code chunks. If you use another program to compile them you may need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
+
+\subsection{The header \& the body}
+
+All \LaTeX documents require a header\index{LaTeX header}. The header goes before the body of the document and specifies what type of presentation document you are creating--an article, a book, a slideshow, and so on. \LaTeX refers to these as classes\index{\LaTeX class}. You also can specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in \LaTeX is {\tt{\backslash usepackage}}. For example, if you include {\tt{\\usepackage{url}}} in the header of your document you will be able to specify URL links in the body with the command {\tt{\\url{SOMEURL}}}.}
+
+The header is followed by the body of your document. You tell \LaTeX where the body\index{LaTeX begin document} of your document starts by typing {\tt{ \backslash begin\{document\} }}. 
+
+The very last line of you document is usually {\tt{ \backslash end\{document\} }}, indicating that your document has ended. 
+
+When you open a new R Sweave file in RStudio it creates an article class document with a very simple header and body like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textbackslash{}documentclass\{article\}
+\textbackslash{}begin\{document\}
+\textbackslash{}end\{document\}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
 
 \subsection{Headings}
 
