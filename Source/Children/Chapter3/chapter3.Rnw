@@ -41,7 +41,7 @@ You will probably have read that `R is an object-oriented\index{object-oriented}
 
 \paragraph{Numeric \& string objects}
 
-Different types of objects have different classes\index{object classes}. Let's make two basic objects of the numeric and character classes. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
+Different types of objects have different data types or modes\index{mode}. Let's make two basic objects of the numeric and character mode. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
 
 <<Ch3NumericObject>>=
 Number <- 10
@@ -62,7 +62,7 @@ Words <- "Hello World"
 @
 
 
-An object's class is important to keep in mind as it determines what things we can do to it. For example you cannot take the mean of a character class object like the {\emph{Words}} object we created earlier:
+An object's class is important to keep in mind as it determines what things we can do to it. For example you cannot take the mean of a character mode object like the {\emph{Words}} object we created earlier:
 
 <<Ch3ClassError>>=
 mean(Words)
@@ -78,36 +78,83 @@ class(Words)
 
 Sp far we have only looked at objects with a single number or string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we want to be using objects--data sets--that have many strings and numbers. In R these are usually {\bf{data frame}}\index{data frame} type objects and are roughly equivalent to the type of data structure you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. It is also useful to cover other, simpler types of objects, primarily vectors. Vectors are R's ``workhorse".\cite{Matloff2011} Knowing how to use vectors\index{vector} will be especially helpful when we clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's book\cite{Matlof2011} is a really good place to look.} \\[0.25cm]
 
-\noindent {\bf{Vectors}}: \\[0.25cm] Vectors are the ``fundamental data type"\cite{Matloff2011} in R. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. Lists are similar to vectors, but allow you to have different types.} It may be useful to think of basically all other data types as complicated forms of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together. 
+\noindent {\bf{Vectors}}: \\[0.25cm] Vectors are the ``fundamental data type"\cite{Matloff2011} in R. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. Lists are similar to vectors, but allow you to have different types.} It may be useful to think of basically all other data types as complicated forms of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--and possibly of different types attached together. 
 
-Let's create a very simple numeric vector containing the numbers 1, 17, 24, and 6. To do this we will use the \texttt{c} (concatenate)\index{concatenate} function:
+Let's create a very simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (concatenate)\index{concatenate} function:
 
 <<Ch3NumericVector>>=
-NumericVect <- c(1, 17, 24, 6)
+NumericVect <- c(2.8, 2, 14.8)
 
 # Show NumericVect's contents
 NumericVect
 @
 
+Vectors of character strings are created in a similar way. The only major difference is that each character string is enclosed in quotation marks like this:
 
-\noindent {\bf{Data frames}}: 
+<<Ch3CharcterVector>>=
+CharacterVect <- c("Albania", "Botswana", "Cambodia")
 
+# Show CharacterVect's contents
+CharacterVect
+@
+
+To give you a preview of what we are going to do when we start working with real data sets, lets combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{cbind} function. This function binds the two vectors together as if they were different columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind} function.}
+
+<<Ch3cbind>>=
+StringNumObject <- cbind(CharacterVect, NumericVect)
+
+# Display contents of StringNumObject
+StringNumObject
+@
+
+\noindent By binding these two objects together we've created a new matrix\index{matrix} object.\footnote{Matrices are vectors with columns as well as rows.} You can see that the numbers in the {\emph{NumericVect}} column are between quotation marks. Matrices, like vectors can only have one data type or mode. 
+
+\noindent {\bf{Data frames}}: If we want to have an object with rows and columns and allow the columns to contain data with different modes, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.
+
+<<Ch3dataframe, tidy=FALSE>>=
+StringNumObject <- data.frame(CharacterVect, NumericVect)
+
+# Display contents of StringNumObject data frame
+StringNumObject
+@
+
+\noindent There are two important things to notice. The first is that because we used the same name for the data frame object as the previous matrix object, R deleted the matrix object and completely replaced it with the data frame. This is something to keep in mind when you are creating new objects. You will also notice that the strings in the {\emph{CharacterVect}} object no longer are in quotation marks. This does not mean, however that they are no longer character string type data. To prove this try taking the mean of {\emph{CharacterVect}} like this:
+
+<<Ch3CharcterVectorMean>>=
+mean(StringNumObject$ChacterVect)
+@
 
 \subsection{Component Selection}
 
-Smaller objects can be combined into larger objects. For example, a data set with two variables may be merged into a larger data set. We will touch on some of these issues, like how to use the {\tt{merge}} command in Chapter \ref{DataGather}. Sometimes we may want to do the opposite task: extract a smaller object from a larger one. We can do this with the dollar sign ({\tt{\$}}). This is called the component selection\index{component selection}, because we use it to select a component from an object.
+The last bit of code will probably be confusing. Why do we have a dollar sign (\texttt{\$}) inbetween the name of our data frame object and the character column? The dollar sign is called the component selector\index{component selection}. It basically extracts a part of an object. In the previous example it extracts the {\emph{
+CharacterVect}} column from the {\emph{StringNumObject}} and feeds this to the \texttt{mean} command, which tries (in this case unsuccessfully) to find its mean.
 
-For example, 
+We can of course use the component selector to create new objects with parts of other objects. Imagine that we only have the {\emph{StringNumObject}}, but want an object with only the information in the numbers column. Let's the following code:
 
-This will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
+<<Ch3CompSelect>>=
+NewNumeric <- StringNumObject$NumericVect
+
+# Display contents of NewNumeric
+NewNumeric
+@
+
+\noindent Knowing how to use the component selector will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
+
+\subsection{Subscripts}
 
 \subsection{Functions, Commands, and Arguments}
 
 \subsection{Loading new commands from libraries}
 
-You can install new user-written packages using the {\tt{install.packages}} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. To install all of the package libraries used in this book see \ref{ReqPackages}.
+You can install new add-on packages\index{packages} using the {\tt{install.packages}}\index{install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. For the code you will need to install all of the package libraries used in this book see \ref{ReqPackages}.
 
-Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. 
+Commands are stored in R libraries\index{R libraries}. R automatically loads a number of basic libraries by default. One of the great things about R is the many user-created libraries\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To load a library so that you can use its functions use the \texttt{library} command. Use the following code to load the {\emph{ggplot2}} library that we use in Chapter \ref{FiguresChapter} to create figures.
+
+<<Ch3Library>>=
+library(ggplot2)
+@
+
+\noindent Please note that I only specify the library a command is in if the library is not loaded by default when you start an R session. 
 
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}

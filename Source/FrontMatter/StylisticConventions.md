@@ -28,11 +28,12 @@ Individual variable values mentioned in the text are in **bold**.
 
 Objects are printed in *italics*.
 
-Camelback is used for objects.
+Camelback (e.g. CamelBack) is used for object names.
 
-- Object Classes
+- Columns
 
-Object classes are in `typewriter text`.
+Columns are printed in *italics*
+
 
 - Packages 
 
@@ -46,6 +47,6 @@ Open windows are written in **bold** text.
 
 Variable names are printed in *italics*.
 
-Camelback (e.g. CamelBack) is used for individual variable names.
+Camelback is used for individual variable names.
 
 
