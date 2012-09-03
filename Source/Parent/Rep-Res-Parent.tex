@@ -85,7 +85,6 @@
 
 
 
-
 \makeatletter
 
 
@@ -254,7 +253,7 @@ want to work on the text). It can spell check \LaTeX documents. It handles \text
 
 Finally, RStudio not only has tight integration with various markup languages, it also integrates other tools such as CSS, JavaScript, and a few other programming languages as well as being closely integrated with the version control programs git and SVN. Both of these programs allow you to keep track of the changes you make to your documents. This is important for reproducible research since the version control program is documenting many of the the steps you took to make your project. As with many tools of reproducible research, version control has other benefits for making researchers' lives easier. Maybe most importantly, when you keep your documents under version control you can go back to older versions. This is useful if you accidentally delete an important paragraph, for example.
 
-\subsection{Installing the Software}\lable{InstallR}
+\subsection{Installing the Software}\label{InstallR}
 
 Before you read this book you should install the software. All of the software covered in detail in this book is open source programs and can be easily downloaded for free. It is available for Windows\index{Windows}, Mac\index{Mac}, and Unix\index{Unix}. They should run well on most modern computers. 
 
@@ -431,7 +430,7 @@ Text files are also very easy to search and manipulate with a wide range of prog
 Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. For especially important piece of code you should use {\bf{literate programming}} so that it is very clear to others how you accomplished a piece of research.
 
 \paragraph{Commenting}
-In R everything on a line after a {\tt{#}} hash (number) character is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{#}} to place comments telling other people what you are doing. Here are some examples:
+In R everything on a line after a {\tt{\#}} hash (number) character is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{\#}} to place comments telling other people what you are doing. Here are some examples:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -498,7 +497,7 @@ The most dynamic way to do this is to explicitly link your files together using 
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 August 2012
+% Updated: 3 September 2012
 
 
 
@@ -509,6 +508,8 @@ If you have rarely or never used R before the first two sections of this chapter
 
 %%%%%%%%%%%%% Using R
 \section{Using R: the basics}
+
+As a computer language, R has FILL in
 
 This section covers some of the very basic syntax in R to get you started. If you have little experience with R, reading this section will make it much easier for you to follow along with the examples in the book. I cover the key components of the R language including:
 
@@ -533,9 +534,9 @@ Before discussing each of these components let's open up R and look around.\foot
 
 You will probably have read that `R is an object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, such as a list of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section. For now let's create a few objects.
 
-\paragraph{Numeric, String, Vector \& Dataframe Objects}
+\paragraph{Numeric \& string objects}
 
-Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
+Different types of objects have different classes\index{object classes}. Let's make two basic objects of the numeric and character classes. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -560,7 +561,9 @@ Number
 \end{knitrout}
 
 
-\noindent Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".
+\noindent \texttt{10} is clearly the contents of {\emph{Number}}. The double has \texttt{\#\#} is included in the output by {\emph{knitr}} to tell you that this is output rather than R code.\footnote{This makes it easier to copy and past code included in a presentation document by {\emph{knitr}}.} Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
+
+Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -600,6 +603,33 @@ An object's class is important to keep in mind as it determines what things we c
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
+
+
+\paragraph{Vector \& data frame Objects}
+
+Sp far we have only looked at objects with a single number or string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we want to be using objects--data sets--that have many strings and numbers. In R these are usually {\bf{data frame}}\index{data frame} type objects and are roughly equivalent to the type of data structure you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. It is also useful to cover other, simpler types of objects, primarily vectors. Vectors are R's ``workhorse".\cite{Matloff2011} Knowing how to use vectors\index{vector} will be especially helpful when we clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's book\cite{Matlof2011} is a really good place to look.} \\[0.25cm]
+
+\noindent {\bf{Vectors}}: \\[0.25cm] Vectors are the ``fundamental data type"\cite{Matloff2011} in R. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. Lists are similar to vectors, but allow you to have different types.} It may be useful to think of basically all other data types as complicated forms of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together. 
+
+Let's create a very simple numeric vector containing the numbers 1, 17, 24, and 6. To do this we will use the \texttt{c} (concatenate)\index{concatenate} function:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+NumericVect <- \hlfunctioncall{c}(1, 17, 24, 6)
+
+\hlcomment{# Show NumericVect's contents}
+NumericVect
+\end{alltt}
+\begin{verbatim}
+## [1]  1 17 24  6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+
+\noindent {\bf{Data frames}}: 
 
 
 \subsection{Component Selection}
@@ -642,6 +672,12 @@ For more advanced literate programming in R we can use the {\emph{knitr}}\index{
 
 \subsection{Code Chunks}
 
+When we want to include R code into our presentation documents we place them in a code chunk\index{code chunk}.
+
+FILL IN
+
+All labels and code chunk options must be on the same line.
+
 \paragraph{Code chunk labels}
 
 \paragraph{Code chunk options}
@@ -666,7 +702,7 @@ The code chunk options discussed so far are specifically for presentation docume
 
 So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks. If we want an option to apply to all of the chunks in our document we can set {\bf{global chunk options}}\index{global chunk options}. They options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure I set the option globally.
 
-To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the {\tt{\\begin{document}}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
 
 Here is an example of how we could have all of the figures in a Markdown document created by {\emph{knitr}} code chunks center aligned. We place the following code at the beginning of the document:
 
@@ -1230,7 +1266,7 @@ much more straightforward. Some examples include:
 
 
 
-\chapter{Preparing Data for Analysis}
+\chapter{Preparing Data for Analysis}\label{DataClean}
 
 Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean it and merge it into a single data files CAWELY QOUTE ABOUT HOW IT CAN BE BAD TO USE DATA FROM DIFFERENT DATA FRAMES.This chapter covers some of the basics of how to clean data files and merge them using R. 
 
@@ -1327,7 +1363,7 @@ is \textbackslash{}Sexpr\{\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), 
 
 To include static code inline in an R Markdown document we enclose the code in single backticks (\` \`). For example typing \`\ MeanRiver \textless- mean(rivers) \`\ produces {\tt{MeanRiver \textless- mean(rivers)}}.
 
-\paragraph{inline dynamic code}
+\paragraph{Inline dynamic code}
 
 To include dynamic code in an R Markdown document we use the backticks as be fore but include a the letter \texttt{r} after the first one.
 
@@ -1337,19 +1373,10 @@ There are a number of reasons that you might want to have your R source code loc
 
 First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy {\emph{knitr}} code collapsing and chunk management options. There are just too many things going on in one document.
 
-Second, you may want to use the same code in multiple documents--an
-article and presentation for example. It is nice to not have to copy and
-paste the same code into multiple places, but have multiple documents
-link to the same source code. Plus if you make changes to the source
-code, these changes will automatically be made across all of your
-presentation documents. You don't need to make the same changes multiple
-times.
+Second, you may want to use the same code in multiple documents--an article and presentation for example. It is nice to not have to copy and paste the same code into multiple places, but have multiple documents link to the same source code. Plus if you make changes to the source code, these changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
 
-Third, other researchers trying to replicate your work might only be
-interested in specific parts of your analysis. If you have the analysis
-broken into separate and clearly labeled files it is easier for these
-researchers to find the specific bits of code that they are interested
-compared to digging through long markup files.
+Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled files it is easier for these
+researchers to find the specific bits of code that they are interested compared to digging through long markup files.
 
 \subsubsection{Source from a local file}
 
@@ -1554,7 +1581,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Sun Sep  2 18:46:26 2012
+% Mon Sep  3 14:27:22 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -1619,7 +1646,7 @@ The most important \texttt{knitr} chunk option for showing the markup created by
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 September 2012
+% Updated: 3 September 2012
 
 
 
@@ -1628,21 +1655,19 @@ The most important \texttt{knitr} chunk option for showing the markup created by
 
 \section{The Basics}
 
+All commands in \LaTeX start with a \texttt{\textbackslash{}}
+
 \subsection{Editors}
 
-As I mentioned earlier, RStudio is an fully functional \LaTeX editor as well as an integrated development environment for R. Of course it is oriented towards combining R and \LaTeX. If you want to create a new \LaTeX document you can go to {\tt{File}} \rightarrow {\tt{New}} \rightarrow {\tt{R Sweave}}. 
+As I mentioned earlier, RStudio is an fully functional \LaTeX editor as well as an integrated development environment for R. Of course it is oriented towards combining R and \LaTeX. If you want to create a new \LaTeX document you can click {\tt{File}} \rightarrow {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
 
-Remember from Chapter \ref{GettingStarted} that R Sweave\index{R Sweave} files are basically \LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular \LaTeX files in RStudio even if they do not include code chunks. If you use another program to compile them you may need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
+Remember from Chapter \ref{GettingStarted} that R Sweave\index{R Sweave} files are basically \LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular \LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
 
 \subsection{The header \& the body}
 
-All \LaTeX documents require a header\index{LaTeX header}. The header goes before the body of the document and specifies what type of presentation document you are creating--an article, a book, a slideshow, and so on. \LaTeX refers to these as classes\index{\LaTeX class}. You also can specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in \LaTeX is {\tt{\backslash usepackage}}. For example, if you include {\tt{\\usepackage{url}}} in the header of your document you will be able to specify URL links in the body with the command {\tt{\\url{SOMEURL}}}.}
+All \LaTeX documents require a header\index{LaTeX header}. The header goes before the body of the document and specifies what type of presentation document you are creating--an article, a book, a slideshow, and so on. \LaTeX refers to these as classes\index{\LaTeX class}. You also can specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in \LaTeX is \texttt{\textbackslash{}usepackage}. For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the header of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
 
-The header is followed by the body of your document. You tell \LaTeX where the body\index{LaTeX begin document} of your document starts by typing {\tt{ \backslash begin\{document\} }}. 
-
-The very last line of you document is usually {\tt{ \backslash end\{document\} }}, indicating that your document has ended. 
-
-When you open a new R Sweave file in RStudio it creates an article class document with a very simple header and body like this:
+The header is followed by the body of your document. You tell \LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple header and body like this:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1756,13 +1781,38 @@ An even faster way to add citations to a bibliography is with \texttt{write.bibt
 \end{knitrout}
 
 
-\noindent In Chapter 13 we'll look at the \texttt{knitcitations} package in more detail.
-
 \section{Presentations with Beamer}
 
 You can make slideshow presentations with \LaTeX. FILL IN WITH INTRO
 
 {\emph{knitr}} largely the works the same way in in \LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
+
+\paragraph{Slide frames}
+
+A quick way to create each Beamer slide is to use the \texttt{frame} command:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textbackslash{}frame\{
+\}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent If you want to include highlighted {\emph{knitr}} code chunks on your slides you should add the \texttt{fragile} option to the \texttt{frame} command.\footnote{For a detailed discussion of why you need to use the \texttt{fragile} option with the verbatim environment that {\emph{knitr}} uses to display highlighted text in \LaTeX documents see this blog post by Pieter Belmans: \url{http://pbelmans.wordpress.com/2011/02/20/why-latex-beamer-needs-fragile-when-using-verbatim/}.} Here is an example:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textbackslash{}begin\{frame\}[fragile]
+    An example fragile frame.
+\textbackslash{}end\{frame\}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{Results}
 

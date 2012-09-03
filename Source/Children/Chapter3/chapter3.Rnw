@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 August 2012
+% Updated: 3 September 2012
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -13,6 +13,8 @@ If you have rarely or never used R before the first two sections of this chapter
 
 %%%%%%%%%%%%% Using R
 \section{Using R: the basics}
+
+As a computer language, R has FILL in
 
 This section covers some of the very basic syntax in R to get you started. If you have little experience with R, reading this section will make it much easier for you to follow along with the examples in the book. I cover the key components of the R language including:
 
@@ -37,9 +39,9 @@ Before discussing each of these components let's open up R and look around.\foot
 
 You will probably have read that `R is an object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, such as a list of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section. For now let's create a few objects.
 
-\paragraph{Numeric, String, Vector \& Dataframe Objects}
+\paragraph{Numeric \& string objects}
 
-Different types of objects have different classes\index{object classes}. Let's make four objects: a numeric, a character, a vector, and a dataframe. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
+Different types of objects have different classes\index{object classes}. Let's make two basic objects of the numeric and character classes. We can choose almost any name we want for our objects.\footnote{Objects must begin with an alphabetic character and cannot have spaces.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
 
 <<Ch3NumericObject>>=
 Number <- 10
@@ -51,7 +53,9 @@ Number <- 10
 Number
 @
 
-\noindent Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".
+\noindent Lets's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included in the output by {\emph{knitr}} to tell you that this is output rather than R code.\footnote{This makes it easier to copy and past code included in a presentation document by {\emph{knitr}}.} Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
+
+Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".
 
 <<Ch3CharacterObject>>=
 Words <- "Hello World"
@@ -69,6 +73,25 @@ mean(Words)
 <<Ch3ClassCommand>>=
 class(Words)
 @
+
+\paragraph{Vector \& data frame Objects}
+
+Sp far we have only looked at objects with a single number or string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we want to be using objects--data sets--that have many strings and numbers. In R these are usually {\bf{data frame}}\index{data frame} type objects and are roughly equivalent to the type of data structure you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. It is also useful to cover other, simpler types of objects, primarily vectors. Vectors are R's ``workhorse".\cite{Matloff2011} Knowing how to use vectors\index{vector} will be especially helpful when we clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's book\cite{Matlof2011} is a really good place to look.} \\[0.25cm]
+
+\noindent {\bf{Vectors}}: \\[0.25cm] Vectors are the ``fundamental data type"\cite{Matloff2011} in R. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. Lists are similar to vectors, but allow you to have different types.} It may be useful to think of basically all other data types as complicated forms of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together. 
+
+Let's create a very simple numeric vector containing the numbers 1, 17, 24, and 6. To do this we will use the \texttt{c} (concatenate)\index{concatenate} function:
+
+<<Ch3NumericVector>>=
+NumericVect <- c(1, 17, 24, 6)
+
+# Show NumericVect's contents
+NumericVect
+@
+
+
+\noindent {\bf{Data frames}}: 
+
 
 \subsection{Component Selection}
 
@@ -110,6 +133,12 @@ For more advanced literate programming in R we can use the {\emph{knitr}}\index{
 
 \subsection{Code Chunks}
 
+When we want to include R code into our presentation documents we place them in a code chunk\index{code chunk}.
+
+FILL IN
+
+All labels and code chunk options must be on the same line.
+
 \paragraph{Code chunk labels}
 
 \paragraph{Code chunk options}
@@ -134,7 +163,7 @@ The code chunk options discussed so far are specifically for presentation docume
 
 So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks. If we want an option to apply to all of the chunks in our document we can set {\bf{global chunk options}}\index{global chunk options}. They options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure I set the option globally.
 
-To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the {\tt{\\begin{document}}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
 
 Here is an example of how we could have all of the figures in a Markdown document created by {\emph{knitr}} code chunks center aligned. We place the following code at the beginning of the document:
 
