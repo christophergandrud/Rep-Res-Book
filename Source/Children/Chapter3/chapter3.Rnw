@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 September 2012
+% Updated: 4 September 2012
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -141,6 +141,32 @@ NewNumeric
 \noindent Knowing how to use the component selector will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
 
 \subsection{Subscripts}
+
+Another way to select parts of an object is to use subscripts\index{subscripts}. These are denoted with square braces (\texttt{[]}). We can use them to select not only columns from data frames but also rows and individual cells. As we began to see in some of the previous output, each part of a data frame as an address captured by its row and column number. We can tell R to find a part of an object by putting the row number, column number/name, or both in square braces. The first part denotes the rows and separated by a comma (\texttt{,}) are the columns. 
+
+To give you an idea of how this works lets use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
+
+<<Ch3HeadSwiss>>=
+head(cars)
+@
+
+\noindent Here we can see a data frame with information on various cars speed ({\emph{speed}}) and distance ({\emph{dist}}). If we want to select only the third through seventh rows we can use the following subscript commands:
+
+<<Ch3FirstSeventhRows>>=
+cars[3:7, ]
+@
+
+\noindent To select the fourth row of the {\emph{dist}} column we can type:
+
+<<Ch3FourthSecond>>=
+cars[4, 2]
+@
+
+\noindent An equivalent way to do this is:
+
+<<Ch3FourthDist>>=
+cars[4, "dist"]
+@
 
 \subsection{Functions, Commands, and Arguments}
 

@@ -729,6 +729,75 @@ NewNumeric
 
 \subsection{Subscripts}
 
+Another way to select parts of an object is to use subscripts\index{subscripts}. These are denoted with square braces (\texttt{[]}). We can use them to select not only columns from data frames but also rows and individual cells. As we began to see in some of the previous output, each part of a data frame as an address captured by its row and column number. We can tell R to find a part of an object by putting the row number, column number/name, or both in square braces. The first part denotes the rows and separated by a comma (\texttt{,}) are the columns. 
+
+To give you an idea of how this works lets use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{head}(cars)
+\end{alltt}
+\begin{verbatim}
+##   speed dist
+## 1     4    2
+## 2     4   10
+## 3     7    4
+## 4     7   22
+## 5     8   16
+## 6     9   10
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Here we can see a data frame with information on various cars speed ({\emph{speed}}) and distance ({\emph{dist}}). If we want to select only the third through seventh rows we can use the following subscript commands:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+cars[3:7, ]
+\end{alltt}
+\begin{verbatim}
+##   speed dist
+## 3     7    4
+## 4     7   22
+## 5     8   16
+## 6     9   10
+## 7    10   18
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent To select the fourth row of the {\emph{dist}} column we can type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+cars[4, 2]
+\end{alltt}
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent An equivalent way to do this is:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+cars[4, \hlstring{"dist"}]
+\end{alltt}
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
 \subsection{Functions, Commands, and Arguments}
 
 \subsection{Loading new commands from libraries}
@@ -744,7 +813,7 @@ Commands are stored in R libraries\index{R libraries}. R automatically loads a n
 \end{alltt}
 
 
-{\ttfamily\noindent\itshape\textcolor{messagecolor}{\#\# Use suppressPackageStartupMessages to eliminate package startup messages.}}\end{kframe}
+{\ttfamily\noindent\itshape\textcolor{messagecolor}{\#\# Find out what's changed in ggplot2 with\\\#\# news(Version == "0.9.1", package = "ggplot2")}}\end{kframe}
 \end{knitrout}
 
 
@@ -1697,7 +1766,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Mon Sep  3 18:12:00 2012
+% Tue Sep  4 10:44:47 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
