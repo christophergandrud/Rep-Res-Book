@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 31 August 2012
+% Updated: 6 September 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -106,7 +106,11 @@
 
 {\chapter*{Author}}
 
-\contributor{Christopher Gandrud}{Yonsei University}{Wonju, Republic of Korea}
+\contributor{Christopher Gandrud}{Yonsei University}{Wonju, Republic of Korea} \\[1cm]
+
+\noindent I am a lecturer at Yonsei University (Wonju) in international relations where I teach international political economy and applied social science statistics (including reproducible research). Previously, I was a Fellow in Government at the London School of Economics and a research associate at the Hertie School of Governance. In 2012 I completed my PhD in Political Science at the LSE. \\[0.25cm]
+
+\noindent I've published articles on political economy and quantitative methods in the Review of International Political Economy and the International Political Science Review.
 
 
 
@@ -225,7 +229,7 @@ In this book I we will focus on learning how to use widely available and highly 
 \begin{itemize}
     \item {\bf{R}}: a programming language primarily for statistics and graphics. It can also be used for data gathering and creating presentation documents.
     
-    \item {\bf{{\emph{knitr}}}}: an R package for literate programming\index{literate programming}, i.e. it allows us to combine our statistical analysis and the presentation of the results into one document.
+    \item {\bf{{\emph{knitr}}}}: an R package for literate programming\index{literate programming}, i.e. it allows us to combine our statistical analysis and the presentation of the results into one document. It works with R and a number of other languages such as shell, Python, Ruby, and others.
     
     \item {\bf{Markup languages}}: instructions for how to format a presentation document. In this book we cover \LaTeX and Markdown.  
     
@@ -242,6 +246,12 @@ In this book I we will focus on learning how to use widely available and highly 
 Why use a statistical programming language like R for reproducible research? R is more than just a statistics program, like \index{SAS}, Stata\index{Stata}, or SPSS\index{SPSS}. It can be used to integrate all stages of the research process not just the statistical analysis stage. As we will see in this book, R can be used to gather data, run statistical analyses, and we can use the {\emph{knitr}} R package to connect our analysis to our presentation documents created with markup languages\index{markup language} such as \LaTeX, Markdown, and HTML we can dynamically present our results in articles, slideshows, and webpages.\footnote{When we use these types of markup languages to create presentation documents what we write is text plus the instructions for how to turn this into a final document. The instructions are written using a markup language. Part IV of this book (Presentation Documents) discusses how to use the \LaTeX and Markdown languages for reproducible research.} 
 
 The way we interact with R or any other programming and markup language promotes reproducibility more than our interactions with Graphical User Interface (GUI) programs like SPSS\footnote{I know you can write scripts in statistical programs like SPSS, but doing so is not encouraged by the interface and we often have to learn multiple languages just to write scripts that run analyses, create graphics, and deal with matrices.} and Microsoft Word. When we write (and save) R code and embed it in documents using markup languages we are being forced to explicitly express the steps we take to do our research. When we do research clicking through drop down menus in GUI programs, the steps we take are lost. Or at least documenting them requires considerable extra effort.
+
+\paragraph{Why knitr?}
+
+Literate programming is a crucial part of reproducible quantitative research. Being able to directly your analyses, your results, and the code you used to produce the results makes tracing your steps much more feasible. There are many different literate programming tools CITE. Previously, one of the most common tools for researchers using R and the \LaTeX markup language was the Sweave package.\cite{Leisch2002}\index{Sweave} The packages I am going to focus on in this book is newer and is called {\emph{knitr}}.\cite{knitr}\index{knitr} Why am I going to focus this book on {\emph{knitr}} and not Sweave or some other tool?
+
+The simple answer is that {\emph{knitr}} has the same capabilities as Sweave, but can work with many more markup languages and can even work with programming languages other than R. It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to Sweave if you want to. However, you can also use much simpler and more straightforward syntax with {\emph{knitr}}. 
 
 \paragraph{Why RStudio?}
 \index{RStudio}Why use the RStudio integrated development environment for reproducible research? R by itself has the capability to gather data, analyse it, and with a little help from {\emph{knitr}} and markup languages, present results in a way that is highly reproducible. RStudio allows us to do all of these things, but simplifies many of these tasks and allows you to navigate them in a more visual way. It is a as happy medium between R's text-based interface and a pure GUI. 
@@ -390,7 +400,7 @@ The other tips and Many of the other One important part of documenting everythin
 ## 
 ## other attached packages:
 ## [1] knitcitations_0.1-0 bibtex_0.3-0       
-## [3] knitr_0.7.9        
+## [3] knitr_0.8          
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] RCurl_1.91-1    XML_3.9-4       codetools_0.2-8
@@ -478,7 +488,7 @@ The most dynamic way to do this is to explicitly link your files together using 
         \hline
         Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline
-        {\emph{knitr}} & R & R package with functions for tying R commands into presentation documents & Discussed throughout the book \\
+        {\emph{knitr}} & R & R package with functions for tying R (and other programming language) commands into presentation documents & Discussed throughout the book \\
         {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
         {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
         {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\
@@ -497,7 +507,7 @@ The most dynamic way to do this is to explicitly link your files together using 
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 September 2012
+% Updated: 4 September 2012
 
 
 
@@ -605,7 +615,7 @@ An object's class is important to keep in mind as it determines what things we c
 \end{knitrout}
 
 
-\paragraph{Vector \& data frame Objects}
+\paragraph{Vector \& data frame objects}
 
 Sp far we have only looked at objects with a single number or string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we want to be using objects--data sets--that have many strings and numbers. In R these are usually {\bf{data frame}}\index{data frame} type objects and are roughly equivalent to the type of data structure you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. It is also useful to cover other, simpler types of objects, primarily vectors. Vectors are R's ``workhorse".\cite{Matloff2011} Knowing how to use vectors\index{vector} will be especially helpful when we clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's book\cite{Matlof2011} is a really good place to look.} \\[0.25cm]
 
@@ -652,7 +662,7 @@ To give you a preview of what we are going to do when we start working with real
 \begin{alltt}
 StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 
-\hlcomment{# Display contents of StringNumObject}
+\hlcomment{# Show StringNumObject's contents}
 StringNumObject
 \end{alltt}
 \begin{verbatim}
@@ -811,9 +821,7 @@ Commands are stored in R libraries\index{R libraries}. R automatically loads a n
 \begin{alltt}
 \hlfunctioncall{library}(ggplot2)
 \end{alltt}
-
-
-{\ttfamily\noindent\itshape\textcolor{messagecolor}{\#\# Find out what's changed in ggplot2 with\\\#\# news(Version == "0.9.1", package = "ggplot2")}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 
@@ -822,7 +830,11 @@ Commands are stored in R libraries\index{R libraries}. R automatically loads a n
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
 
-As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. 
+As I mentioned in Chapter \ref{Intro}, RStudio is an integrated development environment. It allows you 
+
+When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. Other panes include the {\emph{Workspace/History}} panes, usually in the upper right-hand corner. The Workspace pane keeps a record of all of the objects in your current workspace. You can click on an object in this pane to see its contents. This is especially useful for quickly looking at a data set in much the same way that you can scan a Microsoft Excel spreadsheet. The History pane records all of the commands you have run. It allows you to rerun code and insert it into a source code file.
+
+In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help}} pane. We will discuss the Files pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The Plots pane is where   
 
 \begin{figure}[ht]
     \caption{RStudio Startup Panel}
@@ -832,13 +844,13 @@ As I mentioned in Chapter \ref{Intro} When you first open RStudio\index{RStudio}
     \end{center}
 \end{figure}
 
-\paragraph{Compile Notebook}
+
 
 RStudio integrates a number of different methods for literate programming. The most basic is 
 
 %%%%%%%%%%%%% Using knitr
 \section{Using knitr: the basics}
-
+RETHINK PARAGRAPH
 For more advanced literate programming in R we can use the {\emph{knitr}}\index{{\emph{knitr}}} package.\footnote{The RStudio notebook actually also uses {\emph{knitr}}.} This package is highly integrated into RStudio. Throughout much of the book we cover many details about how to use {\emph{knitr}}. This section gives you a basic introduction to get started.
 
 \subsection{Code Chunks}
@@ -910,7 +922,22 @@ opts_knit$\hlfunctioncall{set}(progress=FALSE)
 
 \subsection{knitr \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}}
+RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents. 
+
+\paragraph{Compiling a Notebook}
+
+If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{notebook} capabilities. An RStudio notebooks is a standalone HTML file that includes all code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio notebook in Figure \ref{NotebookExample}. 
+
+If you want to create a notebook from an open R source code file simply click \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}. Click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your notebook to RPubs GET URL. RPubs allows you to share your notebooks over the internet.
+
+\begin{figure}
+    \caption{RStudio Notebook Example}
+    \label{NotebookExample}
+    \begin{center}
+    
+\includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/NotebookExample.png}
+    \end{center}
+\end{figure}
 
 \paragraph{Insert code chunks}
 
@@ -1088,9 +1115,9 @@ The one piece of general instruction I will give now is to highlight an importan
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
+\begin{verbatim}
 cd ~/Desktop
-\end{alltt}
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
@@ -1766,7 +1793,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Tue Sep  4 10:44:47 2012
+% Fri Sep  7 08:23:12 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -2030,7 +2057,7 @@ COMPLETE
 
 \section{Combining Chapters}
 
-We will cover three methods for including child documents into our parent documents. The first is very simple and uses the \LaTeX command \index{{\tt{\\input}}}. The second using {\emph{knitr}} is slightly more complex, but gives us much more flexibility. The final method is a special case of {\tt{\\input}} that uses the command line program \index{Pandoc} to convert and include child documents written in non-\LaTeX markup languages. 
+We will cover three methods for including child documents into our parent documents. The first is very simple and uses the \LaTeX command \texttt{\textbackslash{}input} \index{input}. The second using {\emph{knitr}} is slightly more complex, but gives us much more flexibility. The final method is a special case of \texttt{\textbackslash{}input} that uses the command line program \index{Pandoc} to convert and include child documents written in non-\LaTeX markup languages. 
 
 \subsection{Parent documents}
 
@@ -2043,23 +2070,25 @@ We will cover three methods for including child documents into our parent docume
 
 \paragraph{Child documents in a different markup language}
 
-You can use the \index{Pandoc} command line program and to convert child documents that are in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document with R's {\tt{system}} command. 
+Because {\emph{knitr}} is able to run not only R code but also bash programs, you can use the \index{Pandoc} command line program to convert child documents that are in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document including your Pandoc commands in a code chunk with the \texttt{engine} option set to either \texttt{`bash'} or \texttt{'sh'}.\footnote{Alternatively you can run Pandoc in R using the {\tt{system}} command.} 
 
-For example, the \ref{StylisticConventions} part of this book is written in Markdown. The file is called {\emph{StylisticConventions.md}} It was simply faster to write the list of conventions using the simpler Markdown syntax than \LaTeX, which as we saw has a more complicated way of creating lists. However, I want to include this list in my \LaTeX produced book. Pandoc can convert the Markdown document into a \LaTeX file. This file can then be input into my main document with the \LaTeX command {\tt{\\input}}.
+For example, the \ref{StylisticConventions} part of this book is written in Markdown. The file is called {\emph{StylisticConventions.md}} It was simply faster to write the list of conventions using the simpler Markdown syntax than \LaTeX, which as we saw has a more complicated way of creating lists. However, I want to include this list in my \LaTeX produced book. Pandoc can convert the Markdown document into a \LaTeX file. This file can then be input into my main document with the \LaTeX command \texttt{\textbackslash{}input}.
 
 Imagine that my parent and {\emph{StylisticConventions.md}} documents are in the same directory. In the parent document I add a code chunk with the options {\tt{echo=FALSE}} and {\tt{results=`hide'}}. In this code chunk I add the following command to convert the Markdown syntax in {\emph{StylisticConventions.md}} to \LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlfunctioncall{system}("pandoc StylisticConventions.md
-        -f markdown -t latex -o StyleTemp.tex")
-\end{alltt}
+\begin{verbatim}
+pandoc StylisticConventions.md -f markdown \
+    -t latex -o StyleTemp.tex
+\end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
 \noindent The options {\tt{-f markdown}} and {\tt{-t latex}} tell Pandoc to convert {\emph{StylisticConventions.md}} from Markdown to \LaTeX syntax. {\tt{-o StyleTemp.tex}} instructs Pandoc to save the resulting \LaTeX markup to a new file called {\emph{StyleTemp.tex}}. 
+
+I only need to include a backslash (\textbackslash{}) at the end of the first line because I wanted to split the code over two lines. The code wouldn't fit on this page otherwise. The backslash tells the shell not to treat the following line as a different line. Unlike in R, the bash shell only reads recognizes a command's arguments if they are on the same line. 
 
 After this code chunk we need to tell our parent document to include the converted text. To do this we follow the code chunk with the {\tt{\\input}} command like this:
 
