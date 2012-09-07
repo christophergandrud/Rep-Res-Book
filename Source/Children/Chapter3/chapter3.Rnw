@@ -185,13 +185,14 @@ library(ggplot2)
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
 
-As I mentioned in Chapter \ref{Intro}, RStudio is an integrated development environment. It allows you 
+As I mentioned in Chapter \ref{Intro}, RStudio is an integrated development environment. It provides a centralized and well organized place to do almost anything you want to do with R. As we will see later in this chapter it is especially well integrated with literate programming tools for reproducible research. Right now let's just take a quick tour of the basic RStudio window.
 
-When you first open RStudio\index{RStudio} you should get a something that looks like Figure \ref{BlankMain}. In this figure you see three panels\index{RStudio panels}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. Other panes include the {\emph{Workspace/History}} panes, usually in the upper right-hand corner. The Workspace pane keeps a record of all of the objects in your current workspace. You can click on an object in this pane to see its contents. This is especially useful for quickly looking at a data set in much the same way that you can scan a Microsoft Excel spreadsheet. The History pane records all of the commands you have run. It allows you to rerun code and insert it into a source code file.
+\paragraph{The default window}
 
-In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help}} pane. We will discuss the Files pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The Plots pane is where   
+When you first open RStudio\index{RStudio} you should get a default window that looks like Figure \ref{BlankMain}. In this figure you see three window panes\index{RStudio pane}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. Other panes include the {\emph{Workspace/History}} panes, usually in the upper right-hand corner. The Workspace pane keeps a record of all of the objects in your current workspace. You can click on an object in this pane to see its contents. This is especially useful for quickly looking at a data set in much the same way that you can scan a Microsoft Excel spreadsheet. The History pane records all of the commands you have run. It allows you to rerun code and insert it into a source code file.
 
 \begin{figure}[ht]
+
     \caption{RStudio Startup Panel}
     \label{BlankMain}
     \begin{center}
@@ -199,14 +200,22 @@ In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help
     \end{center}
 \end{figure}
 
+In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help}} pane. We will discuss the Files pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The Plots pane is where figures you create in R will appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The Packages pane shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their manual files (click on the package name), update the packages, and even install new packages. Finally, the Help pane shows you help files. You can search for help files and search within help files using this pane.  
 
+\paragraph{The source pane}
 
-RStudio integrates a number of different methods for literate programming. The most basic is 
+There is an important pane that does not show up when you open RStudio for the first time. This is the Source pane. This is where you create, edit, and run your source code files. It also functions as an editor for your markup files. The Source pane's appearance and capabilities changes depending on the type of file you have open in it. RStudio automatically determines what type of file you have open by the file's extension\index{file extension}.\index{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} Let's look at the three main types of source files we will use in this book: R source files, R Markdown, and R \LaTeX. \\[0.25cm]
+
+\noindent {\bf{R Source}} \\[0.25cm]
+
+\noindent {\bf{R Markdown}} \\[0.25cm]
+
+\noindent {\bf{R \LaTeX}} \\[0.25cm]
 
 %%%%%%%%%%%%% Using knitr
 \section{Using knitr: the basics}
-RETHINK PARAGRAPH
-For more advanced literate programming in R we can use the {\emph{knitr}}\index{{\emph{knitr}}} package.\footnote{The RStudio notebook actually also uses {\emph{knitr}}.} This package is highly integrated into RStudio. Throughout much of the book we cover many details about how to use {\emph{knitr}}. This section gives you a basic introduction to get started.
+
+To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn some of the basic concepts and syntax. The concepts are the same regardless of the markup language that we are using, but much of the syntax varies.
 
 \subsection{Code Chunks}
 
@@ -221,6 +230,8 @@ All labels and code chunk options must be on the same line.
 \paragraph{Code chunk options}
 
 For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+
+\paragraph{Hooks}
 
 \subsection{Code Chunk Options Markup Language Specific Syntax}
 
@@ -271,9 +282,9 @@ RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr 
 
 \paragraph{Compiling a Notebook}
 
-If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{notebook} capabilities. An RStudio notebooks is a standalone HTML file that includes all code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio notebook in Figure \ref{NotebookExample}. 
+If you want a quick well formatted--i.e not a copy and pasted version of what is in the console--account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that includes all code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio notebook in Figure \ref{NotebookExample}. 
 
-If you want to create a notebook from an open R source code file simply click \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}. Click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your notebook to RPubs GET URL. RPubs allows you to share your notebooks over the internet.
+If you want to create a notebook from an open R source code file simply click \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}. Click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your notebook to RPubs (\url{http://www.rpubs.com/}). RPubs allows you to share your notebooks over the internet. You can publish not only notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.
 
 \begin{figure}
     \caption{RStudio Notebook Example}
