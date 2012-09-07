@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 6 September 2012
+% Updated: 7 September 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -121,7 +121,7 @@ This book would not have been possible without the advice and support of a great
 
 The developer and blogging community has been incredibly important for making this book possible. Foremost among among these people is Yihui Xie. He is the developer of the {\emph{knitr}} package (among others) and also an avid writer and reader of blogs. Without him the ability to do reproducible research would be much harder and the blogging community that spreads knowledge about how to do these things would be poorer. Other great bloggers include Carl Boettiger (who also developed the {\emph{knitcitations}} package), Markus Gesmann (who developed {\emph{GoogleVis}}), Jeromy Anglim.
 
-The vibrant and very helpful community at Stack Overflow \url{http://stackoverflow.com/} is always very helpful for finding answers to small problems that plague any coder. Importantly it makes it easy for others to find these answers.
+The vibrant and very helpful communities at Stack Overflow \url{http://stackoverflow.com/} and Stack Exchange \url{http://stackexchange.com/} are always very helpful for finding answers to problems that plague any coder. Importantly they makes it easy for others to find the answers to questions that others have asked before.
 
 
 
@@ -251,7 +251,7 @@ The way we interact with R or any other programming and markup language promotes
 
 Literate programming is a crucial part of reproducible quantitative research. Being able to directly your analyses, your results, and the code you used to produce the results makes tracing your steps much more feasible. There are many different literate programming tools CITE. Previously, one of the most common tools for researchers using R and the \LaTeX markup language was the Sweave package.\cite{Leisch2002}\index{Sweave} The packages I am going to focus on in this book is newer and is called {\emph{knitr}}.\cite{knitr}\index{knitr} Why am I going to focus this book on {\emph{knitr}} and not Sweave or some other tool?
 
-The simple answer is that {\emph{knitr}} has the same capabilities as Sweave, but can work with many more markup languages and can even work with programming languages other than R. It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to Sweave if you want to. However, you can also use much simpler and more straightforward syntax with {\emph{knitr}}. 
+The simple answer is that {\emph{knitr}} has the same capabilities as Sweave, but more. It can work with many more markup languages and can even work with programming languages other than R. It highlights R code\index{code highlighting} in presentation documents. It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to Sweave if you want to. However, you can also use much simpler and more straightforward syntax with {\emph{knitr}}. 
 
 \paragraph{Why RStudio?}
 \index{RStudio}Why use the RStudio integrated development environment for reproducible research? R by itself has the capability to gather data, analyse it, and with a little help from {\emph{knitr}} and markup languages, present results in a way that is highly reproducible. RStudio allows us to do all of these things, but simplifies many of these tasks and allows you to navigate them in a more visual way. It is a as happy medium between R's text-based interface and a pure GUI. 
@@ -849,48 +849,102 @@ In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help
 
 \paragraph{The source pane}
 
-There is an important pane that does not show up when you open RStudio for the first time. This is the Source pane. This is where you create, edit, and run your source code files. It also functions as an editor for your markup files. The Source pane's appearance and capabilities changes depending on the type of file you have open in it. RStudio automatically determines what type of file you have open by the file's extension\index{file extension}.\index{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} Let's look at the three main types of source files we will use in this book: R source files, R Markdown, and R \LaTeX. \\[0.25cm]
+There is an important pane that does not show up when you open RStudio for the first time. This is the Source pane. The Source pane is where you create, edit, and run your source code files. It also functions as an editor for your markup files. It is the center of reproducible research in RStudio. Let's first look at how to use the Source pane with regular R files. These have the file extension \texttt{.R}.
 
-{\bf{R Source}} \\[0.25cm]
+You can create a new source code document, which will open a new Source pane, by going to \texttt{File} \textrightarrow \: \texttt{New}. In this drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Source} option. You should now see a new pane with a bar across the top like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code you don't need to highlight the code, you can simply put your cursor on that line.} and click the \texttt{Run} icon on the top bar. This sends the code to the console where it is executed. The icon next to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in file using R's \texttt{source} command\index{source command}. The icon next to \texttt{Source} is for compiling RStudio notebooks. We will look at creating notebooks later in this chapter.
 
-{\bf{R Markdown}} \\[0.25cm]
+We will cover how to use the Source pane with literate programming file formats--e.g. R Markdown and R \LaTeX--in more detail after first discussing the {\emph{knitr}} basics. 
 
-{\bf{R \LaTeX}} \\[0.25cm]
+\begin{figure}[ht]
+    \caption{RStudio Source Code Pane Top Bars}
+    \label{SourcePanes}
+    \begin{center}
+    
+        \begin{subfigure}
+            \caption{R Source Code}
+            \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/RSourceBar.png}
+        \end{subfigure}\\[0.5cm]
+        
+        \begin{subfigure}
+            \caption{R Markdown Files}
+            \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/MarkdownSourceBar.png}
+        \end{subfigure}\\[0.5cm]
+        
+        \begin{subfigure}
+            \caption{LaTeX Markdown Files}
+            \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/LaTeXSourceBar.png}
+        \end{subfigure}
+        
+    \end{center}
+\end{figure}
+
+
 
 %%%%%%%%%%%%% Using knitr
 \section{Using knitr: the basics}
 
 To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn some of the basic concepts and syntax. The concepts are the same regardless of the markup language that we are using, but much of the syntax varies.
 
+\subsection{File extensions}
+
+When you save a knitable file use a file extension that indicates (a) that it is knitable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}. \LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}}.\cite{Leisch2002} You can also use the file extension \texttt{.Rtex}, which is less confusing file extension. However, the code chunk syntax for \texttt{.Rtex} files is different from that use in \texttt{.Rnw} files. We'll look at this in more detail below.
+
 \subsection{Code Chunks}
 
-When we want to include R code into our presentation documents we place them in a code chunk\index{code chunk}.
+When we want to include R code into our presentation documents we place them in a code chunk\index{code chunk}. Code chunk syntax differs depending on the markup language we are using to write our documents. Let's see the syntax for R Markdown and R \LaTeX files.
 
-FILL IN
+\paragraph{R Markdown}
 
-All labels and code chunk options must be on the same line.
+In R Markdown files we begin a code chunk by writing: \`\`\`\ \{r\}. A code chunk is closed--finished--simply with: \`\`\`\ . For example:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r\}
+\hlcomment{# Example of a R Markdown code chunk}
+StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
+```
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\paragraph{R \LaTeX}
+
+There are two different ways to delimite code chunks in R \LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax. {\tt{Knitr}} now also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
+
+\noindent {\bf{.Rnw-style}} \\[0.25cm]
+
+Traditional Sweave-style code chunks begin with the following code: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an @ sign.   \\[0.25cm]
+
+\noindent {\bf{Rtex-style}} \\[0.25cm]
+
+Sweave-style code chunks may seem fairly baroque. Another option for \LaTeX files is the Rtex-style syntax. To begin a code chunk simply type \texttt{\%\% begin.rcode}. To close the chunk you use double percent signs: \texttt{\%\%}. Each line in the code chunk needs to begin with a single percent sign. For example:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+%% begin.rcode
+% \hlcomment{# Example of a Rtex-style code chunk}
+% StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
+%%
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+
 
 \paragraph{Code chunk labels}
 
 \paragraph{Code chunk options}
 
-For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+Though the syntax for {\emph{knitr}} options is the same regardless of the markup language we use  For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+
+\noindent {\bf{Note:}} all labels and code chunk options must be on the same line.
+
 
 \paragraph{Hooks}
-
-\subsection{Code Chunk Options Markup Language Specific Syntax}
-
-The code chunk options discussed so far are specifically for presentation documents written in Markdown syntax. Though the syntax for {\emph{knitr}} options is the same regardless of the markup language we use 
-
-\paragraph{Code Chunks in Markdown}
-
-\paragraph{Code Chunks in \LaTeX}
-
-\LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}}.\cite{Leisch2002} More recent versions of {\tt{knitr}} support files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
-
-\noindent {\bf{.Rnw-style}} \\[0.25cm]
-
-\noindent {\bf{.Rtex-style}} \\[0.25cm]
 
 \subsection{Global Options}
 
@@ -930,16 +984,16 @@ opts_knit$\hlfunctioncall{set}(progress=FALSE)
 \end{knitrout}
 
 
-
+%%%%%%%%%% Knitr & RStudio
 \subsection{knitr \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents. 
+RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities changes depending on the type of file you have open in it. RStudio uses the file extension\index{file extension} to automatically determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formates we cover in this book: R Markdown\index{R Markdown}, and R \LaTeX\index{R LaTeX}. \\[0.25cm]
 
-\paragraph{Compiling a Notebook}
+\paragraph{Compiling R source code notebooks}
 
 If you want a quick well formatted--i.e not a copy and pasted version of what is in the console--account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that includes all code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio notebook in Figure \ref{NotebookExample}. 
 
-If you want to create a notebook from an open R source code file simply click \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}. Click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your notebook to RPubs (\url{http://www.rpubs.com/}). RPubs allows you to share your notebooks over the internet. You can publish not only notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.
+If you want to create a notebook from an open R source code file simply click click the \texttt{Compile Notebook} icon in the Source pane's top bar (see Figure \ref{SourcePanes}.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your notebook to RPubs (\url{http://www.rpubs.com/}). RPubs allows you to share your notebooks over the internet. You can publish not only notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.
 
 \begin{figure}
     \caption{RStudio Notebook Example}
@@ -950,12 +1004,43 @@ If you want to create a notebook from an open R source code file simply click \t
     \end{center}
 \end{figure}
 
-\paragraph{Insert code chunks}
+\paragraph{R Markdown} The second image in figure \ref{SourcePanes} is what the Source pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu. In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu in the bottom left-hand side of the Source pane (not shown). To knit your file click the \texttt{Knit HTML} icon on the left side of the Source pane's top bar. This will create both a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful features in the R Markdown Source pane's top bar include the \texttt{ABC} spell check icon and \texttt{MD} icon which gives you a Markdown syntax reference file in the Help pane.
 
-\paragraph{Run code chunks}
+Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code. This makes your source code much easier to read and navigate. RStudio can also fold code chunks. This makes also navigating through long documents, with long code chunks, much easier. The first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If we click this arrow the code chunk will collapse, like in the second image in Figure \ref{CodeFold}. You may also notice that there are a code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To do this create a comment line with at least one hash before the comment text and at least four after like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{#### A Comment ####}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent You will be able to fold all of the text after this comment until the next similarly formatted comment (or the end of the chunk).
+
+\begin{figure}[ht]
+    \caption{Folding Code Chunks in RStudio}
+    \label{CodeFold}
+    \begin{center}
+    \begin{subfigure}  
+        \caption{Not Folded}   \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/MarkdownNoCollapse.png}
+    \end{subfigure} \\[0.5cm]
+    
+    \begin{subfigure}
+        \caption{Folded}
+      \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/MarkdownCollapse.png}        
+    \end{subfigure}
+    \end{center}
+\end{figure}
+
+\paragraph{R \LaTeX}
+
+You can see in the final image in Figure \ref{SourcePanes} that many of the options for R \LaTeX files are the same as R Markdown files. The key differences being that there is a \texttt{Compile PDF} icon instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R \LaTeX file's directory. There is also a \texttt{Format} icon next instead of \texttt{MD}. This actually inserts \LaTeX formatting commands into your document for things such as section headings and bullet lists.
+
 
 \paragraph{Change default .Rnw knitter}
-To use {\emph{knitr}} instead of {\emph{Sweave}}\index{Sweave} when knitting \texttt{.Rnw} files in RStudio you should go to the {\bf{Options}} window\index{RStudio Options window}. Click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. The {\bf{Options}} window is in different places depending on the version of RStudio you are using:
+By default RStudio is set up to use{\emph{Sweave}}\index{Sweave} for compiling \LaTeX documents. To use {\emph{knitr}} instead of {\emph{Sweave}} when knitting \texttt{.Rnw} files in RStudio you should go to the {\bf{Options}} window\index{RStudio Options window}. Click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. The {\bf{Options}} window is in different places depending on the version of RStudio you are using:
 
     \begin{itemize}
         \item {\bf{Mac}}: \texttt{RStudio} \textrightarrow\; \texttt{Preferences},
@@ -1804,7 +1889,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Fri Sep  7 11:46:45 2012
+% Fri Sep  7 17:12:47 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
