@@ -9,7 +9,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with R, RStudio, and knitr}\label{GettingStarted}
 
-If you have rarely or never used R before the first two sections of this chapter give you enough information to be able to get started and understand the code I use in this book. For more detailed introductions to R please refer to the related resources I mentioned in chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package and how it is integrated into RStudio.
+If you have rarely or never used R before the first two sections of this chapter give you enough information to be able to get started and understand the code I use in this book. For more detailed introductions to R please refer to the related resources I mentioned in Chapter \ref{WhatNot}. Experienced R users might want to skip the first two sections of the chapter. This chapter also gives a brief overview of RStudio. It highlights the key features of main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package and how it is integrated into RStudio.
 
 %%%%%%%%%%%%% Using R
 \section{Using R: the basics}
@@ -250,7 +250,7 @@ When we want to include R code into our presentation documents we place them in 
 
 \paragraph{R Markdown}
 
-In R Markdown files we begin a code chunk by writing: \`\`\`\ \{r\}. A code chunk is closed--finished--simply with: \`\`\`\ . For example:
+In R Markdown files we begin a code chunk by writing: \texttt{\`\`\`\\ \{r\} }. A code chunk is closed--ended--simply with: \`\`\`\ . For example:
 
 <<FirstMDExample, eval=FALSE>>=
 ```{r}
@@ -263,9 +263,9 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
 
 There are two different ways to delimite code chunks in R \LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax. {\tt{Knitr}} now also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
 
-\noindent {\bf{.Rnw-style}} \\[0.25cm]
+\noindent {\bf{Sweave-style}} \\[0.25cm]
 
-Traditional Sweave-style code chunks begin with the following code: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an @ sign.   \\[0.25cm]
+Traditional Sweave-style code chunks begin with the following code: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an @ sign. \\[0.25cm]
 
 \noindent {\bf{Rtex-style}} \\[0.25cm]
 
@@ -278,18 +278,34 @@ Sweave-style code chunks may seem fairly baroque. Another option for \LaTeX file
 %%
 @
 
-
-
 \paragraph{Code chunk labels}
 
+Each chunk has a label. When a code chunk creates a plot or is cached\index{cache} (see below for more details) {\emph{knitr}} uses the chunk label for the resulting file's name. If you do not explicitly give the chunk a label it will be assigned one like: \texttt{unnamed-chunk-i}. \texttt{i} is the chunk's number.
+
+To explicitly assign chunk labels in R Markdown documents place the label name inside of the braces after the \texttt{r}. If we wanted to use the label \texttt{ChunkLabel} we would simply type this at the beginning:
+
+<<MarkdownChunkLabel, eval=FALSE, tidy=FALSE>>=
+```{r ChunkLabel}
+# Example chunk label
+```
+@
+
+\noindent The same general format applies to the two types of \LaTeX chunks. In Sweave-style chunks we would type: \texttt{\textless\textless ChunkLabel\textgreater\textgreater=}. In Rtex-style we simply use: \texttt{\%\% begin.rcode ChunkLabel}.
+
+Try not to use spaces or periods in your label names. And all chunk labels {\emph{must}} be unique.
+
 \paragraph{Code chunk options}
+
+There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. To make these changes, and many others we can specify code chunk options\index{code chunk options}.
+
+Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following the same rules as arguments to regular R commands. They have the same \texttt{option=value} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false".
 
 Though the syntax for {\emph{knitr}} options is the same regardless of the markup language we use  For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
 
 \noindent {\bf{Note:}} all labels and code chunk options must be on the same line.
 
 
-\paragraph{Hooks}
+\subsection{Hooks}
 
 \subsection{Global Options}
 
@@ -341,7 +357,9 @@ If you want to create a notebook from an open R source code file simply click cl
 
 \paragraph{R Markdown} The second image in figure \ref{SourcePanes} is what the Source pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu. In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu in the bottom left-hand side of the Source pane (not shown). To knit your file click the \texttt{Knit HTML} icon on the left side of the Source pane's top bar. This will create both a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful features in the R Markdown Source pane's top bar include the \texttt{ABC} spell check icon and \texttt{MD} icon which gives you a Markdown syntax reference file in the Help pane.
 
-Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code. This makes your source code much easier to read and navigate. RStudio can also fold code chunks. This makes also navigating through long documents, with long code chunks, much easier. The first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If we click this arrow the code chunk will collapse, like in the second image in Figure \ref{CodeFold}. You may also notice that there are a code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To do this create a comment line with at least one hash before the comment text and at least four after like this:
+Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code. This makes your source code much easier to read and navigate. RStudio can also fold code chunks. This makes also navigating through long documents, with long code chunks, much easier. The first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If we click this arrow the code chunk will collapse, like in the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
+
+You may also notice that there are a code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To do this create a comment line with at least one hash before the comment text and at least four after like this:
 
 <<CommentFold>>=
 #### A Comment ####
