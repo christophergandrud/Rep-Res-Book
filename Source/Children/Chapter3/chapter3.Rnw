@@ -21,7 +21,8 @@ This section covers some of the very basic syntax in R to get you started. If yo
 \begin{itemize}
     \item objects \& assignment,
     \item component selection,
-    \item functions, commands, and arguments,
+    \item functions and commands,
+    \item arguments,
     \item libraries.
 \end{itemize}
 
@@ -168,9 +169,66 @@ cars[4, 2]
 cars[4, "dist"]
 @
 
-\subsection{Functions, Commands, and Arguments}
+\subsection{Functions and commands}
 
-\subsection{Loading new commands from libraries}
+If objects are the nouns of the R language functions and commands\footnote{For the purposes of this book I treat the two as the same.} are the verbs. They do things to objects. Let's use the \texttt{mean} command as an example. This command takes the mean of a numeric vector object. Remember our {\emph{NumericVect}} object from before:
+
+<<ShowNumericVect>>=
+# Show contents of NumericVect
+NumericVect
+@
+
+\noindent To find the mean of this object simply type:
+
+<<MeanNumericVect>>=
+mean(x = NumericVect)
+@
+
+\noindent We use the assignment operator to place a command's output into an object. For example,
+
+<<MeanNumericVectAssign>>=
+MeanNumericVect <- mean(x = NumericVect)
+@
+
+\noindent Notice that we typed the command's name then enclosed the object name in parentheses immediately afterwards. This is the basic sytax that all commands take: \texttt{COMMAND(ARGUMENTS)}. 
+
+\subsection{Arguments}
+
+Arguments modify what commands do. In this example we have given the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we want to find the mean of NumericVect. Arguments use the \texttt{ARGUMENT = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} To find all of the arguments that an argument can accept look at the {\emph{Arguments}} section of the commands help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,
+
+<<Ch3HelpMean, eval=FALSE, tidy=FALSE>>=
+?mean
+@
+
+\noindent The help file will also tell you the default values that the arguments are set at. Clearly, you do not need to explicitly set an argument if you want it's default value.
+
+Let's see how to use multiple arguments for one command with the \texttt{round} command. It rounds a vector of numbers. We can use the \texttt{digits} option to specify how many decimal places we want the numbers rounded to. For example, to round the object {\emph{MeanNumericVect} to one decimal place type:
+
+<<Ch3Round>>=
+round(x = MeanNumericVect, digits = 1)
+@
+
+\noindent You can see that arguments are separated by commas. 
+
+Arguments for logical arguments must written as \texttt{TRUE} or \texttt{FALSE}.\footnote{They can be abbreviated \texttt{T} and \texttt{F}.} Arguments that are character strings should be in quotation marks.
+
+Some arguments do not need to be explicitly labelled. For example we could have written:
+
+<<Ch3ArgeNoLabel>>=
+# Find mean of NumericVect
+mean(NumericVect)
+@
+
+\noindent R will do its best to figure out what you want and will only give up when it can't--producing an error message. However, to avoid any misunderstandings between yourself and R it can be good practice to label all of your arguments. This will also make your code easier for other people to read, i.e. it will be more reproducible.
+
+Finally, you can stack arguments inside of other arguments. To have R find the mean of NumericVect and round it to one decimal place use:
+
+<<Ch3StackedArgs>>=
+round(mean(NumericVect), digits = 1)
+@
+
+
+\subsection{Installing new libraries and loading commands}
 
 You can install new add-on packages\index{packages} using the {\tt{install.packages}}\index{install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. For the code you will need to install all of the package libraries used in this book see \ref{ReqPackages}.
 
@@ -265,7 +323,7 @@ There are two different ways to delimite code chunks in R \LaTeX documents. One 
 
 \noindent {\bf{Sweave-style}} \\[0.25cm]
 
-Traditional Sweave-style code chunks begin with the following code: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an @ sign. \\[0.25cm]
+Traditional Sweave-style code chunks begin with the following code: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an at sign (@). \\[0.25cm]
 
 \noindent {\bf{Rtex-style}} \\[0.25cm]
 
@@ -296,16 +354,26 @@ Try not to use spaces or periods in your label names. And all chunk labels {\emp
 
 \paragraph{Code chunk options}
 
-There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. To make these changes, and many others we can specify code chunk options\index{code chunk options}.
+There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Chunk options can also be used to format the size and placement of this figure. To make these changes, and many others we can specify code chunk options\index{code chunk options}.
 
-Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following the same rules as arguments to regular R commands. They have the same \texttt{option=value} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false".
+Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following the same rules as arguments to regular R commands. They have the same \texttt{option=value} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false". For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we only want to have {\emph{knitr}} include the code in our document, but not actually run it we use the option \texttt{eval=FALSE}. This option tells {\emph{knitr}} not to evaluate (run) the code chunk.
 
-Though the syntax for {\emph{knitr}} options is the same regardless of the markup language we use  For the full list of {\emph{knitr}} options see this page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+<<MarkdownChunkOptionExample, eval=FALSE>>=
+```{r ChunkLabel, eval=FALSE}
+# Example of a non-evaluated code chunk
+StringNumObject <- cbind(CharacterVect, NumericVect)
+```
+@ 
 
-\noindent {\bf{Note:}} all labels and code chunk options must be on the same line.
+\noindent Note that all labels and code chunk options must be on the same line. Options are separated by commas. The syntax for {\emph{knitr}} options is the same regardless of the markup language. Here is the same chunk option in Rtex-style syntax:
 
-
-\subsection{Hooks}
+<<RtexChunkOptionExample, eval=FALSE>>=
+%% begin.rcode ChunkLabel, eval=FALSE
+% # Example of a non-evaluated code chunk
+% StringNumObject <- cbind(CharacterVect, NumericVect)
+%%
+@ 
+Throughout this book we will look at a number of different code chunk options. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
 
 \subsection{Global Options}
 
@@ -426,14 +494,6 @@ texi2pdf(file = "Example.tex")
 \section{R/RStudio Tips}
 
 Finally, here are a few other tips that make using R and RStudio a little easier.
-
-\paragraph{Getting Help}
-
-You can quickly access the help file for any command. In R/the Rstudio console simply type {\tt{?}} before any command. For example, to get the help file for the {\tt{mean}} command just type:
-
-<<Ch3Help, eval=FALSE, tidy=FALSE>>=
-?mean
-@
 
 \noindent In RStudio you can click on the {\bf{Help}} pane (by default at the lower right, see Figure \ref{BlankMain}) and enter the command you want help with into the search field.
 
