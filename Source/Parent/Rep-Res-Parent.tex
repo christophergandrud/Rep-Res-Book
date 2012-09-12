@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 10 September 2012
+% Updated: 12 September 2012
 %%%%%%%%%%%%%%
 % !Rnw weave = knitr
 
@@ -182,14 +182,18 @@ This book discusses how to use a number of user-written R packages for reproduci
 % Chapter Chapter 1 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 August 2012
+% Updated: 12 September 2012
 
 
 
 
 \chapter{Introducing Reproducible Research}\label{Intro}
 
-Most people encounter research as a neat and very abridged package. This package is usually in the form of a conference presentation, journal article, book, or maybe even a website. These presentation documents announce the results of some research project and try to convince us that the results are correct.\cite{Mesirov2010}. However, the article, slideshow, or book is not the research. 
+Most people encounter research as a neat and very abridged package. This package is usually in the form of a conference presentation, journal article, book, or maybe even a website. These presentation documents announce the results of some research project and try to convince us that the results are correct.\cite{Mesirov2010}. However, the article, slideshow, or book is not the research. Especially in the computational and statistical sciences, these documents are the ``advertising". The research is the ``full software environment, code, and data that produced the results".\cite{Buckheit1995}
+
+This book gives you the tools to combine your research to the advertisement. The first tool is a workflow for reproducible research that weaves the principles of replication throughout an entire research project from data gathering, analysis, and presentation of results. We will also learn how to use a specific set of computer tools to make your computational and statistical research fully reproducible.
+
+
 \section{What is reproducible research?}
 
 FILL IN
@@ -199,6 +203,8 @@ FILL IN
 Incorporating high reproducibility into your research is important for science and it can also make your life as a researcher easier. 
 
 \subsection{For Science}
+
+Replicability has been a key part of scientific enquiry since at leas the 1660s\cite{Stodden2010} when the Royal Society began publishing descriptions of experiments and even hosting demonstrations--replications--of experiments. 
 
 \subsection{For You}
 
@@ -341,7 +347,7 @@ In the same spirit, I encourage you to make your research files--not just data, 
 
 \chapter{Getting Started with Reproducible Research}\label{GettingStarted}
 
-Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process and continuing to follow a few simple guidelines throughout your research can help solve these problems. 
+Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning".\cite{Donoho2010}
 
 This chapter first gives you a big picture overview of the reproducible research process: a workflow for reproducible research. Then it covers some of the key guidelines that can help make your research more reproducible.
 
@@ -1623,22 +1629,18 @@ Data gathering Make files usually only need one or two commands {\tt{setwd}}\ind
 \hlcomment{# Gather and clean up raw data files.}
 \hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather1.R"})
 \hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather2.R"})
-    
-\hlcomment{# Merge cleaned data files}
-\hlcomment{# Note: Merged data given the object name CleanedData}
-\hlfunctioncall{source}("GatherSource/MergeData.R)
-\hlcomment{# Save cleaned/merged Data as MainData.csv}
-\hlfunctioncall{write.table}(CleandedData, 
-            file = \hlstring{"/DataFiles/MainData.csv"}, 
-            sep = \hlstring{","})
+\hlcomment{# Merge cleaned data files into object CleanedData}
+\hlfunctioncall{source}(\hlstring{"GatherSource/MergeData.R"})
+\hlcomment{# Save cleaned & merged Data as MainData.csv}
+\hlfunctioncall{write.csv}(CleandedData, file = \hlstring{"/DataFiles/MainData.csv"})
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 
-Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.table}}\index{write.table} command. The \texttt{sep} option sets the character that separates values in a row. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis.
+Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.csv}}\index{write.csv} command. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis. 
 
-You can of course save your data in a wide variety of other formats. You can also save all of the objects in your workspace using the \texttt{save.image} command.
+You can of course save your data in a wide variety of other formats. To save your data in another plain-text format use the \texttt{write.table} command\index{write.table}. You can also save all of the objects in your workspace using the \texttt{save.image} command.
 
 \section{Importing locally stored data sets}
 
@@ -1653,7 +1655,7 @@ Data <- \hlfunctioncall{read.table}(file = \hlstring{"~/Data1.csv"}, sep = \hlst
 \end{knitrout}
 
 
-If you are using RStudio you do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \rightarrow \texttt{From Text File\ldots}. Then specify the separator and other options that will help R understand your data in the box that pops up. This is initially easier than using \texttt{read.table}.
+If you are using RStudio you do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \textrightarrow \texttt{From Text File\ldots}. Then specify the separator with the \texttt{sep = ","} argument and other options that will help R understand your data in the box that pops up. This is initially easier than using \texttt{read.table}. But it is less reproducible
 
 To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before we load it into R.
 
@@ -2044,7 +2046,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Mon Sep 10 16:59:06 2012
+% Wed Sep 12 18:39:45 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}

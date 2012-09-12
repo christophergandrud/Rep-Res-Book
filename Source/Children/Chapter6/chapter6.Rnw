@@ -19,30 +19,25 @@ A key principle of replicable data gathering with R, like replicable research in
 
 Data gathering Make files usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{The {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a Data make file might look like for our example project (see Figure \ref{ExampleTree}).
 
-<<Ch5ExampleMake, error=FALSE, eval=FALSE>>=
+<<Ch5ExampleMake, eval=FALSE>>=
 # Example Make file
 setwd("~/ExampleProject/Data/")
 
-
 # Gather and clean up raw data files.
 source("/GatherSource/IndvDataGather/Gather1.R")
+
 source("/GatherSource/IndvDataGather/Gather2.R")
     
+# Merge cleaned data files into object CleanedData
+source("GatherSource/MergeData.R")
 
-# Merge cleaned data files
-# Note: Merged data given the object name CleanedData
-source("GatherSource/MergeData.R)
-
-
-# Save cleaned/merged Data as MainData.csv
-write.table(CleandedData, 
-            file = "/DataFiles/MainData.csv", 
-            sep = ",")
+# Save cleaned & merged Data as MainData.csv
+write.csv(CleandedData, file = "/DataFiles/MainData.csv")
 @
 
-Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.table}}\index{write.table} command. The \texttt{sep} option sets the character that separates values in a row. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis.
+Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.csv}}\index{write.csv} command. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis. 
 
-You can of course save your data in a wide variety of other formats. You can also save all of the objects in your workspace using the \texttt{save.image} command.
+You can of course save your data in a wide variety of other formats. To save your data in another plain-text format use the \texttt{write.table} command\index{write.table}. You can also save all of the objects in your workspace using the \texttt{save.image} command.
 
 \section{Importing locally stored data sets}
 
@@ -52,7 +47,7 @@ Plain text file based data stored on your computer can be loaded into R using th
 Data <- read.table(file = "~/Data1.csv", sep = ",")
 @
 
-If you are using RStudio you do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \rightarrow \texttt{From Text File\ldots}. Then specify the separator and other options that will help R understand your data in the box that pops up. This is initially easier than using \texttt{read.table}. But it is less reproducible
+If you are using RStudio you do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \textrightarrow \texttt{From Text File\ldots}. Then specify the separator with the \texttt{sep = ","} argument and other options that will help R understand your data in the box that pops up. This is initially easier than using \texttt{read.table}. But it is less reproducible
 
 To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before we load it into R.
 
