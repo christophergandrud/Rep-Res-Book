@@ -1,11 +1,13 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 13 September 2012
+% Updated: 14 September 2012
 %%%%%%%%%%%%%%
+
+% Tell RStudio that weaving is to be done with the knitr package
 % !Rnw weave = knitr
 
-
+% Load required LaTeX packages
 \documentclass[ChapterTOCs,krantz1]{krantz}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -27,6 +29,8 @@
 \usepackage{tikz}
 \usetikzlibrary{trees}
 
+
+% Set knitr global options
 <<ParentGlobalOpts, echo=FALSE>>=
   options(width=60)
   opts_chunk$set(fig.align='center')
@@ -43,19 +47,22 @@
 
 \SweaveOpts{concordance=TRUE}
 
+% Title page
 \title{Reproducible Research with R and RStudio}
 
 \author{Christopher Gandrud}
 
 \maketitle
 
+% Front matter
 \frontmatter
 
+% Include Author About, Foreward, and Preface child documents
 <<ChildFrontMatter, child=c('/git_repositories/Rep-Res-Book/Source/FrontMatter/Author.tex', '/git_repositories/Rep-Res-Book/Source/FrontMatter/Foreword.Rnw', '/git_repositories/Rep-Res-Book/Source/FrontMatter/Preface.Rnw'), eval=TRUE, message=FALSE>>=
 @
 
+% Convert Stylistic Conventions child documnet from Markdown to LaTex and include
 \chapter*{Stylistic Conventions}\label{StylisticConventions}
-\begin{noindent}
 
 <<ChildStylisticConventions, echo=FALSE, messages=FALSE, results='hide', engine="sh">>=
 pandoc /git_repositories/Rep-Res-Book/Source/FrontMatter/StylisticConventions.md -t latex -o /git_repositories/Rep-Res-Book/Temp/StyleTemp.tex
@@ -63,10 +70,9 @@ pandoc /git_repositories/Rep-Res-Book/Source/FrontMatter/StylisticConventions.md
 
 \input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
 
+% Include page on installing R packages used in the book
 <<ChildFrontPackages, child=c('/git_repositories/Rep-Res-Book/Source/FrontMatter/Packages.Rnw')>>=
 @
-
-\end{noindent}
 
 \listoffigures
 \listoftables
@@ -76,31 +82,35 @@ pandoc /git_repositories/Rep-Res-Book/Source/FrontMatter/StylisticConventions.md
 
 \setcounter{page}{1}
 
+% Part 1, include child documents
 \part{Getting Started}
 
 <<Child1, echo=FALSE, child=c('/git_repositories/Rep-Res-Book/Source/Children/Chapter1/chapter1.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter2/chapter2.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter3/chapter3.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter4/chapter4.Rnw'), eval=TRUE, message=FALSE>>=
 @
 
+% Part 2, include child documents
 \part{Data Gathering and Storage}
 
 <<Child2, child=c('/git_repositories/Rep-Res-Book/Source/Children/Chapter5/chapter5.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter6/chapter6.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter7/chapter7.Rnw'), eval=TRUE, message=FALSE>>=
 @
 
-
+% Part 3, include child documents
 \part{Analysis and Results}
 
 <<Child3, child=c('/git_repositories/Rep-Res-Book/Source/Children/Chapter8/chapter8.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter9/chapter9.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter10/chapter10.Rnw'), eval=TRUE, message=FALSE>>=
 @
 
+% Part 4, include child documents
 \part{Presentation Documents}
 
 <<Child4, child=c('/git_repositories/Rep-Res-Book/Source/Children/Chapter11/chapter11.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter12/chapter12.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter13/chapter13.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter14/chapter14.Rnw'), eval=TRUE, warning=FALSE>>=
 @
 
-
+% Include bibliotraphy
 \bibliographystyle{plain}
 \bibliography{/git_repositories/Rep-Res-Book/Source/rep-res-book.bib,/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib}
 
+% Include index
 \clearpage
 \printindex
 

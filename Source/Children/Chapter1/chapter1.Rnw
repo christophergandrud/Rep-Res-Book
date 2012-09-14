@@ -9,14 +9,14 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Introducing Reproducible Research}\label{Intro}
 
-Most people encounter research as a neat and very abridged package. This package is usually in the form of a conference presentation, journal article, book, or maybe even a website. These presentation documents announce the results of some research project and try to convince us that the results are correct.\cite{Mesirov2010}. However, the article, slideshow, or book is not the research. Especially in the computational and statistical sciences, these documents are the ``advertising". The research is the ``full software environment, code, and data that produced the results".\cite{Buckheit1995}
+Most people encounter research as a neat and very abridged package. This package is usually in the form of a conference presentation, journal article, book, or maybe even a website. These presentation documents announce the results of some research project and try to convince us that the results are correct \cite{Mesirov2010}. However, the article, slideshow, or book is not the research. Especially in the computational and statistical sciences, these documents are the ``advertising". The research is the ``full software environment, code, and data that produced the results" \cite[385]{Buckheit1995,Donoho2010}.
 
 This book gives you the tools to {\bf{dynamically}} combine your research to the advertisement. The first tool is a workflow for reproducible research that weaves the principles of replication throughout an entire research project from data gathering, analysis, and presentation of results. We will also learn how to use a specific set of computer tools to make your computational and statistical research fully reproducible.
 
 
 \section{What is reproducible research?}
 
-Research results are replicable if independent researchers can make the same findings using the same procedures. For research that relies on experiments, this can mean a researcher not involved in the original research following rerunning the experiment and seeing if the new results match the original. In computational and quantitative empirical sciences results are replicable if independent researchers can follow the procedures used in the original research to gather the data and run the computer code to obtain the same results. Of course it is sometimes difficult to replicate the original data set because of resource constraints. So as a next-best standard we can aim for reproducible research.\cite{Peng2011} In computational sciences this means:
+Research results are replicable if independent researchers can make the same findings using the same procedures. For research that relies on experiments, this can mean a researcher not involved in the original research following rerunning the experiment and seeing if the new results match the original. In computational and quantitative empirical sciences results are replicable if independent researchers can follow the procedures used in the original research to gather the data and run the computer code to obtain the same results.\footnote{The idea of ``really reproducible" computational research was originally thought of and implemented by Jon Claerbout\index{Jon Claerbout} and the Stanford Exploration Project beginning in the 1980s and early 1990s \cite{Fomel2009,Donoho2009}. Further seminal advances were made by Jonathan B. Buckheit and David L. Donoho who created the Wavelab library of MatLab\index{MatLab} routines for their research on wavelets in the mid-1990s \cite{Buckheit1995}.} Of course it is sometimes difficult to replicate the original data set because of resource constraints. So as a next-best standard we can aim for reproducible research \cite[1226]{Peng2011}. In computational sciences this means:
 
 \begin{quote}
     an independent researcher can use the same data and same computer code to make the same findings.
@@ -24,7 +24,7 @@ Research results are replicable if independent researchers can make the same fin
 
 In this book we will actually aim for replicable research, as new technologies actually make it possible to replicate a data set, especially if the data is available over the internet.
 
-In practice, it needs to be {\emph{easy}} for independent researchers to reproduce your research.\cite{Ball2012} In this book we will learn ways to make research easily reproducible. 
+In practice, it needs to be {\emph{easy}} for independent researchers to reproduce your research \cite{Ball2012}. If a study is difficult to reproduce it is more likely that no one will reproduce it and it will be more difficult to tell if errors found during replication are errors from the original research or errors created by the replicator. In this book we will learn ways to make research easily reproducible to help avoid these problems. 
 
 \section{Why should research be reproducible?}
 
@@ -32,32 +32,53 @@ Reproducibility research is a key component of science. Working to make your res
 
 \subsection{For Science}
 
-Replicability has been a key part of scientific enquiry since at leas the 1660s\cite{Stodden2010} when the Royal Society began publishing descriptions of experiments and even hosting demonstrations--replications--of experiments. Why is replication so important for scientific inquiry? 
+Replicability has been a key part of scientific enquiry since at leas the 1660s\cite[2]{Stodden2010} when the Royal Society began publishing descriptions of experiments and even hosting demonstrations--replications--of experiments. Why is replication so important for scientific inquiry? 
 
-\paragraph{Standard to Judge Scientific Claims} 
-Science, according to the American Physical Society, ``is the systematic enterprise of gathering knowledge \ldots organizing and condensing that knowledge into testable laws and theories."\footnote{See \url{http://www.aps.org/policy/statements/99_6.cfm}.} The ``ultimate standard" for evaluating these scientific claim is whether or not the claim can be replicated.\cite{Peng2011} 
+\paragraph{Standard to judge scientific claims} 
+Replication, or at the least reproducibility, allows opens scientific claims to scrutiny; allowing us to keep what works and discard what doesn't. Science, according to the American Physical Society, ``is the systematic enterprise of gathering knowledge \ldots organizing and condensing that knowledge into testable laws and theories." The ``ultimate standard" for evaluating these scientific claim is whether or not the claim can be replicated \cite{Peng2011,Kelly2006}. Replication ``requires the complete and open exchange of data, procedures, and materials". Scientific conclusions that are not replicable should be abandoned or modified ``when confronted with more complete or reliable \ldots evidence".\footnote{See the American Physical Society's website at \url{http://www.aps.org/policy/statements/99_6.cfm}. See also \cite{Fomel2009}.}
 
-\paragraph{Error is a part of doing computational science}
+\paragraph{Avoiding effort duplication} 
+Not only is reproducibility crucial for evaluating scientific claims, it can also help enable the cumulative growth of future scientific knowledge \cite{Kelly2006}. Reproducible research cuts down on the amount of time scientists have to spend duplicating data or procedures that have already been collected or figured out. They can apply these data and procedures more quickly to addressing other research questions.
 
 \subsection{For You}
 
-Working to make your research reproducible from the start has a number of knock on benefits that make the research process easier {\emph{for the researcher}}. A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Virtually no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, and so on. Whether these changes are because of journal reviewers' and conference participants comments or we discover that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes. 
+Working to make your research reproducible from the start requires a some extra effort. For example, you need to put effort into learning the tools of reproducible research by, for example reading this book. But beyond the clear scientific reasons why you should make this effort, doing so has a number of knock on benefits that make your research process more effective and (hopefully) ultimately easier.
 
-Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves".\cite{Bowers2011}
+\paragraph{Better work habits}
+Making a project reproducible from the start encourages us to use better work habits. It can spur us to more effectively plan our research and push us to bring our data and source code up to a higher level of quality than we might if ``we thought `no one was looking'" \cite[386]{Donoho2010}. This pushes us to root out errors, a ubiquitous part of computational research, earlier in the process \cite[385]{Donoho2010}. Clear documentation also makes it easier to find the errors.
 
-COMPLETE
+Reproducible research needs to be stored in such a way that other researchers can actually access the data and source code. By taking steps to make our research available for others we are also making it easier for us, the original researcher, to find it in the future when we want to use the data or methods in other projects.
+
+\paragraph{Better teamwork}
+A key part of reproducible research is organizing and documenting your work so that it is easy for others to figure out what you are doing. The steps you take to make sure your an independent researcher can figure out what you have done also make it easier for your collaborators to understand as well. This applies not only to current collaborators, but also future collaborators. Bringing new members of a research team up to speed on a cumulatively growing research project is faster if they can easily understand what has been done already \cite[386]{Donoho2010}. 
+
+\paragraph{Changes are easier}
+A third person may or may not actually reproduce your research even if you make it easy to do so. But, it's almost certain that you will reproduce parts or even all of your research. Often times you will reproduce your work long after you originally did it and long since you remembered the details of how to do it. Almost no actual research process is completely linear. We almost never gather data, run our analyses, and present our results without also going backwards to add variables, make changes to our statistical models, create new graphs, alter results tables in light of new findings and so on. Whether these changes are because of journal reviewers' and conference participants comments or we discover that new and better data has been made available since beginning the project, designing our research to be reproducible from the start makes it much easier to make these changes. 
+
+Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves" \cite{Bowers2011}.
+
+\paragraph{Improve research impact}
+Reproducible research is more likely to be useful for other researchers. Useful research is cited more frequently. Research that is fully reproducible contains more information, i.e. more reasons to use and cite, than research that merely presents findings. Other researchers may use the data or code to look at other often unanticipated questions. For this they will (should) cite your work.
+
+A common reason that I sometimes hear from fellow researchers why they avoid making their research fully reproducible is that they are afraid other people will use their data and code to compete with them. I'll let \cite[16]{Donoho2009} answer this one:
+
+\begin{quote}
+    True. But competition means that strangers will read your papers, try to learn from them, cite them, and try to do even better. If you prefer obscurity, why are you publishing?
+\end{quote}
 
 \section{Who should read this book?}
 
-This book is intended primarily for upper-level undergraduate and graduate students and professional researchers who want to develop a more systematic workflow that encourages reproducibility.
-
-\subsection{Students}
+This book is intended primarily for professional researchers upper-level undergraduate and graduate students and working on computational data-driven projects who want to have a systematic workflow that encourages reproducibility and the practical state-of-the-art computer tools to put this into practice. The book will be useful both for people who have general experience using technologies such as the R statistical programming language and \LaTeX. The more researchers that start to incorporate the tools of reproducibility the better. So I have also included enough information in the book that even if you have very limited experience with these tools, you will be able to start using them right away.
 
 \subsection{Researchers}
+Hopefully so far in this chapter I've convinced you that reproducible research has benefits for you as a member of the scientific community and you personally as a computational researcher. This book is intended to be a practical guide for how to actually make your research reproducible. Even if you already use tools such as R and \LaTeX you may not be leveraging their full potential. This book will teach you useful ways to get the most out of them not just as a series of types, but as part of a coherent reproducible research workflow.
+
+\subsection{Students}
+It is better to start using the tools of reproducible research as early as possible \cite{Ball2012}. 
+
 
 \subsection{Editors}
-
-Many authors have argued\cite{Peng2011} CITE OTHERS (and it's my personal experience researching in political science) that even if researchers know how to use the tools of reproducible research a major impediment to them actually doing so is a lack of infrastructure for making the reproducible research available. Hopefully this book will be useful for editors at academic publishers who want to be able to better evaluate reproducible research and develop systems for making it more widely available.
+Beyond a lack of reproducible research skills, an impediment to actually creating reproducible research is a lack of infrastructure to publish this work \cite{Peng2011}. Hopefully, this book will be useful for editors at academic publishers who want to be able to better evaluate reproducible research and develop systems for making it more widely available. The more editors with the skills to work with reproducible research, the more likely it is that researchers will create it.
 
 \subsection{Industry practitioners}
 
@@ -65,9 +86,9 @@ Industry practitioners may or may not want to make their work easily reproducibl
 
 \section{The Tools of Reproducible Research}
 
-This book will teach you the tools you need to make your research highly reproducible. Reproducible (quantitative) research involves two broad sets of tools. The first is a {\bf{reproducible research environment}} that includes the statistical tools you need to run your analyses as well as ``the ability to automatically track the provenance of data, analyses, and results and to package them (or pointers to persistant versions of them) for redistribution". The second set of tools is a {\bf{reproducible research publisher}} that prepares documents to present the results and is easily linked to the reproducible research environment.\cite{Mesirov2010}
+This book will teach you the tools you need to make your research highly reproducible. Reproducible (quantitative) research involves two broad sets of tools. The first is a {\bf{reproducible research environment}} that includes the statistical tools you need to run your analyses as well as ``the ability to automatically track the provenance of data, analyses, and results and to package them (or pointers to persistant versions of them) for redistribution". The second set of tools is a {\bf{reproducible research publisher}} that prepares documents to present the results and is easily linked to the reproducible research environment \cite{Mesirov2010}.
 
-In this book I we will focus on learning how to use widely available and highly flexible reproducible research environment--R/RStudio. R/RStudio can be linked to numerous reproducible research publishers with Yihui Xie's {\emph{knitr}} package\cite{knitr}. The full list of tools tools covered in this book include:
+In this book I we will focus on learning how to use widely available and highly flexible reproducible research environment--R/RStudio. R/RStudio can be linked to numerous reproducible research publishers with Yihui Xie's {\emph{knitr}} package \cite{knitr}. The full list of tools tools covered in this book include:
 
 \begin{itemize}
     \item {\bf{R}}: a programming language primarily for statistics and graphics. It can also be used for data gathering and creating presentation documents.
@@ -92,7 +113,7 @@ The way we interact with R or any other programming and markup language promotes
 
 \paragraph{Why knitr?}
 
-Literate programming is a crucial part of reproducible quantitative research. Being able to directly your analyses, your results, and the code you used to produce the results makes tracing your steps much more feasible. There are many different literate programming tools CITE. Previously, one of the most common tools for researchers using R and the \LaTeX markup language was the Sweave package.\cite{Leisch2002}\index{Sweave} The packages I am going to focus on in this book is newer and is called {\emph{knitr}}.\cite{knitr}\index{knitr} Why am I going to focus this book on {\emph{knitr}} and not Sweave or some other tool?
+Literate programming is a crucial part of reproducible quantitative research. Being able to directly your analyses, your results, and the code you used to produce the results makes tracing your steps much more feasible. There are many different literate programming tools CITE. Previously, one of the most common tools for researchers using R and the \LaTeX markup language was the Sweave package \cite{Leisch2002}.\index{Sweave} The packages I am going to focus on in this book is newer and is called {\emph{knitr}}.\cite{knitr}\index{knitr} Why am I going to focus this book on {\emph{knitr}} and not Sweave or some other tool?
 
 The simple answer is that {\emph{knitr}} has the same capabilities as Sweave, but more. It can work with many more markup languages and can even work with programming languages other than R. It highlights R code\index{code highlighting} in presentation documents. It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to Sweave if you want to. However, you can also use much simpler and more straightforward syntax with {\emph{knitr}}. 
 
@@ -148,7 +169,7 @@ these possibly frustratingly mysterious conventions and/or pointing you in the d
 To that end, I can recommend a number of books for that cover more of the nitty-gritty of R and the command line.
 
 \begin{itemize}
-    \item Michael J. Crawley's encyclopaedic R book, appropriately   titled, \textbf{The R Book} published by Wiley.
+    \item Michael J. Crawley's encyclopaedic R book, appropriately titled, \textbf{The R Book} published by Wiley.
     
     \item Norman Matloff's tour through the programming language aspects of  R called \textbf{The Art of R Programming: A Tour of Statistical Design Software} published by No Starch Press.
     
@@ -164,7 +185,7 @@ This book tells a story. It has a beginning, middle, and end. So, unlike a refer
 
 That being said, readers with more experience using tools like R or \LaTeX) may want to skip over the nitty-gritty parts of the book that describe how to manipulate data frames or compile a \LaTeX) document into a PDF. Please feel free to do this.
 
-If you are experienced with R in particular you may want to skip over the first two sections of Chapter \ref{GettingStarted}: Getting Started with R/RStudio. The latter part of this chapter contains important basic information on the {\emph{knitr}} package. 
+If you are experienced with R in particular you may want to skip over the first two sections of Chapter \ref{GettingStartedRKnitr}: Getting Started with R/RStudio. The latter part of this chapter contains important basic information on the {\emph{knitr}} package. 
 
 \subsection{How this book was written}
 
@@ -173,4 +194,6 @@ This book practices what it preaches. It can be reproduced. It was written using
 In the same spirit, I encourage you to make your research files--not just data, but analysis code and markup--available for other researchers to learn from. Not only does reproducibility help us evaluate past work, but it also pushes forward knowledge in the scientific community.
 
 \subsection{Contents overview.}
+
+The book is broken into four parts. The first part of the book (chapters \ref{GettingStartedRR},  \ref{GettingStartedRKnitr}, and \ref{DirectoriesChapter}}) give an overview of the reproducible research workflow as well as the general computer skills that you'll need to use this workflow. The each of the next three parts of the book guides you through the specific skills you will need for each part of the reproducible research process. The second part of the book (chapters \ref{Storing}, \ref{DataGather}, and \ref{DataClean}) cover the data gathering and storage process. The third part (chapters \ref{StatsModel}, \ref{TablesChapter}, and \ref{FiguresChapter}) teach how to dynamically incorporate your statistical analysis, results figures and tables into your presentation documents. The final part (chapters \ref{LatexChapter}, \ref{LargeDocs}, and \ref{MarkdownChapter}) covers how to create reproducible presentation documents including \LaTeX articles, books, slideshows and batch reports as well as Markdown webpages and slideshows.
 

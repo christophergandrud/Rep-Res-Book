@@ -2,44 +2,44 @@
 
 I use the following conventions throughout this book to format computer code and actions:
 
-- Abstract Variables
+- **Abstract Variables**
 
 Abstract variables, i.e. variables that do not represent specific objects in an example, are in `ALL CAPS TYPWRITER TEXT`. 
 
-- Clickable Buttons
+- **Clickable Buttons**
 
 Clickable Buttons are in `typewriter text`. 
 
-- Code 
+- **Code** 
 
 All code is in `typewriter text`.
 
-- Filenames and Directories
+- **Filenames and Directories**
 
 Filenames and directories more generally are printed in *italics*. Camelback is used for file and directory names.
 
-- Individual variable values
+- **Individual variable values**
 
 Individual variable values mentioned in the text are in **bold**.
 
-- Objects
+- **Objects**
 
 Objects are printed in *italics*. Camelback (e.g. CamelBack) is used for object names.
 
-- Columns
+- **Columns**
 
 Columns are printed in *italics*
 
 
-- Packages 
+- **Packages**
 
 **R** packages are printed in *italics*.
 
-- Windows
+- **Windows**
 
 Open windows are written in **bold** text.
 
-- Variable Names
+- **Variable Names**
 
 Variable names are printed in *italics*. Camelback is used for individual variable names.
 
