@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 14 September 2012
+% Updated: 15 September 2012
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
@@ -162,7 +162,8 @@ This book discusses how to use a number of user-written R packages for reproduci
                 \hlstring{"knitcitations"}, 
                 \hlstring{"markdown"}, 
                 \hlstring{"openair"}, 
-                \hlstring{"texreg"},                     
+                \hlstring{"texreg"},
+                \hlstring{"tools"},                     
                 \hlstring{"xtable"}, 
                 \hlstring{"Zelig"})
 \end{alltt}
@@ -314,7 +315,7 @@ In general we interact with R or any other programming and markup language by ex
 
 \paragraph{Why knitr?}
 
-Literate programming is a crucial part of reproducible quantitative research.\footnote{Donald Knuth\index{Donald Knuth} coined the term literate programming in the 1970s to refer to a source file that could be both run by a computer and ``woven" with a formatted presentation document \cite{Knuth1992}.} Being able to directly link your analyses, your results, and the code you used to produce the results makes tracing your steps much easier. There are many different literate programming tools for a number of different programming languages. Previously, one of the most common tools for researchers using R and the \LaTeX markup language was the Sweave package \cite{Leisch2002}.\index{Sweave} The package I am going to focus on in this book is newer and is called {\emph{knitr}}.\cite{knitr}\index{knitr} Why are we going to focus on {\emph{knitr}} in this book and not Sweave or some other tool?
+Literate programming is a crucial part of reproducible quantitative research.\footnote{Donald Knuth\index{Donald Knuth} coined the term literate programming in the 1970s to refer to a source file that could be both run by a computer and ``woven" with a formatted presentation document \cite{Knuth1992}.} Being able to directly link your analyses, your results, and the code you used to produce the results makes tracing your steps much easier. There are many different literate programming tools for a number of different programming languages. Previously, one of the most common tools for researchers using R and the \LaTeX markup language was the Sweave package \cite{Leisch2002}.\index{Sweave} The package I am going to focus on in this book is newer and is called {\emph{knitr}} \cite{knitr}.\index{knitr} Why are we going to focus on {\emph{knitr}} in this book and not Sweave or some other tool?
 
 The simple answer is that {\emph{knitr}} has the same capabilities as Sweave and more. It can work with many more markup languages and can even work with programming languages other than R. It highlights R code\index{code highlighting} in presentation documents making it easier for your readers to follow. It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to Sweave if you want to. However, you can also use much simpler and more straightforward syntax with {\emph{knitr}} both with \LaTeX and other markup languages. 
 
@@ -544,7 +545,7 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  p{6.5cm}  m{4cm}}
+    \begin{tabular}{l c  p{6.5cm}  l{4cm}}
         \hline
         Command/Package & Language & Description & Chapters for Further Information \\  
         \hline \hline
@@ -555,7 +556,7 @@ The most dynamic way to do this is to explicitly link your files together using 
         {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\
         {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\
         {\tt{includegraphics}} & \LaTeX & Inserts a figure into a \LaTeX document. & \ref{FiguresChapter} \\
-        
+        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \ref{MarkdownChapter} \\        
         \hline 
         
     \end{tabular}
@@ -916,7 +917,7 @@ MeanNumericVect <- \hlfunctioncall{mean}(x = NumericVect)
 
 \subsection{Arguments}
 
-Arguments modify what commands do. In this example we have given the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we want to find the mean of NumericVect. Arguments use the \texttt{ARGUMENT = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} To find all of the arguments that an argument can accept look at the {\emph{Arguments}} section of the commands help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,
+Arguments modify what commands do. In this example we have given the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we want to find the mean of NumericVect. Arguments use the \texttt{ARGUMENT LABEL = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} To find all of the arguments that an argument can accept look at the {\emph{Arguments}} section of the commands help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1301,6 +1302,9 @@ If you try this example, you find that the {\emph{knit}} command only created a 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
+\hlcomment{# Load tools package}
+\hlfunctioncall{library}(tools)
+\hlcomment{# Compile pdf}
 \hlfunctioncall{texi2pdf}(file = \hlstring{"Example.tex"})
 \end{alltt}
 \end{kframe}
@@ -1344,6 +1348,12 @@ In this chapter we work with locally stored files\index{locally stored}, i.e. fi
 \section{Organizing your research project}
 
 Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be structured. The project--called {\emph{Example Project}}--is organized into three main parts: a data gathering section, an analysis section, and a presentation section. The results of the project are presented in an article, slideshow, and website.
+
+COMPLETE
+
+The \textt{README.md} file\index{readme file} should briefly describe the project including things such as its title, author(s), and so on. It should also indicate how the folders in the project are organized and how to reproduce the project. This will likely include information on the directory names that you used. The README file should be in the main project folder so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If it is written using Markdown, it will also be properly formatted.
+
+It is good practice to dynamically include the system info for the R session you used to create the project. To do this 
 
 \clearpage
 \thispagestyle{plain}
@@ -2095,7 +2105,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Fri Sep 14 16:50:18 2012
+% Sat Sep 15 15:10:29 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -2477,6 +2487,19 @@ For example,
 
 
 \chapter{Chapter 14:}
+
+
+% Knit README.md file (primarily updates session info)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##   |                                                          |                                                  |   0%  |                                                          |>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>| 100%
+##   ordinary text without R code
+
+## [1] "/git_repositories/Rep-Res-Book/README.md"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 
 % Include bibliotraphy

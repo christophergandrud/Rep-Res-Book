@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 14 September 2012
+% Updated: 15 September 2012
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
@@ -101,6 +101,16 @@ pandoc /git_repositories/Rep-Res-Book/Source/FrontMatter/StylisticConventions.md
 \part{Presentation Documents}
 
 <<Child4, child=c('/git_repositories/Rep-Res-Book/Source/Children/Chapter11/chapter11.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter12/chapter12.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter13/chapter13.Rnw', '/git_repositories/Rep-Res-Book/Source/Children/Chapter14/chapter14.Rnw'), eval=TRUE, warning=FALSE>>=
+@
+
+% Knit README.md file (primarily updates session info)
+<<ChildREADME, echo=FALSE, message=FALSE>>=
+# Load knitr package
+library(knitr)
+
+# Knit README file
+knit(input = "/git_repositories/Rep-Res-Book/Writing_Setup/README.Rmd",
+        output = "/git_repositories/Rep-Res-Book/README.md")
 @
 
 % Include bibliotraphy
