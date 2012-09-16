@@ -79,7 +79,7 @@ sink()
 
 An even faster way to add citations to a bibliography is with \texttt{write.bibtex} command in the \emph{knitcitations} package. To add the \emph{Zelig} citation to our \texttt{biblio.bib} file we only need to enter:
 
-<<Ch11knitCitations, tidy=FALSE, message=FALSE>>=
+<<Ch11knitCitations, tidy=FALSE, message=FALSE, eval=FALSE>>=
 # Load package
 library(knitcitations)
  
@@ -88,6 +88,10 @@ library(knitcitations)
 write.bibtex(entry = c("ggplot2"), 
               file = "bibliography.bib", append = TRUE)
 @
+
+\noindent Note, you will likely only want to append the citations once. Otherwise your bibliography document will grow with redundant information every time you run this command.
+
+The {\emph{knitr}} package can also create BibTeX bibliographies for R packages using the \texttt{write\_bib} command. To use this command you list the packages whose citation details you want to include in a specified file. The command currently does not have the ability to append the citations to an existing file, but instead writes them to a new file.
 
 \section{Presentations with Beamer}
 

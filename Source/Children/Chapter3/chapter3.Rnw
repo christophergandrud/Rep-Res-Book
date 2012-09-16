@@ -485,6 +485,12 @@ If you try this example, you find that the {\emph{knit}} command only created a 
 mardownToHTML(file = "Example.md", output = "Example.html")
 @
 
+You can combine the knit and markdownToHTML steps using {\emph{knitr}}'s \texttt{knit2html} command like this:
+
+<<Ch3RMDtoHTML, eval=FALSE, tidy=FALSE>>= 
+knit2html(file = "Example.Rmd", output = "Example.html")
+@
+
 \noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both \LaTeX and \BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using \BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
 
 <<CH3tex2pdf, eval=FALSE, tidy=FALSE>>=
@@ -494,6 +500,8 @@ library(tools)
 # Compile pdf
 texi2pdf(file = "Example.tex")
 @
+
+Just like with \texttt{knit2html}, you can speed up this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
  
 \section{R/RStudio Tips}
 

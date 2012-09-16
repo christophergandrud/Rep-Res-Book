@@ -54,11 +54,25 @@ is \Sexpr{round(mean(rivers), digits = 0)} miles.
 
 \paragraph{Inline static code}
 
-To include static code inline in an R Markdown document we enclose the code in single backticks (\` \`). For example typing \`\ MeanRiver \textless- mean(rivers) \`\ produces {\tt{MeanRiver \textless- mean(rivers)}}.
+To include static code inline in an R Markdown (and regular Markdown) document we enclose the code in single backticks (\` \`). For example typing
+
+<<Ch8MarkdownInline, eval=FALSE, tidy=FALSE>>=
+This is example R code: `MeanRiver <- mean(rivers)`.
+@
+
+\noindent produces:\footnote{The exact look of the text depends on the CSS\index{CSS} style file you are using.}
+
+\includegraphics[scale = 0.6]{/git_repositories/Rep-Res-Book/Source/Children/Chapter8/images8/MeanRiverMarkdown.png}
 
 \paragraph{Inline dynamic code}
 
-To include dynamic code in an R Markdown document we use the backticks as be fore but include a the letter \texttt{r} after the first one.
+Including dynamic code in the body of your R Markdown text is similar to including static code. The only difference is that we put the letter \texttt{r} after the first single backtick. For example:
+
+<<Ch8MarkdownInlineDynamic, eval=FALSE, tidy=FALSE>>=
+`r mean(rivers)`
+@
+
+\noindent will include the mean value of the {\emph{rivers}} vector in the text of your Markdown document.
 
 \subsection{Sourcing R code from another file}
 
@@ -86,7 +100,7 @@ The simplest solution to these issues is to host the replication code in your Dr
 
 If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files the steps are generally the same, but you need to use the \texttt{source\_url} command in the {\emph{devtools}} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatter plot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatter plot using {\tt{source\_url}} we simply type:
 
-<<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, fig.path='images8/', fig.width=3, fig.height=3>>=
+<<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, fig.width=3, fig.height=3>>=
 # Load library
 library(devtools)
 

@@ -20,7 +20,7 @@ The book can be reproduced by using the R package *knitr*. To do this:
 
 4. Alternatively, in R you can use the code:
 
-```{r ReadmeknitParentCode, eval=FALSE}
+```{r}
 # Load required packages
 library(knitr)
 library(tools)
@@ -33,13 +33,3 @@ texi2pdf(file = "~/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.te
 ```
 
 > Note: this directory syntax should work for Unix and Mac computers. A different syntax is required on Windows computers.
-
----
-
-### Session Info
-The R session info for the used during the most recent compile of the book is:
-
-```{r ReadmeSessionInfo, echo=FALSE}
-Sys.Date()
-sessionInfo()
-```
