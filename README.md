@@ -25,7 +25,7 @@ The book can be reproduced by using the R package *knitr*. To do this:
 library(knitr)
 
 # Knit document and compile .tex file as PDF
-knit2pdf(file = "~/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.tex")
+knit2pdf(file = "~/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw")
 ```
 
 > Note: this directory syntax should work for Unix and Mac computers. A different syntax is required on Windows computers.
