@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 17 September 2012
+% Updated: 19 September 2012
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
@@ -211,15 +211,15 @@ This book gives you the tools to dynamically combine your research to the advert
 
 \section{What is reproducible research?}
 
-Research results are replicable if there is sufficient information for independent researchers to make the same findings using the same procedures \cite[444]{King1995}. For research that relies on experiments, this can mean a researcher not involved in the original research following rerunning the experiment and seeing if the new results match the original. In computational and quantitative empirical sciences results are replicable if independent researchers can follow the procedures used in the original research to gather the data and run the computer code to obtain the same results.\footnote{The idea of ``really reproducible" computational research was originally thought of and implemented by Jon Claerbout\index{Jon Claerbout} and the Stanford Exploration Project beginning in the 1980s and early 1990s \cite[]{Fomel2009,Donoho2009}. Further seminal advances were made by Jonathan B. Buckheit and David L. Donoho who created the Wavelab library of MatLab\index{MatLab} routines for their research on wavelets in the mid-1990s \cite[]{Buckheit1995}.} Of course it is sometimes difficult to replicate the original data set because of resource constraints. So as a next-best standard we can aim for reproducible research \cite[1226]{Peng2011}. In computational sciences this means:\footnote{Reproducibility is important for both quantitative and qualitative research \cite[]{King1994}. However, this book focuses entirely on methods for reproducibility in quantitative computational research.}
+Research results are replicable if there is sufficient information for independent researchers to make the same findings using the same procedures \cite[444]{King1995}. For research that relies on experiments, this can mean a researcher not involved in the original research following rerunning the experiment and seeing if the new results match the original. In computational and quantitative empirical sciences results are replicable if independent researchers can follow the procedures used in the original research to gather the data and run the computer code to obtain the same results.\footnote{The idea of ``really reproducible" computational research was originally thought of and implemented by Jon Claerbout\index{Jon Claerbout} and the Stanford Exploration Project beginning in the 1980s and early 1990s \cite[]{Fomel2009,Donoho2009}. Further seminal advances were made by Jonathan B. Buckheit and David L. Donoho who created the Wavelab library of MatLab\index{MatLab} routines for their research on wavelets in the mid-1990s \cite[]{Buckheit1995}.} Of course it is sometimes difficult to replicate the original data set because of limited resources. So as a next-best standard we can aim for reproducible research \cite[1226]{Peng2011}. In computational sciences this means:\footnote{Reproducibility is important for both quantitative and qualitative research \cite[]{King1994}. However, this book focuses entirely on methods for reproducibility in quantitative computational research.}
 
 \begin{quote}
     the data and code used to make a finding are available and they are sufficient for an independent researcher to make the same findings.
 \end{quote} 
 
-\noindent In this book we will actually aim for replicable research, as new technologies actually make it possible to replicate a data set, especially if the data is available over the internet.
+\noindent In this book we will aim for replicable research, as new technologies actually make it possible to replicate a data set, especially if the data is available over the internet.
 
-In practice, research needs to be {\emph{easy}} for independent researchers to reproduce your research \cite[]{Ball2012}. If a study is difficult to reproduce it is more likely that no one will reproduce it and it will be more difficult to tell if errors found during replication are errors from the original research or errors created by the replicator. In this book we will learn ways to make research easily reproducible to help avoid these problems. 
+In practice, research needs to be {\emph{easy}} for independent researchers to reproduce your research \cite[]{Ball2012}. If a study is difficult to reproduce it is more likely that no one will reproduce it and it will be more difficult to tell if errors found during verification are errors from the original research or errors created by the research attempting the verification. In this book we will learn ways to make research easily reproducible to help avoid these problems. 
 
 In particular we will learn tools that allow us to dynamically ``knit"\index{knit}\footnote{Much of the reproducible computational research and literate programming literatures have traditionally used the term ``weave"\index{weave} to describe the process of combining source code and presentation documents \cite[see][101]{Knuth1992}. In the R community weave is usually used to describe the combination of source code and \LaTeX documents. The term ``knit" reflects the vocabulary of the {\emph{knitr}} R package\index{knitr} and is used more generally to describe weaving with a variety of markup languages.} the source code we use for data gathering and analysis into our presentation documents. Combined with well organized source files and clear commenting of our code independent researchers can understand how we obtained our results. This makes our computational research easily really reproducible.
 
@@ -232,7 +232,7 @@ Reproducibility research is a key component of science. Working to make your res
 Replicability has been a key part of scientific enquiry from at least the 1200s \cite[]{Bacon1267,Nosek2012} through the 1660s \cite[2]{Stodden2010} when the Royal Society began publishing descriptions of experiments and even hosting demonstrations--replications--of experiments and into the present. It has even been called the ``demarcation between science and non-science" \cite[2]{Braude1979}. Why is replication so important for scientific inquiry? 
 
 \paragraph{Standard to judge scientific claims} 
-Replication, or at the least reproducibility, opens scientific claims to scrutiny; allowing us to keep what works and discard what doesn't. Science, according to the American Physical Society, ``is the systematic enterprise of gathering knowledge \ldots organizing and condensing that knowledge into testable laws and theories." The ``ultimate standard" for evaluating these scientific claims is whether or not the claims can be replicated \cite[]{Peng2011,Kelly2006}. Replication ``requires the complete and open exchange of data, procedures, and materials". Scientific conclusions that are not replicable should be abandoned or modified ``when confronted with more complete or reliable \ldots evidence".\footnote{See the American Physical Society's website at \url{http://www.aps.org/policy/statements/99_6.cfm}. See also \cite{Fomel2009}.}
+Replication, or at the least reproducibility, opens claims to scrutiny; allowing us to keep what works and discard what doesn't. Science, according to the American Physical Society, ``is the systematic enterprise of gathering knowledge \ldots organizing and condensing that knowledge into testable laws and theories." The ``ultimate standard" for evaluating these scientific claims is whether or not the claims can be replicated \cite[]{Peng2011,Kelly2006}. Research findings cannot even really be considered ``genuine contribution[s] to human knowledge" until they have been replicated \cite[38]{Stodden2009}. Replication ``requires the complete and open exchange of data, procedures, and materials". Scientific conclusions that are not replicable should be abandoned or modified ``when confronted with more complete or reliable \ldots evidence".\footnote{See the American Physical Society's website at \url{http://www.aps.org/policy/statements/99_6.cfm}. See also \cite{Fomel2009}.} 
 
 \paragraph{Avoiding effort duplication} 
 Not only is reproducibility crucial for evaluating scientific claims, it can also help enable the cumulative growth of future scientific knowledge \cite[]{Kelly2006,King1995}. Reproducible research cuts down on the amount of time scientists have to spend duplicating data or procedures that have already been collected or figured out. Because they do not have to discover on their own things that you have already done, they can apply these data and procedures more quickly to building on your findings and even address research questions in areas you may not have thought of.
@@ -242,7 +242,7 @@ Not only is reproducibility crucial for evaluating scientific claims, it can als
 Working to make your research reproducible from the start of a project does require extra upfront effort. For example, you need to put effort into learning the tools of reproducible research by, for example reading this book. But beyond the clear benefits for science, why you should make this effort? Because making your research reproducible has a number of knock on benefits that make your research process more effective and (hopefully) ultimately easier.
 
 \paragraph{Better work habits}
-Making a project reproducible from the start encourages us to use better work habits. It can spur us to more effectively plan our research and push us to bring our data and source code up to a higher level of quality than we might if ``we thought `no one was looking'" \cite[386]{Donoho2010}. This pushes us to root out errors, a ubiquitous part of computational research, earlier in the process \cite[385]{Donoho2010}. Clear documentation also makes it easier to find the errors.
+Making a project reproducible from the start encourages us to use better work habits. It can spur us to more effectively plan our research and push us to bring our data and source code up to a higher level of quality than we might if ``we thought `no one was looking'" \cite[386]{Donoho2010}. This pushes us to root out errors, a ubiquitous part of computational research, earlier in the process \cite[385]{Donoho2010}. Clear documentation also makes it easier to find the errors.\footnote{Of course, reproducibility is ``neither necessary nor sufficient to prevent mistakes" \cite[]{Stodden2009b}.}
 
 Reproducible research needs to be stored so that other researchers can actually access the data and source code. By taking steps to make our research available for others we are also making it easier for us, the original researcher, to find it in the future when we want to use the data or methods in other projects. We avoid effort duplication in our own work. We are able to cumulatively build on our work more effectively.
 
@@ -255,7 +255,7 @@ A third person may or may not actually reproduce your research even if you make 
 Changes made to one part of a research project have a way of cascading through the other parts. For example, adding a new variable to a largely completed analysis requires gathering new data and merging it into existing data sets. If we are using data imputation or matching methods this can lead to adjustments to the entire data set. We then have to update our statistical models and the tables and graphs we use to present results. Adding a new variable essentially forces us to reproduce large portions of our research. If we made it easier for others do reproduce our research we also made it easier for us to do this. Jake Bowers has referred to this as taking steps to have a ``better relationship with our future selves" \citeyearpar{Bowers2011}.
 
 \paragraph{Improve research impact}
-Reproducible research is more likely to be useful for other researchers. Useful research is cited more frequently. Research that is fully reproducible contains more information, i.e. more reasons to use and cite, than research that merely presents findings. Other researchers may use the data or code to look at other often unanticipated questions. For this they will (should) cite your work.
+Reproducible research is more likely to be useful for other researchers. Because of this, Vandewalle et al. even argue that ``the goal of reproducible research is to have more impact with our research"  \citeyearpar[1253]{Vandewalle2007}. Useful research is cited more frequently \cite[]{Vandewalle2012}. Research that is fully reproducible contains more information, i.e. more reasons to use and cite, than research that merely presents findings. Other researchers may use the data or code to look at other often unanticipated questions. For this they will (should) cite your work.
 
 A reason researchers often avoid making their research fully reproducible is that they are afraid other people will use their data and code to compete with them. I'll let \cite[16]{Donoho2009} answer this one:
 
@@ -281,13 +281,13 @@ When instructors incorporate the process and tools of reproducible research into
 Also, if you are teaching computational courses, you may also benefit from making your lecture material reproducible. It will be easier to update and making the methods you used to create the material available to students will give them more information. It can also pass information to future instructors. 
 
 \subsection{Editors}
-Beyond a lack of reproducible research skills, an impediment to actually creating reproducible research is a lack of infrastructure to publish this work \cite[]{Peng2011}. Hopefully, this book will be useful for editors at academic publishers who want to be able to better evaluate reproducible research and develop systems for making it more widely available. The more editors with the skills to work with reproducible research, the more likely it is that researchers will create it.
+Beyond a lack of reproducible research skills, an impediment to actually creating reproducible research is a lack of infrastructure to publish this work \cite[]{Peng2011}. Hopefully, this book will be useful for editors at academic publishers who want to be better at evaluating reproducible research and be able to develop systems for making it more widely available. For example, from 2009 the journal {\emph{Biostatistics}} has had an editor for reproducibility that ensures replication files are available and that results can actually be replicated using these files \cite[]{Peng2009}. The more editors there are with the skills to work with reproducible research and even require that research be reproducible, the more likely it is that researchers will do it.
 
 \subsection{Industry practitioners}
 
-Industry practitioners may or may not want to make their work easily reproducible outside of their organization. However, that does not mean that significant benefits cannot be gained from using the methods of reproducible research. First, even if public reproducibility is ruled out to guard proprietary information, making your research reproducible to members of your organization can pass on valuable information about how analyses were done and data collected and avoid effort duplication. Just as a lack of reproducibility hinders the spread of information in the scientific community, it can hinder it inside of a private organization. 
+Industry practitioners may or may not want to make their work easily reproducible outside of their organization. However, that does not mean that significant benefits cannot be gained from using the methods of reproducible research. First, even if public reproducibility is ruled out to guard proprietary information, making your research reproducible to members of your organization can spread and pass on valuable information about how analyses were done and data collected.\footnote{There are ways to enable some reproducibility without revealing confidential information. See \cite{Vandewalle2007} for a discussion of one approach.} This will help build your organization's knowledge and avoid effort duplication. Just as a lack of reproducibility hinders the spread of information in the scientific community, it can hinder it inside of a private organization. 
 
-The tools of reproducible research covered in this book enable you to create professional standardized reports that can be easily updated or changed when new information is available. In particular we learn how to create batch reports that incorporate the data analysis results 
+The tools of reproducible research covered in this book enable you to create professional standardized reports that can be easily updated or changed when new information is available. In particular, we learn how to create batch reports.
 
 \section{The Tools of Reproducible Research}
 
@@ -312,7 +312,7 @@ In this book I we will focus on learning how to use the widely available and hig
 \section{Why use R/RStudio for reproducible research?}
 
 \paragraph{Why R?}
-Why use a statistical programming language like R for reproducible research? R is more than just a statistics program, like SAS\index{SAS}, Stata\index{Stata}, or SPSS\index{SPSS}. As we will see in this book, R can be used to gather data, run statistical analyses, and we can use the {\emph{knitr}} R package to connect our analysis to our presentation documents created with markup languages\index{markup language} such as \LaTeX, Markdown, and HTML. This allows us to dynamically and reproducibly present our results in articles, slideshows, and webpages.\footnote{When we use these types of markup languages to create presentation documents what we write is text plus the instructions for how to turn this into a final document. The instructions are written using a markup language. Part IV of this book (Presentation Documents) discusses how to use the \LaTeX and Markdown languages for reproducible research.} 
+Why use a statistical programming language like R for reproducible research? R has a very active development community that is constantly expanding what it is capable of. As we will see in this book this enables researchers across a wide range of disciplines to gather data, run statistical analyses, and, using the {\emph{knitr}} package, connect our analysis to our presentation documents created with markup languages\index{markup language} such as \LaTeX, Markdown, and HTML. This allows us to dynamically and reproducibly present our results in articles, slideshows, and webpages. 
 
 In general we interact with R or any other programming and markup language by explicitly writing our steps down as source code. This promotes reproducibility more than our typical interactions with Graphical User Interface (GUI) programs like SPSS\footnote{I know you can write scripts in statistical programs like SPSS, but doing so is not encouraged by the interface and we often have to learn multiple languages just to write scripts that run analyses, create graphics, and deal with matrices.} and Microsoft Word. When we write (and save) R code and embed it in documents using markup languages we are being forced to explicitly express the steps we take to do our research. When we do research by clicking through drop down menus in GUI programs, the steps we take are lost. Or at least documenting them requires considerable extra effort. Also it is generally more difficult to dynamically embed our analysis in presentation documents created by GUI word processing programs in a way that will be accessible to other researchers both now and in the future. I'll come back to these points in Chapter \ref{GettingStartedRR}.
 
@@ -405,7 +405,7 @@ The book is broken into four parts. The first part of the book (chapters \ref{Ge
 
 \chapter{Getting Started with Reproducible Research}\label{GettingStartedRR}
 
-Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning".\cite{Donoho2010}
+Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning"\cite[386]{Donoho2010}.
 
 This chapter first gives you a big picture overview of the reproducible research process: a workflow for reproducible research. Then it covers some of the key guidelines that can help make your research more reproducible.
 
@@ -426,6 +426,11 @@ It is common in many disciplines (I know this is true in political science, my d
 \subsection{Data Analysis}
 
 \subsection{Results Presentation}
+
+
+\subsection{Reproducible Theory}
+
+An important part of the research process that I do not actively discuss in this book is the theoretical stage. Ideally, if you are using a deductive research strategy, the bulk of this work would precede and even guide the data gathering process. CITE This doesn't mean that theory building shouldn't be reproducible. It can in fact be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. For mathematically based theory results clear and complete descriptions of the proofs should be given. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material.
 
 \section{Practical tips for reproducible research}
 
@@ -535,7 +540,7 @@ There are a number of R style guides. Most of them are similar to the Google R S
 
 \paragraph{Literate programming}
 
-For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
+For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite[]{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
 \subsection{Reproducible research projects are many files explicitly tied together}
 
@@ -548,18 +553,18 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  p{6.5cm}  l{4cm}}
-        \hline
-        Command/Package & Language & Description & Chapters for Further Information \\  
+    \begin{tabular}{l c p{6.5cm} c}
+        \hline \vspace{0.15cm}
+        Command/Package & Language & Description & Chapters for Further Information \\[0.3cm]  
         \hline \hline
-        {\emph{knitr}} & R & R package with functions for tying R (and other programming language) commands into presentation documents & Discussed throughout the book \\
-        {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
-        {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
-        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\
-        {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\
-        {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\
-        {\tt{includegraphics}} & \LaTeX & Inserts a figure into a \LaTeX document. & \ref{FiguresChapter} \\
-        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \ref{MarkdownChapter} \\        
+        {\emph{knitr}} & R & R package with functions for tying commands from R and other programming languages commands into presentation documents & Discussed throughout the book \\[0.25cm]
+        {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\[0.25cm]
+        {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\[0.25cm]
+        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\[0.25cm]
+        {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\[0.25cm]
+        {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\[0.25cm]
+        {\tt{includegraphics}} & \LaTeX & Inserts a figure into a \LaTeX document. & \ref{FiguresChapter} \\[0.25cm]
+        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \ref{MarkdownChapter} \\  [0.25cm]      
         \hline 
         
     \end{tabular}
@@ -569,6 +574,9 @@ The most dynamic way to do this is to explicitly link your files together using 
 
 \subsection{Have a plan to organize, store, and make your files available}
 
+In order for independent researchers to reproduce your research they need to be able actually access the files that instruct them how to do this. Files also need to be organized so that they can figure out how they fit together.  
+
+Some journals now provide services to host replication files.
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
@@ -982,7 +990,6 @@ Finally, you can stack arguments inside of other arguments. To have R find the m
 \end{knitrout}
 
 
-
 \subsection{Installing new libraries and loading commands}
 
 You can install new add-on packages\index{packages} using the {\tt{install.packages}}\index{install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. For the code you will need to install all of the package libraries used in this book see \ref{ReqPackages}.
@@ -1084,7 +1091,7 @@ StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 
 \paragraph{R \LaTeX}
 
-There are two different ways to delimite code chunks in R \LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax. {\tt{Knitr}} now also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
+There are two different ways to delimite code chunks in R \LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax.\footnote{The syntax originates in a literate programming tool called noweb \cite[]{Leisch2002,RamseyNoweb}.} {\emph{Knitr}} now also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
 
 \noindent {\bf{Sweave-style}} \\[0.25cm]
 
@@ -1458,43 +1465,28 @@ The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It dele
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 September 2012
+% Updated: 19 September 2012
 
 
 
 
 \chapter{Storing, Collaborating, Accessing Files, Versioning}\label{Storing}
 
-A stumbling block to actually reproducing a piece of research is getting a hold of the datasets and the codebooks that describe the data used in
-an analysis.
+A stumbling block to actually reproducing a piece of research is getting a hold of the datasets and the codebooks that describe the data used in an analysis. A useful way to overcome this problem is to keep your research on a cloud storage service \cite[see][]{Howe2012}. This chapter describes two different `cloud' storage services--Dropbox and GitHub\footnote{These services store your data on remote servers}--that you can use to make your research files easily accessible to others.
 
-Researchers often face a number of data management issues that, beyond
-making their research difficult to reproduce, can make doing the initial
-research difficult.
+Not only do these services enable others to reproduce your research, they also have a number of benefits for your own research workflow. Researchers often face a number of data management issues that, beyond making their research difficult to reproduce, can make doing the initial research difficult.
 
-First, there is the problem of \textbf{storing} the data so that it is
-protected against computer failure--virus infections, spilling coffee on
-your laptop, and so on.
+First, there is the problem of \textbf{storing} the data so that it is protected against computer failure--virus infections, spilling coffee on your laptop, and so on. Storing data locally--on your computer--or on a flash drive is generally more prone to loss than on remote servers in the cloud.
 
-Fourth, we almost never create a data set or write a paper perfectly all
-at once. We may make changes and then realize that we liked an earlier
-version, or parts of an earlier version better. This is a particularly
-important issue in data management where we may transform our data in
-unintended ways and want to go back to an earlier version. Collaborative
-projects can have regular incidents of one author accidentally deleting
-something in a file that another author needed, for example.
+Second, we may work on a project with different computers and other devices. For example, we may use a computer at work to run computationally intensive analysis, while editing our presentation document on an tablet computer while riding the train to work. Because of this we need to be able to \textbf{access} our files from multiple devices while in different locations. Also, we often need a way for our \textbf{collaborators} to access and edit research files.
 
-To deal with these issues we need to store our data in a system that has
-\textbf{version control}. Version control systems keep track of changes
-we make to our files and allow us to access previous versions if we
+Finally, we almost never create a data set or write a paper perfectly all at once. We may make changes and then realize that we liked an earlier version, or parts of an earlier version better. This is a particularly
+important issue in data management where we may transform our data in unintended ways and want to go back to an earlier version. Collaborative projects can have regular incidents of one author accidentally deleting something in a file that another author needed, for example. To deal with these issues we need to store our data in a system that has \textbf{version control}. Version control systems keep track of changes we make to our files and allow us to access previous versions if we
 like.
 
-the data set can often grow and become disorganized. Perhaps even during
-a data transformation This creates problems
+All of these issues are not only issues for the original researchers, but also for independent researchers trying to reproduce the findings.
 
-You can solve all of these problems in a couple of different ways using
-free or low cost cloud-based storage formats. In this chapter we will
-learn how to use Dropbox and GitHub for data:
+You can solve all of these problems in a couple of different ways using free or low cost cloud-based storage formats. In this chapter we will learn how to use Dropbox and GitHub for research file:
 
 \begin{itemize}
     \item storage,
@@ -1505,24 +1497,32 @@ learn how to use Dropbox and GitHub for data:
 
 \section{Saving data in reproducible formats}
 
-Before getting into the details of cloud-based data storage, lets just
-consider what type of formats you should actually save your data in. A
-key issue for reproducibility is that others be able to not only get
-ahold of the exact data you used in your analysis, but be able to
-understand and use the data not only now, but in the future. Some file
-formats make this easier than others.
+Before getting into the details of cloud-based data storage for all of our research files, lets just consider what type of formats you should actually save your data in\index{saving data}. A key issue for reproducibility is that others be able to not only get ahold of the exact data you used in your analysis, but be able to understand and use the data not only now, but in the future. Some file formats make this easier than others.
 
-R is able to read (and write) a very wide variety of file
-formats, mostly through the \texttt{foreign} package in \texttt{base}
-R. This includes
+In general, for small to moderately-sized data sets\footnote{I don't cover methods for storing and handling very large data sets--with high hundreds of thousands and more observations. For information on large data and R, not just storage, one place to look is this blog post by from RDataMining: \url{http://rdatamining.wordpress.com/2012/05/06/online-resources-for-handling-big-data-and-parallel-computing-in-r/} (posted 6 May 2012).} a plain-text format like comma-separated values\index{comma-separated values} (\texttt{.csv}) or tab-separated values\index{tab-separated values} (\texttt{.tsv}) can be a good way to store your data. These formats simply store a data set as a text file. A row in the data set is a line in the text file. Data is separated into columns with commas or tabs, respectively. These formats are not dependent on a specific program. Any program that can open text files can open them including a wide variety of statistical programs other than R. This helps future proof your research. Version control systems that track changes to text, like GitHub--are also very effective version control systems with these types of files. 
 
-\section{Storing data in the cloud}
+To save data in a plain-text format use the \texttt{write.table} command\index{write.table}. For example, to save a data frame called {\emph{Data}} as a csv file type:
 
-Storing data locally--on your computer--or on a flash drive is generally
-more prone to loss than storing data on remote servers, often referred
-to as `the cloud'.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{write.table}(x = Data, file = \hlstring{"MyData.csv"}, sep = \hlstring{","})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
-\section{Dropbox}
+
+\noindent The \texttt{sep = ","} argument specifies that we want to use a comma to separate the values. For csv files you can use a modified version of this command called \texttt{write.csv}\index{write.csv}. 
+
+R is able to save data in a wide variety of other file formats, mostly through the {\emph{foreign}} package in.
+
+\section{Storing your files in the cloud}
+
+In this book we'll cover two (largely) free\footnote{Dropbox provides a minimum amount of storage for free, above which a fee is charged. GitHub lets you create publicly accessible repositories for free, but they charge for private repositories.} cloud storage services that allow you to store, access, collaborate on, and version control your research files. These services are Dropbox and GitHub. Though they both meet our basic storage needs, they do so in different ways and require different levels of effort to set up.
+
+These two services are certainly not the only way to make your research files available. sResearch oriented services include the SDSC Cloud,\footnote{\url{https://cloud.sdsc.edu/hp/index.php}} the Dataverse Network Project,\footnote{\url{http://thedata.org/}} and RunMyCode.\footnote{\url{http://www.runmycode.org/}} Not all of these services enable us to store, access, collaborate on, and version control our code. Nonetheless, you might find them useful for making your research files available.
+
+\subsection{Dropbox}
 
 The easiest types of cloud storage for your research are services like
 Dropbox and Google Drive. These services typically
@@ -1538,13 +1538,13 @@ control. I am going to focus on using Dropbox because it
 currently offers a complete set of features that allow you to store,
 version, collaborate, and access your data.
 
-\subsection{Version control}
+\subsubsection{Version control}
 
 Dropbox has a simple version control system. Every time you
 save a document on Dropbox a new version is created. One the
 Dropbox website
 
-\subsection{Accessing Data}
+\subsubsection{Accessing Data}
 
 There are two similar, but importantly different ways to access data
 stored on Dropbox. All files stored on Dropbox have a
@@ -1552,7 +1552,7 @@ URL address through which they can be access from computer connected to
 the internet. Some of these files can be easily loaded directly into
 R, while others must me manually (point-and-click) downloaded
 onto your computer and then loaded into R. The key factor is
-whether or not the files are located in your \textbf{Dropbox}'s
+whether or not the files are located in your Dropbox's
 \emph{Public} folder. Files in the \emph{Public} folder can be
 downloaded directly into R. Files not in the \emph{Public} folder
 have to be downloaded manually.\footnote{This is not completely true. It
@@ -1563,7 +1563,7 @@ have to be downloaded manually.\footnote{This is not completely true. It
 
 Either way you find a file's URL address by first right-clicking on the
 file icon in you Dropbox folder. If the file is stored in the
-\emph{Public} folder, you go to Dropbox then \textbf{Copy
+\emph{Public} folder, you go to Dropbox then \emph{Copy
 Public Link}. This copies the URL into your clipboard from where you can
 paste it into your R source code (or wherever). Once you have
 the URL you can load the file directly into R using the
@@ -1571,7 +1571,7 @@ the URL you can load the file directly into R using the
 command for source files (see Chapter 8).
 
 If the file is not in your \emph{Public} folder you also go to
-Dropbox after right-clicking. Then choose \textbf{Get Link}.
+Dropbox after right-clicking. Then choose \emph{Get Link}.
 This will open a webpage in your default web browser from where you can
 download the file. You can copy and paste the page's URL from your
 browser's address bar.
@@ -1588,7 +1588,7 @@ R.
 Note that you cannot save files through the URL link. You must save
 files in the Dropbox folder on your computer.
 
-\section{GitHub}
+\subsection{GitHub}
 
 Dropbox does a fine job of meeting our four basic criteria for
 reproducible data storage. GitHub meets these criteria and
@@ -1646,16 +1646,29 @@ relative to Dropbox for reproducible research:
   this is an interactive to-do list for your research project.
 \end{itemize}
 
-\subsection{Setting Up GitHub}
+\subsubsection{Setting Up GitHub}
 
-There are a number of ways to set up GitHub on your computer. I
-will briefly cover both the command line version (available for Windows,
-Mac, and Linux) and the GUI\footnote{Graphical User Interface, i.e.~not
-  the command line version, but the one with windows that you navigate
-  with your mouse.} version currently available only for Windows and
-Mac.
+There are a number of ways to set up GitHub on your computer. I will briefly cover both the command line version (available for Windows, Mac, and Linux) and the Graphical User Interface version currently available only for Windows and Mac.
 
-\subsection{Version Control in GitHub}
+COMPLETE
+
+\subsubsection{Storage in GitHub}
+
+\subsubsection{Accessing in GitHub}
+
+\subsubsection{Collaboration in GitHub}
+
+Repositories can have official collaborators. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. 
+
+COMPLETE 
+
+Anyone with a GitHub account can make changes to files in a public repository on the repository's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not the a repository collaborator, their edit will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{git pull} in git terminology}. This is a useful way for independent researchers to catch errors and directly address them.
+
+\paragraph{Branches}
+
+\paragraph{Syncing repository}
+
+\subsubsection{Version Control in GitHub}
 
 GitHub's version control system is much more comprehensive than Dropbox's. However, it also has a steeper learning curve.
 
@@ -2149,7 +2162,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Mon Sep 17 13:35:51 2012
+% Wed Sep 19 17:56:25 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -2525,12 +2538,20 @@ For example,
 % Chapter Chapter 14 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 
+% Updated: 19 September 2012
 
 
 
 
-\chapter{Chapter 14:}
+\chapter{Going Beyond the Book}\label{FinalChapter}
+
+COMPLETE
+
+\section{Licensing Your Reproducible Research}
+
+In the United States and many other countries research, including computer code made available via the internet is automatically given copyright protection. However, copyright protection works against the scientific goals of reproducible research, because work derived from the research falls under the original copyright protections \cite[36]{Stodden2009}. 
+
+To solve this problem, some authors have suggest placing code under an open source software license like the GNU General Public License (GPL) \cite[]{Vandewalle2007}. Being designed to make software more freely available, they are not really adequate for making available the data, code, and other material needed to reproduce research findings in a way that enables scientific validation and knowledge growth \cite[see][]{Stodden2009}. 
 
 
 % Include bibliotraphy

@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 August 2012
+% Updated: 19 September 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,7 +9,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with Reproducible Research}\label{GettingStartedRR}
 
-Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning".\cite{Donoho2010}
+Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning"\cite[386]{Donoho2010}.
 
 This chapter first gives you a big picture overview of the reproducible research process: a workflow for reproducible research. Then it covers some of the key guidelines that can help make your research more reproducible.
 
@@ -30,6 +30,11 @@ It is common in many disciplines (I know this is true in political science, my d
 \subsection{Data Analysis}
 
 \subsection{Results Presentation}
+
+
+\subsection{Reproducible Theory}
+
+An important part of the research process that I do not actively discuss in this book is the theoretical stage. Ideally, if you are using a deductive research strategy, the bulk of this work would precede and even guide the data gathering process. CITE This doesn't mean that theory building shouldn't be reproducible. It can in fact be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. For mathematically based theory results clear and complete descriptions of the proofs should be given. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material.
 
 \section{Practical tips for reproducible research}
 
@@ -100,7 +105,7 @@ There are a number of R style guides. Most of them are similar to the Google R S
 
 \paragraph{Literate programming}
 
-For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
+For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite[]{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
 \subsection{Reproducible research projects are many files explicitly tied together}
 
@@ -113,18 +118,18 @@ The most dynamic way to do this is to explicitly link your files together using 
     \caption{Commands for Tying Together Your Research Files}
     \label{TableTieCommands}
     \vspace{0.3cm}
-    \begin{tabular}{l c  p{6.5cm}  l{4cm}}
-        \hline
-        Command/Package & Language & Description & Chapters for Further Information \\  
+    \begin{tabular}{l c p{6.5cm} c}
+        \hline \vspace{0.15cm}
+        Command/Package & Language & Description & Chapters for Further Information \\[0.3cm]  
         \hline \hline
-        {\emph{knitr}} & R & R package with functions for tying R (and other programming language) commands into presentation documents & Discussed throughout the book \\
-        {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\
-        {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\
-        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\
-        {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\
-        {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\
-        {\tt{includegraphics}} & \LaTeX & Inserts a figure into a \LaTeX document. & \ref{FiguresChapter} \\
-        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \ref{MarkdownChapter} \\        
+        {\emph{knitr}} & R & R package with functions for tying commands from R and other programming languages commands into presentation documents & Discussed throughout the book \\[0.25cm]
+        {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\[0.25cm]
+        {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\[0.25cm]
+        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\[0.25cm]
+        {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\[0.25cm]
+        {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\[0.25cm]
+        {\tt{includegraphics}} & \LaTeX & Inserts a figure into a \LaTeX document. & \ref{FiguresChapter} \\[0.25cm]
+        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \ref{MarkdownChapter} \\  [0.25cm]      
         \hline 
         
     \end{tabular}
@@ -134,3 +139,6 @@ The most dynamic way to do this is to explicitly link your files together using 
 
 \subsection{Have a plan to organize, store, and make your files available}
 
+In order for independent researchers to reproduce your research they need to be able actually access the files that instruct them how to do this. Files also need to be organized so that they can figure out how they fit together.  
+
+Some journals now provide services to host replication files.
