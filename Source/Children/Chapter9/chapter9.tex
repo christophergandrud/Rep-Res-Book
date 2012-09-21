@@ -120,71 +120,9 @@ NBModelSum <- \hlfunctioncall{summary}(NBModel)
 
 We created a new object of the class {\tt{summary.MCMCZelig}}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in our results table like the formula that we used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). This matrix is where the things we want in our table are located. I find it easier to work with data frames, so we'll also convert the matrix into a data frame.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-%%
-\noindent Here is what our model results data frame looks like:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-##                Mean      SD   X2.5.    X50.  X97.5.
-## (Intercept) 10.1397 1.31673  7.5579 10.1566 12.7058
-## Education    0.5786 0.09118  0.3963  0.5781  0.7609
-## sigma2      34.9703 7.81260 22.9567 33.8782 53.2172
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-
-\noindent Now we have a data frame object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) we can use {\emph{NBSumdata frame}} with {\tt{xtable}} as before to create the following table:
-\vspace{0.5cm}
-
-
-% latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Fri Sep 21 17:34:29 2012
-\begin{table}[ht]
-\begin{center}
-\begin{tabular}{rrrrr}
-  \hline
- & Mean & 2.5\% & 50\% & 97.5\% \\ 
-  \hline
-(Intercept) & 10.14 & 7.56 & 10.16 & 12.71 \\ 
-  Education & 0.58 & 0.40 & 0.58 & 0.76 \\ 
-  sigma2 & 34.97 & 22.96 & 33.88 & 53.22 \\ 
-   \hline
-\end{tabular}
-\caption{Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression}
-\end{center}
-\end{table}
 
 
 
 
-It may take a bit of hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be used to create graphics.} Hunting for what you want is generally easier by clicking on the object in RStudio's workspace pane.
-
-\subsection{Basic \texttt{knitr} syntax for tables}
-
-So far we have only looked at how to create \LaTeX and HTML tables from R objects. How can we knit these tables into our presentation documents?
-
-The most important \texttt{knitr} chunk option for showing the markup created by these packages as tables is \texttt{results}. The \texttt{results} option can have three values:
-
-\begin{itemize}
-\item
-  \texttt{markup},
-\item
-  \texttt{asis},
-\item
-  \texttt{hide}.
-\end{itemize}
-\texttt{hide} clearly hides the results of whatever we have in our code chunk; no results show up.
-
-\section{Tables with \texttt{apsrtable}}
 
 

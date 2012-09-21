@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 September 2012
+% Updated: 21 September 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,19 +9,25 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with Reproducible Research}\label{GettingStartedRR}
 
-Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available or another researcher asks if they can use the data. By this point there may be various versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to create an accurate account of how the results were reached. As a result many attempts at providing replication information are incomplete and may not give us an accurate account of how research results were found. Keeping your eye on reproducibility from the beginning of the research process continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning"\cite[386]{Donoho2010}.
+Researchers often start thinking about making their research reproducible near the end of the research process when they get start writing up the results. Or maybe later, like when a journal has conditioned an article's acceptance on making its data available. Or maybe even later when another researcher asks if they can use the data. By these points there may be numerous versions of the data set and records of the analyses strewn across multiple folders on the researcher's computer. It can be difficult and time consuming to sift through these files to create an accurate account of how the results were reached. Waiting until near the end of the research process to start thinking about reproducibility can lead to incomplete documentation that does not give us an accurate account of how findings were made. Keeping your eye on reproducibility from the beginning of the research process and continuing to follow a few simple guidelines throughout your research can help solve these problems. Remember ``reproducibility is not an afterthought--it is something that must be built into the project from the beginning"\cite[386]{Donoho2010}.
 
 This chapter first gives you a big picture overview of the reproducible research process: a workflow for reproducible research. Then it covers some of the key guidelines that can help make your research more reproducible.
 
 \section{The Big Picture: A workflow for reproducible research}
 
-To make our research accurately reproducible we should start thinking at the beginning--the data gathering stage--about how other researchers and ourselves will be able to reproduce our results. This book teaches the tools for an integrated workflow for reproducible research. It covers tools that we can use across the three basic stages that most researchers--especially quantitative researchers--go through to answer their research questions:
+To make our research accurately reproducible we should start thinking at the beginning--the data gathering stage--about how other researchers and ourselves will be able to reproduce our results. This book teaches the tools for an integrated workflow for reproducible research. It covers tools that we can use across the three basic stages that most computational researchers go through to answer their research questions:
 
 \begin{itemize}
     \item data gathering,
     \item data analysis,
     \item results presentation.
 \end{itemize}
+
+\subsection{Reproducible Theory}
+
+An important part of the research process that I do not actively discuss in this book is the theoretical stage. Ideally, if you are using a deductive research design, the bulk of this work would precede and even guide the data gathering process. Because I don't cover this stage of the research process doesn't mean that theory building shouldn't be reproducible. It can in fact be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. For mathematically based theory results clear and complete descriptions of the proofs should be given. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material.
+
+Just because I don't cover theory replication in depth in this book, doesn't mean that you can't find out information about it here. I do touch on some of the ways to incorporate proofs and citations into your presentation documents. These tools are covered in Part IV.
 
 \subsection{Data Gathering}
 
@@ -30,11 +36,6 @@ It is common in many disciplines (I know this is true in political science, my d
 \subsection{Data Analysis}
 
 \subsection{Results Presentation}
-
-
-\subsection{Reproducible Theory}
-
-An important part of the research process that I do not actively discuss in this book is the theoretical stage. Ideally, if you are using a deductive research strategy, the bulk of this work would precede and even guide the data gathering process. CITE This doesn't mean that theory building shouldn't be reproducible. It can in fact be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. For mathematically based theory results clear and complete descriptions of the proofs should be given. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material.
 
 \section{Practical tips for reproducible research}
 
@@ -45,6 +46,7 @@ Before we start learning the details of reproducible research with R and RStudio
     \item Everything is a file,
     \item All files should be human readable,
     \item Reproducible research projects are many files explicitly tied together,
+    \item Don't put too much in one file
     \item Have a plan to organize, store, and make your files available.
     
 \end{enumerate}
@@ -53,19 +55,19 @@ Before we start learning the details of reproducible research with R and RStudio
 
 In order to reproduce your research others must be able to know what you did. You have to tell them what you did by documenting as much of your research process as possible. Ideally, you should tell your readers how you gathered your data, analyzed it, and presented the results.
 
-The other tips and Many of the other One important part of documenting everything with R is to \emph{record your session info\index{session info}}. Many things in R stay the same over time, which makes it easy for future researchers to recreate what was done in the past. However, things--syntax in particular--do can change from one version of R to another. Also, the way R functions may be handled slightly different on different operating systems. Finally, you may have R set to load packages by default. These packages might be necessary to run your code, but other people might not be able know what packages were loaded from just looking at your source code. The \texttt{sessionInfo} command prints a record of all of these things. The information from the session I used to create this book up until this chapter is:
+One important part of documenting everything with R is to \emph{record your session info\index{session info}}. Many things in R stay the same over time, which makes it easy for future researchers to recreate what was done in the past. However, things--syntax in particular--do can change from one version of R to another. Also, the way R functions may be handled slightly different on different operating systems. Finally, you may have R set to load packages by default. These packages might be necessary to run your code, but other people might not be able know what packages were loaded from just looking at your source code. The \texttt{sessionInfo} command prints a record of all of these things. The information from the session I used to create this book is:
 
 <<Ch2SessionInfoPlain, tidy=TRUE>>=
 sessionInfo()
 @
 
-\noindent It is good practice to include make output of the session info available either in the main document or in a separate text file. If you want to nicely format the information for a \LaTeX document simply use the {\tt{toLatex}} command.
+\noindent It is good practice to include make output of the session info available either in the main document or in a separate readme\index{README file} file. If you want to nicely format the information for a \LaTeX document simply use the {\tt{toLatex}} command.
 
 <<Ch2SessionInfoLatex, eval=FALSE>>=
 toLatex(sessionInfo())
 @
 
-\noindent Otherwise, you can use the {\tt{print}} command. 
+\noindent Chapter \ref{DirectoriesChapter} gives specific details about how to create readme files with dynamically included session information.
 
 \subsection{Everything is a (text) file}
 
@@ -73,13 +75,13 @@ Your documentation is stored in files that include data, analysis code, the writ
 
 Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values6} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
 
-The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research.
+The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research \cite[3]{Bowers2011}.
 
 Text files are also very easy to search and manipulate with a wide range of programs--such as R--that can find and replace text characters as well as merge and separate files. They have a number of clear benefits for reproducible research including enabling versioning and track changes in programs such as Git (see Chapter \ref{Storing}).   
 
 \subsection{All files should be human readable}
 
-Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or the researcher six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} and {\bf{format your code using a style guide}}. For especially important piece of code you should use {\bf{literate programming}} so that it is very clear to others how you accomplished a piece of research.
+Treat all of your research files as if someone who has not worked on the project will try to read them and understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what we want done.\footnote{Of course, if it does not understand it will usually give us an error message.} Hopefully, the researcher understands what they are communicating when they write their code. However, there is a very good chance that other people (or you six months in the future) will not understand what is being communicated. So, you need to make your documentation `human readable'. To make your documentation accessible to other people you need to {\bf{comment frequently}} \cite[3]{Bowers2011} and {\bf{format your code using a style guide}} \cite[]{Nagler1995}. For especially important piece of code you should use {\bf{literate programming}}--where the code and the presentation document text appear in the same document--so that it is very clear to others how you accomplished a piece of research.
 
 \paragraph{Commenting}
 In R everything on a line after a {\tt{\#}} hash (number) character is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{\#}} to place comments telling other people what you are doing. Here are some examples:
@@ -91,7 +93,36 @@ In R everything on a line after a {\tt{\#}} hash (number) character is ignored b
 
 Because on the first line the {\tt{\#}} is placed at the very beginning, the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation {\tt{2 + 2}}. R runs the equation as usual and fines the answer {\tt{4}}, but it ignores all of the words after the hash. 
 
+According to Nagler \citeyearpar[491]{Nagler} to make your code understandable it is good practice to:
+
+\begin{itemize}
+    \item write a comment before a block of code describing what the code does,
+    \item comment on any line of code that is ambiguous.
+\end{itemize}
+
+\noindent In this book I follow these guidelines when displaying written code. 
+
 Different languages have different comment declaration characters. In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
+
+All of your source code files should begin with a comment header that {\emph{at the least}} should include:
+
+\begin{itemize}
+    \item a description of what the file does,
+    \item the date it was last updated,
+    \item the name of the file's creator and any other contributors
+\end{itemize}
+
+\noindent Here is an example file header for an R source code file that creates the third figure in an article titled ``My Article":
+
+<<Ch2CommentHeader, tidy=FALSE>>=
+##################
+# Source code file used to create Figure 3 in ''My Article''
+# Created by Christopher Gandrud
+# Updated 21 September 2012
+##################
+@
+
+\noindent Feel free to use things like the long series of hash marks above and below the header, white space, and indentations to make your comments more readable. 
 
 \paragraph{Style guides}
 In natural language writing you don't necessarily need to follow a \index{style guide} for things such as punctuation. People could probably figure out what you are saying. But it would be a lot easier for your readers if you use consistent rules. The same is true when writing R code. It's good to follow consistent rules for formatting your code so that:
@@ -136,9 +167,15 @@ The most dynamic way to do this is to explicitly link your files together using 
 \end{table}
 \end{landscape}
 
+\subsection{Don't put too much in one file}
+
+Files that contain many different operations can be very difficult to navigate, even if they have detailed comments. For example, it would be very difficult to find any particular operation in a file that had the code used to gather all of the data and manipulate the data, run all of the statistical models, and create the results figures and tables. If you have a hard time finding things in a file you created, think of the difficulties independent researchers will have! 
+
+Because we have so many ways to link files together there is really no need to lump many different operations into one file. So, we can make our operations modular. One source code file should to one task. This will make your code easier to read. By breaking your operations into discrete chunks, it will also make it easier for you and others to find errors \cite[490]{Nagler1995}.  
 
 \subsection{Have a plan to organize, store, and make your files available}
 
 In order for independent researchers to reproduce your research they need to be able actually access the files that instruct them how to do this. Files also need to be organized so that they can figure out how they fit together.  
 
 Some journals now provide services to host replication files.
+

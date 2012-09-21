@@ -17,7 +17,7 @@ The book can be reproduced by using the R package *knitr*. To do this:
 2. Run the `BookMake.R` make file.
 
 ### Session Info
-The current version of the book manuscript was compiled with the following session details:
+The current version of the book manuscript was compiled with the following session:
 
 
 ```
@@ -31,21 +31,20 @@ The current version of the book manuscript was compiled with the following sessi
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] devtools_0.8        reshape_0.8.4       plyr_1.7.1         
-##  [4] xtable_1.7-0        MCMCpack_1.2-4      coda_0.15-2        
-##  [7] lattice_0.20-10     Zelig_3.5.5         boot_1.3-5         
-## [10] MASS_7.3-21         ggplot2_0.9.2.1     knitcitations_0.1-0
-## [13] bibtex_0.3-2        knitr_0.8           extrafont_0.11     
+##  [1] reshape_0.8.4       plyr_1.7.1          xtable_1.7-0       
+##  [4] MCMCpack_1.2-4      coda_0.15-2         lattice_0.20-10    
+##  [7] Zelig_3.5.5         boot_1.3-5          MASS_7.3-21        
+## [10] ggplot2_0.9.2.1     knitcitations_0.1-0 bibtex_0.3-2       
+## [13] extrafont_0.11      knitr_0.8          
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] RColorBrewer_1.0-5 RCurl_1.91-1       Rttf2pt1_1.1      
 ##  [4] XML_3.9-4          codetools_0.2-8    colorspace_1.1-1  
 ##  [7] dichromat_1.2-4    digest_0.5.2       evaluate_0.4.2    
 ## [10] formatR_0.6        grid_2.15.1        gtable_0.1.1      
-## [13] httr_0.1.1         labeling_0.1       memoise_0.1       
-## [16] munsell_0.4        parallel_2.15.1    pkgmaker_0.8      
-## [19] proto_0.3-9.2      reshape2_1.2.1     scales_0.2.2      
-## [22] stringr_0.6.1      tools_2.15.1       whisker_0.3-1
+## [13] labeling_0.1       memoise_0.1        munsell_0.4       
+## [16] pkgmaker_0.8       proto_0.3-9.2      reshape2_1.2.1    
+## [19] scales_0.2.2       stringr_0.6.1      tools_2.15.1
 ```
 
 

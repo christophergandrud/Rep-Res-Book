@@ -7,14 +7,14 @@
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
 # It also updates the main README file.
 
-# Change working directory to /Rep-Res-Book/Source/Parent
-setwd("/git_repositories/Rep-Res-Book/Source/Parent/")
-
 # Load required packages
 library(knitr)
 library(extrafont)
 
 ##### PDF ####
+# Change working directory to /Rep-Res-Book/Source/Parent
+setwd("/git_repositories/Rep-Res-Book/Source/Parent/")
+
 # Compile the book's parent document
 knit2pdf(input = "Rep-Res-Parent.Rnw")
 
@@ -22,7 +22,7 @@ knit2pdf(input = "Rep-Res-Parent.Rnw")
 embed_fonts("Rep-Res-Parent.pdf")
 
 #### README ####
-# Change working directory to /Rep-Res-Book/
+# Change working directory to /Rep-Res-Book/Writing_Setup/
 setwd("/git_repositories/Rep-Res-Book/Writing_Setup/")
 
 # Knit README file

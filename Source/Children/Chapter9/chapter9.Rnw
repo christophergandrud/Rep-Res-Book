@@ -66,15 +66,15 @@ class objects}
 
 {\tt{xtable}} and other commands in similar packages are very convenient for making tables from objects in supported classes.\footnote{To see a full list of classes that {\tt{xtable}} supports type {\tt{methods(xtable)}} into the R console.} With supported class objects {\tt{xtable}} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that it needs to create the table. With unsupported classes, however, it doesn't know where to look for these things. We need to help it out. 
 
-{\tt{xtable}} does have a way of dealing with {\tt{matrix}} and {\tt{dataframe}} class objects. The rows of these objects become the rows of the table and the columns become the table columns. So, to create tables with non-supported class objects we need to
+{\tt{xtable}} does have a way of dealing with {\tt{matrix}} and {\tt{data frame}} class objects. The rows of these objects become the rows of the table and the columns become the table columns. So, to create tables with non-supported class objects we need to
 
 \begin{enumerate}
     \item find and extract the information from the unsupported class object that we want in the table, 
-    \item convert this information into a matrix or dataframe where the rows and columns of the object correspond to the rows and columns of the table that we want,
+    \item convert this information into a matrix or data frame where the rows and columns of the object correspond to the rows and columns of the table that we want,
     \item use {\tt{xtable}} with this object to create the table.
 \end{enumerate}
 
-Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} dataframe.\footnote{This dataframe is loaded by default.} We run our model:
+Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame.\footnote{This data frame is loaded by default.} We run our model:
 
 <<Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE>>=
 # Load required library
@@ -106,19 +106,19 @@ First, let's create a summary of our output object {\emph{NBModel}}:
 NBModelSum <- summary(NBModel)
 @
 
-We created a new object of the class {\tt{summary.MCMCZelig}}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in our results table like the formula that we used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). This matrix is where the things we want in our table are located. I find it easier to work with dataframes, so we'll also convert the matrix into a dataframe.
+We created a new object of the class {\tt{summary.MCMCZelig}}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in our results table like the formula that we used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). This matrix is where the things we want in our table are located. I find it easier to work with data frames, so we'll also convert the matrix into a data frame.
 
 <<Ch9NBSum>>=
 NBSumDataFrame <- data.frame(NBModelSum$summary)
 @
 %%
-\noindent Here is what our model results dataframe looks like:
+\noindent Here is what our model results data frame looks like:
 
 <<Ch9NBSumDisplay, echo=FALSE>>=
 NBSumDataFrame
 @
 
-\noindent Now we have a dataframe object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) we can use {\emph{NBSumDataFrame}} with {\tt{xtable}} as before to create the following table:
+\noindent Now we have a data frame object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) we can use {\emph{NBSumdata frame}} with {\tt{xtable}} as before to create the following table:
 \vspace{0.5cm}
 
 <<Ch9NBTable, echo=FALSE, message=FALSE, results='asis'>>=
