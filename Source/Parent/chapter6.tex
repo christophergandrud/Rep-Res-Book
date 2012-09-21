@@ -1,0 +1,126 @@
+% Chapter Chapter 6 For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: 16/07/2012 05:45:03 pm CEST
+% Updated: 2 September 2012
+
+
+
+
+\chapter{Gathering Data with R}\label{DataGather}
+
+There are many practical issues involved in gathering data that can make replication easier or harder. As with all of the steps in this book: document everything. Replication will be easier if your documentation--source code--can be understood and executed by a computer. Of course there are data gathering situations that simply require manually pointing and clicking, talking with subjects in an experiment, and so on. The best we can do in these situations is just describe our data gathering process in detail CITE. Nonetheless, R's automated data gathering capabilities are extensive and often under utilized. Learning how to take full advantage of them greatly increases replicability and can even save researchers considerable time and effort.
+
+\section{Organize Your Data Gathering: Make files}
+MOVE TO END OF CHAPTER
+Before getting into the details of using R to automate data gathering, lets's start from where all data gathering should start: a plan to organize the process. Clearly organizing your data gathering process from the start of a research project improves the possibility of replicability and can save significant effort over the course of the project. 
+
+A key principle of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common Make file. The Make file's output is the data set(s) that we use in the statistical analyses. There are two types of files that the Make file\index{make file} runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merge with data from the other sources. Some of the R tools for data clean up will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. We don't explicitly cover the process of merging data sets together in this book. Merging files are executed by the Make file after it runs the clean up files.
+
+Data gathering Make files usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{The {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a Data make file might look like for our example project (see Figure \ref{ExampleTree}).
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Example Make file}
+\hlfunctioncall{setwd}(\hlstring{"~/ExampleProject/Data/"})
+
+\hlcomment{# Gather and clean up raw data files.}
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather1.R"})
+
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather2.R"})
+
+\hlcomment{# Merge cleaned data files into object CleanedData}
+\hlfunctioncall{source}(\hlstring{"GatherSource/MergeData.R"})
+
+\hlcomment{# Save cleaned & merged Data as MainData.csv}
+\hlfunctioncall{write.csv}(CleandedData, file = \hlstring{"/DataFiles/MainData.csv"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.csv}}\index{write.csv} command. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis. 
+
+You can of course save your data in a wide variety of other formats. To save your data in another plain-text format use the \texttt{write.table} command\index{write.table}. You can also save all of the objects in your workspace using the \texttt{save.image} command.
+
+\section{Importing locally stored data sets}
+
+Plain text file based data stored on your computer can be loaded into R using the \texttt{read.table}\index{read.table} command. This command will take the file and turn it into a data frame object. For example, imagine that we have a data set called {\emph{Data1.csv}} in our root directory. We load it into an R object called Data like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+Data <- \hlfunctioncall{read.table}(file = \hlstring{"~/Data1.csv"}, sep = \hlstring{","})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+If you are using RStudio you do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \textrightarrow \texttt{From Text File\ldots}. Then specify the separator with the \texttt{sep = ","} argument and other options that will help R understand your data in the box that pops up. This is initially easier than using \texttt{read.table}. But it is less reproducible
+
+To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before we load it into R.
+
+\subsection{Single files}
+
+\subsection{Looping through multiple files}
+
+\section{Importing data sets from the internet}
+
+\subsection{Data from non-secure ({\tt{http}}) URLs}
+
+\subsection{Data from secure ({\tt{https}}) URLs}
+
+\subsection{Compressed data stored online}
+
+Sometimes data files can be very large, making them difficult to store and download without compressing them. There are a number of compression methods such as Zip and tar archives. Zip files have the extension {\tt{.zip}} and tar archives use extensions such as {\tt{.tar}} and {\tt{.gz}}. In most cases\footnote{Some formats that require the {\emph{foreign}} package to open are more difficult. This is because functions such as {\tt{read.dta}} for opening Stata {\tt{.dta}} files only accept file names or URLs as arguments, not connections, which we create for unzipped files.} we can easily download, decompress, and create dataframe objects from these files directly in {\bf{R}}. 
+
+To do this we need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes\#tab-top}}, accessed 16 July 2012.}
+
+\begin{itemize}
+    \item create a temporary file with {\tt{tempfile}} to store the zipped file which we will remove with the {\tt{unlink command}} at the end,
+    \item download the file with {\tt{download.file}},
+    \item decompress the file with one of the {\tt{connections}} commands in {\emph{base}} {\bf{R}},\footnote{To find a full list of commands type {\tt{?connections}} in to the {\bf{R}} console.}
+    \item read the file with {\tt{read.table}}. 
+\end{itemize}
+
+The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain more than one file as well as metadata.
+
+Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, but I shortened it\footnote{I used the website \url{bitly.com} to shorten the URL.} to \url{http://bit.ly/S0vxk2} to cut down on the text I have to include in the code.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# For simplicity, store the URL in an object called \hlstring{'url'}.}
+url <- \hlstring{"http://bit.ly/S0vxk2"}
+
+\hlcomment{# Create a temporary file called \hlstring{'temp'} to put the zip file into.}
+temp <- \hlfunctioncall{tempfile}()
+
+\hlcomment{# Download the compressed file into the temporary file.}
+\hlfunctioncall{download.file}(url, temp)
+
+\hlcomment{# Decompress the file and convert it into a dataframe}
+\hlcomment{# class object called \hlstring{'data'}.}
+data <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
+
+\hlcomment{# Delete the temporary file.}
+\hlfunctioncall{unlink}(temp)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{Data APIs \& feeds}
+
+There are growing number of packages that can gather data directly from their sources and import them into R. Needless to say, this is great for reproducible research since it not only makes the data gathering process easier (you don't have to download many of Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward. Some examples include: 
+
+\begin{itemize}
+    \item The \emph{openair} package, which beyond providing a number of tools for analysing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
+\end{itemize}
+
+\section{Basic web scraping}
+
+\subsection{Scraping tables}
+
+\subsection{Gathering and parsing text}
+
