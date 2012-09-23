@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 21 September 2012
+% Updated: 23 September 2012
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,26 +9,24 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with File Management}\label{DirectoriesChapter}
 
-Careful file management is crucial for reproducible research. Apart from the fleeting situations where you have am email exchange (or even meet in person) someone interested in reproducing your research, the main information other researchers will have is stored across many files: data files, analysis files, and presentation files. If these files are well organized then replication will be easier. File management is also important for you as a researcher, because if your files are well organized you will be able to understand your work more easily. Remember two of the guidelines from Chapter \ref{GettingStartedRR}:
+Careful file management is crucial for reproducible research. Apart from the fleeting situations where you have an email exchange (or even meet in person) with someone interested in reproducing your research, the main information they can have will be stored across many files: data files, analysis files, and presentation files. If these files are well organized then replication will be easier. File management is also important for you as a researcher, because if your files are well organized you will be able to understand your work more easily. Remember two of the guidelines from Chapter \ref{GettingStartedRR}:
 
 \begin{itemize}
     \item Reproducible research projects are many files explicitly tied together,
     \item Have a plan to organize, store, and make your files available. 
 \end{itemize}
 
-Using tools such as R and markup languages like \LaTeX requires a bit more knowledge of how files are located--their {\bf{path}}\index{file path}--in your computer and on the internet than just knowing which graphical folder they are located in. Though more difficult to use at first than the typical point-and-click graphical user interface file handling systems you are probably familiar, R and Unix-like shell programs allow us to control files--creating, deleting, moving them--in powerful and reproducible ways. 
+Using tools such as R and markup languages like \LaTeX requires a bit more knowledge of how files are located--their {\bf{path}}\index{file path}--in your computer than you are probably used to. Though more difficult to use at first than the typical point-and-click graphical user interface file handling systems you are probably familiar, R and Unix-like shell programs allow us to control files--creating, deleting, moving them--in powerful and really reproducible ways. 
 
-In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to navigate through files in RStudio in the {\bf{Files}} pane as well as some basic R and Unix-like shell commands for manipulating files. The skills we learn in this chapter will be heavily used in the next Chapter (Gathering Data with R) and throughout the book.
+In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to navigate through files in RStudio in the {\bf{Files}} pane as well as some basic R and Unix-like shell commands for manipulating files. The skills we learn in this chapter will be heavily used in the next Chapter and throughout the book.
 
 In this chapter we work with locally stored files\index{locally stored}, i.e. files stored on your computer. In the next chapter (Chapter \ref{Storing}) we will discuss various ways to store and access files stored remotely in the cloud\index{cloud storage}.
 
 \section{Organizing your research project}
 
-Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be structured. The project--called {\emph{Example Project}}--is organized into three main parts: a data gathering section, an analysis section, and a presentation section. The results of the project are presented in an article, slideshow, and website.
+Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project--called {\emph{Example Project}}--is organized into three main parts: a data gathering section, an analysis section, and a presentation section. The results of the project are presented in an article, slideshow, and website.
 
-COMPLETE
-
-The \textt{README.md} file\index{README file} should briefly describe the project including things such as its title, author(s), and so on. It should also indicate how the folders in the project are organized and how to reproduce the project. This will likely include information on the directory names that you used. The README file should be in the main project folder so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If it is written using Markdown, it will also be properly formatted.
+In addition to the main folders you will probably notice a file called {\emph{README.md}} The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things such as its title, author(s), and so on. It should also indicate how the folders in the project are organized and how to reproduce the project. This will likely include information on the directory names that you used. The README file should be in the main project folder so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If it is written using Markdown, it will also be properly formatted.
 
 It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your readme file with R Markdown. Simply include the \texttt{sessionInfo()} command in a code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
@@ -83,7 +81,13 @@ All of the tasks we can accomplish in RStudio's {\bf{Files}} pane can also be ac
 
 \paragraph{{\tt{setwd}}}
 
-The {\tt{setwd}} command sets the working directory.
+The {\tt{setwd}} command sets the working directory\index{working directory}. The working directory is where R (or another computer program) looks for files and where it will place new files. For example, if we are on a Mac or Linux computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Table \ref{ExampleTree}) like this
+
+<<Ch4SetWorkingDir, eval=FALSE>>=
+setwd("~/ExampleProject/Data/GatherSource")
+@ 
+
+\noindent Now R will automatically look in the {\emph{GatherSource}} folder for files and will save new files into this folder, unless we tell it to do otherwise.
 
 \paragraph{{\tt{dir.create}}}
 

@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 21 September 2012
+% Updated: 23 September 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -23,19 +23,15 @@ To make our research accurately reproducible we should start thinking at the beg
     \item results presentation.
 \end{itemize}
 
+Each stage is covered in its own part of the book. Tools for reproducibly gathering data are covered in Part II. Part III teaches tools for tying the data we gathered to our statistical analyses and presenting the results with tables and figures. Part IV discusses how to tie these findings into documents we can use to advertise our findings to others.
+
+If you are like me, you will probably be tempted to start using the individual tools of reproducible research as soon as you find learn them. However, I would recommend stepping back and learning about how the stages of reproducible research {\emph{tie}} together. This will make your reproducible research more coherent from the beginning and save you a lot of backtracking later on. Hopefully the tips in this chapter will help you appreciate this better.
+
 \subsection{Reproducible Theory}
 
 An important part of the research process that I do not actively discuss in this book is the theoretical stage. Ideally, if you are using a deductive research design, the bulk of this work would precede and even guide the data gathering process. Because I don't cover this stage of the research process doesn't mean that theory building shouldn't be reproducible. It can in fact be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. For mathematically based theory results clear and complete descriptions of the proofs should be given. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material.
 
 Just because I don't cover theory replication in depth in this book, doesn't mean that you can't find out information about it here. I do touch on some of the ways to incorporate proofs and citations into your presentation documents. These tools are covered in Part IV.
-
-\subsection{Data Gathering}
-
-It is common in many disciplines (I know this is true in political science, my discipline) to 
-
-\subsection{Data Analysis}
-
-\subsection{Results Presentation}
 
 \section{Practical tips for reproducible research}
 
@@ -47,9 +43,10 @@ Before we start learning the details of reproducible research with R and RStudio
     \item All files should be human readable,
     \item Reproducible research projects are many files explicitly tied together,
     \item Don't put too much in one file
-    \item Have a plan to organize, store, and make your files available.
-    
+    \item Have a plan to organize, store, and make your files available.    
 \end{enumerate}
+
+\noindent Using these tips will help make your computational research really reproducible.
 
 \subsection{Document everything!}
 
@@ -112,7 +109,9 @@ All of your source code files should begin with a comment header that {\emph{at 
     \item the name of the file's creator and any other contributors
 \end{itemize}
 
-\noindent Here is an example file header for an R source code file that creates the third figure in an article titled ``My Article":
+\noindent You may also want to include other information in the header such as what other files it depends on, what output files it produces, and what version of the programming language you are using. 
+
+Here is an example file header for an R source code file that creates the third figure in an article titled ``My Article":
 
 <<Ch2CommentHeader, tidy=FALSE>>=
 ##################
@@ -136,13 +135,23 @@ There are a number of R style guides. Most of them are similar to the Google R S
 
 \paragraph{Literate programming}
 
-For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite[]{Knuth1992}. This book discusses how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
+For particularly important pieces of research code it may be useful to not only comment on the source file, but also display code in presentation text. For example, you may want to include key parts of the code you used for your statistical model and an explanation of this code in an appendix following your article. This is commonly referred to as literate programming \index{literate programming} \cite[]{Knuth1992}. This book teaches you how to use the {\emph{knitr}} package, a very useful tool for literate programming. 
 
 \subsection{Reproducible research projects are many files explicitly tied together}
 
 If everything is just a text file then research projects can be thought of as individual text files that have a relationship with one another. A data file is used as input for an analysis file. The results of an analysis are shown and discussed in a markup file that is used to create a slideshow or PDF document. Researchers often do not explicitly document the relationships between files that they used in their research. For example, the results of an analysis--a table or figure--may be copied and pasted into a presentation document. It will be very difficult for future researchers to trace the results table or figure back to a particular analysis and a particular data set. Therefore, it is important to make the links between your files explicit. 
 
 The most dynamic way to do this is to explicitly link your files together using what I'll call {\bf{tie commands}}. \index{tie commands} These commands instruct the computer program you are using to gather data, run an analysis, or compile a presentation document to use information from another file. I have compiled the main tie commands used in this book in Table \ref{TableTieCommands}.
+
+\subsection{Don't put too much in one file}
+
+Files that contain many different operations can be very difficult to navigate, even if they have detailed comments. For example, it would be very difficult to find any particular operation in a file that had the code used to gather all of the data and manipulate the data, run all of the statistical models, and create the results figures and tables. If you have a hard time finding things in a file you created, think of the difficulties independent researchers will have! 
+
+Because we have so many ways to link files together there is really no need to lump many different operations into one file. So, we can make our operations modular. One source code file should to one task. This will make your code easier to read. By breaking your operations into discrete chunks, it will also make it easier for you and others to find errors \cite[490]{Nagler1995}.  
+
+\subsection{Have a plan to organize, store, and make your files available}
+
+Finally, in order for independent researchers to reproduce your research they need to be able actually access the files that instruct them how to do this. Files also need to be organized so that independent researchers can figure out how they fit together. So from the beginning of your research process you should have a plan for organizing your files and a way to make them accessible. Chapter \ref{DirectoriesChapter} discusses file organization in detail. Chapter \ref{Storing} teaches you a number of ways to make your files accessible through cloud computing services like Dropbox\index{Dropbox} and GitHub\index{GitHub}. 
 
 \begin{landscape}
 \begin{table}
@@ -153,7 +162,7 @@ The most dynamic way to do this is to explicitly link your files together using 
         \hline \vspace{0.15cm}
         Command/Package & Language & Description & Chapters for Further Information \\[0.3cm]  
         \hline \hline
-        {\emph{knitr}} & R & R package with functions for tying commands from R and other programming languages commands into presentation documents & Discussed throughout the book \\[0.25cm]
+        {\emph{knitr}} & R & R package with commands for tying commands from R and other programming languages commands into presentation documents & Discussed throughout the book \\[0.25cm]
         {\tt{read.table}} & R & Reads a table into R & \ref{DataGather} \\[0.25cm]
         {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\[0.25cm]
         {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\[0.25cm]
@@ -166,16 +175,3 @@ The most dynamic way to do this is to explicitly link your files together using 
     \end{tabular}
 \end{table}
 \end{landscape}
-
-\subsection{Don't put too much in one file}
-
-Files that contain many different operations can be very difficult to navigate, even if they have detailed comments. For example, it would be very difficult to find any particular operation in a file that had the code used to gather all of the data and manipulate the data, run all of the statistical models, and create the results figures and tables. If you have a hard time finding things in a file you created, think of the difficulties independent researchers will have! 
-
-Because we have so many ways to link files together there is really no need to lump many different operations into one file. So, we can make our operations modular. One source code file should to one task. This will make your code easier to read. By breaking your operations into discrete chunks, it will also make it easier for you and others to find errors \cite[490]{Nagler1995}.  
-
-\subsection{Have a plan to organize, store, and make your files available}
-
-In order for independent researchers to reproduce your research they need to be able actually access the files that instruct them how to do this. Files also need to be organized so that they can figure out how they fit together.  
-
-Some journals now provide services to host replication files.
-
