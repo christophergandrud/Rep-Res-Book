@@ -52,6 +52,8 @@ Before getting into the details of how to create tables from R objects we need t
 
 \subsection{Tables in Markdown/HTML}
 
+We can use {\emph{xtable}} and the \texttt{print} command to also create tables for Markdown and HTML documents. Instead of setting the \texttt{type} argument to \texttt{`latex`} we simply put it to \texttt{'html'}.
+
 \section{Creating tables from R objects}
 
 \subsection{\texttt{xtable} \& \texttt{texreg} basics with supported
@@ -148,7 +150,7 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
-% Sun Sep 23 14:54:12 2012
+% Thu Sep 27 10:12:22 2012
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{rrrrr}
@@ -173,17 +175,18 @@ It may take a bit of hunting to find what you want, but a similar process can be
 
 So far we have only looked at how to create \LaTeX and HTML tables from R objects. How can we knit these tables into our presentation documents?
 
-The most important \texttt{knitr} chunk option for showing the markup created by these packages as tables is \texttt{results}. The \texttt{results} option can have three values:
+The most important \texttt{knitr} chunk option for showing the markup created by these packages as tables is \texttt{results}\index{results, knitr option}. The \texttt{results} option can have one of three values:
 
 \begin{itemize}
 \item
-  \texttt{markup},
+  \texttt{'markup'},
 \item
-  \texttt{asis},
+  \texttt{'asis'},
 \item
-  \texttt{hide}.
+  \texttt{'hide'}.
 \end{itemize}
-\texttt{hide} clearly hides the results of whatever we have in our code chunk; no results show up.
+
+\texttt{hide} clearly hides the results of whatever we have in our code chunk; no results show up. To include tables we create from R objects in our \LaTeX or Markdown output we should set \texttt{results='asis'} or \texttt{results='markup'}. \texttt{asis} simple includes the writes the raw output in the presentation document. \texttt{markup} uses an output hook\index{hook} to mark up the results. NEED TO EXPLAIN 
 
 \section{Tables with \texttt{apsrtable}}
 
