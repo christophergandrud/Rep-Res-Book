@@ -38,7 +38,8 @@ knit2pdf(input = "Rep-Res-Parent.Rnw")
 embed_fonts("Rep-Res-Parent.pdf")
 
 # Clean up /git_repositories/Rep-Res-Book/Source/Parent/
-rm(list = setdiff(ls(), c("Rep-Res-Parent.Rnw", "krantz.cls", "figure", "cache"))
+DeleteFiles <- setdiff(list.files(), c("Rep-Res-Parent.Rnw", "Rep-Res-Parent.pdf", "krantz.cls", "figure", "cache"))
+unlink(DeleteFiles)
 
 #### README ####
 # Change working directory to /Rep-Res-Book/Writing_Setup/
