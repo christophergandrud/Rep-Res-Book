@@ -4,76 +4,14 @@
 % Updated 28 September 2012
 %%%%%%%%%%%%%%
 
-\documentclass{article}\usepackage{graphicx, color}
-%% maxwidth is the original width if it is less than linewidth
-%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
-\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
-\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
-\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
-\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
-\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
-\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
-\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
-\newcommand{\hlslot}[1]{\textit{#1}}%
-\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
-
-\usepackage{pdflscape}
-\usepackage[usenames,dvipsnames]{xcolor}
-\usepackage{tikz}
-\usetikzlibrary{decorations.pathmorphing}
-\usetikzlibrary{shapes,arrows}
-
-\begin{document}
-
 % Define colors for figure
 %% Color palette (GnBU) chosen using ColorBrewer 2.0
 %% See: http://colorbrewer2.org/
 \definecolor{Blue}{HTML}{7BCCC4}
 \definecolor{LiteBlue}{HTML}{A8DDB5}
+\definecolor{DarkBlue}{HTML}{08589E}
+
+\definecolor{GrayLine}{HTML}{BDBDBD}
 
 % Set node styles
 %% Workflow stage nodes
@@ -94,30 +32,34 @@
                        inner sep=0.25cm, 
                        font=\normalsize]
 % Link command nodes       
-\tikzstyle{every node} = [draw=none, 
-                          %anchor=west,
-                          %text=
-                          font=\small]
+\tikzstyle{Links} = [draw=none, 
+                          text width=6em,
+                          text=DarkBlue,
+                          font=\large]
                           
-% Line Style
-\tikzstyle{line} = [draw, 
-                    -latex',
-                    very thick]
+% Linking single line style
+\tikzstyle{line} = [draw,
+                    ->,
+                    very thick]    
+                    
+% Separator line style
+\tikzstyle{sepline} = [draw,
+                        very thick,
+                        color=GrayLine]
 
 % Begin tikz picture
-\begin{landscape}
 \begin{tikzpicture}
-  % Nodes
-    % Workflow stage nodes
-    \node (DataGather) at (1, 5) [Stage]{Data Gather};
-    \node (Analysis) at (6, 5) [Stage]{Analysis};
-    \node (Presentation1) at (11, 9) [Stage]{Article \& \\ Slideshow \\ Presentations};
-    \node (Presentation2) at (11, 1) [Stage]{Website \\ Presentations};
-    
+
     % Raw Data Nodes
-    \node (Data1) at (-3, 8) [RawData]{Raw Data};
+    \node (Data1) at (-3, 7) [RawData]{Raw Data};
     \node (Data2) at (-3, 5) [RawData]{Raw Data};
-    \node (Data3) at (-3, 2) [RawData]{Raw Data};
+    \node (Data3) at (-3, 3) [RawData]{Raw Data}; 
+    
+    % Workflow stage nodes
+    \node (DataGather) at (0.5, 5) [Stage]{Data Gather};
+    \node (Analysis) at (5.5, 5) [Stage]{Analysis};
+    \node (Presentation1) at (9, 8) [Stage]{\LaTeX Book, \\ Article, \& \\ Slideshow \\ Presentations};
+    \node (Presentation2) at (9, 2.5) [Stage]{Markdown/ \\ HTML Website \\ Presentations};
 
     % Lines
     \path [line] (Data1) -- (DataGather);
@@ -125,14 +67,20 @@
     \path [line] (Data3) -- (DataGather);
     \path [line] (DataGather) -- (Analysis);
     \path [line] (Analysis) -- (Presentation1);
-    \path [line] (Analysis) -- (Presentation2);'
+    \path [line] (Analysis) -- (Presentation2);
+    
+    \draw [<->, very thick] (Presentation1) -- (Presentation2);
+    
+    \path [sepline] (-3.5, 0.75) -- (11, 0.75);
+    \path [sepline] (11.5, 9) -- (11.5, 1.5);
     
     % Link command nodes
+ 
+    \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ \texttt{![]()}};
+    \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \texttt{source} \\ \texttt{source\_url} \\ \texttt{toLaTeX} \\ \texttt{print(xtable())} };
+    \node (readData) at (3, -1) [Links]{ \texttt{read.table} \\ \texttt{read.csv} \\ \texttt{getURL} };
+    
+    \node (importData) at (-1, -1) [Links]{\texttt{read.table} \\ \texttt{read.csv} \\ \texttt{merge}\\ \texttt{getURL} \\ API-based packages};
 
-  
-  
   
 \end{tikzpicture}
-\end{landscape}
-
-\end{document}

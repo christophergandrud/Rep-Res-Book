@@ -43,11 +43,14 @@ You can of course save your data in a wide variety of other formats. To save you
 
 Plain text file based data stored on your computer can be loaded into R using the \texttt{read.table}\index{read.table} command. This command will take the file and turn it into a data frame object. For example, imagine that we have a data set called {\emph{Data1.csv}} in our root directory. We load it into an R object called Data like this:
 
-<<Ch6CSV, eval=FALSE>>=
-Data <- read.table(file = "~/Data1.csv", sep = ",")
+<<Ch6CSV, eval=FALSE, tidy=FALSE>>=
+Data <- read.table(file = "~/Data1.csv", sep = ",",
+                    header = TRUE)
 @
 
-If you are using RStudio you do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \textrightarrow \texttt{From Text File\ldots}. Then specify the separator with the \texttt{sep = ","} argument and other options that will help R understand your data in the box that pops up. This is initially easier than using \texttt{read.table}. But it is less reproducible
+In this code, \texttt{file} is clearly where we specify the location and file name of the data set we want to open. \texttt{sep} is where we tell R how the data columns are separated. In this case they are separated by commas. Finally, \texttt{header = TRUE} tells R that we want to treat the first row of the data set as the variable names. 
+
+If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \textrightarrow \texttt{From Text File\ldots}. In the box that pops up, specify the separator, whether or not you want the first line to be treated as variable labels and other options. This is initially easier than using \texttt{read.table}. But it is less reproducible.
 
 To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before we load it into R.
 
@@ -57,7 +60,25 @@ To aid reproducibility, locally stored data should include careful documentation
 
 \section{Importing data sets from the internet}
 
+There are many ways to import data that is stored on the internet directly into R. We have to use different methods depending on where and how the data is stored. 
+
 \subsection{Data from non-secure ({\tt{http}}) URLs}
+
+Importing data into R that is located at a non-secure URL ({\tt{http}}) is straightforward provided that:
+
+\begin{itemize}
+    \item the data is stored in a simple format, e.g. plain-text,
+    \item the file is not embedded in an HTML website.
+\end{itemize}
+
+We have discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL. If you only see the raw plain-text data, you are probably good to go.
+
+Now simply include the URL as the file name in your \texttt{read.table} command. Imagine the data we wanted to load was at this URL \texttt{http://www.AWebHost.Data1.csv}.
+
+<<CH6httpLoad, eval=FALSE, tidy=FALSE>>=
+Data <- read.table(file = "http://www.AWebHost.Data1.csv", 
+                    sep = ",", header = TRUE)
+@
 
 \subsection{Data from secure ({\tt{https}}) URLs}
 

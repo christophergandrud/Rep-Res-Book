@@ -37,6 +37,9 @@ knit2pdf(input = "Rep-Res-Parent.Rnw")
 # Embed fonts
 embed_fonts("Rep-Res-Parent.pdf")
 
+# Clean up /git_repositories/Rep-Res-Book/Source/Parent/
+rm(list = setdiff(ls(), c("Rep-Res-Parent.Rnw", "krantz.cls", "figure", "cache"))
+
 #### README ####
 # Change working directory to /Rep-Res-Book/Writing_Setup/
 setwd("/git_repositories/Rep-Res-Book/Writing_Setup/")
