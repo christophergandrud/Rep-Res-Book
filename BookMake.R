@@ -7,11 +7,27 @@
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
 # It also updates the main README file.
 
-# Load required packages
-library(knitr)
-library(extrafont)
+# Install & load required packages
+## Based on https://gist.github.com/3710171
+## See also http://bit.ly/PbabKd
+doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
+toInstall <- c("apsrtable",
+               "devtools",
+               "extrafont",
+               "ggplot2",
+               "knitr",
+               "knitcitations",
+               "markdown",
+               "openair",
+               "texreg",
+               "tools",
+               "xtable",
+               "Zelig")
 
-##### PDF ####
+if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org")}
+lapply(toInstall, library, character.only = TRUE)
+
+##### Create PDF Book Manuscript ####
 # Change working directory to /Rep-Res-Book/Source/Parent
 setwd("/git_repositories/Rep-Res-Book/Source/Parent/")
 
