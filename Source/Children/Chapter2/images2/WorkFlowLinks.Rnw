@@ -1,0 +1,83 @@
+%%%%%%%%%%%%%%
+% Reproducible research workflow + link commands
+% Christopher Gandrud
+% Updated 28 September 2012
+%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+\usepackage{pdflscape}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{shapes,arrows}
+
+\begin{document}
+
+% Define colors for figure
+%% Color palette (GnBU) chosen using ColorBrewer 2.0
+%% See: http://colorbrewer2.org/
+\definecolor{Blue}{HTML}{7BCCC4}
+\definecolor{LiteBlue}{HTML}{A8DDB5}
+
+% Set node styles
+%% Workflow stage nodes
+\tikzstyle{Stage} = [draw=Blue, 
+                     fill=Blue, 
+                     rectangle, 
+                     text width=7em, 
+                     inner sep=0.5cm, 
+                     font=\large]
+
+% Raw Data nodes
+\tikzstyle{RawData} = [draw=LiteBlue, 
+                       fill=LiteBlue, 
+                       decorate,
+                       decoration={random steps,
+                                   segment length=2pt,
+                                   amplitude=2pt},
+                       inner sep=0.25cm, 
+                       font=\normalsize]
+% Link command nodes       
+\tikzstyle{every node} = [draw=none, 
+                          %anchor=west,
+                          text=08589E
+                          font=\small]
+                          
+% Line Style
+\tikzstyle{line} = [draw, 
+                    -latex',
+                    very thick]
+
+% Begin tikz picture
+\begin{landscape}
+\begin{tikzpicture}
+  % Nodes
+    % Workflow stage nodes
+    \node (DataGather) at (1, 5) [Stage]{Data Gather};
+    \node (Analysis) at (6, 5) [Stage]{Analysis};
+    \node (Presentation1) at (11, 9) [Stage]{Article \& \\ Slideshow \\ Presentations};
+    \node (Presentation2) at (11, 1) [Stage]{Website \\ Presentations};
+    
+    % Raw Data Nodes
+    \node (Data1) at (-3, 8) [RawData]{Raw Data};
+    \node (Data2) at (-3, 5) [RawData]{Raw Data};
+    \node (Data3) at (-3, 2) [RawData]{Raw Data};
+
+    % Lines
+    \path [line] (Data1) -- (DataGather);
+    \path [line] (Data2) -- (DataGather);
+    \path [line] (Data3) -- (DataGather);
+    \path [line] (DataGather) -- (Analysis);
+    \path [line] (Analysis) -- (Presentation1);
+    \path [line] (Analysis) -- (Presentation2);'
+    
+    % Link command nodes
+
+  
+  
+  
+\end{tikzpicture}
+\end{landscape}
+
+\end{document}
