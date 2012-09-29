@@ -1,6 +1,6 @@
 %% Stylistic Conventions for Reproducible Research with R and RStudio
 
-I use the following conventions throughout this book to format computer code and actions:
+I use the following conventions throughout this book to format computer code:
 
 - **Abstract Variables**
 

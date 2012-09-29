@@ -14,6 +14,7 @@ install.packages("apsrtable",
                 "knitcitations", 
                 "markdown", 
                 "openair", 
+                "RCurl",
                 "texreg",
                 "tools",                     
                 "xtable", 
@@ -21,9 +22,6 @@ install.packages("apsrtable",
 @
 
 <<FrontPackageCitations, echo=FALSE, message=FALSE, warning=FALSE>>=
-# Load knitcitations
-library(knitcitations)
-
 # Create package list
 PackagesCited <- c("apsrtable", 
                     "devtools", 
@@ -32,13 +30,14 @@ PackagesCited <- c("apsrtable",
                     "knitcitations", 
                     "markdown", 
                     "openair", 
-                    "texreg", 
+                    "texreg",
+                    "RCurl", 
                     "tools",                    
                     "xtable", 
                     "Zelig")
 
 # Write citations to bibtex file
-write.bibtex(entry = PackagesCited,
+write_bib(PackagesCited,
               file = "/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib")
 
 @

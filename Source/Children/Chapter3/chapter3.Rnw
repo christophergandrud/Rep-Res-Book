@@ -26,7 +26,7 @@ This section covers some of the very basic syntax in R to get you started. If yo
     \item libraries.
 \end{itemize}
 
-Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreater}}. This is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
+Before discussing each of these components let's open up R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open up R you should get a window that looks something like what you see in Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book are from a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R console}. Under the session\index{session information} information--what version of R you are using, your workspace, and so on--you should see a {\tt{\textgreater}}. This prompt is where you enter R code.\footnote{If you are using a Unix-like system such as Ubuntu or Mac OS 10, you can an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{r}} into the terminal and then the {\tt{Enter}} or {\tt{Return}} key it will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed into the console type the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session open we can get started. 
 
 \begin{figure}[th!]
     \caption{R Startup Console}
@@ -36,7 +36,7 @@ Before discussing each of these components let's open up R and look around.\foot
     \end{center}
 \end{figure}
 
-\subsection{Objects}
+\subsection{Objects}\label{Objects}
 
 You will probably have read that `R is an object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, such as a list of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section. For now let's create a few objects.
 
@@ -56,7 +56,7 @@ Number
 
 \noindent Lets's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included in the output by {\emph{knitr}} to tell you that this is output rather than R code.\footnote{This makes it easier to copy and past code included in a presentation document by {\emph{knitr}}.} Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
 
-Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".
+Creating a character object is very similar. The only difference is that we enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains a character string ``Hello World".\label{StringObject}
 
 <<Ch3CharacterObject>>=
 Words <- "Hello World"
@@ -265,7 +265,7 @@ There is an important pane that does not show up when you open RStudio for the f
 
 You can create a new source code document, which will open a new Source pane, by going to \texttt{File} \textrightarrow \: \texttt{New}. In this drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Source} option. You should now see a new pane with a bar across the top like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code you don't need to highlight the code, you can simply put your cursor on that line.} and click the \texttt{Run} icon on the top bar. This sends the code to the console where it is executed. The icon next to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in file using R's \texttt{source} command\index{source command}. The icon next to \texttt{Source} is for compiling RStudio notebooks. We will look at creating notebooks later in this chapter.
 
-We will cover how to use the Source pane with literate programming file formats--e.g. R Markdown and R \LaTeX--in more detail after first discussing the {\emph{knitr}} basics. 
+We will cover how to use the Source pane with literate programming file formats--e.g. R Markdown and R LaTeX--in more detail after first discussing the {\emph{knitr}} basics. 
 
 \begin{figure}[ht]
     \caption{RStudio Source Code Pane Top Bars}
@@ -299,11 +299,11 @@ To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn
 
 \subsection{File extensions}
 
-When you save a knitable file use a file extension that indicates (a) that it is knitable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}. \LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}}.\cite{Leisch2002} You can also use the file extension \texttt{.Rtex}, which is less confusing file extension. However, the code chunk syntax for \texttt{.Rtex} files is different from that use in \texttt{.Rnw} files. We'll look at this in more detail below.
+When you save a knitable file use a file extension that indicates (a) that it is knitable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}. LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}}.\cite{Leisch2002} You can also use the file extension \texttt{.Rtex}, which is less confusing file extension. However, the code chunk syntax for \texttt{.Rtex} files is different from that use in \texttt{.Rnw} files. We'll look at this in more detail below.
 
 \subsection{Code Chunks}
 
-When we want to include R code into our presentation documents we place them in a code chunk\index{code chunk}. Code chunk syntax differs depending on the markup language we are using to write our documents. Let's see the syntax for R Markdown and R \LaTeX files.
+When we want to include R code into our presentation documents we place them in a code chunk\index{code chunk}. Code chunk syntax differs depending on the markup language we are using to write our documents. Let's see the syntax for R Markdown and R LaTeX files.
 
 \paragraph{R Markdown}
 
@@ -316,9 +316,9 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
 @
 
-\paragraph{R \LaTeX}
+\paragraph{R LaTeX}
 
-There are two different ways to delimite code chunks in R \LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax.\footnote{The syntax originates in a literate programming tool called noweb \cite[]{Leisch2002,RamseyNoweb}.} {\emph{Knitr}} now also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in \LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
+There are two different ways to delimite code chunks in R LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax.\footnote{The syntax originates in a literate programming tool called noweb \cite[]{Leisch2002,RamseyNoweb}.} {\emph{Knitr}} now also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in LaTeX documents, though in throughout the book I use the older and more established {\emph{Sweave}} style syntax. \\[0.25cm]
 
 \noindent {\bf{Sweave-style}} \\[0.25cm]
 
@@ -326,7 +326,7 @@ Traditional Sweave-style code chunks begin with the following code: \texttt{\tex
 
 \noindent {\bf{Rtex-style}} \\[0.25cm]
 
-Sweave-style code chunks may seem fairly baroque. Another option for \LaTeX files is the Rtex-style syntax. To begin a code chunk simply type \texttt{\%\% begin.rcode}. To close the chunk you use double percent signs: \texttt{\%\%}. Each line in the code chunk needs to begin with a single percent sign. For example:
+Sweave-style code chunks may seem fairly baroque. Another option for LaTeX files is the Rtex-style syntax. To begin a code chunk simply type \texttt{\%\% begin.rcode}. To close the chunk you use double percent signs: \texttt{\%\%}. Each line in the code chunk needs to begin with a single percent sign. For example:
 
 <<RtexExample, eval=FALSE>>=
 %% begin.rcode
@@ -347,7 +347,7 @@ To explicitly assign chunk labels in R Markdown documents place the label name i
 ```
 @
 
-\noindent The same general format applies to the two types of \LaTeX chunks. In Sweave-style chunks we would type: \texttt{\textless\textless ChunkLabel\textgreater\textgreater=}. In Rtex-style we simply use: \texttt{\%\% begin.rcode ChunkLabel}.
+\noindent The same general format applies to the two types of LaTeX chunks. In Sweave-style chunks we would type: \texttt{\textless\textless ChunkLabel\textgreater\textgreater=}. In Rtex-style we simply use: \texttt{\%\% begin.rcode ChunkLabel}.
 
 Try not to use spaces or periods in your label names. And all chunk labels {\emph{must}} be unique.
 
@@ -378,7 +378,7 @@ Throughout this book we will look at a number of different code chunk options. F
 
 So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks. If we want an option to apply to all of the chunks in our document we can set {\bf{global chunk options}}\index{global chunk options}. They options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure I set the option globally.
 
-To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In \LaTeX they should be after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how \LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
 
 Here is an example of how we could have all of the figures in a Markdown document created by {\emph{knitr}} code chunks center aligned. We place the following code at the beginning of the document:
 
@@ -405,7 +405,7 @@ opts_knit$set(progress=FALSE)
 %%%%%%%%%% Knitr & RStudio
 \subsection{knitr \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities changes depending on the type of file you have open in it. RStudio uses the file extension\index{file extension} to automatically determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formates we cover in this book: R Markdown\index{R Markdown}, and R \LaTeX\index{R LaTeX}. \\[0.25cm]
+RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities changes depending on the type of file you have open in it. RStudio uses the file extension\index{file extension} to automatically determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formates we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
 
 \paragraph{Compiling R source code notebooks}
 
@@ -449,13 +449,13 @@ You may also notice that there are a code folding arrows on lines 27 and 34 in t
     \end{center}
 \end{figure}
 
-\paragraph{R \LaTeX}
+\paragraph{R LaTeX}
 
-You can see in the final image in Figure \ref{SourcePanes} that many of the options for R \LaTeX files are the same as R Markdown files. The key differences being that there is a \texttt{Compile PDF} icon instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R \LaTeX file's directory. There is also a \texttt{Format} icon next instead of \texttt{MD}. This actually inserts \LaTeX formatting commands into your document for things such as section headings and bullet lists.
+You can see in the final image in Figure \ref{SourcePanes} that many of the options for R LaTeX files are the same as R Markdown files. The key differences being that there is a \texttt{Compile PDF} icon instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R LaTeX file's directory. There is also a \texttt{Format} icon next instead of \texttt{MD}. This actually inserts LaTeX formatting commands into your document for things such as section headings and bullet lists.
 
 
 \paragraph{Change default .Rnw knitter}
-By default RStudio is set up to use{\emph{Sweave}}\index{Sweave} for compiling \LaTeX documents. To use {\emph{knitr}} instead of {\emph{Sweave}} when knitting \texttt{.Rnw} files in RStudio you should go to the {\bf{Options}} window\index{RStudio Options window}. Click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. The {\bf{Options}} window is in different places depending on the version of RStudio you are using:
+By default RStudio is set up to use{\emph{Sweave}}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of {\emph{Sweave}} when knitting \texttt{.Rnw} files in RStudio you should go to the {\bf{Options}} window\index{RStudio Options window}. Click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. The {\bf{Options}} window is in different places depending on the version of RStudio you are using:
 
     \begin{itemize}
         \item {\bf{Mac}}: \texttt{RStudio} \textrightarrow\; \texttt{Preferences},
@@ -478,7 +478,7 @@ knit(input = "Example.Rmd", output = "Example.md")
 
 \noindent Note that if you do not specify the output file {\emph{knitr}} will determine what the file should be. In this example it would come up with the same name and location.
 
-If you try this example, you find that the {\emph{knit}} command only created a Markdown file and not an HTML file like clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic \LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}} command from the {\emph{markdown}} package, i.e.
+If you try this example, you find that the {\emph{knit}} command only created a Markdown file and not an HTML file like clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}} command from the {\emph{markdown}} package, i.e.
 
 <<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>= 
 mardownToHTML(file = "Example.md", output = "Example.html")
@@ -490,7 +490,7 @@ You can combine the knit and markdownToHTML steps using {\emph{knitr}}'s \texttt
 knit2html(file = "Example.Rmd", output = "Example.html")
 @
 
-\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both \LaTeX and \BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using \BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
+\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both LaTeX and \BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using \BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
 
 <<CH3tex2pdf, eval=FALSE, tidy=FALSE>>=
 # Load tools package

@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 2 September 2012
 
-<<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Gathering Data with R}\label{DataGather}
 
@@ -19,21 +18,26 @@ A key principle of replicable data gathering with R, like replicable research in
 
 Data gathering Make files usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{The {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a Data make file might look like for our example project (see Figure \ref{ExampleTree}).
 
-<<Ch5ExampleMake, error=FALSE, message=FALSE, warning=FALSE>>=
-# Example Make file
-setwd("~/ExampleProject/Data/")
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Example Make file}
+\hlfunctioncall{setwd}(\hlstring{"~/ExampleProject/Data/"})
 
-# Gather and clean up raw data files.
-source("/GatherSource/IndvDataGather/Gather1.R")
+\hlcomment{# Gather and clean up raw data files.}
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather1.R"})
 
-source("/GatherSource/IndvDataGather/Gather2.R")
-    
-# Merge cleaned data files into object CleanedData
-source("GatherSource/MergeData.R")
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather2.R"})
 
-# Save cleaned & merged Data as MainData.csv
-write.csv(CleandedData, file = "/DataFiles/MainData.csv")
-@
+\hlcomment{# Merge cleaned data files into object CleanedData}
+\hlfunctioncall{source}(\hlstring{"GatherSource/MergeData.R"})
+
+\hlcomment{# Save cleaned & merged Data as MainData.csv}
+\hlfunctioncall{write.csv}(CleandedData, file = \hlstring{"/DataFiles/MainData.csv"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.csv}}\index{write.csv} command. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis. 
 
@@ -43,10 +47,15 @@ You can of course save your data in a wide variety of other formats. To save you
 
 Plain text file based data stored on your computer can be loaded into R using the \texttt{read.table}\index{read.table} command. This command will take the file and turn it into a data frame object. For example, imagine that we have a data set called {\emph{Data1.csv}} in our root directory. We load it into an R object called Data like this:
 
-<<Ch6CSV, eval=FALSE, tidy=FALSE>>=
-Data <- read.table(file = "~/Data1.csv", sep = ",",
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+Data <- \hlfunctioncall{read.table}(file = \hlstring{"~/Data1.csv"}, sep = \hlstring{","},
                     header = TRUE)
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 In this code, \texttt{file} is clearly where we specify the location and file name of the data set we want to open. \texttt{sep} is where we tell R how the data columns are separated. In this case they are separated by commas. Finally, \texttt{header = TRUE} tells R that we want to treat the first row of the data set as the variable names. 
 
@@ -75,83 +84,24 @@ We have discussed the first issue in detail. You can determine if the data file 
 
 Now simply include the URL as the file name in your \texttt{read.table} command. Imagine the data we wanted to load was at this URL \texttt{http://www.AWebHost.Data1.csv}.
 
-<<Ch6httpLoad, eval=FALSE, tidy=FALSE>>=
-Data <- read.table(file = "http://www.AWebHost.Data1.csv", 
-                    sep = ",", header = TRUE)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+Data <- \hlfunctioncall{read.table}(file = \hlstring{"http://www.AWebHost.Data1.csv"}, 
+                    sep = \hlstring{","}, header = TRUE)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Data from secure ({\tt{https}}) URLs}
 
-We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https}. We need the help of the \texttt{getURL}\index{getURL} command in the {\emph{RCurl}} package\cite[]{R-RCurl} and \texttt{textConnection}. The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a large HTML website apply to secure web addresses as well.
+We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https}. We need the help of the \texttt{getURL}\index{getURL} command in the {\emph{RCurl}} package\cite[]{RCurl} and \texttt{textConnection}. The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a large HTML website apply to secure web addresses as well.
 
-Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository. The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Imagine that we put the address as a character string into an object called {\emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.}
+Let's try an example. I have data stored at a GitHub repository. The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. 
 To download it into R we could use this code:
 
-<<Ch6UrlObject, echo=FALSE>>=
-# Put URL address into the object UrlAddress
-UrlAddress <- paste("https://raw.github.com/christophergandrud/",
-                "Disproportionality_Data/master/",
-                "Disproportionality.csv", sep = "")
-@
 
-<<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE>>=
-# Load package
-library(RCurl)
 
-# Pull data from the internet
-Data <- getURL(UrlAddress)
 
-# Convert Data into a data frame
-Data <- read.table(textConnection(Data), 
-                    sep = ",", header = TRUE)
-@
-
-\subsection{Compressed data stored online}
-
-Sometimes data files can be very large, making them difficult to store and download without compressing them. There are a number of compression methods such as Zip and tar archives. Zip files have the extension {\tt{.zip}} and tar archives use extensions such as {\tt{.tar}} and {\tt{.gz}}. In most cases\footnote{Some formats that require the {\emph{foreign}} package to open are more difficult. This is because functions such as {\tt{read.dta}} for opening Stata {\tt{.dta}} files only accept file names or URLs as arguments, not connections, which we create for unzipped files.} we can easily download, decompress, and create dataframe objects from these files directly in {\bf{R}}. 
-
-To do this we need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes\#tab-top}}, accessed 16 July 2012.}
-
-\begin{itemize}
-    \item create a temporary file with {\tt{tempfile}} to store the zipped file which we will remove with the {\tt{unlink command}} at the end,
-    \item download the file with {\tt{download.file}},
-    \item decompress the file with one of the {\tt{connections}} commands in {\emph{base}} {\bf{R}},\footnote{To find a full list of commands type {\tt{?connections}} in to the {\bf{R}} console.}
-    \item read the file with {\tt{read.table}}. 
-\end{itemize}
-
-The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain more than one file as well as metadata.
-
-Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a zipped file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, but I shortened it\footnote{I used the website \url{bitly.com} to shorten the URL.} to \url{http://bit.ly/S0vxk2} to cut down on the text I have to include in the code.
-
-<<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
-# For simplicity, store the URL in an object called 'url'.
-url <- "http://bit.ly/S0vxk2"
-
-# Create a temporary file called 'temp' to put the zip file into.
-temp <- tempfile()
-
-# Download the compressed file into the temporary file.
-download.file(url, temp)
-
-# Decompress the file and convert it into a dataframe
-# class object called 'data'.
-data <- read.csv(gzfile(temp, "uds_summary.csv"))
-
-# Delete the temporary file.
-unlink(temp)
-@ 
-
-\subsection{Data APIs \& feeds}
-
-There are growing number of packages that can gather data directly from their sources and import them into R. Needless to say, this is great for reproducible research since it not only makes the data gathering process easier (you don't have to download many of Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward. Some examples include: 
-
-\begin{itemize}
-    \item The \emph{openair} package, which beyond providing a number of tools for analysing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
-\end{itemize}
-
-\section{Basic web scraping}
-
-\subsection{Scraping tables}
-
-\subsection{Gathering and parsing text}
 

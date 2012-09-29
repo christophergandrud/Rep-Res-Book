@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%
 % Reproducible research workflow + link commands
 % Christopher Gandrud
-% Updated 28 September 2012
+% Updated 29 September 2012
 %%%%%%%%%%%%%%
 
 % Define colors for figure
@@ -31,21 +31,17 @@
                                    amplitude=2pt},
                        inner sep=0.25cm, 
                        font=\normalsize]
-% Link command nodes       
-\tikzstyle{Links} = [draw=none, 
-                          text width=6em,
-                          text=DarkBlue,
-                          font=\large]
-                          
-% Linking single line style
-\tikzstyle{line} = [draw,
-                    ->,
-                    very thick]    
                     
 % Separator line style
 \tikzstyle{sepline} = [draw,
                         very thick,
                         color=GrayLine]
+                        
+% Link command nodes       
+\tikzstyle{Links} = [draw=none, 
+                          text width=6em,
+                          text=DarkBlue,
+                          font=\large]
 
 % Begin tikz picture
 \begin{tikzpicture}
@@ -58,16 +54,16 @@
     % Workflow stage nodes
     \node (DataGather) at (0.5, 5) [Stage]{Data Gather};
     \node (Analysis) at (5.5, 5) [Stage]{Analysis};
-    \node (Presentation1) at (9, 8) [Stage]{\LaTeX Book, \\ Article, \& \\ Slideshow \\ Presentations};
+    \node (Presentation1) at (9, 8) [Stage]{LaTeX Book, \\ Article, \& \\ Slideshow \\ Presentations};
     \node (Presentation2) at (9, 2.5) [Stage]{Markdown/ \\ HTML Website \\ Presentations};
 
     % Lines
-    \path [line] (Data1) -- (DataGather);
-    \path [line] (Data2) -- (DataGather);
-    \path [line] (Data3) -- (DataGather);
-    \path [line] (DataGather) -- (Analysis);
-    \path [line] (Analysis) -- (Presentation1);
-    \path [line] (Analysis) -- (Presentation2);
+    \draw [<->, very thick] (Data1) -- (DataGather);
+    \draw [<->, very thick] (Data2) -- (DataGather);
+    \draw [<->, very thick] (Data3) -- (DataGather);
+    \draw [<->, very thick] (DataGather) -- (Analysis);
+    \draw [<->, very thick] (Analysis) -- (Presentation1);
+    \draw [<->, very thick] (Analysis) -- (Presentation2);
     
     \draw [<->, very thick] (Presentation1) -- (Presentation2);
     
@@ -76,11 +72,11 @@
     
     % Link command nodes
  
-    \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ \texttt{![]()}};
+    \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ Pandoc \\ \texttt{![]()}};
     \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \texttt{source} \\ \texttt{source\_url} \\ \texttt{toLaTeX} \\ \texttt{print(xtable())} };
-    \node (readData) at (3, -1) [Links]{ \texttt{read.table} \\ \texttt{read.csv} \\ \texttt{getURL} };
+    \node (readData) at (3, -1) [Links]{ \texttt{read.table} \\ \texttt{getURL} };
     
-    \node (importData) at (-1, -1) [Links]{\texttt{read.table} \\ \texttt{read.csv} \\ \texttt{merge}\\ \texttt{getURL} \\ API-based packages};
+    \node (importData) at (-1, -1) [Links]{\texttt{read.table} \\ \texttt{merge}\\ \texttt{getURL} \\ API-based packages};
 
   
 \end{tikzpicture}

@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 September 2012
+% Updated: 29 September 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -25,7 +25,9 @@ To make our research accurately reproducible we should start thinking at the beg
 
 Each stage is covered in its own part of the book. Tools for reproducibly gathering data are covered in Part II. Part III teaches tools for tying the data we gathered to our statistical analyses and presenting the results with tables and figures. Part IV discusses how to tie these findings into documents we can use to advertise our findings to others.
 
-If you are like me, you will probably be tempted to start using the individual tools of reproducible research as soon as you find learn them. However, I would recommend stepping back and considering how the stages of reproducible research {\emph{tie}} together. This will make your reproducible research workflow more coherent from the beginning and save you a lot of backtracking later on.  Figure \ref{WorkflowTies} gives you a preview of the workflow and some of the commands we will learn in this book for tying it together. For more information on these tie commands see Table \ref{TableTieCommands}. The tips in this chapter should guide you through the reproducible research workflow. The rest of the book will give you the details.
+If you are like me, you will probably be tempted to start using the individual tools of reproducible research as soon as you find learn them. However, I would recommend stepping back and considering how the stages of reproducible research {\emph{tie}} together. This will make your reproducible research workflow more coherent from the beginning and save you a lot of backtracking later on.  Figure \ref{WorkflowTies} illustrates the workflow. Notice that the arrows connecting the workflow's parts point in both directions, indicating that we should always be thinking how to make it easier to go backwards through your research, i.e. reproduce it. 
+
+Around the edges of the workflow are some of the commands you will learn to make it easier to go forwards and backwards through the process. These commands tie your research together. For example, we can use API-based R packages\index{API} to gather data from the internet. We can use the \texttt{merge} command to combine data gathered from different sources into on data set. The \index{read.table}\index{read.table} and \texttt{getURL}\index{getURL} commands can be used to bring this data set into our statistical analyses. The {\emph{knitr}} package then brings our analyses into the presentation documents. This includes the code we used, the figures we created, and, with the help of commands such as \texttt{print} and the {\emph{xtable}} package, tables of results. We can even tie multiple presentation documents together, by for example accessing the same figure for use in a LaTeX article and a Markdown created website with the \texttt{includegraphics}\index{includegraphics} and \texttt{![]()}\index{![]()} commands, respectively. We'll cover these commands in detail throughout the book. For a brief overview of the commands see Table \ref{TableTieCommands}. 
 
 \clearpage
 \thispagestyle{plain}
@@ -71,7 +73,7 @@ One important part of documenting everything with R is to \emph{record your sess
 sessionInfo()
 @
 
-\noindent It is good practice to include make output of the session info available either in the main document or in a separate readme\index{README file} file. If you want to nicely format the information for a \LaTeX document simply use the {\tt{toLatex}} command.
+\noindent It is good practice to include make output of the session info available either in the main document or in a separate readme\index{README file} file. If you want to nicely format the information for a LaTeX document simply use the {\tt{toLatex}} command.
 
 <<Ch2SessionInfoLatex, eval=FALSE>>=
 toLatex(sessionInfo())
@@ -83,9 +85,9 @@ toLatex(sessionInfo())
 
 Your documentation is stored in files that include data, analysis code, the write up of results, and explanations of these files (e.g. data set codebooks, session info files, and so on). Ideally, you should use the simplest file format possible to store this information. Usually the simplest file format is the the humble, but versatile, text file is the simplest file format.\footnote{Depending on the size of your data set it may not be feasible to store it as a text file. Nonetheless, text files can still be used for analysis code and presentation files.} 
 
-Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values6} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for \LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
+Text files are extremely nimble. They can hold data in, for example, comma-separated values {\tt{.csv}} \index{comma-separated values6} files. They can contain our analysis code in {\tt{.R}} files. And they can be the basis for our presentation documents as markup documents like {\tt{.tex}} or {\tt{.md}}, for LaTeX and Markdown files respectively. All of these files can be opened by any program that can read text files--i.e. files with the generic file extension {\tt{.txt}}. 
 
-The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a \LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research \cite[3]{Bowers2011}.
+The main reason reproducible research is best stored in text files is that this helps {\bf{future proof}} our research. Other common file formats, like Microsoft Word \index{Microsoft Word} or Excel \index{Microsoft Excel} documents change regularly and may not be compatible with future versions of these programs. Text files, on the other hand, can be opened by a very wide range past and, more likely than not, future programs. Even if future researchers do not have R or a LaTeX distribution, they will still be able to open our text files and, aided by frequent comments, be able to understand how we conducted our research \cite[3]{Bowers2011}.
 
 Text files are also very easy to search and manipulate with a wide range of programs--such as R--that can find and replace text characters as well as merge and separate files. They have a number of clear benefits for reproducible research including enabling versioning and track changes in programs such as Git (see Chapter \ref{Storing}).   
 
@@ -103,7 +105,7 @@ In R everything on a line after a {\tt{\#}} hash (number) character is ignored b
 
 Because on the first line the {\tt{\#}} is placed at the very beginning, the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation {\tt{2 + 2}}. R runs the equation as usual and fines the answer {\tt{4}}, but it ignores all of the words after the hash. 
 
-According to Nagler \citeyearpar[491]{Nagler} to make your code understandable it is good practice to:
+Nagler \citeyearpar[491]{Nagler1995} argued that to make your code understandable it is good practice to:
 
 \begin{itemize}
     \item write a comment before a block of code describing what the code does,
@@ -112,7 +114,7 @@ According to Nagler \citeyearpar[491]{Nagler} to make your code understandable i
 
 \noindent In this book I follow these guidelines when displaying written code. 
 
-Different languages have different comment declaration characters. In \LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
+Different languages have different comment declaration characters. In LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
 
 All of your source code files should begin with a comment header that {\emph{at the least}} should include:
 
@@ -130,7 +132,7 @@ Here is an example file header for an R source code file that creates the third 
 ##################
 # Source code file used to create Figure 3 in ''My Article''
 # Created by Christopher Gandrud
-# Updated 21 September 2012
+# Updated 15 October 2012
 ##################
 @
 
@@ -179,11 +181,11 @@ Because we have so many ways to link files together there is really no need to l
         {\tt{merge}} & R & Merges together data frames. & \ref{DataClean} \\[0.25cm]
         {\tt{source}} & R & Runs an R source code file & \ref{StatsModel} \\[0.25cm]
         {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \ref{StatsModel} \\[0.25cm]
-        {\tt{print(xtable())}} & R & Combining the \texttt{print} \& \texttt{xtable} commands creates \LaTeX \& HTML tables from R objects & \ref{TablesChapter} \\[0.25cm]
-        {\tt{toLaTeX}} & R & Converts R objects to \LaTeX & \ref{GettingStartedRR} \\[0.25cm]
-        {\tt{input}} & \LaTeX & Includes \LaTeX files inside of other \LaTeX files & \ref{LargeDocs} \\[0.25cm]
-        {\tt{include}} & \LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\[0.25cm]
-        {\tt{includegraphics}} & \LaTeX & Inserts a figure into a \LaTeX document. & \ref{FiguresChapter} \\[0.25cm]
+        {\tt{print(xtable())}} & R & Combining the \texttt{print} \& \texttt{xtable} commands creates LaTeX \& HTML tables from R objects & \ref{TablesChapter} \\[0.25cm]
+        {\tt{toLaTeX}} & R & Converts R objects to LaTeX & \ref{GettingStartedRR} \\[0.25cm]
+        {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files & \ref{LargeDocs} \\[0.25cm]
+        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \ref{LargeDocs} \\[0.25cm]
+        {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \ref{FiguresChapter} \\[0.25cm]
         \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \ref{MarkdownChapter} \\  [0.25cm]      
         \hline 
     

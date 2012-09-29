@@ -52,7 +52,7 @@
   2.3.2 `knitr`  
   2.3.3 Cloud storage & versioning  
   2.3.4 The command line  
-  2.3.5 Markup languages: \\( \LaTeX \\) & **Markdown**/HTML  
+  2.3.5 Markup languages: \\( LaTeX \\) & **Markdown**/HTML  
   
 ### 3 Getting Started with R/RStudio ###
 
@@ -79,7 +79,7 @@
 > 4.3.1 Code chunks  
   4.3.2 Global options  
   4.3.3 `knitr` for the web: **Markdown**/HTML    
-  4.3.4 `knitr` for PDF: \\( \LaTeX \\)
+  4.3.4 `knitr` for PDF: \\( LaTeX \\)
 
 4.4 Text editors and **R**/**RStudio**  
 
@@ -143,16 +143,16 @@
  
 8.1 Incorporating analyses into the markup
 > 8.1.1 Full code in the main document  
-   - \\( \LaTeX \\)  
+   - \\( LaTeX \\)  
    - **Markdown**    
   8.1.2 Sourcing R code from another file  
-   - \\( \LaTeX \\)  
+   - \\( LaTeX \\)  
    - **Markdown** 
 
 8.2 Saving output objects for future use
   
 8.3 Including highlighted syntax in the output  
->  - \\( \LaTeX \\)  
+>  - \\( LaTeX \\)  
    - **Markdown** 
 
 8.4 Debugging
@@ -160,13 +160,13 @@
 ### 9 Showing Results with Tables ###
  
 9.1 Table basics
-> 9.1.1 Tables in \\( \LaTeX \\)  
+> 9.1.1 Tables in \\( LaTeX \\)  
   9.1.2 Tables in **Markdown** and HTML  
   9.1.3 Basic `knitr` syntax for tables
 
 9.2 Creating tables from **R** objects
 > 9.2.1 `xtable` basics with supported class objects  
-    - `xtable` for \\( \LaTeX \\)  
+    - `xtable` for \\( LaTeX \\)  
     - `xtable` for **Markdown**  
   9.2.2 `xtable` for non-supported class objects
   
@@ -188,7 +188,7 @@
  
 ## Part IV: Final Documents ##
 
-### 11 Presenting with \\( \LaTeX \\) ###
+### 11 Presenting with \\( LaTeX \\) ###
 
 11.1 The Basics
 > 11.1.1 The Header  
@@ -199,11 +199,11 @@
 
 11.2 Articles
 > 11.2.1 Planning reproducible articles  
-  11.2.2 Compiling \\( \LaTeX \\) articles in **R** and **RStudio**
+  11.2.2 Compiling \\( LaTeX \\) articles in **R** and **RStudio**
   
 11.3 Presentations with Beamer  
 
-### 12 Large \\( \LaTeX \\) Documents: Theses, books and batch reports ###
+### 12 Large \\( LaTeX \\) Documents: Theses, books and batch reports ###
 
 12.1 Planning large documents
 > 12.1.1 Planning reproducible theses and books    
@@ -214,7 +214,7 @@
   12.2.2 Parent documents  
   12.2.3 Child documents  
   - In line output with `\Sexpr{}`   
-  - Custom title pages in \\( \LaTeX \\)  
+  - Custom title pages in \\( LaTeX \\)  
   
 12.3 Batch reports with `knitr` and the command line
 > 12.3.1 The data  
