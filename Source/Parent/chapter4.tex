@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 23 September 2012
 
-<<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Getting Started with File Management}\label{DirectoriesChapter}
 
@@ -32,9 +31,14 @@ It is good practice to dynamically include the system information for the R sess
 
 \noindent You can also dynamically include session info in a LaTeX document. To do this simply use the {\tt{toLatex}} command in a code chunk. The code chunk should have the option \texttt{results='asis'}. The code is:
 
-<<Ch4SessionInfoLatex, eval=FALSE>>=
-toLatex(sessionInfo())
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{toLatex}(\hlfunctioncall{sessionInfo}())
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 %% Make file discussion?
 
@@ -89,9 +93,14 @@ All of the tasks we can accomplish in RStudio's {\bf{Files}} pane can also be ac
 
 The {\tt{setwd}} command sets the working directory\index{working directory}. The working directory is where R (or another computer program) looks for files and where it will place new files. For example, if we are on a Mac or Linux computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Table \ref{ExampleTree}) like this
 
-<<Ch4SetWorkingDir, eval=FALSE>>=
-setwd("~/ExampleProject/Data/GatherSource")
-@ 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{setwd}(\hlstring{"~/ExampleProject/Data/GatherSource"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Now R will automatically look in the {\emph{GatherSource}} folder for files and will save new files into this folder, unless we tell it to do otherwise.
 
@@ -109,9 +118,14 @@ Though this book is mostly focused on using R for reproducible research it can b
 
 The one piece of general instruction I will give now is to highlight an important difference in the syntax between R and shell commands. In shell commands you don't need to put parentheses around your arguments. For example if we want to change our working directory to my Mac Desktop in a shell using the {\tt{cd}} command we simply type:
 
-<<Ch4ShellIntroExample, eval=FALSE, engine='sh'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
 cd ~/Desktop
-@
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{{\tt{cd}}}
 

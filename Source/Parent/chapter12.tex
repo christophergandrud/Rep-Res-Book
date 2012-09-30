@@ -1,0 +1,78 @@
+% Chapter Chapter 12 For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: 16/07/2012 05:45:03 pm CEST
+% Updated: 27 August 2012
+
+
+
+
+\chapter{Large LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
+
+In the previous chapter we learned the basics of how to create LaTeX documents to present our research findings. So far we have only covered basic short documents, like articles. For longer and more complex documents like books we can take advantage of LaTeX and {\emph{knitr}} options that allow us to separate our files into manageable pieces. The pieces are usually called \index{child files}, which are combined using a \index{parent document}.
+
+These methods can also be used in the creation of \index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want create individual reports of answers to survey questions from interviewees with a specific age. In this chapter we will rely on {\emph{knitr}} and shell scripts to create batch reports. 
+
+\section{Planning large documents}
+
+Before discussing the specifics of each of these methods, it's worth taking some time to carefully plan the structure of our child and parent documents.
+
+\subsection{Planning theses and books}
+
+Books and theses have a natural parent-child structure, i.e. they are single documents comprise of multiple chapters. They often include other child-like features such as title pages, bibliographies, figures, and appendices. We could include most of these features directly into one markup file. Clearly this file would become very large and unwieldy. It would be difficult to find one part or section to edit. If of your presentation markup are are difficult to find, they are difficult to reproduce.  
+
+\subsection{Planning batch reports}
+
+COMPLETE
+
+\section{Combining Chapters}
+
+We will cover three methods for including child documents into our parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input} \index{input}. The second using {\emph{knitr}} is slightly more complex, but gives us much more flexibility. The final method is a special case of \texttt{\textbackslash{}input} that uses the command line program \index{Pandoc} to convert and include child documents written in non-LaTeX markup languages. 
+
+\subsection{Parent documents}
+
+\paragraph{knitr global options}
+{\emph{knitr}} global chunk options\index{global chunk options} and package options\index{package options} should be set at the beginning of the parent document if you want them to apply to the entire presentation document. 
+
+\subsection{Child documents}
+
+\paragraph{Child documents in the same markup language}
+
+\paragraph{Child documents in a different markup language}
+
+Because {\emph{knitr}} is able to run not only R code but also bash programs, you can use the \index{Pandoc} command line program to convert child documents that are in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document including your Pandoc commands in a code chunk with the \texttt{engine} option set to either \texttt{`bash'} or \texttt{'sh'}.\footnote{Alternatively you can run Pandoc in R using the {\tt{system}} command.} 
+
+For example, the \ref{StylisticConventions} part of this book is written in Markdown. The file is called {\emph{StylisticConventions.md}} It was simply faster to write the list of conventions using the simpler Markdown syntax than LaTeX, which as we saw has a more complicated way of creating lists. However, I want to include this list in my LaTeX produced book. Pandoc can convert the Markdown document into a LaTeX file. This file can then be input into my main document with the LaTeX command \texttt{\textbackslash{}input}.
+
+Imagine that my parent and {\emph{StylisticConventions.md}} documents are in the same directory. In the parent document I add a code chunk with the options {\tt{echo=FALSE}} and {\tt{results=`hide'}}. In this code chunk I add the following command to convert the Markdown syntax in {\emph{StylisticConventions.md}} to LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+pandoc StylisticConventions.md -f markdown \
+    -t latex -o StyleTemp.tex
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent The options {\tt{-f markdown}} and {\tt{-t latex}} tell Pandoc to convert {\emph{StylisticConventions.md}} from Markdown to LaTeX syntax. {\tt{-o StyleTemp.tex}} instructs Pandoc to save the resulting LaTeX markup to a new file called {\emph{StyleTemp.tex}}. 
+
+I only need to include a backslash (\textbackslash{}) at the end of the first line because I wanted to split the code over two lines. The code wouldn't fit on this page otherwise. The backslash tells the shell not to treat the following line as a different line. Unlike in R, the bash shell only reads recognizes a command's arguments if they are on the same line. 
+
+After this code chunk we need to tell our parent document to include the converted text. To do this we follow the code chunk with the {\tt{\\input}} command like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textbackslash{}input\{StyleTemp.tex\}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
+
+
+\section{Creating Batch Reports}
+
+\subsection{stich}
