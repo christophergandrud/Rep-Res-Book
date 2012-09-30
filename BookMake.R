@@ -30,7 +30,8 @@ lapply(toInstall, library, character.only = TRUE)
 
 ##### Create PDF Book Manuscript ####
 # Change working directory to /Rep-Res-Book/Source/Parent
-setwd("/git_repositories/Rep-Res-Book/Source/Parent/")
+ParentDirectory <- "/git_repositories/Rep-Res-Book/Source/Parent/"
+setwd(ParentDirectory)
 
 # Compile the book's parent document
 knit2pdf(input = "Rep-Res-Parent.Rnw")
@@ -39,7 +40,7 @@ knit2pdf(input = "Rep-Res-Parent.Rnw")
 embed_fonts("Rep-Res-Parent.pdf")
 
 # Clean up /git_repositories/Rep-Res-Book/Source/Parent/
-DeleteFiles <- setdiff(list.files(), c("Rep-Res-Parent.Rnw", "Rep-Res-Parent.pdf", "krantz.cls", "figure", "cache"))
+DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", "Rep-Res-Parent.pdf", "krantz.cls", "figure", "cache"))
 unlink(DeleteFiles)
 
 #### README ####
