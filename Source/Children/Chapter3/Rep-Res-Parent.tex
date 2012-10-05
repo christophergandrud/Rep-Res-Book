@@ -1,12 +1,15 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 7 September 2012
+% Updated: 21 September 2012
 %%%%%%%%%%%%%%
+
+% Tell RStudio that weaving is to be done with the knitr package
 % !Rnw weave = knitr
 
-
+% Load required LaTeX packages
 \documentclass[ChapterTOCs,krantz1]{krantz}
+\usepackage[authoryear]{natbib}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -24,95 +27,62 @@
 \usepackage{pdflscape}
 \usepackage{url}
 \usepackage{todonotes}
+\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{trees}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{shapes,arrows}
 
+
+% Set margins on highlighted code output boxes
+\setlength\fboxsep{6.25mm}
+
+% Set knitr global options
 
 
 
 \makeatletter
-
-
 \makeatother
-
 \makeindex
 
 \begin{document}
 
 
 
+% Title page
 \title{Reproducible Research with R and RStudio}
 
 \author{Christopher Gandrud}
 
 \maketitle
 
+% Set roman numeral page counter
+\pagenumbering{roman}
+
+% Front matter
 \frontmatter
 
-{\chapter*{Author}}
+% Include Author About, Foreward, and Preface child documents
 
-\contributor{Christopher Gandrud}{Yonsei University}{Wonju, Republic of Korea} \\[1cm]
+\input{Author-out.tex}
 
-\noindent I am a lecturer at Yonsei University (Wonju) in international relations where I teach international political economy and applied social science statistics (including reproducible research). Previously, I was a Fellow in Government at the London School of Economics and a research associate at the Hertie School of Governance. In 2012 I completed my PhD in Political Science at the LSE. \\[0.25cm]
+\input{Foreword.tex}
 
-\noindent I've published articles on political economy and quantitative methods in the Review of International Political Economy and the International Political Science Review.
-
-
+\input{Preface.tex}
 
 
-\chapter*{Forward}
-
-This book would not have been possible without the advice and support of a great many people.
-
-The developer and blogging community has been incredibly important for making this book possible. Foremost among among these people is Yihui Xie. He is the developer of the {\emph{knitr}} package (among others) and also an avid writer and reader of blogs. Without him the ability to do reproducible research would be much harder and the blogging community that spreads knowledge about how to do these things would be poorer. Other great bloggers include Carl Boettiger (who also developed the {\emph{knitcitations}} package), Markus Gesmann (who developed {\emph{GoogleVis}}), Jeromy Anglim.
-
-The vibrant and very helpful community at Stack Overflow \url{http://stackoverflow.com/} is always very helpful for finding answers to small problems that plague any coder. Importantly it makes it easy for others to find these answers.
-
-
-
-\chapter*{Preface}
-
-FILL IN
-
-
+% Convert Stylistic Conventions child documnet from Markdown to LaTex and include
 \chapter*{Stylistic Conventions}\label{StylisticConventions}
-\begin{noindent}
 
 
 
 
 \input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
 
+% Include page on installing R packages used in the book
 
+\input{Packages.tex}
 
-
-\chapter*{Required R Packages}\label{ReqPackages}
-
-This book discusses how to use a number of user-written R packages for reproducible research. These are not included in the default R installation (see Section \ref{InstallR}). They need to be installed installed separately. To install all of the user-written packages discussed in this book use the following code:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlfunctioncall{install.packages}(\hlstring{"apsrtable"}, 
-                \hlstring{"devtools"}, 
-                \hlstring{"ggplot2"}, 
-                \hlstring{"knitr"}, 
-                \hlstring{"knitcitations"}, 
-                \hlstring{"markdown"}, 
-                \hlstring{"openair"}, 
-                \hlstring{"texreg"},                     
-                \hlstring{"xtable"}, 
-                \hlstring{"Zelig"})
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-
-
-
-
-
-\end{noindent}
 
 \listoffigures
 \listoftables
@@ -120,8 +90,10 @@ This book discusses how to use a number of user-written R packages for reproduci
 
 \mainmatter
 
+% Start arabic numeral page counter
 \setcounter{page}{1}
 
+% Part 1, include child documents
 \part{Getting Started}
 
 
