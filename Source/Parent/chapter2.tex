@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 30 September 2012
 
-<<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Getting Started with Reproducible Research}\label{GettingStartedRR}
 
@@ -70,9 +69,54 @@ In order to reproduce your research others must be able to know what you did. Yo
 
 Before discussing the other tips its important to learn a key part of documenting with R. You should \emph{record your session info\index{session info}}. Many things in R have stayed the same since it was introduced in the early 1990s. This makes it easy for future researchers to recreate what was done in the past. However, things can change from one version of R to another. Also, the way R functions and especially R packages are handled may vary across different operating systems. Finally, you may have R set to load packages\index{packages} by default (see page \pageref{Packages} for information about packages). These packages might be necessary to run your code, but other people might not what packages and what versions of the packages were loaded from just looking at your source code. The \texttt{sessionInfo} command in R prints a record of all of these things. The information from the session I used to create this book is:
 
-<<Ch2SessionInfoPlain, tidy=TRUE>>=
-sessionInfo()
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{sessionInfo}()
+\end{alltt}
+\begin{verbatim}
+## R version 2.15.1 (2012-06-22)
+## Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+## 
+## locale:
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
+## 
+## attached base packages:
+## [1] splines   tools     stats     graphics  grDevices
+## [6] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] reshape_0.8.4       plyr_1.7.1         
+##  [3] Zelig_4.0-11        survival_2.36-14   
+##  [5] sandwich_2.2-9      zoo_1.7-7          
+##  [7] MASS_7.3-22         boot_1.3-5         
+##  [9] xtable_1.7-0        texreg_1.06        
+## [11] RCurl_1.95-0.1      bitops_1.0-4.1     
+## [13] openair_0.7-0       markdown_0.5.2     
+## [15] knitcitations_0.1-0 bibtex_0.3-2       
+## [17] knitr_0.8           ggplot2_0.9.2.1    
+## [19] extrafont_0.11      devtools_0.8       
+## [21] apsrtable_0.8-8    
+## 
+## loaded via a namespace (and not attached):
+##  [1] cluster_1.14.2     codetools_0.2-8   
+##  [3] colorspace_1.1-1   dichromat_1.2-4   
+##  [5] digest_0.5.2       evaluate_0.4.2    
+##  [7] formatR_0.6        grid_2.15.1       
+##  [9] gtable_0.1.1       httr_0.1.1        
+## [11] labeling_0.1       lattice_0.20-10   
+## [13] Matrix_1.0-9       memoise_0.1       
+## [15] mgcv_1.7-21        munsell_0.4       
+## [17] nlme_3.1-104       parallel_2.15.1   
+## [19] pkgmaker_0.8       proto_0.3-9.2     
+## [21] RColorBrewer_1.0-5 reshape2_1.2.1    
+## [23] Rttf2pt1_1.1       scales_0.2.2      
+## [25] stringr_0.6.1      whisker_0.3-1     
+## [27] XML_3.95-0.1
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Chapter \ref{DirectoriesChapter} gives specific details about how to create files with dynamically included session information. Throughout the book you will learn how to fully document your research.
 
@@ -93,10 +137,18 @@ Treat all of your research files as if someone who has not worked on the project
 \paragraph{Commenting}
 In R everything on a line after a {\tt{\#}} hash (number, pound, or sharp) character\footnote{This is know as R's comment declaration character.} is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{\#}} to place comments telling other people what you are doing. Here are some examples:
 
-<<Ch2CommentHash>>=
-# A complete comment line
-2 + 2 # A comment after R code
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# A complete comment line}
+2 + 2  \hlcomment{# A comment after R code}
+\end{alltt}
+\begin{verbatim}
+## [1] 4
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent On the first line the {\tt{\#}} is placed at the very beginning, so the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation \texttt{2 + 2}. R runs the equation as usual and finds the answer {\tt{4}}, but it ignores all of the words after the hash. 
 
@@ -123,13 +175,18 @@ He also suggests that all of your source code files should begin with a comment 
 
 Here is an example of a minimal file header for an R source code file that creates the third figure in an article titled ``My Article":
 
-<<Ch2CommentHeader, tidy=FALSE>>=
-##################
-# Source code file used to create Figure 3 in ''My Article''
-# Created by Christopher Gandrud
-# Updated 15 October 2012
-##################
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{##################}
+\hlcomment{# Source code file used to create Figure 3 in \hlstring{''}My Article\hlstring{''}}
+\hlcomment{# Created by Christopher Gandrud}
+\hlcomment{# Updated 15 October 2012}
+\hlcomment{##################}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Feel free to use things like the long series of hash marks above and below the header, white space, and indentations to make your comments more readable. 
 

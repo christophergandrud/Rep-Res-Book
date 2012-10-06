@@ -1,0 +1,208 @@
+%%%%%%%%%%%%%%%
+% Parent document for the book Reproducible Research with R and RStudio
+% Christopher Gandrud
+% Updated: 21 September 2012
+%%%%%%%%%%%%%%
+
+% Tell RStudio that weaving is to be done with the knitr package
+% !Rnw weave = knitr
+
+% Load required LaTeX packages
+\documentclass[ChapterTOCs,krantz1]{krantz}\usepackage{graphicx, color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
+\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
+\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
+\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
+\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
+\newcommand{\hlslot}[1]{\textit{#1}}%
+\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[authoryear]{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{subfigure}
+%\usepackage{epsfig}
+\usepackage{makeidx}
+%\usepackage{showidx}
+\usepackage{multicol}
+\frenchspacing
+\tolerance=5000
+
+\usepackage{dcolumn}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{url}
+\usepackage{todonotes}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{shapes,arrows}
+
+
+% Set margins on highlighted code output boxes
+\setlength\fboxsep{6.25mm}
+
+% Set knitr global options
+
+
+
+\makeatletter
+\makeatother
+\makeindex
+
+\begin{document}
+
+
+
+% Title page
+\title{Reproducible Research with R and RStudio}
+
+\author{Christopher Gandrud}
+
+\maketitle
+
+% Set roman numeral page counter
+\pagenumbering{roman}
+
+% Front matter
+\frontmatter
+
+% Include Author About, Foreward, and Preface child documents
+
+\input{Author-out.tex}
+
+\input{Foreword.tex}
+
+\input{Preface.tex}
+
+
+% Convert Stylistic Conventions child documnet from Markdown to LaTex and include
+\chapter*{Stylistic Conventions}\label{StylisticConventions}
+
+
+
+
+\input{/git_repositories/Rep-Res-Book/Temp/StyleTemp.tex}
+
+% Include page on installing R packages used in the book
+
+\input{Packages.tex}
+
+
+\listoffigures
+\listoftables
+\tableofcontents
+
+\mainmatter
+
+% Start arabic numeral page counter
+\setcounter{page}{1}
+
+% Part 1, include child documents
+\part{Getting Started}
+
+
+\input{chapter1.tex}
+
+\input{chapter2.tex}
+
+\input{chapter3.tex}
+
+\input{chapter4.tex}
+
+
+% Part 2, include child documents
+\part{Data Gathering and Storage}
+
+
+\input{chapter5.tex}
+
+\input{chapter6.tex}
+
+\input{chapter7.tex}
+
+
+% Part 3, include child documents
+\part{Analysis and Results}
+
+
+\input{chapter8.tex}
+
+\input{chapter9.tex}
+
+\input{chapter10.tex}
+
+
+% Part 4, include child documents
+\part{Presentation Documents}
+
+
+\input{chapter11.tex}
+
+\input{chapter12.tex}
+
+\input{chapter13.tex}
+
+\input{chapter14.tex}
+
+
+% Include bibliotraphy
+\bibliographystyle{apa}
+\bibliography{/git_repositories/Rep-Res-Book/Source/rep-res-book.bib,/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib}
+
+% Include index
+\clearpage
+\printindex
+
+\end{document}
+

@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 6 October 2012
 
-<<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Getting Started with File Management}\label{DirectoriesChapter}
 
@@ -70,9 +69,14 @@ It is good practice to dynamically include the system information for the R sess
 
 \noindent You can also dynamically include session info in a LaTeX document. To do this simply use the {\tt{toLatex}} command in a code chunk. The code chunk should have the option \texttt{results='asis'}. The code is:
 
-<<Ch4SessionInfoLatex, eval=FALSE>>=
-toLatex(sessionInfo())
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{toLatex}(\hlfunctioncall{sessionInfo}())
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 %% Make file discussion?
 
@@ -84,9 +88,17 @@ R has an a powerful set of commands for handling and navigating through files. I
 
 To find out what current working directory R is using type:
 
-<<Ch4Getwd>>=
-getwd()
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{getwd}()
+\end{alltt}
+\begin{verbatim}
+## [1] "/git_repositories/Rep-Res-Book/Source/Children/Chapter4"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent The example here shows you the current working directory that was used while knitting this chapter.
 
@@ -98,9 +110,14 @@ Use the \texttt{list.files} command see all of the files and subdirectories in t
 
 The {\tt{setwd}} command sets the current working directory\index{working directory}. For example, if we are on a Mac or other Unix-like computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Table \ref{ExampleTree}) like this
 
-<<Ch4SetWorkingDir, eval=FALSE>>=
-setwd("/ExampleProject/Data/GatherSource")
-@ 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{setwd}(\hlstring{"/ExampleProject/Data/GatherSource"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Now R will automatically look in the {\emph{GatherSource}} folder for files and will save new files into this folder, unless we explicitly tell it to do otherwise.
 
@@ -108,9 +125,14 @@ setwd("/ExampleProject/Data/GatherSource")
 
 Sometimes we may want to create a new directory. We can use the {\tt{dir.create}} command to do this.\footnote{Note: you will need the correct system permissions to be able to do this.} For example to create a {\emph{ExampleProject}} file in the root C directory on a Windows computer type:
 
-<<Ch4dir.create, eval=FALSE>>=
-dir.create("C:\ExampleProject\")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{dir.create}(\hlstring{"C:\textbackslash{}ExampleProject\textbackslash{}"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{{\tt{file.create}}}\index{file.create}
 
@@ -126,9 +148,14 @@ Though this book is mostly focused on using R for reproducible research it can b
 
 The one piece of general instruction I will give now is to highlight an important difference in the syntax between R and shell commands. In shell commands you don't need to put parentheses around your arguments. For example if we want to change our working directory to my Mac Desktop in a shell using the {\tt{cd}} command we simply type:
 
-<<Ch4ShellIntroExample, eval=FALSE, engine='sh'>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
 cd /Users/Me/Desktop
-@
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \todo[inline]{The remainder of this chapter is incomplete.}
 

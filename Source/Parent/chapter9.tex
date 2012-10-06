@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 13 September 2012
 
-<<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Showing Results with Tables}\label{TablesChapter}
 
@@ -78,70 +77,93 @@ class objects}
 
 Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame.\footnote{This data frame is loaded by default.} We run our model:
 
-<<Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE>>=
-# Load required library
-library(ZeligBayesian)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load required library}
+\hlfunctioncall{library}(Zelig)
 
-data(macro)
+\hlcomment{# Run model}
+NBModel <- \hlfunctioncall{zelig}(Examination ~ Education, model = \hlstring{"normal.bayes"}, 
+                    data = swiss, cite = FALSE)
+\end{alltt}
 
-z.out <- zelig(
-               unem ~ gdp + capmob + trade,
-               model = "normal.bayes", 
-               data = macro,
-               verbose=TRUE
-               )
 
-# Find NBModel's class
-class(NBModel)
-@
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'zelig2normal.bayes' of mode 'function' was not found}}\begin{alltt}
+
+\hlcomment{# Find NBModel's class}
+\hlfunctioncall{class}(NBModel)
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModel' not found}}\end{kframe}
+\end{knitrout}
+
 
 Using the {\tt{class}} command we found that the model output object is an {\tt{MCMCZelig}} class object. This class is not supported by {\tt{xtable}}. If we try to create a summary table called {\emph{NBTable}} of the results we will get the following error:
 
-<<Ch9BadTable, echo=FALSE>>=
-# Load required library
-library(xtable)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
-# Attempt to create a table with 'NBModel'
-NBTable <- xtable(NBModel)
-@
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModel' not found}}\end{kframe}
+\end{knitrout}
+
 
 With unsupported class objects we have to create the summary ourselves and extract the things that we want from it manually. This is where a good knowledge of vectors comes in handy. 
 
 First, let's create a summary of our output object {\emph{NBModel}}:
 
-<<Ch9MCMCSummary>>=
-NBModelSum <- summary(NBModel)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+NBModelSum <- \hlfunctioncall{summary}(NBModel)
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModel' not found}}\end{kframe}
+\end{knitrout}
+
 
 We created a new object of the class {\tt{summary.MCMCZelig}}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in our results table like the formula that we used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). This matrix is where the things we want in our table are located. I find it easier to work with data frames, so we'll also convert the matrix into a data frame.
 
-<<Ch9NBSum>>=
-NBSumDataFrame <- data.frame(NBModelSum$summary)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
+\end{alltt}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModelSum' not found}}\end{kframe}
+\end{knitrout}
+
 %%
 \noindent Here is what our model results data frame looks like:
 
-<<Ch9NBSumDisplay, echo=FALSE>>=
-NBSumDataFrame
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}\end{kframe}
+\end{knitrout}
+
 
 \noindent Now we have a data frame object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) we can use {\emph{NBSumdata frame}} with {\tt{xtable}} as before to create the following table:
 \vspace{0.5cm}
 
-<<Ch9NBTable, echo=FALSE, message=FALSE, results='asis'>>=
-# Change quantile variable names
-library(reshape)
-NBSumDataFrame <- rename(NBSumDataFrame, c(X2.5. = "2.5%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c(X50. = "50%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
+\begin{kframe}
 
 
-# Reorder variables and remove the standard deviation.
-NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]  
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
 
-# Create table.
-xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression")
-@
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBTable' not found}}\end{kframe}
+
 
 It may take a bit of hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be used to create graphics.} Hunting for what you want is generally easier by clicking on the object in RStudio's workspace pane.
 
