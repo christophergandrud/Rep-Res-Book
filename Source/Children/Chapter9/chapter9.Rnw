@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 September 2012
+% Updated: 7 October 2012
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -76,20 +76,16 @@ class objects}
     \item use {\tt{xtable}} with this object to create the table.
 \end{enumerate}
 
-Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame.\footnote{This data frame is loaded by default.} We run our model:
+Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame that comes with R
+
+\todo[inline]{Note, I am having trouble with this code using Zelig version 4 and am currently working with the packaged developers to sort the issue out. The code does work with Zelig version 3.5.5.}
 
 <<Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE>>=
 # Load required library
-library(ZeligBayesian)
+library(Zelig)
 
-data(macro)
-
-z.out <- zelig(
-               unem ~ gdp + capmob + trade,
-               model = "normal.bayes", 
-               data = macro,
-               verbose=TRUE
-               )
+NBModel <- zelig(Examination ~ Education, model = "normal.bayes", 
+                    data = swiss, cite = FALSE)
 
 # Find NBModel's class
 class(NBModel)

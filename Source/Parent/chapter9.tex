@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 September 2012
+% Updated: 7 October 2012
 
 
 
@@ -75,7 +75,9 @@ class objects}
     \item use {\tt{xtable}} with this object to create the table.
 \end{enumerate}
 
-Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame.\footnote{This data frame is loaded by default.} We run our model:
+Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame that comes with R
+
+\todo[inline]{Note, I am having trouble with this code using Zelig version 4 and am currently working with the packaged developers to sort the issue out. The code does work with Zelig version 3.5.5.}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -83,20 +85,16 @@ Imagine that we want to create a results table showing the covariate names, coef
 \hlcomment{# Load required library}
 \hlfunctioncall{library}(Zelig)
 
-\hlcomment{# Run model}
 NBModel <- \hlfunctioncall{zelig}(Examination ~ Education, model = \hlstring{"normal.bayes"}, 
                     data = swiss, cite = FALSE)
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'zelig2normal.bayes' of mode 'function' was not found}}\begin{alltt}
 
 \hlcomment{# Find NBModel's class}
 \hlfunctioncall{class}(NBModel)
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModel' not found}}\end{kframe}
+\begin{verbatim}
+## [1] "MCMCZelig"
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
 
@@ -106,7 +104,7 @@ Using the {\tt{class}} command we found that the model output object is an {\tt{
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModel' not found}}\end{kframe}
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no applicable method for 'xtable' applied to an object of class "MCMCZelig"}}\end{kframe}
 \end{knitrout}
 
 
@@ -119,9 +117,7 @@ First, let's create a summary of our output object {\emph{NBModel}}:
 \begin{alltt}
 NBModelSum <- \hlfunctioncall{summary}(NBModel)
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModel' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 
@@ -132,9 +128,7 @@ We created a new object of the class {\tt{summary.MCMCZelig}}. We're still not t
 \begin{alltt}
 NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 \end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBModelSum' not found}}\end{kframe}
+\end{kframe}
 \end{knitrout}
 
 %%
@@ -142,27 +136,38 @@ NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}\end{kframe}
+\begin{verbatim}
+##                Mean      SD   X2.5.    X50.  X97.5.
+## (Intercept) 10.1397 1.31673  7.5579 10.1566 12.7058
+## Education    0.5786 0.09118  0.3963  0.5781  0.7609
+## sigma2      34.9703 7.81260 22.9567 33.8782 53.2172
+\end{verbatim}
+\end{kframe}
 \end{knitrout}
 
 
 \noindent Now we have a data frame object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) we can use {\emph{NBSumdata frame}} with {\tt{xtable}} as before to create the following table:
 \vspace{0.5cm}
 
-\begin{kframe}
+
+% latex table generated in R 2.15.1 by xtable 1.7-0 package
+% Sun Oct  7 17:21:12 2012
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrrrr}
+  \hline
+ & Mean & 2.5\% & 50\% & 97.5\% \\ 
+  \hline
+(Intercept) & 10.14 & 7.56 & 10.16 & 12.71 \\ 
+  Education & 0.58 & 0.40 & 0.58 & 0.76 \\ 
+  sigma2 & 34.97 & 22.96 & 33.88 & 53.22 \\ 
+   \hline
+\end{tabular}
+\caption{Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression}
+\end{center}
+\end{table}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBSumDataFrame' not found}}
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'NBTable' not found}}\end{kframe}
 
 
 It may take a bit of hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be used to create graphics.} Hunting for what you want is generally easier by clicking on the object in RStudio's workspace pane.

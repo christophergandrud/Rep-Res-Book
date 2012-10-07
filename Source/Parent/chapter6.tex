@@ -1,28 +1,29 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 September 2012
+% Updated: 7 October 2012
 
 
 
 
 \chapter{Gathering Data with R}\label{DataGather}
 
-There are many practical issues involved in gathering data that can make replication easier or harder. As with all of the steps in this book: document everything. Replication will be easier if your documentation--source code--can be understood and executed by a computer. Of course there are data gathering situations that simply require manually pointing and clicking, talking with subjects in an experiment, and so on. The best we can do in these situations is just describe our data gathering process in detail CITE. Nonetheless, R's automated data gathering capabilities are extensive and often under utilized. Learning how to take full advantage of them greatly increases replicability and can even save researchers considerable time and effort.
+There are many practical issues involved in gathering data that can make replication easier or harder. As with all of the steps in this book: document everything. Replication will be easier if your documentation--especially, variable description, sources, and source code--you and your computer can understand what you have done. If all of your steps are embedded in source code, then independent researchers (and your) can easily regather the data. executed by a computer. Of course there are data gathering situations that simply require manually pointing and clicking, talking with subjects in an experiment, and so on. The best we can do in these situations is just describe our data gathering process in detail. Nonetheless, R's automated data gathering capabilities for internet-based information are extensive. Learning how to take full advantage of them greatly increases replicability and can even save researchers considerable time and effort.
+
+In this chapter you'll learn how to gather quantitative data in a reproducible and, in some cases, fully replicable way. You'll start by learning how to use data gathering make files\index{make file} to organize your data gathering process. Then we will discuss loading data into R from various sources.
 
 \section{Organize Your Data Gathering: Make files}
-MOVE TO END OF CHAPTER
-Before getting into the details of using R to automate data gathering, lets's start from where all data gathering should start: a plan to organize the process. Clearly organizing your data gathering process from the start of a research project improves the possibility of replicability and can save significant effort over the course of the project. 
+Before getting into the details of using R to gather data, lets's start from where all data gathering should start: a plan to organize the process. Clearly organizing your data gathering process from the beginning of a research project improves the possibility of reproducibility and can save significant effort over the course of the project by making it easier to add and regather data later on. 
 
-A key principle of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common Make file. The Make file's output is the data set(s) that we use in the statistical analyses. There are two types of files that the Make file\index{make file} runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merge with data from the other sources. Some of the R tools for data clean up will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. We don't explicitly cover the process of merging data sets together in this book. Merging files are executed by the Make file after it runs the clean up files.
+A key part of replicable data gathering with R, like replicable research in general is segmenting the process into discrete files that can be run by a common make file\index{make file}. This makes it easier to find errors and also add steps when you decide to include more data sources. The make file's output is the data set(s) that you'll use in the statistical analyses. There are two types of files that the make file runs: data clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them into something that can be merged with data from the other sources. Some of the R tools for data clean up and merging will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. Merging files are executed by the make file after it runs the clean up files.
 
-Data gathering Make files usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{The {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a Data make file might look like for our example project (see Figure \ref{ExampleTree}).
+Data gathering Make files usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a Data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
 \hlcomment{# Example Make file}
-\hlfunctioncall{setwd}(\hlstring{"~/ExampleProject/Data/"})
+\hlfunctioncall{setwd}(\hlstring{"/ExampleProject/Data/"})
 
 \hlcomment{# Gather and clean up raw data files.}
 \hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather1.R"})
@@ -39,33 +40,49 @@ Data gathering Make files usually only need one or two commands {\tt{setwd}}\ind
 \end{knitrout}
 
 
-Here we saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.csv}}\index{write.csv} command. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis. 
+Once the working directory was set the make file then ran two source code files to gather data from two different sources. These files gathered the data, cleaned them so that they would be easy to merge and saved them as data frame objects in our workspace. Next the make file ran a source code file that merged the data frames. Finally,its saved the output data set {\emph{CleanData}} as a \texttt{.csv} formated file using the {\tt{write.csv}}\index{write.csv} command. In our example project, the file {\emph{MainData.csv}} will be the main file we use for statistical analysis. 
 
 You can of course save your data in a wide variety of other formats. To save your data in another plain-text format use the \texttt{write.table} command\index{write.table}. You can also save all of the objects in your workspace using the \texttt{save.image} command.
 
+Now that we've covered the big picture, let's learn the different tools you will need to know to gather data from different types of sources.
+
 \section{Importing locally stored data sets}
 
-Plain text file based data stored on your computer can be loaded into R using the \texttt{read.table}\index{read.table} command. This command will take the file and turn it into a data frame object. For example, imagine that we have a data set called {\emph{Data1.csv}} in our root directory. We load it into an R object called Data like this:
+As we have seen, plain text file based data stored on your computer can be loaded into R using the \texttt{read.table}\index{read.table} command. If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the separator, whether or not you want the first line to be treated as variable labels and other options. This is initially easier than using \texttt{read.table}. But it is less reproducible.
+
+If the data is not stored in plain-text format, but is instead saved by another statistical program such as SPSS, SAS, or Stata, we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-Data <- \hlfunctioncall{read.table}(file = \hlstring{"~/Data1.csv"}, sep = \hlstring{","},
-                    header = TRUE)
+\hlcomment{# Load library}
+\hlfunctioncall{library}(foreign)
+
+\hlcomment{# Load Stata formatted data}
+Data <- \hlfunctioncall{read.dta}(\hlstring{"Data1.dta"})
 \end{alltt}
 \end{kframe}
 \end{knitrout}
 
 
-In this code, \texttt{file} is clearly where we specify the location and file name of the data set we want to open. \texttt{sep} is where we tell R how the data columns are separated. In this case they are separated by commas. Finally, \texttt{header = TRUE} tells R that we want to treat the first row of the data set as the variable names. 
+As you can see, commands in the \emph{foreign} library have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports use the following command
 
-If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow \texttt{Import Dataset\ldots} \textrightarrow \texttt{From Text File\ldots}. In the box that pops up, specify the separator, whether or not you want the first line to be treated as variable labels and other options. This is initially easier than using \texttt{read.table}. But it is less reproducible.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{library}(help = \hlstring{"foreign"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
-To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before we load it into R.
 
-\subsection{Single files}
+If you have data stored in a spreadsheet format such as Excel's \texttt{.xlsx}, it may be best to first clean up the data in the spreadsheet program and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows and remove any extraneous information--notes, colors, and so on.
+
+To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before it was loaded it into R.
 
 \subsection{Looping through multiple files}
+
+\todo[inline]{This subsection needs to be written.}
 
 \section{Importing data sets from the internet}
 
@@ -82,12 +99,12 @@ Importing data into R that is located at a non-secure URL--it starts with {\tt{h
 
 We have discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL. If you only see the raw plain-text data, you are probably good to go.\footnote{If the data is embedded in a larger website--the way data is usually stored on the cloud version of Dropbox--you may still be able to download it into R. However, this can be difficult and varies depending on the structure of the website. So, I do not cover it in this book.}
 
-Now simply include the URL as the file name in your \texttt{read.table} command. Imagine the data we wanted to load was at this URL \texttt{http://www.AWebHost.Data1.csv}.
+Now simply include the URL as the file name in your \texttt{read.table} command. We saw earlier how to download a CSV data file from a Dropbox \emph{Public} folder with the shortened URL \texttt{http://bit.ly/PhjaPM}:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-Data <- \hlfunctioncall{read.table}(file = \hlstring{"http://www.AWebHost.Data1.csv"}, 
+Data <- \hlfunctioncall{read.table}(file = \hlstring{"http://bit.ly/PhjaPM"}, 
                     sep = \hlstring{","}, header = TRUE)
 \end{alltt}
 \end{kframe}

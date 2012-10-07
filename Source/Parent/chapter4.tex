@@ -47,6 +47,12 @@ On Unix-like systems, including Mac computers, directories are indicated with a 
 
 When you use R, the command line, and markup languages it is important to keep in mind what your current working directory is\index{working directory}. The working directory is the directory where the program automatically look for files and other directories. It is also where it will save files. Later in this chapter we will cover commands for handling the working directory.
 
+\section{Organizing your research project}
+
+Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's main parent directory is called {\emph{Example Project}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contain further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
+
+In addition to this main folders you will probably notice a file called {\emph{README.md}} The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things such as its title, author(s), topic and so on. It should also indicate how the folders in the project are organized and give instruction for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If it is written using Markdown, it will also be properly formatted.
+
 \thispagestyle{plain}
 \begin{landscape}
 \begin{figure}[th!]
@@ -58,12 +64,6 @@ When you use R, the command line, and markup languages it is important to keep i
     \end{center}
 \end{figure}
 \end{landscape}
-
-\section{Organizing your research project}
-
-Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's main parent directory is called {\emph{Example Project}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contain further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
-
-In addition to this main folders you will probably notice a file called {\emph{README.md}} The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things such as its title, author(s), topic and so on. It should also indicate how the folders in the project are organized and give instruction for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If it is written using Markdown, it will also be properly formatted.
 
 It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your readme file with R Markdown (see Chapter \ref{LargeDocs}). Simply include the \texttt{sessionInfo()} command in a code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
@@ -136,7 +136,16 @@ Sometimes we may want to create a new directory. We can use the {\tt{dir.create}
 
 \paragraph{{\tt{file.create}}}\index{file.create}
 
-Similarly, you can create a new blank file with the \texttt{file.create} command.
+Similarly, you can create a new blank file with the \texttt{file.create} command. To add a blank R source code file called {\emph{SourceCode.R}} to the {\emph{ExampleProject}} directory on the C drive use:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{file.create}(\hlstring{"C:\textbackslash{}ExampleProject\textbackslash{}SourceCode.R"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{{\tt{unlink}}}\index{unlink}
 
@@ -144,7 +153,7 @@ Finally, you can use the {\tt{unlink}} command to delete a file, files, or direc
 
 \section{Unix-like shell commands for file management} 
 
-Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program to manipulate files in large projects. A command line shell program is simply a program that allows you to type commands to interact with your computer's operating system. We will especially return to shell commands near the end of the book when we discuss Make files\index{Make files} for compiling large documents, and batch reports\index{batch reports} (Chapter \ref{LargeDocs}). The syntax discussed here is also similar to the used in command line git (Chapter \ref{Storing}) and Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to properly get started with shell programs. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line\cite[]{ShottsJr2012}. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}.
+Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program to manipulate files in large projects. A command line shell program is simply a program that allows you to type commands to interact with your computer's operating system. We will especially return to shell commands near the end of the book when we discuss make files\index{make file} for compiling large documents, and batch reports\index{batch reports} (Chapter \ref{LargeDocs}). The syntax discussed here is also similar to the used in command line git (Chapter \ref{Storing}) and Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to properly get started with shell programs. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line\cite[]{ShottsJr2012}. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}.
 
 The one piece of general instruction I will give now is to highlight an important difference in the syntax between R and shell commands. In shell commands you don't need to put parentheses around your arguments. For example if we want to change our working directory to my Mac Desktop in a shell using the {\tt{cd}} command we simply type:
 
