@@ -18,7 +18,7 @@ Careful file management is crucial for reproducible research. Remember two of th
 
 Apart from the fleeting situations where you have an email exchange (or even meet in person) with someone interested in reproducing your research, the main information independent researchers have about the procedures you used will be stored across many files: data files, analysis files, and presentation files. If these files are well organized and the links tying them together are clear, replication will be much easier. File management is also important for you as a researcher, because if your files are well organized you will be able to more easily make changes, collaborate with others, and so on. 
 
-Using tools such as R, {\emph{knitr}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored--their {\bf{file path}}\index{file path}--in your computer. Handling files reproducibly also requires us to use command line tools to access and organize our files. R and Unix-like shell programs allow us to control files--creating, deleting, moving them--in powerful and really reproducible ways. By typing these commands we are documenting every step we take. This is a major advantage over graphical user interface type systems where we organize files by clicking and dragging them with the cursor. However, text commands require us to know our files' specific address--it's file path. 
+Using tools such as R, {\emph{knitr}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored--their {\bf{file path}}\index{file path}--in your computer. Handling files reproducibly also requires us to use command line tools to access and organize our files. R and Unix-like shell programs\index{Unix-like shell program} allow us to control files--creating, deleting, moving them--in powerful and really reproducible ways. By typing these commands we are documenting every step we take. This is a major advantage over graphical user interface type systems where we organize files by clicking and dragging them with the cursor. However, text commands require us to know our files' specific address--it's file path. 
 
 In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn organize them with RStudio Projects\index{RStudio Projects}. Finally, we will cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\bf{Files}} pane and. The skills we learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
 
@@ -40,7 +40,7 @@ On Windows computers the root directory is given a drive letter assignment\index
 
 You will probably not store all of your files  the root directory. This would get very messy. Instead you will likely store your files in subdirectories of the root directory. Inside of these subdirectories may be further subdirectories and so on.  The directory a subdirectory is inside of is called the parent directory\index{parent directory}.
 
-On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: \texttt{C:\textbackslash{}\textbackslash{}ExampleProject\textbackslash{}\textbackslash{}Data}. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell the R to interpret the next character or sequence of characters differently. For example, on page \pageref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab. To neutralize the escape character simply add another escape character, i.e. escape the escape character. In R this simply means using a double backslash: \texttt{\textbackslash{}\textbackslash{}}. Another option for writing Windows file names is to use one forward slash (\texttt{/}).  
+On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: \texttt{C:\textbackslash{}\textbackslash{}ExampleProject\textbackslash{}\textbackslash{}Data}. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell R to interpret the next character or sequence of characters differently. For example, on page \pageref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab. To neutralize the escape character simply add another escape character, i.e. escape the escape character. In R this simply means using a double backslash: \texttt{\textbackslash{}\textbackslash{}}. Another option for writing Windows file names is to use one forward slash (\texttt{/}).  
 
 On Unix-like systems, including Mac computers, directories are indicated with a forward slash (\texttt{/}). The file path of the {\emph{Data}} file on a Unix-like system, for example: \texttt{/ExampleProject/Data}
 
@@ -67,6 +67,15 @@ Figure \ref{ExampleTree} gives an example of how the files in a simple reproduci
 \end{figure}
 \end{landscape}
 
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \caption{An Example RStudio Project Menu}
+    \label{ProjectMenu}
+    \begin{center}
+    \includegraphics[width=0.3\textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter4/images4/ProjectMenu.png}
+    \end{center}
+\end{wrapfigure}
+
+
 In addition to this main folders you will probably notice a file called {\emph{README.md}} The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things such as its title, author(s), topic and so on. It should also indicate how the folders in the project are organized and give instruction for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If it is written using Markdown, it will also be properly formatted.
 
 It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your readme file with R Markdown (see Chapter \ref{LargeDocs}). Simply include the \texttt{sessionInfo()} command in a code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
@@ -79,27 +88,28 @@ toLatex(sessionInfo())
 
 %% Make file discussion?
 
-\section{Setting directories as sRStudio Projects}
+\section{Setting directories as RStudio Projects}
 
-If you are using RStudio, you may want to organize your files as Projects\index{RStudio Projects}. You can declare that a directory should be a Project by clicking on \texttt{Project} in the RStudio menu bar and selecting \texttt{Create Project\ldots}. A new window will pop up. Select the option \texttt{Existing Directory}. Find the directory you want to make an RStudio Project by clicking on the \texttt{Browse} button. Finally, select \texttt{Create Project}. You will also notice in the Create Project pop up window that you can create projects in new directories and also create a project from a directory already under version control (we'll do this in Chapter \ref{Storing}). When you create a new project you will see that a file with the extension \texttt{.Rproj} is created in the directory.
+If you are using RStudio, you may want to organize your files in Projects\index{RStudio Projects}. You can turn a normal directory into an RStudio Project by clicking on \texttt{Project} in the RStudio menu bar and selecting \texttt{Create Project\ldots}. A new window will pop up. Select the option \texttt{Existing Directory}. Find the directory you want to make into an RStudio Project by clicking on the \texttt{Browse} button. Finally, select \texttt{Create Project}. You will also notice in the Create Project pop up window that you can build new project directories and also create a project from a directory already under version control\index{version control} (we'll do this in Chapter \ref{Storing}). When you create a new project you will see that RStudio has put a file with the extension \texttt{.Rproj} into the directory.
 
 Making your research project directories RStudio Projects is useful in a number of ways:
 
 \begin{itemize}
     \item when you open the \textttt{.Rproj} file RStudio automatically sets the working directory to the Project's directory and loads the project workspace, history, and source code files you were last working on.
-    \item you can set project specific options like what whether or not your PDF presentation documents should be compiled with Sweave or {\emph{knitr}}.
+    \item you can set project specific options like whether PDF presentation documents should be compiled with Sweave or {\emph{knitr}}.
     \item when you close the project your R workspace and history are saved in the project directory,
-    \item gives you a way to version control your files.
+    \item helps you version control your files
+    \item the project is listed in RStudio's Project menu where it can be opened easily (see Figure \ref{ProjectMenu}).
 \end{itemize}
 
 %%%%%%%%%%%%%%% File Manipulation
 \section{R file manipulation commands}
 
-R has an a powerful set of commands for handling and navigating through files. Including these commands in our source code files allows us to more easily replicate our actions.
+R has an a range of commands for handling and navigating through files. Including these commands in our source code files allows you to more easily replicate your actions.
 
 \paragraph{{\tt{getwd}}}\index{getwd}
 
-To find out what current working directory R is using type:
+To find out what current working directory R use the \texttt{getwed} command:
 
 <<Ch4Getwd>>=
 getwd()
@@ -109,11 +119,11 @@ getwd()
 
 \paragraph{{\tt{list.files}}}\index{list.files}
 
-Use the \texttt{list.files} command see all of the files and subdirectories in the current working directory. You can list the files in other directories too by adding the directory path as an argument to the command.  
+Use the \texttt{list.files} command to see all of the files and subdirectories in the current working directory. You can list the files in other directories too by adding the directory path as an argument to the command.  
 
 \paragraph{{\tt{setwd}}}\index{setwd}
 
-The {\tt{setwd}} command sets the current working directory\index{working directory}. For example, if we are on a Mac or other Unix-like computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Table \ref{ExampleTree}) like this
+The {\tt{setwd}} command sets the current working directory\index{working directory}. For example, if we are on a Mac or other Unix-like computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Figure \ref{ExampleTree}) like this
 
 <<Ch4SetWorkingDir, eval=FALSE>>=
 setwd("/ExampleProject/Data/GatherSource")
@@ -143,15 +153,23 @@ Finally, you can use the {\tt{unlink}} command to delete a file, files, or direc
 
 \section{Unix-like shell commands for file management} 
 
-Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program to manipulate files in large projects. A command line shell program is simply a program that allows you to type commands to interact with your computer's operating system. We will especially return to shell commands near the end of the book when we discuss make files\index{make file} for compiling large documents, and batch reports\index{batch reports} (Chapter \ref{LargeDocs}). The syntax discussed here is also similar to the used in command line git (Chapter \ref{Storing}) and Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to properly get started with shell programs. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line\cite[]{ShottsJr2012}. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}.
+\todo[inline]{The remainder of this chapter is incomplete.}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \caption{The RStudio Files Pane} %\\[0.25cm]
+    \label{FilesPane}
+        \begin{center}    
+        \includegraphics[width=0.45\textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter4/images4/RStudioFiles.png}
+        \end{center}
+\end{wrapfigure}
+
+Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program\index{Unix-like shell program} to manipulate files in large projects. A command line shell program is simply a program that allows you to type commands to interact with your computer's operating system. We will especially return to shell commands near the end of the book when we discuss make files\index{make file} for compiling large documents, and batch reports\index{batch reports} (Chapter \ref{LargeDocs}). The syntax discussed here is also similar to the used in command line git (Chapter \ref{Storing}) and Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to properly get started with shell programs. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line\cite[]{ShottsJr2012}. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}.
 
 The one piece of general instruction I will give now is to highlight an important difference in the syntax between R and shell commands. In shell commands you don't need to put parentheses around your arguments. For example if we want to change our working directory to my Mac Desktop in a shell using the {\tt{cd}} command we simply type:
 
 <<Ch4ShellIntroExample, eval=FALSE, engine='sh'>>=
 cd /Users/Me/Desktop
 @
-
-\todo[inline]{The remainder of this chapter is incomplete.}
 
 \paragraph{{\tt{cd}}}\index{cd}
 
@@ -161,16 +179,9 @@ As we just saw, to change the working directory in the shell can just use the {\
 
 The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It deletes files or directories.
 
-R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
+As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
 
 \section{File navigation in RStudio}
 
 The RStudio {\bf{Files}} pane allows us to navigate and do some basic file manipulation. Figure \ref{FilesPane} shows us what this pane looks like.
 
-\begin{figure}[t!]
-    \caption{The RStudio Files Pane} %\\[0.25cm]
-    \label{FilesPane}
-        \begin{center}    
-        \includegraphics[scale=0.4]{/git_repositories/Rep-Res-Book/Source/Children/Chapter4/images4/RStudioFiles.png}
-        \end{center}
-\end{figure}

@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 September 2012
+% Updated: 10 October 2012
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,9 +9,19 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Presenting with LaTeX}\label{LatexChapter}
 
+LaTeX is a very powerful markup language, especially for creating PDF documents such as articles, books, and slideshows.
+
+\todo[inline]{Much of this chapter is incomplete.}
+
 \section{The Basics}
 
-All commands in LaTeX start with a \texttt{\textbackslash{}}
+All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, create a section heading we use the \texttt{section} command. The arguments for LaTeX commands are then written inside of curly braces (\texttt{\{\}}) written like this:
+
+<<Ch11Section, eval=FALSE>>=
+\section{My Section Name}
+@
+
+\noindent to write a backslash and have it show up as a (\texttt{\textbackslash{}} in LaTeX
 
 \subsection{Editors}
 
@@ -25,7 +35,7 @@ All LaTeX documents require a header\index{LaTeX header}. The header goes before
 
 The header is followed by the body of your document. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple header and body like this:
 
-<<CH11SweaveBasic, eval=FALSE, tidy=FALSE>>=
+<<CH11SweaveBasic, eval=FALSE, tidy=FALSE, error=FALSE>>=
 \documentclass{article}
 
 \begin{document}

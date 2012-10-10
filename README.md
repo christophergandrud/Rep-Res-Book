@@ -37,7 +37,7 @@ The current version of the book manuscript was compiled with the following sessi
 ## Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
 ## 
 ## locale:
-## [1] C/en_US.UTF-8/C/C/C/C
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
 ## [1] tools     stats     graphics  grDevices utils     datasets  methods  
@@ -45,23 +45,24 @@ The current version of the book manuscript was compiled with the following sessi
 ## 
 ## other attached packages:
 ##  [1] reshape_0.8.4       plyr_1.7.1          MCMCpack_1.2-4     
-##  [4] coda_0.15-2         lattice_0.20-10     Zelig_3.5.5        
-##  [7] boot_1.3-5          MASS_7.3-21         xtable_1.7-0       
-## [10] texreg_1.02         openair_0.7-0       markdown_0.5.2     
-## [13] knitcitations_0.1-0 bibtex_0.3-2        knitr_0.8          
-## [16] ggplot2_0.9.2.1     extrafont_0.11      devtools_0.8       
-## [19] apsrtable_0.8-8    
+##  [4] coda_0.15-2         lattice_0.20-10     foreign_0.8-50     
+##  [7] Zelig_3.5.5         boot_1.3-5          MASS_7.3-22        
+## [10] xtable_1.7-0        texreg_1.06         RCurl_1.95-0.1     
+## [13] bitops_1.0-4.1      openair_0.7-0       markdown_0.5.2     
+## [16] knitcitations_0.1-0 bibtex_0.3-2        knitr_0.8          
+## [19] ggplot2_0.9.2.1     extrafont_0.11      devtools_0.8       
+## [22] apsrtable_0.8-8    
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Matrix_1.0-9       RColorBrewer_1.0-5 RCurl_1.91-1      
-##  [4] Rttf2pt1_1.1       XML_3.9-4          cluster_1.14.2    
-##  [7] codetools_0.2-8    colorspace_1.1-1   dichromat_1.2-4   
-## [10] digest_0.5.2       evaluate_0.4.2     formatR_0.6       
-## [13] grid_2.15.1        gtable_0.1.1       httr_0.1.1        
-## [16] labeling_0.1       memoise_0.1        mgcv_1.7-21       
-## [19] munsell_0.4        nlme_3.1-104       parallel_2.15.1   
-## [22] pkgmaker_0.8       proto_0.3-9.2      reshape2_1.2.1    
-## [25] scales_0.2.2       stringr_0.6.1      whisker_0.3-1
+##  [1] cluster_1.14.2     codetools_0.2-8    colorspace_1.1-1  
+##  [4] dichromat_1.2-4    digest_0.5.2       evaluate_0.4.2    
+##  [7] formatR_0.6        grid_2.15.1        gtable_0.1.1      
+## [10] httr_0.1.1         labeling_0.1       Matrix_1.0-9      
+## [13] memoise_0.1        mgcv_1.7-21        munsell_0.4       
+## [16] nlme_3.1-104       parallel_2.15.1    pkgmaker_0.8      
+## [19] proto_0.3-9.2      RColorBrewer_1.0-5 reshape2_1.2.1    
+## [22] Rttf2pt1_1.1       scales_0.2.2       stringr_0.6.1     
+## [25] whisker_0.3-1      XML_3.95-0.1
 ```
 
 
