@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 10 October 2012
 
-<<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Storing, Collaborating, Accessing Files, Versioning}\label{Storing}
 
@@ -37,10 +36,15 @@ In general, for small to moderately-sized data sets\footnote{I don't cover metho
 
 To save data in a plain-text format with R use the \texttt{write.table} command\index{write.table}. For example, to save a data frame called {\emph{Data}} as a csv file called {\emph{MainData.csv}} in our example {\emph{DataFiles}} directory (see Figure \ref{ExampleTree}):
 
-<<Ch5WriteTable, eval=FALSE, tidy=FALSE>>=
-write.table(Data, "/ExampleProject/Data/DataFiles/MainData.csv",
-                 sep = ",")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{write.table}(Data, \hlstring{"/ExampleProject/Data/DataFiles/MainData.csv"},
+                 sep = \hlstring{","})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent The \texttt{sep = ","} argument specifies that we want to use a comma to separate the values. For csv files you can use a modified version of this command called \texttt{write.csv}\index{write.csv}. This command simply makes it so that you don't have to write \texttt{sep = ","}. 
 
@@ -71,15 +75,23 @@ Either way you find a file's URL address by first right-clicking on the file ico
 To give you a preview of how to download data directly into R from Dropbox, try downloading a data file from my Public folder. The full URL of the data set is: \url{http://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}. I've used the URL shortening service bitly\footnote{See \url{https://bitly.com/}.}
 to make this link fit on the page.
 
-<<Ch5PublicFolderDownload, tidy=FALSE>>=
-# Download data stored in a Dropbox Public folder
-# and save as an object named Data
-Data <- read.table("http://bit.ly/PhjaPM", 
-                    sep = ",", header = TRUE)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Download data stored in a Dropbox Public folder}
+\hlcomment{# and save as an object named Data}
+Data <- \hlfunctioncall{read.table}(\hlstring{"http://bit.ly/PhjaPM"}, 
+                    sep = \hlstring{","}, header = TRUE)
                     
-# Show variables in Data
-names(Data)
-@
+\hlcomment{# Show variables in Data}
+\hlfunctioncall{names}(Data)
+\end{alltt}
+\begin{verbatim}
+## [1] "idn"        "country"    "year"       "reg_4state"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 If the file is not in your \emph{Public} folder you also go to \texttt{Dropbox} after right-clicking on the file. Then choose \texttt{Get Link}. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar. You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. If the file is in your \emph{Public} folder, right-click on it and then select \texttt{Copy Public Link}. When you hover your curser over a file or folder not in the \emph{Public} Folder you will see a chain icon appear on the far right. Clicking on this icon will get you the link.
 
@@ -152,9 +164,14 @@ GitHub's version control system is much more comprehensive than Dropbox's. Howev
 
 You can use the {\tt{git checkout}} command to revert to a previous version of a document, because you accidentally deleted something important or made other changes you don't like. To 'checkout' a particular version of a file type:
 
-<<GitCheckout, error=FALSE, eval=FALSE>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 git checkout COMMITREF FILENAME
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Now the previous version of the file is in your working directory, where you can commit it as usual.
 

@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 5 October 2012
 
-<<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Getting Started with R, RStudio, and knitr}\label{GettingStartedRKnitr}
 
@@ -42,36 +41,72 @@ If you've read a description of R, you will probably have seen it referred to as
 
 Objects can have a number of different data types. Let's make two simple objects. The first has a numeric type object. The other is a character. We can choose almost any name we want for our objects as long as it begins with an alphabetic character and does not contain spaces.\footnote{It is common for people to use either periods (\texttt{.}) or capital letters (referred to as CamelBack) separate words in object names without using spaces. For example: {\emph{new.data}} or {\emph{NewData}} rather than {\emph{new data}}.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the {\bf{assignment operator}}\index{assignment operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow`.}: {\tt{\textless -}}. Let's assign the number 10 to our Number object.
 
-<<Ch3NumericObject>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 Number <- 10
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent To see the contents of our object, just type its name.
 
-<<Ch3NumberSee>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 Number
-@
+\end{alltt}
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Lets's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included in the output here to to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. It makes easier to copy and past code included in a presentation document by {\emph{knitr}}.} You probably did not get the double hash in your R output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
 
 Creating a character object is very similar. The only difference is that you enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains the character string ``Hello World".\label{StringObject}
 
-<<Ch3CharacterObject>>=
-Words <- "Hello World"
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+Words <- \hlstring{"Hello World"}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 
 An object's type is important to keep in mind as it determines what we can do to it. For example you cannot take the mean of a character object like the {\emph{Words}} object we created earlier:
 
-<<Ch3ClassError>>=
-mean(Words)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{mean}(Words)
+\end{alltt}
+
+
+{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: argument is not numeric or logical: returning NA}}\begin{verbatim}
+## [1] NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Trying to find the mean of our {\emph{Words}} object gave us a warning message and returned the value {\tt{NA}}\index{NA}: not applicable. You can also think of {\tt{NA}} as meaning missing. To find out what type of object you have use the {\tt{class}} command. For example:
 
-<<Ch3ClassCommand>>=
-class(Words)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{class}(Words)
+\end{alltt}
+\begin{verbatim}
+## [1] "character"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{Vector \& data frame objects}
 
@@ -81,30 +116,57 @@ So far we have only looked at objects with a single number or character string.\
 
 Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (concatenate)\index{concatenate} function:
 
-<<Ch3NumericVector>>=
-NumericVect <- c(2.8, 2, 14.8)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+NumericVect <- \hlfunctioncall{c}(2.8, 2, 14.8)
 
-# Show NumericVect's contents
+\hlcomment{# Show NumericVect's contents}
 NumericVect
-@
+\end{alltt}
+\begin{verbatim}
+## [1]  2.8  2.0 14.8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 Vectors of character strings are created in a similar way. The only major difference is that each character string is enclosed in quotation marks like this:
 
-<<Ch3CharcterVector>>=
-CharacterVect <- c("Albania", "Botswana", "Cambodia")
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+CharacterVect <- \hlfunctioncall{c}(\hlstring{"Albania"}, \hlstring{"Botswana"}, \hlstring{"Cambodia"})
 
-# Show CharacterVect's contents
+\hlcomment{# Show CharacterVect's contents}
 CharacterVect
-@
+\end{alltt}
+\begin{verbatim}
+## [1] "Albania"  "Botswana" "Cambodia"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 To give you a preview of what we are going to do when we start working with real data sets, lets combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{cbind} function. This function binds the two vectors together side-by-side as columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind} function.}
 
-<<Ch3cbind>>=
-StringNumObject <- cbind(CharacterVect, NumericVect)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 
-# Show StringNumObject's contents
+\hlcomment{# Show StringNumObject's contents}
 StringNumObject
-@
+\end{alltt}
+\begin{verbatim}
+##      CharacterVect NumericVect
+## [1,] "Albania"     "2.8"      
+## [2,] "Botswana"    "2"        
+## [3,] "Cambodia"    "14.8"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent By binding these two objects together we've created a new matrix\index{matrix} object.\footnote{Matrices are vectors with columns as well as rows.} You can see that the numbers in the {\emph{NumericVect}} column are between quotation marks. Matrices, like vectors can only have one data type. \\[0.25cm]
 
@@ -112,18 +174,39 @@ StringNumObject
 
 If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.
 
-<<Ch3dataframe, tidy=FALSE>>=
-StringNumObject <- data.frame(CharacterVect, NumericVect)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+StringNumObject <- \hlfunctioncall{data.frame}(CharacterVect, NumericVect)
 
-# Display contents of StringNumObject data frame
+\hlcomment{# Display contents of StringNumObject data frame}
 StringNumObject
-@
+\end{alltt}
+\begin{verbatim}
+##   CharacterVect NumericVect
+## 1       Albania         2.8
+## 2      Botswana         2.0
+## 3      Cambodia        14.8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent There are two important things to notice in this output. The first is that because we used the same name for the data frame object as the previous matrix object, R deleted the matrix object and replaced it with the data frame. This is something to keep in mind when you are creating new objects. You will also notice that the strings in the {\emph{CharacterVect}} object are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of {\emph{CharacterVect}} by running it through the \texttt{mean}\index{mean} command like this:
 
-<<Ch3CharcterVectorMean>>=
-mean(StringNumObject$ChacterVect)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{mean}(StringNumObject$ChacterVect)
+\end{alltt}
+
+
+{\ttfamily\noindent\textcolor{warningcolor}{\#\# Warning: argument is not numeric or logical: returning NA}}\begin{verbatim}
+## [1] NA
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Component Selection}
 
@@ -131,12 +214,20 @@ The last bit of code will probably be confusing. Why do we have a dollar sign (\
 
 We can of course use the component selector to create new objects with parts of other objects. Imagine that we have the {\emph{StringNumObject}} and want an object with only the information in the numbers column. Let's use the following code:
 
-<<Ch3CompSelect>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 NewNumeric <- StringNumObject$NumericVect
 
-# Display contents of NewNumeric
+\hlcomment{# Display contents of NewNumeric}
 NewNumeric
-@
+\end{alltt}
+\begin{verbatim}
+## [1]  2.8  2.0 14.8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Knowing how to use the component selector will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
 
@@ -148,54 +239,127 @@ Another way to select parts of an object is to use subscripts\index{subscripts}.
 
 To give you an idea of how this works lets use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
 
-<<Ch3HeadSwiss>>=
-head(cars)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{head}(cars)
+\end{alltt}
+\begin{verbatim}
+##   speed dist
+## 1     4    2
+## 2     4   10
+## 3     7    4
+## 4     7   22
+## 5     8   16
+## 6     9   10
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent We can see a data frame with information on various cars speeds ({\emph{speed}}) and stopping distances ({\emph{dist}}). If we want to select only the third through seventh rows we can use the following subscript commands:
 
-<<Ch3FirstSeventhRows>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cars[3:7, ]
-@
+\end{alltt}
+\begin{verbatim}
+##   speed dist
+## 3     7    4
+## 4     7   22
+## 5     8   16
+## 6     9   10
+## 7    10   18
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent The colon (\texttt{:}) creates a sequence of whole numbers from 3 to 7. To select the fourth row of the {\emph{dist}} column we can type:
 
-<<Ch3FourthSecond>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 cars[4, 2]
-@
+\end{alltt}
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent An equivalent way to do this is:
 
-<<Ch3FourthDist>>=
-cars[4, "dist"]
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+cars[4, \hlstring{"dist"}]
+\end{alltt}
+\begin{verbatim}
+## [1] 22
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Finally, we can even include a vector of column names to select:
 
-<<Ch3FourthBoth>>=
-cars[4, c("speed", "dist")]
-@ 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+cars[4, \hlfunctioncall{c}(\hlstring{"speed"}, \hlstring{"dist"})]
+\end{alltt}
+\begin{verbatim}
+##   speed dist
+## 4     7   22
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Functions and commands}
 
 If objects are the nouns of the R language functions then commands\footnote{For the purposes of this book I treat the two as the same.} are the verbs. They do things to objects. Let's use the \texttt{mean} command as an example. This command takes the mean of a numeric vector object. Remember our {\emph{NumericVect}} object from before:
 
-<<ShowNumericVect>>=
-# Show contents of NumericVect
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Show contents of NumericVect}
 NumericVect
-@
+\end{alltt}
+\begin{verbatim}
+## [1]  2.8  2.0 14.8
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent To find the mean of this object simply type:
 
-<<MeanNumericVect>>=
-mean(x = NumericVect)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{mean}(x = NumericVect)
+\end{alltt}
+\begin{verbatim}
+## [1] 6.533
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent We use the assignment operator to place a command's output into an object. For example,
 
-<<MeanNumericVectAssign>>=
-MeanNumericVect <- mean(x = NumericVect)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+MeanNumericVect <- \hlfunctioncall{mean}(x = NumericVect)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Notice that we typed the command's name then enclosed the object name in parentheses immediately afterwards. This is the basic sytax that all commands use, i.e. \texttt{COMMAND(ARGUMENTS)}. If you don't want to explicitly include an argument you still need to type the parentheses after the command. 
 
@@ -205,9 +369,14 @@ Arguments\index{argument} modify what commands do. In our most recent example we
 
 To find all of the arguments that an argument can accept look at the {\bf{Arguments}} section of the command's help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,
 
-<<Ch3HelpMean, eval=FALSE, tidy=FALSE>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 ?mean
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent The help file will also tell you the default values that the arguments are set at. Clearly, you do not need to explicitly set an argument if you want to use it's default value.
 
@@ -215,26 +384,50 @@ You have to be careful with the syntax for your argument's values. Arguments for
 
 Let's see how to use multiple arguments with the \texttt{round} command. This command rounds a vector of numbers. We can use the \texttt{digits} option to specify how many decimal places we want the numbers rounded to. To round the object {\emph{MeanNumericVect} to one decimal place type:
 
-<<Ch3Round>>=
-round(x = MeanNumericVect, digits = 1)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{round}(x = MeanNumericVect, digits = 1)
+\end{alltt}
+\begin{verbatim}
+## [1] 6.5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent You can see that arguments are separated by commas. 
 
 Some arguments do not need to be explicitly labelled. For example we could have written:
 
-<<Ch3ArgeNoLabel>>=
-# Find mean of NumericVect
-mean(NumericVect)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Find mean of NumericVect}
+\hlfunctioncall{mean}(NumericVect)
+\end{alltt}
+\begin{verbatim}
+## [1] 6.533
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent R will do its best to figure out what you want and will only give up when it can't. This will generate an error message. However, to avoid any misunderstandings between yourself and R it can be good practice to label all of your arguments. This will also make your code easier for other people to read, i.e. it will be more reproducible.
 
 Finally, you can stack arguments inside of other arguments. To have R find the mean of NumericVect and round it to one decimal place use:
 
-<<Ch3StackedArgs>>=
-round(mean(NumericVect), digits = 1)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{round}(\hlfunctioncall{mean}(NumericVect), digits = 1)
+\end{alltt}
+\begin{verbatim}
+## [1] 6.5
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Installing new libraries and loading commands}
 
@@ -244,9 +437,14 @@ For the code you need to install all of the package libraries used in this book 
 
 Once you have installed a package you need to load it so that you can use its functions. Use the \texttt{library} command to load a package library. Use the following code to load the {\emph{ggplot2}} library that we use in Chapter \ref{FiguresChapter} to create figures.
 
-<<Ch3Library, warning=FALSE, message=FALSE>>=
-library(ggplot2)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{library}(ggplot2)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Please note for the examples in this book I only specify the library a command is in if the library is not loaded by default when you start an R session. 
 
@@ -317,12 +515,17 @@ When we want to include R code into our markup presentation documents we place t
 
 In R Markdown files we begin a code chunk by writing the head: \texttt{\`\`\`\\ \{r\} }. A code chunk is closed--ended--simply with: \`\`\`\ . For example:
 
-<<FirstMDExample, eval=FALSE>>=
-```{r}
-# Example of a R Markdown code chunk
-StringNumObject <- cbind(CharacterVect, NumericVect)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r\}
+\hlcomment{# Example of a R Markdown code chunk}
+StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 ```
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{R LaTeX}
 
@@ -336,12 +539,17 @@ Traditional Sweave-style code chunks begin with the following head: \texttt{\tex
 
 Sweave-style code chunks may seem fairly baroque. Another option for LaTeX files is the Rtex-style syntax. To begin a code chunk simply type double percent signs followed by \texttt{begin.rcode}, i.e. \texttt{\%\% begin.rcode}. To close the chunk you use double percent signs: \texttt{\%\%}. Each line in the code chunk needs to begin with a single percent sign. For example:
 
-<<RtexExample, eval=FALSE>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 %% begin.rcode
-% # Example of a Rtex-style code chunk
-% StringNumObject <- cbind(CharacterVect, NumericVect)
+% \hlcomment{# Example of a Rtex-style code chunk}
+% StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 %%
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \paragraph{Code chunk labels}
 
@@ -349,11 +557,16 @@ Each chunk has a label. When a code chunk creates a plot or the output is cached
 
 To explicitly assign chunk labels in R Markdown documents place the label name inside of the braces after the \texttt{r}. If we wanted to use the label \texttt{ChunkLabel} we would simply type:
 
-<<MarkdownChunkLabel, eval=FALSE, tidy=FALSE>>=
-```{r ChunkLabel}
-# Example chunk label
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r ChunkLabel\}
+\hlcomment{# Example chunk label}
 ```
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent The same general format applies to the two types of LaTeX chunks. In Sweave-style chunks we would type: \texttt{\textless\textless ChunkLabel\textgreater\textgreater=}. In Rtex-style we use: \texttt{\%\% begin.rcode ChunkLabel}.
 
@@ -365,21 +578,31 @@ There are many times when we want to change how our code chunks are knitted and 
 
 Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \texttt{OPTIONLABEL=VALUE} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false". For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we only want to have {\emph{knitr}} include the code in our document, but not actually run it we use the option \texttt{eval=FALSE}. This option tells {\emph{knitr}} not to evaluate (run) the code chunk.
 
-<<MarkdownChunkOptionExample, eval=FALSE>>=
-```{r ChunkLabel, eval=FALSE}
-# Example of a non-evaluated code chunk
-StringNumObject <- cbind(CharacterVect, NumericVect)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r ChunkLabel, eval=FALSE\}
+\hlcomment{# Example of a non-evaluated code chunk}
+StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 ```
-@ 
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Note that all labels and code chunk options must be on the same line. Options are separated by commas. The syntax for {\emph{knitr}} options is the same regardless of the markup language. Here is the same chunk option in Rtex-style syntax:
 
-<<RtexChunkOptionExample, eval=FALSE>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 %% begin.rcode ChunkLabel, eval=FALSE
-% # Example of a non-evaluated code chunk
-% StringNumObject <- cbind(CharacterVect, NumericVect)
+% \hlcomment{# Example of a non-evaluated code chunk}
+% StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 %%
-@ 
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 Throughout this book we will look at a number of different code chunk options. Many of the chunk options we will use are listed in Table \ref{ChunkOptionsTable} For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
 
 
@@ -409,12 +632,17 @@ To set a global option first create a new code chunk at the beginning of your do
 
 Here is an example of how we can center align all of the figures in a Markdown document created {\emph{knitr}} code chunks. We place the following code at the beginning of the document:
 
-<<Ch3KnitGloabalOpt, eval=FALSE>>=
-```{r GlobalFigOpts, echo=FALSE}
-# Center align all knitr figures
-opts_chunk$set(fig.align='center')
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r GlobalFigOpts, echo=FALSE\}
+\hlcomment{# Center align all knitr figures}
+opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
 ```
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{knitr package options}
 
@@ -422,12 +650,17 @@ opts_chunk$set(fig.align='center')
 
 We set package options in a similar way to global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
 
-<<Ch3KnitPackageOpt, eval=FALSE>>=
-```{r GlobalFigOpts, echo=FALSE}
-# Turn off knitr progress bar
-opts_knit$set(progress=FALSE)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r GlobalFigOpts, echo=FALSE\}
+\hlcomment{# Turn off knitr progress bar}
+opts_knit$\hlfunctioncall{set}(progress=FALSE)
 ```
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Hooks}
 
@@ -459,9 +692,14 @@ Another useful RStudio {\emph{knitr}} integration feature is that RStudio can pr
 
 You may also notice that there are code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To enable this option create a comment line with at least one hash before the comment text and at least four after like this:
 
-<<CommentFold>>=
-#### An RStudio Foldable Comment ####
-@ 
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{#### An RStudio Foldable Comment ####}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent You will be able to fold all of the text after this comment up until the next similarly formatted comment (or the end of the chunk).
 
@@ -493,39 +731,64 @@ By default RStudio is set up to use {\emph{Sweave}}\index{Sweave} for compiling 
 
 As {\emph{knitr}} is a regular R package, you can of course knit documents in regular R (or using the console in RStudio). All of the {\emph{knitr}} in your markup document is the same as before. But instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command. To knit our example Markdown file {\emph{Example.Rmd}} we first set the working directory (see Chapter \ref{DirectoriesChapter}) to the the folder where your {\emph{Example.Rmd}} file is located with the {\tt{setwd}} command. In this example I have it on my desktop.\footnote{Using the directory name {\tt{$\sim$/Desktop/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
-<<Ch3RawKnitSetwd, eval=FALSE, tidy=FALSE>>=
-setwd("~/Desktop/")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{setwd}(\hlstring{"~/Desktop/"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent Then I knit my file:
 
-<<Ch3RawKnit, eval=FALSE, tidy=FALSE>>=
-knit(input = "Example.Rmd", output = "Example.md")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{knit}(input = \hlstring{"Example.Rmd"}, output = \hlstring{"Example.md"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent You use the same steps for all other knitable document types. Note that if you do not specify the output file {\emph{knitr}} will determine what the file name and extension should be. In this example it would come up with the same name and location as I gave it.
 
 If you try this example, you find that the {\emph{knit}} command only created a Markdown file and not an HTML file like clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}} command from the {\emph{markdown}} package, i.e.
 
-<<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>= 
-mardownToHTML(file = "Example.md", output = "Example.html")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{mardownToHTML}(file = \hlstring{"Example.md"}, output = \hlstring{"Example.html"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}. You use it like this:
 
-<<Ch3RMDtoHTML, eval=FALSE, tidy=FALSE>>= 
-knit2html(file = "Example.Rmd", output = "Example.html")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{knit2html}(file = \hlstring{"Example.Rmd"}, output = \hlstring{"Example.html"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both LaTeX and \BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using \BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
 
-<<CH3tex2pdf, eval=TRUE, error=FALSE, tidy=FALSE>>=
-# Load tools package
-library(tools)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load tools package}
+\hlfunctioncall{library}(tools)
 
-# Compile pdf
-texi2pdf(file = "Example.tex")
-@
+\hlcomment{# Compile pdf}
+\hlfunctioncall{texi2pdf}(file = \hlstring{"Example.tex"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 Just like with \texttt{knit2html}, you can speed up this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
 
