@@ -1,0 +1,194 @@
+% Chapter Chapter 9 For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: 16/07/2012 05:45:03 pm CEST
+% Updated: 7 October 2012
+
+
+
+
+\chapter{Showing Results with Tables}\label{TablesChapter}
+
+Graphs and other visual methods, discussed in the next chapter, can often be a more effective way to present results than tables.\footnote{This is especially true of the small-print, high-density coefficient estimate tables that are sometimes descriptively called `train schedule' tables.} Nonetheless, tables of results, descriptive statistics, and so on can sometimes be an important part of communicating research findings.
+
+Creating tables by hand can be tedious no matter what program you are
+using to type up your results. Even more tedious is making changes to
+hand-created tables when you make changes to your data and models.
+Creating these tables can actually introduce new
+errors--post-analysis!--if you incorrectly copy what is in your
+R output. This is a very real possibility. The mind can go numb
+doing that sort of work. Also, creating tables by hand is not very
+reproducible.
+
+Fortunately, we don't actually need to create tables by hand. There are
+many ways to have R do the work for us. The goal of this
+chapter is to learn how to how to \textbf{automate table creation} for
+documents produced with both LaTeX and Markdown/HTML. There are a
+number of ways to turn R objects into tables written in
+LaTeX or HTML markup. In this chapter I mostly focus on the
+\texttt{xtable} and \texttt{texreg} packages. \texttt{xtable} can
+created tables for both of these markup languages. \texttt{texreg} only
+produces output for LaTeX. \texttt{knitr} allows us to incorporate
+these tables directly into our documents.
+
+\textbf{Warning:} Automating table creation removes the possibility of
+adding errors to our analyses by incorrectly copying R output,
+which is a big potential problem in hand-created tables. Be warned, it
+is not an error free process. We could easily create inaccurate tables
+through coding errors. For example, we may incorrectly merge together
+columns in so that our id variables no longer match the data they are
+supposed to.
+
+So, as always, it is important to `eyeball' the output. Does it make
+sense? If we picked a couple values in the R output do the
+match what is in our final table? If not, we need to go back to the code
+and see where things have gone wrong. With that caveat, lets start
+making tables.
+
+\section{Table Basics}
+
+Before getting into the details of how to create tables from R objects we need to first learn how generic tables are created in LaTeX and Markdown/HTML.
+
+\subsection{Tables in LaTeX}
+
+\subsection{Tables in Markdown/HTML}
+
+We can use {\emph{xtable}} and the \texttt{print} command to also create tables for Markdown and HTML documents. Instead of setting the \texttt{type} argument to \texttt{`latex`} we simply put it to \texttt{'html'}.
+
+\section{Creating tables from R objects}
+
+\subsection{\texttt{xtable} \& \texttt{texreg} basics with supported
+class objects}
+
+\subsubsection{\texttt{xtable} for LaTeX}
+
+\subsubsection{\texttt{xtable} for Markdown}
+
+\subsection{\texttt{xtable} with non-supported class objects}
+
+{\tt{xtable}} and other commands in similar packages are very convenient for making tables from objects in supported classes.\footnote{To see a full list of classes that {\tt{xtable}} supports type {\tt{methods(xtable)}} into the R console.} With supported class objects {\tt{xtable}} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that it needs to create the table. With unsupported classes, however, it doesn't know where to look for these things. We need to help it out. 
+
+{\tt{xtable}} does have a way of dealing with {\tt{matrix}} and {\tt{data frame}} class objects. The rows of these objects become the rows of the table and the columns become the table columns. So, to create tables with non-supported class objects we need to
+
+\begin{enumerate}
+    \item find and extract the information from the unsupported class object that we want in the table, 
+    \item convert this information into a matrix or data frame where the rows and columns of the object correspond to the rows and columns of the table that we want,
+    \item use {\tt{xtable}} with this object to create the table.
+\end{enumerate}
+
+Imagine that we want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite{Goodrich2007} and data from the {\emph{swiss}} data frame that comes with R
+
+\todo[inline]{Note, I am having trouble with this code using Zelig version 4 and am currently working with the packaged developers to sort the issue out. The code does work with Zelig version 3.5.5.}
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load required library}
+\hlfunctioncall{library}(Zelig)
+
+NBModel <- \hlfunctioncall{zelig}(Examination ~ Education, model = \hlstring{"normal.bayes"}, 
+                    data = swiss, cite = FALSE)
+
+\hlcomment{# Find NBModel's class}
+\hlfunctioncall{class}(NBModel)
+\end{alltt}
+\begin{verbatim}
+## [1] "MCMCZelig"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+Using the {\tt{class}} command we found that the model output object is an {\tt{MCMCZelig}} class object. This class is not supported by {\tt{xtable}}. If we try to create a summary table called {\emph{NBTable}} of the results we will get the following error:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+
+
+{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: no applicable method for 'xtable' applied to an object of class "MCMCZelig"}}\end{kframe}
+\end{knitrout}
+
+
+With unsupported class objects we have to create the summary ourselves and extract the things that we want from it manually. This is where a good knowledge of vectors comes in handy. 
+
+First, let's create a summary of our output object {\emph{NBModel}}:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+NBModelSum <- \hlfunctioncall{summary}(NBModel)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+We created a new object of the class {\tt{summary.MCMCZelig}}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in our results table like the formula that we used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). This matrix is where the things we want in our table are located. I find it easier to work with data frames, so we'll also convert the matrix into a data frame.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+NBSumDataFrame <- \hlfunctioncall{data.frame}(NBModelSum$summary)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+%%
+\noindent Here is what our model results data frame looks like:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+##                Mean      SD   X2.5.    X50.  X97.5.
+## (Intercept) 10.1397 1.31673  7.5579 10.1566 12.7058
+## Education    0.5786 0.09118  0.3963  0.5781  0.7609
+## sigma2      34.9703 7.81260 22.9567 33.8782 53.2172
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Now we have a data frame object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) we can use {\emph{NBSumdata frame}} with {\tt{xtable}} as before to create the following table:
+\vspace{0.5cm}
+
+
+% latex table generated in R 2.15.1 by xtable 1.7-0 package
+% Thu Oct 11 14:47:24 2012
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}{rrrrr}
+  \hline
+ & Mean & 2.5\% & 50\% & 97.5\% \\ 
+  \hline
+(Intercept) & 10.14 & 7.56 & 10.16 & 12.71 \\ 
+  Education & 0.58 & 0.40 & 0.58 & 0.76 \\ 
+  sigma2 & 34.97 & 22.96 & 33.88 & 53.22 \\ 
+   \hline
+\end{tabular}
+\caption{Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression}
+\end{center}
+\end{table}
+
+
+
+
+It may take a bit of hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be used to create graphics.} Hunting for what you want is generally easier by clicking on the object in RStudio's workspace pane.
+
+\subsection{Basic \texttt{knitr} syntax for tables}
+
+So far we have only looked at how to create LaTeX and HTML tables from R objects. How can we knit these tables into our presentation documents?
+
+The most important \texttt{knitr} chunk option for showing the markup created by these packages as tables is \texttt{results}\index{results, knitr option}. The \texttt{results} option can have one of three values:
+
+\begin{itemize}
+\item
+  \texttt{'markup'},
+\item
+  \texttt{'asis'},
+\item
+  \texttt{'hide'}.
+\end{itemize}
+
+\texttt{hide} clearly hides the results of whatever we have in our code chunk; no results show up. To include tables we create from R objects in our LaTeX or Markdown output we should set \texttt{results='asis'} or \texttt{results='markup'}. \texttt{asis} simple includes the writes the raw output in the presentation document. \texttt{markup} uses an output hook\index{hook} to mark up the results. NEED TO EXPLAIN 
+
+\section{Tables with \texttt{apsrtable}}
+
+

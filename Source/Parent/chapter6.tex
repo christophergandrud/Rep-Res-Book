@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 10 October 2012
 
-<<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Gathering Data with R}\label{DataGather}
 
@@ -24,29 +23,34 @@ It's a good idea to have the make file and source code files use as input, but n
 
 In data gathering and make files you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems.
 
-<<Ch5ExampleMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
-################
-# Example Make file
-# Christopher Gandrud
-# Updated 10 October 2012
-################
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{################}
+\hlcomment{# Example Make file}
+\hlcomment{# Christopher Gandrud}
+\hlcomment{# Updated 10 October 2012}
+\hlcomment{################}
 
-# Set working directory
-setwd("/ExampleProject/Data/")
+\hlcomment{# Set working directory}
+\hlfunctioncall{setwd}(\hlstring{"/ExampleProject/Data/"})
 
-# Gather and clean up raw data files.
-source("/GatherSource/IndvDataGather/Gather1.R")
+\hlcomment{# Gather and clean up raw data files.}
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather1.R"})
 
-source("/GatherSource/IndvDataGather/Gather2.R")
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather2.R"})
 
-source("/GatherSource/IndvDataGather/Gather3.R")
+\hlfunctioncall{source}(\hlstring{"/GatherSource/IndvDataGather/Gather3.R"})
     
-# Merge cleaned data files into object CleanedData
-source("GatherSource/MergeData.R")
+\hlcomment{# Merge cleaned data files into object CleanedData}
+\hlfunctioncall{source}(\hlstring{"GatherSource/MergeData.R"})
 
-# Save cleaned & merged Data as MainData.csv
-write.csv(CleandedData, file = "/DataFiles/MainData.csv")
-@
+\hlcomment{# Save cleaned & merged Data as MainData.csv}
+\hlfunctioncall{write.csv}(CleandedData, file = \hlstring{"/DataFiles/MainData.csv"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 In this code, first we set the working directory. Then the make file ran three source code files to gather data from three different sources. These files gathered the data, cleaned it so that it could merged together. Next the make file ran a source code file that merged the data frames. Finally, it saved the output data frame {\emph{CleanData}} as a \texttt{.csv} formated file called {\emph{MainData.csv}} using the {\tt{write.csv}}\index{write.csv} command. In our example project, this would be the main file we use for statistical analysis. 
 
@@ -62,19 +66,29 @@ As we have seen, plain-text file based data stored on your computer can be loade
 
 If the data is not stored in plain-text format, but is instead saved by another statistical program such as SPSS, SAS, or Stata, we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
-<<Ch6Stata, error=FALSE>>=
-# Load library
-library(foreign)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load library}
+\hlfunctioncall{library}(foreign)
 
-# Load Stata formatted data
-Data <- read.dta(file = "Data1.dta")
-@
+\hlcomment{# Load Stata formatted data}
+Data <- \hlfunctioncall{read.dta}(file = \hlstring{"Data1.dta"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 As you can see, commands in the \emph{foreign} library have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports use the following command
 
-<<Ch6ForeignHelp, eval=FALSE>>=
-library(help="foreign")
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{library}(help = \hlstring{"foreign"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 If you have data stored in a spreadsheet format such as Excel's \texttt{.xlsx}, it may be best to first clean up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information--notes, colors, and so on--that will not be part of the data frame.
 
@@ -101,10 +115,15 @@ We have discussed the first issue in detail. You can determine if the data file 
 
 To import the data simply include the URL as the file name in your \texttt{read.table} command. We saw earlier how to download a CSV data file from a Dropbox \emph{Public} folder with the shortened URL \texttt{http://bit.ly/PhjaPM}:
 
-<<Ch6httpLoad, eval=FALSE, tidy=FALSE>>=
-Data <- read.table("http://bit.ly/PhjaPM", 
-                    sep = ",", header = TRUE)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+Data <- \hlfunctioncall{read.table}(\hlstring{"http://bit.ly/PhjaPM"}, 
+                    sep = \hlstring{","}, header = TRUE)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Data from secure ({\tt{https}}) URLs}
 
@@ -113,27 +132,32 @@ We have to take a few extra steps to download data from a secure URL. You can te
 Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository. The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.} Imagine that we put the address as a character string into an object called {\emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.}
 To download it into R we could use this code:
 
-<<Ch6UrlObject, echo=FALSE>>=
-# Put URL address into the object UrlAddress
-UrlAddress <- paste("https://raw.github.com/christophergandrud/",
-                "Disproportionality_Data/master/",
-                "Disproportionality.csv", sep = "")
-@
 
-<<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE>>=
-# Load package
-library(RCurl)
 
-# Pull data from the internet
-Data <- getURL(UrlAddress)
 
-# Convert Data into a data frame
-Data <- read.table(textConnection(Data), 
-                    sep = ",", header = TRUE)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load package}
+\hlfunctioncall{library}(RCurl)
+
+\hlcomment{# Pull data from the internet}
+Data <- \hlfunctioncall{getURL}(UrlAddress)
+
+\hlcomment{# Convert Data into a data frame}
+Data <- \hlfunctioncall{read.table}(\hlfunctioncall{textConnection}(Data), 
+                    sep = \hlstring{","}, header = TRUE)
                     
-# Show variables in data
-names(Data)
-@
+\hlcomment{# Show variables in data}
+\hlfunctioncall{names}(Data)
+\end{alltt}
+\begin{verbatim}
+## [1] "country"            "year"              
+## [3] "disproportionality"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Compressed data stored online}
 
@@ -152,26 +176,35 @@ The reason that we have to go through so many extra steps is that compressed fil
 
 Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a compressed file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, that I shortened\footnote{Again, I used bitly (\url{bitly.com}) to shorten the URL.} to \url{http://bit.ly/S0vxk2} because of space constraints.
 
-<<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
-# For simplicity, store the URL in an object called 'url'.
-url <- "http://bit.ly/S0vxk2"
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# For simplicity, store the URL in an object called \hlstring{'url'}.}
+url <- \hlstring{"http://bit.ly/S0vxk2"}
 
-# Create a temporary file called 'temp' to put the zip file into.
-temp <- tempfile()
+\hlcomment{# Create a temporary file called \hlstring{'temp'} to put the zip file into.}
+temp <- \hlfunctioncall{tempfile}()
 
-# Download the compressed file into the temporary file.
-download.file(url, temp)
+\hlcomment{# Download the compressed file into the temporary file.}
+\hlfunctioncall{download.file}(url, temp)
 
-# Decompress the file and convert it into a dataframe
-# class object called 'data'.
-Data <- read.csv(gzfile(temp, "uds_summary.csv"))
+\hlcomment{# Decompress the file and convert it into a dataframe}
+\hlcomment{# class object called \hlstring{'data'}.}
+Data <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
 
-# Delete the temporary file.
-unlink(temp)
+\hlcomment{# Delete the temporary file.}
+\hlfunctioncall{unlink}(temp)
 
-# Show variables in data
-names(Data)
-@ 
+\hlcomment{# Show variables in data}
+\hlfunctioncall{names}(Data)
+\end{alltt}
+\begin{verbatim}
+## [1] "country" "year"    "cowcode" "mean"    "sd"     
+## [6] "median"  "pct025"  "pct975"
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \subsection{Data APIs \& feeds}
 
