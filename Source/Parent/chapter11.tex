@@ -1,20 +1,28 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 10 October 2012
+% Updated: 12 October 2012
 
 
 
 
 \chapter{Presenting with LaTeX}\label{LatexChapter}
 
-LaTeX is a very powerful markup language, especially for creating PDF documents such as articles, books, and slideshows.
+This chapter gives you a quick introduction to basic LaTeX document structures and commands. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex multi-part LaTeX documents. 
 
 \todo[inline]{Much of this chapter is incomplete.}
 
 \section{The Basics}
 
-All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, create a section heading we use the \texttt{section} command. The arguments for LaTeX commands are then written inside of curly braces (\texttt{\{\}}) written like this:
+\subsection{Editors}
+
+As I mentioned earlier, RStudio is an fully functional LaTeX editor as well as an integrated development environment for R. Of course it is oriented towards combining R and LaTeX. If you want to create a new LaTeX document you can click {\tt{File}} \rightarrow {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
+
+Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
+
+\subsection{Basic syntax}
+
+All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, to create a section heading you use the \texttt{section} command. The arguments for LaTeX commands are written inside of curly braces (\texttt{\{\}}) like this:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -24,14 +32,6 @@ All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escap
 \end{kframe}
 \end{knitrout}
 
-
-\noindent to write a backslash and have it show up as a (\texttt{\textbackslash{}} in LaTeX
-
-\subsection{Editors}
-
-As I mentioned earlier, RStudio is an fully functional LaTeX editor as well as an integrated development environment for R. Of course it is oriented towards combining R and LaTeX. If you want to create a new LaTeX document you can click {\tt{File}} \rightarrow {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
-
-Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
 
 \subsection{The header \& the body}
 
@@ -59,16 +59,15 @@ The header is followed by the body of your document. You tell LaTeX where the bo
 
 \subsubsection{Footnotes}
 
-Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \texttt{\textbackslash{}footnote\{} where you would like the footnote number to apear in the text. Then type in the footnote's text and of course remember to close it with a \texttt{\}}. LaTeX does the rest, including formatting and numbering.
+Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \texttt{\textbackslash{}footnote\{} where you would like the footnote number to appear in the text. Then type in footnote's text. Of course remember to close the footnote with a \texttt{\}}. LaTeX does the rest, including formatting and numbering.
 
 \subsubsection{Bibliographies}
 
 \paragraph{Citing R Packages with BibTeX}
 
-Researchers are pretty good about consistently citing others' articles and data. However, citing the R packages used in an analysis is very inconsistent. This is unfortunate not only because correct attribution is not being given but also because it makes reproducibility harder because it obscures important steps that were taken in the
-research process. Fortunately, R actually includes the tools to quickly generate citations, including the version of the package you are using. It can also add them directly to an existing bibliography file.
+Researchers are pretty good about consistently citing others' articles and data. However, citations of R packages used in analyses is very inconsistent. This is unfortunate not only because correct attribution is not being given to those who worked to create the package, but also because it makes reproducibility harder. It obscures important steps that were taken in the research process, primarily which package versions were used. Fortunately, R includes the tools to quickly and dynamically generate citations, including the versions of the packages you are using. It can also add them directly to an existing bibliography file.
 
-You can automatically create citations for R packages using the \texttt{citation} command in \emph{base} R. For example if we want the citation information for the \texttt{Zelig} package we would simply type:
+You can automatically create citations for R packages using the \texttt{citation} command in inside of a code chunk. For example if you want the citation information for the \texttt{xtable} package you would simply type:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -101,7 +100,7 @@ You can automatically create citations for R packages using the \texttt{citation
 \end{knitrout}
 
 
-\noindent This gives us both the plain citation as well as the BibTeX version for use in LaTeX and MultiMarkdown documents. If you only want the BibTeX version of the citation we can use the \texttt{toBibtex} command in the \emph{utils} package.
+\noindent inside of a code chunk. This gives you both the plain citation as well as the BibTeX version for use in LaTeX and MultiMarkdown documents. If you only want the BibTeX version of the citation you can use the \texttt{toBibtex} command in the \emph{utils} package.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -121,7 +120,7 @@ You can automatically create citations for R packages using the \texttt{citation
 \end{knitrout}
 
 
-\noindent You can append the citation to your existing BibTeX file using the \texttt{sink} command in \emph{base} R. This command diverts our output and/or the messages to a file. For example, imagine that our existing BibTeX file is called \texttt{biblio.bib}. To add the \emph{Zelig} package citation:
+\noindent You can append the citation to your existing BibTeX file using the \texttt{sink} command in \emph{base} R. This command diverts output and/or the messages to a file. For example, imagine that your existing BibTeX file is called \texttt{biblio.bib}. To add the \emph{xtable} package citation:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -138,9 +137,9 @@ You can automatically create citations for R packages using the \texttt{citation
 \end{knitrout}
 
 
-\noindent This places the citation at the end of our \texttt{biblio.bib} file. It is very important to include the argument \texttt{append = TRUE}. If you don't you will erase the existing file. The argument \texttt{type = c("output")} tells R to include only the output, not the messages.
+\noindent This places the citation at the end of your \texttt{biblio.bib} file. It is very important to include the argument \texttt{append = TRUE}. If you don't you will erase the existing file and replace it with only the new citation. The argument \texttt{type = c("output")} tells R to include only the output, not the messages.
 
-An even faster way to add citations to a bibliography is with \texttt{write.bibtex} command in the \emph{knitcitations} package. To add the \emph{Zelig} citation to our \texttt{biblio.bib} file we only need to enter:
+A more concise way to add citations to a bibliography is with \texttt{write.bibtex} command in the \emph{knitcitations} package\cite[]{R-knitcitations}. To add the \emph{xtable} citation to our \texttt{biblio.bib} file we only need to enter:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -148,7 +147,7 @@ An even faster way to add citations to a bibliography is with \texttt{write.bibt
 \hlcomment{# Load package}
 \hlfunctioncall{library}(knitcitations)
  
-\hlcomment{# Write Zelig citation and}
+\hlcomment{# Write xtable citation and}
 \hlcomment{# to biblio.bib}
 \hlfunctioncall{write.bibtex}(entry = \hlfunctioncall{c}(\hlstring{"xtable"}), 
               file = \hlstring{"bibliography.bib"}, append = TRUE)
@@ -163,8 +162,9 @@ The {\emph{knitr}} package can also create BibTeX bibliographies for R packages 
 
 \section{Presentations with Beamer}
 
-You can make slideshow presentations with LaTeX. FILL IN WITH INTRO
+You can make slideshow presentations with LaTeX. 
 
+\subsection{knitr LaTeX slideshows}
 {\emph{knitr}} largely the works the same way in in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
 
 \paragraph{Slide frames}
