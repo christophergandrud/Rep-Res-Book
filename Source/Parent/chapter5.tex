@@ -1,16 +1,14 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 10 October 2012
+% Updated: 12 October 2012
 
 
 
 
 \chapter{Storing, Collaborating, Accessing Files, Versioning}\label{Storing}
 
-In addition to being well organized, your research files need to be accessible for other researchers to be able to reproduce it. A useful way to make your files accessible is to store them on a cloud storage service \cite[see][]{Howe2012}. This chapter describes in detail two different `cloud' storage services--Dropbox and GitHub\footnote{These services store your data on remote servers}--that you can use to make your research files easily accessible to others.
-
-Not only do these services enable others to reproduce your research, they also have a number of benefits for your research workflow. Researchers often face a number of data management issues that, beyond making their research difficult to reproduce, can make doing the initial research difficult.
+In addition to being well organized, your research files need to be accessible for other researchers to be able to reproduce it. A useful way to make your files accessible is to store them on a cloud storage service \cite[see][]{Howe2012}. This chapter describes in detail two different `cloud' storage services--Dropbox and GitHub\footnote{These services store your data on remote servers}--that you can use to make your research files easily accessible to others. Not only do these services enable others to reproduce your research, they also have a number of benefits for your research workflow. Researchers often face a number of data management issues that, beyond making their research difficult to reproduce, can make doing the initial research difficult.
 
 First, there is the problem of \textbf{storing} the data so that it is protected against computer failure--virus infections, spilling coffee on your laptop, and so on. Storing data locally--on your computer--or on a flash drive is generally more prone to loss than on remote servers in the cloud.
 
@@ -109,16 +107,33 @@ Dropbox has a simple version control system. Every time you save a document on D
 
 Dropbox adequately meets our four basic criteria for reproducible data storage and is easy to set up. GitHub meets the criteria and more, but is less straightforward at first.
 
-GitHub is an interface and cloud hosting service built on top of the Git\index{git} version control system. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded" computer programs by making it easy for a number of collaborators to work together to build a computer program. This seems very far from reproducible research.
+GitHub is an interface and cloud hosting service built on top of the Git\index{git} version control system. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded" computer programs--in what it Git calls ``repositories"\index{repository}--by making it easy for a number of collaborators to work together to build a computer program. This seems very far from reproducible research.
 
 Remember that as reproducible researchers we are building projects out of interconnected text files. In important ways this is exactly the same as building a computer program. Computer programs are also basically large collections of interconnected text files. Like computer programers, we need ways to store, version control, access, and collaborate on our text files. Because GitHub is very actively used by people with very similar needs (who are also really good programmers), the interface offers many highly developed and robust features for reproducible researchers.
 
-GitHub's added extensive features and heart in the computer programming community means that it takes a longer time than Dropbox to set it up and become familiar with it. So we need good reasons to want to invest the time needed to learn GitHub compared to Dropbox and a similar services. Because of this, you probably need some motivation to want to invest the time in using GitHub for your research. Here is a list of GitHub's advantages over Dropbox for reproducible research that will hopefully convince you to get started:
+GitHub's extensive features and heart in the computer programming community means that it takes a longer time than Dropbox to set it up and become familiar with it. So we need good reasons to want to invest the time needed to learn GitHub compared to Dropbox and a similar services. Because of this, you probably need some motivation to want to invest this time. Here is a list of GitHub's advantages over Dropbox for reproducible research that will hopefully convince you to get started: \\[0.25cm]
+
+\noindent{\bf{Storage and Access}}
+\begin{itemize}
+    \item Dropbox simply creates folders stored in the cloud which you can share with other people. GitHub makes your projects accessible on a fully featured project website (see Figure \ref{BookRepository}). An example feature is that it automatically renders Markdown files called {\emph{README.md}}\footnote{You can use a variety of other markup languages as well. See \url{https://github.com/github/markup}.} in a GitHub directory on the repository's website. This makes it easy for independent researchers to find the file and read it.   
+    \item Public repositories--those viewable by anyone--can be downloaded by anyone in a compressed format.
+    \item GitHub can create and and host a website for your research project that you could use to present the results, not just the replication files.
+\end{itemize} \\[0.25cm]
+
+       
+\noindent{\bf{Collaboration}} \\[0.25cm]
+
+Dropbox allows multiple people to share files and change them. GitHub does this and more:
 
 \begin{itemize}
-\item
-  Git is directly integrated into RStudio Projects.\footnote{RStudio also supports the Subversion version
-  control system, but I don't cover that here.}
+        \item GitHub keeps meticulous records of who contributed what to a project.
+        \item Each GitHub repository has an ``Issues'' area where you can to note issues and discuss them with your collaborators. Basically this is an interactive to-do list for your research project.
+        \item Each repository can also host a wiki\index{wiki} that, for example, could explain in detail how certain aspects of a research project were done.
+        \item Anyone can suggest changes to files in a public repository. These changes can be accepted or declined by the projects authors. The changes are recorded by the Git version control system. This could be especially useful if an independent researcher notices an error. 
+\end{itemize}\\[0.25cm]
+
+\noindent{\bf{Version Control}}    
+\begin{itemize}
 \item
   Dropbox's version control system only lets you the see the file names, the times they were created, who created them, and revert back to specific versions. Git tracks every change you make. The GitHub website and GUI programs for Mac and Windows provide nice interfaces for examining specific changes in text files.
 \item
@@ -126,8 +141,17 @@ GitHub's added extensive features and heart in the computer programming communit
 \item
   Dropbox does not merge conflicting versions of a file together. This can be annoying when you are collaborating on project and more than one author is making changes to documents. GitHub identifies conflicts and lets you reconcile them.
 \item
-  An nice extra feature that the GitHub website has is an ``Issues'' area where you can to note and discuss issues you have while doing your research. Basically this is an interactive to-do list for your research project.
+  Git is directly integrated into RStudio Projects\index{RStudio Projects}.\footnote{RStudio also supports the Subversion version
+  control system, but I don't cover that here.}
 \end{itemize}
+
+\begin{figure}[t]
+    \caption{Part of this Book's GitHub Repository Webpage}
+    \label{BookRepository}
+    \begin{center}
+    \includegraphics[scale=0.5]{/git_repositories/Rep-Res-Book/Source/Children/Chapter5/images5/GitHubReadme.png}
+    \end{center}
+\end{figure}
 
 \subsubsection{Setting up GitHub: Basic}
 

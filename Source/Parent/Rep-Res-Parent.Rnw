@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 21 September 2012
+% Updated: 12 October 2012
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
 % !Rnw weave = knitr
 
 % Load required LaTeX packages
-\documentclass[ChapterTOCs,krantz1]{krantz}
+\documentclass[krantz1]{krantz}
 \usepackage[authoryear]{natbib}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -24,7 +24,7 @@
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{pdflscape}
+\usepackage{lscape}
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage[usenames,dvipsnames]{xcolor}
@@ -33,6 +33,13 @@
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{shapes,arrows}
 \usepackage{wrapfig}
+
+\newcommand{\blankpage}{
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+}
 
 
 % Set margins on highlighted code output boxes
@@ -65,9 +72,17 @@
 % Front matter
 \frontmatter
 
-% Include Author About, Foreward, and Preface child documents
-<<ChildFrontMatter, child=c('/git_repositories/Rep-Res-Book/Source/FrontMatter/Author.tex', '/git_repositories/Rep-Res-Book/Source/FrontMatter/Foreword.Rnw', '/git_repositories/Rep-Res-Book/Source/FrontMatter/Preface.Rnw'), eval=TRUE, message=FALSE>>=
+\blankpage
+\blankpage
+\blankpage
+\blankpage
+
+% Preface
+<<ChildFrontMatterAuthor, child=c('/git_repositories/Rep-Res-Book/Source/FrontMatter/Preface.Rnw'), eval=TRUE, message=FALSE>>=
 @
+
+% Table of Contents
+\tableofcontents
 
 % Convert Stylistic Conventions child documnet from Markdown to LaTex and include
 \chapter*{Stylistic Conventions}\label{StylisticConventions}
@@ -84,7 +99,7 @@ pandoc /git_repositories/Rep-Res-Book/Source/FrontMatter/StylisticConventions.md
 
 \listoffigures
 \listoftables
-\tableofcontents
+
 
 \mainmatter
 

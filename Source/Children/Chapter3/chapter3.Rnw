@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 10 October 2012
+% Updated: 12 October 2012
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -109,7 +109,7 @@ StringNumObject
 
 \noindent By binding these two objects together we've created a new matrix\index{matrix} object.\footnote{Matrices are vectors with columns as well as rows.} You can see that the numbers in the {\emph{NumericVect}} column are between quotation marks. Matrices, like vectors can only have one data type. \\[0.25cm]
 
-\noindent {\bf{Data frames:}} \cite[]{Matloff2011}
+\noindent {\bf{Data frames:}}
 
 If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.
 
@@ -253,7 +253,7 @@ You should generally avoid saving your workspace. Instead, when you return to wo
 rm(CharacterVect, Words)
 @
 
-When you enter a command into R they become part of your history. To see the most recent commands in your history use the \texttt(history) command.
+When you enter a command into R they become part of your history. To see the most recent commands in your history use the \texttt(history) command. You can also use the up and down arrows on your keyboard when your cursor is in the R console to scroll through your history.
 
 \subsection{Installing new libraries and loading commands}
 
@@ -349,7 +349,18 @@ There are two different ways to delimite code chunks in R LaTeX documents. One w
 
 \noindent {\bf{Sweave-style}} \\[0.25cm]
 
-Traditional Sweave-style code chunks begin with the following head: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an at sign (@). \\[0.25cm]
+Traditional Sweave-style code chunks begin with the following head: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an at sign (@).
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textless\textless \textgreater\textgreater=
+\hlcomment{# Example of a Sweave-style code chunk}
+StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
+@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
 \noindent {\bf{Rtex-style}} \\[0.25cm]
 
@@ -399,11 +410,12 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
 % StringNumObject <- cbind(CharacterVect, NumericVect)
 %%
 @ 
-Throughout this book we will look at a number of different code chunk options. Many of the chunk options we will use are listed in Table \ref{ChunkOptionsTable} For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+Throughout this book we will look at a number of different code chunk options. All of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.\todo{Note: this table will be expanded as the later chapters are expanded.} 
 
 
 \begin{table}
   \caption{A Selection of {\emph{knitr}} Code Chunk Options}
+  \begin{center}
   \label{ChunkOptionsTable}
   \begin{tabular}{l c p{5cm}}
     \hline  
@@ -411,6 +423,7 @@ Throughout this book we will look at a number of different code chunk options. M
     \texttt{eval} & Logical & Whether or not to run the chunk. \\
     \texttt{echo} & Logical & Whether or not to include the code in the presentation document. \\
     \texttt{error} & Logical & Whether or not to include errors. \\
+    \texttt{engine} & Character & Set the programming language for {\emph{knitr}} to evaluate the code chunk with \\
     \texttt{warning} & Logical & Whether or not to include warnings. \\
     \texttt{message} & Logical & Whether or not to include message messages. \\
     \texttt{fig.align} & Character & Aligns figures. \\
@@ -418,6 +431,7 @@ Throughout this book we will look at a number of different code chunk options. M
     \texttt{fig.width} & Numeric & Sets figures' width. \\
     \hline
   \end{tabular}
+  \end{center}
 \end{table}
 
 \subsection{Global options}

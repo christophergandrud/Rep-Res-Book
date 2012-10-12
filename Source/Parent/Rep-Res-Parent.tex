@@ -1,14 +1,14 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% Updated: 21 September 2012
+% Updated: 12 October 2012
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
 % !Rnw weave = knitr
 
 % Load required LaTeX packages
-\documentclass[ChapterTOCs,krantz1]{krantz}\usepackage{graphicx, color}
+\documentclass[krantz1]{krantz}\usepackage{graphicx, color}
 %% maxwidth is the original width if it is less than linewidth
 %% otherwise use linewidth (to make sure the graphics do not exceed the margin)
 \makeatletter
@@ -79,7 +79,7 @@
 \usepackage{dcolumn}
 \usepackage{booktabs}
 \usepackage{multirow}
-\usepackage{pdflscape}
+\usepackage{lscape}
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage[usenames,dvipsnames]{xcolor}
@@ -88,6 +88,13 @@
 \usetikzlibrary{decorations.pathmorphing}
 \usetikzlibrary{shapes,arrows}
 \usepackage{wrapfig}
+
+\newcommand{\blankpage}{
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
+}
 
 
 % Set margins on highlighted code output boxes
@@ -118,14 +125,18 @@
 % Front matter
 \frontmatter
 
-% Include Author About, Foreward, and Preface child documents
+\blankpage
+\blankpage
+\blankpage
+\blankpage
 
-\input{Author-out.tex}
-
-\input{Foreword.tex}
+% Preface
 
 \input{Preface.tex}
 
+
+% Table of Contents
+\tableofcontents
 
 % Convert Stylistic Conventions child documnet from Markdown to LaTex and include
 \chapter*{Stylistic Conventions}\label{StylisticConventions}
@@ -142,7 +153,7 @@
 
 \listoffigures
 \listoftables
-\tableofcontents
+
 
 \mainmatter
 

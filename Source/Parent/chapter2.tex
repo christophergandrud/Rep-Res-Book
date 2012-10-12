@@ -82,21 +82,24 @@ Before discussing the other tips its important to learn a key part of documentin
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
-## [1] tools     stats     graphics  grDevices utils    
-## [6] datasets  methods   base     
+## [1] splines   tools     stats     graphics  grDevices
+## [6] utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] reshape_0.8.4       plyr_1.7.1         
-##  [3] MCMCpack_1.2-4      coda_0.15-2        
-##  [5] lattice_0.20-10     foreign_0.8-50     
-##  [7] Zelig_3.5.5         boot_1.3-5         
-##  [9] MASS_7.3-22         xtable_1.7-0       
-## [11] texreg_1.06         RCurl_1.95-0.1     
-## [13] bitops_1.0-4.1      openair_0.7-0      
-## [15] markdown_0.5.2      knitcitations_0.1-0
-## [17] bibtex_0.3-2        knitr_0.8          
-## [19] ggplot2_0.9.2.1     extrafont_0.11     
-## [21] devtools_0.8        apsrtable_0.8-8    
+##  [1] survival_2.36-14    MSBVAR_0.7-2       
+##  [3] mvtnorm_0.9-9992    bit_1.1-8          
+##  [5] KernSmooth_2.23-8   reshape2_1.2.1     
+##  [7] reshape_0.8.4       plyr_1.7.1         
+##  [9] MCMCpack_1.2-4      coda_0.15-2        
+## [11] lattice_0.20-10     foreign_0.8-50     
+## [13] Zelig_3.5.5         boot_1.3-5         
+## [15] MASS_7.3-22         xtable_1.7-0       
+## [17] texreg_1.06         RCurl_1.95-0.1     
+## [19] bitops_1.0-4.1      openair_0.7-0      
+## [21] markdown_0.5.2      knitcitations_0.1-0
+## [23] bibtex_0.3-2        knitr_0.8          
+## [25] ggplot2_0.9.2.1     extrafont_0.11     
+## [27] devtools_0.8        apsrtable_0.8-8    
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] cluster_1.14.2     codetools_0.2-8   
@@ -109,9 +112,9 @@ Before discussing the other tips its important to learn a key part of documentin
 ## [15] munsell_0.4        nlme_3.1-104      
 ## [17] parallel_2.15.1    pkgmaker_0.8      
 ## [19] proto_0.3-9.2      RColorBrewer_1.0-5
-## [21] reshape2_1.2.1     Rttf2pt1_1.1      
-## [23] scales_0.2.2       stringr_0.6.1     
-## [25] whisker_0.3-1      XML_3.95-0.1
+## [21] Rttf2pt1_1.1       scales_0.2.2      
+## [23] stringr_0.6.1      whisker_0.3-1     
+## [25] XML_3.95-0.1
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -209,7 +212,36 @@ If everything is just a text file then research projects can be thought of as in
 
 Tie commands are the most dynamic way to explicitly link your files together.\index{tie commands} These commands instruct the computer program you are using to use information from another file. In Table \ref{TableTieCommands} I have compiled a selection of key tie commands you will learn how to use in this book. We'll discuss many more, but these are some of the most important.
 
-\subsection{Have a plan to organize, store, and make your files available}
+\begin{table}
+    \caption{A Selection of Commands for Tying Together Your Research Files}
+    \label{TableTieCommands}
+    \vspace{0.3cm}
+    {\small{
+    \begin{tabular}{p{2.5cm} c p{6cm} p{2cm}}
+        \hline \vspace{0.15cm}
+        Command/Package & Language & Description & Chapters for Further Information \\[0.3cm]  
+        \hline \hline
+        {\emph{knitr}} & R & R package with commands for tying analysis code into presentation documents including those written in LaTeX and Markdown. & Used throughout See Table \ref{ChunkOptionsTable}. \\[0.25cm]
+        {\tt{read.table}} & R & Reads a table into R. You can use this to import plain-text file formated data into R. & \hfill\ref{DataGather} \\[0.25cm]
+        {\tt{read.csv}} & R & Same as \texttt{read.table} with default arguments set to import \texttt{.csv} formatted data files. & \hfill\ref{DataGather} \\[0.25cm]  
+        API-based packages & R & Various packages use APIs to gather data from the internet. & \hfill\ref{DataGather} \\[0.25cm]
+        {\tt{merge}} & R & Merges together data frames. & \hfill\ref{DataClean} \\[0.25cm]
+        {\tt{source}} & R & Runs an R source code file. & \hfill\ref{StatsModel} \\[0.25cm]
+        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \hfill\ref{StatsModel} \\[0.25cm]
+        {\tt{print(xtable())}} & R & Combining the \texttt{print} \& \texttt{xtable} commands creates LaTeX \& HTML tables from R objects & \hfill\ref{TablesChapter} \\[0.25cm]
+        {\tt{toLaTeX}} & R & Converts R objects to LaTeX & \hfill\ref{GettingStartedRR} \\[0.25cm]
+        {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files & \hfill\ref{LargeDocs} \\[0.25cm]
+        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the \texttt{included}-ed text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
+        {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
+        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]   
+        Pandoc & Shell & A Shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]   
+        \hline 
+    
+    \end{tabular}
+    }}
+\end{table}
+
+\subsection{Have a plan to organize, store, \& make your files available}
 
 Finally, in order for independent researchers to reproduce your research they need to be able access the files that instruct them how to do this. Files also need to be organized so that independent researchers can figure out how they fit together. So from the beginning of your research process you should have a plan for organizing your files and a way to make them accessible. 
 
@@ -219,32 +251,4 @@ Because we have so many ways to link files together there is really no need to l
 
 Chapter \ref{DirectoriesChapter} discusses file organization in much more detail. Chapter \ref{Storing} teaches you a number of ways to make your files accessible through cloud computing services like Dropbox\index{Dropbox} and GitHub\index{GitHub}.
 
-\begin{landscape}
-\begin{table}
-    \caption{A Selection of Commands for Tying Together Your Research Files}
-    \label{TableTieCommands}
-    \vspace{0.3cm}
-    {\small{
-    \begin{tabular}{l c p{6.5cm} p{4.5cm}}
-        \hline \vspace{0.15cm}
-        Command/Package & Language & Description & Chapters for Further Information \\[0.3cm]  
-        \hline \hline
-        {\emph{knitr}} & R & R package with commands for tying analysis code into presentation documents & \hfill Discussed throughout the book. See in particular Table \ref{ChunkOptionsTable}. \\[0.25cm]
-        {\tt{read.table}} & R & Reads a table into R. You can use this to import plain-text file formated data into R. & \hfill\ref{DataGather} \\[0.25cm]
-        {\tt{read.csv}} & R & Same as \texttt{read.table} with default arguments set to import \texttt{.csv} formatted data files. & \hfill\ref{DataGather} \\[0.25cm]  
-        API-based packages & R & Various packages use APIs to gather data from the internet. & \hfill\ref{DataGather} \\[0.25cm]
-        {\tt{merge}} & R & Merges together data frames. & \hfill\ref{DataClean} \\[0.25cm]
-        {\tt{source}} & R & Runs an R source code file & \hfill\ref{StatsModel} \\[0.25cm]
-        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub & \hfill\ref{StatsModel} \\[0.25cm]
-        {\tt{print(xtable())}} & R & Combining the \texttt{print} \& \texttt{xtable} commands creates LaTeX \& HTML tables from R objects & \hfill\ref{TablesChapter} \\[0.25cm]
-        {\tt{toLaTeX}} & R & Converts R objects to LaTeX & \hfill\ref{GettingStartedRR} \\[0.25cm]
-        {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files & \hfill\ref{LargeDocs} \\[0.25cm]
-        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually this it is used for including chapters chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
-        {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
-        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]      
-        \hline 
-    
-    \end{tabular}
-    }}
-\end{table}
-\end{landscape} 
+

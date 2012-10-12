@@ -1,12 +1,13 @@
 %%%%%%%%%%%%%%
 % Reproducible research workflow + link commands
 % Christopher Gandrud
-% Updated 29 September 2012
+% Updated 12 October 2012
 %%%%%%%%%%%%%%
 
 % Define colors for figure
 %% Color palette (GnBU) chosen using ColorBrewer 2.0
 %% See: http://colorbrewer2.org/
+%% Not used in the print version
 \definecolor{Blue}{HTML}{7BCCC4}
 \definecolor{LiteBlue}{HTML}{A8DDB5}
 \definecolor{DarkBlue}{HTML}{08589E}
@@ -16,7 +17,7 @@
 % Set node styles
 %% Workflow stage nodes
 \tikzstyle{Stage} = [draw=Blue, 
-                     fill=Blue, 
+                     %fill=Blue, 
                      rectangle, 
                      text width=7em, 
                      inner sep=0.5cm, 
@@ -24,7 +25,7 @@
 
 % Raw Data nodes
 \tikzstyle{RawData} = [draw=LiteBlue, 
-                       fill=LiteBlue, 
+                       %fill=LiteBlue, 
                        decorate,
                        decoration={random steps,
                                    segment length=2pt,
@@ -52,8 +53,8 @@
     \node (Data3) at (-3, 3) [RawData]{Raw Data}; 
     
     % Workflow stage nodes
-    \node (DataGather) at (0.5, 5) [Stage]{Data Gather};
-    \node (Analysis) at (5.5, 5) [Stage]{Analysis};
+    \node (DataGather) at (0.5, 5) [Stage, text width= 6em]{Data Gather};
+    \node (Analysis) at (5.5, 5) [Stage, text width= 4em]{Analysis};
     \node (Presentation1) at (9, 8) [Stage]{LaTeX Book, \\ Article, \& \\ Slideshow \\ Presentations};
     \node (Presentation2) at (9, 2.5) [Stage]{Markdown/ \\ HTML Website \\ Presentations};
 

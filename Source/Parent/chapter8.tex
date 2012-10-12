@@ -1,44 +1,62 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 11 October 2012
+% Updated: 12 October 2012
 
 
 
 
 \chapter{Statistical Modelling and knitr}\label{StatsModel}
 
-To make your research reproducible, you should directly connect your presentation documents to the source code you used to analyse the data you have collected. We primarily tie our statistical analyses and presentation documents together with {\emph{knitr}}. In Chapter \ref{GettingStartedRKnitr} we learned basic {\emph{knitr}} syntax. In this chapter we will look at {\emph{knitr}} syntax in much more detail, particularly code chunk options. You will also learn how to include code chunks as separate blocks from the text of your LaTeX and Markdown presentation documents. You will also learn to include code chunks in-line with your presentation documents' text.
+When you have your data cleaned and organized you will begin to examine it with statistical analysis. To make your analysis really reproducible you should dynamically connect the source code of your analysis to your presentation documents. You will be able to run your analysis and present the results whenever you compile your presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also keeps your the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analysis.
 
-The goal of this and the next two chapters is to show you how to tie your analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results.
+You can dynamically tie your statistical analyses and presentation documents together with {\emph{knitr}}. In Chapter \ref{GettingStartedRKnitr} we learned basic {\emph{knitr}} syntax. In this chapter you will begin to learn {\emph{knitr}} syntax in much more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as a separate block and inline with the text. You will also learn how to dynamically include code from languages other than R. We will also examine how to use {\emph{knitr}} when we have segmented our analysis source code files. 
+
+The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie your analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results.
 
 Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include {\emph{knitr}} code chunks.
 
-\todo[inline]{Much of this chapter is incomplete.}
-
 \section{Incorporating analyses into the markup}
+
+For a relatively short piece of code that you don't need to run in multiple presentation documents it may be easy to type it directly into code chunks written in your markup document. In this section you will learn how set {\emph{knitr}} options to handle these code chunks.
 
 \subsection{Full code chunks}
 
-\subsubsection{LaTeX}
+By default {\emph{knitr}} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text exactly where they are written in the markup version. Figures are inserted as well. Let's look at the main options for determining how R code is handled by {\emph{knitr}}.
 
-\subsubsection{Markdown}
+\paragraph{{\tt{eval}}}\index{eval}
+
+If you would like to only show your code as a block in the text of your presentation document set the \texttt{eval} option to \texttt{FALSE}
+
+\paragraph{{\tt{cache}}}\index{cache}
+
+If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document set the option \texttt{cache=TRUE}. This will only run the code chunk if the code changes. It is very handy if you have a code chunk that is computationally intensive to run. 
+
+Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects have been cached.
+
+\paragraph{{\tt{echo}}}\index{echo}
+
+The opposite of \texttt{eval=FALSE} is to have the code chunk evaluated--run--but do not include the code in the presentation document. You can do this by setting \texttt{echo=TRUE}. We will use this option extensively in chapters \ref{TablesChapter} and \ref{FiguresChapter} when you learn how to run R source code to produce tables and figures that are included in the text.
+
+\paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{warning}\index{error}\index{message}
+
+If you don't want to include in the text of your presentation documents the warnings, messages, and error messages that R outputs when it runs a a code chunk just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}.
 
 \subsection{Showing code \& results inline}
 
-Sometimes we want to have some R code or output to show up in the text of our documents. We may want to include stylized code in our text when we discuss how we did an analysis. We may want to report the mean of some variable in our text.
+Sometimes we want to have some R code or text output show up inline with the rest of our presentation document text. For example, you may want to include a small chunk of stylized code in our text when we discuss how we did an analysis. Or you may want to dynamically report the mean of some variable in your text so that the text will change if you change the data. The {\emph{knitr}} syntax for including inline code is different for the LaTeX and Markdown languages.
 
 \subsubsection{LaTeX}
 
 \paragraph{Inline static code}
 
-If we just want to include a code snippet in out text we can simply use the LaTeX command  \texttt{\textbackslash{}tt}. This sets our text to `typewriter' font, the standard font for inline code in LaTeX (I use it in this book, as you have probably noticed).
+If you want to include a code snippet inline with your text you can simply use the LaTeX command  \texttt{\textbackslash{}tt}. This sets our text to `typewriter' font, the standard font for inline code in LaTeX (I use it in this book, as you have probably noticed). It is equivalent to the \texttt{eval=FALSE} option for full code chunks. 
 
 \paragraph{Inline dynamic code}
 
-If we want to dynamically show the results of some R code in our text we can use the  \texttt{\textbackslash Sexpr} command. This is a pseudo LaTeX command. Its structure is more like a LaTeX command's structure than \texttt{knitr} in that we enclose our R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for code chunks.
+If you want to dynamically show the results of some R code in our LaTeX produced text we can use the  \texttt{\textbackslash Sexpr} command\index{Sexpr}. This is a pseudo LaTeX command. Its structure is more like a LaTeX command's structure than \texttt{knitr} in that you enclose our R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for block code chunks.
 
-For example, imagine that we wanted to include the mean--591--in the text of our document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. We can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
+For example, imagine that you wanted to include the mean--591--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. You can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -52,7 +70,7 @@ For example, imagine that we wanted to include the mean--591--in the text of our
 \end{knitrout}
 
 
-\noindent To have just the output show up inline with the text of our document we would type something like:
+\noindent To have just the output show up inline with the text of your document you would type something like:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -64,7 +82,7 @@ is \textbackslash{}Sexpr\{\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), 
 \end{knitrout}
 
 
-\noindent This will produce the sentence:
+\noindent This produces the sentence:
 
 \begin{quote}
     The mean length of 141 major rivers in North America is 591 miles. 
@@ -74,7 +92,7 @@ is \textbackslash{}Sexpr\{\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), 
 
 \paragraph{Inline static code}
 
-To include static code inline in an R Markdown (and regular Markdown) document we enclose the code in single backticks (\` \`). For example typing
+To include static code inline in an R Markdown (and regular Markdown) document, enclose the code in single backticks (\` \`). For example:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -91,7 +109,7 @@ This is example R code: `MeanRiver <- \hlfunctioncall{mean}(rivers)`.
 
 \paragraph{Inline dynamic code}
 
-Including dynamic code in the body of your R Markdown text is similar to including static code. The only difference is that we put the letter \texttt{r} after the first single backtick. For example:
+Including dynamic code in the body of your R Markdown text is similar to including static code. The only difference is that you put the letter \texttt{r} after the first single backtick. For example:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -104,31 +122,83 @@ Including dynamic code in the body of your R Markdown text is similar to includi
 
 \noindent will include the mean value of the {\emph{rivers}} vector in the text of your Markdown document.
 
-\subsection{Sourcing R code from another file}
+\subsection{Dynamically including non-R code}
 
-There are a number of reasons that you might want to have your R source code located in a separate file from your markup even if you plan to compile them together with {\emph{knitr}}.
+You are not limited to dynamically including just R code in your presentation documents. {\emph{knitr}} can run code from a variety of other languages including: Python\index{Python}, Ruby, Bash, Haskell, and Awk. All you have to do to dynamically include code from one of these languages is set the \texttt{engine}\index{engine} code chunk option. For example, to dynamically include a simple line of Ruby code in an R Markdown document simply type:
 
-First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy {\emph{knitr}} code collapsing and chunk management options. There are just too many things going on in one document.
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+```{r engine='ruby'}
+print "Reproducible Research"
+ 
+
+Reproducible Research
+```
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+The programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. Please note that currently the range of functions {\emph{knitr}} supports for these languages is less extensive what it supports for R. For example, there is no syntax highlighting.
+
+\section{Dynamically including segmented analysis files}
+
+There are a number of reasons that you might want to have your R source code located in separate files from your markup documents even if you compile them together with {\emph{knitr}}.
+
+\begin{wraptable}{rt}{0.4\textwidth}
+    \caption{Knitr \texttt{engine} Values}
+    \label{EngineOptions}
+    \begin{tabular}{l p{2.25cm}}
+    \hline\vspace{0.15cm}
+    Value & Programming Language \\
+    \hline\hline
+    \texttt{awk} & Awk\index{Awk} \\
+    \texttt{bash} & Bash\index{Bash} \\
+    \texttt{gawk} & Gawk\index{Gawk} \\
+    \texttt{haskell} & Haskell\index{Haskell} \\
+    \texttt{highlight} & Highlight\index{Highlight, knitr engine option} \\ 
+    \texttt{python} & Python\index{Python} \\
+    \texttt{R} & R (default) \\[0.25cm]
+    \texttt{ruby} & Ruby\index{Ruby} \\
+    \texttt{sh} & Bash \\
+    \hline
+    \end{tabular}
+\end{wraptable}
+
+First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy {\emph{knitr}} code folding and chunk management options. There are just too many things going on in one document. 
 
 Second, you may want to use the same code in multiple documents--an article and presentation for example. It is nice to not have to copy and paste the same code into multiple places, but have multiple documents link to the same source code. Plus if you make changes to the source code, these changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
 
-Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled files it is easier for these
-researchers to find the specific bits of code that they are interested compared to digging through long markup files.
+Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled files that are clearly tied together in the markup file with {\emph{knitr}} it is easy for these researchers to find the specific bits of code that they are interested.
 
-\subsubsection{Source from a local file}
+\subsection{Source from a local file}
 
-Usually in the early stages of research you may want to source analysis iles located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as above. The only change is that instead of writing all of our code in the chunk we save it to its own file and use the \texttt{source} command in \emph{base} R to access it. For example:
+Usually in the early stages of research you may want to run code stored in analysis files located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as for block code chunks. The only change is that instead of writing all of our code in the chunk we save it to its own file and use the \texttt{source} command in to access it. For example in an R Markdown file you could run the R code in a file called {\emph{MainAnalysis.R}} from our {\exmph{ExampleProject}} like this:
 
-\subsubsection{Source from a non-secure URL (\texttt{http})}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r, echo=FALSE\}
+\hlcomment{# Run main analysis}
+\hlfunctioncall{source}(\hlstring{"/ExampleProject/Analysis/MainAnalysis.R"}\}
+```
+\end{alltt}
+\end{kframe}
+\end{knitrout}
 
-Sourcing from your local computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to replicate your code, you need to
-use another method.\footnote{You can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a   pain if you are collaborating and each author has to constantly change the directories.}
 
-The simplest solution to these issues is to host the replication code in your Dropbox public folder. You can find the file's public URL the same way we did in Chapter 6. Now use the \texttt{source} command the same way as before. For example:
+Notice that we set the \texttt{echo=FALSE} option. This will run the analysis and produce objects created by the analysis code that can be used by other code chunks, but the the results are not show in the text of our presentation document. Errors, messages, and warnings will be shown, if we do not tell {\emph{knitr}} to hide them.
 
-\subsubsection{Source from a secure URL (\texttt{https})}
+\subsection{Source from a non-secure URL (\texttt{http})}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files the steps are generally the same, but you need to use the \texttt{source\_url} command in the {\emph{devtools}} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatter plot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatter plot using {\tt{source\_url}} we simply type:
+Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to
+use another storage method.%\footnote{You can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a pain if you are collaborating and each author has to constantly change the directories.}
+
+The simplest solution to these issues is to host the replication code in your Dropbox public folder. You can find the file's public URL the same way we did in Chapter \ref{Storing}. Now use the \texttt{source} command the same way as before with the URL as the argument.
+
+\subsection{Source from a secure URL (\texttt{https})}
+
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url} command in the {\emph{devtools}} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} we simply type:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -136,11 +206,8 @@ If you are using GitHub\index{GitHub} or another service that uses secure URLs t
 \hlcomment{# Load library}
 \hlfunctioncall{library}(devtools)
 
-\hlcomment{# Create object to hold URL}
-URL <- \hlstring{"http://bit.ly/Ny1n6b"}
-
 \hlcomment{# Run the source code to create the scatter plot}
-\hlfunctioncall{source_url}(URL)
+\hlfunctioncall{source_url}(\hlstring{"http://bit.ly/Ny1n6b"})
 \end{alltt}
 \end{kframe}
 
@@ -151,14 +218,4 @@ URL <- \hlstring{"http://bit.ly/Ny1n6b"}
 
 \end{knitrout}
 
-
-\section{Saving output objects for future use}
-
-\section{Literate Programming: Including highlighted syntax in the output}
-
-\subsection{LaTeX}
-
-\subsection{Markdown/HTML}
-
-\section{Debugging}
 
