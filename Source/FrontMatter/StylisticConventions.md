@@ -1,6 +1,6 @@
 %% Stylistic Conventions for Reproducible Research with R and RStudio
 
-I use the following conventions throughout this book to format computer code:
+I use the following conventions throughout this book:
 
 - **Abstract Variables**
 
@@ -16,7 +16,7 @@ All code is in `typewriter text`.
 
 - **Filenames and Directories**
 
-Filenames and directories more generally are printed in *italics*. Camelback is used for file and directory names.
+Filenames and directories more generally are printed in *italics*. I use CamelBack for file and directory names.
 
 - **Individual variable values**
 
@@ -24,11 +24,11 @@ Individual variable values mentioned in the text are in **bold**.
 
 - **Objects**
 
-Objects are printed in *italics*. Camelback (e.g. CamelBack) is used for object names.
+Objects are printed in *italics*. I use CamelBack for object names.
 
-- **Columns**
+- **Object Columns**
 
-Columns are printed in *italics*
+Data frame object columns are printed in *italics*
 
 
 - **Packages**
@@ -41,6 +41,6 @@ Open windows are written in **bold** text.
 
 - **Variable Names**
 
-Variable names are printed in *italics*. Camelback is used for individual variable names.
+Variable names are printed in *italics*. I use CamelBack for individual variable names.
 
 
