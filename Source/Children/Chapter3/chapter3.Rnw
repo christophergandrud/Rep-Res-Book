@@ -453,9 +453,9 @@ opts_chunk$set(fig.align='center')
 
 \subsection{knitr package options}
 
-{\emph{Knitr}} package options\index{package options} affect how the {\emph{knitr}} package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk.\footnote{The {\emph{knitr}} progress bar looks like this {\tt{|>>>>>>| 100\%}} and indicates how much of a code chunk has been run.} You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+{\emph{Knitr}} package options\index{package options} affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk.\footnote{The {\emph{knitr}} progress bar looks like this {\tt{|>>>>>>| 100\%}} and indicates how much of a code chunk has been run.} You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
-Set package options in a similar way to global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
+You set package options in a similar way as global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
 
 <<Ch3KnitPackageOpt, eval=FALSE>>=
 ```{r GlobalFigOpts, echo=FALSE}
@@ -466,18 +466,18 @@ opts_knit$set(progress=FALSE)
 
 \subsection{Hooks}
 
-You can also set chunk hooks\index{hooks}. Hooks come in two types: chunk hooks and output hooks. Chunk hooks\index{chunk hooks} run a function before or after a code chunk. Output hooks\index{output hooks} change how the raw output is formatted. I don't cover hooks in much detail in this book. For more information on hooks, please see Yihui Xie's webpage: \url{http://yihui.name/knitr/hooks}.
+You can also set hooks\index{hooks}. Hooks come in two types: chunk hooks and output hooks. Chunk hooks\index{chunk hooks} run a function before or after a code chunk. Output hooks\index{output hooks} change how the raw output is formatted. I don't cover hooks in much detail in this book. For more information on hooks, please see Yihui Xie's webpage: \url{http://yihui.name/knitr/hooks}.
 
 %%%%%%%%%% Knitr & RStudio
 \subsection{knitr \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities changes depending on the type of file you have open in it. RStudio uses the file extension\index{file extension} to automatically determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
+RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
 
 \paragraph{Compiling R source code notebooks}
 
 If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that includes all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}. 
 
-If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon in the Source pane's top bar (see Figure \ref{SourcePanes}.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}). RPubs allows you to share your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.
+If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon in the Source pane's top bar (see Figure \ref{SourcePanes}).\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}). RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.
 
 \begin{figure}
     \caption{RStudio Notebook Example}
@@ -488,11 +488,11 @@ If you want to create a Notebook from an open R source code file simply click th
     \end{center}
 \end{figure}
 
-\paragraph{R Markdown} The second image in figure \ref{SourcePanes} is what the Source pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu. In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu in the bottom left-hand side of the Source pane (not shown). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the Source pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful features in the R Markdown Source pane's top bar include the \texttt{ABC} spell check icon and \texttt{MD} icon, which gives you a Markdown syntax reference file in the Help pane.
+\paragraph{R Markdown} The second image in figure \ref{SourcePanes} is what the Source pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu. In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the Source pane (not shown). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the Source pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful buttons in the R Markdown Source pane's top bar include the \texttt{ABC} spell check icon and \texttt{MD} icon, which gives you a Markdown syntax reference file in the Help pane.
 
 Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code in the Source pane. This makes your source code much easier to read and navigate. RStudio can also fold code chunks. This makes navigating through long documents, with long code chunks, much easier. In the first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If you click this arrow the code chunk will collapse, like in the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
 
-You may also notice that there are code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To enable this option create a comment line with at least one hash before the comment text and at least four after like this:
+You may also notice that there are code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To enable this option create a comment line with at least one hash before the comment text and at least four after it like this:
 
 <<CommentFold>>=
 #### An RStudio Foldable Comment ####
@@ -517,36 +517,36 @@ You may also notice that there are code folding arrows on lines 27 and 34 in the
 
 \paragraph{R LaTeX}
 
-You can see in the final image in Figure \ref{SourcePanes} that many of the Source pane options for R LaTeX files are the same as R Markdown files. The key differences being that there is a \texttt{Compile PDF} icon instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R LaTeX file's directory. There is also a \texttt{Format} icon next instead of \texttt{MD}. This actually inserts LaTeX formatting commands into your document for things such as section headings and bullet lists. These can be very tedious to type out by hand.
+You can see in the final image in Figure \ref{SourcePanes} that many of the Source pane options for R LaTeX files are the same as R Markdown files. The key differences being that there is a \texttt{Compile PDF} icon instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R LaTeX file's directory. There is also a \texttt{Format} icon instead of \texttt{MD}. This actually inserts LaTeX formatting commands into your document for things such as section headings and bullet lists. These commands can be very tedious to type out by hand.
 
 
 \paragraph{Change default .Rnw knitter}
 
-By default RStudio is set up to use {\emph{Sweave}}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of {\emph{Sweave}} when knitting \texttt{.Rnw} files in RStudio you should go to the {\bf{Options}} window\index{RStudio Options window}. Click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. The {\bf{Options}} window can be opened by clicking on \texttt{Tools} in the menu bar then \texttt{Options}.
+By default RStudio is set up to use Sweave\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of Sweave to knit \texttt{.Rnw} files in RStudio you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Options} window\index{RStudio Options window}. Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. 
 
 \subsection{knitr \& R}
 
-As {\emph{knitr}} is a regular R package, you can of course knit documents in regular R (or using the console in RStudio). All of the {\emph{knitr}} in your markup document is the same as before. But instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command. To knit our example Markdown file {\emph{Example.Rmd}} we first set the working directory (see Chapter \ref{DirectoriesChapter}) to the the folder where your {\emph{Example.Rmd}} file is located with the {\tt{setwd}} command. In this example I have it on my desktop.\footnote{Using the directory name {\tt{$\sim$/Desktop/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
+As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command. To knit an example Markdown file {\emph{Example.Rmd}} you first set us the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Desktop/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
 <<Ch3RawKnitSetwd, eval=FALSE, tidy=FALSE>>=
 setwd("~/Desktop/")
 @
 
-\noindent Then I knit my file:
+\noindent Then you knit the file:
 
 <<Ch3RawKnit, eval=FALSE, tidy=FALSE>>=
 knit(input = "Example.Rmd", output = "Example.md")
 @
 
-\noindent You use the same steps for all other knitable document types. Note that if you do not specify the output file {\emph{knitr}} will determine what the file name and extension should be. In this example it would come up with the same name and location as I gave it.
+\noindent You use the same steps for all other knitable document types. Note that if you do not specify the output file, {\emph{knitr}} will determine what the file name and extension should be. In this example it would come up with the same name and location as you gave it.
 
-If you try this example, you find that the {\emph{knit}} command only created a Markdown file and not an HTML file like clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}} command from the {\emph{markdown}} package, i.e.
+In this example, using the {\emph{knit}} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}} command from the {\emph{markdown}} package, i.e.
 
 <<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>= 
 mardownToHTML(file = "Example.md", output = "Example.html")
 @
 
-\noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}. You use it like this:
+\noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines \texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}. You use it like this:
 
 <<Ch3RMDtoHTML, eval=FALSE, tidy=FALSE>>= 
 knit2html(file = "Example.Rmd", output = "Example.html")
@@ -562,6 +562,6 @@ library(tools)
 texi2pdf(file = "Example.tex")
 @
 
-Just like with \texttt{knit2html}, you can speed up this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
+\noindent Just like with \texttt{knit2html}, you can simplify this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
 
 
