@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 12 October 2012
+% Updated: 14 October 2012
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -17,7 +17,7 @@ This chapter gives you a quick introduction to basic LaTeX document structures a
 
 \subsection{Editors}
 
-As I mentioned earlier, RStudio is an fully functional LaTeX editor as well as an integrated development environment for R. Of course it is oriented towards combining R and LaTeX. If you want to create a new LaTeX document you can click {\tt{File}} \rightarrow {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
+As I mentioned earlier, RStudio is a fully functional LaTeX editor as well as an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
 
 Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
 
@@ -31,7 +31,7 @@ All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escap
 
 \subsection{The header \& the body}
 
-All LaTeX documents require a header\index{LaTeX header}. The header goes before the body of the document and specifies what type of presentation document you are creating--an article, a book, a slideshow, and so on. LaTeX refers to these as classes\index{LaTeX class}. You also can specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}. For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the header of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
+All LaTeX documents require a header\index{LaTeX header}. The header goes before the body of the document and specifies what type of presentation document you are creating--an article, a book, a slideshow, and so on. LaTeX refers to these as classes\index{LaTeX class}. You can also specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}. For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the header of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
 
 The header is followed by the body of your document. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple header and body like this:
 
@@ -55,21 +55,21 @@ The header is followed by the body of your document. You tell LaTeX where the bo
 
 \subsubsection{Footnotes}
 
-Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \texttt{\textbackslash{}footnote\{} where you would like the footnote number to appear in the text. Then type in footnote's text. Of course remember to close the footnote with a \texttt{\}}. LaTeX does the rest, including formatting and numbering.
+Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \texttt{\textbackslash{}footnote\{} where you would like the footnote number to appear in the text. Then type in the footnote's text. Of course remember to close the footnote with a \texttt{\}}. LaTeX does the rest, including formatting and numbering.
 
 \subsubsection{Bibliographies}
 
 \paragraph{Citing R Packages with BibTeX}
 
-Researchers are pretty good about consistently citing others' articles and data. However, citations of R packages used in analyses is very inconsistent. This is unfortunate not only because correct attribution is not being given to those who worked to create the package, but also because it makes reproducibility harder. It obscures important steps that were taken in the research process, primarily which package versions were used. Fortunately, R includes the tools to quickly and dynamically generate citations, including the versions of the packages you are using. It can also add them directly to an existing bibliography file.
+Researchers are pretty good about consistently citing others' articles and data. However, citations of R packages used in analyses is very inconsistent. This is unfortunate not only because correct attribution is not being given to those who worked to create the package, but also because it makes reproducibility harder. It obscures important steps that were taken in the research process, primarily which package versions were used. Fortunately, there are R tools for quickly and dynamically generating citations, including the versions of the packages you are using. It can also add them directly to an existing bibliography file.
 
-You can automatically create citations for R packages using the \texttt{citation} command in inside of a code chunk. For example if you want the citation information for the \texttt{xtable} package you would simply type:
+You can automatically create citations for R packages using the \texttt{citation} command inside of a code chunk. For example if you want the citation information for the \texttt{xtable} package you would simply type:
 
 <<Ch11IntroCite>>=
 citation("xtable")
 @
 
-\noindent inside of a code chunk. This gives you both the plain citation as well as the BibTeX version for use in LaTeX and MultiMarkdown documents. If you only want the BibTeX version of the citation you can use the \texttt{toBibtex} command in the \emph{utils} package.
+\noindent This gives you both the plain citation as well as the BibTeX version for use in LaTeX and MultiMarkdown\index{MultiMarkdown} documents. If you only want the BibTeX version of the citation you can use the \texttt{toBibtex} command in the \emph{utils} package.
 
 <<Ch11IntrotoBibtex>>=
 toBibtex(citation("xtable"))
@@ -90,14 +90,13 @@ sink()
 
 \noindent This places the citation at the end of your \texttt{biblio.bib} file. It is very important to include the argument \texttt{append = TRUE}. If you don't you will erase the existing file and replace it with only the new citation. The argument \texttt{type = c("output")} tells R to include only the output, not the messages.
 
-A more concise way to add citations to a bibliography is with \texttt{write.bibtex} command in the \emph{knitcitations} package\cite[]{R-knitcitations}. To add the \emph{xtable} citation to our \texttt{biblio.bib} file we only need to enter:
+A more concise way to add citations to a bibliography is with \texttt{write.bibtex} command in the \emph{knitcitations} package \cite[]{R-knitcitations}. To add the \emph{xtable} citation to our \texttt{biblio.bib} file we only need to enter:
 
 <<Ch11knitCitations, tidy=FALSE, message=FALSE, eval=FALSE>>=
 # Load package
 library(knitcitations)
  
-# Write xtable citation and
-# to biblio.bib
+# Write xtable citation and to biblio.bib
 write.bibtex(entry = c("xtable"), 
               file = "bibliography.bib", append = TRUE)
 @
@@ -111,7 +110,7 @@ The {\emph{knitr}} package can also create BibTeX bibliographies for R packages 
 You can make slideshow presentations with LaTeX. 
 
 \subsection{knitr LaTeX slideshows}
-{\emph{knitr}} largely the works the same way in in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
+{\emph{Knitr}} largely works the same way in in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
 
 \paragraph{Slide frames}
 
@@ -134,4 +133,4 @@ A quick way to create each Beamer slide is to use the \texttt{frame} command:
 
 \paragraph{Results}
 
-By default {\emph{knitr}} hides the results or a code chunk. If you want to show the results in your slideshow simply set the {\tt{results}} option to {\tt{'asis'}}.
+By default {\emph{knitr}} hides code chunk results. If you want to show the results in your slideshow simply set the {\tt{results}} option to {\tt{'asis'}}.
