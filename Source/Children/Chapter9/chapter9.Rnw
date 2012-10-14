@@ -85,7 +85,7 @@ First, create a summary of your output object {\emph{NBModel}}:
 NBModelSum <- summary(NBModel)
 @
 
-\noindent You created a new object of the class {\tt{summary.MCMCZelig}}. You're still not there yet as this object contains not just the covariate names and so on but also information you don't want to include in your results table, like the formula that you used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). This matrix is where the things you want in your table are located. I find it easier to work with data frames, so let's also convert the matrix into a data frame.
+\noindent You created a new object of the class {\tt{summary.MCMCZelig}}. You're still not there yet as this object contains not just the covariate names and so on but also information you don't want to include in your results table, like the formula that you used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). Remember that to see the components of an object you can use the \texttt{names} command. The {\emph{summary}} matrix is where the things you want in your table are located. I find it easier to work with data frames, so let's also convert the matrix into a data frame.
 
 <<Ch9NBSum>>=
 NBSumDataFrame <- data.frame(NBModelSum$summary)
