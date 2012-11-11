@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 October 2012
+% Updated: 11 November 2012
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -41,7 +41,7 @@ If you've read a description of R before, you will probably have seen it referre
 
 \paragraph{Numeric \& string objects}
 
-Objects can have a number of different data types. Let's make two simple objects. The first is a numeric type object. The other is a character object. We can choose almost any name we want for our objects as long as it begins with an alphabetic character and does not contain spaces.\footnote{It is common for people to use either periods (\texttt{.}) or capital letters (referred to as CamelBack) separate words in object names without using spaces. For example: {\emph{new.data}} or {\emph{NewData}} rather than {\emph{new data}}.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the assignment operator\index{assignment operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow`.}: {\tt{\textless -}}. Let's assign the number 10 to our {\emph{Number}} object.
+Objects can have a number of different data types. Let's make two simple objects. The first is a numeric type object. The other is a character object. We can choose almost any name we want for our objects as long as it begins with an alphabetic character and does not contain spaces.\footnote{It is common for people to use either periods (\texttt{.}) or capital letters (referred to as CamelBack) to separate words in object names instead of using spaces. For example: {\emph{new.data}} or {\emph{NewData}} rather than {\emph{new data}}.} Let's call our numeric object {\emph{Number}}. To put something into the object we use the assignment operator\index{assignment operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow'.}: {\tt{\textless -}}. Let's assign the number 10 to our {\emph{Number}} object.
 
 <<Ch3NumericObject>>=
 Number <- 10
@@ -76,7 +76,7 @@ class(Words)
 
 \paragraph{Vector \& data frame objects}
 
-So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame} type objects and are roughly equivalent the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse" \cite[]{Matloff2011}. Knowing how to use vectors\index{vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's book\citeyearpar{Matloff2011} is a really good place to look.} \\[0.25cm]
+So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame} type objects and are roughly equivalent the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse" \cite[]{Matloff2011}. Knowing how to use vectors\index{vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
 
 \noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type" in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists\index{lists}.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
 
@@ -141,7 +141,7 @@ NewNumeric
 
 \noindent Knowing how to use the component selector will be especially useful when we discuss making tables for presentation documents in Chapter \ref{TablesChapter}.
 
-Using the component selector can lead to long repetitive code. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{attach} and \texttt{with}\index{with}. For examples in this book I largely avoid using these commands, instead using the component selector. Though it creates longer code, I find it easier to follow, because it's always clear which object we are selecting a component from.
+Using the component selector can lead to long repetitive code. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{attach} and \texttt{with}\index{with}. For examples in this book I largely avoid using these commands. I generally use the component selector. Though it creates longer code, I find code written with the component selector is easier to follow. It's always clear which object we are selecting a component from. \todo{Add with and attach discussion.}
 
 \subsection{Subscripts}
 
@@ -420,17 +420,18 @@ Throughout this book we will look at a number of different code chunk options. A
   \label{ChunkOptionsTable}
   \begin{tabular}{l c p{5cm}}
     \hline  
-    Chunk Option Label & Type & Description \\ \hline\hline
-    \texttt{eval} & Logical & Whether or not to run the chunk. \\
-    \texttt{echo} & Logical & Whether or not to include the code in the presentation document. \\
-    \texttt{error} & Logical & Whether or not to include errors. \\
-    \texttt{engine} & Character & Set the programming language for {\emph{knitr}} to evaluate the code chunk with. \\
-    \texttt{fig.align} & Character & Aligns figures. \\
-    \texttt{fig.height} & Numeric & Sets figures' height. \\
-    \texttt{fig.width} & Numeric & Sets figures' width. \\
-    \texttt{message} & Logical & Whether or not to include message messages. \\
-    \texttt{results} & Character & Whether and how to include results in the presentation document. \\
-    \texttt{warning} & Logical & Whether or not to include warnings. \\
+    Chunk Option Label & Type & Description \\[0.25cm] \hline\hline
+    \texttt{eval} & Logical & Whether or not to run the chunk. \\[0.25cm]
+    \texttt{echo} & Logical & Whether or not to include the code in the presentation document. \\[0.25cm]
+    \texttt{error} & Logical & Whether or not to include errors. \\[0.25cm]
+    \texttt{engine} & Character & Set the programming language for {\emph{knitr}} to evaluate the code chunk with. \\[0.25cm]
+    \texttt{fig.align} & Character & Aligns figures. \\[0.25cm]
+    \texttt{fig.height} & Numeric & Sets figures' height. \\[0.25cm]
+    \texttt{fig.width} & Numeric & Sets figures' width. \\[0.25cm]
+    \texttt{include} & Logical & Whether to run the chunk, but don't echo the code or include the results. \\[0.25cm]
+    \texttt{message} & Logical & Whether or not to include message messages. \\[0.25cm]
+    \texttt{results} & Character & Whether and how to include results in the presentation document. \\[0.25cm]
+    \texttt{warning} & Logical & Whether or not to include warnings. \\[0.25cm]
     \hline
   \end{tabular}
   \end{center}
@@ -522,14 +523,14 @@ You can see in the final image in Figure \ref{SourcePanes} that many of the Sour
 
 \paragraph{Change default .Rnw knitter}
 
-By default RStudio is set up to use Sweave\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of Sweave to knit \texttt{.Rnw} files in RStudio you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Options} window\index{RStudio Options window}. Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}. 
+By default RStudio is set up to use Sweave\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of Sweave to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Options} window\index{RStudio Options window}. Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow \texttt{Preferences} in the menu bar.} 
 
 \subsection{knitr \& R}
 
-As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command. To knit an example Markdown file {\emph{Example.Rmd}} you first set us the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Desktop/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
+As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command. To knit an example Markdown file {\emph{Example.Rmd}} you first set us the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
 <<Ch3RawKnitSetwd, eval=FALSE, tidy=FALSE>>=
-setwd("~/Desktop/")
+setwd("~/Documents/")
 @
 
 \noindent Then you knit the file:
