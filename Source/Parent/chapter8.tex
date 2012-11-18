@@ -3,9 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 14 October 2012
 
-<<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
-@
+
+
 
 \chapter{Statistical Modelling and knitr}\label{StatsModel}
 
@@ -57,23 +56,36 @@ If you want to include a code snippet inline with your text you can simply use t
 
 If you want to dynamically show the results of some R code in your LaTeX produced text you can use the  \texttt{\textbackslash Sexpr} command\index{Sexpr}. This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from Sweave.} Its structure is more like a LaTeX command's structure than \texttt{knitr}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for block code chunks.
 
-For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. You can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
+For example, imagine that you wanted to include the mean of a vector of river lengths--591--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. You can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
 
-<<Ch8MeanRivers>>=
-round(mean(rivers), digits = 0)
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), digits = 0)
+\end{alltt}
+\begin{verbatim}
+## [1] 591
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent To have just the output show up inline with the text of your document you would type something like:
 
-<<CH8MeanRiversSexpr, eval=FALSE>>=
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
 The mean length of 141 major rivers in North America
-is \Sexpr{round(mean(rivers), digits = 0)} miles. 
-@
+is \textbackslash{}Sexpr\{\hlfunctioncall{round}(\hlfunctioncall{mean}(rivers), digits = 0)\} miles. 
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent This produces the sentence:
 
 \begin{quote}
-    The mean length of 141 major rivers in North America is \Sexpr{round(mean(rivers), digits = 0)} miles. 
+    The mean length of 141 major rivers in North America is 591 miles. 
 \end{quote}
 
 \subsubsection{Markdown}
@@ -82,9 +94,14 @@ is \Sexpr{round(mean(rivers), digits = 0)} miles.
 
 To include static code inline in an R Markdown (and regular Markdown) document, enclose the code in single backticks (\` \`). For example:
 
-<<Ch8MarkdownInline, eval=FALSE, tidy=FALSE>>=
-This is example R code: `MeanRiver <- mean(rivers)`.
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+This is example R code: `MeanRiver <- \hlfunctioncall{mean}(rivers)`.
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent produces:\footnote{The exact look of the text depends on the CSS\index{CSS} style file you are using.}
 
@@ -94,9 +111,14 @@ This is example R code: `MeanRiver <- mean(rivers)`.
 
 Including dynamic code in the body of your R Markdown text is similar to including static code. The only difference is that you put the letter \texttt{r} after the first single backtick. For example:
 
-<<Ch8MarkdownInlineDynamic, eval=FALSE, tidy=FALSE>>=
-`r mean(rivers)`
-@
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+`r \hlfunctioncall{mean}(rivers)`
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 \noindent will include the mean value of the {\emph{rivers}} vector in the text of your Markdown document.
 
@@ -153,12 +175,17 @@ Third, other researchers trying to replicate your work might only be interested 
 
 Usually in the early stages of research you may want to run code stored in analysis files located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk you save it to its own file and use the \texttt{source} command to access it. For example, in an R Markdown file we could run the R code in a file called {\emph{MainAnalysis.R}} from our {\exmph{ExampleProject}} like this:
 
-<<MarkdownLocalSource, eval=FALSE>>=
-```{r, echo=FALSE}
-# Run main analysis
-source("/ExampleProject/Analysis/MainAnalysis.R"}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+```\{r, echo=FALSE\}
+\hlcomment{# Run main analysis}
+\hlfunctioncall{source}(\hlstring{"/ExampleProject/Analysis/MainAnalysis.R"}\}
 ```
-@
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
 
 Notice that we set the \texttt{echo=FALSE} option. This will run the analysis and produce objects created by the analysis code that can be used by other code chunks, but the results are not show in the presentation document's text. Errors, messages, and warnings will be shown, if we do not tell {\emph{knitr}} to hide them.
 
@@ -173,13 +200,24 @@ The simplest solution to these issues is to host the replication code in your Dr
 
 If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url} command in the {\emph{devtools}} package \cite[]{R-devtools}. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} you simply type:
 
-<<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, fig.width=3, fig.height=3>>=
-# Load library
-library(devtools)
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load library}
+\hlfunctioncall{library}(devtools)
 
-# Run the source code to create the scatter plot
-source_url("http://bit.ly/Ny1n6b")
-@
+\hlcomment{# Run the source code to create the scatter plot}
+\hlfunctioncall{source_url}(\hlstring{"http://bit.ly/Ny1n6b"})
+\end{alltt}
+\end{kframe}
+
+{\centering \includegraphics[width=\maxwidth]{figure/Ch8SourceURLExample} 
+
+}
+
+
+\end{knitrout}
+
 
 \noindent You can also use the {\emph{devtools}} command \texttt{source\_gitst}\index{source\_gist} in a similar way to source GitHub Gists\index{Gist, GitHub}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
 
