@@ -1,0 +1,72 @@
+% Chapter Chapter 8 For Reproducible Research in R and RStudio
+% Christopher Gandrud
+% Created: 16/07/2012 05:45:03 pm CEST
+% Updated: 24 November 2012
+
+
+
+
+\chapter{Statistical Modelling and knitr}\label{StatsModel}
+
+When you have your data cleaned and organized you will begin to examine it with statistical analysis. To make your analysis really reproducible you should dynamically connect the source code of your analysis to your data make file and presentation documents. Connecting to the data make file could involve actually including the code to run your make file in the analysis source code with the \texttt{source} command or if this is computationally intensive you may include this code in the comments so that independent researchers can easily rerun it. Clearly you will directly link to the output of the data gathering make file when you load the data it produced for your statistical analysis. When you dynamically connect your source code file to your markup document you will be able to run your analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analysis.
+
+You can dynamically tie your statistical analyses and presentation documents together with {\emph{knitr}}. In Chapter \ref{GettingStartedRKnitr} you learned basic {\emph{knitr}} syntax. In this chapter you will begin to learn {\emph{knitr}} syntax in much more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. You will also learn how to dynamically include code from languages other than R. We will finally examine how to use {\emph{knitr}} when you segment your analysis into a number of modular source code files. 
+
+The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie your analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results.
+
+Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include {\emph{knitr}} code chunks.
+
+\section{Incorporating analyses into the markup}
+
+For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your markup document. In this section you will learn how set {\emph{knitr}} options to handle these code chunks.
+
+\subsection{Full code chunks}
+
+By default {\emph{knitr}} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text exactly where they are written in the markup version. Figures are inserted as well. Let's look at the main options for determining how R code is handled by {\emph{knitr}}.
+
+\paragraph{{\tt{eval}}}\index{eval}
+
+Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code chunks without actually running them.
+
+\paragraph{{\tt{echo}}}\index{echo}
+
+The opposite of \texttt{eval=FALSE} is to have the code chunk evaluated but have the code not included in the presentation document. You can do this by setting \texttt{echo=TRUE}. You will use this option extensively in chapters \ref{TablesChapter} and \ref{FiguresChapter} when you learn how to run R source code to produce tables and figures that are included presentation documents' text.
+
+\paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{warning}\index{error}\index{message}
+
+If you don't want to include in the text of your presentation documents the warnings, messages, and error messages that R outputs when it runs a code chunk just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}.
+
+\paragraph{{\tt{cache}}}\index{cache}
+
+If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the code chunk is run only if the code changes. It is very handy if you have a code chunk that is computationally intensive to run. 
+
+Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached.
+
+\subsection{Showing code \& results inline}
+
+Sometimes you may want to have some R code or text output show up inline with the rest of your presentation document's text. For example, you may want to include a small chunk of stylized code in your text when you discuss how you did an analysis. Or you may want to dynamically report the mean of some variable in your text so that the text will change if you change the data. The {\emph{knitr}} syntax for including inline code is different for the LaTeX and Markdown languages. We'll cover both in turn.
+
+\subsubsection{LaTeX}
+
+\paragraph{Inline static code}
+
+There are a number of ways to to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\textttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that something code (I use it in this book, as you have probably noticed). For example, using \verb|\textttt{2 + 2}| will give you `\texttt{2 + 2}' in your text.
+
+However, the \verb|\textttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
+
+To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\textttt|' in the text. We would type:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

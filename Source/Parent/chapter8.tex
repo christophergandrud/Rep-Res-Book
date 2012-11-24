@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 October 2012
+% Updated: 24 November 2012
 
 
 
@@ -36,6 +36,10 @@ The opposite of \texttt{eval=FALSE} is to have the code chunk evaluated but have
 
 If you don't want to include in the text of your presentation documents the warnings, messages, and error messages that R outputs when it runs a code chunk just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}.
 
+\paragraph{{\tt{include}}
+
+Use \texttt{include=FALSE} if you don't want to include anything in the text of your presentation document, but you still want to evaluate a code chunk.
+
 \paragraph{{\tt{cache}}}\index{cache}
 
 If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the code chunk is run only if the code changes. It is very handy if you have a code chunk that is computationally intensive to run. 
@@ -50,11 +54,26 @@ Sometimes you may want to have some R code or text output show up inline with th
 
 \paragraph{Inline static code}
 
-If you want to include a code snippet inline with your text you can simply use the LaTeX command  \texttt{\textbackslash{}texttt}\index{tt}. This sets your text to `typewriter' font, the standard font for inline code in LaTeX (I use it in this book, as you have probably noticed). It is equivalent to the \texttt{eval=FALSE} option for full code chunks. 
+There are a number of ways to to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\textttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that something code (I use it in this book, as you have probably noticed). For example, using \verb|\textttt{2 + 2}| will give you `\texttt{2 + 2}' in your text.
+
+However, the \verb|\textttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
+
+To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\textttt|' in the text. We would type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\textbackslash{}verb|\textbackslash{}texttt|
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar. All of the text in between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012).}
 
 \paragraph{Inline dynamic code}
 
-If you want to dynamically show the results of some R code in your LaTeX produced text you can use the  \texttt{\textbackslash Sexpr} command\index{Sexpr}. This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from Sweave.} Its structure is more like a LaTeX command's structure than \texttt{knitr}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the usual \texttt{\textless\textless\textgreater\textgreater= . . . @} syntax for block code chunks.
+If you want to dynamically show the results of some R code in your LaTeX produced text you can use the  \texttt{\textbackslash Sexpr} command\index{Sexpr}. This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from Sweave.} Its structure is more like a LaTeX command's structure than {\emph{knitr}}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the usual \verb|<<>>= . . . @| syntax for block code chunks. 
 
 For example, imagine that you wanted to include the mean of a vector of river lengths--591--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. You can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
 

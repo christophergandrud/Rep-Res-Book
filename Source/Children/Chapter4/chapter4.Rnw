@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 October 2012
+% Updated: 24 November 2012
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -18,7 +18,7 @@ Careful file management is crucial for reproducible research. Remember two of th
 
 Apart from the times when you have an email exchange (or even meet in person) with someone interested in reproducing your research, the main information independent researchers have about the procedures you used will be stored across many files: data files, analysis files, and presentation files. If these files are well organized and the links tying them together are clear, replication will be much easier. File management is also important for you as a researcher, because if your files are well organized you will be able to more easily make changes, collaborate with others, and so on. 
 
-Using tools such as R, {\emph{knitr}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program} allow you to control files--creating, deleting, moving them--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths. 
+Using tools such as R, {\emph{knitr}}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program} allow you to control files--creating, deleting, moving them--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths. 
 
 In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to organize them with RStudio Projects\index{RStudio Projects}. Finally, we will cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\bf{Files}} pane. The skills you will learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
 
@@ -175,15 +175,37 @@ The one piece of general instruction I will give now is to highlight an importan
 cd /Users/Me/Desktop
 @
 
+\noindent In this example \texttt{Me} is my user name. 
+
 \paragraph{{\tt{cd}}}\index{cd}
 
 As we just saw, to change the working directory in the shell just use the {\tt{cd}} (change directory) command.
 
+\paragraph{{\tt{mkdir}}}\index{mkdir}
+
+Use \texttt{mkdir} to create a new directory. For example, if I wanted to create a directory in my Linux root directory called {\emph{NewDirectory}} I would type:
+
+<<Ch4mkdir, eval=FALSE, engine='sh'>>=
+mkdir /NewDirectory
+@
+
+\noindent If running this code gives you an error message like this:
+
+<<Ch4mkdirError, eval=FALSE, engine='sh'>>=
+mkdir: /NewDirectory: Permission denied
+@
+
+\noindent you simply need to use the \texttt{sudo}\index{sudo} command to run the command with higher privileges. 
+
+<<Ch4Sudo, eval=FALSE, engine='sh'>>=
+sudo mkdir /NewDirectory
+@
+
+\noindent Running this code will prompt you to enter your administrator password.
+
 \paragraph{{\tt{rm}}}
 
-The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It removes (deletes) files or directories.
-
-As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
+The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It removes (deletes) files or directories. As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
 
 \section{File navigation in RStudio}
 

@@ -182,7 +182,7 @@ echo "# An Example Repository" > README.md
 
 \noindent So far we have only made the new directory and set it as our working directory (see Chapter \ref{DirectoriesChapter}). Then with the \texttt{echo} command we created a new file named {\emph{README.md}} that includes the text ``\# An Example Repository". Note that the code is basically the same in Windows PowerShell, though obviously the directory names are different. Also, you don't have to do these steps in the command line. You could just created the new folders and files the same what that you normally do with your mouse.
 
-Now we can tell git that the we want to treat the directory {\emph{ExamplProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize) command to set up directory as a repository.\footnote{For a comprehensive guide to Git commands see \url{http://git-scm.com/}.} Use Git's \texttt{add} command to add a file to the Git repository. For example, 
+Now we can tell git that the we want to treat the directory {\emph{ExamplProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize) command to set up directory as a repository. Use Git's \texttt{add} command to add a file to the Git repository. For example, 
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -207,68 +207,7 @@ git add .
 
 \noindent Now when we want Git to track changes made to files added to the repository we can use the \texttt{commit} command. In Git language we are ``committing" the changes to the repository.
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-git commit -a -m "First Commit, created README file"
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
 
 
-\nodindent The \texttt{-a} (all) command commits changes to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} command like: \texttt{"First Commit, created README file"} Messages help you remember general details of the individual commit. This is helpful when you want to revert to old versions.
-
-Finally, you can use the \texttt{status} command for details about your repository. Generally it's a good idea to use the \texttt{-s} (short) argument, so that the output is more readable.
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
-git status -s
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
 
 
-\paragraph{Setting up GitHub remote repositories}
-
-\paragraph{Setting up GitHub with RStudio Projects}
-
-Once you have your repository set up on GitHub you can clone it onto your computer and create an RStudio Project\index{RStudio Projects}
-
-\subsubsection{Accessing on GitHub}
-
-\subsubsection{Collaboration with GitHub}
-
-Repositories can have official collaborators. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. 
- 
-
-Anyone with a GitHub account can make changes to files in a public repository on the repository's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a repository collaborator, their edit will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{git pull} in git terminology}. This is a useful way for independent researchers to catch errors and directly address them.
-
-\paragraph{Branches}
-
-\paragraph{Syncing repository}
-
-\subsubsection{Version Control with GitHub}
-
-GitHub's version control system is much more comprehensive than Dropbox's. However, it also has a steeper learning curve.
-
-\paragraph{Reverting to an old version of a file}
-
-You can use the {\tt{git checkout}} command to revert to a previous version of a document, because you accidentally deleted something important or made other changes you don't like. To `checkout' a particular version of a file type:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-git checkout COMMITREF FILENAME
-\end{alltt}
-\end{kframe}
-\end{knitrout}
-
-
-\noindent Now the previous version of the file is in your working directory, where you can commit it as usual.
-
-Let's break down the code.  {\tt{FILENAME}} is the name of the file that you want to change\footnote{If it is in a repository's subdirectory you will need to include this in the file name.} and {\tt{COMMITREF}} is the reference that git gave to the commit you want to revert back to. The reference is easy to find and copy in GitHub. On the file's GitHub page click on the {\tt{History}} button. This will show you all of the commits. By clicking on {\tt{Browse Code}} you can see what the file at that commit looks like. Above this button is another with a series of numbers and letters. This is the commit's SHA (Secure Hash Algorithm)\index{SHA}. For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. 
-
-\paragraph{More Practice with Command Line Git \& GitHub}
-
-If you want more practice setting up GitHub in the command line, GitHub and the website Code School have an interactive tutorial that you might find interesting. You can find it at: \url{http://try.github.com/levels/1/challenges/4}.

@@ -65,7 +65,7 @@ Number
 \end{knitrout}
 
 
-\noindent Lets's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. It makes easier to copy and past code included in a presentation document by {\emph{knitr}}.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
+\noindent Lets's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. It makes easier to copy and past code into R from a presentation document by {\emph{knitr}}.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
 
 Creating a character object is very similar. The only difference is that you enclose the character string (letters in a word for example) inside of quotation marks ({\tt{""}}). To create an object called {\emph{Words}} that contains the character string ``Hello World".\label{StringObject}
 
@@ -440,13 +440,17 @@ All of the objects you create become part of your workspace\index{workspace}. Us
 \hlfunctioncall{ls}()
 \end{alltt}
 \begin{verbatim}
-##  [1] "CharacterVect"   "Data"            "DataUrl"        
-##  [4] "doInstall"       "MeanNumericVect" "NBModel"        
-##  [7] "NBModelSum"      "NBSumDataFrame"  "NBTable"        
-## [10] "NewNumeric"      "Number"          "NumericVect"    
-## [13] "PackagesCited"   "ParentDirectory" "StringNumObject"
-## [16] "temp"            "toInstall"       "url"            
-## [19] "UrlAddress"      "Words"
+##  [1] "CharacterVect"   "Data"           
+##  [3] "DataUrl"         "doInstall"      
+##  [5] "MeanNumericVect" "NBModel"        
+##  [7] "NBModelSum"      "NBSumDataFrame" 
+##  [9] "NBTable"         "NewNumeric"     
+## [11] "Number"          "NumericVect"    
+## [13] "PackagesCited"   "ParentDirectory"
+## [15] "Plot"            "StringNumObject"
+## [17] "temp"            "toInstall"      
+## [19] "url"             "UrlAddress"     
+## [21] "Words"
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -519,12 +523,14 @@ R source code files have the file extension \texttt{.R}. You can create a new so
         \begin{subfigure}
             \caption{R Source Code}
             \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/RSourceBar.png}
-        \end{subfigure}\\[0.5cm]
+        \end{subfigure}
+        \vspace{0.5cm}
         
         \begin{subfigure}
             \caption{R Markdown Files}
             \includegraphics[width = \textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/MarkdownSourceBar.png}
-        \end{subfigure}\\[0.5cm]
+        \end{subfigure}
+        \vspace{0.5cm}
         
         \begin{subfigure}
             \caption{LaTeX Markdown Files}
@@ -670,9 +676,9 @@ Throughout this book we will look at a number of different code chunk options. A
     \texttt{fig.align} & Character & Aligns figures. \\[0.25cm]
     \texttt{fig.height} & Numeric & Sets figures' height. \\[0.25cm]
     \texttt{fig.width} & Numeric & Sets figures' width. \\[0.25cm]
-    \texttt{include} & Logical & Whether to run the chunk, but don't echo the code or include the results. \\[0.25cm]
+    \texttt{include} & Logical & When \texttt{include=FALSE} the chunk is evaluated, but the results are not included in the presentation document. \\[0.25cm]
     \texttt{message} & Logical & Whether or not to include message messages. \\[0.25cm]
-    \texttt{results} & Character & Whether and how to include results in the presentation document. \\[0.25cm]
+    \texttt{results} & Character & How to include results in the presentation document. \\[0.25cm]
     \texttt{warning} & Logical & Whether or not to include warnings. \\[0.25cm]
     \hline
   \end{tabular}

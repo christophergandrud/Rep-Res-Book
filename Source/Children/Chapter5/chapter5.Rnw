@@ -105,8 +105,9 @@ GitHub's extensive features and heart in the computer programming community mean
     \item Dropbox simply creates folders stored in the cloud which you can share with other people. GitHub makes your projects accessible on a fully featured project website (see Figure \ref{BookRepository}). An example feature is that it automatically renders Markdown files called {\emph{README.md}}\footnote{You can use a variety of other markup languages as well. See \url{https://github.com/github/markup}.} in a GitHub directory on the repository's website. This makes it easy for independent researchers to find the file and read it.   
     \item Public repositories--those viewable by anyone--can be downloaded by anyone in a compressed format.
     \item GitHub can create and and host a website for your research project that you could use to present the results, not just the replication files.
-\end{itemize} \\[0.25cm]
+\end{itemize} 
 
+\vspace{0.25cm}
        
 \noindent{\bf{Collaboration}} \\[0.25cm]
 
@@ -117,7 +118,9 @@ Dropbox allows multiple people to share files and change them. GitHub does this 
         \item Each GitHub repository has an ``Issues'' area where you can note issues and discuss them with your collaborators. Basically this is an interactive to-do list for your research project. It also stores the issues so you have a full record.
         \item Each repository can also host a wiki\index{wiki} that, for example, could explain in detail how certain aspects of a research project were done.
         \item Anyone can suggest changes to files in a public repository. These changes can be accepted or declined by the project's authors. The changes are recorded by the Git version control system. This could be especially useful if an independent researcher notices an error. 
-\end{itemize}\\[0.25cm]
+\end{itemize}
+
+\vspace{0.25cm}
 
 \noindent{\bf{Version Control}}    
 \begin{itemize}
@@ -142,16 +145,53 @@ Dropbox allows multiple people to share files and change them. GitHub does this 
 
 \subsubsection{Setting up GitHub: Basic}
 
-There are two ways to set up and use GitHub on your computer. You can use the command line version. It's available for Mac and and Linux and Windows through Git Bash\index{Git Bash}, which is automatically installed when you download it. You can also use the Graphical User Interface GitHub program currently available only for Windows and Mac. The GitHub website has excellent step-by-step instructions for how to install both versions. The first thing to do is go to the GitHub website (\url{https://github.com/}) and sign up for an account. Then you should go to one of the following website for instructions on setting up Git: \url{https://help.github.com/articles/set-up-git}.
+There are two ways to set up and use GitHub on your computer. You can use the command line version of Git. It's available for Mac and Linux (in the Terminal\index{Terminal}) as well as Windows (through Git Bash\index{Git Bash}).\footnote{The interface for Git Bash looks a lot like the Terminal or Windows PowerShell. On Windows computers you need it to run Git.} You can also use the Graphical User Interface GitHub program. Currently it's only available for Windows and Mac. Installing the GUI version of GitHub also installs Git. The GitHub website has excellent step-by-step instructions for how to install both versions. 
 
-
-\todo[inline]{The remainder of this chapter is incomplete.}
+The first thing to do to setup GitHub is go to their website (\url{https://github.com/}) and sign up for an account. Second, you should go to the following website for instructions on setting up Git: \url{https://help.github.com/articles/set-up-git}. The instructions on that website are very comprehensive, so I'll direct you there for the full setup information. 
 
 \subsubsection{Storage on GitHub}
 
-Files are stored on GitHub in repositories\index{Github repository}. Repositories are kind of like folders, it's probably best to think of them as your projects' parent directories.
+\paragraph{Setting up Git repositories locally}
+After you set up your GitHub account you'll need to set up a Git repository\index{Github repository}. Git keeps track of changes made to any file in a repository. GitHub stores repositories remotely. Repositories are kind of like folders, it's probably best to think of them as your projects' parent directories.
 
-To set up a GitHub repository\ldots
+You can setup a Git repository on your computer with the command line.\footnote{Much of the discussion of the command line in this section is inspired by Nick Farina's blog post on Git (see \url{http://nfarina.com/post/9868516270/git-is-simpler}, accessed 24 November 2012).} To set up a repository under the root parent directory for a project called {\emph{ExampleProject}}, initially with one README file called {\emph{README.md}} we would first type into the Terminal for Mac and Linux computers:
+
+<<Ch5CLGitRep, eval=FALSE, engine='sh'>>=
+mkdir /ExampleProject
+cd /ExampleProject
+echo "# An Example Repository" > README.md
+@
+
+\noindent So far we have only made the new directory and set it as our working directory (see Chapter \ref{DirectoriesChapter}). Then with the \texttt{echo} command we created a new file named {\emph{README.md}} that includes the text ``\# An Example Repository". Note that the code is basically the same in Windows PowerShell, though obviously the directory names are different. Also, you don't have to do these steps in the command line. You could just created the new folders and files the same what that you normally do with your mouse.
+
+Now we can tell git that the we want to treat the directory {\emph{ExamplProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize) command to set up directory as a repository.\footnote{For a comprehensive guide to Git commands see \url{http://git-scm.com/}.} Use Git's \texttt{add} command to add a file to the Git repository. For example, 
+
+<<Ch5GitAdd, eval=FALSE, engine='sh'>>=
+git init
+git add README.md
+@  
+
+\noindent You probably noticed that you always need to put \texttt{git} before the command. This tells the command line what program the command is from. If you want to add all of the files in the working directory to Git just type:
+
+<<Ch5GitAddPeriod, eval=FALSE, engine='sh'>>=
+git add .
+@
+
+\noindent Now when we want Git to track changes made to files added to the repository we can use the \texttt{commit} command. In Git language we are ``committing" the changes to the repository.
+
+<<Ch5Commit, eval=FALSE, engine='sh'>>=
+git commit -a -m "First Commit, created README file"
+@
+
+\nodindent The \texttt{-a} (all) command commits changes to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} command like: \texttt{"First Commit, created README file"} Messages help you remember general details of the individual commit. This is helpful when you want to revert to old versions.
+
+Finally, you can use the \texttt{status} command for details about your repository. Generally it's a good idea to use the \texttt{-s} (short) argument, so that the output is more readable.
+
+<<Ch5Status, eval=FALSE, engine='sh'>>=
+git status -s
+@
+
+\paragraph{Setting up GitHub remote repositories}
 
 \paragraph{Setting up GitHub with RStudio Projects}
 
@@ -186,6 +226,6 @@ git checkout COMMITREF FILENAME
 
 Let's break down the code.  {\tt{FILENAME}} is the name of the file that you want to change\footnote{If it is in a repository's subdirectory you will need to include this in the file name.} and {\tt{COMMITREF}} is the reference that git gave to the commit you want to revert back to. The reference is easy to find and copy in GitHub. On the file's GitHub page click on the {\tt{History}} button. This will show you all of the commits. By clicking on {\tt{Browse Code}} you can see what the file at that commit looks like. Above this button is another with a series of numbers and letters. This is the commit's SHA (Secure Hash Algorithm)\index{SHA}. For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. 
 
-\paragraph{More Practice with Command Line GitHub}
+\paragraph{More Practice with Command Line Git \& GitHub}
 
 If you want more practice setting up GitHub in the command line, GitHub and the website Code School have an interactive tutorial that you might find interesting. You can find it at: \url{http://try.github.com/levels/1/challenges/4}.
