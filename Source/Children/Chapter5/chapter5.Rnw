@@ -122,6 +122,14 @@ Dropbox allows multiple people to share files and change them. GitHub does this 
 
 \vspace{0.25cm}
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \caption{A Basic Git Repository with Hidden {\emph{.git}} Folder Revealed}
+    \label{BasicGitRepo}
+        \begin{center}    
+        \includegraphics[width=0.45\textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter5/images5/BasicGitRepository.png}
+        \end{center}
+\end{wrapfigure}
+
 \noindent{\bf{Version Control}}    
 \begin{itemize}
 \item
@@ -135,14 +143,6 @@ Dropbox allows multiple people to share files and change them. GitHub does this 
   control system, but I don't cover that here.}
 \end{itemize}
 
-\begin{figure}[t]
-    \caption{Part of this Book's GitHub Repository Webpage}
-    \label{BookRepository}
-    \begin{center}
-    \includegraphics[scale=0.5]{/git_repositories/Rep-Res-Book/Source/Children/Chapter5/images5/GitHubReadme.png}
-    \end{center}
-\end{figure}
-
 \subsubsection{Setting up GitHub: Basic}
 
 There are two ways to set up and use GitHub on your computer. You can use the command line version of Git. It's available for Mac and Linux (in the Terminal\index{Terminal}) as well as Windows (through Git Bash\index{Git Bash}).\footnote{The interface for Git Bash looks a lot like the Terminal or Windows PowerShell. On Windows computers you need it to run Git.} You can also use the Graphical User Interface GitHub program. Currently it's only available for Windows and Mac. Installing the GUI version of GitHub also installs Git. The GitHub website has excellent step-by-step instructions for how to install both versions. 
@@ -154,44 +154,91 @@ The first thing to do to setup GitHub is go to their website (\url{https://githu
 \paragraph{Setting up Git repositories locally}
 After you set up your GitHub account you'll need to set up a Git repository\index{Github repository}. Git keeps track of changes made to any file in a repository. GitHub stores repositories remotely. Repositories are kind of like folders, it's probably best to think of them as your projects' parent directories.
 
-You can setup a Git repository on your computer with the command line.\footnote{Much of the discussion of the command line in this section is inspired by Nick Farina's blog post on Git (see \url{http://nfarina.com/post/9868516270/git-is-simpler}, accessed 24 November 2012).} To set up a repository under the root parent directory for a project called {\emph{ExampleProject}}, initially with one README file called {\emph{README.md}} we would first type into the Terminal for Mac and Linux computers:
+You can setup a Git repository on your computer with the command line.\footnote{Much of the discussion of the command line in this section is inspired by Nick Farina's blog post on Git (see \url{http://nfarina.com/post/9868516270/git-is-simpler}, accessed 24 November 2012).} I keep my repositories in a folder called {\emph{git\_repositories}}.\footnote{To follow along with this code you will first need to create a folder called {\emph{git\_repositories}} in your root directory.} It has the root folder as its parent. Imagine that we want to set up a repository in this directory for a project called {\emph{ExampleProject}}. Initially it will have one README file called {\emph{README.md}}. To do this we would first type into the Terminal for Mac and Linux computers:
 
 <<Ch5CLGitRep, eval=FALSE, engine='sh'>>=
-mkdir /ExampleProject
-cd /ExampleProject
+# Make new directory 'ExampleProject
+mkdir /git_repositories/ExampleProject
+
+# Change to directory 'ExampleProject'
+cd /git_repositories/ExampleProject
+
+# Create new file README.md
 echo "# An Example Repository" > README.md
 @
 
-\noindent So far we have only made the new directory and set it as our working directory (see Chapter \ref{DirectoriesChapter}). Then with the \texttt{echo} command we created a new file named {\emph{README.md}} that includes the text ``\# An Example Repository". Note that the code is basically the same in Windows PowerShell, though obviously the directory names are different. Also, you don't have to do these steps in the command line. You could just created the new folders and files the same what that you normally do with your mouse.
+\noindent So far we have only made the new directory and set it as our working directory (see Chapter \ref{DirectoriesChapter}). Then with the \texttt{echo} Shell command we created a new file named {\emph{README.md}} that includes the text ``\# An Example Repository". Note that the code is basically the same in Windows PowerShell, though obviously the directory names are different. Also, you don't have to do these steps in the command line. You could just created the new folders and files the same what that you normally do with your mouse.
 
-Now we can tell git that the we want to treat the directory {\emph{ExamplProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize) command to set up directory as a repository.\footnote{For a comprehensive guide to Git commands see \url{http://git-scm.com/}.} Use Git's \texttt{add} command to add a file to the Git repository. For example, 
+Now we can tell git that the we want to treat the directory {\emph{ExamplProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize) command to set up directory as a repository. See Table \ref{GitCommandsTable} for the list of Git commands covered in this chapter.\footnote{For a comprehensive guide to Git commands see \url{http://git-scm.com/}.} Use Git's \texttt{add} command to add a file to the Git repository. For example, 
 
 <<Ch5GitAdd, eval=FALSE, engine='sh'>>=
+# Initialize the Git repository
 git init
+
+# Add README to the repository
 git add README.md
 @  
 
-\noindent You probably noticed that you always need to put \texttt{git} before the command. This tells the command line what program the command is from. If you want to add all of the files in the working directory to Git just type:
+\noindent You probably noticed that you always need to put \texttt{git} before the command. This tells the command line what program the command is from. When you initialize a folder as a Git repository a hidden folder called {\emph{.git}} is added to the directory (see Figure \ref{BasicGitRepo}). This is where all of your changes are kept. If you want to add all of the files in the working directory to the Git repository type:
 
 <<Ch5GitAddPeriod, eval=FALSE, engine='sh'>>=
+# Add all files to the repository
 git add .
 @
 
-\noindent Now when we want Git to track changes made to files added to the repository we can use the \texttt{commit} command. In Git language we are ``committing" the changes to the repository.
+\noindent Now when we want Git to track changes made to files added to the repository we can use the \texttt{commit}\index{git commit} command. In Git language we are ``committing" the changes to the repository.
 
 <<Ch5Commit, eval=FALSE, engine='sh'>>=
+# Commit changes
 git commit -a -m "First Commit, created README file"
 @
 
 \nodindent The \texttt{-a} (all) command commits changes to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} command like: \texttt{"First Commit, created README file"} Messages help you remember general details of the individual commit. This is helpful when you want to revert to old versions.
 
-Finally, you can use the \texttt{status} command for details about your repository. Generally it's a good idea to use the \texttt{-s} (short) argument, so that the output is more readable.
+\noindent \textbf{Remember:} Git only tracks changes when you commit them. 
+
+Finally, you can use the \texttt{status} command for details about your repository, including un committed changes. Generally it's a good idea to use the \texttt{-s} (short) argument, so that the output is more readable.
 
 <<Ch5Status, eval=FALSE, engine='sh'>>=
+# Display status
 git status -s
 @
 
+\begin{table}
+  \caption{A Selection of Git Commands}
+  \begin{center}
+  \label{GitCommandsTable}
+  \begin{tabular}{l p{5cm}}
+    \hline  
+    Command & Description \\[0.25cm] \hline\hline
+    \texttt{init} & Initialize a Git repository. \\[0.25cm]
+    \texttt{add} & Add a file to a Git repository. \\[0.25cm]
+    \texttt{commit} & Commit changes to a Git repository. \\[0.25cm]
+    \texttt{status} & Show the status of a Git repository including uncommitted changes made to files. \\[0.25cm]
+    \texttt{checkout} & Checkout a branch. \\[0.25cm]
+    \hline
+  \end{tabular}
+  \end{center}
+\end{table}
+
+Before discussion how to host a Git repository on GitHub it is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a subfolder called {\emph{Objects}}. Commit objects\index{Git commit object}\footnote{Other Git objects include trees (sort of like directories) and blobs (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
+
+<<Ch5CheckoutBasic, eval=FALSE, engine='sh'>>=
+# Checkout latest commit
+git checkout --
+@
+
+\noindent We'll look at the \texttt{checkout} command in more detail later. 
+
 \paragraph{Setting up GitHub remote repositories}
+
+\begin{figure}[t]
+    \caption{Part of this Book's GitHub Repository Webpage}
+    \label{BookRepository}
+    \begin{center}
+    \includegraphics[scale=0.5]{/git_repositories/Rep-Res-Book/Source/Children/Chapter5/images5/GitHubReadme.png}
+    \end{center}
+\end{figure}
 
 \paragraph{Setting up GitHub with RStudio Projects}
 
