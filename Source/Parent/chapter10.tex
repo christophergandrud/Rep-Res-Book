@@ -1,21 +1,43 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 12 October 2012
+% Updated: 16 December 2012
 
 
 
 
 \chapter{Showing Results with Figures}\label{FiguresChapter}
 
-\todo[inline]{This chapter is incomplete.}
+One of the main reasons that many people use R is to take advantage of its very comprehensive and powerful set of tools for data visualization. Figures are often a much more effective way to present descriptive statistics and analysis results than the tables we covered in the last chapter. Dynamically incorporating figures with \emph{knitr} has many of the same benefits as dynamically including tables, especially the ability to have data set or analysis changes automatically cascade into your presentation documents. The basic process for including Figures in knitted presentation documents is also very similar, though there are some important extra considerations we need to make to properly size the figures and include interactive visualizations in our presentation documents.
+
+In this chapter we will learn some of the basics of R's powerful graphics capabilities, including base R graphics, \emph{ggplot2} \citep{R-ggplot2},\index{ggplot2} \emph{googleVis} \citep{R-googleVis},\index{googleVis} and \emph{animation} \citep{R-animation}.\index{animation} In each case we will focus on how to include the figures in knitted presentation documents. 
 
 \section{Including graphics}
 
 \section{Basic knitr figure options}
 
-\section{Creating figures with plot and ggplot2}
+\subsection{Chunk options}
+
+\subsection{Global options}
+
+\section{Creating static figures with ggplot2}
+
+\section{Motion charts and basic maps with googleVis}
+
+Markus Gesmann\index{Markus Gesmann} and Diego de Castillo's \emph{googleVis}\index{googleVis} packages allows us to easily use Google's Visualization API\index{API}\footnote{For full details see: \url{https://developers.google.com/chart/interactive/docs/reference}.} to create interactive figures and maps. Because the visualizations are written in JavaScript\index{JavaScript} they can be included in HTML presentation documents created by R Markdown. Unfortunately, they cannot be included in LaTeX produced PDFs. In the next section we will learn about \emph{animation} package which does have some limited features for including interactive visualizations in PDFs. 
+
+\todo{Complete}
+
+
+\paragraph{Including googleVis in knitted documents}
+
+Using the \verb|print(VISOBJECT, "chart")| prints the entire JavaScript code needed to create the visualization. The default \emph{knitr} setting is to simply print the code, rather than run the JavaScript. This will give you a long code block. Not really what you are aiming for. To have the visualization show up in your HTML output, rather than the code block, simply set the code chunk option to \verb|results='asis'|. 
+
+\paragraph{Important Note for Motion Charts}
+
+You may notice that Google motion charts do not show up in the RStudio Preview window or even in your web browser when you open the knitted HTML version of the file. You just see a big blank space where you had hoped the chart would be It will show up, however, if you use the \verb|plot| command on a \verb|gvis| motion chart object in the console. Motion charts can only be displayed when they are hosted on a web server or located in a directory `trusted' by Flash Player.\footnote{Motion charts and annotated time line charts rely on Flash, unlike the other Google visualizations. For more information see Markus Gesmann's blog post at: \url{http://lamages.blogspot.com/2012/05/interactive-reports-in-r-with-knitr-and.html}.}\index{Flash Player}
+
+The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio Preview window do not. An easy way to solve this problem is to simply save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.
 
 \section{Animations}
 
-\section{Motion charts and basic maps with googleVis}
