@@ -106,9 +106,9 @@ Dropbox has a simple version control system. Every time you save a document on D
 
 Dropbox adequately meets our four basic criteria for reproducible data storage and is easy to set up. GitHub meets the criteria and more, but is less straightforward at first.
 
-GitHub is an interface and cloud hosting service built on top of the Git\index{Git} version control system. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded" computer programs--in what Git calls ``repositories"\index{repository}--by making it easy for a number of collaborators to work together to build computer programs. This seems very far from reproducible research.
+GitHub is an interface and cloud hosting service built on top of the Git\index{Git} version control system. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded" computer programs--in what Git calls ``repositories"\index{repository}, repos for short--by making it easy for a number of collaborators to work together to build computer programs. This seems very far from reproducible research.
 
-Remember that as reproducible researchers we are building projects out of interconnected text files. In important ways this is exactly the same as building a computer program. Computer programs are also basically large collections of interconnected text files. Like computer programers, we need ways to store, version control, access, and collaborate on our text files. Because GitHub is very actively used by people with very similar needs (who are also really good programmers), the interface offers many highly developed and robust features for reproducible researchers.
+Remember that as reproducible researchers we are building projects out of interconnected text files. In important ways this is exactly the same as building a computer program. Computer programs are also basically large collections of interconnected text files. Like computer programmers, we need ways to store, version control, access, and collaborate on our text files. Because GitHub is very actively used by people with very similar needs (who are also really good programmers), the interface offers many highly developed and robust features for reproducible researchers.
 
 GitHub's extensive features and heart in the computer programming community means that it takes a longer time than Dropbox to set it up and become familiar with it. So we need good reasons to want to invest the time needed to learn GitHub compared to Dropbox and similar services. Here is a list of GitHub's advantages over Dropbox for reproducible research that will hopefully convince you to get started using it: \\[0.25cm]
 
@@ -145,7 +145,7 @@ Dropbox allows multiple people to share files and change them. GitHub does this 
 \noindent{\bf{Version Control}}    
 \begin{itemize}
 \item
-  Dropbox's version control system only lets you the see files' names, the times they were created, who created them, and revert back to specific versions. Git tracks every change you make. The GitHub website and GUI programs for Mac and Windows provide nice interfaces for examining specific changes in text files.
+  Dropbox's version control system only lets you see files' names, the times they were created, who created them, and revert back to specific versions. Git tracks every change you make. The GitHub website and GUI programs for Mac and Windows provide nice interfaces for examining specific changes in text files.
 \item
   Dropbox creates a new version every time you save a file. This can make it difficult to actually find the version you want as the versions quickly multiply. Git's version control system only creates a new version when you tell it to.
 \item
@@ -225,11 +225,9 @@ git commit -a -m "First Commit, created README file"
 \end{knitrout}
 
 
-\nodindent The \texttt{-a} (all) command commits changes to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} command like: \texttt{"First Commit, created README file"} Messages help you remember general details of the individual commit. This is helpful when you want to revert to old versions.
+\nodindent The \texttt{-a} (all) command commits changes to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} command like: \texttt{"First Commit, created README file"} Messages help you remember general details of the individual commit. This is helpful when you want to revert to old versions. \textbf{Remember:} Git only tracks changes when you commit them. 
 
-\noindent \textbf{Remember:} Git only tracks changes when you commit them. 
-
-Finally, you can use the \texttt{status} command for details about your repository, including un committed changes. Generally it's a good idea to use the \texttt{-s} (short) argument, so that the output is more readable.
+Finally, you can use the \texttt{status} command for details about your repository, including uncommitted changes. Generally it's a good idea to use the \texttt{-s} (short) argument, so that the output is more readable.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -251,14 +249,17 @@ git status -s
     \texttt{init} & Initialize a Git repository. \\[0.25cm]
     \texttt{add} & Add a file to a Git repository. \\[0.25cm]
     \texttt{commit} & Commit changes to a Git repository. \\[0.25cm]
+    \texttt{push} & Add committed changes to a remote Git repository, i.e. GitHub. \\[0.25cm]
     \texttt{status} & Show the status of a Git repository including uncommitted changes made to files. \\[0.25cm]
     \texttt{checkout} & Checkout a branch. \\[0.25cm]
+    \texttt{pull} & \texttt{fetch} data from a remote repository and try to \texttt{merge} it with your commits.
     \hline
   \end{tabular}
   \end{center}
+  {\scriptsize{Note: when you use these commands in the command line, you will need to precede them with \texttt{git} so the shell knows where they are from.}}
 \end{table}
 
-Before discussion how to host a Git repository on GitHub it is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a subfolder called {\emph{Objects}}. Commit objects\index{Git commit object}\footnote{Other Git objects include trees (sort of like directories) and blobs (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
+Before discussion how to host a Git repository on GitHub it is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{Objects}}. Commit objects\index{Git commit object}\footnote{Other Git objects include trees (sort of like directories) and blobs (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -271,8 +272,9 @@ git checkout --
 
 
 \noindent We'll look at the \texttt{checkout} command in more detail later. 
-
 \paragraph{Setting up GitHub remote repositories}
+
+BUILD
 
 \begin{figure}[t]
     \caption{Part of this Book's GitHub Repository Webpage}
@@ -288,16 +290,40 @@ Once you have your repository set up on GitHub you can clone it onto your comput
 
 \subsubsection{Accessing on GitHub}
 
+Let's learn how to add changes to our GitHub remote repository and access the files based there.
+
+\paragraph{Pushing data to a GitHub}
+
+So far we have learned how to add and commit changes to a local Git repo. To add your commits to the remote GitHub repository use the \texttt{push}\index{git push} command. For example, if your current working directory is the Git repo you want to push and you have already added/committed the changes you want to include in the remote repo type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+git push origin master
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+What do \texttt{origin} and \texttt{master} mean? The origin is simply your locally stored repository. ``Master'' refers to the Master or main ``branch'' of the remotely stored repo. We'll look more at branches in the next section. If you have not set up password caching\footnote{See \url{https://help.github.com/articles/set-up-git} for more details.} you will now be prompted to give your GitHub user name and password.
+
+\paragraph{Downloading into R \& viewing files}
+
+In Chapter \ref{DataGather} we learn how to load data from a text file stored on GitHub directly into R. In general it is similar to loading data from Dropbox Public folders, but because the files are stored on a secure server it requires a few extra steps. See page \pageref{SecureDataDownload} for more details.
+
+The GitHub web user interface also allows you, your collaborators or if the repo is public, anyone to look at text files with a web browser. Collaborators can actually also create, modify and commit changes in the web user interface. This can be useful for making small changes, especially from a mobile device without a full installation of Git. Anyone with a GitHub account can make changes to files in a public repository on the repo's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a designated collaborator, their edits will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{git pull} in git terminology. See the next section for more details.}. This can be a useful way for independent researchers to catch errors and directly address them.
+
 \subsubsection{Collaboration with GitHub}
 
-Repositories can have official collaborators. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. 
- 
+Repositories can have official collaborators. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator.
 
-Anyone with a GitHub account can make changes to files in a public repository on the repository's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a repository collaborator, their edit will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{git pull} in git terminology}. This is a useful way for independent researchers to catch errors and directly address them.
+BUILD
 
 \paragraph{Branches}
 
 \paragraph{Syncing repository}
+
+What do you do if you and your collaborators are making changes to 
 
 \subsubsection{Version Control with GitHub}
 
@@ -319,6 +345,17 @@ git checkout COMMITREF FILENAME
 \noindent Now the previous version of the file is in your working directory, where you can commit it as usual.
 
 Let's break down the code.  {\tt{FILENAME}} is the name of the file that you want to change\footnote{If it is in a repository's subdirectory you will need to include this in the file name.} and {\tt{COMMITREF}} is the reference that git gave to the commit you want to revert back to. The reference is easy to find and copy in GitHub. On the file's GitHub page click on the {\tt{History}} button. This will show you all of the commits. By clicking on {\tt{Browse Code}} you can see what the file at that commit looks like. Above this button is another with a series of numbers and letters. This is the commit's SHA (Secure Hash Algorithm)\index{SHA}. For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. 
+
+\subsection{Summing up the GitHub workflow}
+
+We've covered a lot of ground in this section. Let's sum up the basic GitHub workflow you will probably follow. Let's assume you already have a repo on GitHub that you've cloned to your computer. 
+
+\begin{enumerate}
+    \item add any changes you've made with \texttt{git add .},
+    \item \texttt{commit} the changes,
+    \item \texttt{pull} your collaborators' changes from the GitHub repo and resolve any merge conflicts,
+    \item \texttt{push} your changes to GitHub. 
+\end{enumerate}
 
 \paragraph{More Practice with Command Line Git \& GitHub}
 
