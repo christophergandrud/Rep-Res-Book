@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 October 2012
+% Updated: 26 December 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,26 +9,30 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Gathering Data with R}\label{DataGather}
 
-How you gather your data directly impacts how reproducible your research will be. Of course you should try your best to document everything. Reproduction will be easier if your documentation--especially, variable descriptions and source code--makes it so that you and others can understand what you have done. If all of your data gathering steps are embedded in source code, then independent researchers (and you) can more easily regather the data. Regathering data will be easiest if your source code can tie your analysis code all the way back to the raw data--the rawer the better. Of course this may not always be possible. You may need to conduct interviews or compile information from paper based archives, for example. The best you can sometimes do is describe your data gathering process in detail. Nonetheless, R's automated data gathering capabilities for internet-based information are extensive. Learning how to take full advantage of them greatly increases reproducibility and can save you considerable time and effort.
+How you gather your data directly impacts how reproducible your research will be. Of course you should try your best to document every step of your data gathering process. Reproduction will be easier if your documentation--especially, variable descriptions and source code--makes it easy for you and others to understand what you have done. If all of your data gathering steps are tied together by your source code, then independent researchers (and you) can more easily regather the data. Regathering data will be easiest if running your code allows you to get all the way back to the raw data--the rawer the better. Of course this may not always be possible. You may need to conduct interviews or compile information from paper based archives, for example. The best you can sometimes do is describe your data gathering process in detail. Nonetheless, R's automated data gathering capability for internet-based information is extensive. Learning how to take full advantage of these capabilities greatly increases reproducibility and can save you considerable time and effort over the long run.
 
 In this chapter you'll learn how to gather quantitative data in a reproducible and, in some cases, fully replicable way. You'll start by learning how to use data gathering make files\index{make file} to organize your whole data gathering process so that it can be completely reproduced. Then you will learn the details of how to actually load data into R from various sources, both locally on your computer and via the internet. In the next chapter (Chapter \ref{DataClean}) you'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
 
 %%%%%%%%%%%%% Organizing data gathering
 \section{Organize your data gathering: make files}
 
-Before getting into the details of using R to gather data, lets's start by creating a plan to organize the process. Organizing your data gathering process from the beginning of a research project improves the possibility of reproducibility and can save you significant effort over the course of the project by making it easier to add and regather data later on. 
+Before getting into the details of using R to gather data, let's start by creating a plan to organize the process. Organizing your data gathering process from the beginning of a research project improves the possibility of reproducibility and can save you significant effort over the course of the project by making it easier to add and regather data later on. 
 
-A key part of reproducible data gathering with R, like reproducible research in general is segmenting the process into discrete files that can be run by a common make file\index{make file}. Segmentation makes it easier to navigate research text and find errors in the source code. The make file's output is the data set(s) that you'll use in the statistical analyses. There are two types of source code files that the make file runs: data gathering/clean up files and merging files. Data clean up files bring raw (the rawer the better) individual data sources into R and transform them so that can be merged with data from the other sources. Some of the R tools for data clean up and merging will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. Merging files are executed by the make file after it runs the data gathering/clean up files.
+A key part of reproducible data gathering with R, like reproducible research in general, is segmenting the process into discrete files that can all be run by a common ``make'' file\index{make file}. In this chapter we'll learn how to create make-like files run exclusively from R as well as GNU Make,\footnote{GNU stands for ``GNU's Not Unix", indicating that it is Unix-like.}\index{GNU make} which you run from a shell.\footnote{To standardize things, I use the terms ``R make-like file'' for files created and run in R and the standard ``makefile'' for files run by Make.} Learning how to create R make-like files is fairly easy. Using GNU Make does require learning yet more new syntax. However, it has one very clear advantage: it only runs a source code file that has been updated since the last time you called the makefile. This is very useful if part of your data gathering process is very computationally and time intensive.
+
+Segmentation your data gathering and it together with some sort of make file allows you to more easily navigate research text and find errors in the source code. The make file's output is the data set(s) that you'll use in the statistical analyses. There are two types of source code files that the make file runs: data gathering/clean up files and merging files. Data clean up files bring raw individual data sources into R and transform them so that can be merged together with data from the other sources. Some of the R tools for data clean up and merging will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. Merging files are executed by the make file after it runs the data gathering/clean up files.
 
 It's a good idea to have the source code files use very raw data as input. Your source code should avoid directly changing these raw data files. Instead changes should be output to new objects and data files. Doing this makes it easier to reconstruct the steps you took to create your data set. Also, while cleaning and merging your data you may transform it in an unintended way, for example, accidentally deleting some observations that you had wanted to keep. Having the raw data makes it easy to go back and correct your mistakes. 
 
-In data gathering make files you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems.
+\subsection{R Make-like files}
 
-<<Ch5ExampleMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
+When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems.
+
+<<Ch5ExampleRMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
 ################
-# Example Make file
+# Example R make-like file
 # Christopher Gandrud
-# Updated 10 October 2012
+# Updated 15 January 2012
 ################
 
 # Set working directory
@@ -40,21 +44,71 @@ source("/GatherSource/IndvDataGather/Gather1.R")
 source("/GatherSource/IndvDataGather/Gather2.R")
 
 source("/GatherSource/IndvDataGather/Gather3.R")
-    
-# Merge cleaned data files into object CleanedData
+	
+# Merge cleaned data frames into data frame object CleanedData
 source("GatherSource/MergeData.R")
 
 # Save cleaned & merged Data as MainData.csv
 write.csv(CleandedData, file = "/DataFiles/MainData.csv")
 @
 
-This code first sets the working directory. Then the make file runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. Next the make file runs a source code file that merges the data frames. Finally, it saves the output data frame {\emph{CleanData}} as a \texttt{.csv} formated file called {\emph{MainData.csv}} using the {\tt{write.csv}}\index{write.csv} command. In our example project, this would be the main file we use for statistical analysis. 
+This code first sets the working directory. Then it runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. The cleaned data frames are available in the current workspace. Next the make file runs a source code file that merges the data frames. Finally, it saves the output data frame {\emph{CleanData}} as a CSV\indxe{CSV} formated file called {\emph{MainData.csv}} using the {\tt{write.csv}}\index{write.csv} command. In our example project, this would be the main file we use for statistical analysis. 
 
-Now that we've covered the big picture, let's learn the different tools you will need to know to gather data from different types of sources.
+You can run the commands in this file one by one or run the make-like through the \texttt{source} command to run it all at once.
+
+\subsection{GNU Make}
+
+R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
+
+If you are using a Linux or Mac computer you already have Make installed.\footnote{To verify this open the Terminal\index{Terminal} and type: \texttt{make --version}. This should output details about the current version of Make installed on your computer.} Windows users will have Make installed if they have already installed Rtools\index{Rtools} (see page \pageref{RtoolsDownload}).
+
+The basic of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we saw before: gather data from three sources, clean and merge the data and save it as in CSV\index{CSV} format. 
+
+The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files. In our example this is \texttt{/ExampleProject/Data/GatherSource/IndvDataGather/}. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Then in the makefile write:
+
+<<Ch6ExampleMakeile, eval=FALSE, engine='sh'>>=
+################
+# Example Makefile
+# Christopher Gandrud
+# Updated 15 January 2012
+# Influenced by Rob Hyndman (31 October 2012)
+# See: http://robjhyndman.com/researchtips/makefiles/
+################
+
+# Key variables to define
+RDIR= .
+
+# Create list of R source files
+RSOURCE := $(wildcard $(RDIR)/*.R)
+
+# Indicator files to show R file has run
+OUT_FILES := $(RSOURCE: .R = .Rout)
+
+# Default target
+all: $(OUT_FILES) 
+
+# Run the RSOURCE files
+$(RDIR)/%.Rout: $(RDIR)/%.R
+	R CMD BATCH $<
+
+# Remove Out files
+clean: 
+	rm -fv $(OUT_FILES)
+@
+
+\noindent To run the makefile simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \texttt{.Rout}, indicating when the segmented data gathering files were last run. Remember to make sure your current working directory is the one with the files you want to run.
+
+Ok, let's break down the code. The first line of executable code (\texttt{RDIR=.}) creates a simple variable.\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. For a very good introduction to the details of Make see it's Wikipedia page: \url{http://en.wikipedia.org/wiki/Make_(software)}.} The period (\texttt{.}) indicates the current directory. 
+
+The second line (\texttt{OUT_FILES := $(RSOURCE: .R = .Rout)}) creates a variable
+
+Note that Make relies heavily on commands and syntax of the shell program that you are using. The above example was written and tested on a Mac. It should work on other Unix-like computers without modification.
+
+You can use Make to build almost any project from the shell, not just run R source code files. It was an integral part of early reproducible computational research \citep{Fomel2009, Buckheit1995}. Rob Hyndman more recently posted a description of the makefile he uses to create a project with R and Latex.\footnote{See his blog at: \url{http://robjhyndman.com/researchtips/makefiles/}. Posted 31 October 2012. This method largely replicates what we do in this book with \emph{knitr}. Nonetheless, it has helpful information about Make that can be used in other tasks. It was in fact helpful for writing this section of the book.}
 
 \section{Importing locally stored data sets}
 
-The most straightforward place to load data from is a local file, e.g. one stored on your computer. Though storing your data locally does not really encourage reproducibility, most research projects will involve loading data this way at some point. The tools you will learn for importing locally stored data files will also be important for most of the other methods further on. Let's briefly look at how to load single and multiple files locally.
+Now that we've covered the big picture, let's learn the different tools you will need to know to gather data from different types of sources. The most straightforward place to load data from is a local file, e.g. one stored on your computer. Though storing your data locally does not really encourage reproducibility, most research projects will involve loading data this way at some point. The tools you will learn for importing locally stored data files will also be important for most of the other methods further on. Let's briefly look at how to load single and multiple files locally.
 
 \subsection{Importing a single locally stored file}
 
@@ -93,8 +147,8 @@ There are many ways to import data that is stored on the internet directly into 
 Importing data into R that is located at a non-secure URL--ones that start with {\tt{http}}--is straightforward provided that:
 
 \begin{itemize}
-    \item the data is stored in a simple format, e.g. plain-text,
-    \item the file is not embedded in a larger HTML website.
+	\item the data is stored in a simple format, e.g. plain-text,
+	\item the file is not embedded in a larger HTML website.
 \end{itemize}
 
 We have discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL. If you only see the raw plain-text data, you are probably good to go.\footnote{If the data is embedded in a larger website--the way data is usually stored on the cloud version of Dropbox--you may still be able to download it into R. However, this can be difficult and varies depending on the structure of the website. So, I do not cover it in this book.}
@@ -103,21 +157,21 @@ To import the data simply include the URL as the file name in your \texttt{read.
 
 <<Ch6httpLoad, eval=FALSE, tidy=FALSE>>=
 Data <- read.table("http://bit.ly/PhjaPM", 
-                    sep = ",", header = TRUE)
+					sep = ",", header = TRUE)
 @
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
 \noindent We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}. The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a large HTML website apply to secure web addresses as well.
 
-Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository. The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.} Imagine that we put the address as a character string into an object called {\emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.}
+Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository. The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.}
 To download it into R we could use this code:
 
 <<Ch6UrlObject, echo=FALSE>>=
 # Put URL address into the object UrlAddress
 UrlAddress <- paste("https://raw.github.com/christophergandrud/",
-                "Disproportionality_Data/master/",
-                "Disproportionality.csv", sep = "")
+				"Disproportionality_Data/master/",
+				"Disproportionality.csv", sep = "")
 @
 
 {\small
@@ -130,8 +184,8 @@ DataUrl <- getURL(UrlAddress)
 
 # Convert Data into a data frame
 Data <- read.table(textConnection(DataUrl), 
-                    sep = ",", header = TRUE)
-                    
+					sep = ",", header = TRUE)
+					
 # Show variables in data
 names(Data)
 @
@@ -144,16 +198,17 @@ Sometimes data files are large, making them difficult to store and download with
 To do this you need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes\#tab-top}}, accessed 16 July 2012.)}
 
 \begin{itemize}
-    \item create a temporary file with {\tt{tempfile}} to store the zipped file, which you will later remove with the {\tt{unlink command}} at the end,
-    \item download the file with {\tt{download.file}},
-    \item decompress the file with one of the {\tt{connections}} commands in base R,\footnote{To find a full list of commands type {\tt{?connections}} into the R console.}
-    \item read the file with {\tt{read.table}}. 
+	\item create a temporary file with {\tt{tempfile}} to store the zipped file, which you will later remove with the {\tt{unlink command}} at the end,
+	\item download the file with {\tt{download.file}},
+	\item decompress the file with one of the {\tt{connections}} commands in base R,\footnote{To find a full list of commands type {\tt{?connections}} into the R console.}
+	\item read the file with {\tt{read.table}}. 
 \end{itemize}
 
 \noindent The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain a number of files as well as metadata.
 
 Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a compressed file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, that I shortened\footnote{Again, I used bitly (\url{bitly.com}) to shorten the URL.} to \url{http://bit.ly/S0vxk2} because of space constraints.
 
+{\scriptsize
 <<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
 # For simplicity, store the URL in an object called 'url'.
 url <- "http://bit.ly/S0vxk2"
@@ -174,6 +229,7 @@ unlink(temp)
 # Show variables in data
 names(Data)
 @ 
+}
 
 \subsection{Data APIs \& feeds}
 
@@ -182,17 +238,22 @@ names(Data)
 There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many of Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward. Some examples of these packages include: 
 
 \begin{itemize}
-    \item \todo[inline]{Need to Complete list.}
-    \item The \emph{openair} package, which beyond providing a number of tools for analysing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
+	\item \todo[inline]{Need to Complete list.}
+	\item The \emph{openair} package \cite{R-openair}, which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
+	\item The \emph{WDI} package \cite{R-WDI} allows you to directly download data from the World Bank's Development Indicators database (see \url{http://data.worldbank.org/data-catalog/world-development-indicators}). This data base includes numerous country-level economic, health, and environment variables. 
 \end{itemize}
 
 \section{Basic web scraping}
 
 \emph{scraply}  NOT CURRENTLY ON CRAN
 
+
+
 \subsection{Gathering and parsing text from the web}
 
 \subsection{Scraping tables}
 
+\subsection{Learn more webscraping}
 
+POSIX regular expressions.
 

@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 December 2012
+% Updated: 26 December 2012
 
 
 
@@ -385,7 +385,7 @@ To find all of the arguments that an argument can accept look at the {\bf{Argume
 
 You have to fairly precise with the syntax for your argument's values. Arguments for logical arguments must written as \texttt{TRUE} or \texttt{FALSE}.\footnote{They can be abbreviated \texttt{T} and \texttt{F}.} Arguments that are character strings should be in quotation marks.
 
-Let's see how to use multiple arguments with the \texttt{round} command. This command rounds a vector of numbers. We can use the \texttt{digits} option to specify how many decimal places we want the numbers rounded to. To round the object {\emph{MeanNumericVect} to one decimal place type:
+Let's see how to use multiple arguments with the \texttt{round} command. This command rounds a vector of numbers. We can use the \texttt{digits} option to specify how many decimal places we want the numbers rounded to. To round the object \emph{MeanNumericVect} to one decimal place type:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -685,39 +685,42 @@ Throughout this book we will look at a number of different code chunk options. A
 
 \subsection{Global options}
 
-So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options\index{global chunk options}. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the {\tt{fig.align='center'}} option in each code chunk that creates a figure, I set the option globally.
+So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options\index{global chunk options}. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the \verb|fig.align='center'| option in each code chunk that creates a figure, I set the option globally.
 
 To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be placed after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{echo=FALSE}} so that {\emph{knitr}} doesn't echo the code. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
 
 Here is an example of how you can center align all of the figures in a Markdown document created {\emph{knitr}} code chunks. Place the following code at the beginning of the document:
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-```\{r GlobalFigOpts, echo=FALSE\}
-\hlcomment{# Center align all knitr figures}
-opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
-```
-\end{alltt}
-\end{kframe}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{\textless}ChunkLabel \textgreater{\textgreater}=
+# Center align all knitr figures
+opts_chunk$set(fig.align='center')
+@
+        \end{alltt}
+    \end{kframe}
 \end{knitrout}
-
 
 \subsection{knitr package options}
 
 {\emph{Knitr}} package options\index{package options} affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk.\footnote{The {\emph{knitr}} progress bar looks like this {\tt{|>>>>>>| 100\%}} and indicates how much of a code chunk has been run.} You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
-You set package options in a similar way as global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting Markdown documents include this code at the beginning of the document:
+You set package options in a similar way as global chunk options with {\tt{opts\_knit\$set}}. For example, to turn off the progress bar when knitting documents include this code at the beginning of the document:
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-```\{r GlobalFigOpts, echo=FALSE\}
-\hlcomment{# Turn off knitr progress bar}
-opts_knit$\hlfunctioncall{set}(progress=FALSE)
-```
-\end{alltt}
-\end{kframe}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+        \begin{kframe}
+            \begin{alltt}
+\textless{\textless}ChunkLabel \textgreater{\textgreater}=
+# Turn off knitr progress bar
+opts_knit$set(progress=FALSE)
+@
+            \end{alltt}
+        \end{kframe}
 \end{knitrout}
 
 
@@ -728,7 +731,7 @@ You can also set hooks\index{hooks}. Hooks come in two types: chunk hooks and ou
 %%%%%%%%%% Knitr & RStudio
 \subsection{knitr \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
+RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents than doing so in plain R. Most of the RStudio/{\emph{knitr}} features are accessed in the Source pane\index{Source pane}. The Source pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the Source pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the Source pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
 
 \paragraph{Compiling R source code notebooks}
 

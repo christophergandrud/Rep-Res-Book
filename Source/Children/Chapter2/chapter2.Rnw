@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 November 2012
+% Updated: 26 December 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -27,20 +27,18 @@ The three basic stages of a typical computational empirical research project are
 
 Instead of starting to use the individual tools of reproducible research  as soon as you learn them I recommend briefly stepping back and considering how the stages of reproducible research {\emph{tie}} together overall. This will make your workflow more coherent from the beginning and save you a lot of backtracking later on.  Figure \ref{WorkflowTies} illustrates the workflow. Notice that the arrows connecting the workflow's parts point in both directions, indicating that you should always be thinking how to make it easier to go backwards through your research, i.e. reproduce it, as well as forwards. 
 
-Around the edges of the figure are some of the commands you will learn to make it easier to go forwards and backwards through the process. These commands tie your research together. For example, you can use API-based R packages\index{API} to gather data from the internet. You can use the \texttt{merge} command to combine data gathered from different sources into one data set. The \texttt{getURL}\index{getURL} and {\texttt{read.table}}\index{read.table} commands can be used to bring this data set into your statistical analyses. The {\emph{knitr}} package then ties your analyses into your presentation documents. This includes the code you used, the figures you created, and, with the help of tools such as the {\emph{xtable}} package, tables of results. You can even tie multiple presentation documents together. For example, you can access the same figure for use in a LaTeX article and a Markdown created website with the \texttt{includegraphics}\index{includegraphics} and \texttt{![]()}\index{![]()} commands, respectively. This helps you maintain a consistent presentation of results across multiple documents types. We'll cover these commands in detail throughout the book. See Table \ref{TableTieCommands} for a brief, but more complete overview of the main {\emph{tie commands}.\index{tie commands} 
+Around the edges of the figure are some of the commands you will learn to make it easier to go forwards and backwards through the process. These commands tie your research together. For example, you can use API-based R packages\index{API} to gather data from the internet. You can use the \texttt{merge} command to combine data gathered from different sources into one data set. The \texttt{getURL}\index{getURL} and {\texttt{read.table}}\index{read.table} commands can be used to bring this data set into your statistical analyses. The {\emph{knitr}} package then ties your analyses into your presentation documents. This includes the code you used, the figures you created, and, with the help of tools such as the {\emph{xtable}} package, tables of results. You can even tie multiple presentation documents together. For example, you can access the same figure for use in a LaTeX article and a Markdown created website with the \texttt{includegraphics}\index{includegraphics} and \texttt{![]()}\index{![]()} commands, respectively. This helps you maintain a consistent presentation of results across multiple documents types. We'll cover these commands in detail throughout the book. See Table \ref{TableTieCommands} for a brief, but more complete overview of the main \emph{tie commands}.\index{tie commands} 
 
 
 \clearpage
 \thispagestyle{plain}
 \begin{landscape}
     \begin{center}
-\begin{figure}[th!]
-    \caption{Example Workflow \& Commands to Tie it Together}
-    \label{WorkflowTies}
-
-    
-    \input{/git_repositories/Rep-Res-Book/Source/Children/Chapter2/images2/WorkFlowLinks.tex}
-\end{figure}
+        \begin{figure}[th!]
+            \caption{Example Workflow \& Commands to Tie it Together}
+            \label{WorkflowTies}
+            \input{/git_repositories/Rep-Res-Book/Source/Children/Chapter2/images2/WorkFlowLinks.tex}
+        \end{figure}
     \end{center}
 \end{landscape}
 
@@ -158,7 +156,7 @@ Tie commands are the most dynamic way to explicitly link your files together.\in
     {\footnotesize{
     \begin{tabular}{p{2.5cm} c p{5.25cm} p{2cm}}
         \hline \vspace{0.15cm}
-        Command/Package & Language & Description & Chapters for Further Information \\[0.3cm]  
+        Command/Package/Program & Language & Description & Chapters for Further Information \\[0.3cm]  
         \hline \hline
         {\emph{knitr}} & R & R package with commands for tying analysis code into presentation documents including those written in LaTeX and Markdown. & Used throughout See Table \ref{ChunkOptionsTable}. \\[0.25cm]
         {\tt{read.table}} & R & Reads a table into R. You can use this to import plain-text file formated data into R. & \hfill\ref{DataGather} \\[0.25cm]
@@ -173,9 +171,9 @@ Tie commands are the most dynamic way to explicitly link your files together.\in
         {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the \texttt{included}-ed text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
         {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
         \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]   
-        Pandoc & Shell & A Shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]   
+        Pandoc & Shell & A shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]   
+        Make & Shell & A shell program for automatically building many files. & \ref{DataGather} \\[0.25cm]
         \hline 
-    
     \end{tabular}
     }}
 \end{table}
