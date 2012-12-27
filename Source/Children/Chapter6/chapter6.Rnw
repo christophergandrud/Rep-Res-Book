@@ -319,27 +319,69 @@ names(Data)
 
 \subsection{Data APIs \& feeds}
 
-\todo[inline]{The remainder of this chapter is incomplete.}
-
-There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many of Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward. Some examples of these packages include: 
+There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Most of these packages use the sources' application programing interface (API)\index{API} that allow programs interact with the website. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward. Some examples of these packages include: 
 
 \begin{itemize}
-	\item \todo[inline]{Need to Complete list.}
-	\item The \emph{openair} package \cite{R-openair}, which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
-	\item The \emph{WDI} package \cite{R-WDI} allows you to directly download data from the World Bank's Development Indicators database (see \url{http://data.worldbank.org/data-catalog/world-development-indicators}). This data base includes numerous country-level economic, health, and environment variables. 
+	\item The \emph{openair} package \citep{R-openair}, which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
+	\item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.
+	\item The \emph{treebase} package by \cite{Boettiger2012} allows you to access phylogenetic data from TreeBASE.\footnote{\url{http://treebase.org}}
+	\item The \emph{twitteR} package \citep{R-twitteR} access Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from twitter including tweets and trending topics.
+	\item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
 \end{itemize}
+
+The rOpenSci\footnote{\url{http://ropensci.org/}}\index{rOpenSci} group has and is developing a number of packages for accessing scientific data from web-based sources with R. They have a comprehensive set of packages for accessing biological data and academic journals. For a list of their packages see: \url{http://ropensci.org/packages/index.html}. Another fairly comprehensive and regularly updated list of APIs available as R package on Stack Exchange's Cross Validated website.\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}}}
+
+\paragraph{API Package Example: World Bank Development Indicators}
+
+Each of these packages has its own syntax and it is impossible to go over all of them here. Nonetheless, let's look at an example of accessing World Bank data with the \emph{WDI}\index{WDI} to give you a sense of how these packages work. Imagine that we want to gather data on countries' methane emissions. We can use \emph{WDI}'s \texttt{WDIsearch} command to find methane emissions data available at the World Bank:
+
+{\scriptsize
+<<Ch6WDIsearch>>=
+# Load WDI package 
+library(WDI)
+
+# Search World Bank for methane data
+WDIsearch("methane emissions")
+@
+}
+
+\noindent This shows us a selection of indicator numbers and their name.\footnote{You can also search the website itself. The indicator numbers are at the end of each indicators' URL.} Let's gather data on countries' agricultural methane emissions as a percentage of total methane emissions. The indicator number for this variable is EN.ATM.METH.AG.ZS. Now we can use the command \texttt{WDI} to gather the data and put it in an object called \emph{AgMethane}.
+
+<<Ch6WDIMethaine, cache=TRUE>>=
+# Gather agricultural methane emissions date from WDI
+AgMethane <- WDI(indicator = "EN.ATM.METH.AG.ZS")
+
+# Show head of AgMethane data frame
+head(AgMethane)
+@
 
 \section{Basic web scraping}
 
-\emph{scraply}  NOT CURRENTLY ON CRAN
+If a package does not already exist to access data from a particular website there are other ways to automatically ``scrape'' data from the website with R.\index{web scraping} This section gives a very basic introduction to some of these techniques to get you headed in the right direction.
 
+\subsection{Accessing APIs with httr}
 
+If a website has an API, but there is R package available yet to access it you can probably still get at the data with the \emph{httr} package \citep{R-httr}. To get a sense of how to download data from an API with \emph{httr} let's look at a simple example of 
 
 \subsection{Gathering and parsing text from the web}
 
+If no API is available to access the data you want from a website you can try to scrape the website. The most basic way to do this is with the \emph{RCurl} package \citep{R-RCurl}. Virtually all of the tools for getting data from the a URL discussed so far use \emph{RCurl}. The \emph{httr} package is simply an \emph{RCurl} package that makes accessing APIs easier. The package allows you to transfer files from a URL into R.  
+
 \subsection{Scraping tables}
+
+fromJSON
 
 \subsection{Learn more webscraping}
 
-POSIX regular expressions.
+Here are some more tips on improving what you can do with webscraping.
+
+\paragraph{Regular Expressions} 
+
+To really become a proficient webscraper it is a good idea to learn POSIX regular expressions\index{regular expressions} and how R implements them.
+
+
+
+\paragraph{scraply}  NOT CURRENTLY ON CRAN
+
+\paragraph{Other programming languages}
 

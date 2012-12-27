@@ -1,7 +1,7 @@
 #################
 # Make file for the book Reproducible Research with R and RStudio
 # Christopher Gandrud
-# Updated: 16 December 2012
+# Updated: 27 December 2012
 #################
 
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
@@ -12,19 +12,23 @@
 ## See also http://bit.ly/PbabKd
 doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
 toInstall <- c("animation",
-               "apsrtable",
-               "devtools",
-               "extrafont",
-               "ggplot2",
+               "apsrtable", 
+               "devtools", 
+               "formatR",
+               "ggplot2", 
                "googleVis",
-               "knitr",
-               "knitcitations",
-               "markdown",
-               "openair",
+               "knitr", 
+               "knitcitations", 
+               "markdown", 
+               "openair", 
+               "quantmod",
                "RCurl",
                "texreg",
                "tools",
-               "xtable",
+               "treebase",
+               "twitteR",
+               "WDI",                     
+               "xtable", 
                "Zelig")
 
 if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org")}
