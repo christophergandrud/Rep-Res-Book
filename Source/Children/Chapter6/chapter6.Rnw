@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 December 2012
+% Updated: 27 December 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -58,13 +58,32 @@ You can run the commands in this file one by one or run the make-like through th
 
 \subsection{GNU Make}
 
-R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
+R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
+
+In Make terminology the output files are called ``targets''\index{targets, Make} and the files that create them are called ``prerequisites''\index{prerequisites, Make}. You specify a ``recipe''\index{recipe, Make} to create the targets from the prerequisites. The general form is:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
+TARGET ... : PREREQUISITE ...
+    RECIPIE
+    ... 
+    ...
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
+
+Note that, unlike in R, tabs are important in Make. The indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If they are newer, it does nothing.
 
 If you are using a Linux or Mac computer you already have Make installed.\footnote{To verify this open the Terminal\index{Terminal} and type: \texttt{make --version}. This should output details about the current version of Make installed on your computer.} Windows users will have Make installed if they have already installed Rtools\index{Rtools} (see page \pageref{RtoolsDownload}).
 
 The basic of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we saw before: gather data from three sources, clean and merge the data and save it as in CSV\index{CSV} format. 
 
-The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files. In our example this is \texttt{/ExampleProject/Data/GatherSource/IndvDataGather/}. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Then in the makefile write:
+\paragraph{Example Makefile}
+
+The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Then in the makefile write:
 
 \begin{knitrout}
 	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -83,40 +102,46 @@ The first thing we need to do is create a new file called \emph{Makefile}\footno
 RDIR = .
 
 # Create list of R source files
-RSOURCE:= $(wildcard $(RDIR)/*.R)
+RSOURCE = $(wildcard $(RDIR)/*.R)
 
 # Files to indicate when the RSOURCE file was run
-OUT_FILES := $(RSOURCE: .R = .Rout)
+OUT_FILES = $(RSOURCE:.R=.Rout)
 
 # Default target
 all: $(OUT_FILES) 
 
 # Run the RSOURCE files
 $(RDIR)/%.Rout: $(RDIR)/%.R
-	R CMD BATCH $<
+    R CMD BATCH $<
 
 # Remove Out Files
 clean: 
-	rm -fv $(OUT_FILES)
-			\end{verbatim}
-		\end{kframe}
+    rm -fv $(OUT_FILES)
+		\end{verbatim}
+	\end{kframe}
 \end{knitrout}
 
-\todo[inline]{Tabs Issue}
+\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{ROUT} with a period (\texttt{.}) as its value. In Make, and Unix-like shells periods indicate the current directory. 
 
-\noindent To run the makefile simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \texttt{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.} Remember to make sure your current working directory is the one with the files you want to run. Ok, let's break down the code. 
+The second line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \emph{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. The dollar signs (\verb|$|). In make (and Unix-like shells generally) a dollar sign (\verb|$|) followed by a variable name substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
 
-The first line of executable code (\texttt{RDIR=.}) creates a simple variable.\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. For a very good introduction to the details of Make see it's Wikipedia page: \url{http://en.wikipedia.org/wiki/Make_(software)}.} The period (\texttt{.}) indicates the current directory. 
+The asterisk (\verb|*|) is a ``wildcard''. A wildcard\index{wildcard} is a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
 
-The second line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \texttt{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. Let's start with the \texttt{:=}. In Make a simple equals sign (\texttt{=}) assigns a value to a variable verbatim. In the previous line (\texttt{RDIR = .}) a period (\texttt{.}) is assigned to the variable \texttt{RDIR}. Using a colon and equals sign (\texttt{:=})  The \texttt{:=} is a bash shell command that assigns the values of \verb|$(wildcard $(RDIR)/*.R)| to the variable \texttt{RSOURCE}, i.e. creating the list of R source code files.
+Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make function} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 
-The dollar signs (\verb|$|). In Bash a dollar sign followed by a variable name just substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
+The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \emph{.Rout} files that Make will use to tell how recently each R file was run. \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but uses the file extension \emph{.Rout}.
 
-The asterisk (\verb|*|) is a ``wildcard''. A wildcard\index{wildcard} is a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \texttt{.R}.  
+The second part of the make file tells Make what we want to create and how to create it. In the line (\verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{target, makefile} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \textttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
 
+The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CMD BATCH $<|) actually runs the R source code files in the directory.  The first line specifies that the \emph{.Rout} files are the targets of the \emph{.R} files (the prerequisites. The percent sign (\verb|%|) is another wildcard. Unlike the asterisk, it replaces the selected file names throughout the command used to create the target.
 
+The dollar and less than signs (\verb|$<|) indicate the first prerequisite for the target, i.e. the \emph{.R} files. \texttt{R CMD BATCH}\index{R CMD BATCH} is a way to call R from a Unix-like shell, run source files and output the results to other files. In Windows you will probably need to change \texttt{R} to the path for your \emph{R.exe} file. For example: \emph{C:\textbackslash{}Programs Files\textbackslash{}R\textbackslash{}2.15.2\textbackslash{}bin\textbackslash{}R.exe}. The outfiles it creates have the extension \emph{.Rout}.
 
-The third line (\verb|OUT_FILES := $(RSOURCE: .R = .Rout)|) creates a variable for the \texttt{.Rout} files that Make will use to tell how recently each R file was run. 
+The last two lines specify another target: \texttt{clean}. When you type \texttt{make clean} into your shell Make will follow the recipe: \verb|rm -fv $(OUT_FILES)|.\index{rm} This removes (deletes) the \emph{.Rout} files. The \texttt{f} argument (force) ignores  files that don't exist and the \texttt{v} argument (verbose) tells you what is happening. When you delete the \emph{.Rout} files, Make will run all of the \emph{.R} files the next time you call it.
+
+\paragraph{Running the MakeFile}
+
+To run the makefile simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \emph{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.} Remember to make sure your current working directory is the one with the files you want to run. 
 
 When you run \verb|make| in the shell for the first time you should get the output:
 
@@ -145,7 +170,7 @@ When you run \verb|make| in the shell for the first time you should get the outp
 		\end{kframe}
 \end{knitrout}
 
-To remove the \texttt{.Rout} files use set the make target to \texttt{clean}:
+\noindent To remove the \emph{.Rout} files use set the make target to \texttt{clean}:
 
 \begin{knitrout}
 	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -154,7 +179,8 @@ To remove the \texttt{.Rout} files use set the make target to \texttt{clean}:
 		\begin{verbatim}
 make clean
 
-## rm -fv ./Gather1.Rout ./Gather2.Rout ./Gather3.Rout ./MergeData.Rout
+## rm -fv ./Gather1.Rout ./Gather2.Rout ./Gather3.Rout 
+## ./MergeData.Rout
 ## ./Gather1.Rout
 ## ./Gather2.Rout
 ## ./Gather3.Rout
@@ -164,9 +190,11 @@ make clean
 \end{knitrout}
 
 
+\paragraph{Other information about Makefiles}
+
 Note that Make relies heavily on commands and syntax of the shell program that you are using. The above example was written and tested on a Mac. It should work on other Unix-like computers without modification.
 
-You can use Make to build almost any project from the shell, not just run R source code files. It was an integral part of early reproducible computational research \citep{Fomel2009, Buckheit1995}. Rob Hyndman more recently posted a description of the makefile he uses to create a project with R and Latex.\footnote{See his blog at: \url{http://robjhyndman.com/researchtips/makefiles/}. Posted 31 October 2012. This method largely replicates what we do in this book with \emph{knitr}. Nonetheless, it has helpful information about Make that can be used in other tasks. It was in fact helpful for writing this section of the book.}
+You can use Make to build almost any project from the shell, not just run R source code files. It was an integral part of early reproducible computational research \citep{Fomel2009, Buckheit1995}. Rob Hyndman more recently posted a description of the makefile he uses to create a project with R and Latex.\footnote{See his blog at: \url{http://robjhyndman.com/researchtips/makefiles/}. Posted 31 October 2012. This method largely replicates what we do in this book with \emph{knitr}. Nonetheless, it has helpful information about Make that can be used in other tasks. It was in fact helpful for writing this section of the book.} The complete source of information on GNU Make is the online manual. It is available at: \url{http://www.gnu.org/software/make/manual/}.
 
 \section{Importing locally stored data sets}
 
@@ -192,13 +220,9 @@ As you can see, commands in the \emph{foreign} library have similar syntax to \t
 library(help="foreign")
 @
 
-If you have data stored in a spreadsheet format such as Excel's \texttt{.xlsx}, it may be best to first clean up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information--notes, colors, and so on--that will not be part of the data frame.
+If you have data stored in a spreadsheet format such as Excel's \emph{.xlsx}, it may be best to first clean up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information--notes, colors, and so on--that will not be part of the data frame.
 
 To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before it was loaded into R. Ideally the documentation would be written in a text file saved in the same directory as the raw data file. 
-
-\subsection{Looping through multiple files}
-
-\todo[inline]{This subsection needs to be written.}
 
 \section{Importing data sets from the internet}
 
@@ -270,7 +294,7 @@ To do this you need to:\footnote{The description of this process is based on a S
 
 Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It is in a compressed file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, that I shortened\footnote{Again, I used bitly (\url{bitly.com}) to shorten the URL.} to \url{http://bit.ly/S0vxk2} because of space constraints.
 
-{\scriptsize
+{\footnotesize
 <<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
 # For simplicity, store the URL in an object called 'url'.
 url <- "http://bit.ly/S0vxk2"

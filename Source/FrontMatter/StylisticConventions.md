@@ -18,6 +18,10 @@ All code is in `typewriter text`.
 
 Filenames and directories more generally are printed in *italics*. I use CamelBack for file and directory names.
 
+- **File extensions**
+
+Like filenames, file extensions are *italicized*.
+
 - **Individual variable values**
 
 Individual variable values mentioned in the text are in **bold**.
