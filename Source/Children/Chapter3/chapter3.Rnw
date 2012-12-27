@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 December 2012
+% Updated: 27 December 2012
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -340,7 +340,7 @@ When you want to include R code into your markup presentation documents, place t
 
 In R Markdown files we begin a code chunk by writing the head: \texttt{\`\`\`\\ \{r\} }. A code chunk is closed--ended--simply with: \`\`\`\ . For example:
 
-<<FirstMDExample, eval=FALSE>>=
+<<Ch3FirstMDExample, tidy=FALSE, eval=FALSE>>=
 ```{r}
 # Example of a R Markdown code chunk
 StringNumObject <- cbind(CharacterVect, NumericVect)
@@ -356,26 +356,33 @@ There are two different ways to delimit code chunks in R LaTeX documents. One wa
 Traditional Sweave-style code chunks begin with the following head: \texttt{\textless\textless \textgreater\textgreater=}. The code chunk is closed with an at sign (@).
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}\begin{kframe}
+        \begin{alltt}
 \textless\textless \textgreater\textgreater=
 \hlcomment{# Example of a Sweave-style code chunk}
 StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
 @
-\end{alltt}
-\end{kframe}
+        \end{alltt}
+    \end{kframe}
 \end{knitrout}
 
 \noindent {\bf{Rtex-style}} \\[0.25cm]
 
 Sweave-style code chunk syntax is fairly baroque compared to the Rtex-style syntax. To begin a code chunk in an \texttt{Rtex} file simply type double percent signs followed by \texttt{begin.rcode}, i.e. \texttt{\%\% begin.rcode}. To close the chunk you use double percent signs: \texttt{\%\%}. Each line in the code chunk needs to begin with a single percent sign. For example:
 
-<<RtexExample, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 %% begin.rcode
 % # Example of a Rtex-style code chunk
 % StringNumObject <- cbind(CharacterVect, NumericVect)
 %%
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \paragraph{Code chunk labels}
 
@@ -399,7 +406,7 @@ There are many times when we want to change how our code chunks are knitted and 
 
 Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \texttt{OPTIONLABEL=VALUE} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false". For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we only want to have {\emph{knitr}} include the code in our document, but not actually run it we use the option \texttt{eval=FALSE}. This option tells {\emph{knitr}} not to evaluate (run) the code chunk.
 
-<<MarkdownChunkOptionExample, eval=FALSE>>=
+<<MarkdownChunkOptionExample, tidy=FALSE, eval=FALSE>>=
 ```{r ChunkLabel, eval=FALSE}
 # Example of a non-evaluated code chunk
 StringNumObject <- cbind(CharacterVect, NumericVect)
@@ -408,12 +415,18 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
 
 \noindent Note that all labels and code chunk options must be on the same line. Options are separated by commas. The syntax for {\emph{knitr}} options is the same regardless of the markup language. Here is the same chunk option in Rtex-style syntax:
 
-<<RtexChunkOptionExample, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 %% begin.rcode ChunkLabel, eval=FALSE
 % # Example of a non-evaluated code chunk
 % StringNumObject <- cbind(CharacterVect, NumericVect)
 %%
-@ 
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 Throughout this book we will look at a number of different code chunk options. All of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.\todo{Note: this table will be expanded as the later chapters are expanded.} 
 
@@ -454,7 +467,7 @@ Here is an example of how you can center align all of the figures in a Markdown 
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
-\textless{\textless}ChunkLabel \textgreater{\textgreater}=
+\textless{\textless}ChunkLabel\textgreater{\textgreater}=
 # Center align all knitr figures
 opts_chunk$set(fig.align='center')
 @
@@ -473,7 +486,7 @@ You set package options in a similar way as global chunk options with {\tt{opts\
     \color{fgcolor}
         \begin{kframe}
             \begin{alltt}
-\textless{\textless}ChunkLabel \textgreater{\textgreater}=
+\textless{\textless}ChunkLabel\textgreater{\textgreater}=
 # Turn off knitr progress bar
 opts_knit$set(progress=FALSE)
 @

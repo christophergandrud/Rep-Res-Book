@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 October 2012
+% Updated: 27 December 2012
 
 <<set-parent12, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -57,9 +57,15 @@ pandoc StylisticConventions.md -f markdown \
 
 I only need to include a backslash (\textbackslash{}) at the end of the first line because I wanted to split the code over two lines. The code wouldn't fit on this page otherwise. The backslash tells the shell not to treat the following line as a different line. Unlike in R, Bash only recognizes a command's arguments if they are on the same line as the command. After this code chunk we need to tell our parent document to include the converted text. To do this we follow the code chunk with the {\tt{\\input}} command like this:
 
-<<Ch12InputPandoc, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 \input{StyleTemp.tex}
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \noindent Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
 

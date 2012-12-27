@@ -55,15 +55,21 @@ Sometimes you may want to have some R code or text output show up inline with th
 
 \paragraph{Inline static code}
 
-There are a number of ways to to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\textttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that something code (I use it in this book, as you have probably noticed). For example, using \verb|\textttt{2 + 2}| will give you `\texttt{2 + 2}' in your text.
+There are a number of ways to to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that something code (I use it in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you `\texttt{2 + 2}' in your text.
 
-However, the \verb|\textttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
+However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
 
-To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\textttt|' in the text. We would type:
+To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\texttt|' in the text. We would type:
 
-<<Ch8VerbInLine, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 \verb|\texttt|
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar. All of the text in between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012).}
 
@@ -79,10 +85,16 @@ round(mean(rivers), digits = 0)
 
 \noindent To have just the output show up inline with the text of your document you would type something like:
 
-<<CH8MeanRiversSexpr, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 The mean length of 141 major rivers in North America
 is \Sexpr{round(mean(rivers), digits = 0)} miles. 
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \noindent This produces the sentence:
 
@@ -167,7 +179,7 @@ Third, other researchers trying to replicate your work might only be interested 
 
 Usually in the early stages of research you may want to run code stored in analysis files located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk you save it to its own file and use the \texttt{source} command to access it. For example, in an R Markdown file we could run the R code in a file called {\emph{MainAnalysis.R}} from our {\exmph{ExampleProject}} like this:
 
-<<MarkdownLocalSource, eval=FALSE>>=
+<<MarkdownLocalSource, eval=FALSE, tidy=FALSE>>=
 ```{r, echo=FALSE}
 # Run main analysis
 source("/ExampleProject/Analysis/MainAnalysis.R"}

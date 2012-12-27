@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 October 2012
+% Updated: 27 December 2012
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -25,9 +25,15 @@ Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} f
 
 All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, to create a section heading you use the \texttt{section} command. The arguments for LaTeX commands are written inside of curly braces (\texttt{\{\}}) like this:
 
-<<Ch11Section, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 \section{My Section Name}
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \subsection{The header \& the body}
 
@@ -36,16 +42,16 @@ All LaTeX documents require a header\index{LaTeX header}. The header goes before
 The header is followed by the body of your document. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple header and body like this:
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
+	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+		\begin{alltt}
 \textbackslash{}documentclass\{article\}
 
 \textbackslash{}begin\{document\}
 
 
 \textbackslash{}end\{document\}
-\end{alltt}
-\end{kframe}
+		\end{alltt}
+	\end{kframe}
 \end{knitrout}
 
 
@@ -118,20 +124,32 @@ You can make slideshow presentations with LaTeX.
 
 A quick way to create each Beamer slide is to use the \texttt{frame} command:
 
-<<Ch11FrameExample, eval=FALSE>>=
-
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 \frame{
 
 }
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \noindent If you want to include highlighted {\emph{knitr}} code chunks on your slides you should add the \texttt{fragile} option to the \texttt{frame} command.\footnote{For a detailed discussion of why you need to use the \texttt{fragile} option with the verbatim environment that {\emph{knitr}} uses to display highlighted text in LaTeX documents see this blog post by Pieter Belmans: \url{http://pbelmans.wordpress.com/2011/02/20/why-latex-beamer-needs-fragile-when-using-verbatim/}.} Here is an example:
 
-<<Ch11FrameFragileEx, eval=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 \begin{frame}[fragile]
-    An example fragile frame.
+    \frametitle{An example fragile frame.}
+
 \end{frame}
-@
+            \end{verbatim}
+        \end{kframe}
+\end{knitrout}
 
 \paragraph{Results}
 

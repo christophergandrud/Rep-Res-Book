@@ -1,7 +1,7 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 December 2012
+% Updated: 27 December 2012
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -27,10 +27,14 @@ The three basic stages of a typical computational empirical research project are
 
 Instead of starting to use the individual tools of reproducible research  as soon as you learn them I recommend briefly stepping back and considering how the stages of reproducible research {\emph{tie}} together overall. This will make your workflow more coherent from the beginning and save you a lot of backtracking later on.  Figure \ref{WorkflowTies} illustrates the workflow. Notice that the arrows connecting the workflow's parts point in both directions, indicating that you should always be thinking how to make it easier to go backwards through your research, i.e. reproduce it, as well as forwards. 
 
-Around the edges of the figure are some of the commands you will learn to make it easier to go forwards and backwards through the process. These commands tie your research together. For example, you can use API-based R packages\index{API} to gather data from the internet. You can use the \texttt{merge} command to combine data gathered from different sources into one data set. The \texttt{getURL}\index{getURL} and {\texttt{read.table}}\index{read.table} commands can be used to bring this data set into your statistical analyses. The {\emph{knitr}} package then ties your analyses into your presentation documents. This includes the code you used, the figures you created, and, with the help of tools such as the {\emph{xtable}} package, tables of results. You can even tie multiple presentation documents together. For example, you can access the same figure for use in a LaTeX article and a Markdown created website with the \texttt{includegraphics}\index{includegraphics} and \texttt{![]()}\index{![]()} commands, respectively. This helps you maintain a consistent presentation of results across multiple documents types. We'll cover these commands in detail throughout the book. See Table \ref{TableTieCommands} for a brief, but more complete overview of the main \emph{tie commands}.\index{tie commands} 
+Around the edges of the figure are some of the commands you will learn to make it easier to go forwards and backwards through the process. These commands tie your research together. For example, you can use API-based R packages\index{API} to gather data from the internet. You can use the \texttt{merge} command to combine data gathered from different sources into one data set. The \texttt{getURL}\index{getURL} and {\texttt{read.table}}\index{read.table} commands can be used to bring this data set into your statistical analyses. The {\emph{knitr}} package then ties your analyses into your presentation documents. This includes the code you used, the figures you created, and, with the help of tools such as the {\emph{xtable}} package, tables of results. You can even tie multiple presentation documents together. For example, you can access the same figure for use in a LaTeX article and a Markdown created website with the \texttt{includegraphics}\index{includegraphics} and \texttt{![]()}\index{![]()} commands, respectively. This helps you maintain a consistent presentation of results across multiple documents types. We'll cover these commands in detail throughout the book. See Table \ref{TableTieCommands} for a brief, but more complete overview of the main {\emph{tie commands}}.\index{tie commands} 
 
+\subsection{Reproducible Theory}
 
-\clearpage
+An important part of the research process that I do not discuss in this book is the theoretical stage. Ideally, if you are using a deductive research design, the bulk of this work will precede and guide the data gathering and analysis stages. Just because I don't cover this stage of the research process doesn't mean that theory building can't and shouldn't be reproducible. It can in fact it may be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material. For mathematically based theory, clear and complete descriptions of the proofs should be given. 
+
+Though I don't actively cover theory replication in depth in this book, I do touch on some of the ways to incorporate proofs and citations into your presentation documents. These tools are covered in Part IV.
+
 \thispagestyle{plain}
 \begin{landscape}
     \begin{center}
@@ -41,12 +45,6 @@ Around the edges of the figure are some of the commands you will learn to make i
         \end{figure}
     \end{center}
 \end{landscape}
-
-\subsection{Reproducible Theory}
-
-An important part of the research process that I do not discuss in this book is the theoretical stage. Ideally, if you are using a deductive research design, the bulk of this work will precede and guide the data gathering and analysis stages. Just because I don't cover this stage of the research process doesn't mean that theory building can't and shouldn't be reproducible. It can in fact it may be ``the easiest part to make reproducible" \cite[1254]{Vandewalle2007}. Quotes and paraphrases from previous works in the literature obviously need to be fully cited so that others can verify that they accurately reflect the source material. For mathematically based theory, clear and complete descriptions of the proofs should be given. 
-
-Though I don't actively cover theory replication in depth in this book, I do touch on some of the ways to incorporate proofs and citations into your presentation documents. These tools are covered in Part IV.
 
 \section{Practical tips for reproducible research}
 
@@ -117,10 +115,10 @@ He also suggests that all of your source code files should begin with a comment 
 \begin{itemize}
     \item a description of what the file does,
     \item the date it was last updated,
-    \item the name of the file's creator and any contributors
+    \item the name of the file's creator and any contributors.
 \end{itemize}
 
-\noindent You may also want to include other information in the header such as what other files it depends on, what output files it produces, and what version of the programming language you are using. 
+\noindent You may also want to include other information in the header such as what other files it depends on, what output files it produces, what version of the programming language you are using or sources that may have strongly influenced the code. 
 
 Here is an example of a minimal file header for an R source code file that creates the third figure in an article titled ``My Article":
 
@@ -128,7 +126,7 @@ Here is an example of a minimal file header for an R source code file that creat
 ##################
 # Source code file used to create Figure 3 in ''My Article''
 # Created by Christopher Gandrud
-# Updated 20 November 2012
+# Updated 1 March 2012
 ##################
 @
 

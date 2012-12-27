@@ -66,7 +66,11 @@ The basic of reproducible data gathering with Make is similar to what we saw bef
 
 The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files. In our example this is \texttt{/ExampleProject/Data/GatherSource/IndvDataGather/}. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Then in the makefile write:
 
-<<Ch6ExampleMakeile, eval=FALSE, engine='sh'>>=
+\begin{knitrout}
+	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+	\color{fgcolor}
+	\begin{kframe}
+		\begin{verbatim}
 ################
 # Example Makefile
 # Christopher Gandrud
@@ -76,12 +80,12 @@ The first thing we need to do is create a new file called \emph{Makefile}\footno
 ################
 
 # Key variables to define
-RDIR= .
+RDIR = .
 
 # Create list of R source files
-RSOURCE := $(wildcard $(RDIR)/*.R)
+RSOURCE:= $(wildcard $(RDIR)/*.R)
 
-# Indicator files to show R file has run
+# Files to indicate when the RSOURCE file was run
 OUT_FILES := $(RSOURCE: .R = .Rout)
 
 # Default target
@@ -91,16 +95,74 @@ all: $(OUT_FILES)
 $(RDIR)/%.Rout: $(RDIR)/%.R
 	R CMD BATCH $<
 
-# Remove Out files
+# Remove Out Files
 clean: 
 	rm -fv $(OUT_FILES)
-@
+			\end{verbatim}
+		\end{kframe}
+\end{knitrout}
 
-\noindent To run the makefile simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \texttt{.Rout}, indicating when the segmented data gathering files were last run. Remember to make sure your current working directory is the one with the files you want to run.
+\todo[inline]{Tabs Issue}
 
-Ok, let's break down the code. The first line of executable code (\texttt{RDIR=.}) creates a simple variable.\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. For a very good introduction to the details of Make see it's Wikipedia page: \url{http://en.wikipedia.org/wiki/Make_(software)}.} The period (\texttt{.}) indicates the current directory. 
+\noindent To run the makefile simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \texttt{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.} Remember to make sure your current working directory is the one with the files you want to run. Ok, let's break down the code. 
 
-The second line (\texttt{OUT_FILES := $(RSOURCE: .R = .Rout)}) creates a variable
+The first line of executable code (\texttt{RDIR=.}) creates a simple variable.\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. For a very good introduction to the details of Make see it's Wikipedia page: \url{http://en.wikipedia.org/wiki/Make_(software)}.} The period (\texttt{.}) indicates the current directory. 
+
+The second line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \texttt{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. Let's start with the \texttt{:=}. In Make a simple equals sign (\texttt{=}) assigns a value to a variable verbatim. In the previous line (\texttt{RDIR = .}) a period (\texttt{.}) is assigned to the variable \texttt{RDIR}. Using a colon and equals sign (\texttt{:=})  The \texttt{:=} is a bash shell command that assigns the values of \verb|$(wildcard $(RDIR)/*.R)| to the variable \texttt{RSOURCE}, i.e. creating the list of R source code files.
+
+The dollar signs (\verb|$|). In Bash a dollar sign followed by a variable name just substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
+
+The asterisk (\verb|*|) is a ``wildcard''. A wildcard\index{wildcard} is a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \texttt{.R}.  
+
+
+
+The third line (\verb|OUT_FILES := $(RSOURCE: .R = .Rout)|) creates a variable for the \texttt{.Rout} files that Make will use to tell how recently each R file was run. 
+
+When you run \verb|make| in the shell for the first time you should get the output:
+
+\begin{knitrout}
+	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+	\color{fgcolor}
+	\begin{kframe}
+		\begin{verbatim}
+## R CMD BATCH Gather1.R
+## R CMD BATCH Gather2.R
+## R CMD BATCH Gather3.R
+## R CMD BATCH MergeData.R
+			\end{verbatim}
+		\end{kframe}
+\end{knitrout}
+
+\noindent If you run it a second time without changing the R source files you will get the following output:
+
+\begin{knitrout}
+	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+	\color{fgcolor}
+	\begin{kframe}
+		\begin{verbatim}
+## make: Nothing to be done for `all'.
+			\end{verbatim}
+		\end{kframe}
+\end{knitrout}
+
+To remove the \texttt{.Rout} files use set the make target to \texttt{clean}:
+
+\begin{knitrout}
+	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+	\color{fgcolor}
+	\begin{kframe}
+		\begin{verbatim}
+make clean
+
+## rm -fv ./Gather1.Rout ./Gather2.Rout ./Gather3.Rout ./MergeData.Rout
+## ./Gather1.Rout
+## ./Gather2.Rout
+## ./Gather3.Rout
+## ./MergeData.Rout
+			\end{verbatim}
+		\end{kframe}
+\end{knitrout}
+
 
 Note that Make relies heavily on commands and syntax of the shell program that you are using. The above example was written and tested on a Mac. It should work on other Unix-like computers without modification.
 
