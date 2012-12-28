@@ -22,11 +22,13 @@ The book can be reproduced by using the R package *knitr*. To do this:
 
 3. Run the `BookMake.R` make file.
 
-- To install the R packages used to compile the book make sure that the first line of code in `BookMake.R` is set to `TRUE` like this:
+Note: To install the R packages used to compile the book open the Source/FrontMatter/Packages.Rnw. Find:
 
 ```
 doInstall <- FALSE
 ```
+
+in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `TRUE` and run the code chunk
 
 ### Session Info
 The current version of the book manuscript was compiled with the following session:
@@ -40,32 +42,32 @@ The current version of the book manuscript was compiled with the following sessi
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
-## [1] splines   tools     stats     graphics  grDevices utils     datasets 
-## [8] methods   base     
+## [1] tools     stats     graphics  grDevices utils     datasets  methods  
+## [8] base     
 ## 
 ## other attached packages:
-##  [1] MCMCpack_1.2-4      reshape_0.8.4       MSBVAR_0.7-2       
-##  [4] mvtnorm_0.9-9993    bit_1.1-9           coda_0.16-1        
-##  [7] lattice_0.20-10     KernSmooth_2.23-8   survival_2.36-14   
-## [10] foreign_0.8-51      xtable_1.7-0        texreg_1.14        
-## [13] openair_0.7-0       markdown_0.5.3      knitcitations_0.1-0
-## [16] bibtex_0.3-3        knitr_0.8           apsrtable_0.8-8    
-## [19] extrafont_0.12      Matching_4.8-1      rgenoud_5.7-8      
-## [22] ggplot2_0.9.2.1     reshape2_1.2.1      RCurl_1.95-3       
-## [25] bitops_1.0-4.2      plyr_1.7.1          Zelig_3.5.5        
-## [28] boot_1.3-7          MatchIt_2.4-20      MASS_7.3-22        
-## [31] devtools_0.8       
+##  [1] Zelig_3.5.5         boot_1.3-7          MASS_7.3-22        
+##  [4] xtable_1.7-0        WDI_2.2             treebase_0.0-6     
+##  [7] ape_3.0-6           texreg_1.15         RCurl_1.95-3       
+## [10] bitops_1.0-4.2      quantmod_0.3-17     TTR_0.21-1         
+## [13] xts_0.8-8           zoo_1.7-9           Defaults_1.1-1     
+## [16] openair_0.7-0       markdown_0.5.3      knitcitations_0.1-0
+## [19] bibtex_0.3-4        knitr_0.9           googleVis_0.3.3    
+## [22] RJSONIO_1.0-1       ggplot2_0.9.3       formatR_0.7        
+## [25] devtools_0.8        apsrtable_0.8-8     animation_2.1      
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] cluster_1.14.3     codetools_0.2-8    colorspace_1.2-0  
-##  [4] dichromat_1.2-4    digest_0.5.2       evaluate_0.4.2    
-##  [7] formatR_0.6        grid_2.15.2        gtable_0.1.1      
-## [10] httr_0.2           labeling_0.1       Matrix_1.0-10     
-## [13] memoise_0.1        mgcv_1.7-22        munsell_0.4       
-## [16] nlme_3.1-105       parallel_2.15.2    pkgmaker_0.9      
-## [19] proto_0.3-9.2      RColorBrewer_1.0-5 Rttf2pt1_1.1      
-## [22] scales_0.2.2       stringr_0.6.1      whisker_0.3-2     
-## [25] XML_3.95-0.1
+##  [4] data.table_1.8.6   dichromat_1.2-4    digest_0.6.0      
+##  [7] evaluate_0.4.3     gee_4.13-18        grid_2.15.2       
+## [10] gtable_0.1.2       httr_0.2           labeling_0.1      
+## [13] lattice_0.20-10    Matrix_1.0-10      memoise_0.1       
+## [16] mgcv_1.7-22        munsell_0.4        nlme_3.1-106      
+## [19] parallel_2.15.2    pkgmaker_0.10.1    plyr_1.8          
+## [22] proto_0.3-9.2      RColorBrewer_1.0-5 Rcpp_0.10.1       
+## [25] reshape2_1.2.2     rjson_0.2.11       scales_0.2.3      
+## [28] splines_2.15.2     stringr_0.6.2      twitteR_0.99.19   
+## [31] whisker_0.3-2      XML_3.95-0.1
 ```
 
 

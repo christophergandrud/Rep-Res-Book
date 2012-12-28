@@ -17,14 +17,17 @@ install.packages("animation",
                 "knitr", 
                 "knitcitations", 
                 "markdown", 
-                "openair", 
+                "openair",
+                "plyr", 
                 "quantmod",
                 "RCurl",
+                "RJSONIO",
                 "texreg",
                 "tools",
                 "treebase",
                 "twitteR",
-                "WDI",                     
+                "WDI",    
+                "XML",                 
                 "xtable", 
                 "Zelig")
 @
@@ -46,31 +49,46 @@ install_github("slidifyLibraries", "ramnathv")
 
 If you are Windows you will also need to install Rtools \cite[]{Rtools}.\index{Rtools} You can download Rtools from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload}
 
+\todo[inline]{Fix write\_bib issue}
+
 <<FrontPackageCitations, echo=FALSE, message=FALSE, warning=FALSE>>=
-# Create package list
-PackagesCited <- c("animation",
-                    "apsrtable", 
-                    "devtools",
-                    "formatR", 
-                    "ggplot2", 
-                    "googleVis",
-                    "httr",
-                    "knitr", 
-                    "knitcitations", 
-                    "markdown", 
-                    "openair",
-                    "quantmod",
-                    "RCurl",
-                    "slidify",  
-                    "texreg",
-                    "tools",
-                    "twitteR", 
-                    "WDI",                   
-                    "xtable", 
-                    "Zelig")
+# Install & load required packages
+## Based on https://gist.github.com/3710171
+## See also http://bit.ly/PbabKd
+doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
+toInstall <- c("animation",
+               "apsrtable", 
+               "devtools", 
+               "formatR",
+               "ggplot2", 
+               "googleVis",
+               "knitr", 
+               "knitcitations", 
+               "markdown", 
+               "openair",
+               "plyr", 
+               "quantmod",
+               "RCurl",
+               "RJSONIO",
+               "texreg",
+               "tools",
+               "treebase",
+               "twitteR",
+               "WDI", 
+               "XML",                    
+               "xtable", 
+               "Zelig")
+
+if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org")}
+lapply(toInstall, library, character.only = TRUE)
 
 # Write citations to bibtex file
-write_bib(PackagesCited,
+write_bib(toInstall,
               file = "/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib")
 
+# Remove conflicting packages
+detach(package:twitteR)
+detach(package:rjson)
+detach(package:rjsonio)
+detach(package:XML)
 @
