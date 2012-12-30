@@ -242,7 +242,7 @@ git status -s
   \caption{A Selection of Git Commands Used in this Chapter}
   \begin{center}
   \label{GitCommandsTable}
-  \begin{tabular}{l p{10cm}}
+  \begin{tabular}{l p{7cm}}
     \hline  
     Command & Description \\[0.25cm] \hline\hline
     \texttt{add} & Add a file to a Git repository. \\[0.25cm]
@@ -251,11 +251,14 @@ git status -s
     \texttt{clone} & Clone a repository (for example the GitHub version) into the current working directory. \\[0.25cm]
     \texttt{commit} & Commit changes to a Git repository. \\[0.25cm] 
     \texttt{fetch} & Download objects from the remote (or another) repository. \\[0.25cm] 
+    \texttt{.gitignore} & Not a git command, but a file you can add to your repository specifying what files/file types for Git to ignore. \\[0.25cm]
     \texttt{init} & Initialize a Git repository. \\[0.25cm]
     \texttt{log} & Show commit history. \\[0.25cm]
     \texttt{merge} & Merges two or more commits/branches together. \\[0.25cm]
     \texttt{pull} & \texttt{fetch} data from a remote repository and try to \texttt{merge} it with your commits. \\[0.25cm]
     \texttt{push} & Add committed changes to a remote Git repository, i.e. GitHub. \\[0.25cm]
+    \texttt{remote add} & Add a new remote repository to an existing project. \\[0.25cm]
+    \texttt{rm} & Remove files from Git version tracking. \\[0.25cm]
     \texttt{status} & Show the status of a Git repository including uncommitted changes made to files. \\[0.25cm]
     \hline
   \end{tabular}
@@ -329,6 +332,44 @@ git merge Test
 
 
 \noindent Not, when you merge a branch you may encounter conflicts in the files that make it impossible to smoothly merge the files together. Git will tell you what and where these are, you then need to decide what to keep and what to delete.
+
+\paragraph{Having Git ignore files}
+
+There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files, cache files from \emph{knitr} and other files that are they byproduct of compiling an R LaTeX document. To have Git ignore a file simply create a file called \emph{.gitignore}.\index{.gitignore}\index{Git ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository, or in a child directory to ignore files only in that directory. In the \emph{.gitignore} file add the subdirectories, file names and  file extensions of the files that you want to have Git ignore. 
+
+For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling a LaTeX file would look something like this:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+# Ignore LaTeX compile byproduct files #
+########################################
+.bbl
+.blg
+.pdf
+.gz
+.tex
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Not, Git will not ignore files that have already been commited to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{rm, Git command} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking so that it could be ignored type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+# Remove ExampleProject.tex from Git version tracking
+git rm --cached ExampleProject.tex
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent Using the \texttt{--cached} argument tells Git not to track the file, but not delete it. 
+
+For more information on \emph{.gitignore} files see GitHub's reference page on the topic at: \url{https://help.github.com/articles/ignoring-files}.
+
 
 \subsubsection{Remote Storage on GitHub}
 
@@ -431,6 +472,34 @@ To create a new project with Git version control go to \texttt{Project} in the R
 
 If you have an existing RStudio Project and want to add Git version control to it first go to \texttt{Project} in the RStudio menu bar. Then select \texttt{Project Options \ldots}. Select the \texttt{Git/SVN} icon. Finally select \texttt{Git} from the drop down menu for \texttt{Version Control System:}.
 
+You can push an existing repository stored on your computer to a new remote one on GitHub, for example. To do this first create a new repo on GitHub with the same name as your RStudio project like we did earlier.\footnote{If your project already has a README file make sure you don't have GitHub initialize the repository with another README file.} Then copy the remote repository's URL like we saw before when we cloned a repository. Open a new shell from withing RStudio. To do this, click the \texttt{Shell} button in Git tab's \texttt{More} drop down menu. Then use the Git's \texttt{remote}\index{remote} command with the \texttt{add} argument. For example, if your repository's GitHub URL is \texttt{https://github.com/USERNAME/ExampleProject.git} then type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+# Add a remote (GitHub) repository to an existing repo
+git remote add origin https://github.com/USERNAME/ExampleProject.git
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent This will add the local \texttt{origin} repository to GitHub. Finally, push the repository to GitHub: 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+# Push local repository to GitHub for the first time
+git push -u origin master
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent This is almost identical to the \texttt{push} command we saw earlier. The only difference is the addition of the \texttt{-u} (upstream tracking)\index{Git upstream tracking} argument. This argument simply adds a tracking reference for the upstream (GitHub) repository branches. 
+
+Once you have done this you will not need to use the shell to push changes to GitHub. You can use the \texttt{Push} command in the \texttt{More} drop down menu in your project's \emph{Git} tab. Just like when pushing from the shell, you will be asked for your GitHub user name and password.
+
 \paragraph{Clone repository into a new project}
 
 To create a new project from a cloned GitHub Repository again go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}. Select the \texttt{Version Control} option and then \texttt{Git}. Finally paste the repository's URL in the field called \texttt{Repository URL:}, enter the directory you would like to locate the cloned repo in and click \texttt{Create Project}. 
@@ -457,9 +526,9 @@ When you open a project with a Git repository in RStudio you will see a new tab 
     \end{center}
 \end{figure}
 
-This tab allows you do to many of the things we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with th other files. The yellow question marks in the top panel have now become green A's. Clicking \texttt{Commit} adds the files and commits the changes. As long as you have the dialog box checked, every change you save to the file in the project will be committed when you click \texttt{Commit}. 
+This tab allows you do to many of the things we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}.  
 
-If you are using a cloned GitHub repo you can push and pull them with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu.
+If you are using a GitHub repo that is associated with a remote repository on GitHub, for example, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu.
 
 The Git tab also allows you to change branches, revert to previous commits, view your commit history. You can also always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new Shell with the project set as the working directory to complete any Git task you might want.
 

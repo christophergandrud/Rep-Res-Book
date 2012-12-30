@@ -13,6 +13,9 @@
 # Change the value `FALSE` to `TRUE` and run the code chunk.
 
 ##### Create PDF Book Manuscript ####
+# Load knitr
+library(knitr)
+
 # Change working directory to /Rep-Res-Book/Source/Parent
 ParentDirectory <- "/git_repositories/Rep-Res-Book/Source/Parent/"
 setwd(ParentDirectory)

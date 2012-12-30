@@ -23,6 +23,8 @@ Segmentation your data gathering and it together with some sort of make file all
 
 It's a good idea to have the source code files use very raw data as input. Your source code should avoid directly changing these raw data files. Instead changes should be output to new objects and data files. Doing this makes it easier to reconstruct the steps you took to create your data set. Also, while cleaning and merging your data you may transform it in an unintended way, for example, accidentally deleting some observations that you had wanted to keep. Having the raw data makes it easy to go back and correct your mistakes. 
 
+The files for the examples used in this section can be downloaded from GitHub at: \url{http://bit.ly/YnMKBG}.
+
 \subsection{R Make-like files}
 
 When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems.
@@ -137,7 +139,7 @@ Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make funct
 
 The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \emph{.Rout} files that Make will use to tell how recently each R file was run. \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but uses the file extension \emph{.Rout}.
 
-The second part of the make file tells Make what we want to create and how to create it. In the line (\verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{target, makefile} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \textttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
+The second part of the make file tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{target, makefile} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \textttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
 
 The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CMD BATCH $<|) actually runs the R source code files in the directory.  The first line specifies that the \emph{.Rout} files are the targets of the \emph{.R} files (the prerequisites. The percent sign (\verb|%|) is another wildcard. Unlike the asterisk, it replaces the selected file names throughout the command used to create the target.
 
@@ -194,6 +196,10 @@ make clean
 			\end{verbatim}
 		\end{kframe}
 \end{knitrout}
+
+\paragraph{Makefiles and RStudio Projects}
+
+\todo[inline]{ADD}
 
 \paragraph{Other information about Makefiles}
 
@@ -432,18 +438,18 @@ If a package does not already exist to access data from a particular website the
 
 Simple web scraping involves downloading a file from the internet, parsing it (i.e. reading it), and extracting the data you are interested in then putting it into a data frame object. We already saw a simple example of this when we downloaded data from the a secure HTTPS website. Using the \emph{RCurl} package we downloaded the content of a website from a URL address into R with \emph{RCurl}'s \texttt{getURL} command. We then parsed downloaded text as CSV formatted data, extracted it and put it into a new data frame object. 
 
-This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML formatted table within a more complicated HTML marked up webpage. The \emph{XML} package \citeP{R-XML} has a number of useful commands such as \texttt{readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formated data.\footnote{XML stands for ``Extensible Markup Language''}.\index{XML} If the data is stored in JSON\footnote{JavaScript Object Notation}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
+This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML formatted table within a more complicated HTML marked up webpage. The \emph{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formated data.\footnote{XML stands for ``Extensible Markup Language''}.\index{XML} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation"}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
 
 There are more websites with API's than R packages designed specifically to access each one. It an API is available to access the data you want from a website the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper for \emph{RCurl} intended to make accessing APIs easier. 
 
 As of the time when I was writing this book Brian Abelson's \emph{scraply} \index{scraply} package was not on CRAN.\index{CRAN} I would like to bring your attention to it now though because it may turn out to be a useful addition to the R web scraping tool chest. It looks like an especially promising way of handling errors that might occur while scraping a website. Errors are a persistent issue in web scraping. More information is available at the package's GitHub site: \url{https://github.com/abelsonlive/scraply/}.
 
-\subsection{Learn more web scraping}
+\paragraph{More tools to learn about for web scraping}
 
 Beyond learning about the various R packages that are useful for R web scraping, an aspiring web scraper should probably invest time learning a number of other skills:
 
 \begin{itemize}
-	\item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. A good, free, resource for learning HTML as well as JSON, JavaScript, XML, and other languages is W3 Schools (\url{http://www.w3schools.com/}).
+	\item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
 	\item Regular Expressions:\index{regular expressions} Web scraping often involves using finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag IDs that are particular to a given website and change across the site based on a given pattern. You can use regular expressions to deal with these situations. R has a comprehensive, if bar bones introduction to regular expressions. To access it type \verb|?regex| into your R console.
 	\item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions generally available in \emph{base} R. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} packages \citep{R-plyr} is also particularly useful.
 \end{itemize}
