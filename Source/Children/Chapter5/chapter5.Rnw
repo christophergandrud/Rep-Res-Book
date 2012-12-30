@@ -272,21 +272,24 @@ git merge Test
 
 \paragraph{Having Git ignore files}
 
-There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files, cache files from \emph{knitr} and other files that are they byproduct of compiling an R LaTeX document. To have Git ignore a file simply create a file called \emph{.gitignore}.\index{.gitignore}\index{Git ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository, or in a child directory to ignore files only in that directory. In the \emph{.gitignore} file add the subdirectories, file names and  file extensions of the files that you want to have Git ignore. 
+There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files, cache files from \emph{knitr} and other files that are they byproduct of compiling an R LaTeX document. To have Git ignore a file simply create a file called \emph{.gitignore}.\footnote{Note that like \emph{.git}, \emph{.gitignore} files are hidden.}\index{.gitignore}\index{Git ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository. You can also place one in a child directory to ignore files only in that directory. In the \emph{.gitignore} file add ignore rules by simply including the names of the files that you want to have Git ignore. 
 
-For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling a LaTeX file would look something like this:
+For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling an R LaTeX file would look something like this:
 
 <<Ch5gitignore, eval=FALSE, engine='sh'>>=
 # Ignore LaTeX compile byproduct files #
 ########################################
+*.aux
 *.bbl
 *.blg
+cache/*
+figure/*
 *.pdf
 *.gz
 *.tex
 @
 
-\noindent The asterisks (\verb|*|) is a ``wildcard"\index{wildcard} stands for any character. In other words, it tells Git to look for files with any name that end in the specified file extensions.
+\noindent The asterisks (\verb|*|) is a ``wildcard"\index{wildcard} and stands for any character. In other words, it tells Git to look for files with any name that end in the specified file extensions. This is faster than writing out the full name of every \emph{.tex} file, for example. It also makes it easy to copy the rules into new repos. You'll also notice the \texttt{cache/*} and \texttt{figure/*} rules. These tell Git to ignore all of the files in the \emph{cache} and \emph{figure} directories. These files are the product of caching code chunks and creating figures, respectively.
 
 Note, Git will not ignore files that have already been commited to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{rm, Git command} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking so that it could be ignored type:
 
