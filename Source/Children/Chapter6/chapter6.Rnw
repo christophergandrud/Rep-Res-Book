@@ -129,7 +129,7 @@ clean:
 
 The second line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \emph{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. The dollar signs (\verb|$|). In make (and Unix-like shells generally) a dollar sign (\verb|$|) followed by a variable name substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
 
-The asterisk (\verb|*|) is a ``wildcard''. A wildcard\index{wildcard} is a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
+You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wildcard'',\index{wildcard} a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
 
 Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make function} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 

@@ -279,14 +279,16 @@ For example, a \emph{.gitignore} file that is useful for ignoring files that are
 <<Ch5gitignore, eval=FALSE, engine='sh'>>=
 # Ignore LaTeX compile byproduct files #
 ########################################
-.bbl
-.blg
-.pdf
-.gz
-.tex
+*.bbl
+*.blg
+*.pdf
+*.gz
+*.tex
 @
 
-\noindent Not, Git will not ignore files that have already been commited to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{rm, Git command} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking so that it could be ignored type:
+\noindent The asterisks (\verb|*|) is a ``wildcard"\index{wildcard} stands for any character. In other words, it tells Git to look for files with any name that end in the specified file extensions.
+
+Note, Git will not ignore files that have already been commited to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{rm, Git command} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking so that it could be ignored type:
 
 <<Ch5Gitrm, eval=FALSE, engine='sh'>>=
 # Remove ExampleProject.tex from Git version tracking
