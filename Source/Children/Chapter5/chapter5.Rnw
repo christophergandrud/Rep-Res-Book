@@ -1,9 +1,9 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 December 2012
+% Updated: 31 December 2012
 
-<<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
+<<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
@@ -136,6 +136,7 @@ Dropbox allows multiple people to share files and change them. GitHub does this 
 \begin{itemize}
     \item Dropbox's version control system only lets you see files' names, the times they were created, who created them, and revert back to specific versions. Git tracks every change you make. The GitHub website and GUI programs for Mac and Windows provide nice interfaces for examining specific changes in text files.
     \item Dropbox creates a new version every time you save a file. This can make it difficult to actually find the version you want as the versions quickly multiply. Git's version control system only creates a new version when you tell it to.
+    \item All files in on Dropbox are version controlled. Git allows you to ignore specific files.
     \item Unless you have a paid account, previous file versions in Dropbox disappear after 30 days. GitHub stores previous versions indefinitely for all account types.
     \item Dropbox does not merge conflicting versions of a file together. This can be annoying when you are collaborating on project and more than one author is making changes to documents at the same time. GitHub identifies conflicts and lets you reconcile them.
     \item Git is directly integrated into RStudio Projects\index{RStudio Projects}.\footnote{RStudio also supports the Subversion version control system, but I don't cover that here.}
@@ -284,6 +285,7 @@ For example, a \emph{.gitignore} file that is useful for ignoring files that are
 *.blg
 cache/*
 figure/*
+*.log
 *.pdf
 *.gz
 *.tex
@@ -305,7 +307,7 @@ For more information on \emph{.gitignore} files see GitHub's reference page on t
 
 \subsubsection{Remote Storage on GitHub}
 
-So far we've been using repos stored locally. To create repositories stored on GitHub, first create a new repository through the GitHub website. On your main GitHub account page click the \texttt{New repository} button (see Figure \ref{NewRepo}). In the next page that appears give the repository a name, brief description, choose whether to make it public or private. Also click the check box to to create a \emph{README.md} file in the repository. When you click \texttt{Create Repository} you will be directed to the repository's GitHub page. 
+So far we've been using repos stored locally. To create repositories stored on GitHub, first create a new repository through the GitHub website. On your main GitHub account page click the \texttt{New repository} button. In the next page that appears give the repository a name, brief description, choose whether to make it public or private. Also click the check box to to create a \emph{README.md} file in the repository. When you click \texttt{Create Repository} you will be directed to the repository's GitHub page. 
 
 To download the repository onto your local computer you need to ``clone'' it. The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{git clone} command. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy it's URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in} \ldots button.}
 
@@ -433,9 +435,9 @@ When you open a project with a Git repository in RStudio you will see a new tab 
     \end{center}
 \end{figure}
 
-This tab allows you do to many of the things we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}.  
+This tab allows you do to many of the things we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add files names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
 
-If you are using a GitHub repo that is associated with a remote repository on GitHub, for example, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu.
+If you are using a GitHub repo that is associated with a remote repository on GitHub, for example, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu. You can also use the same icons in the \textbf{Review Changes} window.
 
 The Git tab also allows you to change branches, revert to previous commits, view your commit history. You can also always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new Shell with the project set as the working directory to complete any Git task you might want.
 

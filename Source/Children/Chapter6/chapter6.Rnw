@@ -1,9 +1,9 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 27 December 2012
+% Updated: 31 December 2012
 
-<<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
+<<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 @
 
@@ -339,29 +339,29 @@ The rOpenSci\footnote{\url{http://ropensci.org/}}\index{rOpenSci} group has and 
 
 \paragraph{API Package Example: World Bank Development Indicators}
 
-Each of these packages has its own syntax and it is impossible to go over all of them here. Nonetheless, let's look at an example of accessing World Bank data with the \emph{WDI}\index{WDI} to give you a sense of how these packages work. Imagine that we want to gather data on countries' methane emissions. We can use \emph{WDI}'s \texttt{WDIsearch} command to find methane emissions data available at the World Bank:
+Each of these packages has its own syntax and it is impossible to go over all of them here. Nonetheless, let's look at an example of accessing World Bank data with the \emph{WDI}\index{WDI} to give you a sense of how these packages work. Imagine that we want to gather data on fertilizer consumption. We can use \emph{WDI}'s \texttt{WDIsearch} command to find fretilizer consumption data available at the World Bank:
 
-{\scriptsize
+{\small
 <<Ch6WDIsearch>>=
 # Load WDI package 
 library(WDI)
 
-# Search World Bank for methane data
-WDIsearch("methane emissions")
+# Search World Bank for fertilizer consumption data
+WDIsearch("fertilizer consumption")
 @
 }
 
-\noindent This shows us a selection of indicator numbers and their name.\footnote{You can also search the website itself. The indicator numbers are at the end of each indicators' URL.} Let's gather data on countries' agricultural methane emissions as a percentage of total methane emissions. The indicator number for this variable is: EN.ATM.METH.AG.ZS. Now we can use the command \texttt{WDI} to gather the data and put it in an object called \emph{AgMethaneData}.
+\noindent This shows us a selection of indicator numbers and their name.\footnote{You can also search the website itself. The indicator numbers are at the end of each indicators' URL.} Let's gather data on countries' fertilizer consumption in kilograms per hectare of arable land. The indicator number for this variable is: AG.CON.FERT.ZS. Now we can use the command \texttt{WDI} to gather the data and put it in an object called \emph{FertConsumpData}.
 
-<<Ch6WDIMethaine>>=
-# Gather agricultural methane emissions data from WDI
-AgMethaneData <- WDI(indicator = "EN.ATM.METH.AG.ZS")
+<<Ch6WDIFert>>=
+# Gather fertilizer consumption/hectare arable land data from WDI
+FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 
-# Show head of AgMethane data frame
-head(AgMethaneData)
+# Show head of FertConsump data frame
+head(FertConsumpData)
 @
 
-\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is a the countries' or regions' International Standards Organization's\index{International Standards Organization} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{EN.ATM.METH.AG.ZS} and \textbf{year}.
+\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is a the countries' or regions' International Standards Organization's\index{International Standards Organization} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
 
 \section{Advanced Automatic Data Gathering: web scraping}
 
