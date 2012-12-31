@@ -1,14 +1,14 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 December 2012
+% Updated: 31 December 2012
 
 
 
 
 \chapter{Preparing Data for Analysis}\label{DataClean}
 
-Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean so that it can be merged it into a single data file. This chapter covers some of the basics of how to clean data files and merge them together into one data frame using R. If you are very familiar with data transformations in R you may want to skip onto the next chapter. 
+Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean so that it can be merged it into a single data file. In this chapter we will learn how to create the data gather and merging files we saw last chapter. The chapter also includes information on recoding and transforming variables. This is important for merging data, but will be very useful information in later chapters as well. If you are very familiar with data transformations in R you may want to skip onto the next chapter. 
 
 \section{Cleaning data for merging}
 
@@ -20,41 +20,41 @@ Before doing anything to your data it is a good idea to take a look at it and se
 
 To get a sense of your data you could of course just type a data frame object's name into the R console. This will print the entire data frame. For data frames with more than a few variables and observations. We have already seen a number of commands that are useful for seeing parts of your data. The \texttt{names}\index{names} command shows you the variable names of a data frame object. The \texttt{head}\index{head} command shows the first few observations in a data frame and \texttt{tail}\index{tail} shows the last few.
 
-The \texttt{summary} command\index{summary, R command} is especially helpful for seeing not only basic descriptive statistics for all of the variables in a data frame, but also the variables' types. For example, let's us the \emph{AgMethaneData} object we created in Chapter \ref{DataGather}:
+The \texttt{summary} command\index{summary, R command} is especially helpful for seeing not only basic descriptive statistics for all of the variables in a data frame, but also the variables' types. For example, let's us the \emph{FertConsumpData} object we created in Chapter \ref{DataGather}:
 
 {\small
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# Summarize AgMethaneData data frame object}
-\hlfunctioncall{summary}(AgMethaneData)
+\hlcomment{# Summarize FertConsumpData data frame object}
+\hlfunctioncall{summary}(FertConsumpData)
 \end{alltt}
 \begin{verbatim}
-##     iso2c             country          EN.ATM.METH.AG.ZS      year     
-##  Length:984         Length:984         Min.   : 0.0      Min.   :2002  
-##  Class :character   Class :character   1st Qu.:27.7      1st Qu.:2003  
-##  Mode  :character   Mode  :character   Median :43.3      Median :2004  
-##                                        Mean   :43.4      Mean   :2004  
-##                                        3rd Qu.:61.8      3rd Qu.:2004  
-##                                        Max.   :93.4      Max.   :2005  
-##                                        NA's   :820
+##     iso2c             country          AG.CON.FERT.ZS      year     
+##  Length:984         Length:984         Min.   :   0   Min.   :2002  
+##  Class :character   Class :character   1st Qu.:  12   1st Qu.:2003  
+##  Mode  :character   Mode  :character   Median :  80   Median :2004  
+##                                        Mean   : 180   Mean   :2004  
+##                                        3rd Qu.: 161   3rd Qu.:2004  
+##                                        Max.   :8964   Max.   :2005  
+##                                        NA's   :251
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 }
 
-\noindent We can immediately see that the variables \textbf{iso2C} are character strings. Because \emph{summary} is able to calculate means, medians, and so on for \textbf{EN.ATM.METH.AG.ZS} and \textbf{year} we know they are numeric. You can of course run \emph{summary} on a particular variable by using the component selector (\verb|$|):
+\noindent We can immediately see that the variables \textbf{iso2c} are character strings. Because \emph{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year} we know they are numeric. You can of course run \emph{summary} on a particular variable by using the component selector (\verb|$|):
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# Summarize the methane emissions variable from AgMethaneData}
-\hlfunctioncall{summary}(AgMethaneData$EN.ATM.METH.AG.ZS)
+\hlcomment{# Summarize the methane emissions variable from FertConsumpData}
+\hlfunctioncall{summary}(FertConsumpData$AG.CON.FERT.ZS)
 \end{alltt}
 \begin{verbatim}
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##     0.0    27.7    43.3    43.4    61.8    93.4     820
+##       0      12      80     180     161    8960     251
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -62,67 +62,71 @@ The \texttt{summary} command\index{summary, R command} is especially helpful for
 
 \noindent We'll come back to why knowing this type of information is important for merging and data analysis later in this Chapter.
 
-If you are using R in the Terminal or the R GUI program you can view a portion of a data frame object with the \texttt{View} command.\index{View R command} This will open a new window that lets you see a selection of the data frame. For example, \verb|View(AgMethaneData)| will give you the window shown in the left-hand pane in Figure \ref{ViewerFig}. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab and you will get something that looks like the right-hand panel in Figure \ref{ViewerFig}.
-
-{\small
-\begin{figure}
-	\caption{R Data Viewers}
-	\label{ViewerFig}
-	\centering
-		\begin{minipage}[b]{0.5\textwidth}
-			\centering
-  			\includegraphics[width=.45\linewidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter7/images7/ViewerX11.png}
-  			\caption{Viewer for Terminal/R GUI}
-  		\end{minipage}
-
-  		\hfill
-
- 		\begin{minipage}[b]{0.5\textwidth}
-  			\centering
-  			\includegraphics[width=.45\linewidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter7/images7/ViewerRStudio.png}
-  			\caption{Viewer for RStudio}
-  		\end{minipage}
-\end{figure}
-}
-\noindent Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers.
+You can view a portion of a data frame object with the \texttt{View} command.\index{View R command} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab and you will get something that look similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be see similar windows that you can interactively edit use the \texttt{fix} command in the same way that you use \texttt{view}. This can be useful for small edits, but remember that the edits are not reproducible.
 
 \subsection{Reshaping Data}
 
-Obviously it is usually a good if the data sets kept in data frame type objects. See Chapter \ref{GettingStartedRKnitr} (page \pageref{data.frame}) for how to convert objects into data frames with the \texttt{data.frame} command. Not only do data sets (generally) need to be stored in data frame objects they also need to follow the same layout. Most R statistical analysis tools assume that your data is in ``long'' format\index{long formatted data} (as we also did in Chapter \ref{GettingStartedRKnitr}). This means that data frame columns are variables and rows are observations (see Table \ref{ExampleLong}).
+Obviously it is usually a good if the data sets kept in data frame type objects. See Chapter \ref{GettingStartedRKnitr} (page \pageref{data.frame}) for how to convert objects into data frames with the \texttt{data.frame} command. Not only do data sets (generally) need to be stored in data frame objects they also need to follow the same layout before they can be merged. Most R statistical analysis tools assume that your data is in ``long'' format\index{long formatted data} (as we also did in Chapter \ref{GettingStartedRKnitr}). This usually means that data frame columns are variables and rows are specific observations (see Table \ref{ExampleLong}).
 
 \begin{table}[h!]
-	\caption{Long Formatted Data Example}
-	\label{ExampleLong}
-	\begin{tabular}{l c c c}
-		\hline
-		Observation & Variable1 & Variable2 & \ldots \\
-		\hline \\[0.1cm]
-		Subject1 & & & \\[0.25cm]
-		Subject2 & & & \\[0.25cm]
-		Subject3 & & & \\[0.25cm]
-		\ldots & & & \\[0.25cm]
-		\hline
-	\end{tabular}
+    \caption{Long Formatted Data Example}
+    \label{ExampleLong}
+    \begin{tabular}{l c}
+        \\[0.15cm]
+        \hline
+        Observation & Variable1 \\
+        \hline \\[0.1cm]
+        Subject1 & \\[0.25cm]
+        Subject2 & \\[0.25cm]
+        Subject3 & \\[0.25cm]
+        \ldots & \\[0.25cm]
+        \hline
+    \end{tabular}
 \end{table}
 
-\noindent If one of your data sets is not in this format then you will need to reshape\index{reshape data} it. Some data sets are in ``wide'' format;\index{wide formatted data} where the columns (apart from the first one) are observations and the rows are variables (see Table \ref{ExampleWide}).
+\noindent In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{cross-sectional time-series data}\index{TSCS} that we want to have in long-format. Long formatted TSCS has is simply a data frame where rows identify observations of a particular subject at three points in time (see Table \ref{ExampleTSCSLong})
+
+ \begin{table}[h!]
+    \caption{Long Formatted Time-series Cross-sectional Data Example}
+    \label{ExampleTSCSLong}
+    \begin{tabular}{l c c}
+        \\[0.15cm]
+        \hline
+        Subject & Time & Variable1 \\
+        \hline \\[0.1cm]
+        Subject1 & 1 & \\[0.25cm]
+        Subject1 & 2 & \\[0.25cm]
+        Subject1 & 3 & \\[0.25cm]
+        Subject2 & 1 & \\[0.25cm]
+        Subject2 & 2 & \\[0.25cm]
+        Subject2 & 3 & \\[0.25cm]
+        \ldots & & \\[0.25cm]
+        \hline
+    \end{tabular}
+\end{table}
+
+\noindent In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
+
+\noindent If one of your data sets is not in this format then you will need to reshape\index{reshape data} it. Some data sets are in ``wide'' format;\index{wide formatted data} where one of the columns in long formatted data is widened to cover multiple columns. This can be confusing without an example. Table \ref{ExampleWide} shows how Table \ref{ExampleTSCSLong} looks when we widen the time variable.
 
 \begin{table}[h!]
-	\caption{Wide Formatted Data Example}
-	\label{ExampleWide}
-	\begin{tabular}{l c c c}
-		\hline 
-		Variables & Subject1 & Subject2 & \ldots \\
-		\hline \\[0.1cm]
-		Variable1 & & & \\[0.25cm]
-		Variable2 & & & \\[0.25cm]
-		Variable3 & & & \\[0.25cm]
-		\ldots & & & \\[0.25cm]
-		\hline
-	\end{tabular}
+    \caption{Wide Formatted Data Example}
+    \label{ExampleWide}
+    \begin{tabular}{l c c c}
+        \\[0.15cm]
+        \hline 
+        Subject & Time1 & Time2 & Time3 \\
+        \hline \\[0.1cm]
+        Subject1 & & & \\[0.25cm]
+        Subject2 & & & \\[0.25cm]
+        \ldots & & & \\[0.25cm]
+        \hline
+    \end{tabular}
 \end{table}
 
-There are  has a number of very useful functions for changing data from wide format to long and vice versa. Lets look first at the matrix transpose function (\texttt{t}). Imagine we have the following data:
+Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with simply as \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \textbf{reshape}\index{reshape, command} command, both in loaded in R by default.  Another very helpful package is \emph{reshape2} \citep{R-reshape2}.\index{reshape2} This provides more general tools for reshaping data and is worth investing some time in learning well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape TSCS data frame from wide to long format. We will also encounter this package in more detail in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
+
+Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{WideFert}. It looks like this:\footnote{Please see the Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data.}
 
 
 
@@ -130,38 +134,282 @@ There are  has a number of very useful functions for changing data from wide for
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-WidePop
+\hlfunctioncall{head}(WideFert)
 \end{alltt}
 \begin{verbatim}
-##     variable Albania Botswana Cambodia
-## 1 population     2.8      2.0     14.8
+##    iso2c        country   2002   2003    2004    2005
+## 8     AF    Afghanistan  3.403  3.275   4.536   4.240
+## 10    AL        Albania 97.185 98.933 100.599 111.597
+## 58    DZ        Algeria  9.642  6.002  25.095   7.430
+## 14    AS American Samoa     NA     NA      NA      NA
+## 6     AD        Andorra     NA     NA      NA      NA
+## 12    AO         Angola  1.659  1.789   4.502   2.261
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
-\noindent What we really want is a data frame with the observations (countries) as the rows and the \textbf{population} variable in a column. If we run \emph{WidePop} through the matrix transpose function we will get:
+Let's use \emph{reshape2}'s \texttt{melt}\index{melt} command to reshape this data from wide to long format. The term ``melt'' is intended to evoke an image of the data melting down from a wide to long format.\footnote{The opposite \texttt{cast} command (\texttt{dcast}\index{cast}\index{dcast} in the case of data frames) is supposed to evoke an image of casting out the data from long to wide format. See page \pageref{WideAppendix} for am example using the \texttt{dcast} command.} In our \emph{WideFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be melted. These variables identify the data set's subjects. we can tell \texttt{melt} that they are id variables with the \texttt{id.vars} argument. The remaining columns (i.e. \textbf{2002}, \textbf{2003}, \textbf{2004} and \textbf{2005}) will be melted into two new variables: \textbf{variable}, and \textbf{value}. The former will contain the years and the later will contain the fertilizer consumption data. Here is the full code:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{alltt}
-\hlcomment{# Matrix transpose WidePop}
-LongPop <- \hlfunctioncall{t}(WidePop)
+\hlcomment{# Melt WideFert}
+MoltenFert <- \hlfunctioncall{melt}(data = WideFert, 
+                    id.vars = \hlfunctioncall{c}(\hlstring{"iso2c"}, \hlstring{"country"}))
 
-\hlcomment{# Show LongPop}
-LongPop
+\hlcomment{# Show MoltenFert}
+\hlfunctioncall{head}(MoltenFert)
 \end{alltt}
 \begin{verbatim}
-##          [,1]        
-## variable "population"
-## Albania  "2.8"       
-## Botswana "2.0"       
-## Cambodia "14.8"
+##   iso2c        country variable  value
+## 1    AF    Afghanistan     2002  3.403
+## 2    AL        Albania     2002 97.185
+## 3    DZ        Algeria     2002  9.642
+## 4    AS American Samoa     2002     NA
+## 5    AD        Andorra     2002     NA
+## 6    AO         Angola     2002  1.659
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
 
 
-\noindent We need to clean up \emph{LongPop} a little bit before it is ready to use. The first thing is to change \emph{LongPop} back into a data frame.
+\noindent Note that objects that are created by \texttt{melt} are often referred to as ``molten'' data in the \emph{reshape2} documentation. That is why I've given our new data frame the name \emph{MoltenFert}. 
+
+\subsection{Renaming variables}
+
+Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Rename data frame variables is straight forward with the \texttt{rename} command in the \emph{reshape} package \citep{R-reshape}.\footnote{\emph{reshape} package precedes \emph{reshape2}, which was created to improve the performance of the \texttt{melt} and \texttt{cast} commands}
+
+To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Load reshape package}
+\hlfunctioncall{library}(reshape)
+
+\hlcomment{# Rename variable = year, value = FertilizerConsumption}
+MoltenFert <- \hlfunctioncall{rename}(x = MoltenFert,
+                     replace = \hlfunctioncall{c}(variable = \hlstring{"year"},
+                                 value = \hlstring{"FertilizerConsumption"}))
+
+\hlcomment{# Show MoltenFert}
+\hlfunctioncall{head}(MoltenFert)
+\end{alltt}
+\begin{verbatim}
+##   iso2c        country year FertilizerConsumption
+## 1    AF    Afghanistan 2002                 3.403
+## 2    AL        Albania 2002                97.185
+## 3    DZ        Algeria 2002                 9.642
+## 4    AS American Samoa 2002                    NA
+## 5    AD        Andorra 2002                    NA
+## 6    AO         Angola 2002                 1.659
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{Sorting data}
+
+You may have noticed that as a result of melting \emph{WideFert} the data is now ordered by year then country name. Typically TSCS data is sorted by country then year, or more generally: subject-year. Though not required for merging in R\footnote{Unlike in other statistical programs.} some statistical analyses assume that the data is ordered in a specific way. Well ordered data is also easier for people to understand.
+
+We can order observations in our data set using the \texttt{order} command.\index{order}\index{sort} For example, to order \emph{MoltenFert} by country-year we type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Order MoltenFert by country-year}
+MoltenFert <- MoltenFert[\hlfunctioncall{order}(MoltenFert$country,
+                                MoltenFert$year), ]
+
+\hlcomment{# Show MoltenFert}
+\hlfunctioncall{head}(MoltenFert)
+\end{alltt}
+\begin{verbatim}
+##     iso2c     country year FertilizerConsumption
+## 1      AF Afghanistan 2002                 3.403
+## 247    AF Afghanistan 2003                 3.275
+## 493    AF Afghanistan 2004                 4.536
+## 739    AF Afghanistan 2005                 4.240
+## 2      AL     Albania 2002                97.185
+## 248    AL     Albania 2003                98.933
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\subsection{Subsetting data}
+
+Sometimes you may want to use only a subset of a data frame. For example, the density plot in Figure \ref{FertilizerConsumptionDens} shows us that the MoltenFert data has a few very extreme values. We can use the \texttt{subset}\index{subset} command to examine the outliers,\index{outliers} for example countries that have fertilizer consumption greater than 1000 kilograms per hectare.  
+
+\begin{figure}
+    \caption{Density Plot of Fertilizer Consumption (kilograms per hectare of arable land)}
+    \label{FertilizerConsumptionDens}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/Ch7FertDist} 
+
+}
+
+
+
+\end{knitrout}
+
+    {\scriptsize{Source: World Bank (2012)}}
+\end{figure} 
+
+{\small
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Create outlier data frame}
+FertOutliers <- \hlfunctioncall{subset}(x = MoltenFert, 
+                        FertilizerConsumption > 1000)
+
+\hlcomment{# Show FertOutliers}
+FertOutliers
+\end{alltt}
+\begin{verbatim}
+##     iso2c     country year FertilizerConsumption
+## 16     BH     Bahrain 2002                  8964
+## 754    BH     Bahrain 2005                  4360
+## 786    CR  Costa Rica 2005                  1030
+## 98     IS     Iceland 2002                  2686
+## 344    IS     Iceland 2003                  2265
+## 590    IS     Iceland 2004                  2542
+## 836    IS     Iceland 2005                  2461
+## 109    JO      Jordan 2002                  1590
+## 116    KW      Kuwait 2002                  1763
+## 854    KW      Kuwait 2005                  4349
+## 160    NZ New Zealand 2002                  1836
+## 406    NZ New Zealand 2003                  2279
+## 652    NZ New Zealand 2004                  1761
+## 898    NZ New Zealand 2005                  2719
+## 907    OM        Oman 2005                  1366
+## 674    QA       Qatar 2004                  3796
+## 194    SG   Singapore 2002                  1830
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+}
+
+\noindent If we want to drop these outliers from our data set we can use \texttt{subset} again.
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+MoltenFertSub <- \hlfunctioncall{subset}(x = MoltenFert,
+                        FertilizerConsumption <= 1000)
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+In this data example, non-country units like ``Arab World'' are included. We might want to drop these units with the subset command as well. For example:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Drop Arab World type from MoltenFertSub}
+MoltenFertSub <- \hlfunctioncall{subset}(x = MoltenFertSub,
+                        country != \hlstring{"Arab World"})
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent We can also use \texttt{subset} to remove observations with missing values (\texttt{NA}) for \textbf{FertilizerConsumption}. 
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Remove observations of FertilizerConsumption }
+\hlcomment{# with missing values}
+MoltenFertSub <- \hlfunctioncall{subset}(x = MoltenFertSub,
+                             !\hlfunctioncall{is.na}(FertilizerConsumption))
+
+\hlcomment{# Summarize FertilizerConsumption}
+\hlfunctioncall{summary}(MoltenFertSub$FertilizerConsumption)
+\end{alltt}
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0    11.6    78.3   118.0   151.0   939.0
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+
+\begin{wraptable}{rt}{0.4\textwidth}
+    \caption{R's Logical Operators}
+    \label{LogicalOp}
+    \begin{tabular}{l p{2.25cm}}
+        \hline\vspace{0.15cm}
+        Operator & Meaning \\
+        \hline\hline \\
+        \verb|<| & less than \\
+        \verb|>| & greater than \\
+        \verb|==| & equal to \\
+        \verb|<=| & less than or equal to \\
+        \verb|>=| & greater than or equal to \\
+        \verb|!=| & not equal to \\
+        \verb+a | b + & a or b \\
+        \verb|a & b| & a \& b \\
+        \verb|isTRUE(a)| & determine if a TRUE \\
+        \hline \\
+        \verb|is.na| & missing\\ 
+        \verb|!is.na| & not missing \\
+        \hline
+    \end{tabular}
+\end{wraptable}
+
+Let's step back one second. I've introduced a number of new logical operators\index{logical operators} and a new command in the four subsetting examples. The first example included a very simple one, the greater than sign (\verb|>|). The second example included the less than or equal to operator: \verb|<=|. The third example included the not equal operator: \verb|!=|. In R exclamation points (\verb|!|) generally denote `not'. We used this again in the final example in combination with the \texttt{is.na} command.\index{is.na} This command indicates if an element is missing, so \verb|!is.na| means ``not missing''. For the full list of R's logical operators see Table \ref{LogicalOp}. You can use these operators and command when subsetting data and throughout R.
+
+\subsection{Recoding variables strings/ numeric variables}
+
+You may want to recode\index{recode} your variables. In particular you when you merge data sets together you need to have \textbf{identical} identification variables that R can use to match your data on. If in one data set observations for the Republic of Korea\index{Republic of Korea} are referred to as ``Korea, Rep.'' and in another it is labeled ``South Korea'' they will not be merged. We need to recode values in the variables that we want to match our data sets on. For example, in \emph{MoltenFertSub} Korea is labeled ``Korea, Rep.''. To recode it to ``South Korea'' we type:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+\hlcomment{# Recode country == "Korea, Rep."" to "South Korea"}
+MoltenFertSub$country[MoltenFertSub$country == 
+                        \hlstring{"Korea, Rep."}] <- \hlstring{"South Korea"}
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+
+\noindent This code assigns ``South Korea'' to all values of the country variable that equal ``Korea, Rep.''.\footnote{The \emph{countrycode} package \citep{R-countrycode} is very helpful for creating standardized country identification variables.} You can a similar technique to recode numeric variables as well. The only difference is that you need to omit the quotation marks.
+
+We will look at how to recode factor variables in the next subsection
+
+\subsection{Creating new variables from old}
+
+As part of your data clean up process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log} command and assign a new variable that we'll call \textbf{logFertConsumption}.
+
+{\small
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{alltt}
+MoltenFertSub$logFertConsumption <- \hlfunctioncall{log}(
+                                    MoltenFertSub$FertilizerConsumption
+                                    )
+\end{alltt}
+\end{kframe}
+\end{knitrout}
+
+}
+
+\noindent We can use a similar procedure to create new variables from R's many other mathematical commands and arithmetic operations.\footnote{E.g \verb|+, -, *, /, ^ | for addition, subtraction, multiplication, division and exponentiation, respectively.}
+\paragraph{Factor variables from numeric}
+
+\paragraph{Creating factor variables}
+
+We can also create factor variables from numeric or string variables. For example, we may want to turn the continuous numeric \textbf{FertilizerConsumption} variable into an ordered categorical (i.e. factor) variable.\index{factor variable} Imagine that we want to create a factor variable called \textbf{FertConsGroup} with four levels called `low', `medium low', `medium high', `high'. To do this lets first create a new numeric variable based on the values listed in Table \ref{ExampleFactorRecode}. To do a procedure that is similar to the variable recoding we did earlier:
+
+
+
 
 
