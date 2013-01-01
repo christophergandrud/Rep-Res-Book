@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 December 2012
+% Updated: 1 January 2012
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -51,7 +51,7 @@ Obviously it is usually a good if the data sets kept in data frame type objects.
     \begin{tabular}{l c}
         \\[0.15cm]
         \hline
-        Observation & Variable1 \\
+        Subject & Variable1 \\
         \hline \\[0.1cm]
         Subject1 & \\[0.25cm]
         Subject2 & \\[0.25cm]
@@ -155,7 +155,7 @@ MoltenFert <- rename(x = MoltenFert,
 head(MoltenFert)
 @
 
-\subsection{Sorting data}
+\subsection{Ordering data}
 
 You may have noticed that as a result of melting \emph{WideFert} the data is now ordered by year then country name. Typically TSCS data is sorted by country then year, or more generally: subject-year. Though not required for merging in R\footnote{Unlike in other statistical programs.} some statistical analyses assume that the data is ordered in a specific way. Well ordered data is also easier for people to understand.
 
@@ -250,7 +250,7 @@ summary(MoltenFertSub$FertilizerConsumption)
         \hline \\
         \verb|is.na| & missing\\ 
         \verb|!is.na| & not missing \\
-        \verb|duplicated| & a duplicated observation \\
+        \verb|duplicated| & duplicated observation \\
         \verb|!duplicated| & not a duplicate observation \\ 
         \hline
     \end{tabular}
@@ -359,7 +359,7 @@ Though the commands have straightforward names, a word of caution is necessary. 
 
 \section{Merging data sets}
 
-In the previous section we learned crucial skills for cleaning up data sets. When your data sets are (a) in the same format and (b) have identically matching ID variables you can merge your data sets together. In this section we'll look at two different ways to merge data sets: binding and the \texttt{merge} command. We'll also look at ways to address a common issue when merging data: duplicated observations.
+In the previous section we learned crucial skills for cleaning up data sets. When your data sets are (a) in the same format and (b) have identically matching ID variables you can merge your data sets together. In this section we'll look at two different ways to merge data sets: binding and the \texttt{merge}\index{merge} command. We'll also look at ways to address a common issue when merging data: duplicated observations.
 
 \subsection{Binding}
 
@@ -369,11 +369,63 @@ If you have data sets with the exact same columns and variable types and you jus
 
 \subsection{The merge command}
 
-The safest and most effective way to merge multiple data sets together is with the \texttt{merge} command. 
+Generally, the safest and most effective way to merge two data sets together is with the \texttt{merge}\index{merge} command. Imagine that we want to merge our MoltenFertSub data frame with two data frames we created in Chapter \ref{DataGather}: \emph{FinRegulatorData} and \emph{DispropData}. The simplest way to do this is to use the merge command twice, i.e.:
+
+<<Ch7MergeSimple, tidy=FALSE>>=
+# Merge FinRegulatorData and DispropData
+MergedData1 <- merge(x = FinRegulatorData,
+                     y = DispropData,
+                     by = "iso2c",
+                     all = TRUE)
+
+# Merge combined data set with and MoltenFertSub
+MergedData1 <- merge(x = MergedData1,
+                     y = MoltenFertSub,
+                     by = "iso2c",
+                     all = TRUE)
+
+# Show MergedData1 variables 
+names(MergedData1)
+@
+
+\noindent Let's go through this code. The \texttt{x} and \texttt{y} arguments simply specify which data frames we want to merge. The \texttt{by} argument specifies what variable in the two data sets identifies the observations so that we can match them. In this example we are merging by countries' ISO two letter codes.\footnote{Please see the supplementary source code files (\url{GET}) for information on how I added the \textbf{iso2c} variable to all of the data frames.} We set the argument \texttt{all = TRUE} so that we keep all of the observations from both of the data frames. If the argument is set to \texttt{FALSE} then only observations that are common to both data frames. The others will not be included.
+
+You might have noticed that this isn't actually the merge that we want to accomplish with these data frames. Remember that observations are not simply identified in this time-series cross-section data by one country or country code variable. Instead they are identified by both country and year variables. To merge data frames based on the overlap of two variables (e.g. match Afghanistan-2004 in one data frame with Afghanistan-2004 in the other) we need to add the \texttt{union} command to \texttt{merge}'s \texttt{by} argument. Here is a full example:
+
+<<Ch7MergeFull, tidy=FALSE>>=
+######################
+# Merge and Save
+# Christopher Gandrud
+# 1 January 2013
+######################
+
+## This file merges three data frames created by:
+## Gather1.R, Gather2.R, Gather3.R
+## The data frames have the names:
+## FinRegulatorData, DispropData, FertConsumpData
+
+# Merge FinRegulatorData and DispropData
+MergedData <- merge(
+                    FinRegulatorData, DispropData,
+                    union("iso2c", "year"),
+                    all = TRUE)
+
+# Merge combined data frame with FertConsumpData
+MergedData <- merge(
+                    MergedData, FertConsumpData,
+                    union("iso2c", "year"),
+                    all = TRUE)
+
+# Save data frame as a CSV file
+write.csv(MergedData, file = "MergedData.csv")
+@ 
+
+
+After merging data frames it is always a good idea to look at the result and make sure that the result of the merge is what you expected. Some post merging clean up may be required to get the data frame ready for statistical analysis.
 
 \subsection{Duplicate values}
 
-Sometimes a data set either before or after merging may have duplicate observations. It is good to check for duplicates both before and after merging a data set. You can use the \texttt{duplicated}\index{duplicated} command to check for and remove duplicate observations using subscripts. For example, let's create a new object called \emph{MFSDuplicates} from the country-years that are duplicated in \emph{MoltenFertSub}. Note remember that \textbf{country} and \textbf{year} are in the second and third columns of the data frame.
+One thing to look out for after merging are duplicate observations. It is good to check for duplicates both before and after merging a data set. You can use the \texttt{duplicated}\index{duplicated} command to check for and remove duplicate observations using subscripts. For example, let's create a new object called \emph{MFSDuplicates} from the country-years that are duplicated in \emph{MoltenFertSub}. Note remember that \textbf{country} and \textbf{year} are in the second and third columns of the data frame.
 
 <<Ch7Duplicated, tidy=FALSE>>=
 # Created a data frame of unique country-years
@@ -400,6 +452,12 @@ nrow(MFSNotDuplicated)
 \noindent Note that if you do have duplicated values in your data set and you run a similar procedure on it, it will drop duplicated values that have a lower order in the data frame. To keep the lowest ordered value and drop duplicates higher in the data set use \texttt{duplicated}'s \texttt{fromLast} argument. Set it to \texttt{TRUE}.
 
 Again a word of caution is in order. Lock over your data set and the source code that created the data set to try to understand why duplicates occurred. There may be a more fundamental problem in the way you are handling your data that resulted in the duplicated observations.
+
+\subsection{Duplicate columns}
+
+Another common post-merge clean up issue are duplicate variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. If the variables were called \textbf{Variable1}, for example, \texttt{merge} would rename them \textbf{Variable1.x} and \textbf{Variable1.y} to signify which data set they are from. 
+
+You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables and rename the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{gdata} package \citep{R-gdata} has a useful function called \texttt{remove.vars} that can also remove variables from data frames.
 
 \section*{Appendix}\label{WideAppendix}
 

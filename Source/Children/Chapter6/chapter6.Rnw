@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 December 2012
+% Updated: 1 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -249,15 +249,15 @@ We have discussed the first issue in detail. You can determine if the data file 
 To import the data simply include the URL as the file name in your \texttt{read.table} command. We saw in Chapter \ref{Storing} how to download a CSV data file from a Dropbox \emph{Public} folder with the shortened URL \texttt{http://bit.ly/PhjaPM}:
 
 <<Ch6httpLoad, eval=FALSE, tidy=FALSE>>=
-Data <- read.table("http://bit.ly/PhjaPM", 
-                   sep = ",", header = TRUE)
+FinRegulatorData <- read.table("http://bit.ly/PhjaPM", 
+                   				sep = ",", header = TRUE)
 @
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
 \noindent We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}. The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a large HTML website apply to secure web addresses as well.
 
-Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository.\footnote{For full information about this data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
+Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
 
 <<Ch6UrlObject, echo=FALSE>>=
 # Put URL address into the object UrlAddress
@@ -271,15 +271,15 @@ UrlAddress <- paste("https://raw.github.com/christophergandrud/",
 # Load package
 library(RCurl)
 
-# Pull data from the internet
+# Download Electoral disproportionality data
 DataUrl <- getURL(UrlAddress)
 
 # Convert Data into a data frame
-Data <- read.table(textConnection(DataUrl), 
-                   sep = ",", header = TRUE)
+DispropData <- read.table(textConnection(DataUrl), 
+                   					 sep = ",", header = TRUE)
 					
 # Show variables in data
-names(Data)
+names(DispropData)
 @
 }
 
@@ -313,13 +313,13 @@ download.file(url, temp)
 
 # Decompress the file and convert it into a dataframe
 # class object called 'data'.
-Data <- read.csv(gzfile(temp, "uds_summary.csv"))
+UDSData <- read.csv(gzfile(temp, "uds_summary.csv"))
 
 # Delete the temporary file.
 unlink(temp)
 
 # Show variables in data
-names(Data)
+names(UDSData)
 @ 
 }
 
