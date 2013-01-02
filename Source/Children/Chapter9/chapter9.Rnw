@@ -13,8 +13,7 @@ Graphs and other visual methods, discussed in the next chapter, can often be a m
 
 Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors. It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
 
-The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables written in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \texttt{xtable} \cite[]{R-xtable} and \texttt{apsrtable} packages \cite[]{R-apsrtable}. \texttt{xtable} can create tables for both of LaTeX and Markdown/HTML. \texttt{apsrtable} only
-produces output for LaTeX. \texttt{knitr} allows us to incorporate these tables dynamically into our documents.
+The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables written in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} easily produces nice publication quality tables. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support, \texttt{knitr} allows us to incorporate these tables dynamically into our documents.
 
 \textbf{Warning:} Automating table creation removes the possibility of adding errors to your analyses by incorrectly copying output, which is a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables through coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do the match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
 
@@ -30,17 +29,17 @@ Before getting into the details of how to create tables from R objects we need t
 
 \section{Creating tables from R objects}
 
-\subsection{\texttt{xtable} \& \texttt{apsrtable} basics with supported
-class objects}
+\subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects}
 
-\subsubsection{\texttt{xtable} for LaTeX}
+\subsubsection{\emph{xtable} for LaTeX}
 
-\subsubsection{\texttt{xtable} for Markdown}
+\subsubsection{\emph{xtable} for Markdown}
 
 We can use {\emph{xtable}} and the \texttt{print} command to also create tables for Markdown and HTML documents. Instead of setting the \texttt{type} argument to \texttt{`latex`} we simply put it to \texttt{'html'}.
 
+\subsection{\emph{apsrtable} for LaTeX}
 
-\subsection{\texttt{xtable} with non-supported class objects}
+\subsection{\emph{xtable} with non-supported class objects}
 
 {\tt{xtable}} is very convenient for making tables from objects in supported classes.\footnote{To see a full list of classes that {\tt{xtable}} supports type \texttt{methods(xtable)} into the R console.} With supported class objects {\tt{xtable}} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that it needs to create the table. With unsupported classes, however, it doesn't know where to look for these things. You need to help it find them. 
 
