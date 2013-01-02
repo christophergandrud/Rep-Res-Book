@@ -371,6 +371,24 @@ If you have data sets with the exact same columns and variable types and you jus
 
 Generally, the safest and most effective way to merge two data sets together is with the \texttt{merge}\index{merge} command. Imagine that we want to merge our MoltenFertSub data frame with two data frames we created in Chapter \ref{DataGather}: \emph{FinRegulatorData} and \emph{DispropData}. The simplest way to do this is to use the merge command twice, i.e.:
 
+<<Ch7AddIsoCodes, include=FALSE>>=
+## Add iso2c codes to FinRegulatorData and DispropData
+## as ID variables for merging
+
+# Load countrycode library
+library(countrycode)
+
+# FinRegulatorData
+FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country, 
+                                    origin = "country.name",
+                                    destination = "iso2c")
+
+# DispropData
+DispropData$iso2c <- countrycode(DispropData$country, 
+                                    origin = "country.name",
+                                    destination = "iso2c")
+@
+
 <<Ch7MergeSimple, tidy=FALSE>>=
 # Merge FinRegulatorData and DispropData
 MergedData1 <- merge(x = FinRegulatorData,
@@ -388,36 +406,25 @@ MergedData1 <- merge(x = MergedData1,
 names(MergedData1)
 @
 
-\noindent Let's go through this code. The \texttt{x} and \texttt{y} arguments simply specify which data frames we want to merge. The \texttt{by} argument specifies what variable in the two data sets identifies the observations so that we can match them. In this example we are merging by countries' ISO two letter codes.\footnote{Please see the supplementary source code files (\url{GET}) for information on how I added the \textbf{iso2c} variable to all of the data frames.} We set the argument \texttt{all = TRUE} so that we keep all of the observations from both of the data frames. If the argument is set to \texttt{FALSE} then only observations that are common to both data frames. The others will not be included.
+\noindent Let's go through this code. The \texttt{x} and \texttt{y} arguments simply specify which data frames we want to merge. The \texttt{by} argument specifies what variable in the two data sets identifies the observations so that we can match them. In this example we are merging by countries' ISO country two letter codes.\footnote{Please see this Chapter's Appendix (page \pageref{CountryCodeExample}) for details on how I created ISO country two letter code variables in the \emph{DispropData} and \emph{FinRegulatorData} data frames.} We set the argument \texttt{all = TRUE} so that we keep all of the observations from both of the data frames. If the argument is set to \texttt{FALSE} then only observations that are common to both data frames. The others will not be included.
 
-You might have noticed that this isn't actually the merge that we want to accomplish with these data frames. Remember that observations are not simply identified in this time-series cross-section data by one country or country code variable. Instead they are identified by both country and year variables. To merge data frames based on the overlap of two variables (e.g. match Afghanistan-2004 in one data frame with Afghanistan-2004 in the other) we need to add the \texttt{union} command to \texttt{merge}'s \texttt{by} argument. Here is a full example:
+You might have noticed that this isn't actually the merge that we want to accomplish with these data frames. Remember that observations are not simply identified in this time-series cross-section data by one country or country code variable. Instead they are identified by both country and year variables. To merge data frames based on the overlap of two variables (e.g. match Afghanistan-2004 in one data frame with Afghanistan-2004 in the other) we need to add the \texttt{union} command to \texttt{merge}'s \texttt{by} argument. Here is a full example:\footnote{You can download a modified version of this example as part of the Make file exercise from Chapter \ref{DataGather}: \url{http://bit.ly/YnMKBG}.}
 
 <<Ch7MergeFull, tidy=FALSE>>=
-######################
-# Merge and Save
-# Christopher Gandrud
-# 1 January 2013
-######################
-
-## This file merges three data frames created by:
-## Gather1.R, Gather2.R, Gather3.R
-## The data frames have the names:
-## FinRegulatorData, DispropData, FertConsumpData
-
 # Merge FinRegulatorData and DispropData
-MergedData <- merge(
+MergedData2 <- merge(
                     FinRegulatorData, DispropData,
                     union("iso2c", "year"),
                     all = TRUE)
 
-# Merge combined data frame with FertConsumpData
-MergedData <- merge(
-                    MergedData, FertConsumpData,
+# Merge combined data frame with MoltenFert
+MergedData2 <- merge(
+                    MergedData2, MoltenFertSub,
                     union("iso2c", "year"),
                     all = TRUE)
 
-# Save data frame as a CSV file
-write.csv(MergedData, file = "MergedData.csv")
+# Show MergedData2 variable names
+names(MergedData2)
 @ 
 
 
@@ -425,39 +432,62 @@ After merging data frames it is always a good idea to look at the result and mak
 
 \subsection{Duplicate values}
 
-One thing to look out for after merging are duplicate observations. It is good to check for duplicates both before and after merging a data set. You can use the \texttt{duplicated}\index{duplicated} command to check for and remove duplicate observations using subscripts. For example, let's create a new object called \emph{MFSDuplicates} from the country-years that are duplicated in \emph{MoltenFertSub}. Note remember that \textbf{country} and \textbf{year} are in the second and third columns of the data frame.
+One thing to look out for after (and before) merging are duplicate observations. You can use the \texttt{duplicated}\index{duplicated} command to check for duplicates. Use the command in conjunction with subscripts to remove duplicate observations. For example, let's create a new object called \emph{DataDuplicates} from the iso2c-years that are duplicated in \emph{MergedData2}. Note remember that \textbf{iso2c} and \textbf{year} are in the first and second columns of the data frame.
 
 <<Ch7Duplicated, tidy=FALSE>>=
 # Created a data frame of unique country-years
-MFSDuplicates <- MoltenFertSub[duplicated(
-                                MoltenFertSub[, 2:3]), ]
+DataDuplicates <- MergedData2[duplicated(
+                                MergedData2[, 1:2]), ]
 
-# Show the number of rows in MFSDuplicates
-nrow(MFSDuplicates)
+# Show the number of rows in DataDuplicates
+nrow(DataDuplicates)
 @
 
-\noindent In this data frame there are no duplicated country-year observations. This is indicated by the fact that using the \texttt{nrow}\index{nrow} command\footnote{\texttt{nrow} returns the number of rows an object has.} we find that the \emph{MFSDuplicates} data frame has no rows, i.e. no observations.
+\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. This is indicated by the fact that using the \texttt{nrow}\index{nrow} command\footnote{\texttt{nrow} returns the number of rows an object has.} we find that the \emph{MergedData2} data frame has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
 
 To create a data set of without duplicated observations (if there are duplicates) we just add an exclamation point (\texttt{!}) before \texttt{duplicated}--i.e. not duplicated--in the above code.\footnote{\texttt{!duplicated} is equivalent to the \texttt{unique} command.\index{unique}}
 
 <<Ch7NotDuplicated, tidy=FALSE>>=
 # Created a data frame of duplicated country-years
-MFSNotDuplicated <- MoltenFertSub[!duplicated(
-                                MoltenFertSub[, 2:3]), ]
-
-# Show the number of rows in MFSNotDuplicated
-nrow(MFSNotDuplicated)
+DataNotDuplicates <- MergedData2[!duplicated(
+                                MergedData2[, 1:2]), ]
 @
 
 \noindent Note that if you do have duplicated values in your data set and you run a similar procedure on it, it will drop duplicated values that have a lower order in the data frame. To keep the lowest ordered value and drop duplicates higher in the data set use \texttt{duplicated}'s \texttt{fromLast} argument. Set it to \texttt{TRUE}.
 
-Again a word of caution is in order. Lock over your data set and the source code that created the data set to try to understand why duplicates occurred. There may be a more fundamental problem in the way you are handling your data that resulted in the duplicated observations.
+A word of caution is in order. Lock over your data set and the source code that created the data set to try to understand why duplicates occurred. There may be a more fundamental problem in the way you are handling your data that resulted in the duplicated observations.
 
 \subsection{Duplicate columns}
 
-Another common post-merge clean up issue are duplicate variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. If the variables were called \textbf{Variable1}, for example, \texttt{merge} would rename them \textbf{Variable1.x} and \textbf{Variable1.y} to signify which data set they are from. 
+Another common post-merge clean up issue are duplicate variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. For example, in our previous merged data examples there are three country name variables: \textbf{country.x}, \textbf{country.y} and \textbf{country} to signify which data frame they are from.\footnote{The former two were created in the first merge between \emph{FinRegulatorData} and \emph{DispropData}. When the second merge was completed there were no variables named \textbf{country} in the MergeData2 data frame, so \textbf{country} did not need to be renamed in the new merged data set.}
 
-You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables and rename the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{gdata} package \citep{R-gdata} has a useful function called \texttt{remove.vars} that can also remove variables from data frames.
+You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables and rename the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{gdata} package \citep{R-gdata} has a useful function called \texttt{remove.vars} that can also remove variables from data frames. For example, imagine that we want to keep \textbf{country.x} and drop the other variables\footnote{This version of the country variable is the most complete.} You can use these procedures to remove other unwanted variables as well, let's also remove the extraneous \textbf{idn} variable:
+
+<<Ch7RemoveVars, tidy=FALSE>>=
+# Load gdata
+library(gdata)
+library(reshape)
+
+# Remove country.y, country and idn
+FinalCleanedData <- remove.vars(data = DataNotDuplicates,
+                                names = c("country.y",
+                                        "country",
+                                        "idn"))
+
+# Rename country.x = country
+FinalCleanedData <- rename(x = FinalCleanedData,
+                            replace = c(country.x =
+                                        "country"))
+@
+
+{\footnotesize
+<<Ch7ShowFinalCleanedDataNames>>=
+# Show FinalCleanedData variables
+names(FinalCleanedData)
+@
+}
+
+\noindent Note if you are merging many data sets it can sometimes be good to clean up duplicate columns between each \texttt{merge} call.
 
 \section*{Appendix}\label{WideAppendix}
 
@@ -484,4 +514,21 @@ WideFert <- dcast(data = MoltenFert,
 
 # Order WideFert by country
 WideFert <- WideFert[order(WideFert$country), ]
+@
+
+R code for creating iso2c country codes with the \emph{countrycode} package.\label{CountryCodeExample}
+
+<<Ch7CountryCodeShow, eval=FALSE, tidy=FALSE>>=
+# Load countrycode library
+library(countrycode)
+
+# FinRegulatorData
+FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country, 
+                                    origin = "country.name",
+                                    destination = "iso2c")
+
+# DispropData
+DispropData$iso2c <- countrycode(DispropData$country, 
+                                    origin = "country.name",
+                                    destination = "iso2c")
 @

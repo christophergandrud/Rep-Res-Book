@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 1 January 2013
+% Updated: 2 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -46,17 +46,14 @@ source("/GatherSource/IndvDataGather/Gather1.R")
 source("/GatherSource/IndvDataGather/Gather2.R")
 
 source("/GatherSource/IndvDataGather/Gather3.R")
-	
+    
 # Merge cleaned data frames into data frame object CleanedData
 source("GatherSource/MergeData.R")
-
-# Save cleaned & merged Data as MainData.csv
-write.csv(CleandedData, file = "/DataFiles/MainData.csv")
 @
 
-This code first sets the working directory. Then it runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. The cleaned data frames are available in the current workspace. Next the make file runs a source code file that merges the data frames. Finally, it saves the output data frame {\emph{CleanData}} as a CSV\indxe{CSV} formated file called {\emph{MainData.csv}} using the {\tt{write.csv}}\index{write.csv} command. In our example project, this would be the main file we use for statistical analysis. 
+This code first sets the working directory. Then it runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. The cleaned data frames are available in the current workspace. Next the make file runs the \emph{MergeData.R} file that merges the data frames and saves the output data frame as a CSV\index{CSV} formated file.\footnote{See the full file at: \url{http://bit.ly/YnMKBG}.} The CSV file would be the main file we use for statistical analysis. 
 
-You can run the commands in this file one by one or run the make-like through the \texttt{source} command to run it all at once.
+You can run the commands in this file one by one or run the make-like file through the \texttt{source} command to run it all at once.
 
 \subsection{GNU Make}
 
@@ -90,10 +87,10 @@ The first thing we need to do is create a new file called \emph{Makefile}\footno
 Now let's look at the actual makefile:
 
 \begin{knitrout}
-	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
-	\color{fgcolor}
-	\begin{kframe}
-		\begin{verbatim}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 ################
 # Example Makefile
 # Christopher Gandrud
@@ -104,6 +101,7 @@ Now let's look at the actual makefile:
 
 # Key variables to define
 RDIR = .
+MERGE_OUT = MergeData.Rout
 
 # Create list of R source files
 RSOURCE = $(wildcard $(RDIR)/*.R)
@@ -121,19 +119,23 @@ $(RDIR)/%.Rout: $(RDIR)/%.R
 # Remove Out Files
 clean: 
     rm -fv $(OUT_FILES)
-		\end{verbatim}
-	\end{kframe}
+
+# Remove MergeData.Rout
+cleanMerge:
+    rm -fv $(MERGE_OUT)
+        \end{verbatim}
+    \end{kframe}
 \end{knitrout}
 
-\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{ROUT} with a period (\texttt{.}) as its value. In Make, and Unix-like shells periods indicate the current directory. 
+\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros'' in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{ROUT} with a period (\texttt{.}) as its value. In Make, and Unix-like shells periods indicate the current directory. The next line allows us to specify the outfile created by running the \emph{MergeData.R} file. This will be useful later when we create a target for removing this file to ensure that the \emph{MergeData.R} file is always run.
 
-The second line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \emph{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. The dollar signs (\verb|$|). In make (and Unix-like shells generally) a dollar sign (\verb|$|) followed by a variable name substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
+The third executed line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \emph{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. The dollar signs (\verb|$|). In make (and Unix-like shells generally) a dollar sign (\verb|$|) followed by a variable name substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
 
 You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wildcard'',\index{wildcard} a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
 
 Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make function} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 
-The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \emph{.Rout} files that Make will use to tell how recently each R file was run. \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but uses the file extension \emph{.Rout}.
+The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \emph{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R outfile contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your make files gives you an error like \texttt{make: *** [Gather.Rout] Error 1}.} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but uses the file extension \emph{.Rout}.
 
 The second part of the make file tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{target, makefile} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \textttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
 
@@ -141,46 +143,48 @@ The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CM
 
 The dollar and less than signs (\verb|$<|) indicate the first prerequisite for the target, i.e. the \emph{.R} files. \texttt{R CMD BATCH}\index{R CMD BATCH} is a way to call R from a Unix-like shell, run source files and output the results to other files. In Windows you will probably need to change \texttt{R} to the path for your \emph{R.exe} file. For example: \emph{C:\textbackslash{}Programs Files\textbackslash{}R\textbackslash{}2.15.2\textbackslash{}bin\textbackslash{}R.exe}. The outfiles it creates have the extension \emph{.Rout}.
 
-The last two lines specify another target: \texttt{clean}. When you type \texttt{make clean} into your shell Make will follow the recipe: \verb|rm -fv $(OUT_FILES)|.\index{rm} This removes (deletes) the \emph{.Rout} files. The \texttt{f} argument (force) ignores  files that don't exist and the \texttt{v} argument (verbose) tells you what is happening. When you delete the \emph{.Rout} files, Make will run all of the \emph{.R} files the next time you call it.
+The next two lines specify another target: \texttt{clean}. When you type \texttt{make clean} into your shell Make will follow the recipe: \verb|rm -fv $(OUT_FILES)|.\index{rm} This removes (deletes) the \emph{.Rout} files. The \texttt{f} argument (force) ignores  files that don't exist and the \texttt{v} argument (verbose) tells you what is happening. When you delete the \emph{.Rout} files, Make will run all of the \emph{.R} files the next time you call it.
+
+The last two lines help us solve a problem created by the fact that our simple makefile doesn't push changes downstream. For example, if we make a change to \emph{Gather2.R} and run \texttt{make}, only \emph{Gather2.R} will be rerun. The new data frame will not be added to the final merged data set. To overcome this problem the last two lines of code create a target called \texttt{cleanMerge} this removes only the \emph{MergeData.Rout} file. 
 
 \paragraph{Running the MakeFile}
 
-To run the makefile simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \emph{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.} Remember to make sure your current working directory is the one with the files you want to run. 
+To run the makefile for the first time simply type \texttt{make} into your shell. It will create the CSV final data file and three files with the extension \emph{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.} Remember to make sure your current working directory is the one with the files you want to run. 
 
 When you run \verb|make| in the shell for the first time you should get the output:
 
 \begin{knitrout}
-	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
-	\color{fgcolor}
-	\begin{kframe}
-		\begin{verbatim}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 ## R CMD BATCH Gather1.R
 ## R CMD BATCH Gather2.R
 ## R CMD BATCH Gather3.R
 ## R CMD BATCH MergeData.R
-			\end{verbatim}
-		\end{kframe}
+            \end{verbatim}
+        \end{kframe}
 \end{knitrout}
 
 \noindent If you run it a second time without changing the R source files you will get the following output:
 
 \begin{knitrout}
-	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
-	\color{fgcolor}
-	\begin{kframe}
-		\begin{verbatim}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 ## make: Nothing to be done for `all'.
-			\end{verbatim}
-		\end{kframe}
+            \end{verbatim}
+        \end{kframe}
 \end{knitrout}
 
-\noindent To remove the \emph{.Rout} files use set the make target to \texttt{clean}:
+\noindent To remove all of the \emph{.Rout} files use set the make target to \texttt{clean}:
 
 \begin{knitrout}
-	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
-	\color{fgcolor}
-	\begin{kframe}
-		\begin{verbatim}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 make clean
 
 ## rm -fv ./Gather1.Rout ./Gather2.Rout ./Gather3.Rout 
@@ -189,9 +193,18 @@ make clean
 ## ./Gather2.Rout
 ## ./Gather3.Rout
 ## ./MergeData.Rout
-			\end{verbatim}
-		\end{kframe}
+            \end{verbatim}
+        \end{kframe}
 \end{knitrout}
+
+\noindent If we run the following code:
+
+<<Ch6MakeAll, eval=FALSE, engine='sh'>>=
+# Remove MergeData.Rout and make all R source files
+make cleanMerge all
+@
+
+\noindent then Make will first remove the \emph{MergeData.Rout} file (if there is one) and then run all of the R source files as need be. \emph{MergeData.R} will always be run. This ensures that changes to the gathered data frames are updated in the final merged data set.
 
 \paragraph{Makefiles and RStudio Projects}
 
@@ -240,8 +253,8 @@ There are many ways to import data that is stored on the internet directly into 
 Importing data into R that is located at a non-secure URL--ones that start with {\tt{http}}--is straightforward provided that:
 
 \begin{itemize}
-	\item the data is stored in a simple format, e.g. plain-text,
-	\item the file is not embedded in a larger HTML website.
+    \item the data is stored in a simple format, e.g. plain-text,
+    \item the file is not embedded in a larger HTML website.
 \end{itemize}
 
 We have discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL. If you only see the raw plain-text data, you are probably good to go.\footnote{If the data is embedded in a larger website--the way data is usually stored on the cloud version of Dropbox--you may still be able to download it into R. However, this can be difficult and varies depending on the structure of the website. So, I do not cover it in this book.}
@@ -250,7 +263,7 @@ To import the data simply include the URL as the file name in your \texttt{read.
 
 <<Ch6httpLoad, eval=FALSE, tidy=FALSE>>=
 FinRegulatorData <- read.table("http://bit.ly/PhjaPM", 
-                   				sep = ",", header = TRUE)
+                                sep = ",", header = TRUE)
 @
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
@@ -262,8 +275,8 @@ Let's try an example. I have data in comma-separated values format stored at a G
 <<Ch6UrlObject, echo=FALSE>>=
 # Put URL address into the object UrlAddress
 UrlAddress <- paste("https://raw.github.com/christophergandrud/",
-				"Disproportionality_Data/master/",
-				"Disproportionality.csv", sep = "")
+                "Disproportionality_Data/master/",
+                "Disproportionality.csv", sep = "")
 @
 
 {\small
@@ -276,12 +289,14 @@ DataUrl <- getURL(UrlAddress)
 
 # Convert Data into a data frame
 DispropData <- read.table(textConnection(DataUrl), 
-                   					 sep = ",", header = TRUE)
-					
+                                     sep = ",", header = TRUE)
+                    
 # Show variables in data
 names(DispropData)
 @
 }
+
+\noindent If running \texttt{getURL(UrlAddress)} gives you an error about an \texttt{SSL certificate problem} simply add the argument \texttt{ssl.verifypeer = FALSE}. This allows you to skip certification verification and access the data.\footnote{For more details see the \emph{RCurl} help page at \url{http://www.omegahat.org/RCurl/FAQ.html}.} 
 
 \subsection{Compressed data stored online}
 
@@ -290,10 +305,10 @@ Sometimes data files are large, making them difficult to store and download with
 To do this you need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes\#tab-top}}, posted 10 June 2010.)}
 
 \begin{itemize}
-	\item create a temporary file with {\tt{tempfile}} to store the zipped file, which you will later remove with the {\tt{unlink command}} at the end,
-	\item download the file with {\tt{download.file}},
-	\item decompress the file with one of the {\tt{connections}} commands in base R,\footnote{To find a full list of commands type {\tt{?connections}} into the R console.}
-	\item read the file with {\tt{read.table}}. 
+    \item create a temporary file with {\tt{tempfile}} to store the zipped file, which you will later remove with the {\tt{unlink command}} at the end,
+    \item download the file with {\tt{download.file}},
+    \item decompress the file with one of the {\tt{connections}} commands in base R,\footnote{To find a full list of commands type {\tt{?connections}} into the R console.}
+    \item read the file with {\tt{read.table}}. 
 \end{itemize}
 
 \noindent The reason that we have to go through so many extra steps is that compressed files are more than just a single file, but can contain a number of files as well as metadata.
@@ -328,11 +343,11 @@ names(UDSData)
 There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Most of these packages use the sources' application programing interface (API)\index{API} that allow programs interact with the website. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward. Some examples of these packages include: 
 
 \begin{itemize}
-	\item The \emph{openair} package \citep{R-openair}, which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
-	\item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.
-	\item The \emph{treebase} package by \cite{Boettiger2012} allows you to access phylogenetic data from TreeBASE.\footnote{\url{http://treebase.org}}
-	\item The \emph{twitteR} package \citep{R-twitteR} access Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from twitter including tweets and trending topics.
-	\item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
+    \item The \emph{openair} package \citep{R-openair}, which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database with the \texttt{importKCL} command.
+    \item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.
+    \item The \emph{treebase} package by \cite{Boettiger2012} allows you to access phylogenetic data from TreeBASE.\footnote{\url{http://treebase.org}}
+    \item The \emph{twitteR} package \citep{R-twitteR} access Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from twitter including tweets and trending topics.
+    \item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
 \end{itemize}
 
 The rOpenSci\footnote{\url{http://ropensci.org/}}\index{rOpenSci} group has and is developing a number of packages for accessing scientific data from web-based sources with R. They have a comprehensive set of packages for accessing biological data and academic journals. For a list of their packages see: \url{http://ropensci.org/packages/index.html}. Another fairly comprehensive and regularly updated list of APIs available as R package on Stack Exchange's Cross Validated website.\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}}}
@@ -382,8 +397,8 @@ As of the time when I was writing this book Brian Abelson's \emph{scraply} \inde
 Beyond learning about the various R packages that are useful for R web scraping, an aspiring web scraper should probably invest time learning a number of other skills:
 
 \begin{itemize}
-	\item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
-	\item Regular Expressions:\index{regular expressions} Web scraping often involves using finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag IDs that are particular to a given website and change across the site based on a given pattern. You can use regular expressions to deal with these situations. R has a comprehensive, if bar bones introduction to regular expressions. To access it type \verb|?regex| into your R console.
-	\item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions generally available in \emph{base} R. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} packages \citep{R-plyr} is also particularly useful.
+    \item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
+    \item Regular Expressions:\index{regular expressions} Web scraping often involves using finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag IDs that are particular to a given website and change across the site based on a given pattern. You can use regular expressions to deal with these situations. R has a comprehensive, if bar bones introduction to regular expressions. To access it type \verb|?regex| into your R console.
+    \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions generally available in \emph{base} R. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} packages \citep{R-plyr} is also particularly useful.
 \end{itemize}
 
