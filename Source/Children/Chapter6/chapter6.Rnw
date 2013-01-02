@@ -11,14 +11,14 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 How you gather your data directly impacts how reproducible your research will be. Of course you should try your best to document every step of your data gathering process. Reproduction will be easier if your documentation--especially, variable descriptions and source code--makes it easy for you and others to understand what you have done. If all of your data gathering steps are tied together by your source code, then independent researchers (and you) can more easily regather the data. Regathering data will be easiest if running your code allows you to get all the way back to the raw data--the rawer the better. Of course this may not always be possible. You may need to conduct interviews or compile information from paper based archives, for example. The best you can sometimes do is describe your data gathering process in detail. Nonetheless, R's automated data gathering capability for internet-based information is extensive. Learning how to take full advantage of these capabilities greatly increases reproducibility and can save you considerable time and effort over the long run.
 
-In this chapter you'll learn how to gather quantitative data in a reproducible and, in some cases, fully replicable way. You'll start by learning how to use data gathering make files\index{make file} to organize your whole data gathering process so that it can be completely reproduced. Then you will learn the details of how to actually load data into R from various sources, both locally on your computer and via the internet. In the next chapter (Chapter \ref{DataClean}) you'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
+In this chapter you'll learn how to gather quantitative data in a reproducible and, in some cases, fully replicable way. You'll start by learning how to use data gathering makefiles to organize your whole data gathering process so that it can be completely reproduced. Then you will learn the details of how to actually load data into R from various sources, both locally on your computer and via the internet. In the next chapter (Chapter \ref{DataClean}) you'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
 
 %%%%%%%%%%%%% Organizing data gathering
 \section{Organize your data gathering: make files}
 
 Before getting into the details of using R to gather data, let's start by creating a plan to organize the process. Organizing your data gathering process from the beginning of a research project improves the possibility of reproducibility and can save you significant effort over the course of the project by making it easier to add and regather data later on. 
 
-A key part of reproducible data gathering with R, like reproducible research in general, is segmenting the process into discrete files that can all be run by a common ``make'' file\index{make file}. In this chapter we'll learn how to create make-like files run exclusively from R as well as GNU Make,\footnote{GNU stands for ``GNU's Not Unix", indicating that it is Unix-like.}\index{GNU make} which you run from a shell.\footnote{To standardize things, I use the terms ``R make-like file'' for files created and run in R and the standard ``makefile'' for files run by Make.} Learning how to create R make-like files is fairly easy. Using GNU Make does require learning yet more new syntax. However, it has one very clear advantage: it only runs a source code file that has been updated since the last time you called the makefile. This is very useful if part of your data gathering process is very computationally and time intensive.
+A key part of reproducible data gathering with R, like reproducible research in general, is segmenting the process into discrete files that can all be run by a common ``make'' file\index{makefile}. In this chapter we'll learn how to create make-like files run exclusively from R as well as GNU Make,\footnote{GNU stands for ``GNU's Not Unix", indicating that it is Unix-like.}\index{GNU Make} which you run from a shell.\footnote{To standardize things, I use the terms ``R make-like file'' for files created and run in R and the standard ``makefile'' for files run by Make.} Learning how to create R make-like files is fairly easy. Using GNU Make does require learning yet more new syntax. However, it has one very clear advantage: it only runs a source code file that has been updated since the last time you called the makefile. This is very useful if part of your data gathering process is very computationally and time intensive.
 
 Segmentation your data gathering and it together with some sort of make file allows you to more easily navigate research text and find errors in the source code. The make file's output is the data set(s) that you'll use in the statistical analyses. There are two types of source code files that the make file runs: data gathering/clean up files and merging files. Data clean up files bring raw individual data sources into R and transform them so that can be merged together with data from the other sources. Some of the R tools for data clean up and merging will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. Merging files are executed by the make file after it runs the data gathering/clean up files.
 
@@ -28,13 +28,13 @@ The files for the examples used in this section can be downloaded from GitHub at
 
 \subsection{R Make-like files}
 
-When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what a data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems.
+When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source command}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
 
 <<Ch5ExampleRMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
 ################
 # Example R make-like file
 # Christopher Gandrud
-# Updated 15 January 2012
+# Updated 15 January 2013
 ################
 
 # Set working directory
@@ -94,7 +94,7 @@ Now let's look at the actual makefile:
 ################
 # Example Makefile
 # Christopher Gandrud
-# Updated 15 January 2012
+# Updated 15 January 2013
 # Influenced by Rob Hyndman (31 October 2012)
 # See: http://robjhyndman.com/researchtips/makefiles/
 ################
@@ -137,7 +137,7 @@ Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make funct
 
 The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \emph{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R outfile contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your make files gives you an error like \texttt{make: *** [Gather.Rout] Error 1}.} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but uses the file extension \emph{.Rout}.
 
-The second part of the make file tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{target, makefile} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \textttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
+The second part of the make file tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{targets, Make} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \textttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
 
 The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CMD BATCH $<|) actually runs the R source code files in the directory.  The first line specifies that the \emph{.Rout} files are the targets of the \emph{.R} files (the prerequisites. The percent sign (\verb|%|) is another wildcard. Unlike the asterisk, it replaces the selected file names throughout the command used to create the target.
 
@@ -197,7 +197,7 @@ make clean
         \end{kframe}
 \end{knitrout}
 
-\noindent If we run the following code:
+\noindent If we run the following code:\label{MakeAllCommand}
 
 <<Ch6MakeAll, eval=FALSE, engine='sh'>>=
 # Remove MergeData.Rout and make all R source files
@@ -270,7 +270,7 @@ FinRegulatorData <- read.table("http://bit.ly/PhjaPM",
 
 \noindent We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}. The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a large HTML website apply to secure web addresses as well.
 
-Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
+Let's try an example. I have data in comma-separated values format stored at a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.}\label{RawGitHub} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
 
 <<Ch6UrlObject, echo=FALSE>>=
 # Put URL address into the object UrlAddress

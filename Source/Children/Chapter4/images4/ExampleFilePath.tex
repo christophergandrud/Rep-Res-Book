@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%
 % Example research project file path
 % Christopher Gandrud
-% Updated 28 September 2012
+% Updated 2 January 2013
 %%%%%%%%%%%%%%
 
 % Set node styles
@@ -22,44 +22,33 @@
   two children at (0.5,-0.7) and (0.5,-1.4)},
   edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
   % Root Directory
-  \node (root) at (5, 10) [DirBox]{Root};
+  \node (root) at (7.5, 10) [DirBox]{Root};
   
   % Project Directory
-  \node (project) at (4.55, 8.5) [DirBox]{ExampleProject};
+  \node (project) at (7.25, 8.5) [DirBox]{ExampleProject};
   
-  % Main Project sub-directories
-  \node (data) at (0, 7) [DirBox]{Data};
-  \node (presentation) at (11, 7) [DirBox]{Presentation};
-  \node (readme) at (15, 7) {README.md};
+  % Data Directory
+  \node (data) at (0, 7) [DirBox]{Data}
+      child {node {{\small{MainData.csv}}}}
+      child { node [DirBox]{GatherSource}
+        child {node {{\small{Makefile}}}} 
+        child {node {{\small{MergeData.R}}}} 
+        child {node {{\small{Gather1.R}}}}
+        child {node {{\small{Gather2.R}}}}
+        child {node {{\small{Gather3.R}}}}
+        };
   
   % Analysis subdirectores/files
-  \node (analysis) at (5, 7) [DirBox]{Analysis}
+  \node (analysis) at (4.5, 7) [DirBox]{Analysis}
           child {node {{\small{MainAnalysis.R}}}}
           child { node [DirBox]{ResultsFigures}
             child {node {{\small{Figure1.R}}}}
             child {node {{\small{Figure2.R}}}}
             child {node {{\small{Figure3.R}}}}
             };
-
-  % Data subdirectories/files
-  \node (dataGatherSource) at (-2.5, 6) [DirBox]{GatherSource}
-        child {node {{\small{DataMakeFile.R}}}} 
-        child {node {{\small{MergeData.R}}}} 
-        child {node [DirBox]{IndvDataGather}
-          child {node {{\small{Gather1.R}}}}
-          child {node {{\small{Gather2.R}}}}
-          child {node {{\small{Gather3.R}}}}
-          };
-          
-  \node (dataFiles) at (2, 6) [DirBox]{DataFiles}
-        child {node {{\small{MainData.csv}}}}
-        child {node [DirBox]{IndvData}
-          child {node {{\small{Data1.csv}}}}
-          child {node {{\small{Data2.csv}}}}
-          child {node {{\small{Data3.csv}}}}
-          };
   
   % Presentation subdirectories/files
+  \node (presentation) at (11, 7) [DirBox]{Presentation};
   \node (article) at (9.5, 6) [DirBox]{Article}
           child {node {{\small{Paper.Rnw}}}}
           child {node {{\small{Bibliograph.bib}}}}
@@ -77,17 +66,16 @@
           child {node {{\small{Website.Rmd}}}}
           child {node {{\small{Website.html}}}}
           };
+
+  % README file
+  \node (readme) at (15, 7) {README.md};
   
   % Connect boxes that are not explicit children
   \draw (root) -- (project);
   \draw (project) -| (data);
-  \draw (project) -- (analysis);
+  \draw (project) -| (analysis);
   \draw (project) -| (presentation);
   \draw (project) -| (readme);
-  
-  %% Data connect boxes
-  \draw (data) -| (dataGatherSource);
-  \draw (data) -| (dataFiles);
   
   %% Presentation connect boxes
   \draw (presentation) -| (article);

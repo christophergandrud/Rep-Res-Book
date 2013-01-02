@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 27 December 2012
+% Updated: 2 January 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,57 +9,56 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Statistical Modelling and knitr}\label{StatsModel}
 
-\todo[inline]{Add how to use old versions of R Packages}
+When you have your data cleaned and organized you will begin to examine it with statistical analyses. In this book we don't look at how to do statistical analysis in R (a subject that would and does take many books). Instead we focus on how to make your analyses really reproducible. To do this you dynamically connect your data gathering and analysis source code to your presentation documents. When you dynamically connect your data gathering makefiles and analysis source code file to your markup document you will be able to completely rerun your data gathering and analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analyses source code files.
 
-When you have your data cleaned and organized you will begin to examine it with statistical analysis. To make your analysis really reproducible you should dynamically connect the source code of your analysis to your data make file and presentation documents. Connecting to the data make file could involve actually including the code to run your make file in the analysis source code with the \texttt{source} command or if this is computationally intensive you may include this code in the comments so that independent researchers can easily rerun it. Clearly you will directly link to the output of the data gathering make file when you load the data it produced for your statistical analysis. When you dynamically connect your source code file to your markup document you will be able to run your analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analysis.
+You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr} syntax. In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We will finally examine how to use \emph{knitr} when with segmented source code files. 
 
-You can dynamically tie your statistical analyses and presentation documents together with {\emph{knitr}}. In Chapter \ref{GettingStartedRKnitr} you learned basic {\emph{knitr}} syntax. In this chapter you will begin to learn {\emph{knitr}} syntax in much more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. You will also learn how to dynamically include code from languages other than R. We will finally examine how to use {\emph{knitr}} when you segment your analysis into a number of modular source code files. 
+The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
-The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie your analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results.
-
-Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include {\emph{knitr}} code chunks.
+sessioninfohow
+\textbf{Reminder:} Before discussing the details of how to incorporate you analysis into your source code, it's important to reiterate something we discussed in Chapter \ref{GettingStartedRR}. The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for file path names, syntax can change depending on what operating system you are using.  So it is important to make your R session info available (see page \pageref{SessionInfoHow} for details) to make your research reproducible and future proof. If someone reproducing your research has this information they can likely download and use the exact version of the software that you used. For example, CRAN\index{CRAN archive} maintains an archive of previous R package versions.\footnote{See: \url{http://cran.r-project.org/src/contrib/Archive/}.} Previous versions of R itself can also be downloaded through CRAN.\footnote{See: \url{http://cran.r-project.org/src/base/}.}
 
 \section{Incorporating analyses into the markup}
 
-For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your markup document. In this section you will learn how set {\emph{knitr}} options to handle these code chunks.
+For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your \emph{knitr} markup document. In this section we will learn how set \emph{knitr} options to handle these code chunks. For a list including the chunk options covered here see Table \ref{ChunkOptionsTable}.
 
 \subsection{Full code chunks}
 
-By default {\emph{knitr}} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text exactly where they are written in the markup version. Figures are inserted as well. Let's look at the main options for determining how R code is handled by {\emph{knitr}}.
+By default {\emph{knitr}} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the point where they are written in the markup version. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by {\emph{knitr}}.
 
 \paragraph{{\tt{eval}}}\index{eval}
 
-Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code chunks without actually running them.
+The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code chunks without actually running them. By default it is set to \texttt{TRUE}, i.e. the code is run.
 
 \paragraph{{\tt{echo}}}\index{echo}
 
-The opposite of \texttt{eval=FALSE} is to have the code chunk evaluated but have the code not included in the presentation document. You can do this by setting \texttt{echo=TRUE}. You will use this option extensively in chapters \ref{TablesChapter} and \ref{FiguresChapter} when you learn how to run R source code to produce tables and figures that are included presentation documents' text.
+If you would like hide a chunks code you from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} (which it is by default) then source code will be included in the presentation document.
 
 \paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{warning}\index{error}\index{message}
 
-If you don't want to include in the text of your presentation documents the warnings, messages, and error messages that R outputs when it runs a code chunk just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}.
+If you don't want to include the warnings, messages, and error messages that R outputs in the text of your presentation documents just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}. They are set to \texttt{TRUE} by default.
 
-\paragraph{{\tt{include}}}
+\paragraph{{\tt{include}}}\index{include}
 
-Use \texttt{include=FALSE} if you don't want to include anything in the text of your presentation document, but you still want to evaluate a code chunk.
+Use \texttt{include=FALSE} if you don't want to include anything in the text of your presentation document, but you still want to evaluate a code chunk. It is \texttt{TRUE} by default.
 
 \paragraph{{\tt{cache}}}\index{cache}
 
-If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the code chunk is run only if the code changes. It is very handy if you have a code chunk that is computationally intensive to run. 
+If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the code chunk is run only if the code changes. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default.
 
-Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached.
+Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached. Packages that are loaded in cached chunks cannot be accessed by other chunks.
 
 \subsection{Showing code \& results inline}
 
-Sometimes you may want to have some R code or text output show up inline with the rest of your presentation document's text. For example, you may want to include a small chunk of stylized code in your text when you discuss how you did an analysis. Or you may want to dynamically report the mean of some variable in your text so that the text will change if you change the data. The {\emph{knitr}} syntax for including inline code is different for the LaTeX and Markdown languages. We'll cover both in turn.
+Sometimes you may want to have R code or output show up inline with the rest of your presentation document's text. For example, you may want to include a small chunk of stylized code in your text when you discuss how you did an analysis. Or you may want to dynamically report the mean of some variable in your text so that the text will change if you change the data. The {\emph{knitr}} syntax for including inline code is different for the LaTeX and Markdown languages. We'll cover both in turn.
 
 \subsubsection{LaTeX}
 
 \paragraph{Inline static code}
 
-There are a number of ways to to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that something code (I use it in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you `\texttt{2 + 2}' in your text.
+There are a number of ways to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that some text is code (I use typewriter font for this purpose in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you \texttt{2 + 2} in your text. Note that in LaTeX curly brackets (\verb|{}|) work exactly like parentheses in R, i.e. the enclose a command's arguments.
 
-However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
+However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command as if it was LaTeX markup. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). The backslash is an escape character in LaTeX. Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
 
 To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\texttt|' in the text. We would type:
 
@@ -73,13 +72,13 @@ To use the \verb|\verb| command pick some character you will not use in the inli
         \end{kframe}
 \end{knitrout}
 
-\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar. All of the text in between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012).}
+\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar following \verb|\verb|. All of the text in between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012).}
 
 \paragraph{Inline dynamic code}
 
-If you want to dynamically show the results of some R code in your LaTeX produced text you can use the  \texttt{\textbackslash Sexpr} command\index{Sexpr}. This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from Sweave.} Its structure is more like a LaTeX command's structure than {\emph{knitr}}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the usual \verb|<<>>= . . . @| syntax for block code chunks. 
+If you want to dynamically show the results of some R code in your \emph{knitr} LaTeX produced text you can use the \verb|\Sexpr|\index{Sexpr}. This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from Sweave.} Its structure is more like a LaTeX command's structure than {\emph{knitr}}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the \verb|<<>>= . . . @| syntax you use for block code chunks. 
 
-For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the length of 141 major rivers recorded in miles. You can simply use the {\tt{mean}} command to find the mean and the {\tt{round}} command to round it to the nearest whole number:
+For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the lengths of 141 major rivers recorded in miles. You can simply use the \texttt{mean}\index{mean, R command} command to find the mean and the \texttt{round}\index{round, R command} command to round the result to the nearest whole number:
 
 <<Ch8MeanRivers>>=
 round(mean(rivers), digits = 0)
@@ -87,16 +86,10 @@ round(mean(rivers), digits = 0)
 
 \noindent To have just the output show up inline with the text of your document you would type something like:
 
-\begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
-    \color{fgcolor}
-    \begin{kframe}
-        \begin{verbatim}
+<<Ch7SexprExample, eval=FALSE>>=
 The mean length of 141 major rivers in North America
 is \Sexpr{round(mean(rivers), digits = 0)} miles. 
-            \end{verbatim}
-        \end{kframe}
-\end{knitrout}
+@
 
 \noindent This produces the sentence:
 
@@ -108,13 +101,13 @@ is \Sexpr{round(mean(rivers), digits = 0)} miles.
 
 \paragraph{Inline static code}
 
-To include static code inline in an R Markdown (and regular Markdown) document, enclose the code in single backticks (\` \`). For example:
+To include static code inline in an R Markdown (and regular Markdown) document, enclose the code in single backticks (\verb|` . . . ` |). For example:
 
 <<Ch8MarkdownInline, eval=FALSE, tidy=FALSE>>=
 This is example R code: `MeanRiver <- mean(rivers)`.
 @
 
-\noindent produces:\footnote{The exact look of the text depends on the CSS\index{CSS} style file you are using.}
+\noindent produces:\footnote{The exact look of the text depends on the CSS\index{CSS} style file you are using. The example here was created with RStudio's default style file.}
 
 \includegraphics[scale = 0.6]{/git_repositories/Rep-Res-Book/Source/Children/Chapter8/images8/MeanRiverMarkdown.png}
 
@@ -128,28 +121,30 @@ Including dynamic code in the body of your R Markdown text is similar to includi
 
 \noindent will include the mean value of the {\emph{rivers}} vector in the text of your Markdown document.
 
-\subsection{Dynamically including non-R code}
+\subsection{Dynamically including non-R code in code chunks}
 
-You are not limited to dynamically including just R code in your presentation documents. {\emph{knitr}} can run code from a variety of other languages including: Python\index{Python}, Ruby, Bash, Haskell, and Awk. All you have to do to dynamically include code from one of these languages is set the \texttt{engine}\index{engine} code chunk option. For example, to dynamically include a simple line of Ruby code in an R Markdown document simply type:
+You are not limited to dynamically including just R code in your presentation documents. {\emph{knitr}} can run code from a variety of other languages including: Python\index{Python}, Ruby, Bash, Haskell, and Awk. All you have to do to dynamically include code from one of these languages is use the \texttt{engine}\index{engine} code chunk option to tell \emph{knitr} which language you are using. For example, to dynamically include a simple line of Ruby code in an R Markdown document type:
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{verbatim}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
+        \begin{verbatim}
 ```{r engine='ruby'}
 print "Reproducible Research"
- 
-
-Reproducible Research
 ```
-\end{verbatim}
-\end{kframe}
+        \end{verbatim}
+    \end{kframe}
 \end{knitrout}
 
-The programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. Please note that currently the range of functions {\emph{knitr}} supports for these languages is less extensive than what it supports for R. For example, there is no colored syntax highlighting.
+\noindent In the final HTML file you will get:\footnote{Again, this was created using RStudio's default CSS style file.} 
+
+\includegraphics[scale = 0.6]{/git_repositories/Rep-Res-Book/Source/Children/Chapter8/images8/RubyRR.png}
+
+The programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. Please note that currently the range of functions \emph{knitr} supports for these languages is less extensive than what it supports for R. For example, there is no colored syntax highlighting.
 
 \section{Dynamically including modular analysis files}
 
-There are a number of reasons that you might want to have your R source code located in separate files from your markup documents even if you compile them together with {\emph{knitr}}.
+There are a number of reasons that you might want to have your R source code located in separate files from your markup documents even if you compile them together with \emph{knitr}.
 
 \begin{wraptable}{rt}{0.4\textwidth}
     \caption{Knitr \texttt{engine} Values}
@@ -171,35 +166,61 @@ There are a number of reasons that you might want to have your R source code loc
     \end{tabular}
 \end{wraptable}
 
-First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy {\emph{knitr}} code folding and chunk management options. There are just too many things going on in one document. 
+First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code folding and chunk management options. There are just too many things going on in one document. 
 
-Second, you may want to use the same code in multiple documents--an article and presentation for example. It is nice to not have to copy and paste the same code into multiple places. Instead it is easier to have multiple documents link to the same source code. When you make changes to this source code files, the changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
+Second, you may want to use the same code in multiple documents--an article and slide show presentation for example. It is nice to not have to copy and paste the same code into multiple places. Instead it is easier to have multiple documents link to the same source code file. When you make changes to this source code file, the changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
 
-Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled modular files that are explicitly tied together in the markup file with {\emph{knitr}} it is easy for them to find the specific bits of code that they are interested in.
+Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled modular files that are explicitly tied together in the markup file with \emph{knitr} it is easy for them to find the specific bits of code that they are interested in.
 
 \subsection{Source from a local file}
 
-Usually in the early stages of research you may want to run code stored in analysis files located on your computer. Doing this is simple. The {\emph{knitr}} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk you save it to its own file and use the \texttt{source} command to access it. For example, in an R Markdown file we could run the R code in a file called {\emph{MainAnalysis.R}} from our {\exmph{ExampleProject}} like this:
+Usually in the early stages of research you may want to run code stored in analysis files located on your computer. Doing this is simple. The \emph{knitr} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk, you save it to its own file and use the \texttt{source}\index{source command} command to access it.\footnote{We used the \texttt{source} command in Chapter \ref{DataGather} in our make-like data gathering file.} For example, in an R Markdown file we could run the R code in a file called \emph{MainAnalysis.R} from our \emph{ExampleProject} like this:
 
 <<MarkdownLocalSource, eval=FALSE, tidy=FALSE>>=
-```{r, echo=FALSE}
+```{r, include=FALSE}
 # Run main analysis
 source("/ExampleProject/Analysis/MainAnalysis.R"}
 ```
 @
 
-Notice that we set the \texttt{echo=FALSE} option. This will run the analysis and produce objects created by the analysis code that can be used by other code chunks, but the results are not show in the presentation document's text. Errors, messages, and warnings will be shown, if we do not tell {\emph{knitr}} to hide them.
+\noindent Notice that we set the \texttt{include=FALSE} option. This will run the analysis and produce objects created by the analysis code that can be used by other code chunks, but the output will not show up in the presentation document's text. 
+
+\paragraph{Sourcing a makefile in a code chunk}
+
+In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{system, R command} command (see page \pageref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{\textless}engine='sh', include=FALSE\textgreater{\textgreater}=
+# Change the working directory to \ExampleProject/Data/GatherSource
+cd /ExampleProject/Data/GatherSource/
+
+# Run makefile
+make cleanMerge all
+
+# Change to working directory to /ExampleProject/Analysis/
+cd /ExampleProject/Analysis/
+@
+            \end{alltt}
+        \end{kframe}
+\end{knitrout}  
+
+\noindent Please see page \pageref{MakeAllCommand} for details on the \texttt{make} command arguments used here.
+
+You can of course also use R's \texttt{source} command to run an R make-like data gathering file. Unlike GNU Make, this will rerun all of the data gathering files, even if they have not been updated. This may become very time consuming depending on the size of your data sets and who they are manipulated. 
+
+One final note on including makefiles in your \emph{knitr} presentation document source code: it is important to place the code chunk with the makefile before code chunks containing statistical analyses that depend on the data file it creates. Placing the makefile first will keep the others up-to-date as well.
 
 \subsection{Source from a non-secure URL (\texttt{http})}
 
-Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to
-use another storage method.%\footnote{You can make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. However, this usually just adds an extra complicating step that makes replication harder. It is also a pain if you are collaborating and each author has to constantly change the directories.}
-
-The simplest solution to these issues is to host the replication code in your Dropbox public folder. You can find the file's public URL the same that you did in Chapter \ref{Storing}. Now use the \texttt{source} command the same way as before with the URL as the argument.
+Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest solution for this issues is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{source} command the same way as we did before with the \texttt{read.table}\index{read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included included with this book.}
 
 \subsection{Source from a secure URL (\texttt{https})}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url} command in the {\emph{devtools}} package \cite[]{R-devtools}. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing}. Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} you simply type:
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url} command in the {\emph{devtools}} package \cite[]{R-devtools}. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (page \pageref{RawGitHub}). Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} you simply type:
 
 <<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, fig.width=3, fig.height=3>>=
 # Load library
