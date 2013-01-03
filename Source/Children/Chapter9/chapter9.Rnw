@@ -13,7 +13,7 @@ Graphs and other visual methods, discussed in the next chapter, can often be a m
 
 Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors. It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
 
-The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support. As we will learn at the end of the chapter, \texttt{knitr} allows us to dynamically incorporate tables from both packages into our documents.
+The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only packages available for creating presentation document tables from R objects. Others include the \emph{table} package \citep{R-table}\index{table, R package} and } As we will learn at the end of the chapter, \texttt{knitr} allows us to dynamically incorporate tables from both packages into our documents.
 
 \textbf{Warning:} Automating table creation removes the possibility of adding errors to your analyses by incorrectly copying output, a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables through coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do they match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
 
@@ -70,7 +70,7 @@ To begin a simple tabular environment type \verb|\begin{tabular}{TABLE_SPEC}|. T
 
 Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.}\index{ampersand in LaTeX} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double back slashes. For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
 
-<<Ch7TwoLineLaTeX1, eval=FALSE>>=
+<<Ch9TwoLineLaTeX1, eval=FALSE>>=
 \begin{tabular}{l | c c}
     Observation & Variable1 & Variable2 \\
     Subject1 & a & b \\
@@ -78,7 +78,7 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
 
 \noindent It is common to demarcate the row with a table's column names--the first row--with horizontal lines. A horizontal line also often demarcates a table's end. You can add horizontal in the \texttt{tabular} environment with the \verb|\hline| command.\footnote{The \texttt{\textbackslash{}hline} command works outside of the \texttt{tabular} environment as well.}
 
-<<Ch7TwoLineLaTeX2, eval=FALSE>>=
+<<Ch9TwoLineLaTeX2, eval=FALSE>>=
 \begin{tabular}{l | c c}
     \hline
     Observation & Variable1 & Variable2 \\
@@ -89,7 +89,7 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
 
 \noindent Finally, we close the \texttt{tabular} environment with \verb|\end{tabular}|. The full code (with a few extra rows added) is:
 
-<<Ch7LaTeXExampleFull, eval=FALSE>>=
+<<Ch9LaTeXExampleFull, eval=FALSE>>=
 \begin{tabular}{l | c c}
     \hline
     Observation & Variable1 & Variable2 \\
@@ -119,7 +119,7 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
 
 You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{float, LaTeX} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table}float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC| argument allows us to determine the location of the table. I can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{caption, LaTeX command} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref{KEY}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{pageref, LaTeX command} to reference the page number.}\index{label, LaTeX command} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
 
-<<Ch7LaTeXExampleFullFloat, eval=FALSE>>=
+<<Ch9LaTeXExampleFullFloat, eval=FALSE>>=
 \begin{table}[t]
     \caption{Example Simple LaTeX Table}
     \label{ExLaTeXTable}
@@ -161,36 +161,165 @@ You can see how typing out a table in LaTeX gets very tedious very fast. For all
 
 \subsection{Tables in Markdown/HTML}\index{Markdown/HTML tables}
 
-\paragraph{Markdown tables}
+Now we will briefly look at the syntax for creating simple Markdown and HTML tables before turning to learning how to have R create these tables for us.
 
-\paragraph{HTML tables}
+\paragraph{Markdown tables}\index{Markdown tables}
 
-The \emph{xtable} package we will learn in the next section doesn't create Markdown formatted tables. It can create HTML tables. This is useful for us because virtually any HTML markup can be incorporated into a Markdown document. So it is useful to understand the basic syntax for HTML tables.
+Markdown table syntax, as with all Markdown syntax is generally much simpler than LaTeX's tabular syntax. The markup is much more human readable. Nontheless, larger tables can still be tedious to create.
+
+You do not need to declare any new environments to start creating a Markdown table. Just start typing. Columns are delimited in Markdown tables with a vertical bar (\texttt{|}). Rows are started with a new line. To indicate the head of the table--usually the row(s) containing the column names--separate it from the body of the table a row of dashes (e.g. \verb|----|). Here is an example based on the table we created in the previous section:
+
+<<Ch9MarkdownTable2Row, eval=FALSE>>=
+Observation | Variable1  | Variable2 
+----------- | ---------- | --------- 
+Subject1    | a          | b        
+@
+
+\noindent Note that it is not necessary to line up the vertical bars. You just need to have the same number of them on each row.
+
+You can specify each columns text justification using colons on the dashed row. For example this code will create the center-right-right justified format we did previously (with a few extra rows thrown in):
+
+<<Ch9MarkdownTableust, eval=FALSE>>=
+Observation | Variable1 | Variable2 
+:---------- | :-------: | :-------: 
+Subject1    | a         | b        
+Subject2    | c         | d        
+Subject3    | e         | f        
+Subject4    | g         | c       
+@
+
+\noindent To create a right-right justified column simply place a colon on the right side of the dashes. 
+
+The ultimate look of a Markdown table is highly dependent on the CSS style file you are using (see Chapter \ref{MarkdownChapter} for how to change your CSS style file). The default RStudio CSS style file formats our table like this:
+
+\includegraphics[scale = 0.6]{/git_repositories/Rep-Res-Book/Source/Children/Chapter9/images9/RStudioDefaultTableExample.png}
+
+\noindent Using a different CSS style file\footnote{The table was created using the Upstanding Citizen style from the program Marked.\index{Marked}} we can get something like this:
+
+\includegraphics[scale = 0.6]{/git_repositories/Rep-Res-Book/Source/Children/Chapter9/images9/MarkedTableExample.png}
+
+\noindent In basic Markdown you can add a caption with the heading syntax (see page \pageref{headings, Markdown}). For example:
+
+<<Ch9MarkdownTableHeading, eval=FALSE, engine='sh'>>=
+### Example Simple Markdown Table
+Observation | Variable1 | Variable2 
+:---------- | :-------: | :-------: 
+Subject1    | a         | b         
+@
+
+\noindent will produce something like this:
+
+\includegraphics[scale = 0.6]{/git_repositories/Rep-Res-Book/Source/Children/Chapter9/images9/MarkedCaptionTableExample.png}
+
+\noindent If you use MultiMarkdown you can use a more sophisticated caption by including the heading and cross reference key inside of square brackets (\verb|[]|) either directly before or directly after the table. Please see Chapter \ref{MarkdownChapter} (page \pageref{MultiMarkdownDiscussion}).
+
+\paragraph{HTML tables}\index{HTML tables}
+
+The \emph{xtable} package we will learn in the next section doesn't create tables formatted by Markdown syntax. It can creates tables with HTML syntax. This is useful for us because virtually any HTML markup can be incorporated into a Markdown document. In fact, Markdown table syntax is only a stepping stone for more easily producing tables with HTML syntax. So it is useful to understand the basic syntax for HTML tables.
+
+HTML uses element ``tags''\index{element tag, HTML} to begin and end tables. The main element we use to create tables is, well the \texttt{tables} element. This is very similar to LaTeX's \texttt{tabular} environment. An HTML element generally begins with a start tag and ends with an end tag. Clearly this is very similar to LaTeX's \verb|\begin{}| and \verb|\end{}| commands. Begin tags are encapsulated in a greater than and less than sign and include the element tag name (\verb|<TAG>|). End tags are similar, but include a forward slash like this \verb|</TAG>|. The content of the element goes between the start and end tags. For example:
+
+<<Ch9HTMLElementTag, eval=FALSE>>=
+<table>
+    . . .
+    . . .
+</table>
+@
+
+\noindent As in LaTeX you are not required to tab the content of a table element, however, it does make the markup document easier to read and, as the number of tags proliferates, easier to write.
+
+You can add element attributes inside of start tags.\footnote{These work like arguments in R in that they change how the element is evaluated.} For example, to add a border to the table use: \verb|<table border="1">|.
+
+Table rows are put inside of \texttt{tr}\index{tr, HTML element} (table rows) element tags. Individual cells are delimited with \texttt{td} (standard cell) tags.\index{td, HTML element} Here is what the first row of our example table looks like in basic HTML:
+
+<<Ch9HTMLTableFirst, eval=FALSE>>=
+<table>
+    <tr>
+        <td>Observation</td> <td>Variable1</td> <td><Variable2/td>
+    </tr>
+@
+
+\noindent We can further delimit a table's header row(s) from its body with the \texttt{thead} and \texttt{tbody} tags. Finally, before making a full table its useful to mention that table captions can be include with \texttt{caption} tags. Let's put this all together:
+
+{\small
+<<Ch9HTMLTableFull, eval=FALSE>>=
+<table>
+    <thead>
+        <tr>
+            <td>Observation</td> <td>Variable1</td> <td>Variable2</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Subject1</td> <td>a</td> <td>b</td>
+        </tr>
+        <tr>
+            <td>Subject2</td> <td>c</td> <td>d</td>
+        </tr>
+        <tr>
+            <td>Subject3</td> <td>e</td> <td>e</td>
+        </tr>
+        <tr>
+            <td>Subject4</td> <td>f</td> <td>f</td>
+        </tr>      
+    </tbody>
+</table>
+@
+}
+
+\noindent As with Markdown tables, the ultimate appearance of the table is highly dependent on the style files you use.
 
 \section{Creating tables from R objects}
 
-Just as the \texttt{read.csv} command turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an object--e.g. a matrix, data frame, the output from a statistical analysis and so on--and turn format it as either a LaTeX of HTML table. In this section we will learn how to do this with the \emph{xtable} and \emph{apsrtable} packages.
+Just as the \texttt{read.csv} command turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an object--e.g. a matrix, data frame, the output from a statistical analysis and so on--and turn format it into either a LaTeX or HTML table. In this section we will learn how to do this with the \emph{xtable} and \emph{apsrtable} packages.
 
-\subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects}
+\subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects} 
+
+The \emph{xtable} and \emph{apsrtable} packages are fairly easy to use if you want to convert a model object or an object of a class that they support into a table. To see a full list of object classes that \emph{xtable} supports type \texttt{methods(xtable)} into the R console. To see \emph{apsrtable}'s' supported classes \todo{Need to find out.} 
 
 \subsubsection{\emph{xtable} for LaTeX}
 
+Let's first look at how to create LaTeX tables with \emph{xtable}. Let's begin by creating a summary table of simple linear regression results using data from the \emph{swiss} data frame and R's \texttt{lm} (linear model) command.\index{lm} This data frame is included with R by default. The simple linear regression model we are going to make has the \emph{swiss} variable \textbf{Examination} as the dependent variable and \textbf{Education} as the only independent variable.\footnote{For a description of these variables type \texttt{?swiss} into the console}
+
+<<Ch9xtableSummary, eval=FALSE>>=
+# Load xtable 
+library(xtable)
+
+# Fit simple linear regression model
+M1 <- lm(Examination ~ Education, data = swiss)
+
+# Create LaTeX table
+M1Table <- xtable(M1Table)
+@ 
+
+This code will create a fully formatted LaTeX table (with both complete \texttt{tabular} and \texttt{table} environments) That looks like Table \ref{BasicLaTeXxtable}.
+
+{\small
+<<Ch9xtableSummaryPrint, echo=FALSE, results='asis'>>=
+xtable(M1, label = "BasicLaTeXxtable")
+@
+}
+
+\paragraph{LaTeX landscape tables}\index{landscape tables, LaTeX}
+
 \subsubsection{\emph{xtable} for Markdown}
 
-We can use {\emph{xtable}} and the \texttt{print} command to also create tables for Markdown and HTML documents. Instead of setting the \texttt{type} argument to \texttt{`latex`} we simply put it to \texttt{'html'}.
+We can use {\emph{xtable}} and the \texttt{print} command to also create tables for Markdown and HTML documents. Instead of setting the \texttt{type} argument to \verb|'latex'| we simply set it to \verb|'html'|.
 
-\subsection{\emph{apsrtable} for LaTeX}
+\subsubsection{\emph{apsrtable} for LaTeX}
+
+You need to include the \texttt{dcolumn} package in your LaTeX preamble, i.e. \verb|\usepackage{dcolumn}| (see page \pageref{LaTeXPreamble} for a discussion of LaTeX preambles).
 
 \subsection{\emph{xtable} with non-supported class objects}
 
-{\tt{xtable}} is very convenient for making tables from objects in supported classes.\footnote{To see a full list of classes that {\tt{xtable}} supports type \texttt{methods(xtable)} into the R console.} With supported class objects {\tt{xtable}} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that it needs to create the table. With unsupported classes, however, it doesn't know where to look for these things. You need to help it find them. 
+\emph{xtable} is very convenient for making tables from objects in supported classes. With supported class objects \emph{xtable} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that it needs to create the table. With unsupported classes, however, it doesn't know where to look for these things. You need to help it find them. 
 
-{\tt{xtable}} can handle matrix and data frame class objects. The rows of these objects become the rows of the table and the columns become the table columns. So, to create tables with non-supported class objects you need to
+\emph{xtable} can handle matrix and data frame class objects. The rows of these objects become the rows of the table and the columns become the table columns. So, to create tables with non-supported class objects you need to
 
 \begin{enumerate}
     \item find and extract the information from the unsupported class object that you want in the table, 
     \item convert this information into a matrix or data frame where the rows and columns of the object correspond to the rows and columns of the table that you want to create,
-    \item use {\tt{xtable}} with this object to create the table.
+    \item use \emph{xtable} with this object to create the table.
 \end{enumerate}
 
 Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite[]{Goodrich2007,R-Zelig} and data from the {\emph{swiss}} data frame that comes with R. First run the model:
@@ -208,7 +337,7 @@ NBModel <- zelig(Examination ~ Education, model = "normal.bayes",
 class(NBModel)
 @
 
-Using the {\tt{class}} command we found that the model output object is a {\tt{MCMCZelig}} class object. This class is not supported by {\tt{xtable}}. If you try to create a summary table called {\emph{NBTable}} of the results you will get the following error:
+Using the {\tt{class}} command we found that the model output object is a {\tt{MCMCZelig}} class object. This class is not supported by \emph{xtable}. If you try to create a summary table called {\emph{NBTable}} of the results you will get the following error:
 
 {\small
 <<Ch9BadTable>>=
@@ -239,12 +368,14 @@ NBSumDataFrame <- data.frame(NBModelSum$summary)
 NBSumDataFrame
 @
 
-\noindent Now you have a data frame object that {\tt{xtable}} can handle. After a little cleaning up (see the chapter's source code for more details) you can use {\emph{NBSumdata frame}} with {\tt{xtable}} as before to create the following table:
+\noindent Now you have a data frame object that \emph{xtable} can handle. After a little cleaning up (see the chapter's source code for more details) you can use {\emph{NBSumdata frame}} with \emph{xtable} as before to create the following table:
 \vspace{0.5cm}
 
 <<Ch9NBTable, echo=FALSE, message=FALSE, results='asis'>>=
-# Change quantile variable names
+# Load reshape library
 library(reshape)
+
+# Change quantile variable names
 NBSumDataFrame <- rename(NBSumDataFrame, c(X2.5. = "2.5%"))
 NBSumDataFrame <- rename(NBSumDataFrame, c(X50. = "50%"))
 NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
@@ -277,4 +408,6 @@ So far we have only looked at how to create LaTeX and HTML tables from R objects
 \subsection{Knitting tables in LaTeX}
 
 In general, LaTeX tables created with \emph{xtable} or \emph{apsrtable} will take care of creating the content and formatting of the \texttt{tabular}. You will usually still want to embed this inside of a \texttt{table} environment to add a caption and cross-reference label.
+
+
 
