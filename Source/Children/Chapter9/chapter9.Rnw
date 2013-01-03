@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 January 2012
+% Updated: 3 January 2012
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,25 +9,167 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Showing Results with Tables}\label{TablesChapter}
 
-Graphs and other visual methods, discussed in the next chapter, can often be a more effective way to present results than tables.\footnote{This is especially true of the small-print, high-density coefficient estimate tables that are sometimes descriptively called `train schedule' tables.} Nonetheless, tables of parameter estimates, descriptive statistics, and so on can sometimes be an important part of presenting research findings. Learning how to dynamically connect your analysis results with tables in presentation documents aids reproducibility and can ultimately save you a lot of time.
+Graphs and other visual methods, discussed in the next chapter, can often be a more effective way to present descriptive and inferencial statistics than tables.\footnote{This is especially true of the small-print, high-density coefficient estimate tables that are sometimes descriptively called `train schedule' tables.} Nonetheless, tables of parameter estimates, descriptive statistics and so on can sometimes be an important tool for describing your data and presenting research findings. Learning how to dynamically connect statistical results with tables in your presentation documents aids reproducibility and can ultimately save you a lot of time.
 
 Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors. It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
 
-The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables written in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} easily produces nice publication quality tables. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support, \texttt{knitr} allows us to incorporate these tables dynamically into our documents.
+The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support. As we will learn at the end of the chapter, \texttt{knitr} allows us to dynamically incorporate tables from both packages into our documents.
 
-\textbf{Warning:} Automating table creation removes the possibility of adding errors to your analyses by incorrectly copying output, which is a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables through coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do the match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
+\textbf{Warning:} Automating table creation removes the possibility of adding errors to your analyses by incorrectly copying output, a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables through coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do they match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
 
 \section{Table Basics}
 
-Before getting into the details of how to create tables from R objects we need to first learn how generic tables are created in LaTeX and Markdown/HTML.
+Before getting into the details of how to create tables from R objects we need to first learn how generic tables are created in LaTeX and Markdown/HTML. If you are not familiar with basic LaTeX or Markdown syntax you might want to skip ahead to chapters \ref{LatexChapter} and \ref{MarkdownChapter}, respectively, before coming back to learn about making tables in these languages.
 
-\subsection{Tables in LaTeX}
+\subsection{Tables in LaTeX}\index{LaTeX tables}
 
-\todo[inline]{Much of the rest of the chapter is incomplete.}
+Tables in LaTeX are usually embedded in two environments:\index{LaTeX table environment} the \texttt{table} and \texttt{tabular} environments. Before discussing these particular environments, what is a LaTeX environment in general?
 
-\subsection{Tables in Markdown/HTML}
+A LaTeX environment is a part of the markup where special commands are executed. A simple environment is the \texttt{center} environment.\footnote{For a comprehensive list of LaTeX environments see: \url{http://latex.wikia.com/wiki/List_of_LaTeX_environments}.} Every thing typed in a center environment is, unsurprisingly, centered. If we typed:
+
+<<Ch9CenterEnviron, eval=FALSE>>=
+\begin{center}
+    This is a center environment.
+\end{center}
+@
+
+\noindent We would create the following text in the PDF output:
+
+\begin{center}
+    This is a center environment.
+\end{center}
+
+\noindent LaTeX environments all follow the same general syntax:
+
+<<Ch9EnvironSyntax, eval=FALSE>>=
+\begin{ENVIRONMENT_NAME}
+    . . .
+    . . .
+\end{ENVIRONMENT_NAME}
+@
+
+\noindent You do not have to indent the contents of an environment. Indentations neither affect how the document is compiled nor show up in the final PDF.\footnote{An aside: the \texttt{tabbing}\footnote{tabbing, LaTeX environment} environment is a useful way to create tabbed text in LaTeX. We don't cover this here.} It is conventional to indent them, however, because it makes the markup easier to read.
+
+In this chapter we will learn about two types of environments you need for tables in LaTeX. The \texttt{tabular} environment allows you to format the content of a table. The \texttt{table} environment allows you to format a table's location in the text and its caption.
+
+\paragraph{The \texttt{tabular} environment}\index{tabular, LaTeX environment}
+
+The \texttt{tabular} environment allows you to create tables in LaTeX. Let's work through the basic syntax for a simple table.\footnote{For a comprehensive overview see the LaTeX Wiki page on tables: \url{http://en.wikibooks.org/wiki/LaTeX/Tables}.} 
+
+To begin a simple tabular environment type \verb|\begin{tabular}{TABLE_SPEC}|. The \verb|TABLE_SPEC| argument allows you to specify the number of columns in a table and the alignment of text in each column. For example, to create a table with three columns, the first of which is left-justified and the latter two are center-justified we would type:
+
+<<Ch9BeginTabular1, eval=FALSE>>=
+\begin{tabular}{l c c}
+@ 
+
+\noindent The \texttt{l} argument creates a left-justified column, \texttt{c} creates a centered one. If we wanted a right-justified column we would use \texttt{r}.\footnote{You can also specify a column's width by using \texttt{m\{WIDTH\}} instead. This will create a column of a specified width that is vertically justified in the middle. For example, \texttt{p\{3cm\}} would create a column with a width of 3 centimeters. Text in the column would automatically be wrapped onto multiple lines if need be. You can replace the \texttt{m} with either \texttt{p} or \texttt{b}. \texttt{p} vertically aligns the text at the top, \texttt{b} aligns it at the bottom.} Finally we can add a horizontal line between columns by adding a vertical bar \texttt{|} between the columns arguments.\footnote{If you add two vertical bars (\texttt{||}) you will get two lines.} For example, to place a vertical line between the first and second column in our example table we would type:
+
+ <<Ch9BeginTabular2, eval=FALSE>>=
+\begin{tabular}{l | c c}
+@ 
+
+Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.}\index{ampersand in LaTeX} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double back slashes. For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
+
+<<Ch7TwoLineLaTeX1, eval=FALSE>>=
+\begin{tabular}{l | c c}
+    Observation & Variable1 & Variable2 \\
+    Subject1 & a & b \\
+@
+
+\noindent It is common to demarcate the row with a table's column names--the first row--with horizontal lines. A horizontal line also often demarcates a table's end. You can add horizontal in the \texttt{tabular} environment with the \verb|\hline| command.\footnote{The \texttt{\textbackslash{}hline} command works outside of the \texttt{tabular} environment as well.}
+
+<<Ch7TwoLineLaTeX2, eval=FALSE>>=
+\begin{tabular}{l | c c}
+    \hline
+    Observation & Variable1 & Variable2 \\
+    \hline \hline
+    Subject1 & a & b \\
+    \hline
+@
+
+\noindent Finally, we close the \texttt{tabular} environment with \verb|\end{tabular}|. The full code (with a few extra rows added) is:
+
+<<Ch7LaTeXExampleFull, eval=FALSE>>=
+\begin{tabular}{l | c c}
+    \hline
+    Observation & Variable1 & Variable2 \\
+    \hline \hline
+    Subject1 & a & b \\
+    Subject2 & c & d \\
+    Subject3 & e & f \\
+    Subject4 & g & h \\
+    \hline
+\end{tabular}
+@
+
+\noindent This produces the following table:
+
+\begin{tabular}{l | c c}
+    \hline
+    Observation & Variable1 & Variable2 \\
+    \hline \hline
+    Subject1 & a & b \\
+    Subject2 & c & d \\
+    Subject3 & e & f \\
+    Subject4 & g & h \\
+    \hline
+\end{tabular}
+
+\paragraph{Table float environment}\index{table, LaTeX environment}
+
+You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{float, LaTeX} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table}float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC| argument allows us to determine the location of the table. I can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{caption, LaTeX command} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref{KEY}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{pageref, LaTeX command} to reference the page number.}\index{label, LaTeX command} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
+
+<<Ch7LaTeXExampleFullFloat, eval=FALSE>>=
+\begin{table}[t]
+    \caption{Example Simple LaTeX Table}
+    \label{ExLaTeXTable}
+    \begin{center}
+        \begin{tabular}{l | c c}
+            \hline
+            Observation & Variable1 & Variable2 \\
+            \hline \hline
+            Subject1 & a & b \\
+            Subject2 & c & d \\
+            Subject3 & e & f \\
+            Subject4 & g & h \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+@
+
+\begin{table}[t]
+    \caption{Example Simple LaTeX Table}
+    \label{ExLaTeXTable}
+    \begin{center}
+        \begin{tabular}{l | c c}
+            \hline
+            Observation & Variable1 & Variable2 \\
+            \hline \hline
+            Subject1 & a & b \\
+            Subject2 & c & d \\
+            Subject3 & e & f \\
+            Subject4 & g & h \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\noindent Notice that the \texttt{tabular} environment is further nested in the \texttt{center} environment. This centers the table while leaving the table's title left-justified. The final result is Table \ref{ExLaTeXTable}.
+
+You can see how typing out a table in LaTeX gets very tedious very fast. For all but the simplest tables it is best to try to have R do the table making work for you.
+
+\subsection{Tables in Markdown/HTML}\index{Markdown/HTML tables}
+
+\paragraph{Markdown tables}
+
+\paragraph{HTML tables}
+
+The \emph{xtable} package we will learn in the next section doesn't create Markdown formatted tables. It can create HTML tables. This is useful for us because virtually any HTML markup can be incorporated into a Markdown document. So it is useful to understand the basic syntax for HTML tables.
 
 \section{Creating tables from R objects}
+
+Just as the \texttt{read.csv} command turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an object--e.g. a matrix, data frame, the output from a statistical analysis and so on--and turn format it as either a LaTeX of HTML table. In this section we will learn how to do this with the \emph{xtable} and \emph{apsrtable} packages.
 
 \subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects}
 
@@ -117,20 +259,22 @@ xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores i
 
 It may take some hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be used to create graphics.} Hunting for what you want is generally easier if you look inside of it by clicking on the object in RStudio's {\bf{Workspace}} pane.
 
-\subsection{Basic \texttt{knitr} syntax for tables}
+\subsection{Basic \emph{knitr} syntax for tables}
 
 So far we have only looked at how to create LaTeX and HTML tables from R objects. How can we knit these tables into our presentation documents? The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{results, knitr option}. The \texttt{results} option can have one of three values:
 
 \begin{itemize}
 \item
-  \texttt{'markup'},
+  \verb|'markup'|,
 \item
-  \texttt{'asis'},
+  \verb|'asis'|,
 \item
-  \texttt{'hide'}.
+  \verb|'hide'|.
 \end{itemize}
 
-\noindent The value \texttt{hide} clearly hides the results of you code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \texttt{results='asis'} or \texttt{results='markup'}. \texttt{asis} simply the writes the raw output in the presentation document where it is then compiled with the rest of the markup. \texttt{markup} uses an output hook\index{hook} to mark up the results in a predfined way.  
+\noindent The value \texttt{hide} clearly hides the results of you code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} simply the writes the raw output in the presentation document where it is then compiled with the rest of the markup. \texttt{markup} uses an output hook\index{hook} to mark up the results in a predefined way.  
 
+\subsection{Knitting tables in LaTeX}
 
+In general, LaTeX tables created with \emph{xtable} or \emph{apsrtable} will take care of creating the content and formatting of the \texttt{tabular}. You will usually still want to embed this inside of a \texttt{table} environment to add a caption and cross-reference label.
 
