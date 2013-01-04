@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 January 2013
+% Updated: 4 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -227,14 +227,14 @@ As we have seen, plain-text file based data stored on your computer can be loade
 If the data is not stored in plain-text format, but is instead saved by another statistical program such as SPSS, SAS, or Stata, we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
 <<Ch6Stata, error=FALSE>>=
-# Load library
+# Load foreign package
 library(foreign)
 
 # Load Stata formatted data
 StataData <- read.dta(file = "Data1.dta")
 @
 
-As you can see, commands in the \emph{foreign} library have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports use the following command:
+As you can see, commands in the \emph{foreign} package have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports use the following command:
 
 <<Ch6ForeignHelp, eval=FALSE>>=
 library(help="foreign")

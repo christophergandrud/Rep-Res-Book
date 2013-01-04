@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 2 January 2013
+% Updated: 4 January 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -218,12 +218,23 @@ One final note on including makefiles in your \emph{knitr} presentation document
 
 Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest solution for this issues is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{source} command the same way as we did before with the \texttt{read.table}\index{read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included included with this book.}
 
+Let's look at a quick example of sourcing an R function\index{R function} that has been made available on at a non-secure URL. Paul Johnson created a function called \emph{outreg}\index{outreg} for creating LaTeX tables from R objects. He has made the fucntion available his website at: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}. You can directly load this function into your workspace with \texttt{source}.
+
+{\small
+<<Ch8OutregSource, eval=FALSE>>=
+# Load Paul Johnson' outreg function
+source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
+@
+}
+
+\noindent Now you can use \texttt{outreg} like any other function you have loaded.
+
 \subsection{Source from a secure URL (\texttt{https})}
 
 If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url} command in the {\emph{devtools}} package \cite[]{R-devtools}. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (page \pageref{RawGitHub}). Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} you simply type:
 
 <<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, fig.width=3, fig.height=3>>=
-# Load library
+# Load devtools package
 library(devtools)
 
 # Run the source code to create the scatter plot

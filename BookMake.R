@@ -1,7 +1,7 @@
 #################
 # Make file for the book Reproducible Research with R and RStudio
 # Christopher Gandrud
-# Updated: 30 December 2012
+# Updated: 4 January 2013
 #################
 
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
@@ -27,7 +27,11 @@ knit2pdf(input = "Rep-Res-Parent.Rnw")
 embed_fonts("Rep-Res-Parent.pdf")
 
 # Clean up /git_repositories/Rep-Res-Book/Source/Parent/
-DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", "Rep-Res-Parent.pdf", "krantz.cls", "figure", "cache"))
+DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", 
+                                                      "Rep-Res-Parent.pdf", 
+                                                      "krantz.cls", "figure", 
+                                                      "cache")
+                       )
 unlink(DeleteFiles)
 
 #### README ####

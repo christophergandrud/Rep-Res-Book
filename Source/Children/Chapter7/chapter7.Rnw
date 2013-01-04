@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 January 2012
+% Updated: 4 January 2012
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -375,7 +375,7 @@ Generally, the safest and most effective way to merge two data sets together is 
 ## Add iso2c codes to FinRegulatorData and DispropData
 ## as ID variables for merging
 
-# Load countrycode library
+# Load countrycode
 library(countrycode)
 
 # FinRegulatorData
@@ -464,7 +464,7 @@ Another common post-merge clean up issue are duplicate variables. These are vari
 You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables and rename the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{gdata} package \citep{R-gdata} has a useful function called \texttt{remove.vars} that can also remove variables from data frames. For example, imagine that we want to keep \textbf{country.x} and drop the other variables\footnote{This version of the country variable is the most complete.} You can use these procedures to remove other unwanted variables as well, let's also remove the extraneous \textbf{idn} variable:
 
 <<Ch7RemoveVars, tidy=FALSE>>=
-# Load gdata
+# Load gdata and reshape packages
 library(gdata)
 library(reshape)
 
@@ -494,7 +494,7 @@ names(FinalCleanedData)
 R code for turning \emph{FertConsumData} into year-wide format:
 
 <<Ch7WideCreateShow, eval=FALSE, tidy=FALSE>>=
-# Load WDI package 
+# Load WDI and reshape 2 package 
 library(WDI)
 library(reshape2)
 
@@ -519,7 +519,7 @@ WideFert <- WideFert[order(WideFert$country), ]
 R code for creating iso2c country codes with the \emph{countrycode} package:\label{CountryCodeExample}
 
 <<Ch7CountryCodeShow, eval=FALSE, tidy=FALSE>>=
-# Load countrycode library
+# Load countrycode package
 library(countrycode)
 
 # FinRegulatorData
