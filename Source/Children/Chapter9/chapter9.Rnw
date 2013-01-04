@@ -13,9 +13,24 @@ Graphs and other visual methods, discussed in the next chapter, can often be a m
 
 Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors. It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
 
-The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only means available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{table, R package} \emph{memisc} \citep{R-memisc}\index{memisc, R package} and \emph{estout} \citep{estout} packages as well as Paul Johnson's \texttt{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} As we will learn at the end of the chapter, \texttt{knitr} allows us to dynamically incorporate tables from both packages into our documents.
+The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only means available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{table, R package} \emph{memisc} \citep{R-memisc}\index{memisc, R package}\index{memisc} and \emph{estout} \citep{R-estout}\index{estout} packages as well as Paul Johnson's \texttt{outreg}\index{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} 
 
 \textbf{Warning:} Automating table creation removes the possibility of adding errors to your analyses by incorrectly copying output, a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables through coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do they match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
+
+\subsection{Basic \emph{knitr} syntax for tables}
+
+The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{results, knitr option}. The \texttt{results} option can have one of three values:
+
+\begin{itemize}
+\item
+  \verb|'markup'|,
+\item
+  \verb|'asis'|,
+\item
+  \verb|'hide'|.
+\end{itemize}
+
+\noindent The value \texttt{hide} clearly hides the results of you code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} is the simplest option as it writes the raw markup form of the table into the presentation document, not as a highlighted code chunk, but as markup. It is then compiled as table markup with the rest of the document. \texttt{markup} uses an output hook\index{hook}\index{hook} to mark up the results in a predefined way. In this chapter we will work with examples using the \texttt{asis} option.\footnote{Note that the \texttt{results} option is a major difference in syntax between \emph{knitr} and \emph{Sweave}.\index{Sweave} In \emph{Sweave} the equivalent option is \texttt{results=TEX}.} 
 
 \section{Table Basics}
 
@@ -298,42 +313,141 @@ To find a full list of object classes that \emph{xtable} supports type \texttt{m
 
 Let's first look at how to create LaTeX tables with \emph{xtable} by creating a table summarizing the estimates from the \emph{M1} model object.
 
-<<Ch9xtableSimpleModelTable, tidy=FALSE>>=
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{\textless}results='asis', echo=FALSE\textgreater{\textgreater}=
+\hlcomment{# Load xtable }
+\hlfunctioncall{library}(xtable)
+
+\hlcomment{# Create LaTeX table from M1 and show the output markup}
+\hlfunctioncall{xtable}(M1, caption = "Linear Regression,
+                            Dependent Variable: Exam Score",
+           label = \hlstring{"BasicXtableSummary"},
+           digits = 2)
+@
+        \end{alltt}
+    \end{kframe}
+\end{knitrout}
+
+\noindent When included in an R Sweave-style LaTeX document this code will create a table exactly like Table \ref{BasicXtableSummary}.
+
+Let's go through this code, working from the outside in. First you'll notice that we've set two \emph{knitr} code chunk options. As we discussed earlier, \verb|results='asis'| allows us to include the LateX formatted table created by \emph{xtable}. The next option \verb|echo=FALSE| hides the code from being show in our final document. The \emph{xtable} command creates the summary table of our \emph{M1} model object. Not only does it produce both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments it automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 2} argument to. This specifies that I want numbers in the table to be rounded to two decimal digits. 
+
+% Actually show M1Table in the text
+<<Ch9xtableSummaryPrint, results='asis', echo=FALSE>>=
 # Load xtable 
 library(xtable)
 
 # Create LaTeX table from M1 and show the output markup
-xtable(M1, caption = "Linear Regression, Dependent Variable:
-                      Exam Score",
-           label = "BasicXtableSummary",
-           digits = 2)
-@ 
-
-\noindent This code creates a fully formatted LaTeX table of the \emph{M1} model object's summary. The table looks like Table \ref{BasicXtableSummary} when it is included in a LaTeX document. The \emph{xtable} command not only produces complete both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments also automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 2} argument. This specifies that I want numbers in the table to be rounded to two decimal digits. 
-
-% Code chunk for showing M1Table in the text
-<<Ch9xtableSummaryPrint, echo=FALSE, results='asis'>>=
-xtable(M1, caption = "Linear Regression, Dependent Variable:
-                      Exam Score",
+xtable(M1, caption = "Linear Regression, Dependent 
+                                 Variable: Exam Score",
            label = "BasicXtableSummary",
            digits = 2)
 @
 
-
 \subsubsection{\emph{xtable} for Markdown/HTML}
 
-We can use {\emph{xtable}} and the \texttt{print} command to also create tables for Markdown and HTML documents. Instead of setting the \texttt{type} argument to \verb|'latex'| we simply set it to \verb|'html'|.
+We can use \emph{xtable} and the \texttt{print.xtable}\index{print.xtable} command\footnote{Note: you can abbreviate \texttt{print.xtable} simply as \texttt{print}.} to also create tables for Markdown and HTML documents. The \emph{xtable} command produces, unsurprisingly, \texttt{xtable} class objects. We can run these through the \texttt{print} command and add arguments to customize how the table is formatted. By default \texttt{print.xtable}'s \texttt{type} argument is set to \verb|"latex"|. To create an HTML table that can be inserted into Markdown and HTML documents set the \texttt{type} argument to \verb|"latex"| we simply set it to \verb|"html"|. For example, to create an HTML version of the table summarizing \emph{M1} and include it in an R Markdown document we type:
 
-\subsubsection{\emph{apsrtable} for LaTeX}
+<<Ch9PrintXTableHTML, eval=FALSE>>=
+```{r, results='asis', echo=FALSE}
+# Load xtable
+library(xtable)
 
-You need to include the \texttt{dcolumn} package in your LaTeX preamble, i.e. \verb|\usepackage{dcolumn}| (see page \pageref{LaTeXPreamble} for a discussion of LaTeX preambles).
+# Create an xtable object from M1
+M1Table <- xtable(M1, caption = "Linear Regression, Dependent 
+                                 Variable: Exam Score",
+                      label = "BasicXtableSummary",
+                      digits = 2)
 
+# Create HTML summary table of M1Table
+print.xtable(M1Table, type = "html", caption.placement = "top")
+```
+@ 
+
+\noindent Notice that we also added the \texttt{caption.placement = "top"} argument. This will move the cation from the bottom of the table, as it is in Table \ref{BasicXtableSummary}, to the top. See the \emph{xtable} package documentation\footnote{\url{http://cran.r-project.org/web/packages/xtable/xtable.pdf}} for the full list of \texttt{print.xtable} options.
+
+\subsubsection{\emph{apsrtable} for LaTeX}\index{apsrtable}
+
+The \emph{xtable} package is a very versatile tool for creating relatively well formatted tables from R objects. By default, however, it is not set up to output tables that compare multiple statistical model estimates in the style used by many prominent academic journals. The \emph{apsrtable} package is very useful for creating these types of tables.\footnote{It creates tables in the style used by the \emph{American Political Science Review},\index{American Political Science Review}--hence the package's name--and many other journals.}
+
+Imagine we wanted to show the estimates from a number of nested regression models in a table like Table \ref{BasicApsrTableExample}. For example, to estimate nested regression models from the remaining variables in the \emph{swiss} data set we would type:
+
+<<Ch9EstimateNested, tidy=FALSE>>=
+# Estimated nested regression models
+M2 <- lm(Examination ~ Education + Agriculture, data = swiss)
+
+M3 <- lm(Examination ~ Education + Agriculture + Catholic,
+            data = swiss)
+
+M4 <- lm(Examination ~ Education + Agriculture + Catholic +
+            Infant.Mortality, data = swiss)
+
+M5 <- lm(Examination ~ Education + Agriculture + Catholic +
+            Infant.Mortality + Fertility, data = swiss)
+@
+
+\noindent We can now include these model objects in one table with \emph{apsrtable}.
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textbackslash{}begin\{table\}
+    \textbackslash{}caption\{Example Nested Estimates Table with \textbackslash{}emph\{aprstable\}\}
+    \textbackslash{}label\{BasicApsrTableExample\}
+        \textbackslash{}begin\{center\}
+
+\textless{\textless}results='asis', echo=FALSE\textgreater{\textgreater}=
+\hlcomment{# Load apsrtable package}
+\hlfunctioncall{library}(apsrtable)
+
+\hlcomment{# Create nested regression model table}
+\hlfunctioncall{apsrtable}(M1, M2, M3, M4, M5, Sweave = TRUE,
+          stars = \hlstring{"default"}) 
+@
+        \textbackslash{}end\{center\}
+\textbackslash{}end\{table\}
+        \end{alltt}
+    \end{kframe}
+\end{knitrout}
+
+\noindent Let's go over this code. The first thing that you probably notice is that we manually created the \texttt{table} and \texttt{center} environments as well as set the \texttt{caption} and \texttt{label}. You do not necessarily need to do this. If you set \texttt{apsrtable}'s \texttt{Sweave} argument to \texttt{FALSE}, it will create the \texttt{table} environment and allow you to determine the caption and cross-reference label with the \texttt{caption} and \texttt{label} arguments. Nonetheless \texttt{Sweave=TRUE} is useful if, for example you create the table in a separate R source code file and want to incorporate it into multiple LaTeX documents and be able to set different labels and titles in each. 
+
+In the LaTeX caption you'll notice \verb|\emph{apsrtable}|. In LateX the \texttt{emph} command italicizes text (we'll see this again in Chapter \ref{LatexChapter}). You can also include LaTeX commands like this in \texttt{apsrtable}'s \texttt{caption} argument.
+
+You'll notice another argument in \texttt{apsrtable}: \verb|starts='default'|. This uses the \texttt{lm} model summary default of showing three statistical significance stars. You can change this to showing only one star (\verb|"1"|) and define the significance level you would like this start to denote with the \texttt{lev} argument. By default it is set to \texttt{lev = 0.5}. To hide the stars altogether use \verb|starts='0'|.
+
+\begin{table}
+    \caption{Example Nested Estimates Table with \emph{aprstable}}
+    \label{BasicApsrTableExample}
+    \begin{center}
+<<Ch9BasicApsrTable, echo=FALSE, results='asis'>>=
+# Load apsrtable package
+library(apsrtable)
+
+# Create nested regression model table
+apsrtable(M1, M2, M3, M4, M5, Sweave = TRUE,
+          stars = "default") 
+@
+    \end{center}
+\end{table}
+
+There are many other changes you can make to tables created with \emph{apsrtable}. You can change the column and coefficient names, determine what type of standard errors to show, and so on. For the full list of arguments see the help file (i.e. type \texttt{?apsrtable} into your R console.)
+
+Finally, note that you need to include the \texttt{dcolumn} package in your LaTeX preamble, i.e. \verb|\usepackage{dcolumn}| (see page \pageref{LaTeXPreamble} for a discussion of LaTeX preambles) to include the tables created by \emph{apsrtable}.
+
+\paragraph{LaTeX landscape tables}\index{landscape tables, LaTeX}
+
+If your your LaTex table is very long, e.g. because it shows results from many estimation models, you can LaTeX's \texttt{lscape} package to create \texttt{landscape} formatting environments. Rather than orienting the text of a page so that it is in profile (a long page), a \texttt{landscape} environment turns it 90 degrees so that it has a landscape orientation (a wide page).
+
+To use the \emph{lscape} package first place \verb|\usepackage{lscape}| in your LaTeX document's preamble. Then begin a \texttt{landscape} environment with \verb|\begin{landscape}| where you would like it located in the text. Then place the \texttt{table} environment information and \emph{knitr} code for creating the table. Finally close the \texttt{landscape} environment with \verb|\end{landscape}|.
 
 \subsection{\emph{xtable} with non-supported class objects}
 
-\emph{xtable} is very convenient for making tables from objects in supported classes. With supported class objects \emph{xtable} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that it needs to create the table. With unsupported classes, however, it doesn't know where to look for these things. You need to help it find them. 
-
-\emph{xtable} can handle matrix and data frame class objects. The rows of these objects become the rows of the table and the columns become the table columns. So, to create tables with non-supported class objects you need to
+The \emph{apsrtable} and \emph{xtable} packages are very convenient for model objects they know how to handle. With supported class objects \emph{xtable} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that they need to create tables. With unsupported classes, however, they don't know where to look for these things. Luckily, there is a work around, where you basically tell \texttt{xtable} where to find elements you want to include in your table. \texttt{xtable} can handle matrix and data frame class objects. The rows of these objects become table rows and the columns become the table columns. So, to create tables with non-supported class objects you need to:
 
 \begin{enumerate}
     \item find and extract the information from the unsupported class object that you want in the table, 
@@ -341,9 +455,7 @@ You need to include the \texttt{dcolumn} package in your LaTeX preamble, i.e. \v
     \item use \emph{xtable} with this object to create the table.
 \end{enumerate}
 
-Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions from a Bayesian normal linear regression using the {\tt{zelig}} command \cite[]{Goodrich2007,R-Zelig} and data from the {\emph{swiss}} data frame that comes with R. First run the model:
-
-\todo[inline]{Note, I am having trouble with this code using Zelig version 4 and am currently working with the packaged developers to sort the issue out. The code does work with Zelig version 3.5.5.}
+Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions estimated from a Bayesian normal linear regression using the \emph{Zelig} package \cite[]{Goodrich2007,R-Zelig} and data from the \emph{swiss} data frame. Let's run the model:
 
 <<Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE>>=
 # Load Zelig package
@@ -356,7 +468,7 @@ NBModel <- zelig(Examination ~ Education, model = "normal.bayes",
 class(NBModel)
 @
 
-Using the {\tt{class}} command we found that the model output object is a {\tt{MCMCZelig}} class object. This class is not supported by \emph{xtable}. If you try to create a summary table called {\emph{NBTable}} of the results you will get the following error:
+Using the \texttt{class} command we see that the model output object in \emph{NBModel} is of both the \texttt{zelig} and \texttt{normal.bayes} classes. These class are not supported by \emph{xtable}. If you try to create a table summarizing the estimates in \emph{NBTable} you will get the following error:
 
 {\small
 <<Ch9BadTable>>=
@@ -375,19 +487,26 @@ First, create a summary of your output object {\emph{NBModel}}:
 NBModelSum <- summary(NBModel)
 @
 
-\noindent You created a new object of the class {\tt{summary.MCMCZelig}}. You're still not there yet as this object contains not just the covariate names and so on but also information you don't want to include in your results table, like the formula that you used. The second step is to extract a matrix from inside {\emph{NBModelSum}} called {\emph{summary}} with the component selector ({\tt{\$}}). Remember that to see the components of an object you can use the \texttt{names} command. The {\emph{summary}} matrix is where the things you want in your table are located. I find it easier to work with data frames, so let's also convert the matrix into a data frame.
+\noindent This creates a new object of the class \texttt{summary.MCMCZelig}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{NBModelSum} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names} command. 
+
+<<Ch9MCMCSummaryNames>>=
+names(NBModelSum)
+@
+
+\noindent The \emph{summary} matrix is where the things we want in our table are located. I find it easier to work with data frames, so let's also convert the matrix into a data frame.
 
 <<Ch9NBSum>>=
 NBSumDataFrame <- data.frame(NBModelSum$summary)
 @
-%%
-\noindent Here is what your model results data frame looks like:
 
-<<Ch9NBSumDisplay, echo=FALSE>>=
+\noindent Here is what the model summary data frame looks like:
+
+<<Ch9NBSumDisplay>>=
+# Show NBSumDataFrame
 NBSumDataFrame
 @
 
-\noindent Now you have a data frame object that \emph{xtable} can handle. After a little cleaning up (see the chapter's source code for more details) you can use {\emph{NBSumdata frame}} with \emph{xtable} as before to create the following table:
+\noindent Now we have a data frame object \texttt{xtable} can handle. After a little cleaning up (see the Chapter's Appendix for more details) you can use {\emph{NBSumdata frame}} with \emph{xtable} as before to create the following table:
 \vspace{0.5cm}
 
 <<Ch9NBTable, echo=FALSE, message=FALSE, results='asis'>>=
@@ -400,39 +519,36 @@ NBSumDataFrame <- rename(NBSumDataFrame, c(X50. = "50%"))
 NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
 
 
-# Reorder variables and remove the standard deviation.
+# Reorder variables and remove the standard deviation
 NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]  
 
-# Create table.
+# Create table
 xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression")
 @
 
-It may take some hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be used to create graphics.} Hunting for what you want is generally easier if you look inside of it by clicking on the object in RStudio's {\bf{Workspace}} pane.
+It may take some hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be useful for creating graphics as we will see in Chapter \ref{FiguresChapter}.} Hunting for what you want is generally easier if you look inside of objects by clicking on them in RStudio's {\bf{Workspace}} pane.
 
-\subsection{Basic \emph{knitr} syntax for tables}
+\section*{Appendix}
 
-So far we have only looked at how to create LaTeX and HTML tables from R objects. How can we knit these tables into our presentation documents? The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{results, knitr option}. The \texttt{results} option can have one of three values:
+Source code for cleaning \emph{NBSumDataFrame} and using it to create a LaTeX table:
 
-\begin{itemize}
-\item
-  \verb|'markup'|,
-\item
-  \verb|'asis'|,
-\item
-  \verb|'hide'|.
-\end{itemize}
+<<Ch9NBSumClean, eval=FALSE, tidy=FALSE>>=
+# Load packages
+library(reshape)
+library(xtable)
 
-\noindent The value \texttt{hide} clearly hides the results of you code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} simply the writes the raw output in the presentation document where it is then compiled with the rest of the markup. \texttt{markup} uses an output hook\index{hook} to mark up the results in a predefined way.  
-
-\subsection{Knitting tables in LaTeX}
-
-In general, LaTeX tables created with \emph{xtable} or \emph{apsrtable} will take care of creating the content and formatting of the \texttt{tabular}. You will usually still want to embed this inside of a \texttt{table} environment to add a caption and cross-reference label.
-
-\paragraph{LaTeX landscape tables}\index{landscape tables, LaTeX}
-
-If your your LaTex table is very long, e.g. because it shows results from many estimation models, you can LaTeX's \texttt{lscape} package to create \texttt{landscape} formatting environments. Rather than orienting the text of a page so that it is in profile (a long page), a \texttt{landscape} environment turns it 90 degrees so that it has a landscape orientation (a wide page).
-
-To use the \emph{lscape} package first place \verb|\usepackage{lscape}| in your LaTeX document's preamble (see page \pageref{LaTeXPreamble} for more information). Then begin a \texttt{landscape} environment with \verb|\begin{landscape}| where you would like it located in the text. Then place the \texttt{table} environment information and \emph{knitr} code for creating the table. Finally close the \texttt{landscape} environment with \verb|\end{landscape}|.
+# Change quantile variable names
+NBSumDataFrame <- rename(NBSumDataFrame, c(X2.5. = "2.5%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c(X50. = "50%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
 
 
+# Reorder variables and remove the standard deviation
+NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")] 
 
+# Create table
+xtable(NBTable, caption = "Coefficient Estimates Predicting 
+                            Examination Scores in Swiss Cantons 
+                            (1888) Found Using Bayesian Normal
+                            Linear Regression")
+@
