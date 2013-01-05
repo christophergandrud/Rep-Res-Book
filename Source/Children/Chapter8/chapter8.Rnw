@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 4 January 2013
+% Updated: 5 January 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -24,7 +24,11 @@ For a relatively short piece of code that you don't need to run in multiple pres
 
 \subsection{Full code chunks}
 
-By default {\emph{knitr}} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the point where they are written in the markup version. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by {\emph{knitr}}.
+By default {\emph{knitr}} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the point where they are written in the markup version. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
+
+\paragraph{{\tt{include}}}\index{include}
+
+Use \texttt{include=FALSE} if you don't want to include anything in the text of your presentation document, but you still want to evaluate a code chunk. It is \texttt{TRUE} by default.
 
 \paragraph{{\tt{eval}}}\index{eval}
 
@@ -34,13 +38,13 @@ The \texttt{eval} option determines whether or not the code in a chunk will be r
 
 If you would like hide a chunks code you from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} (which it is by default) then source code will be included in the presentation document.
 
+\paragraph{{\tt{results}}}\index{results, knitr option}
+
+We will look at the \texttt{results} option in more detail in the next two chapters (see especially page \pageref{ResultsOption}). However let's briefly discuss the option value \texttt{hide}. Setting \texttt{results='hide'} is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{hide} shows the code, but not the results.
+
 \paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{warning}\index{error}\index{message}
 
 If you don't want to include the warnings, messages, and error messages that R outputs in the text of your presentation documents just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}. They are set to \texttt{TRUE} by default.
-
-\paragraph{{\tt{include}}}\index{include}
-
-Use \texttt{include=FALSE} if you don't want to include anything in the text of your presentation document, but you still want to evaluate a code chunk. It is \texttt{TRUE} by default.
 
 \paragraph{{\tt{cache}}}\index{cache}
 

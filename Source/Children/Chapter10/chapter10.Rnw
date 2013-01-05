@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 December 2012
+% Updated: 5 January 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,19 +9,143 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Showing Results with Figures}\label{FiguresChapter}
 
-One of the main reasons that many people use R is to take advantage of its very comprehensive and powerful set of tools for data visualization. Figures are often a much more effective way to present descriptive statistics and analysis results than the tables we covered in the last chapter. Dynamically incorporating figures with \emph{knitr} has many of the same benefits as dynamically including tables, especially the ability to have data set or analysis changes automatically cascade into your presentation documents. The basic process for including Figures in knitted presentation documents is also very similar, though there are some important extra considerations we need to make to properly size the figures and include interactive visualizations in our presentation documents.
+One of the main reasons that many people use R is to take advantage of its very comprehensive and powerful set of data visualization tools. Visually displaying information with graphics is often a much more effective presenting both descriptive statistics and analysis results than the tables we covered in the last chapter.\footnote{There are of course a number of exceptions to this rule of thumb. \cite[][Ch. 9]{vanBelle2008} argues that a few numbers can be listed in a sentence, many numbers shown in tables and relationships between numbers are best shown with graphs. Similarly, \cite{Tufte2001} argues that tables tend to outperform graphics for displaying 20 or fewer numbers. Graphics often outperform tables for showing larger data sets and relationships within the data.} 
 
-In this chapter we will learn some of the basics of R's powerful graphics capabilities, including base R graphics, \emph{ggplot2} \citep{R-ggplot2},\index{ggplot2} \emph{googleVis} \citep{R-googleVis},\index{googleVis} and \emph{animation} \citep{R-animation}.\index{animation} In each case we will focus on how to include the figures in knitted presentation documents. 
+Nonetheless, dynamically incorporating figures with \emph{knitr} has many of the same benefits as dynamically including tables, especially the ability to have data set or analysis changes automatically cascade into your presentation documents. The basic process for including figures in knitted presentation documents is also very similar to including tables, though there are some important extra considerations we need to make to properly size the figures and be able to include interactive visualizations in our presentation documents.
 
-\section{Including graphics}
+In this chapter we will first briefly learn how to include non-knitted graphics in LaTeX and Markdown documents before turning to look at how to dynamically knit R graphics into presentation documents. In the remainder of the chapter we will dig into how to actually create graphics with R including some of the fundamentals of base R graphics as well as the \emph{ggplot2} \citep{R-ggplot2},\index{ggplot2} \emph{googleVis} \citep{R-googleVis},\index{googleVis} and \emph{animation} \citep{R-animation} \index{animation} packages. In each case we will focus on how to include the figures in knitted presentation documents. 
+
+\section{Including graphics non-knitted graphics}
+
+Understanding how \emph{knitr} dynamically includes figures is easier if you understand how figures are normally included in LaTeX and Markdown. Unlike a word processing program like Microsoft Word\index{Microsoft Word}, in LaTeX, Markdown, HTML and other markup languages you don't copy and paste figures into your document. Instead you link to an image file outside of your markup document. Typically these images files are in formats such as PDF,\footnote{Portable Document Format} EPS,\footnote{Encapsulated PostScript} PNG\footnote{Portable Network Graphic} and \emph{JPEG}.\footnote{Joint Photographic Experts Group}\index{PDF}\index{EPS}\index{PNG}\index{JPEG} 
+
+There are three advantages to this method of including graphics over cut and paste. The first is that whenever the image files are changed the changes are updated in the final presentation document when it is compiled, no recopying and pasting. The second advantage is that the images' are sized and placed with the markup code rather than point and clicking. This is tedious at first, but saves considerable time and frustration when a document becomes larger. Finally, because the image is not actually loaded in the markup file, you won't notice any sluggishness while editing caused by many possibly large sized images.
+
+If the image files are in the same directory as the markup document, we don't need to specify the image's file path only its name. If it is another directory, we need to include file path information. In this section we will learn how to include graphics files in documents created with LaTeX and Markdown.
+
+\subsection{Including graphics in LaTeX}
+
+The main way to include graphics (graphs, photos and so on) in LaTeX documents is to use the \texttt{includegraphics}\index{includegraphics} command to link to image files. To have the full range of features for \texttt{includegraphics} make sure to load the \emph{graphicx}\index{graphicx, LaTeX} package in your document's preamble. Imagine that we wanted to include an image of butterflies stored in a file called \emph{HeliconiusMimicry.png} in a LaTeX produced document.\footnote{The image used here is from \cite{Meyer2006}.} We type:
+
+<<Ch10IncludeGraphics, eval=FALSE>>=
+\includegraphics[scale=0.8]{HeliconiusMimicry.png}
+@
+
+\noindent In the square brackets you'll notice \verb|scale=0.8|. This formats the image to be included at 80 percent of its actual size. You can use other options such as \texttt{height} to specify the height, \texttt{width} to specify the width and \texttt{angle} to specify what angle to rotate the image. You can add include more than one of these if the are separated by commas. Rather than setting the exact centimeters wide you want a figure to be you can determine its width as a proportion of the text width using \verb|\textwidth|.\footnote{Note there are a number of other ways to set the size of a figure relative to a page element. See: LaTeX Wiki Book for more details: \url{http://en.wikibooks.org/wiki/LaTeX/Page_Layout}.} For example to set our image at 80 percent of the text width we can type:
+
+<<Ch10IncludeGraphicsTextWidth, eval=FALSE>>=
+\includegraphics[width=0.8\textwidth]{HeliconiusMimicry.png}
+@
+
+
+\paragraph{{\tt{figure}} float environment}\index{figure, LaTeX environment}
+
+Most often you will want to include figures in LaTeX in a \texttt{figure} float environment. The \emph{figure} environment works almost exactly the same way as the \texttt{table} environment. It allows you to separate the figure from the text, add a caption and label the figure. We begin the environment with \verb|\begin{figure}[POSITION_SPEC]|. \verb|POSITION_SPEC| can have the same values as we saw earlier (page \pageref{POSITIONSPEC}). We can then include a \texttt{caption}\index{caption, LaTeX} and \emph{label} command.\index{label, LaTeX} The environment is closed with \verb|\end{figure}|. For example, to create Figure \ref{ExampleLaTeXFigure} I used the following code:\footnote{For simplicity, this code does not include the full image's file path.}
+
+<<Ch10FigFloat, eval=FALSE>>=
+\begin{figure}[h]
+    \caption{An Example Figure in LaTeX}
+    \label{ExampleLaTeXFigure}
+        \begin{center}
+            \includegraphics[scale=0.8]{HeliconiusMimicry.png}
+        \end{center}
+    \scriptsize{Source: \cite{Meyer2006}}
+\end{figure}
+@
+
+\noindent Notice that after the call to end the \texttt{center} environment we include \verb|{\scriptsize{Source: \cite{Meyer2006}}}|. This simply includes a note in the figure environment (i.e. it moves with the figure and is separate from the text) giving the images source. The \texttt{scriptsize} command transforms the text to smaller than normal size font. See Chapter \ref{LatexChapter} (page \pageref{FontSize}) for more details on LaTeX font sizes. The command \verb|\cite{Meyer2006}| inserts a citation from the bibliography for \cite{Meyer2006}. Again, we will discuss bibliographies in more detail in the next chapter (see page \pageref{BibTeXBib}).
+
+\begin{figure}[h]
+    \caption{An Example Figure in LaTeX}
+    \label{ExampleLaTeXFigure}
+        \begin{center}
+            \includegraphics[scale=0.8]{/git_repositories/Rep-Res-Book/Source/Children/Chapter10/images10/HeliconiusMimicry.png}
+        \end{center}
+    {\scriptsize{Source: \cite{Meyer2006}}}
+\end{figure}
+
+\subsection{Including graphics in Markdown/HTML}
+
+Markdown has a similar command to LaTeX's \texttt{includegraphics}. It goes like this: \verb|![ALT_TEXT](FILE_PATH)|.\index{![]()} This syntax may seem strange now, but it will hopefully make more sense when we cover hyperlinks in Chapter \ref{MarkdownChapter} (page \pageref{MarkdownLinks}) as this is what it is intended to imitate. \verb|ALT_TEXT| refers to HTML's \texttt{alt} (alternative text)\index{alt, HTML} attribute. This should be a very short description of the image if it fails to load. \verb|FILE_PATH| specifies the image's file path.\footnote{You can also include a title in quotation marks. This specifies the HTML \texttt{title} attribute. However, this attribute does not create a title for the image in the way that \texttt{caption} does for LaTeX float figures. Instead it creates a tooltip\index{tooltip}, a small box that appears when you place your cursor over the image.} Here is an example using the image we worked with before.
+
+<<Ch9MarkdownImage, eval=FALSE>>=
+![ButterflyImage](HeliconiusMimicry.png)
+@
+
+\noindent Note that the file path can be a URL. You may, for example store an image in the Dropbox Public folder or on GitHub and use its URL to link to it in the Markdown document.\footnote{For images stored on GitHub use the URL for the raw version of the file} A final tip: if you are using RStudio's \textbf{HTML Preview} window to preview your Markdown document images sourced from a URL will probably not show up. You should preview the document in your web browser instead. This is easy to do in RStudio by clicking on the \texttt{View the page with the system web browser} button (\includegraphics[scale=0.45]{/git_repositories/Rep-Res-Book/Source/Children/Chapter10/images10/ShowInBrowser.png}). It's located at the top of the \textbf{HTML Preview} window.
+
+To keep things simple, Markdown does not include ways to size or reposition an image. To do this you will have to use HTML markup. Probably the simplest way to include images with HTML is by using the \texttt{img} (image) element tag. To create the equivalent of what we just did in Markdown with HTMl we type:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+<img src="HeliconiusMimicry.png" alt="ButterflyImage"></img>
+            \end{alltt}
+        \end{kframe}
+\end{knitrout} 
+
+\noindent The \texttt{src} (script)\index{src, HTML} attribute specifies the file path. To change the width and height of the image we can use the \texttt{width} and \texttt{height} attributes. For example:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+<img src="HeliconiusMimicry.png" alt="ButterflyImage"
+     width="100px" height="100px"></img>
+            \end{alltt}
+        \end{kframe}
+\end{knitrout} 
+
+\noindent creates an image that is 100 pixels (\texttt{px}) wide by 100 pixels\index{pixel}\index{px} high.\footnote{See the pixel Wikipedia page for more details on what a pixel is: \url{http://en.wikipedia.org/wiki/Pixel}.} 
 
 \section{Basic knitr figure options}
 
+So far we have looked at how to included images that have already been created into our LaTeX and Markdown documents. \emph{knitr} allows us to combine a figure's creation by R with its inclusion in a presentation document. They are tied together and update together. We use \emph{knitr} chunk options to specify how the figure will look in the presentation document and where it will be saved. Let's learn some of the more important options for figures.
+
 \subsection{Chunk options}
 
+\paragraph{\tt{fig.path}}}\index{fig.path, knitr option}
+
+When you use \emph{knitr} to create and include figures in your presentation documents it (1) runs the code you give it to create the figure, (2) automatically saves it in a particular directory and (2) includes the necessary LaTeX or Markdown code to include the figure in the final presentation document. By default \emph{knitr} saves images in to a folder (it creates) called \emph{figure} located in the working directory.\footnote{File names are based on the code chunk label where they were created.} You can tell \emph{knitr} to where it saves the images with the \texttt{fig.path} option. Simply use the file path naming conventions suitable for your system and include the new path in quotation marks.
+
+\paragraph{{\tt{out.height}}}\index{out.height, knitr option}
+
+To set the height that a figure will be in the final presentation document use the \texttt{out.height} option. In R LaTeX documents you can set the width using centimeters, inches, or as a proportion of a page element. In R Markdown documents you use pixels to set the height. For example, to set a figure's height in an R Markdown document to 200 pixels use \verb|out.height='200px'|. 
+
+\paragraph{{\tt{out.width}}}\index{out.width, knitr option}
+
+Similarly, we can set the width of a \emph{knitr} created figure using the \texttt{out.width} option. The same rules apply as with \textt{out.width}. For example, to have figure shown at 80 percent of the text width in an R LaTeX document use: \verb|out.width='0.8\textwidth'|.
+
+\paragraph{{\tt{fig.align}}}\index{fig.align, knitr option}
+
+You can set a knitted figure's alignment using \texttt{fig.align}. The option can be set to \texttt{left}, \texttt{center} or \texttt{right}. To center a figure add \verb|fig.align='center'|. Note that this option only works with R LaTeX and R HTML. You probably noticed before that there was no way to change a figure's alignment in straight Markdown syntax. To specify the alignment of figures in Markdown you need to change the CSS style file.
+ 
 \subsection{Global options}
 
+If you want all of your figures share the same options-e.g. same hight and alignment--you can set global figure options at the beginning of the document with \verb|opts_chunk$set|.\index{knitr global chunk options} Imagine that we are making an R LaTeX Sweave-style document want all of our figures to be center aligned and 80 percent of the text width. We type:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+        \begin{kframe}
+            \begin{alltt}
+\textless{\textless}include=FALSE\textgreater{\textgreater}=
+opts_chunk$\hlfunctioncall{set.}(fig.align = \hlstring{"center"}, out.width = \hlstring{"0.8\textbackslash{}textwidth"})
+@
+            \end{alltt}
+        \end{kframe}
+\end{knitrout}
+
+\section{Graphics with base R}
+
+Now that we've learned how to include graphics in our presentation documents, let's learn how to use R to actually create these figures.
+
 \section{Creating static figures with ggplot2}
+
+\subsection{Coefficient estimate plot}
 
 \section{Motion charts and basic maps with googleVis}
 

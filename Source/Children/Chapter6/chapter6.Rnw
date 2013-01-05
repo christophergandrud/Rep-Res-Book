@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 4 January 2013
+% Updated: 5 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -51,7 +51,7 @@ source("/GatherSource/IndvDataGather/Gather3.R")
 source("GatherSource/MergeData.R")
 @
 
-This code first sets the working directory. Then it runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. The cleaned data frames are available in the current workspace. Next the make file runs the \emph{MergeData.R} file that merges the data frames and saves the output data frame as a CSV\index{CSV} formated file.\footnote{See the full file at: \url{http://bit.ly/YnMKBG}.} The CSV file would be the main file we use for statistical analysis. 
+This code first sets the working directory. Then it runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. The cleaned data frames are available in the current workspace. Next the make file runs the \emph{MergeData.R} file that merges the data frames and saves the output data frame as a CSV\index{CSV} formated file.\footnote{See the full file at: \url{http://bit.ly/YnMKBG}.} The CSV file would be the main file we use for statistical analysis. \emph{MergeData.R} also creates a Markdown file with a table describing the variables and their sources.
 
 You can run the commands in this file one by one or run the make-like file through the \texttt{source} command to run it all at once.
 
@@ -78,11 +78,11 @@ Note that, unlike in R, tabs are important in Make. The indicate what lines are 
 
 If you are using a Linux or Mac computer you already have Make installed.\footnote{To verify this open the Terminal\index{Terminal} and type: \texttt{make --version}. This should output details about the current version of Make installed on your computer.} Windows users will have Make installed if they have already installed Rtools\index{Rtools} (see page \pageref{RtoolsDownload}).
 
-The basic of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we saw before: gather data from three sources, clean and merge the data and save it as in CSV\index{CSV} format. 
+The basic of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data and save it as in CSV\index{CSV} format. 
 
 \paragraph{Example Makefile}
 
-The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Also, think carefully about how R packages are loaded. Imagine you have commands in a file called \emph{Gather2.R}, for example, from libraries loaded in \emph{Gather1.R}. If Make doesn't run \emph{Gather1.R} because its outfile is up to date, but needs to run \emph{Gather2.R} it won't be able to find the commands. The simplest solution is to load required packages in each source code file.
+The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files we already have. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Also, think carefully about how R packages are loaded. Imagine you have commands in a file called \emph{Gather2.R}, for example, from libraries loaded in \emph{Gather1.R}. If Make doesn't run \emph{Gather1.R} because its outfile is up to date, but needs to run \emph{Gather2.R} it won't be able to find the commands. The simplest solution is to load required packages in each source code file.
 
 Now let's look at the actual makefile:
 

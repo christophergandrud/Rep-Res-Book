@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 4 January 2012
+% Updated: 5 January 2012
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -19,7 +19,7 @@ The goal of this chapter is to learn how to dynamically create tables for you pr
 
 \subsection{Basic \emph{knitr} syntax for tables}
 
-The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{results, knitr option}. The \texttt{results} option can have one of three values:
+The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{results, knitr option}.\index{ResultsOption} The \texttt{results} option can have one of three values:
 
 \begin{itemize}
 \item
@@ -132,7 +132,7 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
 
 \paragraph{Table float environment}\index{table, LaTeX environment}
 
-You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{float, LaTeX} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table}float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC| argument allows us to determine the location of the table. I can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{caption, LaTeX command} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref{KEY}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{pageref, LaTeX command} to reference the page number.}\index{label, LaTeX command} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
+You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{float, LaTeX} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table}float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC|\label{POSITIONSPEC} argument allows us to determine the location of the table. I can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{caption, LaTeX command} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref{KEY}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{pageref, LaTeX command} to reference the page number.}\index{label, LaTeX command} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
 
 <<Ch9LaTeXExampleFullFloat, eval=FALSE>>=
 \begin{table}[t]
@@ -170,7 +170,7 @@ You might notice that the table we created so far lacks a title and is bunched v
     \end{center}
 \end{table}
 
-\noindent Notice that the \texttt{tabular} environment is further nested in the \texttt{center} environment. This centers the table while leaving the table's title left-justified. The final result is Table \ref{ExLaTeXTable}.
+\noindent Notice that the \texttt{tabular} environment is further nested in the \texttt{center} environment. This centers the table while leaving the table's title left-justified. The final result is Table \ref{ExLaTeXTable}. One final tip: to have the caption placed at the bottom, rather than the top of the table in the final document simply put the \texttt{caption} command after the \texttt{tabular} environment is closed.
 
 You can see how typing out a table in LaTeX gets very tedious very fast. For all but the simplest tables it is best to try to have R do the table making work for you.
 
@@ -325,7 +325,7 @@ Let's first look at how to create LaTeX tables with \emph{xtable} by creating a 
 \hlfunctioncall{xtable}(M1, caption = "Linear Regression,
                             Dependent Variable: Exam Score",
            label = \hlstring{"BasicXtableSummary"},
-           digits = 2)
+           digits = 1)
 @
         \end{alltt}
     \end{kframe}
@@ -333,7 +333,7 @@ Let's first look at how to create LaTeX tables with \emph{xtable} by creating a 
 
 \noindent When included in an R Sweave-style LaTeX document this code will create a table exactly like Table \ref{BasicXtableSummary}.
 
-Let's go through this code, working from the outside in. First you'll notice that we've set two \emph{knitr} code chunk options. As we discussed earlier, \verb|results='asis'| allows us to include the LateX formatted table created by \emph{xtable}. The next option \verb|echo=FALSE| hides the code from being show in our final document. The \emph{xtable} command creates the summary table of our \emph{M1} model object. Not only does it produce both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments it automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 2} argument to. This specifies that I want numbers in the table to be rounded to two decimal digits. 
+Let's go through this code, working from the outside in. First you'll notice that we've set two \emph{knitr} code chunk options. As we discussed earlier, \verb|results='asis'| allows us to include the LateX formatted table created by \emph{xtable}. The next option \verb|echo=FALSE| hides the code from being show in our final document. The \emph{xtable} command creates the summary table of our \emph{M1} model object. Not only does it produce both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments it automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 1} argument to. This specifies that I want numbers in the table to be rounded to one decimal digit. 
 
 % Actually show M1Table in the text
 <<Ch9xtableSummaryPrint, results='asis', echo=FALSE>>=
@@ -344,7 +344,7 @@ library(xtable)
 xtable(M1, caption = "Linear Regression, Dependent 
                                  Variable: Exam Score",
            label = "BasicXtableSummary",
-           digits = 2)
+           digits = 1)
 @
 
 \subsubsection{\emph{xtable} for Markdown/HTML}
@@ -360,7 +360,7 @@ library(xtable)
 M1Table <- xtable(M1, caption = "Linear Regression, Dependent 
                                  Variable: Exam Score",
                       label = "BasicXtableSummary",
-                      digits = 2)
+                      digits = 1)
 
 # Create HTML summary table of M1Table
 print.xtable(M1Table, type = "html", caption.placement = "top")
@@ -534,6 +534,7 @@ You can use \emph{xtable} to create a table describing variables in your data se
 
 Imagine that we want to create a Markdown File with a table describing the variables from the \emph{swiss} data frame. First we will create two vectors: one for the variable name and the other for the variable descriptions.
 
+{\small
 <<Ch9VarDescriptVect, tidy=FALSE>>=
 # Create variable vector from column names
 Variable <- names(swiss)
@@ -547,15 +548,17 @@ Description <- c("common standardized fertility measure’",
                  "% live births who live less than 1 year"
                   )
 @
+}
+\paragraph{{\tt{results}}}\index{results, knitr option}
 
 \noindent In the first line we use the \texttt{names} command to create a vector of the \emph{swiss} data frame's column names. Then we simply create a vector of descriptions with the concatenate command (\texttt{c}). Now we can combine these vectors into a matrix and use it to create an HTML table.
 
-<<Ch9CbindDescript>>=
+<<Ch9CbindDescript, results='hide'>>=
 # Combine Variable and Description variables into a matrix
-Descriptions <- cbind(Variable, Description)
+DescriptionsBound <- cbind(Variable, Description)
 
 # Create an xtable object from Descriptions
-DescriptionsTable <- xtable(Descriptions)
+DescriptionsTable <- xtable(DescriptionsBound)
 
 # Format table in HTML
 DescriptTable <- print.xtable(DescriptionsTable, type = "html")
@@ -565,14 +568,16 @@ DescriptTable <- print.xtable(DescriptionsTable, type = "html")
 
 <<Ch9Cat, tidy=FALSE, eval=FALSE>>=
 # Create variable description file
-cat("# Swiss Data Variable Descriptions \n\n",
-    "### Source: Mosteller and Tukey, (1977) \n\n\n\n",
+cat("# Swiss Data Variable Descriptions \n",
+    "### Source: Mosteller and Tukey, (1977) \n",
     DescriptTable,
     file = "SwissVariableDescriptions.md"
     )
 @
 
-\noindent The first part of the \texttt{cat} command here is the title of the document. As we will see in Chapter \ref{MarkdownChapter} hashes (\verb|#|) created headers. The \verb|\n| creates a new line, so putting two \verb|\n| after ``Descriptions'' creates two new lines. The next line is information on the \emph{swiss} data frame. We then include the HTML table and save it to a file called \emph{SwissVariableDescriptions.md}. 
+\noindent The first part of the \texttt{cat} command here is the title of the document. As we will see in Chapter \ref{MarkdownChapter} hashes (\verb|#|) created headers. The \verb|\n| creates a new line in the Markdown document. The next line is information on the \emph{swiss} data frame's source. We then include the HTML table and save it to a file called \emph{SwissVariableDescriptions.md}. 
+
+It is convenient to simply include the creation of this table in your data gathering make-files and have it saved into the same directory as your data. This way it will be easy to update as you update your data and easy to find. If you are storing your data on GitHub it will automatically render the variable description Markdown file and make it easy for others to read. See this Book's makefile example for more information: \url{https://github.com/christophergandrud/Rep-Res-Examples/blob/master/DataGather_Merge/MergeData.R}.
 
 \section*{Appendix}
 
