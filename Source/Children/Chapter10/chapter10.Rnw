@@ -13,7 +13,7 @@ One of the main reasons that many people use R is to take advantage of its very 
 
 Nonetheless, dynamically incorporating figures with \emph{knitr} has many of the same benefits as dynamically including tables, especially the ability to have data set or analysis changes automatically cascade into your presentation documents. The basic process for including figures in knitted presentation documents is also very similar to including tables, though there are some important extra considerations we need to make to properly size the figures and be able to include interactive visualizations in our presentation documents.
 
-In this chapter we will first briefly learn how to include non-knitted graphics in LaTeX and Markdown documents before turning to look at how to dynamically knit R graphics into presentation documents. In the remainder of the chapter we will dig into how to actually create graphics with R including some of the fundamentals of base R graphics as well as the \emph{ggplot2} \citep{R-ggplot2},\index{ggplot2} \emph{googleVis} \citep{R-googleVis},\index{googleVis} and \emph{animation} \citep{R-animation} \index{animation} packages. In each case we will focus on how to include the figures in knitted presentation documents. 
+In this chapter we will first briefly learn how to include non-knitted graphics in LaTeX and Markdown documents before turning to look at how to dynamically knit R graphics into presentation documents. In the remainder of the chapter we will look at how to actually create graphics with R including some of the fundamentals of R's default graphics package as well as the \emph{ggplot2} \citep{R-ggplot2},\index{ggplot2} \emph{googleVis} \citep{R-googleVis},\index{googleVis} and \emph{animation} \citep{R-animation} \index{animation} packages. In each case we will not be learning a complete introduction to tool, but instead focusing on how to include the figures created by these packages in knitted presentation documents. 
 
 \section{Including graphics non-knitted graphics}
 
@@ -99,7 +99,7 @@ To keep things simple, Markdown does not include ways to size or reposition an i
         \end{kframe}
 \end{knitrout} 
 
-\noindent creates an image that is 100 pixels (\texttt{px}) wide by 100 pixels\index{pixel}\index{px} high.\footnote{See the pixel Wikipedia page for more details on what a pixel is: \url{http://en.wikipedia.org/wiki/Pixel}.} 
+\noindent creates an image that is 100 pixels (\texttt{px}) wide by 100 pixels\index{pixel}\index{px} high.\footnote{A pixel is the smallest discrete part of images displayed on a screen. See pixel Wikipedia page for more details on what a pixel is: \url{http://en.wikipedia.org/wiki/Pixel}.} 
 
 \section{Basic knitr figure options}
 
@@ -109,7 +109,7 @@ So far we have looked at how to included images that have already been created i
 
 \paragraph{\tt{fig.path}}}\index{fig.path, knitr option}
 
-When you use \emph{knitr} to create and include figures in your presentation documents it (1) runs the code you give it to create the figure, (2) automatically saves it in a particular directory and (2) includes the necessary LaTeX or Markdown code to include the figure in the final presentation document. By default \emph{knitr} saves images in to a folder (it creates) called \emph{figure} located in the working directory.\footnote{File names are based on the code chunk label where they were created.} You can tell \emph{knitr} to where it saves the images with the \texttt{fig.path} option. Simply use the file path naming conventions suitable for your system and include the new path in quotation marks.
+When you use \emph{knitr} to create and include figures in your presentation documents it (1) runs the code you give it to create the figure, (2) automatically saves it into a particular directory\footnote{If a code chunk creates more than one figure, \emph{knitr} automatically saves each into its own file in the same directory.} and (2) includes the necessary LaTeX or Markdown code to include the figure in the final presentation document. By default \emph{knitr} saves images in to a folder (it creates) called \emph{figure} located in the working directory.\footnote{File names are based on the code chunk label where they were created.} You can tell \emph{knitr} to where it saves the images with the \texttt{fig.path} option. Simply use the file path naming conventions suitable for your system and include the new path in quotation marks.
 
 \paragraph{{\tt{out.height}}}\index{out.height, knitr option}
 
@@ -122,6 +122,10 @@ Similarly, we can set the width of a \emph{knitr} created figure using the \text
 \paragraph{{\tt{fig.align}}}\index{fig.align, knitr option}
 
 You can set a knitted figure's alignment using \texttt{fig.align}. The option can be set to \texttt{left}, \texttt{center} or \texttt{right}. To center a figure add \verb|fig.align='center'|. Note that this option only works with R LaTeX and R HTML. You probably noticed before that there was no way to change a figure's alignment in straight Markdown syntax. To specify the alignment of figures in Markdown you need to change the CSS style file.
+
+\paragraph{Other figure chunk options}
+
+The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation document the way that you would like them to be.  The option \texttt{fig.cap}\index{fig.lb, knitr option} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{fig.lb, knitr option} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so long lists of options can become difficult to read.} Please see the official \emph{knitr} code chunk options webpage for more information: \{http://yihui.name/knitr/options\#chunk_options}.
  
 \subsection{Global options}
 
@@ -139,20 +143,138 @@ opts_chunk$\hlfunctioncall{set.}(fig.align = \hlstring{"center"}, out.width = \h
         \end{kframe}
 \end{knitrout}
 
-\section{Graphics with base R}
+\section{Knitting R's default graphics}
 
-Now that we've learned how to include graphics in our presentation documents, let's learn how to use R to actually create these figures.
+R's \emph{graphics} package\index{graphics, R package}--loaded by default--includes commands to create numerous plot types. These include \texttt{hist}\index{hist} for histograms, \texttt{pairs}\index{pairs, R command} for scatterplot matrices, \texttt{boxplot}\index{boxplot} for creating boxplots and the versatile \texttt{plot}\index{plot, R command} for creating x-y plots--including scatter plots and bar charts depending on the data's type. 
+
+There are many useful resources for learning how to fully utilize R's default graphics capabilities. These include Paul Murrell's \citeyearpar{Murrell2011} very comprehensive \emph{R Graphics} book. The more basic Cookbook for R\footnote{http://wiki.stdout.org/rcookbook/Graphs/} and Quick-R\footnote{\url{http://www.statmethods.net/advgraphs/}} websites are also very helpful. In this section we are going to see how include R's default graphs in our LaTeX and presentation documents. We will also see an example of how to source the creation of a graph from a segmented analysis file. In general R's default graphics capabilities create static graphics (i.e. they are not animations or interactive). The discussion in this section is exclusively about using static graphics with \emph{knitr}. Later in the chapter we will discuss how to knit interactive graphics.
+
+Let's look at an example we first saw at the end of Chapter \ref{StatsModel} (page \pageref{SourceCarsGraph}). Remember that we accessed an R source code file stored on GitHub to create a simple scatterplot of a sample of cars' speed and stopping distances using R's \emph{cars} data set, which is loaded by default. We haven't yet seen the code in the R source file that created the plot. The variable \textbf{speed} contains the stopping speed and \textbf{dist} contains the stopping distances. Here is the code to create the plot:
+
+<<Ch10CarsPlotCode, eval=FALSE, tidy=FALSE>>=
+# Create simple scatterplot of cars' speed and stopping distance
+plot(x = cars$speed, y = cars$dist,
+     xlab = "Speed (mph)",
+     ylab = "Stopping Distance (ft)",
+     cex.lab = 1.5)
+@
+
+\noindent We select the variables from \emph{cars} to plot on the $x$ and $y$ axes with the component selector (\verb|$|). Then we use the \texttt{xlab} and \texttt{ylab} arguments to specify the $x$ and $y$ axis labels. We could have added a title for the plot using the \texttt{main} argument. We didn't do this because we will give the plot a title in the LaTeX \texttt{figure} environment. The \texttt{cex.lab}\index{cex.lab} argument increased the labels' font size. The argument specifically determines how to scale the labels relative to the default. 1.5 means 50 percent larger than the default. 
+
+Now let's see how to create this plot with \emph{knitr} and include it in a LaTeX \texttt{figure} environment.
+
+{\small
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textbackslash{}begin\{figure\}[ht]
+    \textbackslash{}caption\{Example Simple Scatter Plot Using \textbackslash{}texttt\{plot\}\}
+    \textbackslash{}label\{BasicFigureExample\}
+\textless{\textless}echo=FALSE, fig.align='center', out.width='8cm', out.height='8cm'\textgreater{\textgreater}=
+\hlfunctioncall{plot}(x = cars$speed, y = cars$dist,
+     xlab = \hlstring{"\hlfunctioncall{Speed} (mph)"},
+     ylab = \hlstring{"Stopping \hlfunctioncall{Distance} (ft)"},
+     cex.lab = 1.5)
+@
+\textbackslash{}end\{figure\}
+        \end{alltt}
+    \end{kframe}
+\end{knitrout}
+}
+
+% Actually create simple scatterplot
+\begin{figure}
+    \caption{Example Simple Scatter Plot Using \texttt{plot}}
+    \label{BasicFigureExample}
+<<Ch10PlotBasic, echo=FALSE, fig.align='center', out.width='8cm', out.height='8cm'>>=
+plot(x = cars$speed, y = cars$dist,
+     xlab = "Speed (mph)",
+     ylab = "Stopping Distance (ft)",
+     cex.lab = 1.5)
+@
+\end{figure} 
+
+\noindent This code produces the Figure \ref{BasicFigureExample}. If you are familiar with R graphics you will notice that we did not need to tell \emph{knitr} to save the file in a particular format. Instead, behind the scenes it automatically saves the plot as a PDF file in a folder called \emph{figure} that is a child of the current working directory.
+
+We could of course simply linked to the original R source code file stored on GitHub\index{GitHub} with the \verb|source_url|\index{source\_url} command. Let's look at an example of this with a different source code file. Remember in Chapter \ref{DataGather} we used a makefile to gather data from three different sources on the internet. The makefile and the CSV file it creates called \emph{MainData.csv} are stored on GitHub.\footnote{See: \url{https://github.com/christophergandrud/Rep-Res-Examples/tree/master/DataGather_Merge}} I've created another R source code file that downloads this data into R and creates a scatterplot mattrix. The code looks like this:
+
+<<Ch10ScatterPlotMatrix, eval=FALSE, tidy=FALSE>>=
+# Load RCurl package
+library(RCurl)
+
+# MainData.csv raw URl Address
+UrlAddress <- paste("https://raw.github.com/christophergandrud/",
+                    "Rep-Res-Examples/master/DataGather_Merge/",
+                    "MainData.csv", sep = "")
+
+# Download MainData.csv
+DataUrl <- getURL(UrlAddress)
+
+# Convert DataURL into a data frame
+MainData <- read.table(textConnection(DataUrl),
+                          sep = ",", header = TRUE)
+
+# Subset MainData so that it only includes 2003
+SubData <- subset(MainData, year == 2003)
+
+# Remove iso2c, country, year variables
+# Keep reg_4state, disproportionality, FertilizerConsumption
+SubData <- SubData[, c("reg_4state",
+                       "disproportionality",
+                       "FertilizerConsumption")]
+
+# Create scatterplot matrix
+pairs(x = SubData)
+@
+
+\noindent Ok, this is a lot of code, but you should be familiar with most of it. You will notice one new command: \texttt{paste}.\index{paste, R command} This command simply pastes together the different parts of \emph{MainData.csv}'s URL address. Setting \verb|sep = ""|, simply means that we don't want any space (or other character) to separate the different parts of the URL. We don't have to do this. It just makes the code easier to read in this instance, so that it won't run off the page. 
+
+You will notice that after downloading the data we cleaned up the data by removing data from all years other than 2003 and all of the country-year type variables. Finally, we create the scatterplot matrix with \texttt{pairs}.
+
+Luckily, to dynamically include the plot in our final document, we don't need to include all of this code in a code chunk in our markup document. The source code file is available on GitHub.\footnote{See: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/ScatterPlotMatrix.R}.} So we only need to use \verb|source_url| to link to it. I've shortened the raw source code file's URL to: \url{http://bit.ly/TE0gTc}. Let's look at the syntax for knitting this into an R Markdown file:
+
+{\scriptsize
+<<Ch9ScatterplotMatrixMarkdown, eval=FALSE>>=
+### Scatterplot Matrix Created from MainData.csv
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.width='500px', out.height='500px'}
+# Load devtools
+library(devtools)
+
+# Create scatterplot matrix from MainData.csv
+source_url("http://bit.ly/TE0gTc")
+```
+@
+}
+
+\noindent This code creates the plot that we see in Figure \ref{MarkdownScatterMatrix}. Because we have linked all the way back to the original data set \emph{MainData.csv} any time it is updated by the Makefile the update will automatically cascade all the way through to our final presentation document the next time we knit it.
+
+\begin{figure}
+    \caption{Example Markdown Scatterplot Matrix}
+    \label{MarkdownScatterMatrix}
+        \begin{center}
+            \includegraphics[width=0.7\textwidth]{/git_repositories/Rep-Res-Book/Source/Children/Chapter10/images10/MarkdownScatterMatrix.png}
+        \end{center}
+\end{figure}
 
 \section{Creating static figures with ggplot2}
 
+The \emph{ggplot2} package\footnote{``GG'' stands for grammar of graphics and ``2'' indicates that it is the second major version of the package.} \citep{R-ggplot2}\index{ggplot2} is probably one of the most popular recent developments in R graphics. It greatly expands the aesthetic and substantive tools R has for displaying quantitative information. Figures created with \emph{ggplot2} are (generally) static,\footnote{It is possible to combine a series of figures created with \emph{ggplot2} into an animation. We will touch on this briefly in the last section of this Chapter (see page \pageref{http://bit.ly/UUVKka}). For a nice example of an animation using \emph{ggplot2} see Jerzy Wieczorek's animation of 2012 US presidential campaigning: \url{http://bit.ly/UUVKka}.} so they are included in knitted documents the same way as default  R graphics. There are a number of very good resources for learning how to use \emph{ggplot2}. These include Hadley Wickham's \emph{ggplot2} book \citeyearpar{Whickham2009book} and article \citeyearpar{Whickham2010journal}. The official \emph{ggplot2} website\footnote{\url{http://docs.ggplot2.org/current/}} has up-to-date information. I've also found the Cookbook for R website helpful.\footnote{\url{http://wiki.stdout.org/rcookbook/Graphs/}}
+
+Given the existence of extensive good documentation on \emph{ggplot2} we are not going to learn the full details of how to use the package here. Instead we will see examples of how to include \emph{ggplot2} figures in a knitted presentation document. We will also see how to do two things that many researchers want to do, but initially find difficult. The first is how to create a plot with multiple lines in \emph{ggplot2}. The second is how to dissect a model summary object to create a new plot of coefficient estimates. This is something that many researchers often want to be able to do, but find difficult. This will illuminate how you can break into R objects to create new graphics in a highly reproducible way and showcase some of \emph{ggplot2}'s capabilities. Note that everything we do here with \emph{ggplot2} can also be done with R's default graphics, though the appearance will be different.
+
+\subsection{Multi-line time-series plot}
+
+Sometimes we may want to show how a variable changes overtime. Imagine we have data on inflation in the United States along with inflation forecasts made by the US Federal Reserve. The data is stored on GitHub at: 
+
 \subsection{Coefficient estimate plot}
+
+
 
 \section{Motion charts and basic maps with googleVis}
 
 Markus Gesmann\index{Markus Gesmann} and Diego de Castillo's \emph{googleVis}\index{googleVis} packages allows us to easily use Google's Visualization API\index{API}\footnote{For full details see: \url{https://developers.google.com/chart/interactive/docs/reference}.} to create interactive figures and maps. Because the visualizations are written in JavaScript\index{JavaScript} they can be included in HTML presentation documents created by R Markdown. Unfortunately, they cannot be included in LaTeX produced PDFs. In the next section we will learn about \emph{animation} package which does have some limited features for including interactive visualizations in PDFs. 
-
-\todo{Complete}
-
 
 \paragraph{Including googleVis in knitted documents}
 
@@ -164,5 +286,5 @@ You may notice that Google motion charts do not show up in the RStudio Preview w
 
 The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio Preview window do not. An easy way to solve this problem is to simply save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.
 
-\section{Animations}
+\section{Animations}\label{animations}
 

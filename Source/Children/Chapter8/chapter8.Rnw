@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 5 January 2013
+% Updated: 6 January 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -15,7 +15,6 @@ You can dynamically tie your data gathering, statistical analyses and presentati
 
 The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
-sessioninfohow
 \textbf{Reminder:} Before discussing the details of how to incorporate you analysis into your source code, it's important to reiterate something we discussed in Chapter \ref{GettingStartedRR}. The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for file path names, syntax can change depending on what operating system you are using.  So it is important to make your R session info available (see page \pageref{SessionInfoHow} for details) to make your research reproducible and future proof. If someone reproducing your research has this information they can likely download and use the exact version of the software that you used. For example, CRAN\index{CRAN archive} maintains an archive of previous R package versions.\footnote{See: \url{http://cran.r-project.org/src/contrib/Archive/}.} Previous versions of R itself can also be downloaded through CRAN.\footnote{See: \url{http://cran.r-project.org/src/base/}.}
 
 \section{Incorporating analyses into the markup}
@@ -60,7 +59,7 @@ Sometimes you may want to have R code or output show up inline with the rest of 
 
 \paragraph{Inline static code}
 
-There are a number of ways to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that some text is code (I use typewriter font for this purpose in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you \texttt{2 + 2} in your text. Note that in LaTeX curly brackets (\verb|{}|) work exactly like parentheses in R, i.e. the enclose a command's arguments.
+There are a number of ways to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font\index{texttt} commonly used LaTeX to indicate that some text is code (I use typewriter font for this purpose in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you \texttt{2 + 2} in your text. Note that in LaTeX curly brackets (\verb|{}|) work exactly like parentheses in R, i.e. the enclose a command's arguments.
 
 However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command as if it was LaTeX markup. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). The backslash is an escape character in LaTeX. Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
 
@@ -150,25 +149,27 @@ The programming language values \texttt{engine} can take are listed in Table \re
 
 There are a number of reasons that you might want to have your R source code located in separate files from your markup documents even if you compile them together with \emph{knitr}.
 
-\begin{wraptable}{rt}{0.4\textwidth}
+\begin{table}[ht]
     \caption{Knitr \texttt{engine} Values}
     \label{EngineOptions}
-    \begin{tabular}{l p{2.25cm}}
-    \hline\vspace{0.15cm}
-    Value & Programming Language \\
-    \hline\hline
-    \texttt{awk} & Awk\index{Awk} \\
-    \texttt{bash} & Bash\index{Bash} \\
-    \texttt{gawk} & Gawk\index{Gawk} \\
-    \texttt{haskell} & Haskell\index{Haskell} \\
-    \texttt{highlight} & Highlight\index{Highlight, knitr engine option} \\ 
-    \texttt{python} & Python\index{Python} \\
-    \texttt{R} & R (default) \\[0.25cm]
-    \texttt{ruby} & Ruby\index{Ruby} \\
-    \texttt{sh} & Bash \\
-    \hline
-    \end{tabular}
-\end{wraptable}
+    \begin{center}
+        \begin{tabular}{l p{2.25cm}}
+            \hline\vspace{0.15cm}
+            Value & Programming Language \\
+            \hline\hline
+            \texttt{awk} & Awk\index{Awk} \\
+            \texttt{bash} & Bash\index{Bash} \\
+            \texttt{gawk} & Gawk\index{Gawk} \\
+            \texttt{haskell} & Haskell\index{Haskell} \\
+            \texttt{highlight} & Highlight\index{Highlight, knitr engine option} \\ 
+            \texttt{python} & Python\index{Python} \\
+            \texttt{R} & R (default) \\[0.25cm]
+            \texttt{ruby} & Ruby\index{Ruby} \\
+            \texttt{sh} & Bash \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
 
 First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code folding and chunk management options. There are just too many things going on in one document. 
 
@@ -233,17 +234,17 @@ source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
 
 \noindent Now you can use \texttt{outreg} like any other function you have loaded.
 
-\subsection{Source from a secure URL (\texttt{https})}
+\subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url} command in the {\emph{devtools}} package \cite[]{R-devtools}. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (page \pageref{RawGitHub}). Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/Ny1n6b}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/christophergandrud.github.com/master/SourceCode/CarsScatterExample.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} you simply type:
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \texttt{source\_url}\index{source\url} command in the {\emph{devtools}} package \cite[]{R-devtools}. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (page \pageref{RawGitHub}). Remember to use the URL for the {\emph{raw}} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to original secure {\tt{https}} URL.} To run this code and create the scatterplot using {\tt{source\_url}} you simply type:\label{SourceCarsGraph}
 
-<<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, fig.width=3, fig.height=3>>=
+<<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
 library(devtools)
 
 # Run the source code to create the scatter plot
-source_url("http://bit.ly/Ny1n6b")
+source_url("http://bit.ly/UOtH4L")
 @
 
-\noindent You can also use the {\emph{devtools}} command \texttt{source\_gitst}\index{source\_gist} in a similar way to source GitHub Gists\index{Gist, GitHub}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
+\noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{source\_gist} in a similar way to source GitHub Gists\index{Gist, GitHub}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
 
