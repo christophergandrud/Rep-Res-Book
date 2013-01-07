@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 5 January 2012
+% Updated: 7 January 2012
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -445,7 +445,7 @@ If your your LaTex table is very long, e.g. because it shows results from many e
 
 To use the \emph{lscape} package first place \verb|\usepackage{lscape}| in your LaTeX document's preamble. Then begin a \texttt{landscape} environment with \verb|\begin{landscape}| where you would like it located in the text. Then place the \texttt{table} environment information and \emph{knitr} code for creating the table. Finally close the \texttt{landscape} environment with \verb|\end{landscape}|.
 
-\subsection{\emph{xtable} with non-supported class objects}
+\subsection{\emph{xtable} with non-supported class objects}\label{NonSupportedClasses}
 
 The \emph{apsrtable} and \emph{xtable} packages are very convenient for model objects they know how to handle. With supported class objects \emph{xtable} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that they need to create tables. With unsupported classes, however, they don't know where to look for these things. Luckily, there is a work around, where you basically tell \texttt{xtable} where to find elements you want to include in your table. \texttt{xtable} can handle matrix and data frame class objects. The rows of these objects become table rows and the columns become the table columns. So, to create tables with non-supported class objects you need to:
 
@@ -461,6 +461,7 @@ Imagine that you want to create a results table showing the covariate names, coe
 # Load Zelig package
 library(Zelig)
 
+# Estimate model
 NBModel <- zelig(Examination ~ Education, model = "normal.bayes", 
                     data = swiss, cite = FALSE)
 
@@ -523,7 +524,7 @@ NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
 NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]  
 
 # Create table
-xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression")
+xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression", label = "CoefEstTable")
 @
 
 It may take some hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be useful for creating graphics as we will see in Chapter \ref{FiguresChapter}.} Hunting for what you want is generally easier if you look inside of objects by clicking on them in RStudio's \textbf{Workspace} pane.

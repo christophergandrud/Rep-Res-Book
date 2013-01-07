@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 6 January 2013
+% Updated: 7 January 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -79,7 +79,7 @@ class(Words)
 
 So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects, though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame} type objects and are roughly equivalent the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse" \cite[]{Matloff2011}. Knowing how to use vectors\index{vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list} and matrices\index{matrix}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
 
-\noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type" in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists\index{lists}.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
+\noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type" in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
 
 Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (concatenate)\index{concatenate} function:
 
@@ -268,7 +268,15 @@ Once you have installed a package you need to load it so that you can use its fu
 library(ggplot2)
 @
 
-\noindent Please note for the examples in this book I only specify what package a command is from if the it is not loaded by default when you start an R session. 
+\noindent Please note that for the examples in this book I only specify what package a command is from if the it is not loaded by default when you start an R session. 
+
+Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{double-colon operator} For example, to make sure that we use the \texttt{qplot}\index{qplot} command from \emph{ggplot2} we would type:
+
+<<Ch3ColonOperator, eval=FALSE>>=
+ggplot2::qplot(. . .)
+@
+
+\noindent We can use the double-colon to simplify our code by removing the need to include \verb|library(. . .)|. Though, I generally prefer loading all of the packages used in a source code file at the begining with \texttt{library}. This makes it clearer right up front what packages are used.
 
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
