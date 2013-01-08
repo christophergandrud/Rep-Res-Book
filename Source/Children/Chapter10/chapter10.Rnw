@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 7 January 2013
+% Updated: 8 January 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -126,7 +126,7 @@ You can set a knitted figure's alignment using \texttt{fig.align}. The option ca
 
 \paragraph{Other figure chunk options}
 
-The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation document the way that you would like them to be.  The option \texttt{fig.cap}\index{fig.lb, knitr option} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{fig.lb, knitr option} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so long lists of options can become difficult to read.} Please see the official \emph{knitr} code chunk options webpage for more information: \{http://yihui.name/knitr/options\#chunk_options}.
+The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation document the way that you would like them to be.  The option \texttt{fig.cap}\index{fig.lb, knitr option} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{fig.lb, knitr option} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so long lists of options can become difficult to read.} Please see the official \emph{knitr} code chunk options webpage for more information: \url{http://yihui.name/knitr/options#chunk_options}.
  
 \subsection{Global options}
 
@@ -148,7 +148,9 @@ opts_chunk$\hlfunctioncall{set.}(fig.align = \hlstring{"center"}, out.width = \h
 
 R's \emph{graphics} package\index{graphics, R package}--loaded by default--includes commands to create numerous plot types. These include \texttt{hist}\index{hist} for histograms, \texttt{pairs}\index{pairs, R command} for scatterplot matrices, \texttt{boxplot}\index{boxplot} for creating boxplots and the versatile \texttt{plot}\index{plot, R command} for creating x-y plots--including scatter plots and bar charts depending on the data's type. 
 
-There are many useful resources for learning how to fully utilize R's default graphics capabilities. These include Paul Murrell's \citeyearpar{Murrell2011} very comprehensive \emph{R Graphics} book. The more basic Cookbook for R\footnote{http://wiki.stdout.org/rcookbook/Graphs/} and Quick-R\footnote{\url{http://www.statmethods.net/advgraphs/}} websites are also very helpful. In this section we are going to see how include R's default graphs in our LaTeX and presentation documents. We will also see an example of how to source the creation of a graph from a segmented analysis file. In general R's default graphics capabilities create static graphics (i.e. they are not animations or interactive). The discussion in this section is exclusively about using static graphics with \emph{knitr}. Later in the chapter we will discuss how to knit interactive graphics.
+There are many useful resources for learning how to fully utilize R's default graphics capabilities. These include Paul Murrell's \citeyearpar{Murrell2011} very comprehensive \emph{R Graphics} book. The more basic Cookbook for R\footnote{http://wiki.stdout.org/rcookbook/Graphs/} and Quick-R\footnote{\url{http://www.statmethods.net/advgraphs/}} websites are also very helpful. Winston Chang, the maintainer of the CookBook for R also has a book devoted creating R graphics \citeyearpar{Chang2012}.
+
+In this section we are going to see how include R's default graphs in our LaTeX and presentation documents. We will also see an example of how to source the creation of a graph from a segmented analysis file. In general R's default graphics capabilities create static graphics (i.e. they are not animations or interactive). The discussion in this section is exclusively about using static graphics with \emph{knitr}. Later in the chapter we will discuss how to knit interactive graphics.
 
 Let's look at an example we first saw at the end of Chapter \ref{StatsModel} (page \pageref{SourceCarsGraph}). Remember that we accessed an R source code file stored on GitHub to create a simple scatterplot of a sample of cars' speed and stopping distances using R's \emph{cars} data set, which is loaded by default. We haven't yet seen the code in the R source file that created the plot. The variable \textbf{speed} contains the stopping speed and \textbf{dist} contains the stopping distances. Here is the code to create the plot:
 
@@ -371,7 +373,7 @@ devtools::source_url("http://bit.ly/VEvGJG")
 
 \subsection{Showing Regression Results with Caterpillar Plots}
 
-Many packages that estimate statistical models from data in R have built in plotting capabilities. For example, the \emph{survival} package \cite{R-survival} has a \texttt{plot.survfit}\index{plot.survfit} command for plotting survival curves created using event history analysis.\index{event history analysis} These plots can of course be knitted into presentation documents like the plots we have seen already.
+Many packages that estimate statistical models from data in R have built in plotting capabilities. For example, the \emph{survival} package \citep{R-survival} has a \texttt{plot.survfit}\index{plot.survfit} command for plotting survival curves created using event history analysis.\index{event history analysis} These plots can of course be knitted into presentation documents like the plots we have seen already.
 
 However, sometimes either a package doesn't have built in commands for plotting the model results that you want or you want to use \emph{ggplot2} to improve the aesthetic quality of the plots they do create by default. In either case you can almost always create the plot that you want by first breaking into the model results object, extracting what you want, then plotting it with \emph{ggplot2}. The process is very similar to what we did in Chapter \ref{TablesChapter} (page \pageref{NonSupportedClasses}).
 
@@ -395,7 +397,7 @@ NBModel2 <- zelig(Examination ~ Education + Agriculture +
 NBModel2Sum <- summary(NBModel2)
 
 # Create summary data frame
-NBSum2DataFrame <- data.frame(NBModel2Sum$summary)
+NBSum2DF <- data.frame(NBModel2Sum$summary)
 
 # Show data frame
 NBSum2DF
@@ -403,29 +405,28 @@ NBSum2DF
 
 \noindent We want to use \emph{ggplot2} to create credibility intervals for each variable with \textbf{X2.5.} as the minimum value and \textbf{X97.5.} as the maximum value. These are the lower and upper bounds of middle 95 percent of the estimates' marginal posterior distributions, i.e. the 95 percent credibility intervals.\footnote{The procedures used here are also generally applicable for graphing frequentist confidence intervals once you have calculated the confidence intervals. One useful command for doing this is \texttt{confint}.\index{confint}} We will also create a point at the \textbf{mean} of each estimate. To do this we will use \emph{ggplot2}'s \texttt{geom\_pointrange}. 
 
-First we need to do a little tidying well.
+First we need to do a little tidying up.\label{RowNamesTidy}
 
 <<Ch10MeltBayes, tidy=FALSE>>=
 # Convert row.names to normal variable
-NBSum2DF$Coef <- row.names(NBSum2DF)
+NBSum2DF$Variable <- row.names(NBSum2DF)
 
-# Remove the SD variable
-NBSum2DF <- NBSum2DF[, c("Coef", "Mean", "X2.5.", "X97.5.")]
-
-# Keep only coefficient estimates
+# Keep only coefficienent estimates
 ## This allows for a more interpretable scale
-NBSum2DF <- subset(NBSum2DF, Coef != "(Intercept)")
-NBSum2DF <- subset(NBSum2DF, Coef != "sigma2")
+NBSum2DF <- subset(NBSum2DF, Variable != "(Intercept)")
+NBSum2DF <- subset(NBSum2DF, Variable != "sigma2")
 @
 
-\noindent Now we can create our caterpillar plot.
+\noindent The first line of executable code creates a proper variable out of the data frame's row.names\index{row.names} attribute. In this case row.names contains the variable names. The second and third executable lines remove the estimates \emph{(Intercept)} and \emph{sigma2}. This allows the estimates for the variables to be plotted on a scale that more easily enables interpretation.
+
+Now we can create our caterpillar plot.
 
 <<Ch10CatPlot, eval=FALSE, tidy=FALSE>>=
 # Load ggplot2
 library(ggplot2)
 
 # Make caterpillar plot
-ggplot(data = NBSum2DF, aes(x = reorder(Coef, X2.5.),
+ggplot(data = NBSum2DF, aes(x = reorder(Variable, X2.5.),
                             y = Mean,
                             ymin = X2.5., ymax = X97.5.)) +
         geom_pointrange(size = 1.4) +

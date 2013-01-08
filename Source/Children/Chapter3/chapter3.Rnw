@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 7 January 2013
+% Updated: 8 January 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -112,7 +112,7 @@ StringNumObject
 
 \noindent {\bf{Data frames}}
 
-If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.\label{data.frame}
+If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame}\index{data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.\label{data.frame}
 
 <<Ch3dataframe, tidy=FALSE>>=
 StringNumObject <- data.frame(CharacterVect, NumericVect)
@@ -121,7 +121,27 @@ StringNumObject <- data.frame(CharacterVect, NumericVect)
 StringNumObject
 @
 
-\noindent There are two important things to notice in this output. The first is that because we used the same name for the data frame object as the previous matrix object, R deleted the matrix object and replaced it with the data frame. This is something to keep in mind when you are creating new objects. You will also notice that the strings in the {\emph{CharacterVect}} object are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of {\emph{CharacterVect}} by running it through the \texttt{mean}\index{mean} command:
+\noindent There are a few important things to notice in this output. The first is that because we used the same name for the data frame object as the previous matrix object, R deleted the matrix object and replaced it with the data frame. This is something to keep in mind when you are creating new objects. In general it is a better idea to assign elements to new objects rather than overwriting old ones. This will help avoid accidentally using an object you had not intended to. It also allows you to more easily change previously run source code.
+
+You can see the data frame's names\index{names} attribute.\footnote{Matrices can also have a names attribute.} It is the column names. You can use the \texttt{names} command to see any data frame's names:\footnote{You can also use \texttt{names} to assign names for the entire data frame. For example, \texttt{names(StringNumObject) <- c("Variable1", "Variable2")}}
+
+<<Ch10Names>>=
+names(StringNumObject)
+@
+
+You will also notice that the first column of the data set has no name and is a series of numbers. This is the row.names attribute.\index{row.names} Unlike with matrices, data frame rows can be given any name as long as they are unique. We can use the \texttt{row.names} command to set the row names from a vector. For example,
+
+<<Ch3ReassignRowNames>>=
+# Reassign row.names
+row.names(StringNumObject) <- c("First", "Second", "Third")
+
+# Display new row.names
+row.names(StringNumObject)
+@
+
+You can see in this example how the \texttt{row.names} command can also be used to see the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example include it as a variable in a regression. You can use the \emph{row.names} command to assign the row.names values to a regular column (for an example see page \pageref{RowNamesTidy}). 
+
+You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect}} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect}} by running it through the \texttt{mean}\index{mean} command:
 
 <<Ch3CharcterVectorMean>>=
 mean(StringNumObject$ChacterVect)
@@ -129,7 +149,7 @@ mean(StringNumObject$ChacterVect)
 
 \subsection{Component Selection}
 
-The last bit of code will probably be confusing. Why do we have a dollar sign (\texttt{\$}) inbetween the name of our data frame object and the {\emph{CharcterVect}} vector? The dollar sign is called the component selector\index{component selection}.\footnote{It's also known as the element name operator.} It basically extracts a part of an object. In the previous example it extracted the {\emph{CharacterVect}} column from the {\emph{StringNumObject}} and fed it to the \texttt{mean} command, which tried (in this case unsuccessfully) to find its mean.
+The last bit of code will probably be confusing. Why do we have a dollar sign (\texttt{\$}) in between the name of our data frame object and the \textbf{CharcterVect}? The dollar sign is called the component selector.\index{component selector}\footnote{It's also sometimes called the element name operator.} It basically extracts a part--component--of an object. In the previous example it extracted the \textbf{CharacterVect} column from the {\emph{StringNumObject}} and fed it to the \texttt{mean} command, which tried (in this case unsuccessfully) to find its mean.
 
 We can of course use the component selector to create new objects with parts of other objects. Imagine that we have the {\emph{StringNumObject}} and want an object with only the information in the numbers column. Let's use the following code:
 
@@ -154,13 +174,13 @@ To give you an idea of how this works lets use the {\emph{cars}} data set that c
 head(cars)
 @
 
-\noindent We can see a data frame with information on various cars speeds ({\emph{speed}}) and stopping distances ({\emph{dist}}). If we want to select only the third through seventh rows we can use the following subscript commands:
+\noindent We can see a data frame with information on various cars speeds (\textbf{speed}) and stopping distances (\textbf{dist}). If we want to select only the third through seventh rows we can use the following subscript commands:
 
 <<Ch3FirstSeventhRows>>=
 cars[3:7, ]
 @
 
-\noindent The colon (\texttt{:}) creates a sequence of whole numbers from 3 to 7. To select the fourth row of the {\emph{dist}} column we can type:
+\noindent The colon (\texttt{:}) creates a sequence of whole numbers from 3 to 7. To select the fourth row of the \textbf{dist} column we can type:
 
 <<Ch3FourthSecond>>=
 cars[4, 2]
@@ -223,7 +243,7 @@ round(x = MeanNumericVect, digits = 1)
 
 \noindent You can see that arguments are separated by commas. 
 
-Some arguments do not need to be explicitly labelled. For example we could have written:
+Some arguments do not need to be explicitly labeled. For example we could have written:
 
 <<Ch3ArgeNoLabel>>=
 # Find mean of NumericVect
@@ -334,6 +354,18 @@ R source code files have the file extension \texttt{.R}. You can create a new so
 \section{Using knitr: the basics}
 
 To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn some of the basic concepts and syntax. The concepts are the same regardless of the markup language we are knitting R code with, but much of the syntax varies by markup language.
+
+\subsection{What \emph{knitr} does}
+
+Let's take a quick, abstract look at what the \emph{knitr} package does. As I've mentioned, \emph{knitr} ties together your presentation of results with the creation of those results. The \emph{knitr} process takes three steps (see Figure \ref{KnitProcess}). First we create a knitable markup document. This contains both the analysis code and the presentation document's markup--the text and rules for how to format the text. \emph{knitr} then \emph{knits}: i.e. it runs the analysis code and converts the output into the markup language you are using according to the rules that we tell it to. It inserts the marked-up results into a document that only contains markup for the presentation document. You \emph{compile}\index{compile markup} this markup document as you would if you hadn't used \emph{knitr} into your final PDF document or webpage presenting your results. 
+
+\begin{figure}
+    \caption{The \emph{knitr} Process}
+    \label{KnitProcess}
+        \begin{center}
+            \input{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/KnitrProcess.tex}
+        \end{center}
+\end{figure}
 
 \subsection{File extensions}
 
@@ -450,7 +482,7 @@ Throughout this book we will look at a number of different code chunk options. A
     \texttt{error} & Logical & Whether or not to include errors. \\[0.25cm]
     \texttt{engine} & Character & Set the programming language for {\emph{knitr}} to evaluate the code chunk with. \\[0.25cm]
     \texttt{fig.align} & Character & Aligns figures (Note: does not work with R Markdown documents) \\[0.25cm]
-    \texttt{fig.path} & Sets the directory where figures will be saved. \\[0.25cm]
+    \texttt{fig.path} & Character & Sets the directory where figures will be saved. \\[0.25cm]
     \texttt{include} & Logical & When \texttt{include=FALSE} the chunk is evaluated, but the results are not included in the presentation document. \\[0.25cm]
     \texttt{message} & Logical & Whether or not to include message messages. \\[0.25cm]
     \texttt{out.height} & Numeric & Sets figures' heights in the presentation document. \\[0.25cm]

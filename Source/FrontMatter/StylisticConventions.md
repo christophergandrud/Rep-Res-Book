@@ -24,7 +24,7 @@ Like filenames, file extensions are *italicized*.
 
 - **Individual variable values**
 
-Individual variable values mentioned in the text are in **bold**.
+Individual variable values mentioned in the text are in *italics*.
 
 - **Objects**
 
@@ -45,6 +45,6 @@ Open windows are written in **bold** text.
 
 - **Variable Names**
 
-Variable names are printed in *italics*. I use CamelBack for individual variable names.
+Variable names are printed in **bold**. I use CamelBack for individual variable names.
 
 

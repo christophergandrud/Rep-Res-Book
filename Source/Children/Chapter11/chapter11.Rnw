@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 5 January 2013
+% Updated: 8 January 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -9,21 +9,25 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Presenting with LaTeX}\label{LatexChapter}
 
-This chapter gives you a quick introduction to basic LaTeX document structures and commands. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex multi-part LaTeX documents. 
+By learning how to knit data gathering and analysis LaTeX presentation documents we have already begun to see how LaTeX works. This chapter gives you a more detailed and comprhensive introduction to basic LaTeX document structures and commands. It is not a complete introduction to all that LaTeX is capabable of, but we will cover enough that you should be able to create an entire article and slideshow with LaTeX you can use to dynamically present your results. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex multi-part LaTeX documents. 
 
-\todo[inline]{Much of this chapter is incomplete.}
+In this chapter we will learn about basic LaTeX document structures and syntax as well as how to dynamically create LaTeX bibliographies with R and \emph{knitr}. Finally, we will look at how to create PDF slideshow with LaTeX and \emph{knitr}. 
 
 \section{The Basics}
 
-\subsection{Editors}
+In this section we will look at how to set up a basic LaTeX article including what editors to use, the basic structure of a LaTeX document and LaTeX syntax including how to create footnotes, cross-references, headings, and changing font sizes. I will assume that you already have a fully functioning TeX distribution installed on your computer. See page \pageref{InstallMarkup} for information on how to install TeX.
+
+\subsection{Getting Started with LaTeX Editors}
 
 As I mentioned earlier, RStudio is a fully functional LaTeX editor as well as an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
 
-Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
+Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can use RStudio to knit and compile a document with the click of one button: \textbf{Compile PDF} (\includegraphics[scale=0.5]{/git_repositories/Rep-Res-Book/Source/Children/Chapter11/images11/CompilePDF.png}). You can use this button to compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
+
+There are many other LaTeX editors\footnote{Wikipedia has collated table comprehensively comparing many of these editors} and many text editors can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text 2\footnote{http://www.sublimetext.com/} text editor. None of these options have RStudio's high level integration with \emph{knitr}.
 
 \subsection{Basic syntax}
 
-All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, to create a section heading you use the \texttt{section} command. The arguments for LaTeX commands are written inside of curly braces (\texttt{\{\}}) like this:
+As you probably noticed in the examples from Part II, LaTeX commands start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, to create a section heading you use the \texttt{section} command. The arguments for LaTeX commands are written inside of curly braces (\verb|{}|) like this:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -37,9 +41,9 @@ All commands in LaTeX start with the backslash (\texttt{\textbackslash{}}) escap
 
 \subsection{The preamble \& the body}\label{LaTeXPreamble}
 
-All LaTeX documents require a preamble\index{LaTeX preamble}. The preamble goes before the body of the document and specifies what type of presentation document you are creating--an article, a book, a slideshow, and so on. LaTeX refers to these as classes\index{LaTeX class}. You can also specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}. For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the preamble of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
+All LaTeX documents require a preamble\index{LaTeX preamble}. The preamble goes at the very beginning of the document and specifies what type of presentation document the document is creating--e.g. an article, a book, a slideshow,\footnote{``Slideshow'' is not valid class. One slideshow class that we discuss later is called ``beamer''.} and so on. LaTeX refers to these as classes\index{LaTeX class}. In the preamble you can also specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}.\index{usepackage, LaTeX command} For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the preamble of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
 
-The preamble is followed by the body of your document. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple preamble and body like this:
+The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{body, LaTeX environment} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnvirn} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple preamble and body like this:
 
 \begin{knitrout}
 	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -54,6 +58,32 @@ The preamble is followed by the body of your document. You tell LaTeX where the 
 	\end{kframe}
 \end{knitrout}
 
+\noindent By default RStudio sets up an article class document. Let's modify the preamble in this document to load some packages we need to show knitted tables (\texttt{dcolumn}) and allow us to include clickable hyperlinks (\texttt{href}). Note that in general, and unlike in R, the required packages are already installed on you computer when you installed the TeX distribution.
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+        \begin{alltt}
+\textbackslash{}documentclass\{article\}
+
+\textbackslash{}usepackage\{dcolumn\}
+\textbackslash{}usepackage\{href\}
+
+\textbackslash{}begin\{document\}
+
+
+\textbackslash{}end\{document\}
+        \end{alltt}
+    \end{kframe}
+\end{knitrout} 
+
+\subsection{Global \emph{knitr} chunk information}
+
+After the preamble it is often a good idea to include \emph{knitr} code chunks that specify features of the document as a whole. These can include global chunk options\index{global chunk options}, loading data and packages used throughout the document.
+
+\subsection{Titles, authors \& abstracts}
+
+You can specify title information after the preamble and before the \texttt{document} environment begins. Use the \texttt{title} command to add a title and the \texttt{author} command to add author information. 
+
 
 \subsection{Headings}
 
@@ -64,6 +94,8 @@ The preamble is followed by the body of your document. You tell LaTeX where the 
 \paragraph{Font size}\label{FontSize}
 
 \subsection{Footnotes}
+
+\subsection{Cross-References}
 
 Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \texttt{\textbackslash{}footnote\{} where you would like the footnote number to appear in the text. Then type the footnote's text. Of course remember to close the footnote with a \texttt{\}}. LaTeX does the rest, including formatting and numbering.
 
