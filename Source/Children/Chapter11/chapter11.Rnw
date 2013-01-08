@@ -9,7 +9,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Presenting with LaTeX}\label{LatexChapter}
 
-By learning how to knit data gathering and analysis LaTeX presentation documents we have already begun to see how LaTeX works. This chapter gives you a more detailed and comprhensive introduction to basic LaTeX document structures and commands. It is not a complete introduction to all that LaTeX is capabable of, but we will cover enough that you should be able to create an entire article and slideshow with LaTeX you can use to dynamically present your results. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex multi-part LaTeX documents. 
+By learning how to knit data gathering and analysis LaTeX presentation documents we have already begun to see how LaTeX works for presenting research results. This chapter gives you a more detailed and comprehensive introduction to basic LaTeX document structures and commands. It is not a complete introduction to all that LaTeX is capable of, but we will cover enough that you should be able to create an entire article and slideshow with LaTeX you can use to dynamically present your results. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex multi-part LaTeX documents. 
 
 In this chapter we will learn about basic LaTeX document structures and syntax as well as how to dynamically create LaTeX bibliographies with R and \emph{knitr}. Finally, we will look at how to create PDF slideshow with LaTeX and \emph{knitr}. 
 
@@ -19,13 +19,13 @@ In this section we will look at how to set up a basic LaTeX article including wh
 
 \subsection{Getting Started with LaTeX Editors}
 
-As I mentioned earlier, RStudio is a fully functional LaTeX editor as well as an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \rightarrow {\tt{R\; Sweave}}. 
+As I mentioned earlier, RStudio is a fully functional LaTeX editor as well as an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \textrightarrow {\tt{R\; Sweave}}. 
 
 Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can use RStudio to knit and compile a document with the click of one button: \textbf{Compile PDF} (\includegraphics[scale=0.5]{/git_repositories/Rep-Res-Book/Source/Children/Chapter11/images11/CompilePDF.png}). You can use this button to compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}.
 
 There are many other LaTeX editors\footnote{Wikipedia has collated table comprehensively comparing many of these editors} and many text editors can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text 2\footnote{http://www.sublimetext.com/} text editor. None of these options have RStudio's high level integration with \emph{knitr}.
 
-\subsection{Basic syntax}
+\subsection{Basic command syntax}
 
 As you probably noticed in the examples from Part II, LaTeX commands start with the backslash (\texttt{\textbackslash{}}) escape character\index{escape character}. For example, to create a section heading you use the \texttt{section} command. The arguments for LaTeX commands are written inside of curly braces (\verb|{}|) like this:
 
@@ -39,69 +39,222 @@ As you probably noticed in the examples from Part II, LaTeX commands start with 
         \end{kframe}
 \end{knitrout}
 
+\noindent Probably one of the biggest sources of compiling errors are caused by curly brackets that aren't closed in that an open bracket (\verb|{|) is not matched by a subsequent closed bracket (\verb|}|). Watch out for this and use an editor (like RStudio) that highlights a brackets matching pair.
+
+As we will see, unlike in R with parentheses if your LaTeX command does not have an argument you do not need to include the curly brackets. 
+
+There are a number of helpful lists of LaTeX commands. The Netherlands TeX users group has compiled a comprehensive list. See: \url{http://www.ntg.nl/doc/biemesderfer/ltxcrib.pdf}.
+
 \subsection{The preamble \& the body}\label{LaTeXPreamble}
 
-All LaTeX documents require a preamble\index{LaTeX preamble}. The preamble goes at the very beginning of the document and specifies what type of presentation document the document is creating--e.g. an article, a book, a slideshow,\footnote{``Slideshow'' is not valid class. One slideshow class that we discuss later is called ``beamer''.} and so on. LaTeX refers to these as classes\index{LaTeX class}. In the preamble you can also specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}.\index{usepackage, LaTeX command} For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the preamble of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
+All LaTeX documents require a preamble\index{LaTeX preamble}. The preamble goes at the very beginning of the document. The preamble usually starts with the \texttt{documentclass}\index{documentclass} command. This specifies what type of presentation document the document is creating--e.g. an article, a book, a slideshow,\footnote{``Slideshow'' is not valid class. One slideshow class that we discuss later is called ``beamer''.} and so on. LaTeX refers to these as classes.\index{LaTeX class} Classes specify a document's formatting. You can add options to \texttt{documentclass} to change the format of the entire document. For example, if we wanted to create an article class document with two columns we would type:
 
-The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{body, LaTeX environment} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnvirn} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \texttt{\textbackslash{}begin\{document\}}. The very last line of you document is usually \texttt{\textbackslash{}end\{document\}}, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple preamble and body like this:
+<<Ch10DCOptions, eval=FALSE>>=
+\documentclass[twocolumn]{article}
+@
 
+In the preamble you can also specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}.\index{usepackage, LaTeX command} For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the preamble of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
+
+The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{body, LaTeX environment} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnviron} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX begin document} of your document starts by typing \verb|\begin{document}|. The very last line of you document is usually \verb|\end{document}|, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple preamble and body like this:
+
+<<Ch10FirstOpenDoc, eval=FALSE, tidy=FALSE>>=
+\documentclass{article}
+
+\begin{document}
+
+
+
+
+\end{document}
+@
+
+\noindent This is all you need to get a very basic article class document working. If you want the document to be of another class simply change \texttt{article} to something else, a \texttt{book} for example.
+
+Let's begin to modify the markup. First we will include in the preamble some packages we need to show knitted tables (\texttt{dcolumn}) and allow us to include clickable hyperlinks (\texttt{hyperref}). Note that in general, and unlike in R, the required packages are already installed on you computer when you installed the TeX distribution.
+
+Next it's often a good idea to include \emph{knitr} code chunks that specify features of the document as a whole. These can include global chunk options\index{global chunk options}, loading data and packages used throughout the document.
+
+Then it's a good idea to specify title information just after the \texttt{document} environment begins. Use the \texttt{title} command to add a title, the \texttt{author} command to add author information and \texttt{data} to specify the date.\footnote{In some document classes the current data will automatically be included if you don't specify the date.} Then include the \texttt{maketitle} command. This will place your title and author information in the body of the document. If you are writing an article you may also want to follow \texttt{maketitle} with an abstract. Unsurprisingly, you can use the \texttt{abstract} environment to include this.
+
+Here is what the document looks like with all of these changes added:
+
+{\small
 \begin{knitrout}
-	\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-		\begin{alltt}
-\textbackslash{}documentclass\{article\}
-
-\textbackslash{}begin\{document\}
-
-
-\textbackslash{}end\{document\}
-		\end{alltt}
-	\end{kframe}
-\end{knitrout}
-
-\noindent By default RStudio sets up an article class document. Let's modify the preamble in this document to load some packages we need to show knitted tables (\texttt{dcolumn}) and allow us to include clickable hyperlinks (\texttt{href}). Note that in general, and unlike in R, the required packages are already installed on you computer when you installed the TeX distribution.
-
-\begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
         \begin{alltt}
-\textbackslash{}documentclass\{article\}
+\textbackslash{}documentclass\{article\} 
 
+% Load LaTeX packages
 \textbackslash{}usepackage\{dcolumn\}
-\textbackslash{}usepackage\{href\}
+\textbackslash{}usepackage\{hyperref\}
 
+% Set knitr global options
+\textless{}\textless{}ParentGlobalOpts, echo=FALSE\textgreater{}\textgreater{}=
+    opts_chunk$\hlfunctioncall{set}(concordance=TRUE)
+    opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
+\textbackslash{}@
+
+% Start document body
 \textbackslash{}begin\{document\}
+
+% Create title
+\textbackslash{}title\{An Example knitr LaTeX Article\}
+\textbackslash{}author\{Christopher Gandrud \textbackslash{}\textbackslash{}
+Hertie School of Governance\}\textbackslash{}thanks\{Email: \textbackslash{}href\{mailto:gandrud@hertie-
+chool.org\}\{gandrud@hertie-school.org\}\}
+\textbackslash{}date\{Janary 2014\}
+\textbackslash{}maketitle
+
+% Create abstract
+\textbackslash{}begin\{abstract\}
+  Here is an example of a knittable article class LaTeX document.
+\textbackslash{}end\{abstract\}
+
 
 
 \textbackslash{}end\{document\}
         \end{alltt}
-    \end{kframe}
-\end{knitrout} 
+\end{kframe}
+\end{knitrout}
+}
 
-\subsection{Global \emph{knitr} chunk information}
-
-After the preamble it is often a good idea to include \emph{knitr} code chunks that specify features of the document as a whole. These can include global chunk options\index{global chunk options}, loading data and packages used throughout the document.
-
-\subsection{Titles, authors \& abstracts}
-
-You can specify title information after the preamble and before the \texttt{document} environment begins. Use the \texttt{title} command to add a title and the \texttt{author} command to add author information. 
-
+\noindent Just few quick notes about some new syntax in this example. First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (page \ref{DoubleBS}) double backslashes (\verb|\\|), like those after the author name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{href, LaTeX command}\index{mailto, LaTeX command} This creates an email address in the final document that will open the reader's default email program when clicked. 
 
 \subsection{Headings}
 
-\subsection{Fonts}
+Now we have set up the beginning of our article. Let's build the body. 
+Earlier in the chapter we briefly saw how to create section-level headings with \texttt{section}.\index{section, LaTeX command} There are a number of other sub-section level headings including \texttt{subsection}, \texttt{subsubsection}, \texttt{paragraph}, and \texttt{subparagraph}. Headers are numbered automatically by LaTeX.\footnote{The \texttt{paragraph} level does not have numbers.} To have an unnumbered section place an asterisk in it like this: \verb|\section*{Unnumbered Section}|. In book class documents you can also use \texttt{chapter} to create new chapters and \texttt{part} for collections of chapters.
+
+\subsection{Paragraphs \& spacing}
+
+In LaTeX paragraphs are simply created by adding an blank line between lines. It will format all of the tabs for the beginning of paragraphs based on the document's class rules. As we discussed before, writing tabs in the markup version of your document does nothing in the compiled document. They are generally used just to make the markup easier for people to read. 
+
+Note that adding more blank lines between paragraphs will not add extra space between the paragraphs in the final document. To specify the space following paragraphs (or almost any line) use the \texttt{vspace} (vertical space) command.\index{vspace, LaTeX command} for example to add three centimeters of vertical space on a page type: \verb|\vspace{3cm}|. This gives us the following space:
+
+\vspace{3cm}
+
+Similarly adding extra spaces between words in your LaTeX markup won't create extra spaces between words in the compiled document. To add horizontal space use the \texttt{hspace}\index{hspace, LaTeX command} in the same way as \textt{vspace}.
+
+\subsection{Text formatting \& math}
+
+Let's briefly look at how to do some of the more common types of text formatting in LaTeX and how to create some commonly used diacritics and special characters. We will also briefly look at how to include LaTeX's powerful mathematical typesetting capabilities.
 
 \paragraph{Italics \& Bold}
 
+To italicize a word in LaTeX use the \texttt{emph} (emphasis) command.\index{emph, LaTeX command} For bold use \texttt{textbf}.\index{textbf, LaTeX command} You can nest commands inside of one another to combine their effect. For example, to \emph{\textbf{italicize and bold}} a word use: \verb|\emph{textbf{italicize and bold}}|.
+
 \paragraph{Font size}\label{FontSize}
+
+You can specify the base font size of an entire document with a \texttt{documentclass} option. For example, to create an article with 12 point font use: \texttt{\textbackslash{}documentclass[12pt]\{article\}}.
+
+There are a number of commands to set the size of specific pieces of text relative to the base size. See Table \ref{LaTeXFontSize} for the full list. Usually a slightly different syntax is used for these commands that goes like this: \verb|{\SIZE_COMMAND . . . }|. For example, to use the {\small small size} type: \verb|{\small small size}|.
+
+\begin{table}
+    \caption{LaTeX Font Size Commands}
+    \label{LaTeXFontSize}
+    \begin{center}
+        \hline\\[0.25cm]
+        \begin{tabular}{c}
+            {\Huge \texttt{Huge}} \\
+            {\huge \texttt{huge}} \\
+            {\LARGE \texttt{LARGE}} \\
+            {\Large \texttt{Large}} \\
+            {\large \texttt{large}} \\
+            {\normalsize \texttt{normalsize}} \\
+            {\small \texttt{small}} \\
+            {\footnotesize \texttt{footnotesize}} \\
+            {\scriptsize \texttt{scriptsize}} \\
+            {\tiny \texttt{tiny}} \\[0.25cm]
+        \end{tabular}
+        \hline
+    \end{center}
+\end{table}
+
+\paragraph{Diacritics}\index{diacritics, LaTeX}
+
+You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX directly. For example to create a letter c with a cedilla (\c) you need to type \verb|\c|. To create an `a' with an acute accent type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them in LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.
+
+\paragraph{Quotation marks}
+
+To specify double left quotation marks (``) use two back ticks (\verb|``|). For double right quotes use the usual double quote character ("). Single quotes follow the same format (\verb|`'|). 
+
+\paragraph{Math}\index{math, LaTeX}
+
+LaTeX is particularly popular among quantitative researchers and mathematicians because is very good at rendering mathematics. A complete listing of every math command would take up quite a bit of space.\footnote{See the Netherlands TeX user group list mentioned earlier for an extensive compilation of LaTeX math commands.} I am briefly just going to discuss how to include math in a LaTeX document. This discussion includes a few math examples. 
+
+To include math inline with your text place the math in between two dollar signs (\verb|$$|). For example, \verb|$s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}$| produces $s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}$ in our final document.\footnote{Instead of dollar signs you can also use \textbackslash{}( . . . \textbackslash).} We can display math separate from the text with two dollar signs on either side of our math commands (\verb|$$ . . . $$|).\footnote{Equivalently, use \textbackslash{}[ . . . \textbackslash{}] or the \texttt{display} environment. To number display equations use the \texttt{equation} environment.} For example, 
+
+<<Ch11Math, eval=FALSE, engine='sh'>>=
+$$
+s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+$$
+@ 
+
+\noindent gives us:
+
+$$
+s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+$$
 
 \subsection{Footnotes}
 
-\subsection{Cross-References}
-
 Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \texttt{\textbackslash{}footnote\{} where you would like the footnote number to appear in the text. Then type the footnote's text. Of course remember to close the footnote with a \texttt{\}}. LaTeX does the rest, including formatting and numbering.
 
-\subsection{Bibliographies}\label{BibTeXBib}
+\subsection{Cross-References}
 
-\paragraph{Citing R Packages with BibTeX}
+LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to refer to add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{label, LaTeX command} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labeling R objects (see page \pageref{ObjectNames}). Then place a \texttt{ref}\index{ref. LaTeX command} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be. 
+
+If you place the \texttt{label} on the same line as a heading command \texttt{ref} will place the heading number. If \texttt{label} is in a \texttt{table} or \texttt{figure} environment you will get the table or figure number. You can also use \texttt{pageref} instead of \texttt{ref} to include the page number. Finally, loading the \emph{hyperref} package makes cross-references (or footnote) clickable. Clicking on them will take you to the item the reference is referring to.
+
+\section{Bibliographies with BibTeX}\label{BibTeXBib}\index{BibTeX}\index{bibliographies, LaTeX}
+
+LaTeX can take advantage of very comprehensive bibliography making capabilities. All major TeX distributions come with BibTeX. BibTeX is basically a tool for creating databases of citation information. In this section, we are going to see how to incorporate a BibTeX bibliography into you LaTeX documents. Then we will learn how use R to automatically generate a bibliography of packages used to create a knitted document. We will cover very basic BibTeX syntax. For more information see the LaTeX Wikibook page on Bibliography management: \url{http://en.wikibooks.org/wiki/LaTeX/Bibliography_Management}.
+
+\subsection{The \emph{.bib} file}
+
+BibTeX bibliographies are stored in files with the extension \emph{.bib}. The file contains a list of citations.\footnote{The order of the citations does not matter.} The syntax for each citation goes like this:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+@DOCUMENT_TYPE{CITE_KEY,
+    title = {TITLE},
+    author = {AUTHOR},
+    . . . = {. . .}
+} 
+        \end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\noindnet \verb|DOCUMENT_TYPE| specifies what type of document--article, book, webpage, and so on--the citation is for. This determines what items the citation can and needs to include.  FINISH
+
+For example, the entry for \cite{Donohue2009} is:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+@article{Donohue2009,
+  author = {Donohue, David L and Maleki, Arian and 
+  Shahram, Morteza and Rahman, Inam Ur and Stodden, Victoria},
+  title = {Reproducible Research in Computational Harmonic Analysis},
+  journal = {Computing in Science \& Engineering},
+  year = {2009},
+  volume = {11},
+  number = {1},
+  pages = {8--18}
+}
+        \end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\noindent Each item of the entry must end in a comma, except the last one.\footnote{This is very similar to how we create vectors in R.} 
+
+\subsection{Including citations in a LaTeX document}
+
+\subsection{Citing R Packages with BibTeX}
 
 Researchers are pretty good about consistently citing others' articles and data. However, citations of R packages used in analyses is very inconsistent. This is unfortunate not only because correct attribution is not being given to those who worked to create the package, but also because it makes reproducibility harder. It obscures important steps that were taken in the research process, primarily which package versions were used. Fortunately, there are R tools for quickly and dynamically generating citations, including the versions of the packages you are using. It can also add them directly to an existing bibliography file.
 
@@ -119,41 +272,47 @@ citation("xtable")
 toBibtex(citation("xtable"))
 @
 
-\noindent You can append the citation to your existing BibTeX file using the \texttt{sink} command in \emph{base} R. This command diverts output and/or the messages to a file. For example, imagine that your existing BibTeX file is called \texttt{biblio.bib}. To add the \emph{xtable} package citation:
+The {\emph{knitr}} package create BibTeX bibliographies for R packages with the \texttt{write\_bib}\index{write\_bib} command. Let's make a BibTeX file called \emph{Packages.bib} containing citation information for the \emph{xtable} package.
 
-<<Ch11Sink, eval=FALSE, tidy=FALSE>>=
-# Divert output to biblio.bib
-sink(file = "biblio.bib", 
-     append = TRUE, type = c("output")
-     )      
-
-# Extract BibTeX citation     
-toBibtex(citation("xtable")) 
-sink()
+<<Ch10OneBib, eval=FALSE, tidy=FALSE>>=
+# Create package BibTeX file
+knitr::write_bib("xtable",
+                 file = "Packages.bib")
 @
 
-\noindent This places the citation at the end of your \texttt{biblio.bib} file. It is \textbf{very important} to include the argument \texttt{append = TRUE}. If you don't you will erase the existing file and replace it with only the new citation. The argument \texttt{type = c("output")} tells R to include only the output, not the messages.
+\textbf{Warning:} The command currently does not have the ability to append the citations to an existing file, but instead writes them to a new file. If there is already a file with the same name it will overwrite the file. So, be very careful using this command to avoid accidental deletions. Therefore it is good to have \verb|write_bib| always write to a file specifically for automatically generated package citations. You can include more than one bibliography in the \texttt{bibliography} command. All you need to do is separate them with a comma.
 
-A more concise way to add citations to a bibliography is with \texttt{write.bibtex} command in the \emph{knitcitations} package \cite[]{R-knitcitations}. To add the \emph{xtable} citation to our \texttt{biblio.bib} file we only need to enter:
-
-<<Ch11knitCitations, tidy=FALSE, message=FALSE, eval=FALSE>>=
-# Load package
-library(knitcitations)
- 
-# Write xtable citation and to biblio.bib
-write.bibtex(entry = c("xtable"), 
-              file = "bibliography.bib", append = TRUE)
+<<Ch11TwoBibs, eval=FALSE>>=
+\bibliography{Main.bib,Packages.bib}
 @
 
-\noindent Note, you will likely only want to append the citations once. Otherwise your bibliography document will grow with redundant information every time you run this command.
+We can use these techniques to automatically create a BibTeX file with citation information for all of the packages used in a research project. Simply make a character vector of the names of package that you would like to include in your bibliography. Then run this through \verb|\write_bib|. 
 
-The {\emph{knitr}} package can also create BibTeX bibliographies for R packages using the \texttt{write\_bib} command. To use this command you list the packages whose citation details you want to include in a specified file. The command currently does not have the ability to append the citations to an existing file, but instead writes them to a new file.
+You can make sure you are citing all of the key packages used in a knitted document by (a) creating a vector of all of the packages and then (b) using this to both load the packages and write the bibliography. Here is an example:
+
+<<Ch11LoadCite, eval=FALSE>>=
+# Package list
+PackagesUsed <- c("ggplot2", "knitr", 
+                  "xtable", "Zelig")
+
+# Load packages
+lapply(PackagesUsed, library, 
+        character.only = TRUE)
+
+# Create package BibTeX file
+knitr::write_bib("xtable",
+                 file = "Packages.bib")
+@
+
+\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library} argument that allows us to use character string versions of the library names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used library up until now).
+
+If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of the packages you use.
 
 \section{Presentations with Beamer}
 
 You can make slideshow presentations with LaTeX. 
 
-\subsection{knitr LaTeX slideshows}
+\subsection{knitr with LaTeX slideshows}
 {\emph{Knitr}} largely works the same way in in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
 
 \paragraph{Slide frames}

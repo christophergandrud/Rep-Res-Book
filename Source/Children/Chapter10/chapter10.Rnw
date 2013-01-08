@@ -44,7 +44,7 @@ The main way to include graphics (graphs, photos and so on) in LaTeX documents i
 Most often you will want to include figures in LaTeX in a \texttt{figure} float environment. The \emph{figure} environment works almost exactly the same way as the \texttt{table} environment. It allows you to separate the figure from the text, add a caption and label the figure. We begin the environment with \verb|\begin{figure}[POSITION_SPEC]|. \verb|POSITION_SPEC| can have the same values as we saw earlier (page \pageref{POSITIONSPEC}). We can then include a \texttt{caption}\index{caption, LaTeX} and \emph{label} command.\index{label, LaTeX} The environment is closed with \verb|\end{figure}|. For example, to create Figure \ref{ExampleLaTeXFigure} I used the following code:\footnote{For simplicity, this code does not include the full image's file path.}
 
 <<Ch10FigFloat, eval=FALSE>>=
-\begin{figure}[h]
+\begin{figure}[ht]
     \caption{An Example Figure in LaTeX}
     \label{ExampleLaTeXFigure}
         \begin{center}
@@ -56,7 +56,7 @@ Most often you will want to include figures in LaTeX in a \texttt{figure} float 
 
 \noindent Notice that after the call to end the \texttt{center} environment we include \verb|{\scriptsize{Source: \cite{Meyer2006}}}|. This simply includes a note in the figure environment (i.e. it moves with the figure and is separate from the text) giving the images source. The \texttt{scriptsize} command transforms the text to smaller than normal size font. See Chapter \ref{LatexChapter} (page \pageref{FontSize}) for more details on LaTeX font sizes. The command \verb|\cite{Meyer2006}| inserts a citation from the bibliography for \cite{Meyer2006}. Again, we will discuss bibliographies in more detail in the next chapter (see page \pageref{BibTeXBib}).
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \caption{An Example Figure in LaTeX}
     \label{ExampleLaTeXFigure}
         \begin{center}
@@ -108,7 +108,7 @@ So far we have looked at how to included images that have already been created i
 
 \subsection{Chunk options}
 
-\paragraph{\tt{fig.path}}}\index{fig.path, knitr option}
+\paragraph{{\tt{fig.path}}}\index{fig.path, knitr option}
 
 When you use \emph{knitr} to create and include figures in your presentation documents it (1) runs the code you give it to create the figure, (2) automatically saves it into a particular directory\footnote{If a code chunk creates more than one figure, \emph{knitr} automatically saves each into its own file in the same directory.} and (2) includes the necessary LaTeX or Markdown code to include the figure in the final presentation document. By default \emph{knitr} saves images in to a folder (it creates) called \emph{figure} located in the working directory.\footnote{File names are based on the code chunk label where they were created.} You can tell \emph{knitr} to where it saves the images with the \texttt{fig.path} option. Simply use the file path naming conventions suitable for your system and include the new path in quotation marks.
 
@@ -118,7 +118,7 @@ To set the height that a figure will be in the final presentation document use t
 
 \paragraph{{\tt{out.width}}}\index{out.width, knitr option}
 
-Similarly, we can set the width of a \emph{knitr} created figure using the \texttt{out.width} option. The same rules apply as with \textt{out.width}. For example, to have figure shown at 80 percent of the text width in an R LaTeX document use: \verb|out.width='0.8\\textwidth'|.
+Similarly, we can set the width of a \emph{knitr} created figure using the \texttt{out.width} option. The same rules apply as with \texttt{out.width}. For example, to have figure shown at 80 percent of the text width in an R LaTeX document use: \verb|out.width='0.8\\textwidth'|.
 
 \paragraph{{\tt{fig.align}}}\index{fig.align, knitr option}
 

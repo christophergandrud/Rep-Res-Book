@@ -17,7 +17,6 @@ install.packages("apsrtable",
                 "httr",
                 "httr",
                 "knitr", 
-                "knitcitations", 
                 "markdown", 
                 "openair",
                 "plyr", 
@@ -74,7 +73,6 @@ toInstall <- c("animation",
                "httr",
                "Hmisc",
                "knitr", 
-               "knitcitations", 
                "markdown", 
                "memisc",
                "openair",
@@ -100,7 +98,7 @@ if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org"
 lapply(toInstall, library, character.only = TRUE)
 
 # Write citations to bibtex file
-write_bib(toInstall,
+knitr::write_bib(toInstall,
               file = "/git_repositories/Rep-Res-Book/Source/rep-res-PackagesCited.bib")
 
 # Remove conflicting packages

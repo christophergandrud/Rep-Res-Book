@@ -40,7 +40,7 @@ Before getting into the details of how to create tables from R objects we need t
 
 Tables in LaTeX are usually embedded in two environments:\index{LaTeX table environment} the \texttt{table} and \texttt{tabular} environments. Before discussing these particular environments, what is a LaTeX environment in general?
 
-A LaTeX environment\lable{LaTeXEnvirn} is a part of the markup where special commands are executed. A simple environment is the \texttt{center} environment.\footnote{For a comprehensive list of LaTeX environments see: \url{http://latex.wikia.com/wiki/List_of_LaTeX_environments}.} Every thing typed in a center environment is, unsurprisingly, centered. If we typed:
+A LaTeX environment\label{LaTeXEnviron} is a part of the markup where special commands are executed. A simple environment is the \texttt{center} environment.\footnote{For a comprehensive list of LaTeX environments see: \url{http://latex.wikia.com/wiki/List_of_LaTeX_environments}.} Every thing typed in a center environment is, unsurprisingly, centered. If we typed:
 
 <<Ch9CenterEnviron, eval=FALSE>>=
 \begin{center}
@@ -83,7 +83,7 @@ To begin a simple tabular environment type \verb|\begin{tabular}{TABLE_SPEC}|. T
 \begin{tabular}{l | c c}
 @ 
 
-Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.}\index{ampersand in LaTeX} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double back slashes. For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
+Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.}\index{ampersand in LaTeX} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double backslashes.\label{DoubleBS} For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
 
 <<Ch9TwoLineLaTeX1, eval=FALSE>>=
 \begin{tabular}{l | c c}

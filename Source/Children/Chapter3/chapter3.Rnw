@@ -37,11 +37,11 @@ Before discussing each of these in detail let's open R and look around.\footnote
 
 \subsection{Objects}\label{Objects}
 
-If you've read a description of R before, you will probably have seen it referred to as an `object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, like a vector of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section. For now let's create a few objects.
+If you've read a description of R before, you will probably have seen it referred to as an `object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, like a vector of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' just means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section.\footnote{Somewhat confusingly, commands and functions are themselves objects. In this Chapter I treat them as distinct from other object types.} For now let's create a few objects.
 
 \paragraph{Numeric \& string objects}
 
-Objects can have a number of different data types. Let's make two simple objects. The first is a numeric type object. The other is a character object. We can choose almost any name we want for our objects as long as it begins with an alphabetic character and does not contain spaces.\footnote{It is common for people to use either periods (\texttt{.}) or capital letters (referred to as CamelBack) to separate words in object names instead of using spaces. For example: {\emph{new.data}} or {\emph{NewData}} rather than {\emph{new data}}.} Let's call our numeric object {\emph{Number}}. It is a good idea to give each object a different name. Also make sure that object names are different from variable names. This will avoid many complications like accidentally overwriting an object or confusing R about what object or component you are referring to.
+Objects can have a number of different data types. Let's make two simple objects. The first is a numeric type object. The other is a character object. We can choose almost any name\label{ObjectNames} we want for our objects as long as it begins with an alphabetic character and does not contain spaces.\footnote{It is common for people to use either periods (\texttt{.}) or capital letters (referred to as CamelBack) to separate words in object names instead of using spaces. For example: {\emph{new.data}} or {\emph{NewData}} rather than {\emph{new data}}.} Let's call our numeric object {\emph{Number}}. It is a good idea to give each object a different name. Also make sure that object names are different from variable names. This will avoid many complications like accidentally overwriting an object or confusing R about what object or component you are referring to.
 
 To put something into the object we use the assignment operator\index{assignment operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow'.}: {\tt{\textless -}}. Let's assign the number 10 to our {\emph{Number}} object.
 
@@ -141,7 +141,7 @@ row.names(StringNumObject)
 
 You can see in this example how the \texttt{row.names} command can also be used to see the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example include it as a variable in a regression. You can use the \emph{row.names} command to assign the row.names values to a regular column (for an example see page \pageref{RowNamesTidy}). 
 
-You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect}} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect}} by running it through the \texttt{mean}\index{mean} command:
+You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{mean} command:
 
 <<Ch3CharcterVectorMean>>=
 mean(StringNumObject$ChacterVect)
@@ -360,7 +360,7 @@ To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn
 Let's take a quick, abstract look at what the \emph{knitr} package does. As I've mentioned, \emph{knitr} ties together your presentation of results with the creation of those results. The \emph{knitr} process takes three steps (see Figure \ref{KnitProcess}). First we create a knitable markup document. This contains both the analysis code and the presentation document's markup--the text and rules for how to format the text. \emph{knitr} then \emph{knits}: i.e. it runs the analysis code and converts the output into the markup language you are using according to the rules that we tell it to. It inserts the marked-up results into a document that only contains markup for the presentation document. You \emph{compile}\index{compile markup} this markup document as you would if you hadn't used \emph{knitr} into your final PDF document or webpage presenting your results. 
 
 \begin{figure}
-    \caption{The \emph{knitr} Process}
+    \caption{The {\emph{knitr}} Process}
     \label{KnitProcess}
         \begin{center}
             \input{/git_repositories/Rep-Res-Book/Source/Children/Chapter3/images3/KnitrProcess.tex}
@@ -625,7 +625,7 @@ mardownToHTML(file = "Example.md", output = "Example.html")
 knit2html(file = "Example.Rmd", output = "Example.html")
 @
 
-\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both LaTeX and \BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using \BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
+\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}} command in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX for bibliographies). Here is a {\tt{texi2pdf}} example:
 
 <<CH3tex2pdf, eval=TRUE, error=FALSE, tidy=FALSE>>=
 # Load tools package
