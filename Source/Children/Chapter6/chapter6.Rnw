@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 9 January 2013
+% Updated: 10 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
@@ -57,7 +57,7 @@ You can run the commands in this file one by one or run the make-like file throu
 
 \subsection{GNU Make}
 
-R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
+R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see page \pageref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
 
 In Make terminology the output files are called ``targets''\index{targets, Make} and the files that create them are called ``prerequisites''\index{prerequisites, Make}. You specify a ``recipe''\index{recipe, Make} to create the targets from the prerequisites. The general form is:
 
@@ -76,11 +76,9 @@ TARGET ... : PREREQUISITE ...
 
 Note that, unlike in R, tabs are important in Make. The indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If they are newer, it does nothing.
 
-If you are using a Linux or Mac computer you already have Make installed.\footnote{To verify this open the Terminal\index{Terminal} and type: \texttt{make --version}. This should output details about the current version of Make installed on your computer.} Windows users will have Make installed if they have already installed Rtools\index{Rtools} (see page \pageref{RtoolsDownload}).
+The basic idea of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data and save it as in CSV\index{CSV} format. 
 
-The basic of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data and save it as in CSV\index{CSV} format. 
-
-\paragraph{Example Makefile}
+\subsubsection{Example Makefile}
 
 The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files we already have. Before modifying the makefile first make sure that the \texttt{write.csv} command is moved into the \emph{MergeData.R} file. Also, think carefully about how R packages are loaded. Imagine you have commands in a file called \emph{Gather2.R}, for example, from libraries loaded in \emph{Gather1.R}. If Make doesn't run \emph{Gather1.R} because its outfile is up to date, but needs to run \emph{Gather2.R} it won't be able to find the commands. The simplest solution is to load required packages in each source code file.
 
@@ -206,11 +204,23 @@ make cleanMerge all
 
 \noindent then Make will first remove the \emph{MergeData.Rout} file (if there is one) and then run all of the R source files as need be. \emph{MergeData.R} will always be run. This ensures that changes to the gathered data frames are updated in the final merged data set.
 
-\paragraph{Makefiles and RStudio Projects}
+\subsubsection{Makefiles and RStudio Projects}
 
-\todo[inline]{ADD}
+You can run basic Makfiles with RStudio's Build capabilities.\index{Build, RStudio} For the type of Makefile we have been using, the main advantage of running Makefiles from within RStudio is that you don't have to toggle between RStudio and the Shell. 
 
-\paragraph{Other information about Makefiles}
+Imagine that the directory with our Makefile is an RStudio Project (see page \pageref{CreateRStudioProject}. If a project already contains a Makefile, RStudio will automatically open a \emph{Build} tab on the \texbf{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a Makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
+
+The \emph{Build} tab has buttons you can click to \texttt{Build All} (this is equivalent to \texttt{make all}), and, in the \texttt{More} drop down menu, \texttt{Clean all} (\texttt{make clean}) and \texttt{Clean and Rebuild} (\texttt{make clean all}). As you can see in Figure \ref{BuildTab}, the Tab shows you the same output you get in the Shell.
+
+\begin{figure}
+    \caption{The RStudio Build Tab}
+    \label{BuildTab}
+        \begin{center}
+            \includegraphics[scale=0.5]{/git_repositories/Rep-Res-Book/Source/Children/Chapter6/images6/BuildTab.png}
+        \end{center}
+\end{figure}  
+
+\subsubsection{Other information about Makefiles}
 
 Note that Make relies heavily on commands and syntax of the shell program that you are using. The above example was written and tested on a Mac. It should work on other Unix-like computers without modification.
 

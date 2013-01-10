@@ -21,10 +21,10 @@ ParentDirectory <- "/git_repositories/Rep-Res-Book/Source/Parent/"
 setwd(ParentDirectory)
 
 # Compile the book's parent document
-knit2pdf(input = "Rep-Res-Parent.Rnw")
+knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 
 # Embed fonts
-embed_fonts("Rep-Res-Parent.pdf")
+extrafont::embed_fonts("Rep-Res-Parent.pdf")
 
 # Clean up /git_repositories/Rep-Res-Book/Source/Parent/
 DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", 

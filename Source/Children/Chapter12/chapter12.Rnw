@@ -9,34 +9,77 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Large LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
 
-\todo[inline]{This chapter is largely incomplete}
+In the previous chapter we learned the basics of how to create LaTeX documents to create and present research findings. So far we have only learned how to create short documents, like articles and slide shows. For longer and more complex documents, like theses and books, a single LaTeX markup file can become very unwieldy very quickly, especially when it includes \emph{knitr} code chunks as well. Ideally we could segment the markup file at individual chapter, for example, and then bring them all together when we compile the main document that allows us to have continuious section and page numbering. Also, if we are using R Sweave, we need a way to run the code chunks in the segmented documents as well.
 
-In the previous chapter you learned the basics of how to create LaTeX documents to present your research findings. So far you have only learned how to create short documents, like articles. For longer and more complex documents, like books, you can take advantage of LaTeX and {\emph{knitr}} options that allow us to separate our files into manageable pieces. The pieces are usually called child files\index{child files}, which are combined using a parent document\index{parent document}.
+To overcome these problems we can take advantage of LaTeX, \emph{knitr}, and GNU Make functions that allow us to separate markup files into manageable pieces. Like directories, these pieces are called child files, which are combined using a parent document.
 
-These methods can also be used when creating batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In this chapter we will rely on {\emph{knitr}} and shell scripts to create batch reports. 
+Many of these tools can also be used to create batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In the latter part of this chapter we will rely on {\emph{knitr}} and GNU Make scripts to create batch reports. 
+
+In this chapter we will first briefly discuss how to plan large documents' file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input}\index{input}. The second uses {\emph{knitr}} and is slightly more complex, but is more flexibile. The final method is a special case of \texttt{\textbackslash{}input} that uses the command line program Pandoc \index{Pandoc} to convert and include child documents written in non-LaTeX markup languages. After this we will look at how GNU Make can help us build large projects, especially batch reports.
 
 \section{Planning large documents}
 
-Before discussing the specifics of each of these methods, it's worth taking some time to carefully plan the structure of your child and parent documents.
+Before discussing the specifics of each of these methods, it's worth taking a moment to carefully plan the structure of our child and parent documents.
 
-\subsection{Planning theses and books}
+\subsection{Planning theses and books}\index{child files}\index{parent document}
 
 Books and theses have a natural parent-child structure, i.e. they are single documents comprised of multiple chapters. They often include other child-like features such as title pages, bibliographies, figures, and appendices. You could include most of these features directly into one markup file. Clearly this file would become very large and unwieldy. It would be difficult to find one part or section to edit. If your presentation markup files are difficult to navigate, they are difficult to reproduce.  
 
+Instead of one long markup file you can break the document at natural division point, like chapters, into multiple child documents. These can then be combined with a parent document. The parent document acts like the skeleton that organizes the children in a specific order in one document when it is compiled. In LaTeX a parent document will include the preamble where the document class (\texttt{book} for example\index{book, LaTeX document class}) is set and all of the necessary LaTeX packages are loaded. It also includes \emph{knitr} global options, the \texttt{maketitle}, \verb|\begin{document}| and \verb|\end{document}|, and the \texttt{bibliography.} When you compile the parent document you will compile the entire document. Notice that if the parent document contains the preamble and so on, that the children cannot contain this information as well. This can create some issues if you only want to compile one chapter, for example. We will see how to overcome this problem with \emph{knitr}.
+
+To make your many child and parent documents manageable, it is a good idea to store your child files in a subdirectory of the folder storing the parent file. This book was created using a knittable parent and child structure, so please see the markup files on GitHub for a complete example of how to use \emph{knitr} with large documents.\footnote{See: \url{https://github.com/christophergandrud/Rep-Res-Book/tree/master/Source}. Note, I choose a slightly different directory structure. I created \emph{Parent}, \emph{Children} and \emph{FrontMatter}--the preface and so on-- directories as subdirectories of another folder called \emph{Source}.} When segmenting your presentation document into parents and children, the remainder of your research project structure can stay largely the same as what we have been using so far.
+
 \subsection{Planning batch reports}
 
-\section{Combining Chapters}
+COMPLETE
 
-We will cover three methods for including child documents into our parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input}\index{input}. The second uses {\emph{knitr}} and is slightly more complex, but is more flexibile. The final method is a special case of \texttt{\textbackslash{}input} that uses the command line program Pandoc \index{Pandoc} to convert and include child documents written in non-LaTeX markup languages. 
+\section{Large documents with traditional LaTeX}
 
-\subsection{Parent documents}
+Imagine that we are writing a book with three chapters. No part of the document includes code chunks. We can split the book into three child documents and place them in a subdirectory of the parent document's folder called \emph{Children}. The child documents should not contain a preamble, \verb|\begin{document}|, or \verb|\end{document}|. Because they are chapters we will begin the documents simply with the \texttt{chapter} heading.\index{chapter, LaTeX command} For example, the chapter in this book has: 
+
+<<Ch12ChapterName, eval=FALSE, tidy=FALSE>>=
+\chapter{Large LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
+@
+
+\noindent As we saw earlier, the \texttt{label}\index{label, LaTeX command} is used for cross-references.
+
+Now in the parent document we can place the \texttt{input}\index{input, LaTeX command} command in the parent where we would like it to show up in the final document. If we want there to be a clear page on either side of the included document we could use the \texttt{include}\index{include, LaTeX command} instead. In the \texttt{input} or \texttt{include} command we simply place the child document's file path. Here is an example parent document with three child documents:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+
+
+
+        \end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\subsection{Other common features of large documents}
+
+There were some other commands in the example parent document that we have not seen before. These commands create tables of contents, lists of figures and tables, and indices while discussing large documents.
+
+\paragraph{Table of contents}\index{table of contents, LaTeX}
+
+If you are using LaTeX's section headings (e.g. \texttt{chapter}, \texttt{section}) you can automatically generate a table of contents with the \texttt{tableofcontents}\index{tableofcontents, LaTeX command} command that we saw when creating a Beamer slideshow. Simply place this command where you want to the table of contents to appear. Usually this is after the \texttt{maketitle} command near the beginning of the document.
+
+\paragraph{Lists of figures and tables}\index{list of tables/figures, LaTeX}
+
+It is also common in large documents to include lists of figures and tables. Usually these are placed after the table of contents. LaTeX will automatically create these lists from the \texttt{caption}s\index{caption, LaTeX command} you place in \texttt{table} and \texttt{figure} environments. To create these lists use the \texttt{listoffigures} and \texttt{listoftables} commands.\index{listoftables, LaTeX command}\index{listoffigures}
+
+\paragraph{Index}\index{indices, LaTeX}
+
+You can also automatically create an index with the \emph{makeidx} (make index) LaTeX package.\index{makeidx, LaTeX package} To set up this package include it in your preamble. Then near the beginning of your document enable the index by placing \verb|\makeindex|. You will probably want to include the actual index near the end of the document. To do this place \verb|\printindex|. Throughout the child documents you can place use \verb|\index{INDEX_	KEY}| in your child files where you would like the index to refer to. For example, if we wanted create an index entry for this spot in this book with the INDEX\_KEY ``indices, LaTeX'' we type: \verb|\index{indices, LaTeX}|. 
+
+Sometimes we want to make sure that an index, a bibliography, or some other item, begins on a new page. To do this simply place the \texttt{clearpage}\index{clearpage, LaTeX command} directly before the item.
+
+\section{\emph{knitr} and large documents}
 
 \paragraph{knitr global options}
 {\emph{Knitr}} global chunk options\index{global chunk options} and package options\index{package options} should be set at the beginning of the parent document if you want them to apply to the entire presentation document. 
 
 \subsection{Child documents}
-
-\paragraph{Include child documents with input}
 
 \paragraph{Include child documents with knitr}
 

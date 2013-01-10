@@ -123,7 +123,7 @@ In this book we will focus on learning how to use the widely available and highl
     
     \item {\bf{Cloud storage \& versioning}}: Services such as Dropbox and Github that can store data, code, and presentation files, save previous versions of these files, and make this information widely available.
     
-    \item {\bf{Unix-like shell programs}}\index{Unix-like shell program}: These tools are useful for working with large research projects.\footnote{In this book I cover the Bash shell for Linux\index{Linux} and Mac as well as Windows PowerShell\index{Windows PowerShell}.} They also allow us to use command line tools including Pandoc, a program for converting documents from one markup language to another.
+    \item {\bf{Unix-like shell programs}}\index{Unix-like shell program}: These tools are useful for working with large research projects.\footnote{In this book I cover the Bash shell for Linux\index{Linux} and Mac as well as Windows PowerShell\index{Windows PowerShell}.} They also allow us to use command line tools including GNU Make for compiling projects and Pandoc, a program for converting documents from one markup language to another.
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%% Why use R, knitr, and RStudio for reproducible research? %%%%%%%%%%%%%%
@@ -149,9 +149,9 @@ Not only does RStudio do many of the things that R can do but more easily, it is
 
 Finally, RStudio not only has tight integration with various markup languages, it also has capabilities for using other tools such as C++, CSS, JavaScript, and a few other programming languages. It is closely integrated with the version control programs Git\index{Git} and SVN\index{SVN}. Both of these programs allow you to keep track of the changes you make to your documents (see Chapter \ref{Storing}). This is important for reproducible research since version control programs can document many of your research steps. 
 
-\subsection{Installing the Software}\label{InstallR}
+\subsection{Installing the Main Software}\label{InstallR}
 
-Before you read this book you should install the software. All of the software programs covered in this book are open source and can be easily downloaded for free. They are available for Windows\index{Windows}, Mac\index{Mac}, and Unix-like operating systems\index{Unix}. They should run well on most modern computers. 
+Before you read this book you should install the main software. All of the software programs covered in this book are open source and can be easily downloaded for free. They are available for Windows\index{Windows}, Mac\index{Mac}, and Unix-like operating systems\index{Unix}. They should run well on most modern computers. 
 
 You should install R before installing RStudio. You can download the programs from the following websites:
 
@@ -169,6 +169,14 @@ After installing R and RStudio you will probably also want to install a number o
 If you are planning to create LaTeX documents you need to install a TeX distribution\index{TeX distribution}.\footnote{LaTeX is is really a set of macros for the the TeX typesetting system. It is included in all major TeX distributions.} They are available for Windows, Mac, and Unix. They can be found at: \url{http://www.latex-project.org/ftp.html}. Please refer to that site for more installation information.
 
 If you want to create Markdown documents you can separately install the {\emph{markdown}} package\index{markdown package} in R. You can do this the same way that you install any package in R, with the {\tt{install.packages}} command.\footnote{The exact command is: {\tt{install.packages("markdown")}}.} 
+
+\paragraph{GNU Make}
+
+If you are using a Linux computer you already have GNU Make\label{InstallMake}\index{GNU Make} installed.\footnote{To verify this open the Terminal\index{Terminal} and type: \texttt{make --version}. This should output details about the current version of Make installed on your computer.} Mac users should go to the App Store\index{Apple App Store} and download Xcode (it's free). Once Xcode is installed install command line tools, which you will find by clicking on \texttt{Preference} \textrightarrow \texttt{Downloads}. Windows users will have Make installed if they have already installed Rtools\index{Rtools} (see page \pageref{RtoolsDownload}). Mac and Windows users will need to install these tools not only so that GNU Make runs properly, but also so that other command line tools work well.
+
+\paragraph{Other Tools}
+
+We will discuss other tools that can be a useful part of a reproducible research workflow. Installation instructions for these tools will be discussed below.
 
 %%%%%%%%%%%%%% Book Overview %%%%%%%%%%%%%%
 
