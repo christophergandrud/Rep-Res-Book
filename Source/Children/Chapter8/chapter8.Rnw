@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 6 January 2013
+% Updated: 12 January 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -37,9 +37,31 @@ The \texttt{eval} option determines whether or not the code in a chunk will be r
 
 If you would like hide a chunks code you from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} (which it is by default) then source code will be included in the presentation document.
 
+\paragraph{{\tt{tidy}}}\index{tidy}
+
+If you do echo your code in your presentation document you may want to manually format it in a particular way. By default \texttt{knitr} `tidies' the code using the \emph{formatR} package. To turn this off simply set the option \verb|tidy=FALSE|.
+
+For example, this code chunk has \verb|tidy=FALSE| so that I could put the arguments on separate lines:
+
+<<Ch8TidyFalse, eval=FALSE, tidy=FALSE>>=
+MoltenFert <- melt(data = FertConsumpData,
+                    id.vars = c("iso2c", "country", "year"),
+                    measure.vars= "AG.CON.FERT.ZS")
+@
+
+\noindent This is what the same code looks like when \verb|tidy=TRUE|:\footnote{I changed the font size so that it would fit on the page.}
+
+{\scriptsize
+<<Ch8TidyTrue, eval=FALSE>>=
+MoltenFert <- melt(data = FertConsumpData,
+                    id.vars = c("iso2c", "country", "year"),
+                    measure.vars= "AG.CON.FERT.ZS")
+@
+}
+
 \paragraph{{\tt{results}}}\index{results, knitr option}
 
-We will look at the \texttt{results} option in more detail in the next two chapters (see especially page \pageref{ResultsOption}). However let's briefly discuss the option value \texttt{hide}. Setting \texttt{results='hide'} is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{hide} shows the code, but not the results.
+We will look at the \texttt{results} option in more detail in the next two chapters (see especially page \pageref{ResultsOptions}). However let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{hide} shows the code, but not the results.
 
 \paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{warning}\index{error}\index{message}
 
@@ -47,7 +69,7 @@ If you don't want to include the warnings, messages, and error messages that R o
 
 \paragraph{{\tt{cache}}}\index{cache}
 
-If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the code chunk is run only if the code changes. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default.
+If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default.
 
 Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached. Packages that are loaded in cached chunks cannot be accessed by other chunks.
 
@@ -99,6 +121,8 @@ is \Sexpr{round(mean(rivers), digits = 0)} miles.
 \begin{quote}
     The mean length of 141 major rivers in North America is \Sexpr{round(mean(rivers), digits = 0)} miles. 
 \end{quote}
+
+Note that R code included inline with \texttt{Sexpr} is evaluated using current R options.\index{R global options} So if you want all of the output from \texttt{Sepxr} to be rounded to the same number of digits, for example, it might be a good idea to set this in a code chunk with R's \texttt{options} command.\index{options, R command} See page \pageref{ROptions} for more details.
 
 \subsubsection{Markdown}
 
@@ -248,3 +272,43 @@ source_url("http://bit.ly/UOtH4L")
 
 \noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{source\_gist} in a similar way to source GitHub Gists\index{Gist, GitHub}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
 
+\section{Computationally Intensive Analyses}
+
+Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make compiling the document frustrating because it will take a long time. There are at least two solutions to this problem: the \texttt{cache} chunk option and Makfiles. We discussed Makefiles Chapter \ref{DataGather}, so lets look at how to work with the \texttt{cache} option. 
+
+Setting \verb|cache=TRUE| for the code chunk that contains the analysis. This will only run the code chunk only when the code written in the chunk or the other chunk options change. This is a very easy solution the problem. Though it does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. A solution to this is to (a) have packages loaded in a separate chunk and to save objects created by the cached chunk to a separate file RData file that can be loaded in later chunks (see page \pageref{RSave}).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \emph{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
+Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{hist} to create a histogram of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{}\textless{}Sample, cahe=TRUE\textgreater{}\textgreater{}=
+\hlcomment{# Create data}
+Sample <- \hlfunction{rnorm}(n = 1000, mean = 5, sd = 2)
+
+\hlcomment{# Save sample}
+\hlfunction{save}(Sample, file = \hlstring{"Sample.RData"})
+@
+            \end{alltt}
+        \end{kframe}
+\end{knitrout}
+
+\noindent The later code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{rnorm} to take a random sample of size 1000 from a normal distribution with a mean of five and standard deviation of two.}
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{}\textless{}Histogram\textgreater{}\textgreater{}=
+\hlcomment{# Load Sample}
+\hlfunction{load}(file = \hlcomment{"Sample.RData"})
+
+\hlcomment{# Create histogram}
+\hlfunction{hist}(Sample)
+@
+            \end{alltt}
+        \end{kframe}
+\end{knitrout}

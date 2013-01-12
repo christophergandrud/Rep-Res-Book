@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 8 January 2013
+% Updated: 12 January 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -213,7 +213,7 @@ NumericVect
 mean(x = NumericVect)
 @
 
-\noindent We use the assignment operator to place a command's output into an object. For example,
+\noindent We use the assignment operator to place a command's output into an object. For example:
 
 <<MeanNumericVectAssign>>=
 MeanNumericVect <- mean(x = NumericVect)
@@ -266,15 +266,46 @@ All of the objects you create become part of your workspace\index{workspace}. Us
 ls()
 @
 
-To save the workspace into an \texttt{.RData} file use the \texttt{save.image}\index{save.image} command. The main argument of the \texttt{save.image} command is the file path you would like the file saved into. If you don't specify the file path it will save in your current working directory (see Chapter \ref{DirectoriesChapter}). 
-
-You should generally avoid saving your workspace. Instead, when you return to working on a project rerun the source code files. This avoids any complications caused when you use an object in your workspace that is left over from running an older version of the source code.\footnote{For example, imagine you create an object, then change the source code you used to create the object. However, there is a syntax error in the new version of the source code. The old object won't be overwritten and you will be mistakenly using the old object in future commands.} The only time when saving your workspace is very useful is when it includes an object that was computationally difficult and took a long time to create. In this case it is still useful to clean up the workspace before saving it by using the \texttt{rm} command\index{rm} to remove the other objects. For example, to remove the \texttt{CharacterVect} and \texttt{Words} objects type:
+You can remove specific objects from the workspace using the \texttt{rm} command\index{rm}. For example, to remove the \texttt{CharacterVect} and \texttt{Words} objects type:
 
 <<Ch3RM, eval=FALSE>>=
 rm(CharacterVect, Words)
 @
 
-When you enter a command into R they become part of your history. To see the most recent commands in your history use the \texttt(history) command. You can also use the up and down arrows on your keyboard when your cursor is in the R console to scroll through your history.
+To save the entire workspace into a binary--not plain-text--RData file use the \texttt{save.image}\index{save.image}\lable{SaveLoadWS} command. The main argument of the \texttt{save.image} command is the file path you would like the file saved into. If you don't specify the file path it will save in your current working directory (see Chapter \ref{DirectoriesChapter}). For example, to save the current workspace in a file called \emph{DecemberWorkspace.RData} in the current working directory type:
+
+<<Ch3Workspace, eval=FALSE>>=
+save.image(file = "DecemberWorkspace.RData")
+@
+
+\noindent Use the \texttt{load}\index{load, R command} to load a saved workspace back into R:
+
+<<Ch3LoadWS, eval=FALSE>>=
+load(file = "DecemberWorkspace.RData")
+@
+
+You should generally avoid having R save your workspace when you quit and reload it when you start R again. Instead, when you return to working on a project rerun the source code files. This avoids any complications caused when you use an object in your workspace that is left over from running an older version of the source code.\footnote{For example, imagine you create an object, then change the source code you used to create the object. However, there is a syntax error in the new version of the source code. The old object won't be overwritten and you will be mistakenly using the old object in future commands.} 
+
+The only time when saving your workspace is very useful is when it includes an object that was computationally difficult and took a long time to create. In this case you can save only the large object with the \texttt{save} command.\footnote{The \texttt{save.image} command is just a special case of \texttt{save}.}\index{save, R command}\label{RSave} For example, if we have a very large object called \emph{Comp} we can save it to a file called \emph{Comp.RData} like this:
+
+<<Ch3Comp, eval=FALSE>>=
+save(Comp, file = "Comp.RData")
+@
+
+In general I also recommend against saving data in binary RData formatted files. Because they are not text files they are not human readable and are much less future proof.
+
+\paragraph{R history}
+
+When you enter a command into R it becomes part of your history. To see the most recent commands in your history use the \texttt(history) command. You can also use the up and down arrows on your keyboard when your cursor is in the R console to scroll through your history.
+
+\subsection{Global R options}\label{ROptions}
+
+In R you can set global options with the \texttt{options} command\index{options, R command} This lets you set how R runs and outputs commands through an entire R session. For example, to have output rounded to one decimal place set set the \texttt{digits}\index{digits} argument:
+
+<<Ch3Options, eval=FALSE>>=
+# Round output to one decimal place
+options(digits = 1)
+@
 
 \subsection{Installing new packages and loading commands}\label{Packages}
 

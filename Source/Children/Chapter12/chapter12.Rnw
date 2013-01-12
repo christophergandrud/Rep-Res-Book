@@ -3,8 +3,8 @@
 % Created: 16/07/2012 05:45:03 pm CEST
 % Updated: 12 January 2013
 
-<<set-parent12>>=
-set_parent('/Parent/Rep-Res-Parent.Rnw', include=FALSE)
+<<set-parent12, include=FALSE>>=
+set_parent('/Parent/Rep-Res-Parent.Rnw')
 @
 
 \chapter{Large LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
@@ -173,7 +173,7 @@ This chapter is very short
 \end{kframe}
 \end{knitrout}
 
-\noindent You can also use \verb|set_parent| with \verb|Sexpr|. When you have set the parent document you can \texttt{knit} the child document by itself. In addition to knitting the code chunks \emph{knitr} will include all of the preamble information from the parent document as well as \verb|\begin{docuement}| and \verb|\end{document}|.
+\noindent You can also use \verb|set_parent| with \verb|Sexpr|. When you have set the parent document you can \texttt{knit} the child document by itself. In addition to knitting the code chunks \emph{knitr} will include all of the preamble information from the parent document as well as \verb|\begin{docuement}| and \verb|\end{document}|.\footnote{If you are using custom LaTeX style files (\emph{.sty}) then \emph{knitr} won't include these in the knitted document unless you include a copy of the style file in the child document's directory.}
 
 \paragraph{Other markup languages}
 
@@ -215,5 +215,7 @@ You'll notice that after the code chunk we use {\tt{\\input}} to include the new
 
 
 \section{Creating Batch Reports}
+
+
 
 \subsection{stich}
