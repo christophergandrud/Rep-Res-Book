@@ -213,8 +213,47 @@ I only need to include a backslash (\textbackslash{}) at the end of the first li
 
 You'll notice that after the code chunk we use {\tt{\\input}} to include the new \emph{StyleTemp.tex} document. Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
 
+\begin{figure}
+    \caption{The \emph{brew} + \emph{knitr} Process}
+    \label{BrewFig}
+\input{Children/Chapter12/images12/BrewProcess.tex}
 
-\section{Creating Batch Reports}
+\section{Creating Batch Reports}\index{batch reports}
+
+When we create batch reports we want to some how subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks to produce multiple presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}: 
+
+\begin{itemize}
+    \item create a \emph{brew} template document,
+    \item create a function to subset the data, brew and knit each file.
+\end{itemize}
+
+Imagine that we are using our the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}). First let's create a \emph{brew} template document. This document will include all of our markup and code chunks we want in our \emph{knitr} document. There is one small difference from regular knittable documents: it will use \emph{brew} syntax for including information from the data subset. 
+
+Text in a \emph{brew} template document is printed as is unless it is between \emph{brew}'s delimiters. These are:
+
+\begin{itemize}
+    \item \texttt{\textless{}\% . . . \%\textgreater{}}: R function inside the delimiters are run,
+    \item \texttt{\textless{}\%= . . . \%\textgreater{}}: contents are printed.
+\end{itemize}
+
+\noindent In the following example we use the latter one. Here is our \emph{brew} template:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{}documentclass{article}
+
+{\LARGE \textless{}\%= COUNTRY \%\textgreater{}}
+
+\textbackslash{}vspace\{1cm\}
+
+The mean fertilizer consumption for \textless{}\%= COUNTRY \%\textgreater{}
+is: \textbackslash{}Sexpr\{\hlfunction{mean}(\textless{}\%= X \%\textgreater{}, digits = 1)\} kilograms per hectare of arable land.
+            \end{alltt}
+        \end{kframe}
+\end{knitrout}
 
 
 
