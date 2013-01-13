@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 10 January 2013
+% Updated: 13 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -129,7 +129,7 @@ cleanMerge:
 
 The third executed line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \emph{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. The dollar signs (\verb|$|). In make (and Unix-like shells generally) a dollar sign (\verb|$|) followed by a variable name substitutes the variable name for the value of the variable.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
 
-You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wildcard'',\index{wildcard} a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
+You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wildcard'',\index{wildcard}\label{AsteriskWildcard} a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
 
 Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make function} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 
@@ -208,7 +208,7 @@ make cleanMerge all
 
 You can run basic Makfiles with RStudio's Build capabilities.\index{Build, RStudio} For the type of Makefile we have been using, the main advantage of running Makefiles from within RStudio is that you don't have to toggle between RStudio and the Shell. 
 
-Imagine that the directory with our Makefile is an RStudio Project (see page \pageref{CreateRStudioProject}. If a project already contains a Makefile, RStudio will automatically open a \emph{Build} tab on the \texbf{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a Makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
+Imagine that the directory with our Makefile is an RStudio Project (see page \pageref{CreateRStudioProject}. If a project already contains a Makefile, RStudio will automatically open a \emph{Build} tab on the \textbf{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a Makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
 
 The \emph{Build} tab has buttons you can click to \texttt{Build All} (this is equivalent to \texttt{make all}), and, in the \texttt{More} drop down menu, \texttt{Clean all} (\texttt{make clean}) and \texttt{Clean and Rebuild} (\texttt{make clean all}). As you can see in Figure \ref{BuildTab}, the Tab shows you the same output you get in the Shell.
 

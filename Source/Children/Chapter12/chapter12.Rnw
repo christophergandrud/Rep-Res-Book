@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 12 January 2013
+% Updated: 13 January 2013
 
 <<set-parent12, include=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -15,11 +15,11 @@ To overcome these problems we can take advantage of LaTeX, \emph{knitr}, and GNU
 
 Many of these tools can also be used to create batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In the latter part of this chapter we will rely on {\emph{knitr}} and GNU Make scripts to create batch reports. 
 
-In this chapter we will first briefly discuss how to plan large documents' file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input}\index{input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} to convert and include child documents written in non-LaTeX markup languages. After this we will look at how GNU Make can help us build large projects, especially batch reports.
+In this chapter we will first briefly discuss how to plan a large document's file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input}\index{input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} to convert and include child documents written in non-LaTeX markup languages. After this we will look at how GNU Make can help us build large projects, especially batch reports.
 
 \section{Planning large documents}
 
-Before discussing the specifics of each of these methods, it's worth taking a moment to carefully plan the structure of our child and parent documents.
+Before discussing the specifics of each of these methods, it's worth taking a moment to carefully plan the structure of our child and parent documents. We will discuss how to structure files for batch reports later in the chapter.
 
 \subsection{Planning theses and books}\index{child files}\index{parent document}
 
@@ -28,10 +28,6 @@ Books and theses have a natural parent-child structure, i.e. they are single doc
 Instead of one long markup file you can break the document at natural division point, like chapters, into multiple child documents. These can then be combined with a parent document. The parent document acts like the skeleton that organizes the children in a specific order in one document when it is compiled. In LaTeX a parent document will include the preamble where the document class (\texttt{book} for example\index{book, LaTeX document class}) is set and all of the necessary LaTeX packages are loaded. It also includes \emph{knitr} global options, the \texttt{maketitle}, \verb|\begin{document}| and \verb|\end{document}|, and the \texttt{bibliography.} When you compile the parent document you will compile the entire document. Notice that if the parent document contains the preamble and so on, that the children cannot contain this information as well. This can create some issues if you only want to compile one chapter, for example. We will see how to overcome this problem with \emph{knitr}.
 
 To make your many child and parent documents manageable, it is a good idea to store your child files in a subdirectory of the folder storing the parent file. This book was created using a knittable parent and child structure, so please see the markup files on GitHub for a complete example of how to use \emph{knitr} with large documents.\footnote{See: \url{https://github.com/christophergandrud/Rep-Res-Book/tree/master/Source}.} When segmenting your presentation document into parents and children, the remainder of your research project structure can stay largely the same as what we have been using so far.
-
-\subsection{Planning batch reports}
-
-COMPLETE
 
 \section{Large documents with traditional LaTeX}
 
@@ -142,7 +138,7 @@ Rather than using the \texttt{input} or \texttt{include} commands, we use the \t
 \end{kframe}
 \end{knitrout}
 
-\noindent We can include the other child documents either in their own code chunks or all in one chunk as a character vector. You can also use \verb|Sexpr|\index{Sexpr} with the option \verb|knit_child|.\index{knit\_child}}
+\noindent We can include the other child documents either in their own code chunks or all in one chunk as a character vector. You can also use \verb|Sexpr|\index{Sexpr} with the option \verb|knit_child|.\index{knit\_child}
 
 <<Ch12Sexpr, eval=FALSE, tidy=FALSE>>=
 \Sexpr{knit_child('Children/Chapter1.Rnw')}
@@ -216,45 +212,120 @@ You'll notice that after the code chunk we use {\tt{\\input}} to include the new
 \begin{figure}
     \caption{The \emph{brew} + \emph{knitr} Process}
     \label{BrewFig}
+    \vspace{0.2cm}
 \input{Children/Chapter12/images12/BrewProcess.tex}
+\end{figure}
 
 \section{Creating Batch Reports}\index{batch reports}
 
-When we create batch reports we want to some how subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks to produce multiple presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}: 
+When we create batch reports we want to some how subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks to produce multiple presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}): 
 
 \begin{itemize}
     \item create a \emph{brew} template document,
     \item create a function to subset the data, brew and knit each file.
 \end{itemize}
 
-Imagine that we are using our the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}). First let's create a \emph{brew} template document. This document will include all of our markup and code chunks we want in our \emph{knitr} document. There is one small difference from regular knittable documents: it will use \emph{brew} syntax for including information from the data subset. 
+Imagine that we are using the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}). 
 
-Text in a \emph{brew} template document is printed as is unless it is between \emph{brew}'s delimiters. These are:
+First, let's create a \emph{brew} template document. This document will include all of our markup and code chunks we want in our \emph{knitr} document. There is one small difference from regular knittable documents: it will use \emph{brew} syntax for including information from the data subset. Text in a \emph{brew} template document is printed as is unless it is between \emph{brew}'s delimiters.\index{brew delimiters} The delimiters are:\footnote{Note that the spaces between the delimiter and its contents are important.}
 
 \begin{itemize}
-    \item \texttt{\textless{}\% . . . \%\textgreater{}}: R function inside the delimiters are run,
+    \item \texttt{\textless{}\textbackslash{}\# . . . \%\textgreater{}}: Comment delimiter, i.e. contents are thrown away when brewed.
+    \item \texttt{\textless{}\% . . . \%\textgreater{}}: R functions inside the delimiters are run, but the results aren't printed.
     \item \texttt{\textless{}\%= . . . \%\textgreater{}}: contents are printed.
 \end{itemize}
 
-\noindent In the following example we use the latter one. Here is our \emph{brew} template:
+\noindent In the following example we use the latter two. Here is our \emph{brew} template:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
-\textless{}documentclass{article}
+\textbackslash{}documentclass\{article\}
 
-{\LARGE \textless{}\%= COUNTRY \%\textgreater{}}
+\textbackslash{}begin\{document\}
 
-\textbackslash{}vspace\{1cm\}
+% Create numeric vector
+\textless{}% NewFC <- FC %\textgreater{}
 
-The mean fertilizer consumption for \textless{}\%= COUNTRY \%\textgreater{}
-is: \textbackslash{}Sexpr\{\hlfunction{mean}(\textless{}\%= X \%\textgreater{}, digits = 1)\} kilograms per hectare of arable land.
+\{\textbackslash{}LARGE \textless{}%= Name %\textgreater{}}
+
+\vspace{1cm}
+
+The mean fertilizer consumption for \textless{}%= Name %\textgreater{} is 
+\textbackslash{}Sexpr\{round(mean(NewFC), digits = 1)\} kilograms
+per hectare of arable land.
+
+\textbackslash{}end\{document\}
             \end{alltt}
         \end{kframe}
 \end{knitrout}
 
+\noindent There are a few things to note. The line \verb|<% NewFC <- FC %>| will create a vector called \emph{NewFC} from the object \emph{FC}. As we will see when we create the brew function, \emph{FC} are the values of \emph{FertilizerConsumption} for each country. We need to put \emph{FC} into a new object because if we typed \verb|<%= FC %>| \texttt{brew} would print the numbers literally, not in a numeric vector like we need later for the \texttt{mean} command. \verb|<%= Name %>| simply prints the country name. We'll se how to create \emph{Name} in the \emph{brew} function. We will save this template in \emph{BatchReports/Template}, i.e. in a subdirectory of \emph{BatchReports} called \emph{Template}.
 
+Now lets create the R code to \texttt{brew} and \texttt{knit} the reports:
 
-\subsection{stich}
+<<Ch12BrewFunction, eval=FALSE, tidy=FALSE>>=
+# Set working directory
+setwd("/BatchReports")
+
+#### Download Data ####
+# Load source_GitHubData
+devtools::source_url("http://bit.ly/UOMkpd")
+                     
+# Download data)
+MainData <- source_GitHubData("http://bit.ly/V0ldsf")
+
+# Create vector of country names
+COUNTRY <- as.character(unique(MainData$country))
+
+#### Create BatchReports Function ####
+BatchReports <- function(Name)
+{
+  # Create files names for individual reports 
+  ## Remove white space in country names
+  CountryNoWhite <- gsub(" ", "", x = Name)
+  KnitFile <- paste(CountryNoWhite, ".Rnw", sep = "")
+
+  # Subset data
+  SubData <- subset(MainData, country == Name)
+  
+  # Create vector of the country's fertilizer consumption
+  FC <- SubData$FertilizerConsumption
+
+  # Brew and Knit
+  brew::brew("Template/BrewTemplate.Rnw", KnitFile)
+  knitr::knit2pdf(KnitFile)
+}
+
+#### Run function and clean up ####
+plyr::l_ply(COUNTRY, BatchReports)
+
+# Keep only pdf reports
+unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
+@
+
+\noindent Ok, this is a lot of new code. Let's go through it step by step:
+
+\begin{enumerate}
+    \item Set the working directory to \emph{/BatchReports}.
+    \item Download \emph{MainData.csv} using the \texttt{source\_GitHubData} function, as we've done before.
+    \item Create a vector for the country names in the data. We will use this vector to subset the data.
+    \item Create a function\index{function, R command} called \emph{BatchReports} for subsetting the data, brewing it, and knitting it. 
+        \begin{itemize}
+            \item The \texttt{function} command allows us create a new function.\footnote{These functions are just like almost any other R function.} Arguments are specified in parentheses and R expressions are put in curly brackets. The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew and knit the data according to \emph{Name}'s value. 
+            \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{gsub}, i.e. we substitute a space \'\' \'\' with no white space \'\'\'\'. We then use the \texttt{paste}\index{paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
+        \end{itemize}
+    \item \texttt{l\_ply} from the \emph{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value of \emph{COUNTRY}. 
+    \item Finally, we use the \texttt{unlink}\index{unlink} command to delete all of the ancillary files used in to create the final batch report PDFs. Always be careful with the \texttt{unlink} command as it permanently deletes files. Because we used the asterisk wildcard (see page \pageref{AsteriskWildcard}) \texttt{unlink} will delete all files in the working directory with the extensions \emph{.aux}, \emph{.log}, \emph{.Rnw} and \emph{.tex}.
+\end{enumerate}
+
+Figure \ref{BrewExample} shows you a sample of what the final PDF created by this \emph{brew}/\emph{knitr} for Afghanistan looks like. This was a very simple example illustrating the basic process for combining \emph{brew} and \emph{knitr} to create batch reports. The process can be used to create much more complex documents and with with other markup languages. 
+
+\begin{figure}
+    \caption{Example PDF created by \emph{brew} + \emph{knitr}}
+    \label{BrewExample}
+        \includegraphics[width=0.8\textwidth]{Children/Chapter12/images12/BrewExample.png}
+        \vspace{1cm}
+\end{figure} 

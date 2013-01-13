@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 9 January 2013
+% Updated: 12 January 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -163,7 +163,7 @@ ggplot(UDSData, aes(x = year, y = mean)) +
 \textbackslash{}end\{figure\}
 
 %%%%%%%%%%% Reproducing the Document %%%%%
-\textbackslash{}section*\{Reproducing the Document\}
+\textbackslash{}section\*\{Reproducing the Document\}
 
 This document was created using the R version 2.15.2 and the R package \textbackslash{}emph\{knitr\} 
 \textbackslash{}citep\{R-knitr\}. It also relied on the R packages \textbackslash{}emph\{devtools\} \textbackslash{}citep\{R-devtools\} 
@@ -198,7 +198,7 @@ Note that adding more blank lines between paragraphs will not add extra space be
 
 \vspace{3cm}
 
-Similarly adding extra spaces between words in your LaTeX markup won't create extra spaces between words in the compiled document. To add horizontal space use the \texttt{hspace}\index{hspace, LaTeX command} in the same way as \textt{vspace}.
+Similarly adding extra spaces between words in your LaTeX markup won't create extra spaces between words in the compiled document. To add horizontal space use the \texttt{hspace}\index{hspace, LaTeX command} in the same way as \texttt{vspace}.
 
 \subsection{Text formatting \& math}
 
@@ -218,7 +218,8 @@ There are a number of commands to set the size of specific pieces of text relati
     \caption{LaTeX Font Size Commands}
     \label{LaTeXFontSize}
     \begin{center}
-        \hline \vspace{0.2cm}
+        \hline 
+        \vspace{0.2cm}
         \begin{tabular}{c}
             {\Huge \texttt{Huge}} \\
             {\huge \texttt{huge}} \\
@@ -229,7 +230,8 @@ There are a number of commands to set the size of specific pieces of text relati
             {\small \texttt{small}} \\
             {\footnotesize \texttt{footnotesize}} \\
             {\scriptsize \texttt{scriptsize}} \\
-            {\tiny \texttt{tiny}} \\[0.25cm]
+            {\tiny \texttt{tiny}} 
+        \vspace{0.2cm}
         \end{tabular}
         \hline
     \end{center}
@@ -239,7 +241,7 @@ There are a number of commands to set the size of specific pieces of text relati
 
 \paragraph{Diacritics}\index{diacritics, LaTeX}
 
-You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX directly. For example to create a letter c with a cedilla (\{c}) you need to type \verb|\{c}|. To create an `a' with an acute accent (\'{a}) type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them in LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.
+You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX directly. For example to create a letter c with a cedilla (\c{c}) you need to type \verb|\c{c}|. To create an `a' with an acute accent (\'{a}) type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them in LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.
 
 \paragraph{Quotation marks}
 
@@ -338,7 +340,7 @@ BibTeX bibliographies are stored in plain-text files with the extension \emph{.b
 \end{kframe}
 \end{knitrout}
 
-\noindnet \verb|DOCUMENT_TYPE| specifies what type of document--article, book, webpage, and so on--the citation is for. This determines what items the citation can and needs to include. Then we have the \verb|CITE_KEY|.\index{BibTeX citation keys} This is the reference's label that you will use to include the citation in your presentation document. We'll look more at this later in the section. Each citation must have a unique \verb|CITE_KEY|. A common way to write these keys is to use the author's surname and the publication year, e.g. \verb|Donohue2009|. The cite key is followed by the other citation attributes such as \texttt{author}, \texttt{title} and \texttt{year}. These attributes all follow the same syntax: \verb|ATTRIBUTE = {. . .}|.
+\noindent \verb|DOCUMENT_TYPE| specifies what type of document--article, book, webpage, and so on--the citation is for. This determines what items the citation can and needs to include. Then we have the \verb|CITE_KEY|.\index{BibTeX citation keys} This is the reference's label that you will use to include the citation in your presentation document. We'll look more at this later in the section. Each citation must have a unique \verb|CITE_KEY|. A common way to write these keys is to use the author's surname and the publication year, e.g. \verb|Donohue2009|. The cite key is followed by the other citation attributes such as \texttt{author}, \texttt{title} and \texttt{year}. These attributes all follow the same syntax: \verb|ATTRIBUTE = {. . .}|.
 
 It's worth taking a moment to discuss the syntax for the BibTeX author attribute. First multiple author names are separated by \texttt{and}. Secondly, BibTeX assumes that the last word for each author is their surname. If you would like multiple words to be taken as the ``surname'' then enclose these word's in curly brackets. If we wanted to cite the World Bank as an author we write \verb|{World Bank}|, otherwise it will be formatted Bank, World in the presentation document.
 
