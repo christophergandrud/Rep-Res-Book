@@ -11,7 +11,7 @@ set_parent('/Parent/Rep-Res-Parent.Rnw')
 
 LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML. HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research HTML presentation documents.
 
-In this chapter we will learn the basic Markdown syntax for creating simple reproducible HTML documents. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. We will also briefly look at some more advanced features for including math, bibliographies and customizing styles with CSS. Then we will learn how to create HTML slideshows with Markdown and the \emph{slidify} R package. The remainder of the chapter will look at options for publishing Markdown created documents, including locally, on RPubs, on the blogging service Tumblr, as well as via Dropbox and GitHub. 
+In this chapter we will learn the basic Markdown syntax for creating simple reproducible HTML documents. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. We will also briefly look at some more advanced features for including math with MathJax, footnotes and bibliographies with Pandoc and customizing styles with CSS. Then we will learn how to create HTML slideshows with Markdown and the \emph{slidify} R package. The remainder of the chapter will look at options for publishing Markdown created documents, including locally, on RPubs, on the blogging service Tumblr, as well as via Dropbox and GitHub. 
 
 \section{The Basics}
 
@@ -21,7 +21,7 @@ That being said, to make Markdown simple it does not have as many capabilities a
 
 \subsection{Getting Started with Markdown Editors}
 
-Like for R LaTeX, RStudio functions as a very good editor for R Markdown documents and regular non-knittable documents as well. To create a new R Markdown document in RStudio click \texttt{File} in the menu bar then \texttt{New} \textrightarrow{} \texttt{R Markdown}. RStudio has full syntax highlighting for code chunks and can knit \emph{.Rmd} files into \emph{.md} then render them in \emph{.html} with a click of the \texttt{Knit HTML} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/KnitHTML.png}). As we saw in Chapter \ref{GettingStartedRKnitr} (Figure \ref{NotebookExample}), when you knit a Markdown document in RStudio, it will preview the HTML document for you. You can always view HTML documents by opening them with your web browser. You can do this directly from RStudio's \textbf{HTML Preview} window by clicking the \texttt{View the page with the system browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). You can also click the \texttt{Markdown quick reference} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/MDButton.png}) for a quick guide to the Markdown syntax used in RStudio.\foonote{RStudio uses Git Flavored Markdown, which is a variant of Markdown developed by GitHub. See: \url{http://github.github.com/github-flavored-markdown/}.}
+Like for R LaTeX, RStudio functions as a very good editor for R Markdown documents and regular non-knittable documents as well. To create a new R Markdown document in RStudio click \texttt{File} in the menu bar then \texttt{New} \textrightarrow{} \texttt{R Markdown}. RStudio has full syntax highlighting for code chunks and can knit \emph{.Rmd} files into \emph{.md} then render them in \emph{.html} with a click of the \texttt{Knit HTML} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/KnitHTML.png}). As we saw in Chapter \ref{GettingStartedRKnitr} (Figure \ref{NotebookExample}), when you knit a Markdown document in RStudio, it will preview the HTML document for you. You can always view HTML documents by opening them with your web browser. You can do this directly from RStudio's \textbf{HTML Preview} window by clicking the \texttt{View the page with the system browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). You can also click the \texttt{Markdown quick reference} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/MDButton.png}) for a quick guide to the Markdown syntax used in RStudio.\foonote{RStudio uses Sundown, which is a variant of Markdown developed by GitHub. See: \url{https://github.com/vmg/sundown}.}
 
 Being plain-text, you can also use any text editor to modify Markdown documents, though they lack the level of integration with \emph{knitr} that RStudio has. There are also Markdown specific programs that include useful features like live preview (i.e. continuously updating) of how the Markdown document will look when compiled. Again these will not run \emph{knitr} code. However, they do include some features RStudio lacks, like word counts, the ability to save in PDF formats, and multiple CSS style files to format your documents with. On my Mac I often use Mou\footnote{\url{http://mouapp.com/}} and Marked\footnote{See: \url{http://markedapp.com/}. Marked can be integrated fairly well with RStudio as it only preview Markdown documents, rather than allowing you to edit them. It has more functionality than RStudio's \textbf{HTML Preview} window.}. One option of Windows is MarkdownPad.\footnote{\url{http://markdownpad.com/}} 
 
@@ -165,7 +165,7 @@ To create itemized lists Markdown simply place the items after one dash:
 
 Markdown, like LaTeX and R uses backslashes (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document, rather than start an italicize your text, type: \verb|\*|. Two characters ampersand (\verb|&|) and the less than sign (\verb|<|) have special meanings in HTML.\footnote{Ampersands declare the begining of a speacial HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|. 
 
-\subsection{Math}
+\subsection{Math with MathJax}
 
 Markdown by itself can't formatting mathematical equations. We can create LaTeX style equations by adding on the MathJax JavaScript engine.\index{MathJax} MathJax syntax is the same as LaTeX syntax (see page \pageref{MathLaTeX}), especially when used from RStudio. Markdown documents rendered in RStudio automatically links to the MathJax engine online.\footnote{You will not be able to render equations when you are not online when you are linking to the engine.} If you want to use another program to render Markdown documents with MathJax equations you may need to take extra steps to link to MathJax. For more details see: \url{http://docs.mathjax.org/en/latest/start.html#mathjax-cdn}.
 
@@ -191,17 +191,91 @@ s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
 \\]
 @
 
-\section{Expanding Markdown with MultiMarkdown and Custom CSS in RStudio}
+\section{Expanding Markdown with Pandoc and Custom CSS in RStudio}
 
-Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section I will show how to overcome these limitations, especially in RStudio, with MultiMarkdown and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up Markdown and custom CSS style files in RStudio.
+Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files custom render HTML documents.
 
-\subsection{MultiMarkdown}\label{MultiMarkdownDiscussion}
+\subsection{Pandoc}\label{PandocDiscussion}\index{Pandoc}
 
+With a little customization you can include footnotes and Bibtex\index{BibTeX} into R Markdown documents. When you click on the \texttt{Knit HTML} button in RStudio it runs two commands: \texttt{knitr} to convert your \emph{.Rmd} file to \emph{.md} and then \texttt{markdownToHTML}\index{markdownToHTML} from the \emph{markdown} package \citep{R-markdown}. What we need to do is reset \texttt{markdownToHTML} or create a new function to run Pandoc.
+
+The simplest way to do this is to create a new R function\index{function, R command} that runs markdown files created by \emph{knitr} to Pandoc in order to create an HTML file:\footnote{This function is modified from one on the RStudio website. See below for more details.}
+
+<<Ch13PandocFunction, eval=FALSE, tidy=FALSE>>=
+# Function to render .md file with Pandoc
+pandocToHTML <-  function(inputFile, outputFile) 
+{      
+	system(paste("pandoc", shQuote(inputFile), "-o", 
+				 shQuote(outputFile)))
+}
+@
+
+\noindent The \texttt{system}\index{system, R command} sends the following code to your computer's command line where it runs Pandoc. \texttt{shQuote} allows us quotes a string that can be parsed by the sell. In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents.
+
+Imagine that we have a file called \emph{Example.Rmd} in our working directory. This is who we knit it and render it with Pandoc:
+
+<<Ch13knitrPandoc, eval=FALSE>>=
+# knit file to Example.md
+knitr::knit("Example.Rmd", "Example.md")
+
+# Render with Pandoc to Example.html
+pandocToHTML("Example.md", "Example.html")
+@
+
+In RStudio you can use this type of function rather than \texttt{markdownToHTML} when you click \emph{Knit HTML} by setting a new \texttt{option} in an invisible file called \emph{.Rprofile}. Changing this file allows you to alter how R works. Note: using Pandoc rather than \emph{markdownToHTML} from the \emph{markdown} package allows us to use footnotes and bibliographies and but because we also loose functions, like automatic MathJax support specific to \emph{markdownToHTML} from \emph{markdown}. It would take some work (not covered here) get the best of both worlds. Here is the code to add to the \emph{.Rprofile}.\footnote{This code is from the RStudio website: (\url{http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering}.}
+
+<<Ch13Options, eval=FALSE, tidy=FALSE>>=
+options(rstudio.markdownToHTML = 
+  function(inputFile, outputFile) {      
+    system(paste("pandoc", shQuote(inputFile), "-o", 
+    			 shQuote(outputFile)))
+  }
+)  
+@
+
+\paragraph{Footnotes with Pandoc}
+
+Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown functions. I am only briefly going to discuss two of the most important for reproducible Markdown documents: footnotes and bibliographies with BibTeX. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
+
+To create a what Pandoc calls an ``inline note'' use the \verb|^[NOTE]| syntax. For example:
+
+<<Ch13PandocInlineNotes, eval=FALSE, tidy=FALSE, engine='sh'>>=
+This is some text.^[This is an inline footnote.]
+@
+
+\noindent When rendered a hyperlink number will appear after ``text.''. It will link to the note at the bottom of the page.
+
+\paragraph{Bibliographies with Pandoc}
+
+We can add BibTeX citations with a small addition to the Pandoc call we use to render our Markdown file. Imagine we have a bibliography file called \emph{Example.bib} in the same directory as our \emph{Example.Rmd} file. We need to add the \verb|--bibliography| option to Pandoc like this:
+
+<<Ch13PandocFunctionBib, eval=FALSE, tidy=FALSE>>=
+# Function to render .md file with Pandoc
+pandocToHTML <-  function(inputFile, outputFile) 
+{      
+	system(paste("pandoc", shQuote(inputFile), "-o", 
+				 shQuote(outputFile), "--bibliography
+				 Example.bib"))
+}
+@
+
+Now in the text of our document we can add the citation:
+
+<<Ch13BibTeXCite, eval=FALSE, tidy=FALSE, engine='sh'>>=
+This is a citation [@Donohue2009].
+@
+
+\noindent Pandoc uses \emph{natbib}\index{natbib} by default so the citation \verb|[@Donohue2009| will appear as (Donohue et al, 2009). See the Pandoc README site for more options.
 
 \subsection{CSS style files and Markdown}
 
+You can customize the appearance of your Markdown files with custom CSS files. 
+
 \paragraph{CSS style files in RStudio}
 
+\paragraph{Custom CSS files with Pandoc}\index{CSS and Pandoc}
+
+You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \emph|--include-in-header| an option to your \texttt{pandocToHTML} call. This will include the file you specify verbatim to the HTML files's header.
 
 \section{Presentations with \texttt{Slidify}}
 
