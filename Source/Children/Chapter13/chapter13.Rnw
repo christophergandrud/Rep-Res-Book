@@ -9,33 +9,199 @@ set_parent('/Parent/Rep-Res-Parent.Rnw')
 
 \chapter{Presenting on the Web and Beyond with Markdown/HTML}\label{MarkdownChapter}
 
-LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML. HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research presentation documents.
+LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML. HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research HTML presentation documents.
 
-In this chapter we will learn the basic Markdown syntax for creating simple reproducible HTML documents. We will also look at how to create HTML slideshows with the \emph{slidify} R package. The remainder of the chapter will look at options for publishing Markdown created documents, including locally, on RPubs and the blogging service Tumblr, as well as via Dropbox and GitHub. 
+In this chapter we will learn the basic Markdown syntax for creating simple reproducible HTML documents. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. We will also briefly look at some more advanced features for including math, bibliographies and customizing styles with CSS. Then we will learn how to create HTML slideshows with Markdown and the \emph{slidify} R package. The remainder of the chapter will look at options for publishing Markdown created documents, including locally, on RPubs, on the blogging service Tumblr, as well as via Dropbox and GitHub. 
 
 \section{The Basics}
 
-\subsection{Headings}\label{headings, Markdown}
+Markdown was created specifically to make it easy to write HTML (Or XHTML) using a syntax that is human readable and possibly publishable without compiling. For example, compare the Markdown table syntax in Chapter \ref{TablesChapter} to the HTML syntax for virtually the same table. Let's look at the key Markdown syntax.\footnote{For more information see John Gruber's explanation: \url{http://daringfireball.net/projects/markdown/}.}
 
-Headings in Markdown are extremely simple. To create a line in the topmost heading style--maybe a title--just place one hash mark (\verb|#|) at the beginning of the line. The second tier heading just gets two hashes (\verb|##|) and so on. You can also put the hash mark(s) at the end of the heading, but this is not necessary.
+That being said, to make Markdown simple it does not have as many capabilities as HTML. To get around this problem you can still use HTML in Markdown. Note that Markdown syntax cannot be used between HTML element tags. 
 
-\subsection{Italics and bold}
+\subsection{Getting Started with Markdown Editors}
+
+Like for R LaTeX, RStudio functions as a very good editor for R Markdown documents and regular non-knittable documents as well. To create a new R Markdown document in RStudio click \texttt{File} in the menu bar then \texttt{New} \textrightarrow{} \texttt{R Markdown}. RStudio has full syntax highlighting for code chunks and can knit \emph{.Rmd} files into \emph{.md} then render them in \emph{.html} with a click of the \texttt{Knit HTML} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/KnitHTML.png}). As we saw in Chapter \ref{GettingStartedRKnitr} (Figure \ref{NotebookExample}), when you knit a Markdown document in RStudio, it will preview the HTML document for you. You can always view HTML documents by opening them with your web browser. You can do this directly from RStudio's \textbf{HTML Preview} window by clicking the \texttt{View the page with the system browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). You can also click the \texttt{Markdown quick reference} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/MDButton.png}) for a quick guide to the Markdown syntax used in RStudio.\foonote{RStudio uses Git Flavored Markdown, which is a variant of Markdown developed by GitHub. See: \url{http://github.github.com/github-flavored-markdown/}.}
+
+Being plain-text, you can also use any text editor to modify Markdown documents, though they lack the level of integration with \emph{knitr} that RStudio has. There are also Markdown specific programs that include useful features like live preview (i.e. continuously updating) of how the Markdown document will look when compiled. Again these will not run \emph{knitr} code. However, they do include some features RStudio lacks, like word counts, the ability to save in PDF formats, and multiple CSS style files to format your documents with. On my Mac I often use Mou\footnote{\url{http://mouapp.com/}} and Marked\footnote{See: \url{http://markedapp.com/}. Marked can be integrated fairly well with RStudio as it only preview Markdown documents, rather than allowing you to edit them. It has more functionality than RStudio's \textbf{HTML Preview} window.}. One option of Windows is MarkdownPad.\footnote{\url{http://markdownpad.com/}} 
+
+\subsection{Preamble and document structure}
+
+That was trick subsection title. Unlike LaTeX documents Markdown documents do not have a preamble. There is also no need to start a body environment or anything like that. HTML head elements (HTMLs preamble equivalent) is added automatically when you render Markdown documents into HTML. So with Markdown, you can just start typing.
+
+Here is an example of an R Markdown document that creates the map we saw in Chapter \re{FiguresChapter}:\footnote{This code is available on GitHub at: \url{https://github.com/christophergandrud/Rep-Res-Examples/blob/master/RMarkdownExamples/ExampleKnitrMarkdown.Rmd}.}
+
+<<Ch13FullExample, eval=FALSE, engine='sh'>>=
+# Example R Markdown File
+## from ''Reproducible Research with R and RStudio''
+### Christopher Gandrud
+### 14 January 2013
+
+-----------
+
+```{r LoadPackages, include=FALSE}
+# Load required packages
+library(devtools)
+```
+
+We can use use R's [googleVis](http://code.google.com/p/google-
+motion-charts-with-r/#Examples) package to create interactive 
+JavaScript tables, charts, and maps. Here is an example of 
+how to create a map with *googleVis*'s `gvisGeoMap` command. 
+
+Let's first download some data from [GitHub](https://github.com/). 
+See chapters 6 and 7 for details about this data as well as the 
+[variable description page](https://github.com/christophergandrud/
+Rep-Res-Examples/blob/master/DataGather_Merge/MainData_
+VariableDescriptions.md).
+
+-----------
+
+## Fertilizer Consumption (kilograms per hectare of arable land) 
+in 2003
+### Data from the [World Bank](http://data.worldbank.org/
+indicator/AG.CON.FERT.ZS)
+
+```{r CreategvisGeoMap, echo=FALSE, message=FALSE, results='asis'}
+# Create geo map of global fertilizer consumption for 2003
+# The data is loaded from GitHub (http://bit.ly/V0ldsf)
+## The data gathering process used to create this data set
+## is completely reproducible. For more information see:
+## http://bit.ly/YnMKBG
+source_url("http://bit.ly/VNnZxS")
+```
+
+-----------
+@
+
+\noindent When knitted in RStudio and viewed in the Google Chrome web browser\index{Google Chrome} the final presentation document looks like Figure \ref{MarkdownExampleFig}.
+
+\begin{figure}
+	\caption{Example Rendered R Markdown Document}
+	\label{MarkdownExampleFig}
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/MarkdownExampleMap.png}
+	\end{center}
+\end{figure}
+
+
+\subsection{Headers}\label{header, Markdown}
+
+Headers in Markdown are extremely simple. To create a line in the topmost header style--maybe a title--just place one hash mark (\verb|#|) at the beginning of the line. The second tier header gets two hashes (\verb|##|) and so on. You can also put the hash mark(s) at the end of the header, but this is not necessary. Here is an example of the three header:
+
+<<Ch13header, eval=FALSE, tidy=FALSE, engine='sh'>>=
+# A level one header
+## A level two header
+### A level three header
+@
+
+\noindent There are six header levels in Markdown. You can also create level one headers by following a line of text with equal signs. Level two headers can be created by following a line of text with dashes:
+
+<<Ch13headerLines, eval=FALSE, tidy=FALSE, engine='sh'>>=
+A level one header
+===================
+
+A level two header
+-------------------
+@
+
+\subsection{Horizontal Lines}\index{lines, Markdown}
+
+If you would like to create horizontal lines that run the width of the page in Markdown simply place three or more equal signs or dashes separated by text from above by one blank line:
+
+<<Ch13Lines, eval=FALSE, tidy=FALSE, engine='sh'>>=
+Create a horizontal inline
+
+=========
+@
+
+\subsection{Paragraphs and new lines}\index{paragraphs, Markdown}
+
+Just like in LaTeX new paragraphs are created by putting text on a new line separated by a blank line. For example:
+
+<<Ch13NewLine, eval=FALSE, tidy=FALSE, engine='sh'>>=
+This is the first paragraph.
+
+This is the second paragraph.
+@
+
+\noindent You might have noticed that in the headers example we did not need to separate the header with a blank line.
+
+Separating lines with a blank line places a blank line in the HTML document. End a line with two or more white spaces (  ) to create a new line that is not separated by a blank line.\index{new line, Markdown}
+
+\subsection{Italics and bold}\index{italics, Markdown}\index{bold, Markdown}
+
+To \emph{italicize} a word in Markdown simply place it between two asterisks, e.g. \verb|*Italicize these words*|. To make a word \textbf{bold} place it between four asterisks: \verb|**Make these words bold**|.
 
 \subsection{Links}\label{MarkdownLinks}
 
-\subsection{Math}
+To create hyperlinks in Markdown use the \verb|[LINK_TEXT](URL)| syntax.\footnote{You can also include a \texttt{title} attribute after the URL. Though this is generally not very useful. See page \pageref{TitleAttribute} for a discussion.} \verb|LINK_TEXT| is the text that you would like to show up as the hyperlink text. When you click on this text it will take you to the linked site specified by \texttt{URL}.
+
+If you want to show a URL as as the text simply type it in both the square brackets and parentheses. This is a little tedious so in RStudio you can just type the URL and it will be hyper-linked. In other regular Markdown place the URL between less than and greater than signs (\verb|<URL>|).
+
+\subsection{Special characters and font customization}
+
+Unlike LaTeX Markdown can include almost any letters and characters included in your system. The main exceptions are characters used by Markdown syntax (e.g. \verb|*|, \verb|#|, \verb|\| and so on). You will have to escape these (see below). Font sizes and typefaces cannot be set directly with Markdown syntax. You need to set these with HTML or CSS, which I don't cover here.
+
+\subsection{Lists}\index{lists, Markdown}
+
+To create itemized lists Markdown simply place the items after one dash:
+
+<<Ch13ItemizeList, eval=FALSE, tidy=FALSE, engine='sh'>>=
+- Item 1
+- Another item
+- Item 3
+@
+
+\noindent To create a numbered list use numbers and periods rather than dashes.
+
+<<Ch13NumberedList, eval=FALSE, tidy=FALSE, engine='sh'>>=
+1. Item 1
+2. Another item
+3. Item 3
+@
 
 \subsection{Escape characters}\index{escape character, Markdown}
 
-Markdown, like LaTeX and R uses backslashes (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document, rather than start an italicize your text type: \verb|\*|. Two characters ampersand (\verb|&|) and the less than sign (\verb|<|) have special meanings in HTML\footnote{Ampersands declare the begining of a speacial HTML character. Less than signs begin HTML tags.} So, have them printed literally in your text you have to use HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|. 
+Markdown, like LaTeX and R uses backslashes (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document, rather than start an italicize your text, type: \verb|\*|. Two characters ampersand (\verb|&|) and the less than sign (\verb|<|) have special meanings in HTML.\footnote{Ampersands declare the begining of a speacial HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|. 
+
+\subsection{Math}
+
+Markdown by itself can't formatting mathematical equations. We can create LaTeX style equations by adding on the MathJax JavaScript engine.\index{MathJax} MathJax syntax is the same as LaTeX syntax (see page \pageref{MathLaTeX}), especially when used from RStudio. Markdown documents rendered in RStudio automatically links to the MathJax engine online.\footnote{You will not be able to render equations when you are not online when you are linking to the engine.} If you want to use another program to render Markdown documents with MathJax equations you may need to take extra steps to link to MathJax. For more details see: \url{http://docs.mathjax.org/en/latest/start.html#mathjax-cdn}.
+
+Because backslashes are Markdown escape characters, in many Markdown editors you will have to use two backslashes to create math environments with MathJax. For example, in LaTeX and RStudio's Markdown you can create a display equation like this:
+
+\[
+s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+\]
+
+\noindent you type:
+
+<<Ch13Equation1, eval=FALSE, tidy=FALSE, engine='sh'>>=
+\[
+s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+\]
+@
+
+\noindent In other markdown programs you may have to use:
+
+<<Ch13Equation2, eval=FALSE, tidy=FALSE, engine='sh'>>=
+\\[
+s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+\\]
+@
+
+\section{Expanding Markdown with MultiMarkdown and Custom CSS in RStudio}
+
+Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section I will show how to overcome these limitations, especially in RStudio, with MultiMarkdown and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up Markdown and custom CSS style files in RStudio.
+
+\subsection{MultiMarkdown}\label{MultiMarkdownDiscussion}
+
 
 \subsection{CSS style files and Markdown}
 
 \paragraph{CSS style files in RStudio}
 
-\paragraph{Drawing figures with CSS}
-
-\subsection{Added features with MultiMarkdown}\label{MultiMarkdownDiscussion}
 
 \section{Presentations with \texttt{Slidify}}
 
