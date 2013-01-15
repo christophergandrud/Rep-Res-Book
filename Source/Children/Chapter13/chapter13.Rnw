@@ -210,7 +210,9 @@ pandocToHTML <-  function(inputFile, outputFile)
 }
 @
 
-\noindent The \texttt{system}\index{system, R command} sends the following code to your computer's command line where it runs Pandoc. \texttt{shQuote} allows us quotes a string that can be parsed by the sell. In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents.
+\noindent The \texttt{system}\index{system, R command} sends the following code to your computer's command line where it runs Pandoc. \texttt{shQuote} allows us quotes a string that can be parsed by the sell. In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. 
+
+As we saw in the previous chapter, we can use Pandoc to output a Markdown file to markup languages other than HTML. You can modify the previous code to do this. See page \pageref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}. 
 
 Imagine that we have a file called \emph{Example.Rmd} in our working directory. This is who we knit it and render it with Pandoc:
 
@@ -235,7 +237,7 @@ options(rstudio.markdownToHTML =
 
 \paragraph{Footnotes with Pandoc}
 
-Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown functions. I am only briefly going to discuss two of the most important for reproducible Markdown documents: footnotes and bibliographies with BibTeX. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
+Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown extensions.\index{Pandoc Markdown Extensions} Pandoc Markdown extensions add functions to regular Markdown syntax. I am only briefly going to discuss two of the most important for reproducible Markdown documents: footnotes and bibliographies with BibTeX. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
 
 To create a what Pandoc calls an ``inline note'' use the \verb|^[NOTE]| syntax. For example:
 
@@ -247,16 +249,15 @@ This is some text.^[This is an inline footnote.]
 
 \paragraph{Bibliographies with Pandoc}
 
-We can add BibTeX citations with a small addition to the Pandoc call we use to render our Markdown file. Imagine we have a bibliography file called \emph{Example.bib} in the same directory as our \emph{Example.Rmd} file. We need to add the \verb|--bibliography| option to Pandoc like this:
+We can add BibTeX citations with a small addition to the Pandoc call we use to render our Markdown file. Imagine we have a bibliography file called \emph{Example.bib} in the same directory as our \emph{Example.Rmd} file. We need to add the \verb|--bibliography| option\index{bibliography, Pandoc option} to Pandoc like this:
 
 <<Ch13PandocFunctionBib, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
-pandocToHTML <-  function(inputFile, outputFile) 
-{      
+pandocToHTML <-  
+	function(inputFile, outputFile) {      
 	system(paste("pandoc", shQuote(inputFile), "-o", 
-				 shQuote(outputFile), "--bibliography
-				 Example.bib"))
-}
+				 shQuote(outputFile), "--bibliography Example.bib"))
+	}
 @
 
 Now in the text of our document we can add the citation:
@@ -265,21 +266,87 @@ Now in the text of our document we can add the citation:
 This is a citation [@Donohue2009].
 @
 
-\noindent Pandoc uses \emph{natbib}\index{natbib} by default so the citation \verb|[@Donohue2009| will appear as (Donohue et al, 2009). See the Pandoc README site for more options.
+\noindent Pandoc uses \emph{natbib}\index{natbib} by default so the citation \verb|[@Donohue2009]| will appear as (Donohue et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donohue2009, 10]|. This will create an in-text citation that looks like this: (see Donohue et al. 2009, 10) To include only the year and not the authors' surnames add a minus sign, e.g. \verb|[-@Donohue2009]|. See the Pandoc README site for more options.
+
+Here is complete example of an R Markdown document that includes footnotes and bibliographies.
+
+<<Ch13PandocDoc, eval=FALSE, tidy=FALSE>>=
+# Example Pandoc + knitr Markdown Document
+## Christopher Gandrud
+### 14 January 2013
+
+-----
+
+This is some text.^[This is an inline footnote.]
+
+This is a *knitr* code chunk:
+
+```{r}
+plot(cars$speed, cars$dist)
+```
+
+This is a citation [see @Donohue2009, 10].
+@
+
+\noindent Note you can find is file and the bibliography plus commands to render the document at: \url{https://github.com/christophergandrud/Rep-Res-Examples/tree/master/RMarkdownExamples/ExamplePandocKnitrMarkdown}.
 
 \subsection{CSS style files and Markdown}
 
-You can customize the appearance of your Markdown files with custom CSS files. 
+You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this Google Chrome's Developer Tools.\index{Google Chrome Developer Tools} This allows you to edit your webpages, including their CSS and have a live preview. It is a really nice way to experiment CSS (and HTML, JavaScript, and so on).  For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}. There are also numerous pre-made style sheets online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error.} In this example I will use a stylsheet called \emph{Markdown.css} created by and can be found at: \url{https://github.com/simonlc/Markdown-CSS}. 
 
-\paragraph{CSS style files in RStudio}
+\paragraph{Rendering Markdown files using custom CSS}\index{CSS, custom Markdown}
+
+It is simple to use a custom CSS file with the \texttt{markdownToHTML} command. Just add save your custom \emph{.css} file in the working directory and use the \texttt{stylesheet} argument with \texttt{markdownToHTML}. Imagine we want to \texttt{knit} our \emph{Example.Rmd} file using a custom style sheet called \emph{Markdown.css}. Both files are in the working directory.
+
+ <<Ch13CustomCSS1, eval=FALSE, tidy=FALSE>>=
+# knit file to Example.md
+knitr::knit("Example.Rmd", "Example.md")
+
+# Render with using custom Markdown.css style sheet
+markdownToHTML("Example.md", "Example.html",
+			 stylesheet = "Markdown.css")
+@
+
+\noindent When we use this style sheet with the R Markdown file in Figure \ref{MarkdownExampleFig} we get a document that looks like Figure \ref{CustomCSSExample}.
+
+\begin{figure}
+	\caption{Example Rendered R Markdown Document with Custom CSS}
+	\label{CustomCSSExample}
+		\begin{center}
+			\includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/CustomCSSExample.png}
+		\end{center}
+\end{figure}
+
+You can of course also modify your \emph{.Rprofile} so that you always use the same CSS style file. RStudio suggests adding the following code to your \emph{.Rprofile}:
+
+<<Ch13CustomCSS2, eval=FALSE, tidy=FALSE>>=
+options(rstudio.markdownToHTML = 
+  function(inputFile, outputFile) {      
+    require(markdown)
+    markdownToHTML(inputFile, outputFile, 
+    stylesheet = "Markdown.css")   
+  }
+) 
+@
+
+\noindent Simply change the style sheets name and file path as needed.
 
 \paragraph{Custom CSS files with Pandoc}\index{CSS and Pandoc}
 
-You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \emph|--include-in-header| an option to your \texttt{pandocToHTML} call. This will include the file you specify verbatim to the HTML files's header.
+You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \verb|--css| option to your \texttt{pandocToHTML} call.\index{--css, Pandoc option} This will tell Pandoc what CSS file you want to use. For example:
+
+<<Ch13PandocCustomCSS, eval=FALSE, tidy=FALSE>>=
+pandocToHTML <-  
+  function(inputFile, outputFile) {      
+    system(paste("pandoc", shQuote(inputFile), "-o", 
+    shQuote(outputFile), "--bibliography PandocBib.bib", 
+    "--css Markdown.css"))
+  }
+@
 
 \section{Presentations with \texttt{Slidify}}
 
-It is possible to create reproducible \emph{knitr} HTML5 slideshows\index{slideshow}\index{HTML5} with R using Ramnath Vaidyanathan's \emph{Slidify}\index{Slidify} package \citeyearpar{R-slidify}.\footnote{For more information about Slidify please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. There are a number of advantages to creating HTML presentations:
+It is possible to create reproducible HTML5 slideshows\index{slideshow}\index{HTML5} with R Markdown using Ramnath Vaidyanathan's \emph{Slidify}\index{Slidify} package \citeyearpar{R-slidify}.\footnote{For more information about Slidify please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. There are a number of advantages to creating HTML presentations:
 
 \begin{itemize}
 	\item You can use the relatively simple Markdown syntax.
@@ -287,22 +354,22 @@ It is possible to create reproducible \emph{knitr} HTML5 slideshows\index{slides
 	\item Slidify presentations can incorporate virtually any content that can be included in a webpage. This includes interactive content, like motion charts created by \emph{googleVis}\index{googleVis} (see Chapter \ref{FiguresChapter}).
 \end{itemize} 
 
-\noindent There are a number of steps to create an HTML5 slideshow with \emph{Slidify}:
+There are a number of steps to create an HTML5 slideshow with \emph{Slidify}:
 
 \begin{itemize}
-	\item initialize a slideshow with the \verb|author| command,
-	\item edit the slideshows main R Markdown file, called \emph{index.Rmd} by default. This includes both the files header and body.
-	\item Use the \verb|slidify| command to run \emph{knitr} and compile the slideshow 
-	\item publish the slideshow online with the \verb|publish| command.
+	\item Initialize a slideshow with the \verb|author| command,
+	\item Edit the slideshows main R Markdown file, called \emph{index.Rmd} by default. This includes both the slideshows header and body.
+	\item Use the \verb|slidify| command to run \emph{knitr} and compile the slideshow. 
+	\item Publish the slideshow online with the \verb|publish| command.
 \end{itemize}
 
 \noindent We will cover each step in turn.
 
 \paragraph{HTML5 frameworks}
 
-Before getting into the details of how to use \emph{Slidify}, let's briefly understand what an HTML5 slideshow is and the frameworks that make it possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, CSS,\index{CSS}\footnote{Cascading Style Sheets} JavaScript,\index{JavaScript} to essentially create a website that behaves like a Latex beamer\index{beamer} or Powerpoint\index{Powerpoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components may be located remotely. Most browsers have a \texttt{Full Screen} mode you can use for presentations. 
+Before getting into the details of how to use \emph{Slidify}, let's briefly understand what an HTML5 slideshow is and the frameworks that make it possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, CSS,\index{CSS} JavaScript,\index{JavaScript} to essentially create a website that behaves like a LaTeX beamer\index{beamer} or Powerpoint\index{Powerpoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components may be located remotely. Most browsers have a \texttt{Full Screen} mode you can use for presentations. 
 
-There are a number of different HTML5 slideshow frameworks that let you create and style you slideshows. Table \ref{SlideshowFrameworks} lists some of the major frameworks supported by \emph{Slidify}. In all of the framworks you advance through slides with the forward arrow button on your keyboard. Of course you can go back with the back arrow. Despite this similarity, the frameworks have different looks and capabilities. Check out their respective websites listed in Table \ref{SlideshowFrameworks} for more information. The URL's listed in Table 5 \ref{SlideshowFrameworks} link to example slideshows.
+There are a number of different HTML5 slideshow frameworks that let you create and style you slideshows. Table \ref{SlideshowFrameworks} lists some of the major frameworks supported by \emph{Slidify}. In all of the framworks you advance through slides with the forward arrow button on your keyboard. Of course you can go back with the back arrow. Despite this similarity, the frameworks have different looks and capabilities. Check out their respective websites listed in Table \ref{SlideshowFrameworks} for more information.
 
 \begin{table}
 	\caption{A Selection of HTML5 Slideshow Frameworks}
@@ -312,9 +379,11 @@ There are a number of different HTML5 slideshow frameworks that let you create a
 		\hline
 		Framework & Website for more information \\[0.25cm]
 		\hline\hline
-		io2012 & \url{http://code.google.com/p/io-2012-slides/} \\[0.25cm]
-		html5slides & \url{http://code.google.com/p/html5slides/} \\[0.25cm]
 		deck.js &  \url{http://imakewebthings.com/deck.js/} \\[0.25cm]
+		dzslides & \url{http://paulrouget.com/dzslides/} \\[0.25cm]
+		html5slides & \url{http://code.google.com/p/html5slides/} \\[0.25cm]
+		shower & \url{https://github.com/shower/shower} \\[0.25cm]
+		io2012 & \url{http://code.google.com/p/io-2012-slides/} \\[0.25cm]
 		\hline
 	\end{tabular}
 	\end{center}
@@ -322,7 +391,7 @@ There are a number of different HTML5 slideshow frameworks that let you create a
 
 \paragraph{Installing Slidify}
 
-To get started with Slidify load the \emph{devtools} packages and install its libraries from GitHub\index{GitHub}.\footnote{As of when I wrote this (December 2012) Slidify was not yet available on CRAN\index{CRAN}.}
+To get started with \emph{Slidify} load the \emph{devtools} packages and install \emph{Slidify} from GitHub\index{GitHub}.\footnote{As of when I wrote this (January 2012) Slidify was not yet available on CRAN\index{CRAN}.}
 
 <<Ch13DownloadSlidify, eval=FALSE>>=
 # Load devtools
@@ -335,7 +404,7 @@ install_github("slidifyLibraries", "ramnathv")
 
 \paragraph{Initializing a new slideshow}
 
-Use the \verb|author| command to create a new slideshow. Imagine we want to create a new slideshow in \emph{Presentation} folder of our \emph{ExampleProject} called \emph{MySlideShow}. To do this type:
+Use the \verb|author| command to create a new slideshow. Imagine we want to create a new slideshow in the \emph{Presentation} folder of our \emph{ExampleProject} called \emph{MySlideShow}. To do this type:
 
 <<Ch13SlidifyAuthor, eval=FALSE>>=
 # Set working directory
@@ -348,7 +417,7 @@ library(slidify)
 author("MySlideShow")
 @
 
-This will create a new folder with an R Markdown file called \emph{index.Rmd}. It will also initialize a Git\index{Git} repository and create a folder called \emph{assets}. The \emph{assets} folder is where CSS,\index{CSS} JavaScript,\index{JavaScript} and other files needed to create the full slideshow are stored. Luckily, \emph{Slidify} takes care of all these things for us. Though if you want to you can certainly customize these files.\footnote{See \url{http://ramnathv.github.com/slidify/customize.html} for more details on the best way to modify these files.} You will primarily edit the \emph{index.Rmd} file. You are can change the name of this file if you like. 
+\noindent This will create a new folder with an R Markdown file called \emph{index.Rmd}. It will also initialize a Git\index{Git} repository and create a folder called \emph{assets}. The \emph{assets} folder is where CSS,\index{CSS} JavaScript,\index{JavaScript} and other ancillary files needed to create the slideshow are stored. Luckily, \emph{Slidify} takes care of all these things for us. If you want to you can certainly customize these files.\footnote{See \url{http://ramnathv.github.com/slidify/customize.html} for more details on the best way to modify these files.} To edit the \emph{index.Rmd} file to add content to your slideshow. You are can change the name of this file if you like. 
 
 \paragraph{The \emph{Slidify} header}
 
@@ -370,21 +439,21 @@ mode        : selfcontained # {standalone, draft}
 @
 }
 
-The first four lines relate to what will appear on the slideshow's title slide, i.e. the title, subtitle, author, and job.\footnote{This is intended as a place to put your job title and affiliation.}  The next five lines affect the slideshow's formating. The \texttt{framework} line allows you to change the slideshow's overall type. It is currently set by default to Google's \emph{io2012} framework. You can see a number of other supported formats on the right side of the line. These include \emph{html5slides}, Opera's \emph{shower} format and \emph{dzslides}. You can use one of these other formats by deleting \texttt{io2012} after the colon and replacing it with the name of your desired framework.
+The first four lines relate to what will appear on the slideshow's title slide, i.e. the \texttt{title}, \texttt{subtitle}, \texttt{author}, and \texttt{job}.\footnote{This is intended as a place to put your job title and affiliation.}  The next five lines affect the slideshow's formating. The \texttt{framework} line allows you to change the slideshow's overall type. It is currently set by default to Google's \emph{io2012} framework. You can see a number of other supported formats on the right side of the line. These include \emph{html5slides}, Opera's \emph{shower} format and \emph{dzslides}. You can use one of these other formats by deleting \texttt{io2012} after the colon and replacing it with the name of your desired framework.
 
 The following two lines (\texttt{highlighter} and \texttt{hitheme}) relate to which syntax highlighting\index{syntax highlighting} theme you would like code chunks to be formatted with. The default highlighter is \emph{highlighter.js}\footnote{See: \url{http://softwaremaniacs.org/soft/highlight/en/}.} with the \emph{tomorrow} theme.\footnote{See: \url{https://github.com/chriskempson/tomorrow-theme}.}
 
-The next line allows you to automatically include a number of different widgets. As we saw earlier in this chapter, the \emph{Mathjax} widget lets us view well formatted math in Markdown produced documents. The \emph{bootstrap} widget lets you take advantage of, among other things, the wide range of JavaScript plug-ins available from Twitter Bootstrap\index{Twitter Bootstrap}.\footnote{See: \url{http://twitter.github.com/bootstrap/javascript.html}. For an example of how you can combine Twitter Bootstrap's \emph{Carousel} plug-in with \emph{googleVis} to create interactive timeline maps in slide shows see: \url{http://ramnathv.github.com/carouselDemo/#1}.} To add widgets, type their name in the square brackets (\verb|[]|) separated by a comma.
+The next line allows you to automatically include a number of different widgets. As we saw earlier in this chapter, MathJax lets us have well formatted math in Markdown produced documents. The \emph{bootstrap} widget lets you take advantage of, among other things, the wide range of JavaScript plug-ins available from Twitter Bootstrap\index{Twitter Bootstrap}.\footnote{See: \url{http://twitter.github.com/bootstrap/javascript.html}. For an example of how you can combine Twitter Bootstrap's \emph{Carousel} plug-in with \emph{googleVis} to create interactive timeline maps in slide shows see: \url{http://ramnathv.github.com/carouselDemo/#1}.} To add widgets, type their name in the square brackets (\verb|[]|) separated by a comma.
 
-Finally there is the \texttt{mode} option. In general you will want to use the default \texttt{selfcontained} mode.\todo{Get more info on mode.}
+Finally there is the \texttt{mode} option. The mode option determines how to load auxiliary files and features such as CSS. In general you will want to use the default \texttt{selfcontained} mode.
 
 \paragraph{Slide frames and slide titles}
 
-\emph{Slidify} R Markdown documents use very similar syntax to ordinary R Markdown documents. \emph{knitr} code chunks are written in the same way. An important difference is that three dashes (\verb|---|) delimit individual slide frames. Importantly, you need to have an empty line before and after the three dashes or else a new slide will not be created. Two hash marks (\verb|##|) are used to indicate a slide's title.\footnote{One hash mark does creates a slide title formatted in the same way as the text.} 
+\emph{Slidify} R Markdown documents use very similar syntax to ordinary R Markdown documents. \emph{knitr} code chunks are written in the same way as regular R Markdown. An important difference is that three dashes (\verb|---|) delimit individual slide frames. Importantly, you need to have an empty line before and after the three dashes or else a new slide will not be created. Two hash marks (\verb|##|) are used to indicate a slide's title.\footnote{One hash mark creates a slide title formatted in the same way as the text.} 
 
-\paragraph{Compiling a Slideshow}
+\paragraph{Compiling a slideshow}
 
-Use the \verb|slidify| command to compile an R Markdown file into a slideshow. This run \emph{knitr} and parse your R Markdown file into a slideshow:
+Use the \verb|slidify| command to compile an R Markdown file into a slideshow. This code runs \emph{knitr} and renders our R Markdown file into a slideshow:
 
 <<Ch13SlidifyFile, eval=FALSE>>=
 # Change to slideshow's working directory
@@ -394,52 +463,74 @@ setwd("/ExampleProject/Presentation/MySlideShow")
 slidify("MySlideShow.Rmd")
 @
 
-\noindent In RStudio\index{RStudio} you can click the \texttt{Knit HTML} button and it will `slidify' the R Markdown file. The slideshow will likely not work in the RStudio preview window, but opening the \emph{index.html} file in your web browser works fine. 
+\noindent In RStudio\index{RStudio} you can click the \texttt{Knit HTML} button and it will \texttt{slidify} the R Markdown file. Note that the resulting slideshow will likely not work in the RStudio \textbf{HTML Preview} window, but opening the \emph{index.html} file in your web browser should work fine. 
 
 \paragraph{Publishing Slidify slideshows}
 
-You can of course show slideshows on your own computer by opening the \emph{index.html} file in a web browser. If you want to make your slideshow available to anyone with an internet connection use Slidify's \verb|publish| command. This will allow you to publish your presentation via GitHub\index{GitHub}, Dropbox\index{Dropbox}, or RPubs\index{RPubs}. Because we've already learned about how to use GitHub and Dropbox, I'll focus on using these two services to publish your slideshow.
+You can of course show slideshows on your own computer by opening the \emph{index.html} file in a web browser. If you want to make your slideshow available to anyone with an internet connection use Slidify's \verb|publish| command. This will allow you to publish your presentation via GitHub\index{GitHub}, Dropbox\index{Dropbox}, or RPubs\index{RPubs}. Let's look at how to publish to GitHub and Dropbox.
 
-To publish our example \emph{MySlideShow} on GitHub first create a new GitHub repository\index{GitHub repository} called `MySlideShow' (see Chapter \ref{Storing} for instructions on how to create a new repository). Make sure the repository is empty, i.e. has no files in it. Then type in R:
+To publish our example \emph{MySlideShow} on GitHub first create a new GitHub repository\index{GitHub repository} called `MySlideShow' (see Chapter \ref{Storing} page \pageref{NewGHRepo} for instructions on how to create a new repository). Make sure the repository is empty, i.e. has no files in it. Then type in R:
 
 <<Ch13GitPublish, eval=FALSE>>=
-publish(user = "USER", repo = "MySlideShow")
+publish(user = "USER", repo = "MySlideShow", host = "github")
 @
 
-\noindent \texttt{USER} is your GitHub user name. This will create a new GitHub Pages\index{GitHub Pages} website where your slideshow will be accessible to anyone on the internet. We look at GitHub Pages in more detail later in this chapter.
+\noindent \texttt{USER} is your GitHub user name. This will create a new GitHub Pages\index{GitHub Pages} website where your slideshow will be accessible to anyone on the internet.
 
-To use the webpage hosting abilities of Dropbox public folders type:
+To use the webpage hosting abilities of Dropbox's public folders type:
 
 <<Ch13DrobpoxPublish, eval=FALSE>>=
 publish("MySlideShow", host = "dropbox")
 @
 
-\noindent This will create a new directory in your Dropbox \emph{Public} folder. To get the URL address for the slideshow navigate to the folder and copy the public link for the \emph{index.html} file (see Chapter \ref{Storing} for more details).
+\noindent This will create a new directory in your Dropbox \emph{Public} folder. To get the URL address for the slideshow navigate to the folder and copy the public link for the \emph{index.html} file (see Chapter \ref{Storing} page \pageref{PublicLink} for more details).
 
-Note: Before you use the \verb|publish| command you will need to have set up accounts for the respective services before publishing a slideshow to them. In the GitHub and Dropbox cases you also need to have set up the services on your computer. Please refer back to Chapter \ref{Storing} for more details on how to set up these services.
+Note: Before you use the \verb|publish| command you will need to have set up accounts for the respective services. In the GitHub and Dropbox cases you also need to have set up the services on your computer. Please refer back to Chapter \ref{Storing} for more details on how to set up these services.
 
 \section{Publishing Markdown Documents}
 
-We saw in the previous section how \emph{slidify} can publish slideshows via RPubs, Dropbox and GitHub. In this section we will look at these options and others in more detail for publishing reproducible Markdown documents.
+We saw in the previous section how \emph{slidify} can publish slideshows via RPubs, Dropbox and GitHub. In Chapter \ref{GettingStartedRKnitr} (page \pageref{PublishRPubs}) we saw how to publish other R Markdown documents compiled with RStudio to RPubs. In this section we will look at how to publish general R Markdown documents using Dropbox and GitHub.
 
-\subsection{Locally}
+\subsection{Stand alone HTML file}
 
-\subsection{RPubs}
+Before looking at the specifics of ways to publish R Markdown documents on the internet it's important to note that you can of course simply open the HTML file rendered from any R Markdown document in your web browser. If the HTML file contains the full information for the page, e.g. there are not auxiliary files it depends on, you can simply share this file and anyone with a web browser can open it. We can of course also send auxiliary files if need be, but this can get unwieldy.
 
-\subsection{Hosting webpages with Dropbox}
+\subsection{Hosting webpages with Dropbox}\index{Dropbox Public folder}
 
-\subsection{Blogging with Tumblr}
+Probably one of the easiest ways to host an HTML file created with R Markdown is on your Dropbox \emph{Public} folder.\footnote{See page \pageref{EnablePublicFolder} for instructions on how to enable this folder if you created your Dropbox account after 4 October 2012.} Just like we saw with \emph{Slidify} slideshows in the \emph{Public} folder any HTML file will be properly rendered and widely accessible simply be entering the public link into a web browser. 
 
-\subsection{Jekyll-Bootstrap and GitHub}
+\section{GitHub Pages}\index{GitHub Pages}
 
-see \url{http://jfisher-usgs.github.com/r/2012/07/03/knitr-jekyll/}
+GitHub also offers a free hosting service for webpages. These can be much more complex. The simplest way to create one of these pages is to create a repository with a file called \emph{README.Rmd}. You can \texttt{knit} this file and then create your GitHub Page with it. To do this go to the \texttt{Settings} \textrightarrow{} \texttt{GitHub Pages} on your repository's main GitHub website. Then click \emph{Automatic Page Generator}. This place the contents of your \emph{README.md} file in the page and provide you with formatting options. Click \texttt{Publish} and you will have a new website. 
 
-\subsection{Jekyll and Github Pages}
+Clicking \texttt{Publish} creates a new orphan branch\footnote{An orphan branch is a branch with a different root from other repository branches. Another way of think about this is that they have their own history.}\index{orphan branch, GitHub} called \emph{gh-pages}.\index{gh-pages} When these branches are pushed to GitHub will create a website if they contain a file called \emph{index.html}. This will be the websites main page. 
 
-\section{Using Markdown for non-HTML output with Pandoc}
+If you want to create more customized and larger websites with GitHub pages you can manually create a GitHub Pages orphan branch and push it to GitHub. This is essentially what \emph{Slidify} did for us with its \texttt{publish} command. Imagine have our working directory set as a repository containing an R Markdown file that we have rendered into an HTML file called \emph{index.html}. Let's create a new orphan branch and remove all files from it:
 
-Markdown syntax is very simple. So simple, you may be tempted to write many or all of your presentation documents in Markdown. This presents the obvious problem of how to convert your markdown documents to other markup languages if, for example, you want to create a LaTeX formatted PDF. As we saw in the previous chapter, Pandoc can help solve this problem. Pandoc is a command line program that can convert files written in Markdown, HTML, LaTeX, and a number of other markup languages\footnote{See the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}} to any of the other formats. 
+<<Ch13GHPages1, eval=FALSE, tidy=FALSE, engine='sh'>>=
+# Create orphan gh-pages branch
+git checkout --orphan gh-pages
+@
 
-%% Fill In Example with Fake Documents.
+\noindent Now \texttt{add} the files, \texttt{commit} the changes and \texttt{push} it to GitHub. Remember to push it to the gh-pages branch like this:
+
+<<Ch13GHPages2, eval=FALSE, tidy=FALSE, engine='sh'>>=
+# Add files
+git add .
+
+# Commit changes
+git commit -am "First gh-pages commit"
+
+# Push branch to GitHub pages
+git push origin gh-pages
+@
+
+\noindent A new webpage will be created at: \emph{USERNAME.github.com/REPO\_Name} You can also add custom domain names. For details see: \url{https://help.github.com/articles/setting-up-a-custom-domain-with-pages}.
+
+\paragraph{GitHub with Jekyll and Ruhoh}
+
+If you want to create more complex websites with R Markdown and host them on GitHub you might want to look into Jekyll\footnote{\url{https://help.github.com/articles/using-jekyll-with-pages}}\index{Jekyll} or the slightly newer Ruhoh\index{Ruhoh} platform.\footnote{\url{http://ruhoh.com/}}  Jason Fisher has a useful blog post about how to combine Jekyll with knitr. See:\url{http://jfisher-usgs.github.com/r/2012/07/03/knitr-jekyll/} (posted 3 July 2012).
+
+
 
   

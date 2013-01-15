@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 January 2013
+% Updated: 15 January 2013
 
 <<set-parent12, include=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -183,7 +183,7 @@ Because {\emph{knitr}} is able to run not only R code but also command line prog
 
 For example, the Stylistic Conventions (page \pageref{StylisticConventions}) part of this book is written in Markdown. The source file is called {\emph{StylisticConventions.md}} and in a subdirectory of the parent's called: \emph{Children/Frontmatter} It was faster to write the list of conventions using the simpler Markdown syntax than LaTeX, which as we saw has a more complicated way of creating lists. However, I wanted to include this list in the LaTeX produced book. Pandoc can convert the Markdown document into a LaTeX file. This file can then be input into the main document with the LaTeX command \texttt{\textbackslash{}input}.
 
-In the parent document I added a code chunk with the following command to convert the Markdown syntax in {\emph{StylisticConventions.md}} to LaTeX and save it in a file called {\emph{StyleTemp.tex}}.
+In the parent document I added a code chunk with the following command to convert the Markdown syntax in {\emph{StylisticConventions.md}} to LaTeX and save it in a file called {\emph{StyleTemp.tex}}.\label{PandoctoLaTeXExample}
 
 
 \begin{knitrout}
@@ -317,7 +317,7 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
     \item Create a function\index{function, R command} called \emph{BatchReports} for subsetting the data, brewing it, and knitting it. 
         \begin{itemize}
             \item The \texttt{function} command allows us create a new function.\footnote{These functions are just like almost any other R function.} Arguments are specified in parentheses and R expressions are put in curly brackets. The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew and knit the data according to \emph{Name}'s value. 
-            \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{gsub}, i.e. we substitute a space \'\' \'\' with no white space \'\'\'\'. We then use the \texttt{paste}\index{paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
+            \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
         \end{itemize}
     \item \texttt{l\_ply} from the \emph{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value of \emph{COUNTRY}. 
     \item Finally, we use the \texttt{unlink}\index{unlink} command to delete all of the ancillary files used in to create the final batch report PDFs. Always be careful with the \texttt{unlink} command as it permanently deletes files. Because we used the asterisk wildcard (see page \pageref{AsteriskWildcard}) \texttt{unlink} will delete all files in the working directory with the extensions \emph{.aux}, \emph{.log}, \emph{.Rnw} and \emph{.tex}.

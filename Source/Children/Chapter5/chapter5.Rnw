@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 January 2012
+% Updated: 15 January 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/Parent/Rep-Res-Parent.Rnw')
@@ -63,9 +63,11 @@ When you sign up for Dropbox and install the program\footnote{See \url{https://w
 
 \subsubsection{Accessing Data}
 
-There are two similar, but importantly different ways to access data stored on Dropbox. All files stored on Dropbox have a URL address through which they can be accessed from a computer connected to the internet. Some of these files can be easily loaded directly into R, while others must me manually (point-and-click) downloaded onto your computer and then loaded into R. Files in the Dropbox \emph{Public}\index{Dropbox Public folder} folder can be downloaded directly into R. Files not in the \emph{Public} folder have to be downloaded  manually.\footnote{This is not completely true. It could be possible to create a web scraper\index{web scraper} that could download data from a file not in your \emph{Public} folder. However, this is a hassle and not practical, especially given that accessing files from the \emph{Public} folder is so easy.} Either way you find a file's URL address by first right-clicking on the file icon in your Dropbox folder. 
+There are two similar, but importantly different ways to access data stored on Dropbox. All files stored on Dropbox have a URL address through which they can be accessed from a computer connected to the internet. Some of these files can be easily loaded directly into R, while others must me manually (point-and-click) downloaded onto your computer and then loaded into R. Files in the Dropbox \emph{Public}\index{Dropbox Public folder} folder can be downloaded directly into R. Files not in the \emph{Public} folder have to be downloaded manually.\footnote{This is not completely true. It could be possible to create a web scraper\index{web scraper} that could download data from a file not in your \emph{Public} folder. However, this is a hassle and not practical, especially given that accessing files from the \emph{Public} folder is so easy.} Either way you find a file's URL address by first right-clicking on the file icon in your Dropbox folder. 
 
-If the file is stored in the \emph{Public} folder, you go to \texttt{Dropbox} in the menu that pops up, then click \emph{Copy Public Link}. This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). Once you have the URL you can load the file directly into R using the \texttt{read.table} command for data frames (see Chapter 5) or the \texttt{source} command for source code files (see Chapter 8).
+Note: if you created your Dropbox account after 4 October 2012 you will not automatically have a \emph{Public} folder. To enable on on your account see this website: \url{https://www.dropbox.com/help/16/en}.\label{EnablePublicFolder}\index{Dropbox Public folder, enable}
+
+If the file is stored in the \emph{Public} folder, you go to \texttt{Dropbox} in the menu that pops up, then click \emph{Copy Public Link}.\label{PublicLink} This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). Once you have the URL you can load the file directly into R using the \texttt{read.table} command for data frames (see Chapter 5) or the \texttt{source} command for source code files (see Chapter 8).
 
 To give you a preview of how to download data on financial regulator type directly into R from Dropbox, try downloading a data file from my Public folder. The data set's URL is: \url{http://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.\footnote{This data is from \cite{Gandrud2012}} I've used the URL shortening service bitly\index{bitly}\footnote{See \url{https://bitly.com/}.} to make this link fit on the page.
 
@@ -309,7 +311,7 @@ For more information on \emph{.gitignore} files see GitHub's reference page on t
 
 \subsubsection{Remote Storage on GitHub}
 
-So far we've been using repos stored locally. To create repositories stored on GitHub, first create a new repository through the GitHub website. On your main GitHub account page click the \texttt{New repository} button. In the next page that appears give the repository a name, brief description, choose whether to make it public or private. Also click the check box to to create a \emph{README.md} file in the repository. When you click \texttt{Create Repository} you will be directed to the repository's GitHub page. 
+So far we've been using repos stored locally. To create repositories stored on GitHub, first create a new repository through the GitHub website. On your main GitHub account page click the \texttt{New repository} button. In the next page that appears give the repository a name, brief description, choose whether to make it public or private. Also click the check box to to create a \emph{README.md} file in the repository. When you click \texttt{Create Repository} you will be directed to the repository's GitHub page.\label{NewGHRepo}
 
 To download the repository onto your local computer you need to ``clone'' it. The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{git clone} command. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy it's URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in} \ldots button.}
 
