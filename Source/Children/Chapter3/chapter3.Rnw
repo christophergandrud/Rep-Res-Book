@@ -1,10 +1,10 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 15 January 2013
+% Updated: 16 January 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/Parent/Rep-Res-Parent.Rnw')
+set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 @
 
 \chapter{Getting Started with R, RStudio, and knitr}\label{GettingStartedRKnitr}
@@ -474,11 +474,10 @@ Try not to use spaces or periods in your label names. Also remember that chunk l
 
 There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Maybe we want the figure to be formatted on a page in a certain way. To make these changes, and many others we can specify code chunk options\index{code chunk options}.
 
-Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \texttt{OPTIONLABEL=VALUE} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false". For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we only want to have {\emph{knitr}} include the code in our document, but not actually run it we use the option \texttt{eval=FALSE}. This option tells {\emph{knitr}} not to evaluate (run) the code chunk.
+Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \texttt{OPTIONLABEL=VALUE} structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written ``true" and ``false". For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document we can use the option \texttt{echo=FALSE}.\index{echo, knitr chunk option} 
 
 <<MarkdownChunkOptionExample, tidy=FALSE, eval=FALSE>>=
-```{r ChunkLabel, eval=FALSE}
-# Example of a non-evaluated code chunk
+```{r ChunkLabel, echo=FALSE}
 StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
 @ 
@@ -490,7 +489,7 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
     \color{fgcolor}
     \begin{kframe}
         \begin{verbatim}
-%% begin.rcode ChunkLabel, eval=FALSE
+%% begin.rcode ChunkLabel, echo=FALSE
 % # Example of a non-evaluated code chunk
 % StringNumObject <- cbind(CharacterVect, NumericVect)
 %%
@@ -498,7 +497,7 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
         \end{kframe}
 \end{knitrout}
 
-Throughout this book we will look at a number of different code chunk options. All of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.\todo{Note: this table will be expanded as the later chapters are expanded.} 
+Throughout this book we will look at a number of different code chunk options. All of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
 
 
 \begin{table}
@@ -519,6 +518,7 @@ Throughout this book we will look at a number of different code chunk options. A
     \texttt{out.height} & Numeric & Sets figures' heights in the presentation document. \\[0.25cm]
     \texttt{out.width} & Numeric & Sets figures' widths in the presentation document. \\[0.25cm]   
     \texttt{results} & Character & How to include results in the presentation document. \\[0.25cm]
+    \texttt{tidy} & Logical & Whether or not to have \emph{knitr} format printed code chunks. \\[0.25cm]
     \texttt{warning} & Logical & Whether or not to include warnings. \\[0.25cm]
     \hline
   \end{tabular}
@@ -526,7 +526,7 @@ Throughout this book we will look at a number of different code chunk options. A
   {\scriptsize{These commands are discussed in more detail in Chapter \ref{StatsModel}.}}
 \end{table}
 
-\subsection{Global options}
+\subsection{Global chunk options}
 
 So far we have only looked at how to set local options\index{local chunk options} in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options\index{global chunk options}. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the \verb|fig.align='center'| option in each code chunk that creates a figure, I set the option globally.
 
@@ -539,13 +539,15 @@ Here is an example of how you can center align all of the figures in a Markdown 
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
-\textless{\textless}ChunkLabel\textgreater{\textgreater}=
+\textless{\textless}ChunkLabel, echo=FALSE\textgreater{\textgreater}=
 # Center align all knitr figures
 opts_chunk$set(fig.align='center')
 @
         \end{alltt}
     \end{kframe}
 \end{knitrout}
+
+\noindent W
 
 \subsection{knitr package options}
 
@@ -558,7 +560,7 @@ You set package options in a similar way as global chunk options with {\tt{opts\
     \color{fgcolor}
         \begin{kframe}
             \begin{alltt}
-\textless{\textless}ChunkLabel\textgreater{\textgreater}=
+\textless{\textless}ChunkLabel, echo=FALSE\textgreater{\textgreater}=
 # Turn off knitr progress bar
 opts_knit$set(progress=FALSE)
 @

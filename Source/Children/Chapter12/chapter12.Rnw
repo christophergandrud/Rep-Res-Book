@@ -1,10 +1,10 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 15 January 2013
+% Updated: 16 January 2013
 
 <<set-parent12, include=FALSE>>=
-set_parent('/Parent/Rep-Res-Parent.Rnw')
+set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 @
 
 \chapter{Large LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
@@ -15,7 +15,7 @@ To overcome these problems we can take advantage of LaTeX, \emph{knitr}, and GNU
 
 Many of these tools can also be used to create batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In the latter part of this chapter we will rely on {\emph{knitr}} and GNU Make scripts to create batch reports. 
 
-In this chapter we will first briefly discuss how to plan a large document's file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input}\index{input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} to convert and include child documents written in non-LaTeX markup languages. After this we will look at how GNU Make can help us build large projects, especially batch reports.
+In this chapter we will first briefly discuss how to plan a large document's file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{\textbackslash{}input}\index{input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} \citep{Pandoc2012} to convert and include child documents written in non-LaTeX markup languages. After this we will look at how GNU Make can help us build large projects, especially batch reports.
 
 \section{Planning large documents}
 
@@ -179,9 +179,9 @@ We can use \emph{knitr}'s parent-child functions in any of the markup languages 
 %%%%%%%%%%% Child documents in other markup language %%%%%
 \section{Child documents in a different markup language}
 
-Because {\emph{knitr}} is able to run not only R code but also command line programs, you can use the Pandoc \index{Pandoc} program to convert child documents written in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document by including the Pandoc commands in a code chunk with the \texttt{engine} option set to either \texttt{`bash'} or \texttt{'sh'}.\footnote{Alternatively you can run Pandoc in and R code chunk using the {\tt{system}} command.} 
+Because {\emph{knitr}} is able to run not only R code but also command line programs, you can use the Pandoc \index{Pandoc} program to convert child documents written in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document by including the Pandoc commands in a code chunk with the \texttt{engine} option set to either \verb|'bash'| or \verb|'sh'|.\footnote{Alternatively you can run Pandoc in and R code chunk using the {\tt{system}} command.} 
 
-For example, the Stylistic Conventions (page \pageref{StylisticConventions}) part of this book is written in Markdown. The source file is called {\emph{StylisticConventions.md}} and in a subdirectory of the parent's called: \emph{Children/Frontmatter} It was faster to write the list of conventions using the simpler Markdown syntax than LaTeX, which as we saw has a more complicated way of creating lists. However, I wanted to include this list in the LaTeX produced book. Pandoc can convert the Markdown document into a LaTeX file. This file can then be input into the main document with the LaTeX command \texttt{\textbackslash{}input}.
+For example, the Stylistic Conventions (page \pageref{StylisticConventions}) part of this book is written in Markdown. The source file is called {\emph{StylisticConventions.md}} and in a subdirectory of the parent's called: \emph{Children/FrontMatter} It was faster to write the list of conventions using the simpler Markdown syntax than LaTeX, which as we saw has a more complicated way of creating lists. However, I wanted to include this list in the LaTeX produced book. Pandoc can convert the Markdown document into a LaTeX file. This file can then be input into the main document with the LaTeX command \texttt{\textbackslash{}input}.
 
 In the parent document I added a code chunk with the following command to convert the Markdown syntax in {\emph{StylisticConventions.md}} to LaTeX and save it in a file called {\emph{StyleTemp.tex}}.\label{PandoctoLaTeXExample}
 
@@ -193,7 +193,7 @@ In the parent document I added a code chunk with the following command to conver
         \begin{alltt}
 \textless{}\textless{}StyleConventions, include=FALSE, engine='sh'\textgreater{}\textgreater{}=
 # Use pandoc to convert MD to TEX
-pandoc Children/Frontmattter/StylisticConventions.md -f markdown \textbackslash{}
+pandoc Children/FrontMattter/StylisticConventions.md -f markdown \textbackslash{}
     -t latex -o StyleTemp.tex
 @
 
@@ -207,7 +207,7 @@ pandoc Children/Frontmattter/StylisticConventions.md -f markdown \textbackslash{
 
 I only need to include a backslash (\textbackslash{}) at the end of the first line because I wanted to split the code over two lines. The code wouldn't fit on this page otherwise. The backslash tells the shell not to treat the following line as a different line. Unlike in R, the shell only recognizes a command's arguments if they are on the same line as the command. 
 
-You'll notice that after the code chunk we use {\tt{\\input}} to include the new \emph{StyleTemp.tex} document. Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
+You'll notice that after the code chunk we use \verb|\input| to include the new \emph{StyleTemp.tex} document. Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
 
 \begin{figure}
     \caption{The \emph{brew} + \emph{knitr} Process}
@@ -266,7 +266,7 @@ per hectare of arable land.
 
 \noindent There are a few things to note. The line \verb|<% NewFC <- FC %>| will create a vector called \emph{NewFC} from the object \emph{FC}. As we will see when we create the brew function, \emph{FC} are the values of \emph{FertilizerConsumption} for each country. We need to put \emph{FC} into a new object because if we typed \verb|<%= FC %>| \texttt{brew} would print the numbers literally, not in a numeric vector like we need later for the \texttt{mean} command. \verb|<%= Name %>| simply prints the country name. We'll se how to create \emph{Name} in the \emph{brew} function. We will save this template in \emph{BatchReports/Template}, i.e. in a subdirectory of \emph{BatchReports} called \emph{Template}.
 
-Now lets create the R code to \texttt{brew} and \texttt{knit} the reports:
+Now let's create the R code to subset the data, \texttt{brew} and \texttt{knit} the reports:
 
 <<Ch12BrewFunction, eval=FALSE, tidy=FALSE>>=
 # Set working directory
@@ -283,8 +283,7 @@ MainData <- source_GitHubData("http://bit.ly/V0ldsf")
 COUNTRY <- as.character(unique(MainData$country))
 
 #### Create BatchReports Function ####
-BatchReports <- function(Name)
-{
+BatchReports <- function(Name){
   # Create files names for individual reports 
   ## Remove white space in country names
   CountryNoWhite <- gsub(" ", "", x = Name)
@@ -314,9 +313,9 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
     \item Set the working directory to \emph{/BatchReports}.
     \item Download \emph{MainData.csv} using the \texttt{source\_GitHubData} function, as we've done before.
     \item Create a vector for the country names in the data. We will use this vector to subset the data.
-    \item Create a function\index{function, R command} called \emph{BatchReports} for subsetting the data, brewing it, and knitting it. 
+    \item Create a \texttt{function}\index{function, R command} called \emph{BatchReports} for subsetting the data, brewing it, and knitting it. 
         \begin{itemize}
-            \item The \texttt{function} command allows us create a new function.\footnote{These functions are just like almost any other R function.} Arguments are specified in parentheses and R expressions are put in curly brackets. The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew and knit the data according to \emph{Name}'s value. 
+            \item The \texttt{function} command allows us create a new function.\footnote{User created functions are just like most other R function.} Arguments are specified in parentheses (these are also called the formals\index{formals, R functions}) and R expressions are put in the curly brackets that denote the function's body.\index{body, R functions} The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew and knit the data according to \emph{Name}'s value.\footnote{For more infromation on functions see Hadley Wickham's \emph{devtools} Wiki page on the topic: \url{https://github.com/hadley/devtools/wiki/Functions}.}
             \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
         \end{itemize}
     \item \texttt{l\_ply} from the \emph{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value of \emph{COUNTRY}. 

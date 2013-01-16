@@ -1,13 +1,13 @@
 % Chapter Chapter 13 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 January 2013
+% Updated: 16 January 2013
 
 <<set-parent13, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/Parent/Rep-Res-Parent.Rnw')
+set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 @
 
-\chapter{Presenting on the Web and Beyond with Markdown/HTML}\label{MarkdownChapter}
+\chapter{Presenting on the Web and More with Markdown}\label{MarkdownChapter}
 
 LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML. HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research HTML presentation documents.
 
@@ -77,11 +77,11 @@ source_url("http://bit.ly/VNnZxS")
 \noindent When knitted in RStudio and viewed in the Google Chrome web browser\index{Google Chrome} the final presentation document looks like Figure \ref{MarkdownExampleFig}.
 
 \begin{figure}
-	\caption{Example Rendered R Markdown Document}
-	\label{MarkdownExampleFig}
-	\begin{center}
-		\includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/MarkdownExampleMap.png}
-	\end{center}
+    \caption{Example Rendered R Markdown Document}
+    \label{MarkdownExampleFig}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/MarkdownExampleMap.png}
+    \end{center}
 \end{figure}
 
 
@@ -205,8 +205,8 @@ The simplest way to do this is to create a new R function\index{function, R comm
 # Function to render .md file with Pandoc
 pandocToHTML <-  function(inputFile, outputFile) 
 {      
-	system(paste("pandoc", shQuote(inputFile), "-o", 
-				 shQuote(outputFile)))
+    system(paste("pandoc", shQuote(inputFile), "-o", 
+                 shQuote(outputFile)))
 }
 @
 
@@ -230,7 +230,7 @@ In RStudio you can use this type of function rather than \texttt{markdownToHTML}
 options(rstudio.markdownToHTML = 
   function(inputFile, outputFile) {      
     system(paste("pandoc", shQuote(inputFile), "-o", 
-    			 shQuote(outputFile)))
+                 shQuote(outputFile)))
   }
 )  
 @
@@ -254,10 +254,11 @@ We can add BibTeX citations with a small addition to the Pandoc call we use to r
 <<Ch13PandocFunctionBib, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
 pandocToHTML <-  
-	function(inputFile, outputFile) {      
-	system(paste("pandoc", shQuote(inputFile), "-o", 
-				 shQuote(outputFile), "--bibliography Example.bib"))
-	}
+    function(inputFile, outputFile) {      
+    system(paste("pandoc", shQuote(inputFile), "-o", 
+                 shQuote(outputFile),
+                 "--bibliography Example.bib"))
+    }
 @
 
 Now in the text of our document we can add the citation:
@@ -303,18 +304,18 @@ It is simple to use a custom CSS file with the \texttt{markdownToHTML} command. 
 knitr::knit("Example.Rmd", "Example.md")
 
 # Render with using custom Markdown.css style sheet
-markdownToHTML("Example.md", "Example.html",
-			 stylesheet = "Markdown.css")
+markdownToHTML("Example.md", "Example.html", 
+               stylesheet = "Markdown.css")
 @
 
 \noindent When we use this style sheet with the R Markdown file in Figure \ref{MarkdownExampleFig} we get a document that looks like Figure \ref{CustomCSSExample}.
 
 \begin{figure}
-	\caption{Example Rendered R Markdown Document with Custom CSS}
-	\label{CustomCSSExample}
-		\begin{center}
-			\includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/CustomCSSExample.png}
-		\end{center}
+    \caption{Example Rendered R Markdown Document with Custom CSS}
+    \label{CustomCSSExample}
+        \begin{center}
+            \includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/CustomCSSExample.png}
+        \end{center}
 \end{figure}
 
 You can of course also modify your \emph{.Rprofile} so that you always use the same CSS style file. RStudio suggests adding the following code to your \emph{.Rprofile}:
@@ -324,7 +325,7 @@ options(rstudio.markdownToHTML =
   function(inputFile, outputFile) {      
     require(markdown)
     markdownToHTML(inputFile, outputFile, 
-    stylesheet = "Markdown.css")   
+                   stylesheet = "Markdown.css")   
   }
 ) 
 @
@@ -349,18 +350,18 @@ pandocToHTML <-
 It is possible to create reproducible HTML5 slideshows\index{slideshow}\index{HTML5} with R Markdown using Ramnath Vaidyanathan's \emph{Slidify}\index{Slidify} package \citeyearpar{R-slidify}.\footnote{For more information about Slidify please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. There are a number of advantages to creating HTML presentations:
 
 \begin{itemize}
-	\item You can use the relatively simple Markdown syntax.
-	\item HTML presentations are a nice native way to show content on the web.
-	\item Slidify presentations can incorporate virtually any content that can be included in a webpage. This includes interactive content, like motion charts created by \emph{googleVis}\index{googleVis} (see Chapter \ref{FiguresChapter}).
+    \item You can use the relatively simple Markdown syntax.
+    \item HTML presentations are a nice native way to show content on the web.
+    \item Slidify presentations can incorporate virtually any content that can be included in a webpage. This includes interactive content, like motion charts created by \emph{googleVis}\index{googleVis} (see Chapter \ref{FiguresChapter}).
 \end{itemize} 
 
 There are a number of steps to create an HTML5 slideshow with \emph{Slidify}:
 
 \begin{itemize}
-	\item Initialize a slideshow with the \verb|author| command,
-	\item Edit the slideshows main R Markdown file, called \emph{index.Rmd} by default. This includes both the slideshows header and body.
-	\item Use the \verb|slidify| command to run \emph{knitr} and compile the slideshow. 
-	\item Publish the slideshow online with the \verb|publish| command.
+    \item Initialize a slideshow with the \verb|author| command,
+    \item Edit the slideshows main R Markdown file, called \emph{index.Rmd} by default. This includes both the slideshows header and body.
+    \item Use the \verb|slidify| command to run \emph{knitr} and compile the slideshow. 
+    \item Publish the slideshow online with the \verb|publish| command.
 \end{itemize}
 
 \noindent We will cover each step in turn.
@@ -372,21 +373,21 @@ Before getting into the details of how to use \emph{Slidify}, let's briefly unde
 There are a number of different HTML5 slideshow frameworks that let you create and style you slideshows. Table \ref{SlideshowFrameworks} lists some of the major frameworks supported by \emph{Slidify}. In all of the framworks you advance through slides with the forward arrow button on your keyboard. Of course you can go back with the back arrow. Despite this similarity, the frameworks have different looks and capabilities. Check out their respective websites listed in Table \ref{SlideshowFrameworks} for more information.
 
 \begin{table}
-	\caption{A Selection of HTML5 Slideshow Frameworks}
-	\label{SlideshowFrameworks}
-	\begin{center}
-	\begin{tabular}{l c}
-		\hline
-		Framework & Website for more information \\[0.25cm]
-		\hline\hline
-		deck.js &  \url{http://imakewebthings.com/deck.js/} \\[0.25cm]
-		dzslides & \url{http://paulrouget.com/dzslides/} \\[0.25cm]
-		html5slides & \url{http://code.google.com/p/html5slides/} \\[0.25cm]
-		shower & \url{https://github.com/shower/shower} \\[0.25cm]
-		io2012 & \url{http://code.google.com/p/io-2012-slides/} \\[0.25cm]
-		\hline
-	\end{tabular}
-	\end{center}
+    \caption{A Selection of HTML5 Slideshow Frameworks}
+    \label{SlideshowFrameworks}
+    \begin{center}
+    \begin{tabular}{l c}
+        \hline
+        Framework & Website for more information \\[0.25cm]
+        \hline\hline
+        deck.js &  \url{http://imakewebthings.com/deck.js/} \\[0.25cm]
+        dzslides & \url{http://paulrouget.com/dzslides/} \\[0.25cm]
+        html5slides & \url{http://code.google.com/p/html5slides/} \\[0.25cm]
+        shower & \url{https://github.com/shower/shower} \\[0.25cm]
+        io2012 & \url{http://code.google.com/p/io-2012-slides/} \\[0.25cm]
+        \hline
+    \end{tabular}
+    \end{center}
 \end{table}
 
 \paragraph{Installing Slidify}
@@ -529,7 +530,7 @@ git push origin gh-pages
 
 \paragraph{GitHub with Jekyll and Ruhoh}
 
-If you want to create more complex websites with R Markdown and host them on GitHub you might want to look into Jekyll\footnote{\url{https://help.github.com/articles/using-jekyll-with-pages}}\index{Jekyll} or the slightly newer Ruhoh\index{Ruhoh} platform.\footnote{\url{http://ruhoh.com/}}  Jason Fisher has a useful blog post about how to combine Jekyll with knitr. See:\url{http://jfisher-usgs.github.com/r/2012/07/03/knitr-jekyll/} (posted 3 July 2012).
+If you want to create more complex websites with R Markdown and host them on GitHub you might want to look into Jekyll\footnote{\url{https://help.github.com/articles/using-jekyll-with-pages}}\index{Jekyll} or the slightly newer Ruhoh\index{Ruhoh} platform.\footnote{\url{http://ruhoh.com/}}  Jason Fisher has a useful blog post about how to combine Jekyll with knitr. See:\url{http://jfisher-usgs.github.com/r/2012/07/03/knitr-jekyll/} (posted 3 July 2012). And of course, because R Markdown creates HTML markup files you can use virtually any other web hosting service to make your presentation documents widely available.
 
 
 
