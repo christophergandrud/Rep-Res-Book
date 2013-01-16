@@ -20,9 +20,9 @@ Careful file management is crucial for reproducible research. Remember two of th
 
 Using tools such as R, {\emph{knitr}}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program} allow you to control files--creating, deleting, relocating--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths. 
 
-In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to organize them with RStudio Projects\index{RStudio Projects}. Finally, we will cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\bf{Files}} pane. The skills you will learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
+In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to organize them with RStudio Projects\index{RStudio!Projects}. Finally, we will cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\bf{Files}} pane. The skills you will learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
 
-In this chapter we work with locally stored files\index{locally stored}, i.e. files stored on your computer. In the next chapter we will discuss various ways to store and access files remotely stored in the cloud\index{cloud storage}.
+In this chapter we work with locally stored files\index{locally stored}, i.e. files stored on your computer. In the next chapter we will discuss various ways to store and access files remotely stored in the cloud.\index{remotely stored}\index{cloud storage}
 
 
 \section{File paths \& naming conventions}
@@ -37,7 +37,7 @@ On Windows computers you can have multiple root directories, one for each storag
 
 \subsection{Subdirectories \& parent directories}
 
-You will probably not store all of your files in the root directory. This would get very messy. Instead you will likely store your files in subdirectories of the root directory. Inside of these subdirectories may be further subdirectories and so on.  Directories inside of other directories are child directories\index{child directories} or subdirectories of a parent directory\index{parent directory}.
+You will probably not store all of your files in the root directory. This would get very messy. Instead you will likely store your files in subdirectories of the root directory. Inside of these subdirectories may be further subdirectories and so on.  Directories inside of other directories are child directories\index{child directory} or subdirectories of a parent directory\index{parent directory}.
 
 On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: \texttt{C:\textbackslash{}\textbackslash{}ExampleProject\textbackslash{}\textbackslash{}Data}. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell R to interpret the next character or sequence of characters differently. For example, on page \pageref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab rather than the letter ``t''. Add another escape character to neutralize the escape character so that R interprets it as a backslash. In other words use an escape character to the escape character. Another option for writing Windows file names in R is to use one forward slash (\texttt{/}).  
 
@@ -93,7 +93,7 @@ toLatex(sessionInfo())
 
 \section{Setting directories as RStudio Projects}
 
-If you are using RStudio, you may want to organize your files as Projects\index{RStudio Projects}.\label{CreateRStudioProject} You can turn a normal directory into an RStudio Project by clicking on \texttt{Project} in the RStudio menu bar and selecting \texttt{Create Project\ldots}. A new window will pop up. Select the option \texttt{Existing Directory}. Find the directory you want to turn into an RStudio Project by clicking on the \texttt{Browse} button. Finally, select \texttt{Create Project}. You will also notice in the Create Project pop up window that you can build new project directories and create a project from a directory already under version control\index{version control} (we'll do this at the end of Chapter \ref{Storing}). When you create a new project you will see that RStudio has put a file with the extension \texttt{.Rproj} into the directory.
+If you are using RStudio, you may want to organize your files as Projects\index{RStudio!Projects}.\label{CreateRStudioProject} You can turn a normal directory into an RStudio Project by clicking on \texttt{Project} in the RStudio menu bar and selecting \texttt{Create Project\ldots}. A new window will pop up. Select the option \texttt{Existing Directory}. Find the directory you want to turn into an RStudio Project by clicking on the \texttt{Browse} button. Finally, select \texttt{Create Project}. You will also notice in the Create Project pop up window that you can build new project directories and create a project from a directory already under version control\index{version control} (we'll do this at the end of Chapter \ref{Storing}). When you create a new project you will see that RStudio has put a file with the extension \texttt{.Rproj} into the directory.
 
 Making your research project directories RStudio Projects is useful for a number of reasons:
 
@@ -111,7 +111,7 @@ Making your research project directories RStudio Projects is useful for a number
 
 R has a range of commands for handling and navigating through files. Including these commands in your source code files allows you to more easily replicate your actions.
 
-\paragraph{{\tt{getwd}}}\index{getwd}
+\paragraph{{\tt{getwd}}}\index{R command!getwd}
 
 To find your current working directory use the \texttt{getwed} command:
 
@@ -121,7 +121,7 @@ getwd()
 
 \noindent The example here shows you the current working directory that was used while knitting this chapter.
 
-\paragraph{{\tt{list.files}}}\index{list.files}
+\paragraph{{\tt{list.files}}}\index{R command!list.files}
 
 Use the \texttt{list.files} command to see all of the files and subdirectories in the current working directory. You can list the files in other directories too by adding the directory path as an argument to the command. 
 
@@ -131,7 +131,7 @@ list.files()
 
 \noindent You can see that the \emph{Chapter4} folder has the file \emph{chapter4.Rnw} (the markup file used to create this chapter) and a child directory called \emph{images4} where I stored the original versions of the figures show in this chapter.
 
-\paragraph{{\tt{setwd}}}\index{setwd}
+\paragraph{{\tt{setwd}}}\index{R command!setwd}
 
 The {\tt{setwd}} command sets the current working directory\index{working directory}. For example, if we are on a Mac or other Unix-like computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Figure \ref{ExampleTree}) like this
 
@@ -141,7 +141,7 @@ setwd("/ExampleProject/Data/GatherSource")
 
 \noindent Now R will automatically look in the {\emph{GatherSource}} folder for files and will save new files into this folder, unless we explicitly tell it to do otherwise.
 
-\paragraph{{\tt{dir.create}}}\index{dir.create}
+\paragraph{{\tt{dir.create}}}\index{R command!dir.create}
 
 Sometimes you may want to create a new directory. You can use the {\tt{dir.create}} command to do this.\footnote{Note: you will need the correct system permissions to be able to do this.} For example to create a {\emph{ExampleProject}} file in the root C directory on a Windows computer type:
 
@@ -149,7 +149,7 @@ Sometimes you may want to create a new directory. You can use the {\tt{dir.creat
 dir.create("C:\\ExampleProject")
 @
 
-\paragraph{{\tt{file.create}}}\index{file.create}
+\paragraph{{\tt{file.create}}}\index{R command!file.create}
 
 Similarly, you can create a new blank file with the \texttt{file.create} command. To add a blank R source code file called {\emph{SourceCode.R}} to the {\emph{ExampleProject}} directory on the C drive use:
 
@@ -157,7 +157,7 @@ Similarly, you can create a new blank file with the \texttt{file.create} command
 file.create("C:\\ExampleProject\\SourceCode.R")
 @
 
-\paragraph{{\tt{cat}}}\index{cat, R command}\label{catR}
+\paragraph{{\tt{cat}}}\index{R command!cat}\label{catR}
 
 If you want to create a new file and put text into it use the \texttt{cat} (concatenate and print). For example to create a new file in the current working directory called \emph{ExampleEcho.md} that includes the text ``Reproducible Research with R and RStudio'' type:
 
@@ -175,7 +175,7 @@ cat("More Text", file = "ExampleCat.md",
     append = TRUE)
 @
 
-\paragraph{{\tt{unlink}}}\index{unlink}
+\paragraph{{\tt{unlink}}}\index{R command!unlink}
 
 Finally, you can use the {\tt{unlink}} command to delete files and directories. 
 
@@ -185,7 +185,7 @@ unlink("C:\\ExampleProject\\SourceCode.R")
 
 \noindent \textbf{Important} the \texttt{unlink} command permanently deletes files, so be very careful using this command.
 
-\paragraph{{\tt{file.rename}}}\index{file.rename}
+\paragraph{{\tt{file.rename}}}\index{R command!file.rename}
 
 You can use the \texttt{file.rename} to obviously rename a file. It can also be used to move a file from one directory to another. For example, imagine that we want to move the \emph{ExampleCat.md} file from the directory \emph{ExampleProject} to one called \emph{MarkdownFiles} that we already created.\footnote{The \texttt{file.rename} command won't create new directories. To move a file to a new directory you will need to create the directory first with \texttt{dir.create}.}
 
@@ -194,7 +194,7 @@ file.rename(from = "C:\\ExampleProject\\ExampleCat.md",
             to = "C:\\MarkdownFiles\\ExampleCat.md")
 @
 
-\paragraph{{\tt{file.copy}}}\index{file.copy}
+\paragraph{{\tt{file.copy}}}\index{R command!file.copy}
 
 The \texttt{file.rename} fully moves a file from one directory to another. To copy the file to another directory use the \texttt{file.rename} command. It has the same syntax as \texttt{file.rename}:
 
@@ -223,7 +223,7 @@ cd /Users/Me/Desktop
 
 \noindent In this example \texttt{Me} is my user name. 
 
-\paragraph{{\tt{cd}}}\index{cd}
+\paragraph{{\tt{cd}}}\index{shell command!cd}
 
 As we just saw, to change the working directory in the shell just use the {\tt{cd}} (change directory) command. If you are in a child directory and want to change the working directory to its parent you can simply type:
 
@@ -233,7 +233,7 @@ cd -
 
 \noindent If, for example, our current working directory was \emph{/User/Me/Desktop} and we typed \texttt{cd -} then the working directory would change to \emph{/User/Me}.
 
-\paragraph{{\tt{pwd}}}\index{pwd}
+\paragraph{{\tt{pwd}}}\index{shell command!pwd}
 
 To find your current working directory use the \texttt{pwd} command (present working directory). This is essentially the same as R's \texttt{getwd} command.
 
@@ -243,7 +243,7 @@ pwd
 ## /Users/Me/Desktop
 @
 
-\paragraph{{\tt{ls}}}\index{ls}
+\paragraph{{\tt{ls}}}\index{shell command!ls}
 
 The \texttt{ls} (list) command works very similarly to R's \texttt{list.files} command. It shows you what is in the current working directory.
 
@@ -253,7 +253,7 @@ ls
 ## chapter4.Rnw images4
 @
 
-\paragraph{{\tt{mkdir}}}\index{mkdir}
+\paragraph{{\tt{mkdir}}}\index{shell command!mkdir}
 
 Use \texttt{mkdir} to create a new directory. For example, if I wanted to create a directory in my Linux root directory called {\emph{NewDirectory}} I would type:
 
@@ -267,7 +267,7 @@ mkdir /NewDirectory
 mkdir: /NewDirectory: Permission denied
 @
 
-\noindent you simply need to use the \texttt{sudo}\index{sudo} command to run the command with higher privileges. 
+\noindent you simply need to use the \texttt{sudo}\index{shell command!sudo} command to run the command with higher privileges. 
 
 <<Ch4Sudo, eval=FALSE, engine='sh'>>=
 sudo mkdir /NewDirectory
@@ -275,7 +275,7 @@ sudo mkdir /NewDirectory
 
 \noindent Running this code will prompt you to enter your administrator password.
 
-\paragraph{{\tt{echo}}}\index{echo}
+\paragraph{{\tt{echo}}}\index{shell command!echo}
 
 There are a number of ways to create new files in Unix-like shells. One of the simplest ways is with the \texttt{echo} command. This command simply prints its arguments. For example:
 
@@ -295,11 +295,11 @@ echo Reproducible Research with R and RStudio > ExampleEcho.md
 echo More text. >> ExampleEcho.md
 @
 
-\noindent There is also a \texttt{cat} shell command.\index{cat, shell command} It works slightly differently than the R version of the command and I don't cover it here.
+\noindent There is also a \texttt{cat} shell command.\index{shell command!cat} It works slightly differently than the R version of the command and I don't cover it here.
 
-\paragraph{{\tt{rm}}}
+\paragraph{{\tt{rm}}}\index{shell command!rm}
 
-The {\tt{rm}}\index{rm} command is similar to R's {\tt{unlink}} command. It removes (deletes) files or directories. Again, be careful when using this command, because it permanently deletes the files or directories.
+The {\tt{rm}} command is similar to R's {\tt{unlink}} command. It removes (deletes) files or directories. Again, be careful when using this command, because it permanently deletes the files or directories.
 
 As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
 
@@ -307,7 +307,7 @@ As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} comma
 rm ExampleEcho.md
 @
 
-\paragraph{{\tt{mv}}}\index{mv}
+\paragraph{{\tt{mv}}}\index{shell command!mv}
 
 To move a file from one directory to another with the shell use the \texttt{mv} (move) command. For example, to move the file \emph{ExampleEcho.md} from \emph{ExampleProjects} to \emph{MarkdownFiles} use the following code and imagine both directories are in the root directory:\footnote{If they were not in the root directory we would not place a forward slash at the begining.}
 
@@ -317,7 +317,7 @@ mv /ExampleProject/ExampleEcho.md /MarkdownFiles
 
 \noindent Note that like the \emph{MarkdownFiles} directory must already exist. You can also use the \texttt{mv} command to simply rename files, just like the R command \texttt{file.rename}.
 
-\paragraph{{\tt{cp}}}\index{cp}
+\paragraph{{\tt{cp}}}\index{shell command!cp}
 
 The \texttt{mv} command completely moves a file from one directory to another. To simply copy a version of the file to a new directory use the \texttt{cp} command. The syntax is similar to \texttt{mv}:
 
@@ -325,7 +325,7 @@ The \texttt{mv} command completely moves a file from one directory to another. T
 cp /ExampleProject/ExampleEcho.md /MarkdownFiles
 @
 
-\paragraph{{\tt{system}} (R command)}\index{system, R command}\label{systemRcommand}
+\paragraph{{\tt{system}} (R command)}\index{R command!system}\label{systemRcommand}
 
 You can run shell commands from within R using R's \texttt{system} command. For example, to run the \texttt{echo} command from within R type:
 
@@ -338,5 +338,5 @@ system("echo Text to Add > ExampleEcho.md")
 
 The RStudio \textbf{Files} pane allows us to navigate and do some basic file manipulation. Figure \ref{FilesPane} shows us what this pane looks like. This pane allows us to navigate to specific files and folder, delete and rename files. To select a folder as the working directory tick the dialog box next to the file then click the \texttt{More} button and select \texttt{Set As Working Directory}. Under the \texttt{More} button you will also find options to \texttt{Move} and \texttt{Copy} files.
 
-The \textbf{Files} pane is a GUI, so our actions in the \text{Files} pane are not as easily reproducible as the commands we learned earlier in this chapter. 
+The \textbf{Files} pane is a GUI, so our actions in the \textbf{Files} pane are not as easily reproducible as the commands we learned earlier in this chapter. 
 

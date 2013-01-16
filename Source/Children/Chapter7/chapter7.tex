@@ -18,9 +18,9 @@ In order to successfully merge two or more data frames we need to make sure that
 
 Before doing anything to your data it is a good idea to take a look at it and see what needs to be done. Surprisingly, just taking a little time to look at your data will help you avoid many error messages and much frustration. 
 
-To get a sense of your data you could of course just type a data frame object's name into the R console. This will print the entire data frame. For data frames with more than a few variables and observations. We have already seen a number of commands that are useful for seeing parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, \texttt{names}\index{names} command shows you the variable names of a data frame object. The \texttt{head}\index{head} command shows the first few observations in a data frame and \texttt{tail}\index{tail} shows the last few.
+To get a sense of your data you could of course just type a data frame object's name into the R console. This will print the entire data frame. For data frames with more than a few variables and observations. We have already seen a number of commands that are useful for seeing parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, \texttt{names}\index{R command!names} command shows you the variable names of a data frame object. The \texttt{head}\index{R command!head} command shows the first few observations in a data frame and \texttt{tail}\index{tail} shows the last few.
 
-The \texttt{summary} command\index{summary, R command} is especially helpful for seeing not only basic descriptive statistics for all of the variables in a data frame, but also the variables' types. For example, let's us the \emph{FertConsumpData} object we created in Chapter \ref{DataGather}:
+The \texttt{summary} command\index{R command!summary} is especially helpful for seeing not only basic descriptive statistics for all of the variables in a data frame, but also the variables' types. For example, let's us the \emph{FertConsumpData} object we created in Chapter \ref{DataGather}:
 
 {\small
 \begin{knitrout}
@@ -56,7 +56,7 @@ The \texttt{summary} command\index{summary, R command} is especially helpful for
 
 \noindent We'll come back to why knowing this type of information is important for merging and data analysis later in this Chapter.
 
-You can view a portion of a data frame object with the \texttt{View} command.\index{View R command} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab and you will get something that look similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be see similar windows that you can interactively edit use the \texttt{fix} command in the same way that you use \texttt{view}. This can be useful for small edits, but remember that the edits are not reproducible.
+You can view a portion of a data frame object with the \texttt{View} command.\index{R command!view} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab and you will get something that look similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be see similar windows that you can interactively edit use the \texttt{fix} command in the same way that you use \texttt{view}. This can be useful for small edits, but remember that the edits are not reproducible.
 
 \subsection{Reshaping Data}
 
@@ -78,7 +78,7 @@ Obviously it is usually a good if the data sets kept in data frame type objects.
     \end{tabular}
 \end{table}
 
-\noindent In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{cross-sectional time-series data}\index{TSCS} that we want to have in long-format. Long formatted TSCS has is simply a data frame where rows identify observations of a particular subject at three points in time (see Table \ref{ExampleTSCSLong})
+\noindent In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long-format. Long formatted TSCS has is simply a data frame where rows identify observations of a particular subject at three points in time (see Table \ref{ExampleTSCSLong})
 
  \begin{table}[h!]
     \caption{Long Formatted Time-series Cross-sectional Data Example}
@@ -118,7 +118,7 @@ Obviously it is usually a good if the data sets kept in data frame type objects.
     \end{tabular}
 \end{table}
 
-Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with simply as \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \textbf{reshape}\index{reshape, command} command, both in loaded in R by default.  Another very helpful package is \emph{reshape2} \citep{R-reshape2}.\index{reshape2} This provides more general tools for reshaping data and is worth investing some time in learning well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape TSCS data frame from wide to long format. We will also encounter this package in more detail in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
+Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with simply as \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \textbf{reshape}\index{R command!reshape} command, both in loaded in R by default.  Another very helpful package is \emph{reshape2} \citep{R-reshape2}.\index{reshape2} This provides more general tools for reshaping data and is worth investing some time in learning well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape TSCS data frame from wide to long format. We will also encounter this package in more detail in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
 
 Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{WideFert}. It looks like this:\footnote{Please see the Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data.}
 
@@ -192,7 +192,7 @@ MoltenFert <- \hlfunctioncall{rename}(x = MoltenFert,
 
 You may have noticed that as a result of melting \emph{WideFert} the data is now ordered by year then country name. Typically TSCS data is sorted by country then year, or more generally: subject-year. Though not required for merging in R\footnote{Unlike in other statistical programs.} some statistical analyses assume that the data is ordered in a specific way. Well ordered data is also easier for people to understand.
 
-We can order observations in our data set using the \texttt{order} command.\index{order}\index{sort} For example, to order \emph{MoltenFert} by country-year we type:
+We can order observations in our data set using the \texttt{order} command.\index{R command!order}\index{sort} For example, to order \emph{MoltenFert} by country-year we type:
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}

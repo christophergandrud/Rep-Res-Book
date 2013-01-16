@@ -28,15 +28,15 @@ By default {\emph{knitr}} code chunks are run by R, the code and any text output
 
 Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code chunks without actually running them.
 
-\paragraph{{\tt{echo}}}\index{echo}
+\paragraph{{\tt{echo}}}\index{knitr option!echo}
 
 The opposite of \texttt{eval=FALSE} is to have the code chunk evaluated but have the code not included in the presentation document. You can do this by setting \texttt{echo=TRUE}. You will use this option extensively in chapters \ref{TablesChapter} and \ref{FiguresChapter} when you learn how to run R source code to produce tables and figures that are included presentation documents' text.
 
-\paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{warning}\index{error}\index{message}
+\paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{knitr option!warning}\index{knitr option!error}\index{knitr option!message}
 
 If you don't want to include in the text of your presentation documents the warnings, messages, and error messages that R outputs when it runs a code chunk just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}.
 
-\paragraph{{\tt{cache}}}\index{cache}
+\paragraph{{\tt{cache}}}\index{knitr option!cache}
 
 If you want to store a code chunk's output for use later, rather than running the code chunk every time you compile your presentation document, set the option \texttt{cache=TRUE}. When you do this the code chunk is run only if the code changes. It is very handy if you have a code chunk that is computationally intensive to run. 
 
@@ -52,7 +52,7 @@ Sometimes you may want to have some R code or text output show up inline with th
 
 There are a number of ways to to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\textttt| to have text show up in the \texttt{typewriter} font commonly used LaTeX to indicate that something code (I use it in this book, as you have probably noticed). For example, using \verb|\textttt{2 + 2}| will give you `\texttt{2 + 2}' in your text.
 
-However, the \verb|\textttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{verb, LaTeX command}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
+However, the \verb|\textttt| command isn't always ideal, because your LaTeX compiler will still try to run the code inside of the command. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| which have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). Probably the better option is to use the \verb|\verb| command\index{LaTeX command!verb}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. 
 
 To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\textttt|' in the text. We would type:
 

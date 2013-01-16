@@ -25,7 +25,7 @@ If the image files are in the same directory as the markup document, we don't ne
 
 \subsection{Including graphics in LaTeX}
 
-The main way to include graphics (graphs, photos and so on) in LaTeX documents is to use the \texttt{includegraphics}\index{includegraphics} command to link to image files. To have the full range of features for \texttt{includegraphics} make sure to load the \emph{graphicx}\index{graphicx, LaTeX} package in your document's preamble. Imagine that we wanted to include an image of butterflies stored in a file called \emph{HeliconiusMimicry.png} in a LaTeX produced document.\footnote{The image used here is from \cite{Meyer2006}.} We type:
+The main way to include graphics (graphs, photos and so on) in LaTeX documents is to use the \texttt{includegraphics}\index{LaTeX command!includegraphics} command to link to image files. To have the full range of features for \texttt{includegraphics} make sure to load the \emph{graphicx}\index{LaTeX package!graphicx} package in your document's preamble. Imagine that we wanted to include an image of butterflies stored in a file called \emph{HeliconiusMimicry.png} in a LaTeX produced document.\footnote{The image used here is from \cite{Meyer2006}.} We type:
 
 <<Ch10IncludeGraphics, eval=FALSE>>=
 \includegraphics[scale=0.8]{HeliconiusMimicry.png}
@@ -39,9 +39,9 @@ The main way to include graphics (graphs, photos and so on) in LaTeX documents i
 
 \noindent Notice that that there are two backslashes before \texttt{textwidth}. The LaTeX command only has one, however all knitr code chunk options must be written as they are in R. We need to escape the backslash with the backslash escape character, i.e. to backslashes.
 
-\paragraph{{\tt{figure}} float environment}\index{figure, LaTeX environment}
+\paragraph{{\tt{figure}} float environment}\index{LaTeX environment!figure}
 
-Most often you will want to include figures in LaTeX in a \texttt{figure} float environment. The \emph{figure} environment works almost exactly the same way as the \texttt{table} environment. It allows you to separate the figure from the text, add a caption and label the figure. We begin the environment with \verb|\begin{figure}[POSITION_SPEC]|. \verb|POSITION_SPEC| can have the same values as we saw earlier (page \pageref{POSITIONSPEC}). We can then include a \texttt{caption}\index{caption, LaTeX} and \emph{label} command.\index{label, LaTeX} The environment is closed with \verb|\end{figure}|. For example, to create Figure \ref{ExampleLaTeXFigure} I used the following code:\footnote{For simplicity, this code does not include the full image's file path.}
+Most often you will want to include figures in LaTeX in a \texttt{figure} float environment. The \emph{figure} environment works almost exactly the same way as the \texttt{table} environment. It allows you to separate the figure from the text, add a caption and label the figure. We begin the environment with \verb|\begin{figure}[POSITION_SPEC]|. \verb|POSITION_SPEC| can have the same values as we saw earlier (page \pageref{POSITIONSPEC}). We can then include a \texttt{caption}\index{LaTeX!caption} and \emph{label} command.\index{LaTeX command!label} The environment is closed with \verb|\end{figure}|. For example, to create Figure \ref{ExampleLaTeXFigure} I used the following code:\footnote{For simplicity, this code does not include the full image's file path.}
 
 <<Ch10FigFloat, eval=FALSE>>=
 \begin{figure}[ht]
@@ -67,7 +67,7 @@ Most often you will want to include figures in LaTeX in a \texttt{figure} float 
 
 \subsection{Including graphics in Markdown/HTML}
 
-Markdown has a similar command to LaTeX's \texttt{includegraphics}. It goes like this: \verb|![ALT_TEXT](FILE_PATH)|.\index{![]()} This syntax may seem strange now, but it will hopefully make more sense when we cover hyperlinks in Chapter \ref{MarkdownChapter} (page \pageref{MarkdownLinks}) as this is what it is intended to imitate. \verb|ALT_TEXT| refers to HTML's \texttt{alt} (alternative text)\index{alt, HTML} attribute. This should be a very short description of the image if it fails to load. \verb|FILE_PATH| specifies the image's file path.\footnote{You can also include a title in quotation marks. This specifies the HTML \texttt{title} attribute. However, this attribute does not create a title for the image in the way that \texttt{caption} does for LaTeX float figures. Instead it creates a tooltip\index{tooltip}, a small box that appears when you place your cursor over the image.} Here is an example using the image we worked with before.\label{TitleAttribute}
+Markdown has a similar command to LaTeX's \texttt{includegraphics}. It goes like this: \verb|![ALT_TEXT](FILE_PATH)|.\index{![]()} This syntax may seem strange now, but it will hopefully make more sense when we cover hyperlinks in Chapter \ref{MarkdownChapter} (page \pageref{MarkdownLinks}) as this is what it is intended to imitate. \verb|ALT_TEXT| refers to HTML's \texttt{alt} (alternative text)\index{HTML!alt} attribute. This should be a very short description of the image if it fails to load. \verb|FILE_PATH| specifies the image's file path.\footnote{You can also include a title in quotation marks. This specifies the HTML \texttt{title} attribute. However, this attribute does not create a title for the image in the way that \texttt{caption} does for LaTeX float figures. Instead it creates a tooltip\index{tooltip}, a small box that appears when you place your cursor over the image.} Here is an example using the image we worked with before.\label{TitleAttribute}
 
 <<Ch9MarkdownImage, eval=FALSE>>=
 ![ButterflyImage](HeliconiusMimicry.png)
@@ -75,7 +75,7 @@ Markdown has a similar command to LaTeX's \texttt{includegraphics}. It goes like
 
 \noindent Note that the file path can be a URL. You may, for example store an image in the Dropbox Public folder or on GitHub and use its URL to link to it in the Markdown document.\footnote{For images stored on GitHub use the URL for the raw version of the file} A final tip: if you are using RStudio's \textbf{HTML Preview} window to preview your Markdown document images sourced from a URL will probably not show up. You should preview the document in your web browser instead. This is easy to do in RStudio by clicking on the \texttt{View the page with the system web browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). It's located at the top of the \textbf{HTML Preview} window.
 
-To keep things simple, Markdown does not include ways to size or reposition an image. To do this you will have to use HTML markup. Probably the simplest way to include images with HTML is by using the \texttt{img} (image) element tag. To create the equivalent of what we just did in Markdown with HTMl we type:
+To keep things simple, Markdown does not include ways to size or reposition an image. To do this you will have to use HTML markup. Probably the simplest way to include images with HTML is by using the \texttt{img} (image) element tag. To create the equivalent of what we just did in Markdown with HTML we type:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -87,7 +87,7 @@ To keep things simple, Markdown does not include ways to size or reposition an i
         \end{kframe}
 \end{knitrout} 
 
-\noindent The \texttt{src} (script)\index{src, HTML} attribute specifies the file path. To change the width and height of the image we can use the \texttt{width} and \texttt{height} attributes. For example:
+\noindent The \texttt{src} (script)\index{HTML!src} attribute specifies the file path. To change the width and height of the image we can use the \texttt{width} and \texttt{height} attributes. For example:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -112,25 +112,25 @@ So far we have looked at how to included images that have already been created i
 
 When you use \emph{knitr} to create and include figures in your presentation documents it (1) runs the code you give it to create the figure, (2) automatically saves it into a particular directory\footnote{If a code chunk creates more than one figure, \emph{knitr} automatically saves each into its own file in the same directory.} and (2) includes the necessary LaTeX or Markdown code to include the figure in the final presentation document. By default \emph{knitr} saves images in to a folder (it creates) called \emph{figure} located in the working directory.\footnote{File names are based on the code chunk label where they were created.} You can tell \emph{knitr} to where it saves the images with the \texttt{fig.path} option. Simply use the file path naming conventions suitable for your system and include the new path in quotation marks.
 
-\paragraph{{\tt{out.height}}}\index{out.height, knitr option}
+\paragraph{{\tt{out.height}}}\index{knitr option!out.height}
 
 To set the height that a figure will be in the final presentation document use the \texttt{out.height} option. In R LaTeX documents you can set the width using centimeters, inches, or as a proportion of a page element. In R Markdown documents you use pixels to set the height. For example, to set a figure's height in an R Markdown document to 200 pixels use \verb|out.height='200px'|. 
 
-\paragraph{{\tt{out.width}}}\index{out.width, knitr option}
+\paragraph{{\tt{out.width}}}\index{knitr option!out.width}
 
 Similarly, we can set the width of a \emph{knitr} created figure using the \texttt{out.width} option. The same rules apply as with \texttt{out.width}. For example, to have figure shown at 80 percent of the text width in an R LaTeX document use: \verb|out.width='0.8\\textwidth'|.
 
-\paragraph{{\tt{fig.align}}}\index{fig.align, knitr option}
+\paragraph{{\tt{fig.align}}}\index{knitr option!fig.align}
 
 You can set a knitted figure's alignment using \texttt{fig.align}. The option can be set to \texttt{left}, \texttt{center} or \texttt{right}. To center a figure add \verb|fig.align='center'|. Note that this option only works with R LaTeX and R HTML. You probably noticed before that there was no way to change a figure's alignment in straight Markdown syntax. To specify the alignment of figures in Markdown you need to change the CSS style file.
 
 \paragraph{Other figure chunk options}
 
-The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation document the way that you would like them to be.  The option \texttt{fig.cap}\index{fig.lb, knitr option} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{fig.lb, knitr option} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so long lists of options can become difficult to read.} Please see the official \emph{knitr} code chunk options webpage for more information: \url{http://yihui.name/knitr/options#chunk_options}.
+The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation document the way that you would like them to be.  The option \texttt{fig.cap}\index{knitr option!fig.lb} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{knitr option!fig.lb} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so long lists of options can become difficult to read.} Please see the official \emph{knitr} code chunk options webpage for more information: \url{http://yihui.name/knitr/options#chunk_options}.
  
 \subsection{Global options}
 
-If you want all of your figures share the same options-e.g. same hight and alignment--you can set global figure options at the beginning of the document with \verb|opts_chunk$set|.\index{knitr global chunk options} Imagine that we are making an R LaTeX Sweave-style document want all of our figures to be center aligned and 80 percent of the text width. We type:
+If you want all of your figures share the same options-e.g. same hight and alignment--you can set global figure options at the beginning of the document with \verb|opts_chunk$set|.\index{knitr!global chunk options} Imagine that we are making an R LaTeX Sweave-style document want all of our figures to be center aligned and 80 percent of the text width. We type:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -146,7 +146,7 @@ opts_chunk$\hlfunctioncall{set.}(fig.align = \hlstring{"center"}, out.width = \h
 
 \section{Knitting R's default graphics}
 
-R's \emph{graphics} package\index{graphics, R package}--loaded by default--includes commands to create numerous plot types. These include \texttt{hist}\index{hist} for histograms, \texttt{pairs}\index{pairs, R command} for scatterplot matrices, \texttt{boxplot}\index{boxplot} for creating boxplots and the versatile \texttt{plot}\index{plot, R command} for creating x-y plots--including scatter plots and bar charts depending on the data's type. 
+R's \emph{graphics} package\index{graphics, R package}--loaded by default--includes commands to create numerous plot types. These include \texttt{hist}\index{hist} for histograms, \texttt{pairs}\index{R command!pairs} for scatterplot matrices, \texttt{boxplot}\index{boxplot} for creating boxplots and the versatile \texttt{plot}\index{R command!plot} for creating x-y plots--including scatter plots and bar charts depending on the data's type. 
 
 There are many useful resources for learning how to fully utilize R's default graphics capabilities. These include Paul Murrell's \citeyearpar{Murrell2011} very comprehensive \emph{R Graphics} book. The more basic Cookbook for R\footnote{http://wiki.stdout.org/rcookbook/Graphs/} and Quick-R\footnote{\url{http://www.statmethods.net/advgraphs/}} websites are also very helpful. Winston Chang, the maintainer of the CookBook for R also has a book devoted creating R graphics \citeyearpar{Chang2012}.
 
@@ -221,7 +221,7 @@ SubData <- SubData[, c("reg_4state",
 pairs(x = SubData)
 @
 
-\noindent Ok, this is a lot of code, but you should be familiar with most of it. You will notice one new command: \texttt{paste}.\index{paste, R command} This command simply pastes together the different parts of \emph{MainData.csv}'s URL address. Setting \verb|sep = ""|, simply means that we don't want any space (or other character) to separate the different parts of the URL.\footnote{The command \texttt{paste0}\index{paste0} is equivalent to \texttt{paste} with \texttt{sep = ""}} We don't have to do this. It just makes the code easier to read in this instance, so that it won't run off the page. 
+\noindent Ok, this is a lot of code, but you should be familiar with most of it. You will notice one new command: \texttt{paste}.\index{R command!paste} This command simply pastes together the different parts of \emph{MainData.csv}'s URL address. Setting \verb|sep = ""|, simply means that we don't want any space (or other character) to separate the different parts of the URL.\footnote{The command \texttt{paste0}\index{R command!paste0} is equivalent to \texttt{paste} with \texttt{sep = ""}} We don't have to do this. It just makes the code easier to read in this instance, so that it won't run off the page. 
 
 You will notice that after downloading the data we cleaned up the data by removing data from all years other than 2003 and all of the country-year type variables. Finally, we create the scatterplot matrix with \texttt{pairs}.
 
@@ -307,7 +307,7 @@ names(MoltenInflation)
 
 \noindent Now we have a data set we can use to create our line graph with \emph{ggplot2}. 
 
-Let's cover a few basic \emph{ggplot2} ideas that will help us understand the following code better. First, plots are composed of layers\index{layers, ggplot2} including the coordinate system, points, labels and so on. Each layer has aesthetics including the variables plotted on the $x$ and $y$ axes, label sizes, colors and shapes. Aesthetic elements are defined by the \texttt{aes}\index{aes}\index{aesthetics, ggplot2} argument. Finally, the main layer types are called geometrics,\index{geometrics, ggplot2} including lines, points, bars, text. Arguments that set geometrics usually begin with \texttt{geom}.\index{geom, ggplot2} For example, the geometric to create lines is \verb|geom_line|.\index{geom\_line}
+Let's cover a few basic \emph{ggplot2} ideas that will help us understand the following code better. First, plots are composed of layers\index{ggplot2!layers} including the coordinate system, points, labels and so on. Each layer has aesthetics including the variables plotted on the $x$ and $y$ axes, label sizes, colors and shapes. Aesthetic elements are defined by the \texttt{aes}\index{ggplot2!aes}\index{ggplot2!aesthetics} argument. Finally, the main layer types are called geometrics,\index{geometrics, ggplot2} including lines, points, bars, text. Arguments that set geometrics usually begin with \texttt{geom}.\index{ggplot2!geom} For example, the geometric to create lines is \verb|geom_line|.\index{geom\_line}
 
 {\footnotesize
 <<Ch10ggplot2Lines, eval=FALSE, tidy=FALSE>>=
@@ -332,7 +332,7 @@ print(LinePlot)
 @ 
 }
 
-\noindent You can see we set the $x$ and $y$ axes using the \textbf{Quarter} and \textbf{value} variables. We told \texttt{ggplot} that elements in the geometic layer should have lines with colors and line types (dashed, dotted, and so on) based on the value of \textbf{variable} that they represent. \verb|geom_line| specifies that we want to add a line geometric layer.\footnote{Remember from Chapter \ref{GettingStartedRKnitr} that commands must be followed by parentheses. These layers are commands so need to be followed by parentheses.} \verb|scale_color_discrete| and \verb|scale_linetype|\index{scale\_color\_discrete}\index{scale\_linetype} are used here to hide the plots legend title with \verb|name = ""| and customize the legend's labels with \verb|labels = . . .|. You can also use them to determine the specific colors and line types you would like to use. \texttt{xlab} and \texttt{ylab} set the axes labels. You can add a title with \texttt{ggtitle}.\index{ggtitle} Finally, I added \verb|theme_bw|\index{theme\_bw} so that the plot would use a simple black and white theme. We added the argument \verb|base_size = 15| to increase the plot's font size.
+\noindent You can see we set the $x$ and $y$ axes using the \textbf{Quarter} and \textbf{value} variables. We told \texttt{ggplot} that elements in the geometic layer should have lines with colors and line types (dashed, dotted, and so on) based on the value of \textbf{variable} that they represent. \verb|geom_line| specifies that we want to add a line geometric layer.\footnote{Remember from Chapter \ref{GettingStartedRKnitr} that commands must be followed by parentheses. These layers are commands so need to be followed by parentheses.} \verb|scale_color_discrete| and \verb|scale_linetype|\index{ggplot2!scale\_color\_discrete}\index{ggplot2!scale\_linetype} are used here to hide the plots legend title with \verb|name = ""| and customize the legend's labels with \verb|labels = . . .|. You can also use them to determine the specific colors and line types you would like to use. \texttt{xlab} and \texttt{ylab} set the axes labels. You can add a title with \texttt{ggtitle}.\index{ggplot2!ggtitle} Finally, I added \verb|theme_bw|\index{ggplot2!theme\_bw} so that the plot would use a simple black and white theme. We added the argument \verb|base_size = 15| to increase the plot's font size.
 
 All of the code required to create this graph is on GitHub at \url{http://bit.ly/VEvGJG}.\footnote{The full URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationLineGraph.R}.} So to knit the graph like Figure \ref{ggplot2Line} into an R Sweave-style LaTeX document we type:
 
@@ -436,7 +436,7 @@ ggplot(data = NBSum2DF, aes(x = reorder(Variable, X2.5.),
         theme_bw(base_size = 20)
 @
 
-\noindent There are some new pieces of code in here, so let's take a look. First the data frame is reordered by the from highest to lowest value of \textbf{X2.5.} using the \texttt{reorder} command.\index{reorder, R command} This makes the plot easier to read. The middle point of the point range is set with \texttt{y} and the lower and upper bounds with \texttt{ymin}\index{ymin, ggplot2} and \texttt{ymax}.\index{ymax, ggplot2} The \verb|geom_hline|\index{geom\_hline, ggplot2} command used here creates a dotted horizontal line at 0. i.e. no effect. \verb|coord_flip|\index{coord\_flip} flips the plot's coordinates so that the variable names are on the $y$ axis.
+\noindent There are some new pieces of code in here, so let's take a look. First the data frame is reordered by the from highest to lowest value of \textbf{X2.5.} using the \texttt{reorder} command.\index{R command!reorder} This makes the plot easier to read. The middle point of the point range is set with \texttt{y} and the lower and upper bounds with \texttt{ymin}\index{ggplot2!ymin} and \texttt{ymax}.\index{ggplot2!ymax} The \verb|geom_hline|\index{geom\_hline, ggplot2} command used here creates a dotted horizontal line at 0. i.e. no effect. \verb|coord_flip|\index{ggplot2!coord\_flip} flips the plot's coordinates so that the variable names are on the $y$ axis.
 
 \noindent We can include this plot in a knitted document the same way as before. 
 
@@ -519,4 +519,4 @@ If you are using RStudio you will likely notice that \emph{googleVis} charts do 
 
 You may notice that Google motion charts do not show up in the RStudio Preview window or even in your web browser when you open the knitted HTML version of the file. You just see a big blank space where you had hoped the chart would be It will show up, however, if you use the \verb|plot| command on a \verb|gvis| motion chart object in the console. Motion charts can only be displayed when they are hosted on a web server or located in a directory `trusted' by Flash Player.\footnote{Motion charts and annotated time line charts rely on Flash, unlike the other Google visualizations. For more information see Markus Gesmann's blog post at: \url{http://lamages.blogspot.com/2012/05/interactive-reports-in-r-with-knitr-and.html}.}\index{Flash Player}
 
-The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio Preview window do not. An easy way to solve this problem is to simply save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.
+The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio Preview window do not. An easy way to solve this problem is to simply save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub!Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.

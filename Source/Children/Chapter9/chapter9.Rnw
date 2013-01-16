@@ -13,13 +13,13 @@ Graphs and other visual methods, discussed in the next chapter, can often be a m
 
 Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors. It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
 
-The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only means available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{table, R package} \emph{memisc} \citep{R-memisc}\index{memisc, R package}\index{memisc} and \emph{estout} \citep{R-estout}\index{estout} packages as well as Paul Johnson's \texttt{outreg}\index{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} I personally also really like the \emph{stargazer} package \citep{R-stargazer}. It has a similar syntax to \emph{apsrtable} and is particularly good for showing results from multiple models estimated using different model types in one table.
+The goal of this chapter is to learn how to dynamically create tables for you presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both of LaTeX and Markdown/HTML. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only means available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{R package!table} \emph{memisc} \citep{R-memisc}\index{R command!memisc}\index{memisc} and \emph{estout} \citep{R-estout}\index{estout} packages as well as Paul Johnson's \texttt{outreg}\index{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} I personally also really like the \emph{stargazer} package \citep{R-stargazer}. It has a similar syntax to \emph{apsrtable} and is particularly good for showing results from multiple models estimated using different model types in one table.
 
 \textbf{Warning:} Automating table creation removes the possibility of adding errors to your analyses by incorrectly copying output, a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables through coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do they match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
 
 \subsection{Basic \emph{knitr} syntax for tables}
 
-The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{results, knitr option}.\label{ResultsOptions} The \texttt{results} option can have one of three values:
+The most important \texttt{knitr} chunk option for showing tables is \texttt{results}\index{knitr option!results}.\label{ResultsOptions} The \texttt{results} option can have one of three values:
 
 \begin{itemize}
 \item
@@ -30,15 +30,15 @@ The most important \texttt{knitr} chunk option for showing tables is \texttt{res
   \verb|'hide'|.
 \end{itemize}
 
-\noindent The value \texttt{hide} clearly hides the results of you code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} is the simplest option as it writes the raw markup form of the table into the presentation document, not as a highlighted code chunk, but as markup. It is then compiled as table markup with the rest of the document. \texttt{markup} uses an output hook\index{hook}\index{hook} to mark up the results in a predefined way. In this chapter we will work with examples using the \texttt{asis} option.\footnote{Note that the \texttt{results} option is a major difference in syntax between \emph{knitr} and \emph{Sweave}.\index{Sweave} In \emph{Sweave} the equivalent option is \texttt{results=TEX}.} 
+\noindent The value \texttt{hide} clearly hides the results of you code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} is the simplest option as it writes the raw markup form of the table into the presentation document, not as a highlighted code chunk, but as markup. It is then compiled as table markup with the rest of the document. \texttt{markup} uses an output hook\index{knitr!hook}\index{knitr!hook} to mark up the results in a predefined way. In this chapter we will work with examples using the \texttt{asis} option.\footnote{Note that the \texttt{results} option is a major difference in syntax between \emph{knitr} and \emph{Sweave}.\index{Sweave} In \emph{Sweave} the equivalent option is \texttt{results=TEX}.} 
 
 \section{Table Basics}
 
 Before getting into the details of how to create tables from R objects we need to first learn how generic tables are created in LaTeX and Markdown/HTML. If you are not familiar with basic LaTeX or Markdown syntax you might want to skip ahead to chapters \ref{LatexChapter} and \ref{MarkdownChapter}, respectively, before coming back to learn about making tables in these languages.
 
-\subsection{Tables in LaTeX}\index{LaTeX tables}
+\subsection{Tables in LaTeX}\index{LaTeX!tables}
 
-Tables in LaTeX are usually embedded in two environments:\index{LaTeX table environment} the \texttt{table} and \texttt{tabular} environments. Before discussing these particular environments, what is a LaTeX environment in general?
+Tables in LaTeX are usually embedded in two environments:\index{LaTeX environment!table} the \texttt{table} and \texttt{tabular} environments. Before discussing these particular environments, what is a LaTeX environment in general?
 
 A LaTeX environment\label{LaTeXEnviron} is a part of the markup where special commands are executed. A simple environment is the \texttt{center} environment.\footnote{For a comprehensive list of LaTeX environments see: \url{http://latex.wikia.com/wiki/List_of_LaTeX_environments}.} Every thing typed in a center environment is, unsurprisingly, centered. If we typed:
 
@@ -67,7 +67,7 @@ A LaTeX environment\label{LaTeXEnviron} is a part of the markup where special co
 
 In this chapter we will learn about two types of environments you need for tables in LaTeX. The \texttt{tabular} environment allows you to format the content of a table. The \texttt{table} environment allows you to format a table's location in the text and its caption.
 
-\paragraph{The \texttt{tabular} environment}\index{tabular, LaTeX environment}
+\paragraph{The \texttt{tabular} environment}\index{LaTeX environment!tabular}
 
 The \texttt{tabular} environment allows you to create tables in LaTeX. Let's work through the basic syntax for a simple table.\footnote{For a comprehensive overview see the LaTeX Wiki page on tables: \url{http://en.wikibooks.org/wiki/LaTeX/Tables}.} 
 
@@ -83,7 +83,7 @@ To begin a simple tabular environment type \verb|\begin{tabular}{TABLE_SPEC}|. T
 \begin{tabular}{l | c c}
 @ 
 
-Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.}\index{ampersand in LaTeX} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double backslashes.\label{DoubleBS} For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
+Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.}\index{LaTeX!ampersand} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double backslashes.\label{DoubleBS} For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
 
 <<Ch9TwoLineLaTeX1, eval=FALSE>>=
 \begin{tabular}{l | c c}
@@ -130,9 +130,9 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
     \hline
 \end{tabular}
 
-\paragraph{Table float environment}\index{table, LaTeX environment}
+\paragraph{Table float environment}\index{LaTeX environment!table}
 
-You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{float, LaTeX} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table}float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC|\label{POSITIONSPEC} argument allows us to determine the location of the table. I can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{caption, LaTeX command} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref{KEY}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{pageref, LaTeX command} to reference the page number.}\index{label, LaTeX command} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
+You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{float, LaTeX} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table}float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC|\label{POSITIONSPEC} argument allows us to determine the location of the table. I can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{LaTeX command!caption} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref{KEY}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{LaTeX command!pageref} to reference the page number.}\index{LaTeX command!label} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
 
 <<Ch9LaTeXExampleFullFloat, eval=FALSE>>=
 \begin{table}[t]
@@ -174,11 +174,11 @@ You might notice that the table we created so far lacks a title and is bunched v
 
 You can see how typing out a table in LaTeX gets very tedious very fast. For all but the simplest tables it is best to try to have R do the table making work for you.
 
-\subsection{Tables in Markdown/HTML}\index{Markdown/HTML tables}
+\subsection{Tables in Markdown/HTML}\index{Markdown!tables}
 
 Now we will briefly look at the syntax for creating simple Markdown and HTML tables before turning to learning how to have R create these tables for us.
 
-\paragraph{Markdown tables}\index{Markdown tables}
+\paragraph{Markdown tables}\index{Markdown!tables}
 
 Markdown table syntax, as with all Markdown syntax is generally much simpler than LaTeX's tabular syntax. The markup is much more human readable. Nontheless, larger tables can still be tedious to create.
 
@@ -228,11 +228,11 @@ Subject1    | a         | b
 
 \noindent If you use Pandoc you can use a more sophisticated caption by including the heading and cross reference key inside of square brackets (\verb|[]|) either directly before or directly after the table. Please see Chapter \ref{MarkdownChapter} (page \pageref{PandocDiscussion}).
 
-\paragraph{HTML tables}\index{HTML tables}
+\paragraph{HTML tables}\index{HTML!tables}
 
 The \emph{xtable} package we will learn in the next section doesn't create tables formatted by Markdown syntax. It can creates tables with HTML syntax. This is useful for us because virtually any HTML markup can be incorporated into a Markdown document. In fact, Markdown table syntax is only a stepping stone for more easily producing tables with HTML syntax. So it is useful to understand the basic syntax for HTML tables.
 
-HTML uses element ``tags''\index{element tag, HTML} to begin and end tables. The main element we use to create tables is, well the \texttt{tables} element. This is very similar to LaTeX's \texttt{tabular} environment. An HTML element generally begins with a start tag and ends with an end tag. Clearly this is very similar to LaTeX's \verb|\begin{}| and \verb|\end{}| commands. Begin tags are encapsulated in a greater than and less than sign and include the element tag name (\verb|<TAG>|). End tags are similar, but include a forward slash like this \verb|</TAG>|. The content of the element goes between the start and end tags. For example:
+HTML uses element ``tags''\index{HTML!element tag} to begin and end tables. The main element we use to create tables is, well the \texttt{tables} element. This is very similar to LaTeX's \texttt{tabular} environment. An HTML element generally begins with a start tag and ends with an end tag. Clearly this is very similar to LaTeX's \verb|\begin{}| and \verb|\end{}| commands. Begin tags are encapsulated in a greater than and less than sign and include the element tag name (\verb|<TAG>|). End tags are similar, but include a forward slash like this \verb|</TAG>|. The content of the element goes between the start and end tags. For example:
 
 <<Ch9HTMLElementTag, eval=FALSE>>=
 <table>
@@ -245,7 +245,7 @@ HTML uses element ``tags''\index{element tag, HTML} to begin and end tables. The
 
 You can add element attributes inside of start tags.\footnote{These work like arguments in R in that they change how the element is evaluated.} For example, to add a border to the table use: \verb|<table border="1">|.
 
-Table rows are put inside of \texttt{tr}\index{tr, HTML element} (table rows) element tags. Individual cells are delimited with \texttt{td} (standard cell) tags.\index{td, HTML element} Here is what the first row of our example table looks like in basic HTML:
+Table rows are put inside of \texttt{tr}\index{HTML element!tr} (table rows) element tags. Individual cells are delimited with \texttt{td} (standard cell) tags.\index{HTML element!td} Here is what the first row of our example table looks like in basic HTML:
 
 <<Ch9HTMLTableFirst, eval=FALSE>>=
 <table>
@@ -300,7 +300,7 @@ M1 <- lm(Examination ~ Education, data = swiss)
 class(M1)
 @
 
-\noindent By using the \texttt{class}\index{class, R command} we can see that \emph{M1} is of the \texttt{lm} class. \emph{M1} contains items estimated by the linear regression model\footnote{If you are unfamiliar with the syntax of R statistical estimation models the previous code might be confusing. In general `response' ($Y$) variables are written first and are separated from the `explanatory' ($X$) variables by a tilde \texttt{$sim$}. Crawley \cite[107]{Crawley2005} notes that you can read $Y \sim X$ as `$Y$ is modeled as a function of $X$'. The individual response variables are generally separated by plus signs (\texttt{+}), indicating that they are included in the model, not that they are added. For more information see Crawley \cite[][Ch. 7]{\Crawley2005}.} such as the coefficient estimates and their standard errors. To get a summary of a model object's contents use the \texttt{summary}\index{summary, R command} like this:
+\noindent By using the \texttt{class}\index{R command!class} we can see that \emph{M1} is of the \texttt{lm} class. \emph{M1} contains items estimated by the linear regression model\footnote{If you are unfamiliar with the syntax of R statistical estimation models the previous code might be confusing. In general `response' ($Y$) variables are written first and are separated from the `explanatory' ($X$) variables by a tilde \texttt{$sim$}. Crawley \cite[107]{Crawley2005} notes that you can read $Y \sim X$ as `$Y$ is modeled as a function of $X$'. The individual response variables are generally separated by plus signs (\texttt{+}), indicating that they are included in the model, not that they are added. For more information see Crawley \cite[][Ch. 7]{\Crawley2005}.} such as the coefficient estimates and their standard errors. To get a summary of a model object's contents use the \texttt{summary}\index{R command!summary} like this:
 
 <<Ch9SimpleSwissSummary>>=
 # Show summary of M1 model object
@@ -371,7 +371,7 @@ print.xtable(M1Table, type = "html", caption.placement = "top")
 
 \subsubsection{\emph{apsrtable} for LaTeX}\index{apsrtable}
 
-The \emph{xtable} package is a very versatile tool for creating relatively well formatted tables from R objects. By default, however, it is not set up to output tables that compare multiple statistical model estimates in the style used by many prominent academic journals. The \emph{apsrtable} package is very useful for creating these types of tables.\footnote{It creates tables in the style used by the \emph{American Political Science Review},\index{American Political Science Review}--hence the package's name--and many other journals.}
+The \emph{xtable} package is a very versatile tool for creating relatively well formatted tables from R objects. By default, however, it is not set up to output tables that compare multiple statistical model estimates in the style used by many prominent academic journals. The \emph{apsrtable} package is very useful for creating these types of tables.\footnote{It creates tables in the style used by the \emph{American Political Science Review},\index{APSR}--hence the package's name--and many other journals.}
 
 Imagine we wanted to show the estimates from a number of nested regression models in a table like Table \ref{BasicApsrTableExample}. For example, to estimate nested regression models from the remaining variables in the \emph{swiss} data set we would type:
 
@@ -439,7 +439,7 @@ There are many other changes you can make to tables created with \emph{apsrtable
 
 Finally, note that you need to include the \texttt{dcolumn} package in your LaTeX preamble, i.e. \verb|\usepackage{dcolumn}| (see page \pageref{LaTeXPreamble} for a discussion of LaTeX preambles) to include the tables created by \emph{apsrtable}.
 
-\paragraph{LaTeX landscape tables}\index{landscape tables, LaTeX}
+\paragraph{LaTeX landscape tables}\index{LaTeX!landscape}
 
 If your your LaTex table is very long, e.g. because it shows results from many estimation models, you can LaTeX's \texttt{lscape} package to create \texttt{landscape} formatting environments. Rather than orienting the text of a page so that it is in profile (a long page), a \texttt{landscape} environment turns it 90 degrees so that it has a landscape orientation (a wide page).
 
@@ -531,7 +531,7 @@ It may take some hunting to find what you want, but a similar process can be use
 
 \subsection{Creating variable description documents with \emph{xtable}}\label{VarDescriptTables}
 
-You can use \emph{xtable} to create a table describing variables in your data set and insert these into Markdown documents created with the concatenate and print (\texttt{cat}) command (see page \pageref{catR}).\index{cat, R command} This is useful because our data so far has been stored in plain-text files. Unlike binary Stata or SAS data files, plain-text data files do not include variable descriptions. 
+You can use \emph{xtable} to create a table describing variables in your data set and insert these into Markdown documents created with the concatenate and print (\texttt{cat}) command (see page \pageref{catR}).\index{R command!cat} This is useful because our data so far has been stored in plain-text files. Unlike binary Stata or SAS data files, plain-text data files do not include variable descriptions. 
 
 Imagine that we want to create a Markdown File with a table describing the variables from the \emph{swiss} data frame. First we will create two vectors: one for the variable name and the other for the variable descriptions.
 
@@ -550,7 +550,7 @@ Description <- c("common standardized fertility measure’",
                   )
 @
 }
-\paragraph{{\tt{results}}}\index{results, knitr option}
+\paragraph{{\tt{results}}}\index{knitr option!results}
 
 \noindent In the first line we use the \texttt{names} command to create a vector of the \emph{swiss} data frame's column names. Then we simply create a vector of descriptions with the concatenate command (\texttt{c}). Now we can combine these vectors into a matrix and use it to create an HTML table.
 

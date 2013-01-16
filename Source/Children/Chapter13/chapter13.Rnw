@@ -105,7 +105,7 @@ A level two header
 -------------------
 @
 
-\subsection{Horizontal Lines}\index{lines, Markdown}
+\subsection{Horizontal Lines}\index{Markdown!lines}
 
 If you would like to create horizontal lines that run the width of the page in Markdown simply place three or more equal signs or dashes separated by text from above by one blank line:
 
@@ -115,7 +115,7 @@ Create a horizontal inline
 =========
 @
 
-\subsection{Paragraphs and new lines}\index{paragraphs, Markdown}
+\subsection{Paragraphs and new lines}\index{Markdown!paragraphs}
 
 Just like in LaTeX new paragraphs are created by putting text on a new line separated by a blank line. For example:
 
@@ -127,9 +127,9 @@ This is the second paragraph.
 
 \noindent You might have noticed that in the headers example we did not need to separate the header with a blank line.
 
-Separating lines with a blank line places a blank line in the HTML document. End a line with two or more white spaces (  ) to create a new line that is not separated by a blank line.\index{new line, Markdown}
+Separating lines with a blank line places a blank line in the HTML document. End a line with two or more white spaces (  ) to create a new line that is not separated by a blank line.\index{Markdown!new line}
 
-\subsection{Italics and bold}\index{italics, Markdown}\index{bold, Markdown}
+\subsection{Italics and bold}\index{Markdown!italicsn}\index{Markdown!bold}
 
 To \emph{italicize} a word in Markdown simply place it between two asterisks, e.g. \verb|*Italicize these words*|. To make a word \textbf{bold} place it between four asterisks: \verb|**Make these words bold**|.
 
@@ -143,7 +143,7 @@ If you want to show a URL as as the text simply type it in both the square brack
 
 Unlike LaTeX Markdown can include almost any letters and characters included in your system. The main exceptions are characters used by Markdown syntax (e.g. \verb|*|, \verb|#|, \verb|\| and so on). You will have to escape these (see below). Font sizes and typefaces cannot be set directly with Markdown syntax. You need to set these with HTML or CSS, which I don't cover here.
 
-\subsection{Lists}\index{lists, Markdown}
+\subsection{Lists}\index{Markdown!lists}
 
 To create itemized lists Markdown simply place the items after one dash:
 
@@ -161,9 +161,9 @@ To create itemized lists Markdown simply place the items after one dash:
 3. Item 3
 @
 
-\subsection{Escape characters}\index{escape character, Markdown}
+\subsection{Escape characters}\index{Markdown!escape character}
 
-Markdown, like LaTeX and R uses backslashes (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document, rather than start an italicize your text, type: \verb|\*|. Two characters ampersand (\verb|&|) and the less than sign (\verb|<|) have special meanings in HTML.\footnote{Ampersands declare the begining of a speacial HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|. 
+Markdown, like LaTeX and R uses backslashes (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document, rather than start an italicize your text, type: \verb|\*|. Two characters ampersand (\verb|&|)\index{Markdown!ampersand} and the less than sign (\verb|<|)\index{Markdown!less than sign} have special meanings in HTML.\footnote{Ampersands declare the begining of a speacial HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|. 
 
 \subsection{Math with MathJax}
 
@@ -191,15 +191,15 @@ s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
 \\]
 @
 
-\section{Expanding Markdown with Pandoc and Custom CSS in RStudio}
+\section{Markdown with Pandoc and Custom CSS}
 
 Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files custom render HTML documents.
 
 \subsection{Pandoc}\label{PandocDiscussion}\index{Pandoc}
 
-With a little customization you can include footnotes and Bibtex\index{BibTeX} into R Markdown documents. When you click on the \texttt{Knit HTML} button in RStudio it runs two commands: \texttt{knitr} to convert your \emph{.Rmd} file to \emph{.md} and then \texttt{markdownToHTML}\index{markdownToHTML} from the \emph{markdown} package \citep{R-markdown}. What we need to do is reset \texttt{markdownToHTML} or create a new function to run Pandoc.
+With a little customization you can include footnotes and Bibtex\index{BibTeX} into R Markdown documents. When you click on the \texttt{Knit HTML} button in RStudio it runs two commands: \texttt{knitr} to convert your \emph{.Rmd} file to \emph{.md} and then \texttt{markdownToHTML}\index{R command!markdownToHTML} from the \emph{markdown} package \citep{R-markdown}. What we need to do is reset \texttt{markdownToHTML} or create a new function to run Pandoc.
 
-The simplest way to do this is to create a new R function\index{function, R command} that runs markdown files created by \emph{knitr} to Pandoc in order to create an HTML file:\footnote{This function is modified from one on the RStudio website. See below for more details.}
+The simplest way to do this is to create a new R function\index{R command!function} that runs markdown files created by \emph{knitr} to Pandoc in order to create an HTML file:\footnote{This function is modified from one on the RStudio website. See below for more details.}
 
 <<Ch13PandocFunction, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
@@ -210,7 +210,7 @@ pandocToHTML <-  function(inputFile, outputFile)
 }
 @
 
-\noindent The \texttt{system}\index{system, R command} sends the following code to your computer's command line where it runs Pandoc. \texttt{shQuote} allows us quotes a string that can be parsed by the sell. In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. 
+\noindent The \texttt{system}\index{R command!system} sends the following code to your computer's command line shell where it runs Pandoc. \texttt{shQuote} allows us quotes a string that can be parsed by the sell. In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. 
 
 As we saw in the previous chapter, we can use Pandoc to output a Markdown file to markup languages other than HTML. You can modify the previous code to do this. See page \pageref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}. 
 
@@ -237,7 +237,7 @@ options(rstudio.markdownToHTML =
 
 \paragraph{Footnotes with Pandoc}
 
-Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown extensions.\index{Pandoc Markdown Extensions} Pandoc Markdown extensions add functions to regular Markdown syntax. I am only briefly going to discuss two of the most important for reproducible Markdown documents: footnotes and bibliographies with BibTeX. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
+Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown extensions.\index{Pandoc!Markdown Extensions} Pandoc Markdown extensions add functions to regular Markdown syntax. I am only briefly going to discuss two of the most important for reproducible Markdown documents: footnotes and bibliographies with BibTeX. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
 
 To create a what Pandoc calls an ``inline note'' use the \verb|^[NOTE]| syntax. For example:
 
@@ -249,7 +249,7 @@ This is some text.^[This is an inline footnote.]
 
 \paragraph{Bibliographies with Pandoc}
 
-We can add BibTeX citations with a small addition to the Pandoc call we use to render our Markdown file. Imagine we have a bibliography file called \emph{Example.bib} in the same directory as our \emph{Example.Rmd} file. We need to add the \verb|--bibliography| option\index{bibliography, Pandoc option} to Pandoc like this:
+We can add BibTeX citations with a small addition to the Pandoc call we use to render our Markdown file. Imagine we have a bibliography file called \emph{Example.bib} in the same directory as our \emph{Example.Rmd} file. We need to add the \verb|--bibliography| option\index{Pandoc option!bibliography} to Pandoc like this:
 
 <<Ch13PandocFunctionBib, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
@@ -267,7 +267,7 @@ Now in the text of our document we can add the citation:
 This is a citation [@Donohue2009].
 @
 
-\noindent Pandoc uses \emph{natbib}\index{natbib} by default so the citation \verb|[@Donohue2009]| will appear as (Donohue et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donohue2009, 10]|. This will create an in-text citation that looks like this: (see Donohue et al. 2009, 10) To include only the year and not the authors' surnames add a minus sign, e.g. \verb|[-@Donohue2009]|. See the Pandoc README site for more options.
+\noindent Pandoc uses \emph{natbib}\index{LaTeX package!Natbib} by default so the citation \verb|[@Donohue2009]| will appear as (Donohue et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donohue2009, 10]|. This will create an in-text citation that looks like this: (see Donohue et al. 2009, 10) To include only the year and not the authors' surnames add a minus sign, e.g. \verb|[-@Donohue2009]|. See the Pandoc README site for more options.
 
 Here is complete example of an R Markdown document that includes footnotes and bibliographies.
 
@@ -293,9 +293,9 @@ This is a citation [see @Donohue2009, 10].
 
 \subsection{CSS style files and Markdown}
 
-You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this Google Chrome's Developer Tools.\index{Google Chrome Developer Tools} This allows you to edit your webpages, including their CSS and have a live preview. It is a really nice way to experiment CSS (and HTML, JavaScript, and so on).  For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}. There are also numerous pre-made style sheets online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error.} In this example I will use a stylsheet called \emph{Markdown.css} created by and can be found at: \url{https://github.com/simonlc/Markdown-CSS}. 
+You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this Google Chrome's Developer Tools.\index{Google Chrome!Developer Tools} This allows you to edit your webpages, including their CSS and have a live preview. It is a really nice way to experiment CSS (and HTML, JavaScript, and so on).  For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}. There are also numerous pre-made style sheets online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error.} In this example I will use a stylsheet called \emph{Markdown.css} created by and can be found at: \url{https://github.com/simonlc/Markdown-CSS}. 
 
-\paragraph{Rendering Markdown files using custom CSS}\index{CSS, custom Markdown}
+\paragraph{Rendering Markdown files using custom CSS}\index{Markdown!custom CSS}
 
 It is simple to use a custom CSS file with the \texttt{markdownToHTML} command. Just add save your custom \emph{.css} file in the working directory and use the \texttt{stylesheet} argument with \texttt{markdownToHTML}. Imagine we want to \texttt{knit} our \emph{Example.Rmd} file using a custom style sheet called \emph{Markdown.css}. Both files are in the working directory.
 
@@ -332,9 +332,9 @@ options(rstudio.markdownToHTML =
 
 \noindent Simply change the style sheets name and file path as needed.
 
-\paragraph{Custom CSS files with Pandoc}\index{CSS and Pandoc}
+\paragraph{Custom CSS files with Pandoc}\index{Pandoc!CSS}
 
-You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \verb|--css| option to your \texttt{pandocToHTML} call.\index{--css, Pandoc option} This will tell Pandoc what CSS file you want to use. For example:
+You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \verb|--css| option to your \texttt{pandocToHTML} call.\index{Pandoc option!css option} This will tell Pandoc what CSS file you want to use. For example:
 
 <<Ch13PandocCustomCSS, eval=FALSE, tidy=FALSE>>=
 pandocToHTML <-  
@@ -368,7 +368,7 @@ There are a number of steps to create an HTML5 slideshow with \emph{Slidify}:
 
 \paragraph{HTML5 frameworks}
 
-Before getting into the details of how to use \emph{Slidify}, let's briefly understand what an HTML5 slideshow is and the frameworks that make it possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, CSS,\index{CSS} JavaScript,\index{JavaScript} to essentially create a website that behaves like a LaTeX beamer\index{beamer} or Powerpoint\index{Powerpoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components may be located remotely. Most browsers have a \texttt{Full Screen} mode you can use for presentations. 
+Before getting into the details of how to use \emph{Slidify}, let's briefly understand what an HTML5 slideshow is and the frameworks that make it possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, CSS,\index{CSS} JavaScript,\index{JavaScript} to essentially create a website that behaves like a LaTeX Beamer\index{Beamer} or Powerpoint\index{Powerpoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components may be located remotely. Most browsers have a \texttt{Full Screen} mode you can use for presentations. 
 
 There are a number of different HTML5 slideshow frameworks that let you create and style you slideshows. Table \ref{SlideshowFrameworks} lists some of the major frameworks supported by \emph{Slidify}. In all of the framworks you advance through slides with the forward arrow button on your keyboard. Of course you can go back with the back arrow. Despite this similarity, the frameworks have different looks and capabilities. Check out their respective websites listed in Table \ref{SlideshowFrameworks} for more information.
 
@@ -470,13 +470,13 @@ slidify("MySlideShow.Rmd")
 
 You can of course show slideshows on your own computer by opening the \emph{index.html} file in a web browser. If you want to make your slideshow available to anyone with an internet connection use Slidify's \verb|publish| command. This will allow you to publish your presentation via GitHub\index{GitHub}, Dropbox\index{Dropbox}, or RPubs\index{RPubs}. Let's look at how to publish to GitHub and Dropbox.
 
-To publish our example \emph{MySlideShow} on GitHub first create a new GitHub repository\index{GitHub repository} called `MySlideShow' (see Chapter \ref{Storing} page \pageref{NewGHRepo} for instructions on how to create a new repository). Make sure the repository is empty, i.e. has no files in it. Then type in R:
+To publish our example \emph{MySlideShow} on GitHub first create a new GitHub repository\index{GitHub!repository} called `MySlideShow' (see Chapter \ref{Storing} page \pageref{NewGHRepo} for instructions on how to create a new repository). Make sure the repository is empty, i.e. has no files in it. Then type in R:
 
 <<Ch13GitPublish, eval=FALSE>>=
 publish(user = "USER", repo = "MySlideShow", host = "github")
 @
 
-\noindent \texttt{USER} is your GitHub user name. This will create a new GitHub Pages\index{GitHub Pages} website where your slideshow will be accessible to anyone on the internet.
+\noindent \texttt{USER} is your GitHub user name. This will create a new GitHub Pages\index{GitHub!Pages} website where your slideshow will be accessible to anyone on the internet.
 
 To use the webpage hosting abilities of Dropbox's public folders type:
 
@@ -496,15 +496,15 @@ We saw in the previous section how \emph{slidify} can publish slideshows via RPu
 
 Before looking at the specifics of ways to publish R Markdown documents on the internet it's important to note that you can of course simply open the HTML file rendered from any R Markdown document in your web browser. If the HTML file contains the full information for the page, e.g. there are not auxiliary files it depends on, you can simply share this file and anyone with a web browser can open it. We can of course also send auxiliary files if need be, but this can get unwieldy.
 
-\subsection{Hosting webpages with Dropbox}\index{Dropbox Public folder}
+\subsection{Hosting webpages with Dropbox}\index{Dropbox!Public folder}
 
 Probably one of the easiest ways to host an HTML file created with R Markdown is on your Dropbox \emph{Public} folder.\footnote{See page \pageref{EnablePublicFolder} for instructions on how to enable this folder if you created your Dropbox account after 4 October 2012.} Just like we saw with \emph{Slidify} slideshows in the \emph{Public} folder any HTML file will be properly rendered and widely accessible simply be entering the public link into a web browser. 
 
-\section{GitHub Pages}\index{GitHub Pages}
+\section{GitHub Pages}\index{GitHub!Pages}
 
 GitHub also offers a free hosting service for webpages. These can be much more complex. The simplest way to create one of these pages is to create a repository with a file called \emph{README.Rmd}. You can \texttt{knit} this file and then create your GitHub Page with it. To do this go to the \texttt{Settings} \textrightarrow{} \texttt{GitHub Pages} on your repository's main GitHub website. Then click \emph{Automatic Page Generator}. This place the contents of your \emph{README.md} file in the page and provide you with formatting options. Click \texttt{Publish} and you will have a new website. 
 
-Clicking \texttt{Publish} creates a new orphan branch\footnote{An orphan branch is a branch with a different root from other repository branches. Another way of think about this is that they have their own history.}\index{orphan branch, GitHub} called \emph{gh-pages}.\index{gh-pages} When these branches are pushed to GitHub will create a website if they contain a file called \emph{index.html}. This will be the websites main page. 
+Clicking \texttt{Publish} creates a new orphan branch\footnote{An orphan branch is a branch with a different root from other repository branches. Another way of think about this is that they have their own history.}\index{Git!orphan branch} called \emph{gh-pages}.\index{GitHub!gh-pages branch} When these branches are pushed to GitHub will create a website if they contain a file called \emph{index.html}. This will be the websites main page. 
 
 If you want to create more customized and larger websites with GitHub pages you can manually create a GitHub Pages orphan branch and push it to GitHub. This is essentially what \emph{Slidify} did for us with its \texttt{publish} command. Imagine have our working directory set as a repository containing an R Markdown file that we have rendered into an HTML file called \emph{index.html}. Let's create a new orphan branch and remove all files from it:
 

@@ -28,7 +28,7 @@ The files for the examples used in this section can be downloaded from GitHub at
 
 \subsection{R Make-like files}
 
-When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{source command}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
+When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{setwd} and {\tt{source}}\index{R command!soure}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command is used more in the Chapter \ref{StatsModel}.}  Lets see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
 
 <<Ch5ExampleRMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
 ################
@@ -59,7 +59,7 @@ You can run the commands in this file one by one or run the make-like file throu
 
 R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see page \pageref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
 
-In Make terminology the output files are called ``targets''\index{targets, Make} and the files that create them are called ``prerequisites''\index{prerequisites, Make}. You specify a ``recipe''\index{recipe, Make} to create the targets from the prerequisites. The general form is:
+In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipie} to create the targets from the prerequisites. The general form is:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -131,11 +131,11 @@ The third executed line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a var
 
 You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wildcard'',\index{wildcard}\label{AsteriskWildcard} a special character that allows you to select file names. The asterisk wildcard selects any file name. Using \verb|*.R| selects any file name that ends in \emph{.R}.  
 
-Why did we include the actual word \texttt{wildcard}?\index{wildcard, Make function} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
+Why did we include the actual word \texttt{wildcard}?\index{Make function!wildcard} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 
 The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \emph{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R outfile contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your make files gives you an error like \texttt{make: *** [Gather.Rout] Error 1}.} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but uses the file extension \emph{.Rout}.
 
-The second part of the make file tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{targets, Make} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \texttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
+The second part of the make file tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{Make!targets} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \texttt{make} in the terminal with now arguments. We will see later how to instruct Make to compile different targets.
 
 The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CMD BATCH $<|) actually runs the R source code files in the directory.  The first line specifies that the \emph{.Rout} files are the targets of the \emph{.R} files (the prerequisites. The percent sign (\verb|%|) is another wildcard. Unlike the asterisk, it replaces the selected file names throughout the command used to create the target.
 
@@ -206,7 +206,7 @@ make cleanMerge all
 
 \subsubsection{Makefiles and RStudio Projects}
 
-You can run basic Makfiles with RStudio's Build capabilities.\index{Build, RStudio} For the type of Makefile we have been using, the main advantage of running Makefiles from within RStudio is that you don't have to toggle between RStudio and the Shell. 
+You can run basic Makfiles with RStudio's Build capabilities.\index{RStudio!Build} For the type of Makefile we have been using, the main advantage of running Makefiles from within RStudio is that you don't have to toggle between RStudio and the Shell. 
 
 Imagine that the directory with our Makefile is an RStudio Project (see page \pageref{CreateRStudioProject}. If a project already contains a Makefile, RStudio will automatically open a \emph{Build} tab on the \textbf{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a Makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
 
@@ -405,7 +405,7 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 head(FertConsumpData)
 @
 
-\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is a the countries' or regions' International Standards Organization's\index{International Standards Organization} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
+\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is a the countries' or regions' International Standards Organization's\index{ISO} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
 
 \section{Advanced Automatic Data Gathering: web scraping}
 
