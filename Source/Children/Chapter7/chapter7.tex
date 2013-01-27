@@ -125,103 +125,13 @@ Let's imagine that the fertilizer consumption data we previously downloaded from
 
 
 
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlfunctioncall{head}(WideFert)
-\end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'WideFert' not found}}\end{kframe}
-\end{knitrout}
 
 
-Using \emph{reshape2}'s \texttt{melt}\index{melt}\label{MeltReshape} command we can reshape this data from wide to long format. The term ``melt'' is intended to evoke an image of the data melting down from a wide to long format.\footnote{The opposite \texttt{cast} command (\texttt{dcast}\index{cast}\index{dcast} in the case of data frames) is supposed to evoke an image of casting out the data from long to wide format. See page \pageref{WideAppendix} for am example using the \texttt{dcast} command.} In our \emph{WideFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be melted. These variables identify the data set's subjects. we can tell \texttt{melt} that they are id variables with the \texttt{id.vars} argument. The remaining columns (i.e. \textbf{2002}, \textbf{2003}, \textbf{2004} and \textbf{2005}) will be melted into two new variables: \textbf{variable}, and \textbf{value}. The former will contain the years and the later will contain the fertilizer consumption data. Here is the full code:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcomment{# Melt WideFert}
-MoltenFert <- \hlfunctioncall{melt}(data = WideFert, 
-                    id.vars = \hlfunctioncall{c}(\hlstring{"iso2c"}, \hlstring{"country"}))
-\end{alltt}
 
 
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: object 'WideFert' not found}}\begin{alltt}
 
-\hlcomment{# Show MoltenFert}
-\hlfunctioncall{head}(MoltenFert)
-\end{alltt}
-\begin{verbatim}
-## data frame with 0 columns and 0 rows
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-
-\noindent Note that objects that are created by \texttt{melt} are often referred to as ``molten'' data in the \emph{reshape2} documentation. That is why I've given our new data frame the name \emph{MoltenFert}. 
-
-\subsection{Renaming variables}
-
-Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Rename data frame variables is straight forward with the \texttt{rename} command in the \emph{reshape} package \citep{R-reshape}.\footnote{\emph{reshape} package precedes \emph{reshape2}, which was created to improve the performance of the \texttt{melt} and \texttt{cast} commands}
-
-To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcomment{# Load reshape package}
-\hlfunctioncall{library}(reshape)
-
-\hlcomment{# Rename variable = year, value = FertilizerConsumption}
-MoltenFert <- \hlfunctioncall{rename}(x = MoltenFert,
-                     replace = \hlfunctioncall{c}(variable = \hlstring{"year"},
-                                 value = \hlstring{"FertilizerConsumption"}))
-
-\hlcomment{# Show MoltenFert}
-\hlfunctioncall{head}(MoltenFert)
-\end{alltt}
-\begin{verbatim}
-## data frame with 0 columns and 0 rows
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-
-\subsection{Ordering data}
-
-You may have noticed that as a result of melting \emph{WideFert} the data is now ordered by year then country name. Typically TSCS data is sorted by country then year, or more generally: subject-year. Though not required for merging in R\footnote{Unlike in other statistical programs.} some statistical analyses assume that the data is ordered in a specific way. Well ordered data is also easier for people to understand.
-
-We can order observations in our data set using the \texttt{order} command.\index{R command!order}\index{sort} For example, to order \emph{MoltenFert} by country-year we type:
-
-\begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
-\begin{alltt}
-\hlcomment{# Order MoltenFert by country-year}
-MoltenFert <- MoltenFert[\hlfunctioncall{order}(MoltenFert$country,
-                                MoltenFert$year), ]
-\end{alltt}
-
-
-{\ttfamily\noindent\bfseries\textcolor{errorcolor}{\#\# Error: argument 1 is not a vector}}\begin{alltt}
-
-\hlcomment{# Show MoltenFert}
-\hlfunctioncall{head}(MoltenFert)
-\end{alltt}
-\begin{verbatim}
-## data frame with 0 columns and 0 rows
-\end{verbatim}
-\end{kframe}
-\end{knitrout}
-
-
-\subsection{Subsetting data}
-
-Sometimes you may want to use only a subset of a data frame. For example, the density plot in Figure \ref{FertilizerConsumptionDens} shows us that the MoltenFert data has a few very extreme values. We can use the \texttt{subset}\index{subset} command to examine the outliers,\index{outliers} for example countries that have fertilizer consumption greater than 1000 kilograms per hectare.  
-
-\begin{figure}
-    \caption{Density Plot of Fertilizer Consumption (kilograms per hectare of arable land)}
-    \label{FertilizerConsumptionDens}
 
 
 

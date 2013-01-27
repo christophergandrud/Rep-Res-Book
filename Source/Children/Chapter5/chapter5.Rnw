@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 January 2012
+% Updated: 21 January 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -328,11 +328,11 @@ git rm --cached ExampleProject.tex
 For more information on \emph{.gitignore} files see GitHub's reference page on the topic at: \url{https://help.github.com/articles/ignoring-files}.
 
 
-\subsubsection{Remote Storage on GitHub}
+\subsubsection{Remote Storage on GitHub}\label{NewGitHubRepo}
 
 So far we've been using repos stored locally. To create repositories stored on GitHub, first create a new repository through the GitHub website. On your main GitHub account page click the \texttt{New repository} button. In the next page that appears give the repository a name, brief description, choose whether to make it public or private. Also click the check box to to create a \emph{README.md} file in the repository. When you click \texttt{Create Repository} you will be directed to the repository's GitHub page.\label{NewGHRepo}
 
-To download the repository onto your local computer you need to ``clone'' it. The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy it's URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in} \ldots button.}
+To download the repository onto your local computer you need to ``clone'' it. The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy it's URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in} \ldots button.}\label{GitClone}
 
 <<Ch5Clone, eval=FALSE, engine='sh'>>=
 # Change working directory 
@@ -407,22 +407,30 @@ We've covered a lot of ground in this section. Let's sum up the basic GitHub wor
 
 If you want more practice setting up GitHub in the command line, GitHub and the website Code School have an interactive tutorial that you might find interesting. You can find it at: \url{http://try.github.com/levels/1/challenges/4}.
 
+\begin{figure}
+	\caption{Creating RStudio Projects}
+	\label{NewRStudioProject}
+		\begin{center}
+			\includegraphics[scale=0.5]{Children/Chapter5/images5/GitNewProject.png}
+		\end{center}
+\end{figure}
+
 \section{RStudio \& GitHub}
 
-RStudio can accomplish many of the Git commands covered in the previous section with a graphical user interface. 
+RStudio can accomplish many of the Git commands covered in the previous section with a graphical user interface. Let's look at how to set up and use Git in RStudio Projects.
 
-\subsection{Set Up}
+\subsection{Setting Up Git/GitHub with Projects}
 
-You can Git initialize new RStudio projects as repositories, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do this RStudio automatically adds a \emph{.gitignore} file telling Git to ignore the R files: \emph{.Rproj.user}, \emph{.Rhistory} and \emph{.RData}. 
+You can Git initialize new RStudio projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do this RStudio automatically adds a \emph{.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory} and \emph{.RData} files. 
 
-\paragraph{New Git version controlled repository}
-To create a new project with Git version control go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}. Select \texttt{New Project}. Enter the Projects name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project}. 
+\paragraph{Git with a new project}\label{NewProjectGit}
+To create a new project with Git version control go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}, the select \texttt{New Project} (see Figure \ref{NewRStudioProject}). Enter the project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project}. 
 
 \paragraph{Git initialize existing projects}
 
 If you have an existing RStudio Project and want to add Git version control to it first go to \texttt{Project} in the RStudio menu bar. Then select \texttt{Project Options \ldots}. Select the \texttt{Git/SVN} icon. Finally select \texttt{Git} from the drop down menu for \texttt{Version Control System:}.
 
-You can push an existing repository stored on your computer to a new remote one on GitHub, for example. To do this first create a new repo on GitHub with the same name as your RStudio project like we did earlier.\footnote{If your project already has a README file make sure you don't have GitHub initialize the repository with another README file.} Then copy the remote repository's URL like we saw before when we cloned a repository. Open a new shell from withing RStudio. To do this, click the \texttt{Shell} button in Git tab's \texttt{More} drop down menu. Then use the Git's \texttt{remote}\index{Git command!remote} command with the \texttt{add} argument. For example, if your repository's GitHub URL is \texttt{https://github.com/USERNAME/ExampleProject.git} then type:
+You can push an existing repository stored on your computer to a new remote repository on GitHub. To do this first create a new repo on GitHub with the same name as your RStudio project (see page \pageref{NewGitHubRepo}).\footnote{If your project already has a README file make sure you don't have GitHub initialize the repository with another README file.} Then copy the remote repository's URL like we saw before when we cloned a repository from GitHub (see page \pageref{GitClone}). Open a new shell from within RStudio. To do this, click the \texttt{Shell} button in Git tab's \texttt{More} drop down menu. In the shell type Git's \texttt{remote}\index{Git command!remote} command with the \texttt{add} argument. For example, your repository's GitHub URL is \texttt{https://github.com/USERNAME/ExampleProject.git} then type:
 
 {\small
 <<Ch5GitRemoteAdd, eval=FALSE, engine='sh'>>=
@@ -431,24 +439,20 @@ git remote add origin https://github.com/USERNAME/ExampleProject.git
 @
 }
 
-\noindent This will add the local \texttt{origin} repository to GitHub. Finally, push the repository to GitHub: 
+\noindent This will connect your local repository to the remote one on GitHub. Finally, push the repository to GitHub: 
 
 <<Ch5GitPushRemote, eval=FALSE, engine='sh'>>=
 # Push local repository to GitHub for the first time
 git push -u origin master
 @
 
-\noindent This is almost identical to the \texttt{push} command we saw earlier. The only difference is the addition of the \texttt{-u} (upstream tracking)\index{Git!upstream tracking} argument. This argument simply adds a tracking reference for the upstream (GitHub) repository branches. 
+\noindent This is almost identical to the \texttt{push} command we saw earlier. The only difference is the addition of the \texttt{-u} (upstream tracking)\index{Git!upstream tracking} argument. This argument adds a tracking reference for the upstream (GitHub) repository branches. 
 
-Once you have done this you will not need to use the shell to push changes to GitHub. You can use the \texttt{Push} command in the \texttt{More} drop down menu in your project's \emph{Git} tab. Just like when pushing from the shell, you will be asked for your GitHub user name and password.
+Once you have done this you will not need to use the shell to push changes to GitHub. You can use the \texttt{Push}\index{Git command!push} command in the \texttt{More} drop down menu in your project's \emph{Git} tab. Just like when pushing from the shell, you will be asked for your GitHub user name and password.
 
 \paragraph{Clone repository into a new project}
 
-To create a new project from a cloned GitHub Repository again go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}. Select the \texttt{Version Control} option and then \texttt{Git}. Finally paste the repository's URL in the field called \texttt{Repository URL:}, enter the directory you would like to locate the cloned repo in and click \texttt{Create Project}. 
-
-\subsection{Using Git in RStudio projects}
-
-When you open a project with a Git repository in RStudio you will see a new tab in the same pane as \emph{Workspace/History} (see Figure \ref{GitTab}).
+Again go to \texttt{Project} in the RStudio menu bar to create a new project from a cloned GitHub Repository. Then click \texttt{Create Project \ldots}. Select the \texttt{Version Control} option and then \texttt{Git}. Finally paste the repository's URL in the field called \texttt{Repository URL:}, enter the directory you would like to locate the cloned repo in and click \texttt{Create Project}. 
 
 \begin{figure}
     \caption{The RStudio Git Tab}
@@ -468,9 +472,11 @@ When you open a project with a Git repository in RStudio you will see a new tab 
     \end{center}
 \end{figure}
 
-This tab allows you do to many of the things we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add files names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
+\subsection{Using Git in RStudio projects}
 
-If you are using a GitHub repo that is associated with a remote repository on GitHub, for example, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu. You can also use the same icons in the \textbf{Review Changes} window.
+When you open a project with a Git repository in RStudio you will see a new tab next to \emph{Workspace} and \emph{History} (see Figure \ref{GitTab}).This tab allows you do to many of the same things with Git that we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's for ``add''. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add file names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
 
-The Git tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can also always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new Shell with the project set as the working directory to complete any Git task you might want.
+If you are using a GitHub repo that is associated with a remote repository on GitHub, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu. You can also use the same buttons in the \textbf{Review Changes} window.
+
+The Git tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new Shell with the project set as the working directory to complete any other Git task you might want.
 

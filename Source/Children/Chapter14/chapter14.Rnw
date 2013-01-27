@@ -1,7 +1,7 @@
 % Chapter Chapter 14 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 January 2013
+% Updated: 25 January 2013
 
 <<set-parent14, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -17,7 +17,7 @@ In this book we have learned many of the basic tools and a workflow to create an
 
 With most things computational (possibly most things in general) probably one of the best ways to continue learning are practice and trying new things. Inevitably you will hit walls, with R and the other tools discussed here there are almost always solutions that can be found with curiosity and patience. The R and reproducible research community is extremely helpful when it comes to finding and sharing solutions. I highly recommend that to get the most out of reproducible research you take full advantage of (and contribute to!) these communities.
 
-Before ending the book I wanted to briefly address three issues we have not covered so far that are important for reproducible research: citing reproducible research, licensing this research and whether or not it is possible to completely future proof your research.  
+Before ending the book I wanted to briefly address three issues we have not covered so far that are important for reproducible research: citing reproducible research, licensing this research, sharing your code in R packages and whether or not it is possible to completely future proof your research.  
 
 \section{Citing reproducible research}\index{citing}
 
@@ -46,6 +46,14 @@ Though \citeauthor{Altman2007} are interested in data sets their system could ea
 \section{Licensing your reproducible research}\index{licensing}
 
 In the United States and many other countries research, including computer code made available via the internet is automatically given copyright protection. However, copyright protection works against the scientific goals of reproducible research, because work derived from the research falls under the original copyright protections \cite[36]{Stodden2009}. To solve this problem, some authors have suggest placing code under an open source software license like the GNU General Public License (GPL) \cite[]{Vandewalle2007}.\index{GNU General Public License} \cite{Stodden2009} argues that this type of license is not really adequate for making available the data, code, and other material needed to reproduce research findings in a way that enables scientific validation and knowledge growth. I don't want to fully explore the intricacies of these issue here. Nonetheless, they are important for computational researchers to think about, especially if their data and source code is publicly available. Two good places to go for more information are \cite{Stodden2009} and \cite{CreativeCommons2012}. 
+
+\section{Sharing your code in packages}\index{R!package development}\index{R!functions}
+
+Developing R functions and putting them into into packages is a good way to enable cumulative knowledge development. Many researchers spend a considerable amount of time writing code to solve problems that no one has addressed yet, or haven't addressed in a way that they believe is adequate. It is very useful if they make this code publicly accessible so that others can perhaps adopt and use it in their own work. Abstracting your code into functions so that it can be applied to many problems and distributing it in easily installed packages makes it much easier for other researchers to adopt and use your code to help solve their research problems. The active community of researcher/package developers is one of the main reasons that R has become such a widely used and useful statistical language. 
+
+Many of the tools we have covered in this book provide a good basis to start making and distributing functions. We have discussed many of the R commands and concepts that are important for creating functions. We have also looked at Git and GitHub which are very helpful for developing and distributing packages. Learning about Hadley Wickham's\index{Hadley Wickham} \emph{devtools} package is probably the best next step for you to take to be able to develop and distribute functions in packages. He has an excellent comprehensive wiki on the \emph{devtools} GitHub site to get you started. For more details see \url{http://www.rstudio.com/projects/devtools/}. 
+
+RStudio Projects\index{RStudio!Projects} has excellent \emph{devtools} integration and is certainly worth using. To begin creating a new package in RStudio start a new project, preferably with Git version control (see page \pageref{NewProjectGit}). In the \textbf{Create New Project} window make sure to select \texttt{Package} from the \texttt{Type:} drop down menu. Now you will have a new project will all of the files and directories you need to get started making packages that will hopefully be directly useful for the computational research community.
 
 \section{Is it possible to completely future proof your research?}
 
