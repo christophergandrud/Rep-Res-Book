@@ -86,19 +86,19 @@ Text files are also very easy to search and manipulate with a wide range of prog
 
 \subsection{All files should be human readable}
 
-Treat all of your research files as if someone who has not worked on the project will, in the future, try to understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what you want to do.\footnote{Of course, if it does not understand it will usually give us an error message.} However, there is a very good chance that other people (or you six months in the future) will not understand what you were telling the computer. So, you need to make all of your files `human readable'. To make your source code files accessible to other people you need to {\emph{comment frequently}} \cite[3]{Bowers2011} and {\emph{format your code using a style guide}} \cite[]{Nagler1995}. For especially important pieces of code you should use {\emph{literate programming}}--where the source code and the presentation text appear in the same document. Doing this will make it very clear to others how you accomplished a piece of research.
+Treat all of your research files as if someone who has not worked on the project will, in the future, try to understand them. Computer code is a way of communicating with the computer. It is `machine readable' in that the computer is able to use it to understand what you want to do.\footnote{Of course, if the computer does not understand it will usually give an error message.} However, there is a very good chance that other people (or you six months in the future) will not understand what you were telling the computer. So, you need to make all of your files `human readable'. To make your source code files accessible to other people you need to {\emph{comment frequently}} \cite[3]{Bowers2011} and {\emph{format your code using a style guide}} \cite[]{Nagler1995}. For especially important pieces of code you should use {\emph{literate programming}}--where the source code and the presentation text appear in the same document. Doing this will make it very clear to others how you accomplished a piece of research.
 
 \paragraph{Commenting}
-In R everything on a line after a {\tt{\#}} hash character (also known as number, pound, or sharp) is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{\#}} to place comments telling other people what you are doing. Here are some examples:
+In R everything on a line after a hash character--{\tt{\#}}--(also known as number, pound, or sharp) is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{\#}} to place comments telling other people what you are doing. Here are some examples:
 
 <<Ch2CommentHash>>=
 # A complete comment line
 2 + 2 # A comment after R code
 @
 
-\noindent On the first line the {\tt{\#}} is placed at the very beginning, so the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation \texttt{2 + 2}. R runs the equation as usual and finds the answer {\tt{4}}, but it ignores all of the words after the hash. 
+\noindent On the first line the {\tt{\#}} is placed at the very beginning, so the entire line is treated as a comment. On the second line the {\tt{\#}} is placed after the simple equation \texttt{2 + 2}. R runs the equation and finds the answer {\tt{4}}, but it ignores all of the words after the hash. 
 
-Different languages have different comment declaration characters. In LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in shell scripts.
+Different languages have different comment declaration characters. In LaTeX everything after the {\tt{\%}} percent sign is treated as a comment and in markdown/HTML comments are placed inside of {\tt{\textless !-- --\textgreater}}. The hash character is used for comment declaration in command line shell scripts.\index{shell script}
 
 Nagler \citeyearpar[491]{Nagler1995} gives some advice on when and how to use comments:
 
@@ -107,7 +107,7 @@ Nagler \citeyearpar[491]{Nagler1995} gives some advice on when and how to use co
     \item comment on any line of code that is ambiguous.
 \end{itemize}
 
-\noindent In this book I follow these guidelines when displaying written code. 
+\noindent In this book I follow these guidelines when displaying code. 
 
 He also suggests that all of your source code files should begin with a comment header. {\emph{At the least}} the header should include:
 
@@ -117,24 +117,23 @@ He also suggests that all of your source code files should begin with a comment 
     \item the name of the file's creator and any contributors.
 \end{itemize}
 
-\noindent You may also want to include other information in the header such as what other files it depends on, what output files it produces, what version of the programming language you are using or sources that may have strongly influenced the code. 
-
-Here is an example of a minimal file header for an R source code file that creates the third figure in an article titled ``My Article":
+\noindent You may also want to include other information in the header such as what files it depends on, what output files it produces, what version of the programming language you are using or sources that may have influenced the code. Here is an example of a minimal file header for an R source code file that creates the third figure in an article titled ``My Article":
 
 <<Ch2CommentHeader, tidy=FALSE>>=
 ##################
 # Source code file used to create Figure 3 in ''My Article''
 # Created by Christopher Gandrud
-# Updated 1 March 2012
+# Updated 1 March 2013
 ##################
 @
 
 \noindent Feel free to use things like the long series of hash marks above and below the header, white space, and indentations to make your comments more readable. 
 
 \paragraph{Style guides}
-In natural language writing you don't necessarily need to always follow a style guide\index{style guide}. People could probably figure out what you are saying, but it would be a lot easier for your readers if you use consistent rules. The same is true when writing computer code. It's good to follow consistent rules for formatting your code so that its easier for you and others to understand.
 
-There are a number of R style guides. Most of them are similar to the Google R Style Guide\index{Google R Style Guide}.\footnote{See: \url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}.} Hadley Wickham also has a nicely presented R style guide.\footnote{You can find it at \url{https://github.com/hadley/devtools/wiki/Style}.} You may want to use the {\emph{formatR}}\index{formatR} \cite[]{R-formatR} package to automatically reformat your code so that it is easier to read.
+In natural language writing you don't necessarily have to follow a style guide\index{style guide}. People could probably figure out what you are trying to say, but it is a lot easier for your readers if you use consistent rules. The same is true when writing computer code. It's good to follow consistent rules for formatting your code so that it's easier for you and others to understand.
+
+There are a number of R style guides. Most of them are similar to the Google R Style Guide\index{Google R Style Guide}.\footnote{See: \url{http://google-styleguide.googlecode.com/svn/trunk/google-r-style.html}.} Hadley Wickham also has a nicely presented R style guide.\footnote{You can find it at \url{https://github.com/hadley/devtools/wiki/Style}.} You may want to use the {\emph{formatR}}\index{R package!formatR} \cite[]{R-formatR} package to automatically reformat your code so that it is easier to read.
 
 \paragraph{Literate programming}
 
@@ -142,7 +141,7 @@ For particularly important pieces of research code it may be useful to not only 
 
 \subsection{Explicitly tie your files together}
 
-If everything is just a text file then research projects can be thought of as individual text files that have a relationship with one another. They are tied together. A data file is used as input for an analysis file. The results of an analysis are shown and discussed in a markup file that is used to create a PDF document. Researchers often do not explicitly document the relationships between files that they used in their research. For example, the results of an analysis--a table or figure--may be copied and pasted into a presentation document. It will be very difficult for future researchers to trace the table or figure back to a particular statistical model and a particular data set. Therefore, it is important to make the links between your files explicit. 
+If everything is just a text file then research projects can be thought of as individual text files that have a relationship with one another. They are tied together. A data file is used as input for an analysis file. The results of an analysis are shown and discussed in a markup file that is used to create a PDF document. Researchers often do not explicitly document the relationships between files that they used in their research. For example, the results of an analysis--a table or figure--may be copied and pasted into a presentation document. It can be very difficult for future researchers to trace the table or figure back to a particular statistical model and a particular data set without clear documentation. Therefore, it is important to make the links between your files explicit. 
 
 Tie commands are the most dynamic way to explicitly link your files together.\index{tie commands} These commands instruct the computer program you are using to use information from another file. In Table \ref{TableTieCommands} I have compiled a selection of key tie commands you will learn how to use in this book. We'll discuss many more, but these are some of the most important.
 
@@ -165,11 +164,11 @@ Tie commands are the most dynamic way to explicitly link your files together.\in
         {\tt{print(xtable())}} & R & Combining the \texttt{print} \& \texttt{xtable} commands creates LaTeX \& HTML tables from R objects & \hfill\ref{TablesChapter} \\[0.25cm]
         {\tt{toLaTeX}} & R & Converts R objects to LaTeX & \hfill\ref{GettingStartedRR} \\[0.25cm]
         {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files & \hfill\ref{LargeDocs} \\[0.25cm]
-        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the \texttt{included}-ed text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
+        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
         {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
         \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]   
         Pandoc & Shell & A shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]   
-        Make & Shell & A shell program for automatically building many files. & \ref{DataGather} \\[0.25cm]
+        Make & Shell & A shell program for automatically building many files at the same time. & \ref{DataGather} \\[0.25cm]
         \hline 
     \end{tabular}
     }}
@@ -181,8 +180,8 @@ Finally, in order for independent researchers to reproduce your work they need t
 
 One rule of thumb for organizing your research in files is to limit the amount of content any one file has. Files that contain many different operations can be very difficult to navigate, even if they have detailed comments. For example, it would be very difficult to find any particular operation in a file that contained the code used to gather the data, run all of the statistical models, and create the results figures and tables. If you have a hard time finding things in a file you created, think of the difficulties independent researchers will have! 
 
-Because we have so many ways to link files together there is really no need to lump many different operations into one file. So, we can make our operations modular. One source code file should be used to complete one task. Breaking your operations into discrete parts will also make it easier for you and others to find errors \cite[490]{Nagler1995}.
+Because we have so many ways to link files together there is really no need to lump many different operations into one file. So, we can make our files modular. One source code file should be used to complete one or just a few tasks. Breaking your operations into discrete parts will also make it easier for you and others to find errors \cite[490]{Nagler1995}.
 
-Chapter \ref{DirectoriesChapter} discusses file organization in much more detail. Chapter \ref{Storing} teaches you a number of ways to make your files accessible through cloud computing services like Dropbox\index{Dropbox} and GitHub\index{GitHub}.
+Chapter \ref{DirectoriesChapter} discusses file organization in much more detail. Chapter \ref{Storing} teaches you a number of ways to make your files accessible through the cloud computing services Dropbox\index{Dropbox} and GitHub\index{GitHub}.
 
 
