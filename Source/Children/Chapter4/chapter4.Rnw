@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 10 January 2012
+% Updated: 28 January 2012
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -16,46 +16,46 @@ Careful file management is crucial for reproducible research. Remember two of th
     \item Have a plan to organize, store and make your files available. 
 \end{itemize}
 
-\noindent Apart from the times when you have an email exchange (or even meet in person) with someone interested in reproducing your research, the main information independent researchers have about the procedures you used will be stored across many files: data files, analysis files, and presentation files. If these files are well organized and the links tying them together are clear, replication will be much easier. File management is also important for you as a researcher, because if your files are well organized you will be able to more easily make changes, benefit from work you have already done and collaborate with others. 
+\noindent Apart from the times when you have an email exchange (or even meet in person) with someone interested in reproducing your research, the main information independent researchers have about the procedures is what they access in files you make available: data files, analysis files, and presentation files. If these files are well organized and the way they are tied together is clear, replication will be much easier. File management is also important for you as a researcher, because if your files are well organized you will be able to more easily make changes, benefit from work you have already done and collaborate with others. 
 
-Using tools such as R, {\emph{knitr}}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program} allow you to control files--creating, deleting, relocating--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths. 
+Using tools such as R, {\emph{knitr}}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program}\index{command line} allow you to control files--creating, deleting, relocating--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths. 
 
-In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix, Mac, and Windows systems. We then learn how to organize them with RStudio Projects\index{RStudio!Projects}. Finally, we will cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\bf{Files}} pane. The skills you will learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
+In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix-like operating systems, such as Mac OS X and Linux, as well as Windows. We then learn how to organize them with RStudio Projects\index{RStudio!Projects}. Finally, we'll cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\bf{Files}} pane. The skills you will learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
 
 In this chapter we work with locally stored files\index{locally stored}, i.e. files stored on your computer. In the next chapter we will discuss various ways to store and access files remotely stored in the cloud.\index{remotely stored}\index{cloud storage}
 
 
 \section{File paths \& naming conventions}
 
-All of the operating systems\index{operating systems} covered in this book organize files in hierarchical directories\index{directories}, also know as file trees. To a large extent, directories can be thought of as the folders you usually see on your Windows or Mac desktop.\footnote{To simplify things, I use the terms `directory' and `folder' interchangeably in this book.} They are called `hierarchical' because directories are located inside of other directories, as in Figure \ref{ExampleTree}. 
+All of the operating systems\index{operating systems} covered in this book organize files in hierarchical directories\index{directories}, also know as file trees. To a large extent, directories can be thought of as the folders you usually see on your Windows or Mac desktop.\footnote{To simplify things, I use the terms `directory' and `folder' interchangeably in this book.} They are called `hierarchical' because directories\index{hierarchical directories} are located inside of other directories, as in Figure \ref{ExampleTree}. 
 
 \subsection{Root directories}
 
-A root directory\index{root directory} is the first level in a disk, such as a hard drive. It is the root out of which the file tree `grows'. All other directories are subdirectories\index{subdirectory} of the root directory.
+A root directory\index{root directory} is the first level in a disk, such as a hard drive. It is the root out of which the file tree `grows'.\index{file tree} All other directories are subdirectories\index{subdirectory} of the root directory.
 
-On Windows computers you can have multiple root directories, one for each storage device or partition of a storage device. The root directory is given a drive letter assignment\index{drive letter assignment}. If you use Windows regularly you will most likely be familiar with the \texttt{C:\textbackslash{}} used to denote the C partition of the the hardrive. This is a root directory. On Unix-like systems, including Macs, the root directory is simply denoted by a forward slash (\texttt{/}) with nothing before it.
+On Windows computers you can have multiple root directories, one for each storage device or partition of a storage device. The root directory is given a drive letter assignment\index{drive letter assignment}. If you use Windows regularly you will most likely be familiar with \texttt{C:\textbackslash{}} used to denote the C partition of the the hardrive. This is a root directory. On Unix-like systems, including Macs and Linux computers, the root directory is simply denoted by a forward slash (\texttt{/}) with nothing before it.
 
 \subsection{Subdirectories \& parent directories}
 
-You will probably not store all of your files in the root directory. This would get very messy. Instead you will likely store your files in subdirectories of the root directory. Inside of these subdirectories may be further subdirectories and so on.  Directories inside of other directories are child directories\index{child directory} or subdirectories of a parent directory\index{parent directory}.
+You will probably not store all of your files in the root directory. This would get very messy. Instead you will likely store your files in subdirectories of the root directory. Inside of these subdirectories may be further subdirectories and so on.  Directories inside of other directories are also referred to as child directories\index{child directory} of a parent directory\index{parent directory}.
 
-On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: \texttt{C:\textbackslash{}\textbackslash{}ExampleProject\textbackslash{}\textbackslash{}Data}. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell R to interpret the next character or sequence of characters differently. For example, on page \pageref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab rather than the letter ``t''. Add another escape character to neutralize the escape character so that R interprets it as a backslash. In other words use an escape character to the escape character. Another option for writing Windows file names in R is to use one forward slash (\texttt{/}).  
+On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: e.g. \verb|C:\\ExampleProject\\Data|. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell R to interpret the next character or sequence of characters differently. For example, on page \pageref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab rather than the letter ``t''. Add another escape character to neutralize the escape character so that R interprets it as a backslash. In other words use an escape character to escape the escape character. Another option for writing Windows file names in R is to use one forward slash (\texttt{/}).  
 
-On Unix-like systems, including Mac computers, directories are indicated with a forward slash (\texttt{/}). The file path of the {\emph{Data}} file on a Unix-like system would be: \texttt{/ExampleProject/Data}
+On Unix-like systems, including Mac computers, directories are indicated with a forward slash (\texttt{/}). The file path of the {\emph{Data}} file on a Unix-like system would be: \texttt{/ExampleProject/Data}. Remember that a forward slash with nothing before it indicates the root directory. So \texttt{/ExampleProject/Data} has a different meaning than \texttt{ExampleProject/Data}. In the former \emph{ExampleProject} is a subdirectory of the root. In the latter \emph{ExampleProject} is a subdirectory of the current working directory (see below for details about working directories). This is also true in Windows.
 
-In the book I switch between the two file system naming conventions to expose you to both.
+In this chapter I switch between the two file system naming conventions to expose you to both. For the remainder of the book I use Unix-like file paths.
 
 \subsection{Spaces in directory \& file names}
 
-It is generally good practice to avoid putting spaces in your file and directory names. For example, I called the example project parent directory ``ExampleProject" rather than ``Example Project". Spaces in file and directory names can sometimes create problems for compter programs trying to read the file path. It may believe that the space indicates that the path name has ended. To make multi-word names easily readable without using spaces, adopt a convention such as CamelBack\index{CamelBack}. In CamelBack new words are indicated with capital letters, while all other letters are lower case. For example, ``ExampleProject".
+It is generally good practice to avoid putting spaces in your file and directory names. For example, I called the example project parent directory ``ExampleProject" rather than ``Example Project". Spaces in file and directory names can sometimes create problems for compter programs trying to read the file path. The program may believe that the space indicates that the path name has ended. To make multi-word names easily readable without using spaces, adopt a convention such as CamelBack\index{CamelBack}. In CamelBack new words are indicated with capital letters, while all other letters are lower case. For example, ``ExampleProject".
 
 \subsection{Working directories}
 
-When you use R and markup languages it is important to keep in mind what your current working directory is\index{working directory}. The working directory is the directory where the program automatically looks for files and other directories, unless you tell it to look elsewhere. It is also where it will save files. Later in this chapter we will cover commands for finding and changing the working directory.
+When you use R, markup languages and many of the other tools covered in this book it is important to keep in mind what your current working directory is\index{working directory}.\index{current working directory} The working directory is the directory where the program automatically looks for files and other directories, unless you tell it to look elsewhere. It is also where it will save files. Later in this chapter we will cover commands for finding and changing the working directory.
 
 \section{Organizing your research project}
 
-Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's main parent directory is called {\emph{ExampleProject}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contains further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
+Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's parent directory is called {\emph{ExampleProject}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contains further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
 
 \clearpage
 \thispagestyle{plain}
@@ -81,15 +81,13 @@ Figure \ref{ExampleTree} gives an example of how the files in a simple reproduci
 
 In addition to the main subdirectories of {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}} The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If the \texttt{README} file is written using Markdown, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
-It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown (see Chapter \ref{LargeDocs}). Simply include the \texttt{sessionInfo()} command in a code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
+It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown. Simply include the \texttt{sessionInfo()}\index{R command!sessionInfo} command in a \emph{knitr} code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
 You can also dynamically include session info in a LaTeX document. To do this use the {\tt{toLatex}} command in a code chunk. The code chunk should have the option \verb|results='asis'|. The code is:
 
 <<Ch4SessionInfoLatex, eval=FALSE>>=
 toLatex(sessionInfo())
 @
-
-%% Make file discussion?
 
 \section{Setting directories as RStudio Projects}
 
@@ -99,12 +97,14 @@ Making your research project directories RStudio Projects is useful for a number
 
 \begin{itemize}
     \item the project is listed in RStudio's Project menu where it can be opened easily (see Figure \ref{ProjectMenu}).
-    \item when you open the \texttt{.Rproj} file RStudio automatically sets the working directory to the project's directory and loads the workspace, history, and source code files you were last working on.
-    \item you can set project specific options like whether PDF presentation documents should be compiled with Sweave or {\emph{knitr}}.
-    \item when you close the project your R workspace and history are saved in the project directory,
+    \item when you open the project in RStudio it automatically sets the working directory to the project's directory and loads the workspace, history, and source code files you were last working on.
+    \item you can set project specific options like whether PDF presentation documents should be compiled with \emph{Sweave} or {\emph{knitr}}.
+    \item when you close the project your R workspace and history are saved in the project directory if you want,
     \item it helps you version control your files,
     \item you can build your Project--run the files in a specific way--with Makefiles.
 \end{itemize}
+
+\noindent We will look at many of these points in more detail in the next few chapters
 
 %%%%%%%%%%%%%%% File Manipulation
 \section{R file manipulation commands}
@@ -113,7 +113,7 @@ R has a range of commands for handling and navigating through files. Including t
 
 \paragraph{{\tt{getwd}}}\index{R command!getwd}
 
-To find your current working directory use the \texttt{getwed} command:
+To find your current working directory use the \texttt{getwd} command:
 
 <<Ch4Getwd>>=
 getwd()
@@ -129,7 +129,7 @@ Use the \texttt{list.files} command to see all of the files and subdirectories i
 list.files()
 @ 
 
-\noindent You can see that the \emph{Chapter4} folder has the file \emph{chapter4.Rnw} (the markup file used to create this chapter) and a child directory called \emph{images4} where I stored the original versions of the figures show in this chapter.
+\noindent You can see that the \emph{Chapter4} folder has the file \emph{chapter4.Rnw} (the markup file used to create this chapter) and a child directory called \emph{images4} where I stored the original versions of the figures included in this chapter.
 
 \paragraph{{\tt{setwd}}}\index{R command!setwd}
 
@@ -143,7 +143,7 @@ setwd("/ExampleProject/Data/GatherSource")
 
 \paragraph{{\tt{dir.create}}}\index{R command!dir.create}
 
-Sometimes you may want to create a new directory. You can use the {\tt{dir.create}} command to do this.\footnote{Note: you will need the correct system permissions to be able to do this.} For example to create a {\emph{ExampleProject}} file in the root C directory on a Windows computer type:
+Sometimes you may want to create a new directory. You can use the {\tt{dir.create}} command to do this.\footnote{Note: you will need the correct system permissions to be able to do this.} For example to create a {\emph{ExampleProject}} file in the root \emph{C} directory on a Windows computer type:
 
 <<Ch4dir.create, eval=FALSE>>=
 dir.create("C:\\ExampleProject")
@@ -151,7 +151,7 @@ dir.create("C:\\ExampleProject")
 
 \paragraph{{\tt{file.create}}}\index{R command!file.create}
 
-Similarly, you can create a new blank file with the \texttt{file.create} command. To add a blank R source code file called {\emph{SourceCode.R}} to the {\emph{ExampleProject}} directory on the C drive use:
+Similarly, you can create a new blank file with the \texttt{file.create} command. To add a blank R source code file called {\emph{SourceCode.R}} to the {\emph{ExampleProject}} directory on the \emph{C} drive use:
 
 <<CH4File, eval=FALSE>>=
 file.create("C:\\ExampleProject\\SourceCode.R")
@@ -159,16 +159,16 @@ file.create("C:\\ExampleProject\\SourceCode.R")
 
 \paragraph{{\tt{cat}}}\index{R command!cat}\label{catR}
 
-If you want to create a new file and put text into it use the \texttt{cat} (concatenate and print). For example to create a new file in the current working directory called \emph{ExampleEcho.md} that includes the text ``Reproducible Research with R and RStudio'' type:
+If you want to create a new file and put text into it use the \texttt{cat} (concatenate and print) command. For example to create a new file in the current working directory called \emph{ExampleEcho.md} that includes the text ``Reproducible Research with R and RStudio'' type:
 
 <<Ch4cat1, eval=FALSE, tidy=FALSE>>=
 cat("Reproducible Research with R and RStudio",
     file = "ExampleCat.md")
 @
 
-\noindent You can use \texttt{cat} to also print the contents of a one or more objects to a file. In this example we created a Markdown formatted file by using the \texttt{.md} file extension. We could of course change the file extension to \texttt{.R} to set it as an R source code file, \texttt{.Rnw} to create a \emph{knitr} LaTeX file and so on.
+\noindent In this example we created a Markdown formatted file by using the \texttt{.md} file extension. We could of course change the file extension to \texttt{.R} to set it as an R source code file, \texttt{.Rnw} to create a \emph{knitr} LaTeX file and so on. 
 
-The \texttt{cat} command will overwrite existing files with the new contents. To add the text to existing files use the \texttt{append = TRUE} argument.
+You can use \texttt{cat} to also print the contents of a one or more objects to a file. \textbf{Warning:} The \texttt{cat} command will overwrite existing files with the new contents. To add the text to existing files use the \texttt{append = TRUE} argument.
 
 <<Ch4cat2, eval=FALSE, tidy = FALSE>>=
 cat("More Text", file = "ExampleCat.md",
@@ -177,17 +177,17 @@ cat("More Text", file = "ExampleCat.md",
 
 \paragraph{{\tt{unlink}}}\index{R command!unlink}
 
-Finally, you can use the {\tt{unlink}} command to delete files and directories. 
+You can use the {\tt{unlink}} command to delete files and directories. 
 
 <<CH4Unlink, eval=FALSE>>=
 unlink("C:\\ExampleProject\\SourceCode.R")
 @
 
-\noindent \textbf{Important} the \texttt{unlink} command permanently deletes files, so be very careful using this command.
+\noindent \textbf{Warning:} the \texttt{unlink} command permanently deletes files, so be very careful using this command.
 
 \paragraph{{\tt{file.rename}}}\index{R command!file.rename}
 
-You can use the \texttt{file.rename} to obviously rename a file. It can also be used to move a file from one directory to another. For example, imagine that we want to move the \emph{ExampleCat.md} file from the directory \emph{ExampleProject} to one called \emph{MarkdownFiles} that we already created.\footnote{The \texttt{file.rename} command won't create new directories. To move a file to a new directory you will need to create the directory first with \texttt{dir.create}.}
+You can use the \texttt{file.rename} to, obviously, rename a file. It can also be used to move a file from one directory to another. For example, imagine that we want to move the \emph{ExampleCat.md} file from the directory \emph{ExampleProject} to one called \emph{MarkdownFiles} that we already created.\footnote{The \texttt{file.rename} command won't create new directories. To move a file to a new directory you will need to create the directory first with \texttt{dir.create}.}
 
 <<Ch4filerename, eval=FALSE, tidy=FALSE>>=
 file.rename(from = "C:\\ExampleProject\\ExampleCat.md", 
@@ -205,17 +205,9 @@ file.copy(from = "C:\\ExampleProject\\ExampleCat.md",
 
 \section{Unix-like shell commands for file management} 
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-    \caption{The RStudio Files Pane} %\\[0.25cm]
-    \label{FilesPane}
-        \begin{center}    
-        \includegraphics[width=0.45\textwidth]{Children/Chapter4/images4/RStudioFiles.png}
-        \end{center}
-\end{wrapfigure}
+Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program\index{Unix-like shell program} to manipulate files in large projects. Unix-like shell programs including Bash on Mac and Linux\index{Bash} and Windows PowerShell\index{PowerShell} allow you to type commands to interact with your computer's operating system.\footnote{You can access Bash via the Terminal program\index{Terminal} on Mac OS 10 and Linux computers. It is the default shell on Mac and Linux, so it loads automatically when you open the Terminal. Windows PowerShell comes installed with Windows.} We will especially return to shell commands in the next chapter when we discuss Git\index{Git} version control and makefiles\index{makefile} for collecting data in Chapter \ref{DataGather}, as well as the command line program\footnote{A command line program\index{command line program}\index{command line} is just a program you run from a shell.} Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating files. We are just going to cover some of the basic and most useful commands for file management. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command line \cite[]{ShottsJr2012}. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}. The commands discussed in this chapter should work in both Unix-like shells and Windows PowerShell.
 
-Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program\index{Unix-like shell program} to manipulate files in large projects. A command line shell program is simply a program in which you to type commands to interact with your computer's operating system. We will especially return to shell commands in the next chapter when we discuss Git\index{Git} version control and makefiles\index{makefile} for collecting data in Chapter \ref{DataGather}, as well as the command line program Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating files. We are just going to cover some of the basic and most useful commands For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s book on the Linux command-line \cite[]{ShottsJr2012}. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}. The commands discussed in this chapter should work in both Unix-like shells and Windows Powershell. That being said, I have not tested all of them in Powershell. 
-
-It's important at this point to highlight a key difference between R and Unix-like shell syntax. In shell commands you don't need to put parentheses around your arguments. For example if I want to change my working directory to my Mac Desktop in a shell using the \texttt{cd} command I simply type:\footnote{Many shell code examples in other sources include the shell prompt, like the \texttt{\$} in Bash. It's like R's \texttt{\textgreater} prompt. I don't include the prompt in code examples in this book because you don't type them.}
+It's important at this point to highlight a key difference between R and Unix-like shell syntax. In shell commands you don't need to put parentheses around your arguments. For example if I want to change my working directory to my Mac Desktop in a shell using the \texttt{cd} command I simply type:\footnote{Many shell code examples in other sources include the shell prompt, like the \texttt{\$} in Bash or \texttt{\textgreater{}} in PowerShell. These are like R's \texttt{\textgreater{}} prompt. I don't include the prompt in code examples in this book because you don't type them.}
 
 <<Ch4ShellIntroExample, eval=FALSE, engine='sh'>>=
 cd /Users/Me/Desktop
@@ -225,13 +217,19 @@ cd /Users/Me/Desktop
 
 \paragraph{{\tt{cd}}}\index{shell command!cd}
 
-As we just saw, to change the working directory in the shell just use the {\tt{cd}} (change directory) command. If you are in a child directory and want to change the working directory to its parent you can simply type:
+As we just saw, to change the working directory in the shell just use the {\tt{cd}} (change directory) command. Here is an example of changing the directory in Windows PowerShell:
+
+<<Ch4cdPowerShell, eval=FALSE, engine='sh'>>=
+cd C:/Users/Me/Desktop
+@
+
+\noindent If you are in a child directory and want to change the working directory to the previous working directory simply type:
 
 <<Ch4ChildtoParent, eval=FALSE, engine='sh'>>=
 cd -
 @
 
-\noindent If, for example, our current working directory was \emph{/User/Me/Desktop} and we typed \texttt{cd -} then the working directory would change to \emph{/User/Me}.
+\noindent If, for example, our current working directory is \emph{/User/Me/Desktop} and we typed \texttt{cd -} then the working directory would change to \emph{/User/Me}. Note this will not work in PowerShell.
 
 \paragraph{{\tt{pwd}}}\index{shell command!pwd}
 
@@ -261,7 +259,7 @@ Use \texttt{mkdir} to create a new directory. For example, if I wanted to create
 mkdir /NewDirectory
 @
 
-\noindent If running this code gives you an error message like this:
+\noindent If running this code on Mac or Linux gives you an error message like this:
 
 <<Ch4mkdirError, eval=FALSE, engine='sh'>>=
 mkdir: /NewDirectory: Permission denied
@@ -283,13 +281,13 @@ There are a number of ways to create new files in Unix-like shells. One of the s
 echo Reproducible Research with R and RStudio
 @
 
-\noindent If you add the greater than symbol (\verb|>|) after the text you want to print then a file name, \texttt{echo} will create the file (if it doesn't already exist) in the current working directory then print the text into the file.
+\noindent If you add the greater than symbol (\verb|>|) after the text you want to print and then a file name, \texttt{echo} will create the file (if it doesn't already exist) in the current working directory then print the text into the file.
 
 <<Ch4Echo2, eval=FALSE, engine='sh'>>=
 echo Reproducible Research with R and RStudio > ExampleEcho.md
 @
 
-\noindent Using only one greater than sign will completely erase the \emph{ExampleEcho.txt} file's contents and replace them with \texttt{Reproducible Research with R and RStudo}. To add the text at the end of an existing file use two greater than signs (\verb|>>|).
+\noindent Using only one greater than sign will completely erase the \emph{ExampleEcho.md} file's contents and replace them with \texttt{Reproducible Research with R and RStudo}. To add the text at the end of an existing file use two greater than signs (\verb|>>|).
 
 <<Ch4Echo3, eval=FALSE, engine='sh'>>=
 echo More text. >> ExampleEcho.md
@@ -301,11 +299,11 @@ echo More text. >> ExampleEcho.md
 
 The {\tt{rm}} command is similar to R's {\tt{unlink}} command. It removes (deletes) files or directories. Again, be careful when using this command, because it permanently deletes the files or directories.
 
-As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
-
 <<Ch4rm, eval=FALSE, engine='sh'>>=
 rm ExampleEcho.md
 @
+
+\noindent As we saw in Chapter \ref{GettingStartedRKnitr}, R also has an \texttt{rm} command. It is different because it removes objects from your R workspace rather than files from your working directory.
 
 \paragraph{{\tt{mv}}}\index{shell command!mv}
 
@@ -315,17 +313,17 @@ To move a file from one directory to another with the shell use the \texttt{mv} 
 mv /ExampleProject/ExampleEcho.md /MarkdownFiles
 @
 
-\noindent Note that like the \emph{MarkdownFiles} directory must already exist. You can also use the \texttt{mv} command to simply rename files, just like the R command \texttt{file.rename}.
+\noindent Note that the \emph{MarkdownFiles} directory must already exist otherwise it will simply rename the file. So this command is similar to the R command \texttt{file.rename}.
 
 \paragraph{{\tt{cp}}}\index{shell command!cp}
 
-The \texttt{mv} command completely moves a file from one directory to another. To simply copy a version of the file to a new directory use the \texttt{cp} command. The syntax is similar to \texttt{mv}:
+The \texttt{mv} command completely moves a file from one directory to another. To copy a version of the file to a new directory use the \texttt{cp} command. The syntax is similar to \texttt{mv}:
 
 <<Ch4cp, eval=FALSE, engine='sh'>>=
 cp /ExampleProject/ExampleEcho.md /MarkdownFiles
 @
 
-\paragraph{{\tt{system}} (R command)}\index{R command!system}\label{systemRcommand}
+\paragraph{{\tt{system}} (R command)}\index{R command!system}\label{systemRcommand}\index{R!shell commands}
 
 You can run shell commands from within R using R's \texttt{system} command. For example, to run the \texttt{echo} command from within R type:
 
@@ -334,9 +332,20 @@ system("echo Text to Add > ExampleEcho.md")
 @
 
 
-\section{File navigation in RStudio}
+\section{File navigation in RStudio}\index{RStudio!Files pane}
 
-The RStudio \textbf{Files} pane allows us to navigate and do some basic file manipulation. Figure \ref{FilesPane} shows us what this pane looks like. This pane allows us to navigate to specific files and folder, delete and rename files. To select a folder as the working directory tick the dialog box next to the file then click the \texttt{More} button and select \texttt{Set As Working Directory}. Under the \texttt{More} button you will also find options to \texttt{Move} and \texttt{Copy} files.
+The RStudio \emph{Files} pane allows us to navigate and do some basic file manipulation. The left panel of Figure \ref{FilesPane} shows us what this pane looks like. The pane allows us to navigate to specific files and folder, delete and rename files. To select a folder as the working directory tick the dialog box next to the file then click the \texttt{More} button and select \texttt{Set As Working Directory}. Under the \texttt{More} button (\includegraphics[scale=0.5]{Children/Chapter4/images4/MoreIcon.png}) you will also find options to \texttt{Move} and \texttt{Copy} files (see the right pane of Figure \ref{FilesPane}.
 
-The \textbf{Files} pane is a GUI, so our actions in the \textbf{Files} pane are not as easily reproducible as the commands we learned earlier in this chapter. 
+The \emph{Files} pane is a GUI, so our actions in the \emph{Files} pane are not as easily reproducible as the commands we learned earlier in this chapter. 
+
+\begin{figure}
+    \caption{The RStudio Files Pane} 
+    \label{FilesPane}
+    \vspace{0.2cm}
+    \centering
+        \mbox{
+            \subfigure{\includegraphics[width=0.4\textwidth]{Children/Chapter4/images4/RStudioFiles.png}}\quad
+            \subfigure{\includegraphics[width=0.4\textwidth]{Children/Chapter4/images4/MoreMore.png} 
+            }}
+\end{figure}
 
