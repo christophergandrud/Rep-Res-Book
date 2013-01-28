@@ -1,7 +1,7 @@
 % Chapter Chapter 1 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 27 January 2013
+% Updated: 28 January 2013
 
 <<set-parent1, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -14,10 +14,10 @@ Research is often presented in very abridged packages: slideshows, journal artic
 This book gives you the tools to dynamically combine your research with the presentation of your findings. The first tool is a workflow for reproducible research that weaves the principles of reproducibility throughout your entire research project, from data gathering to the statistical analysis, and the presentation of results. You will also learn how to use a number of computer tools that make this workflow possible. These tools include:
 
 \begin{itemize}
-    \item the R statistical language that will allow you to gather data and analyze it,
-    \item the LaTeX and Markdown markup languages that you can use to create documents--slideshows, articles, books, and webpages--for presenting your findings,
-    \item the {\emph{knitr}} package for R and other tools, including command line programs like GNU Make and Git version control, for dynamically tying your data gathering, analysis, and presentation documents together so that they can be easily reproduced,
-    \item RStudio, a program that brings all of these tools together in one place.
+    \item the \textbf{R} statistical language that will allow you to gather data and analyze it,
+    \item the \textbf{LaTeX} and \textbf{Markdown} markup languages that you can use to create documents--slideshows, articles, books, and webpages--for presenting your findings,
+    \item the {\emph{knitr}} package for R and other tools, including \textbf{command line programs} like GNU Make and Git version control, for dynamically tying your data gathering, analysis, and presentation documents together so that they can be easily reproduced,
+    \item \textbf{RStudio}, a program that brings all of these tools together in one place.
 \end{itemize}
 
 %%%%%%%%%%%%%% What is reproducible research? %%%%%%%%%%%%%
@@ -137,9 +137,9 @@ The way you interact with R has benefits for reproducible research. In general y
 
 \paragraph{Why knitr?}
 
-Literate programming\index{literate programming} is a crucial part of reproducible quantitative research.\footnote{Donald Knuth\index{Donald Knuth} coined the term literate programming in the 1970s to refer to a source file that could be both run by a computer and ``woven" with a formatted presentation document \cite[]{Knuth1992}.} Being able to directly link your analyses, your results, and the code you used to produce the results makes tracing your steps much easier. There are many different literate programming tools for a number of different programming languages. Previously, one of the most common tools for researchers using R and the LaTeX markup language was Sweave \cite[]{Leisch2002}.\index{Sweave} The package I am going to focus on in this book is newer and is called {\emph{knitr}}\index{knitr}. Why are we going to use {\emph{knitr}} in this book and not Sweave or some other tool?
+Literate programming\index{literate programming} is a crucial part of reproducible quantitative research.\footnote{Donald Knuth\index{Donald Knuth} coined the term literate programming in the 1970s to refer to a source file that could be both run by a computer and ``woven" with a formatted presentation document \cite[]{Knuth1992}.} Being able to directly link your analyses, your results, and the code you used to produce the results makes tracing your steps much easier. There are many different literate programming tools for a number of different programming languages. Previously, one of the most common tools for researchers using R and the LaTeX markup language was \emph{Sweave} \cite[]{Leisch2002}.\index{Sweave} The package I am going to focus on in this book is newer and is called {\emph{knitr}}\index{knitr}. Why are we going to use {\emph{knitr}} in this book and not \emph{Sweave} or some other tool?
 
-The simple answer is that {\emph{knitr}} has the same capabilities as Sweave and more. It can work with markup languages other than LaTeX\footnote{It works with LaTeX, Markdown, HTML, and reStructuredText\index{reStructuredText}. We cover the first two in this book.} and can even work with programming languages other than R. It highlights R code\index{syntax highlighting} in presentation documents making it easier for your readers to follow.\footnote{Syntax highlighting uses different colors and fonts to distinguish different types of text. For example in the PDF version of this book R commands are highlighted in \hlfunctioncall{maroon}, while character strings are in \hlstring{lavender}.} It gives you better control over the inclusion of graphics and can cache code chunks--save the output for later.\index{cache} It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to Sweave if you want to.\footnote{Note that the Sweave-style syntax is not identical to actual Sweave syntax. See Yihui Xie's discussion of the differences between the two at: \url{http://yihui.name/knitr/demo/sweave/}. \emph{knitr} has a function (\texttt{Sweave2knitr})\index{Sweave2knitr} for converting Sweave to \emph{knitr} syntax.} You also have the choice to use much simpler and more straightforward syntax with {\emph{knitr}}. 
+The simple answer is that {\emph{knitr}} has the same capabilities as \emph{Sweave} and more. It can work with markup languages other than LaTeX\footnote{It works with LaTeX, Markdown, HTML, and reStructuredText\index{reStructuredText}. We cover the first two in this book.} and can even work with programming languages other than R. It highlights R code\index{syntax highlighting} in presentation documents making it easier for your readers to follow.\footnote{Syntax highlighting uses different colors and fonts to distinguish different types of text. For example in the PDF version of this book R commands are highlighted in \hlfunctioncall{maroon}, while character strings are in \hlstring{lavender}.} It gives you better control over the inclusion of graphics and can cache code chunks--save the output for later.\index{cache} It has the ability to understand Sweave-like syntax, so it will be easy to convert backwards to \emph{Sweave} if you want to.\footnote{Note that the Sweave-style syntax is not identical to actual \emph{Sweave} syntax. See Yihui Xie's discussion of the differences between the two at: \url{http://yihui.name/knitr/demo/sweave/}. \emph{knitr} has a function (\texttt{Sweave2knitr})\index{Sweave2knitr} for converting \emph{Sweave} to \emph{knitr} syntax.} You also have the choice to use much simpler and more straightforward syntax with {\emph{knitr}}. 
 
 \paragraph{Why RStudio?}
 
@@ -184,7 +184,7 @@ We will discuss other tools such as Git that can be a useful part of a reproduci
 
 The purpose of this book is to give you the tools that you will need to do reproducible research with R and RStudio. This book describes a workflow for reproducible research primarily using R and RStudio. It is designed to give you the necessary tools to use this workflow for your own research. It is not designed to be a complete reference for R, RStudio, {\emph{knitr}}, Git, or any other program that is a part of this workflow. Instead it shows you how these tools can fit together to make your research more reproducible. To get the most out of these individual programs I will along the way point you to other resources that cover these programs in more detail.
 
-To that end, I can recommend a number of resources that cover more of the nitty-gritty:
+To that end, I can recommend a number of resources that cover more of the nitty-gritty:\label{OtherBooks}
 
 \begin{itemize}
     \item Michael J. Crawley's \citeyearpar{Crawley2013} encyclopaedic R book, appropriately titled, \textbf{The R Book} published by Wiley.

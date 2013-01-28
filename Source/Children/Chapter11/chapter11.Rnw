@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 January 2013
+% Updated: 28 January 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -53,7 +53,7 @@ All LaTeX documents require a preamble\index{LaTeX!preamble}. The preamble goes 
 
 In the preamble you can also specify what style it should be formatted in and load any extra packages you may want to use to help you format your document.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}.\index{LaTeX command!usepackage} For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the preamble of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.}
 
-The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{LaTeX environment!body} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnviron} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX!begin document} of your document starts by typing \verb|\begin{document}|. The very last line of you document is usually \verb|\end{document}|, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class document with a very simple preamble and body like this:
+The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{LaTeX environment!body} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnviron} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX!begin document} of your document starts by typing \verb|\begin{document}|. The very last line of you document is usually \verb|\end{document}|, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class\index{LaTeX class!article} document with a very simple preamble and body like this:
 
 <<Ch10FirstOpenDoc, eval=FALSE, tidy=FALSE>>=
 \documentclass{article}
@@ -463,7 +463,7 @@ If you include these commands in a code chunk at the beginning of your knitted d
 
 You can make slideshow presentations with a number of LaTeX document classes. Creating a presentation with a markup language can take a bit more effort than using a WYSIWYG program like Microsoft PowerPoint\index{Microsoft PowerPoint} or Apple's Keynote.\index{Apple Keynote} However, combining LaTeX and \emph{knitr} can create slideshows fully reproducible presentations that dynamically create and present results. I have found this particularly useful in my teaching as dynamically produced presentations allow me to provide my students with fully replicable examples of how I created a figure on a slide, for example. \emph{knitr} also makes it easy to beautifully present code examples.
 
-One of the most popular is the Beamer class.\index{Beamer} When you compile a Beamer class document a PDF will be created where every page is a different slide (see Figure \ref{BeamerExample}). All major PDF viewer programs have some sort of ``View Full Screen'' option to view Beamer PDFs as full screen slideshows. Usually you can navigate through the slides with the forward and back arrows on the keyboard.
+One of the most popular is the Beamer class.\index{Beamer}\index{LaTeX class!beamer} When you compile a Beamer class document a PDF will be created where every page is a different slide (see Figure \ref{BeamerExample}). All major PDF viewer programs have some sort of ``View Full Screen'' option to view Beamer PDFs as full screen slideshows. Usually you can navigate through the slides with the forward and back arrows on the keyboard.
 
 In this section we will take a brief look at the basics of creating slideshows with Beamer, highlighting special considerations that need to be made when working with Beamer and \emph{knitr}. A full example of a knittable Beamer presentation with illustrations of the many of the points discussed here is printed at the end of the chapter.
 
