@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 12 January 2012
+% Updated: 29 January 2012
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -104,6 +104,10 @@ Obviously it is usually a good if the data sets kept in data frame type objects.
 Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with simply as \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \textbf{reshape}\index{R command!reshape} command, both in loaded in R by default.  Another very helpful package is \emph{reshape2} \citep{R-reshape2}.\index{reshape2} This provides more general tools for reshaping data and is worth investing some time in learning well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape TSCS data frame from wide to long format. We will also encounter this package in more detail in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
 
 Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{WideFert}. It looks like this:\footnote{Please see the Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data.}
+
+<<Ch7LoadFertConsumpData, include=FALSE>>=
+
+@
 
 <<Ch7WideCreate, include=FALSE>>=
 # Reshape Wide

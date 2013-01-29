@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 January 2012
+% Updated: 29 January 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -9,7 +9,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 
 \chapter{Storing, Collaborating, Accessing Files, Versioning}\label{Storing}
 
-In addition to being well organized, your research files need to be accessible for other researchers to be able to reproduce your findings. A useful way to make your files accessible is to store them on a cloud storage service\footnote{These services store your data on remote servers.} \cite[see][]{Howe2012}. This chapter describes in detail two different cloud storage services--Dropbox and GitHub--that you can use to make your research files easily accessible to others. Not only do these services enable others to reproduce your research, they also have a number of benefits for your research workflow. Researchers often face a number of data management issues that, beyond making their research difficult to reproduce, can make doing the initial research difficult.
+In addition to being well organized, your research files need to be accessible for other researchers to be able to reproduce your findings. A useful way to make your files accessible is to store them on a cloud storage service\footnote{These services store your data on remote servers.} \cite[see][]{Howe2012}. This chapter describes in detail two different cloud storage services--Dropbox and Git/GitHub--that you can use to make your research files easily accessible to others. Not only do these services enable others to reproduce your research, they also have a number of benefits for your research workflow. Researchers often face a number of data management issues that, beyond making their research difficult to reproduce, can make doing the initial research difficult.
 
 First, there is the problem of \textbf{storing} data so that it is protected against computer failure--virus infections, spilling coffee on your laptop, and so on. Storing data locally--on your computer--or on a flash drive is generally more prone to loss than on remote servers in the cloud.
 
@@ -17,7 +17,7 @@ Second, we may work on a project with different computers and mobile devices. Fo
 
 Finally, we almost never create a data set or write a paper perfectly all at once. We may make changes and then realize that we liked an earlier version, or parts of an earlier version better. This is a particularly important issue in data management where we may transform our data in unintended ways and want to go back to earlier versions. Also, when working on a collaborative project, one of the authors may accidentally delete something in a file that another author needed. To deal with these issues we need to store our data in a system that has \textbf{version control}. Version control systems keep track of changes we make to our files and allows us to access previous versions if we want to.\index{version control}
 
-You can solve all of these problems in a couple of different ways using free or low cost cloud-based storage formats. In this chapter we will learn how to use Dropbox and GitHub for research file:
+You can solve all of these problems in a couple of different ways using free or low cost cloud-based storage formats. In this chapter we will learn how to use Dropbox and Git/GitHub for research file:
 
 \begin{itemize}
     \item storage,
@@ -67,7 +67,7 @@ Note: if you created your Dropbox account after 4 October 2012 you will not auto
 
 If the file is stored in the \emph{Public} folder, you go to \texttt{Dropbox} in the menu that pops up, then click \emph{Copy Public Link}.\label{PublicLink} This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). Once you have the URL you can load the file directly into R using the \texttt{read.table} command for data frames or the \texttt{source} command for source code files (see Chapter \ref{StatsModel}).
 
-To give you a preview let's download data on financial regulator type directly into R from Dropbox from my Public folder. The data set's URL is: \url{http://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.\footnote{This data is from \cite{Gandrud2012}} I've used the URL shortening service bitly\index{bitly}\footnote{See \url{https://bitly.com/}.} to make this link fit on the page.
+To give you a preview let's download data on financial regulator type directly into R from Dropbox from my Public folder. The data set's URL is: \url{http://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.\footnote{This data is from \cite{Gandrud2012}} I've used the URL shortening service bitly\index{bitly}\footnote{See \url{https://bitly.com/}.} to make this link fit on the page.\label{ReadTable}
 
 <<Ch5PublicFolderDownload, tidy=FALSE>>=
 # Download data on Financial Regulators 
@@ -250,7 +250,7 @@ It is useful to step back for a second and try to understand what Git is doing w
 git checkout --
 @
 
-\noindent You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|---| with the commit reference. The reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage}.\footnote{You can also search your commit history and roll back to a previous commit using only the command line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the right-hand side of the repo's webpage. This will show you all of the commits. A portion of this Book's commit history is shown in Figure \ref{BookHistory}. By clicking on {\tt{Browse Code}} you can see what the files at any commit looked like. Above this button is another with a series of numbers and letters. This is the commit's SHA-1 hash\footnote{Secure Hash Algorithm}.\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file. 
+\noindent You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|---| with the commit reference.\index{Git!commit reference} The reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage} (see below for more information on how to create a GitHub webpage).\footnote{You can also search your commit history and roll back to a previous commit using only the command line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the right-hand side of the repo's webpage. This will show you all of the commits. A portion of this Book's commit history is shown in Figure \ref{BookHistory}. By clicking on {\tt{Browse Code}} you can see what the files at any commit looked like. Above this button is another with a series of numbers and letters. This is the commit's SHA-1 hash\footnote{Secure Hash Algorithm}.\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file. 
 
 \begin{figure}[t]
     \caption{Part of this Book's GitHub Repository Commit History Page}
@@ -351,11 +351,15 @@ git rm --cached ExampleProject.tex
 For more information on \emph{.gitignore} files see GitHub's reference page on the topic at: \url{https://help.github.com/articles/ignoring-files}.
 
 
-\subsection{Remote Storage on GitHub}\label{NewGitHubRepo}
+\subsection{Remote Storage on GitHub}
+So far we've been using repos stored locally. Let's now look at how to also store a repository remotely on GitHub. You can either create a new repository on GitHub and download (\texttt{clone}) it to your computer or upload (\texttt{push}) an existing repository to a new GitHub remote repo. In both cases you need to create a new repository on GitHub. 
 
-So far we've been using repos stored locally. To create repositories stored on GitHub, first create a new repository through the GitHub website. On your main GitHub account page click the \texttt{New repository} button. In the next page that appears give the repository a name, brief description, choose whether to make it public or private. Also click the check box to to create a \emph{README.md} file in the repository. When you click \texttt{Create Repository} you will be directed to the repository's GitHub page.\label{NewGHRepo}
+To create a new repository on GitHub go to your main GitHub account webpage and click the \texttt{New repository} button. On the next page that appears give the repository a name, brief description, and choose whether to make it public or private. If you want to store an existing repository on GitHub give it the same name as the one that already exists on your computer. If you already have files in your local repository do not check the boxes for creating \emph{README.md} and \emph{.gitignore} files. When you then click \texttt{Create Repository} you will be directed to the repository's GitHub webpage.\footnote{Before the repo has any files in it the webpage will include instructions for how to set it up on your computer.}\label{NewGitHubRepo}
 
-To download the repository onto your local computer you need to ``clone'' it. The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy it's URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in} \ldots button.}\label{GitClone}
+
+\paragraph{Clone a new remote repository}
+
+If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{Git!clone} The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy its URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in \ldots} button.}\label{GitClone}
 
 <<Ch5Clone, eval=FALSE, engine='sh'>>=
 # Change working directory 
@@ -365,16 +369,39 @@ cd /git_repositories/
 git clone https://github.com/USERNAME/ExampleProject.git
 @
 
-\paragraph{Pushing files to a GitHub repo}
+\paragraph{Push an existing repository to a new GitHub repo}\label{RemoteAdd}
 
-So far we have learned how to add and commit changes to a local Git repo. To add your commits to the remote GitHub repository use the \texttt{push}\index{Git command!push} command. For example, if your current working directory is the Git repo you want to push and you have already added/committed the changes you want to include in the remote repo type:
+If you already have a repository with files in it on your computer and want to store them remotely in a new GitHub repo you need to add the remote repository and \texttt{push}\index{Git command!push} your files to it. Type Git's \texttt{remote add}\index{Git command!remote add} command. For example, if your repository's GitHub URL is \texttt{https://github.com/USERNAME/ExampleProject.git} button.} then type:
+
+{\small
+<<Ch5GitRemoteAdd, eval=FALSE, engine='sh'>>=
+# Change working directory to existing local repo
+cd /git_repositories/ExampleProject
+
+# Add a remote (GitHub) repository to an existing repo
+git remote add origin https://github.com/USERNAME/ExampleProject.git
+@
+}
+
+\noindent This will tell your local repository where the remote one is. Finally, push the repository to GitHub: 
+
+<<Ch5GitPushRemote, eval=FALSE, engine='sh'>>=
+# Push local repository to GitHub for the first time
+git push -u origin master
+@
+
+\noindent The \texttt{-u} (upstream tracking)\index{Git!upstream tracking} option adds a tracking reference for the upstream (GitHub) repository branches. 
+
+\paragraph{Pushing commits to a GitHub repo}
+
+Once you have your local repository connected to GitHub you can add new commits with the \texttt{push}\index{Git command!push} command. For example, if your current working directory is the Git repo you want to push and you have already added/committed the changes you want to include in the remote repo type:
 
 <<Ch5Push, eval=FALSE, engine='sh'>>=
 # Add changes to the GitHub remote master branch
 git push origin master
 @
 
-\noindent The \texttt{origin} is simply the remotely stored repository on GitHub and \texttt{master} is the master branch. You can change this to another branch if you'ld lik. If you have not set up password caching\footnote{See \url{https://help.github.com/articles/set-up-git} for more details.} you will now be prompted to give your GitHub user name and password.
+\noindent The \texttt{origin} is simply the remotely stored repository on GitHub and \texttt{master} is the master branch. You can change this to another branch if you'ld like. If you have not set up password caching\footnote{See \url{https://help.github.com/articles/set-up-git} for more details.} you will now be prompted to give your GitHub user name and password.
 
 You can also push your tags to GitHub.\index{GitHub!tag} To push all of the tags to GitHub type:
 
@@ -388,31 +415,31 @@ git push --tags
 
 \paragraph{Downloading into R \& viewing files}
 
-In Chapter \ref{DataGather} we learn how to load data from a text file stored on GitHub directly into R. In general it is similar to loading data from Dropbox Public folders, but because the files are stored on a secure server it requires a few extra steps. See page \pageref{SecureDataDownload} for more details.
+In Chapter \ref{DataGather} we will learn how to load data from a text file stored on GitHub directly into R. In general it is similar to loading data from Dropbox Public folders, but because the files are stored on a secure server it requires a few extra steps. See page \pageref{SecureDataDownload} for more details.
 
-The GitHub web user interface also allows you, your collaborators (see below) or if the repo is public, anyone to look at text files with a web browser. Collaborators can actually also create, modify and commit changes in the web user interface. This can be useful for making small changes, especially from a mobile device without a full installation of Git. Anyone with a GitHub account can make changes to files in a public repository on the repo's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a designated collaborator, their edits will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{Git command!pull} in git terminology. See the next section for more details.}. This can be a useful way for independent researchers to catch errors and directly address them.
+The GitHub web user interface also allows you, your collaborators (see below) or if the repo is public, anyone to look at text files with a web browser. Collaborators can actually also create, modify and commit changes in the web user interface. This can be useful for making small changes, especially from a mobile device without a full installation of Git. Anyone with a GitHub account can suggest changes to files in a public repository on the repo's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a designated collaborator, their edits will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{Git command!pull} in Git terminology. See the next section for more details.} This can be a useful way for independent researchers to fix errors.
 
 \subsubsection{Collaboration with GitHub}
 
-Repositories can have official collaborators that can make changes to files in the repo. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. To add a collaborator to a repository you created click on the \texttt{Settings} button on the repository's website (see Figure \ref{BookRepository}). Then click the \texttt{Collaborators} button on the left-hand side of the page. You will be given a box to \texttt{Add a friend}. You can search for other people's GitHub user names. If your collaborator doesn't have one, they will have to create a new account. Once you add someone as a collaborator they can clone the repository onto their computer as you did earlier.
+Repositories can have official collaborators that can make changes to files in the repo. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. To add a collaborator to a repository you created click on the \texttt{Settings} button on the repository's website (see Figure \ref{BookRepository}). Then click the \texttt{Collaborators} button on the left-hand side of the page. You will be given a box to \texttt{Add a friend}. You type your collaborator's GitHub user name here. If your collaborator doesn't have one, they will have to create a new account. Once you add someone as a collaborator they can clone the repository onto their computer as you did earlier and push changes.
 
-\paragraph{Syncing repository}
+\paragraph{Syncing a repository}
 
-What do you do if you and your collaborators are both making changes to the files? To avoid too many conflicts, it is a good idea to sync your local repository with the remote repository \textbf{before} you push your commits to GitHub. Use the \texttt{pull command}\index{Git command!pull} to sync your local and remote repository. First add and commit your changes, then type:
+If you and your collaborators are both making changes to the files in a repo you might create conflicting changes, i.e. different changes to the same part of a file.\index{conflicts, in files} To avoid too many conflicts, it is a good idea to sync your local repository with the remote repository \textbf{before} you push your commits to GitHub. Use the \texttt{pull command}\index{Git command!pull} to sync your local and remote repository. First add and commit your changes, then type:
 
 <<Ch5Pull, eval=FALSE, engine='sh'>>=
 # Sync repository
 git pull 
 @ 
 
-\noindent If you have merge conflicts you will probably want to resolve these in the individual files and commit the changes. Finally, push your merged changes up to the remote repository.
+\noindent If the files you are pulling conflict with your local files you will probably want to resolve these in the individual files and commit the changes. When there are merge conflicts Git adds both versions of a piece of text to the file. You then open the file and decide which version to keep and which one to delete. When the conflicts are resolved and changes committed, push your merged changes up to the remote repository as we did before.
 
 \subsection{Summing up the GitHub workflow}
 
-We've covered a lot of ground in this section. Let's sum up the basic GitHub workflow you will probably follow. Let's assume you already have a repo on GitHub that you've cloned to your computer. 
+We've covered a lot of ground in this section. Let's sum up the basic GitHub workflow you will probably follow once your repo is set up. 
 
 \begin{enumerate}
-    \item add any changes you've made with \texttt{git add .},
+    \item add any changes you've made with \texttt{git add},
     \item \texttt{commit} the changes,
     \item \texttt{pull} your collaborators' changes from the GitHub repo and resolve any merge conflicts,
     \item \texttt{push} your changes to GitHub. 
@@ -432,42 +459,35 @@ If you want more practice setting up GitHub in the command line, GitHub and the 
 
 \section{RStudio \& GitHub}
 
-RStudio can accomplish many of the Git commands covered in the previous section with a graphical user interface. Let's look at how to set up and use Git in RStudio Projects.
+When you open a Project with a Git repository in RStudio you will see a new \emph{Git} tab next to \emph{Workspace} and \emph{History} (see Figure \ref{GitTab}). From here you can do many of the things we covered in the previous section. Let's look at how to set up and use Git in RStudio Projects.
 
 \subsection{Setting Up Git/GitHub with Projects}
 
-You can Git initialize new RStudio projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do this RStudio automatically adds a \emph{.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory} and \emph{.RData} files. 
+You can Git initialize new RStudio projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do any of these things RStudio automatically adds a \emph{.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory} and \emph{.RData} files. 
 
 \paragraph{Git with a new project}\label{NewProjectGit}
-To create a new project with Git version control go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}, the select \texttt{New Project} (see Figure \ref{NewRStudioProject}). Enter the project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project}. 
+
+To create a new project with Git version control go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}. In the box that appears (see Figure \ref{NewRStudioProject}) select \texttt{New Project} . Enter the Project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project}. 
 
 \paragraph{Git initialize existing projects}
 
-If you have an existing RStudio Project and want to add Git version control to it first go to \texttt{Project} in the RStudio menu bar. Then select \texttt{Project Options \ldots}. Select the \texttt{Git/SVN} icon. Finally select \texttt{Git} from the drop down menu for \texttt{Version Control System:}.
-
-You can push an existing repository stored on your computer to a new remote repository on GitHub. To do this first create a new repo on GitHub with the same name as your RStudio project (see page \pageref{NewGitHubRepo}).\footnote{If your project already has a README file make sure you don't have GitHub initialize the repository with another README file.} Then copy the remote repository's URL like we saw before when we cloned a repository from GitHub (see page \pageref{GitClone}). Open a new shell from within RStudio. To do this, click the \texttt{Shell} button in Git tab's \texttt{More} drop down menu. In the shell type Git's \texttt{remote}\index{Git command!remote} command with the \texttt{add} argument. For example, your repository's GitHub URL is \texttt{https://github.com/USERNAME/ExampleProject.git} then type:
-
-{\small
-<<Ch5GitRemoteAdd, eval=FALSE, engine='sh'>>=
-# Add a remote (GitHub) repository to an existing repo
-git remote add origin https://github.com/USERNAME/ExampleProject.git
-@
-}
-
-\noindent This will connect your local repository to the remote one on GitHub. Finally, push the repository to GitHub: 
-
-<<Ch5GitPushRemote, eval=FALSE, engine='sh'>>=
-# Push local repository to GitHub for the first time
-git push -u origin master
-@
-
-\noindent This is almost identical to the \texttt{push} command we saw earlier. The only difference is the addition of the \texttt{-u} (upstream tracking)\index{Git!upstream tracking} argument. This argument adds a tracking reference for the upstream (GitHub) repository branches. 
-
-Once you have done this you will not need to use the shell to push changes to GitHub. You can use the \texttt{Push}\index{Git command!push} command in the \texttt{More} drop down menu in your project's \emph{Git} tab. Just like when pushing from the shell, you will be asked for your GitHub user name and password.
+If you have an existing RStudio Project and want to add Git version control to it first go to \texttt{Project} in the RStudio menu bar. Then select \texttt{Project Options \ldots}. Select the \texttt{Git/SVN} icon. Finally select \texttt{Git} from the drop down menu for \texttt{Version Control System:}. 
 
 \paragraph{Clone repository into a new project}
 
 Again go to \texttt{Project} in the RStudio menu bar to create a new project from a cloned GitHub Repository. Then click \texttt{Create Project \ldots}. Select the \texttt{Version Control} option and then \texttt{Git}. Finally paste the repository's URL in the field called \texttt{Repository URL:}, enter the directory you would like to locate the cloned repo in and click \texttt{Create Project}. 
+
+\begin{figure}
+	\caption{The RStudio Git More Drop Down Menu}
+	\label{GitMoreDrop}
+	\begin{center}
+		\includegraphics[scale=0.6]{Children/Chapter5/images5/GitMore.png}
+	\end{center}
+\end{figure}
+
+\paragraph{Add existing Project repository to GitHub}
+
+You can push an existing Project repository stored on your computer to a new remote repository on GitHub. To do this first create a new repo on GitHub with the same name as your RStudio Project (see page \pageref{NewGitHubRepo}). Then copy the remote repository's URL like we saw before when we cloned a repository from GitHub (see page \pageref{GitClone}). Open a new shell from within RStudio. To do this, click the \texttt{Shell} button in the \temph{Git} tab's \texttt{More} drop down menu (see Figure \ref{GitMoreDrop}}. Now follow the same steps that we used on page \pageref{RemoteAdd} to connect a locally stored repository to GitHub for the first time.
 
 \begin{figure}
     \caption{The RStudio Git Tab}
@@ -475,7 +495,7 @@ Again go to \texttt{Project} in the RStudio menu bar to create a new project fro
     \begin{center}
 
     \begin{subfigure}
-        \caption{ExampleProject Git Tab}
+        \caption{\emph{ExampleProject} Git Tab}
             \includegraphics[scale=0.6]{Children/Chapter5/images5/GitTab.png}
     \end{subfigure}
     \vspace{0.25cm}
@@ -489,9 +509,9 @@ Again go to \texttt{Project} in the RStudio menu bar to create a new project fro
 
 \subsection{Using Git in RStudio projects}
 
-When you open a project with a Git repository in RStudio you will see a new tab next to \emph{Workspace} and \emph{History} (see Figure \ref{GitTab}).This tab allows you do to many of the same things with Git that we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's for ``add''. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add file names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
+The \emph{Git} tab allows you do to many of the same things with Git that we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's for ``add''. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add file names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
 
-If you are using a GitHub repo that is associated with a remote repository on GitHub, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branches} buttons in the \texttt{More} drop down menu. You can also use the same buttons in the \textbf{Review Changes} window.
+If you are using a GitHub repo that is associated with a remote repository on GitHub, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branch} buttons in the \texttt{More} drop down menu. You can also use the same buttons in the \textbf{Review Changes} window.
 
-The Git tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new Shell with the project set as the working directory to complete any other Git task you might want.
+The \emph{Git} tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new shell with the project set as the working directory to complete any other Git task you might want to do.
 
