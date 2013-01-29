@@ -614,7 +614,7 @@ RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr 
 
 If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}. 
 
-If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emphP{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.\label{PublishRPubs}
+If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emph{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.\label{PublishRPubs}
 
 \begin{figure}
     \caption{RStudio Notebook Example}
@@ -678,7 +678,7 @@ knit(input = "Example.Rmd", output = "Example.md")
 
 \noindent You use the same steps for all other knitable document types. Note that if you do not specify the output file, {\emph{knitr}} will determine what the file name and extension should be. In this example it would come up with the same name and location as we gave it.
 
-In this example, using the \textbf{knit} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R command!markdowntoHTML} command from the {\emph{markdown}} package, i.e.
+In this example, using the \textbf{knit} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R command!markdownToHTML} command from the {\emph{markdown}} package, i.e.
 
 <<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>= 
 mardownToHTML(file = "Example.md", output = "Example.html")
@@ -700,7 +700,7 @@ library(tools)
 texi2pdf(file = "Example.tex")
 @
 
-\noindent Just like with \texttt{knit2html},\index{R command!knit2htmlr} you can simplify this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
+\noindent Just like with \texttt{knit2html}, you can simplify this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
 
 \section*{Appendix: knitr and Lyx}
 
