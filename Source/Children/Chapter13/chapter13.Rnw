@@ -85,9 +85,9 @@ source_url("http://bit.ly/VNnZxS")
 \end{figure}
 
 
-\subsection{Headers}\label{header, Markdown}
+\subsection{Headers}
 
-Headers in Markdown are extremely simple. To create a line in the topmost header style--maybe a title--just place one hash mark (\verb|#|) at the beginning of the line. The second tier header gets two hashes (\verb|##|) and so on. You can also put the hash mark(s) at the end of the header, but this is not necessary. Here is an example of the three header:
+Headers\label{MarkdownHeader} in Markdown are extremely simple. To create a line in the topmost header style--maybe a title--just place one hash mark (\verb|#|) at the beginning of the line. The second tier header gets two hashes (\verb|##|) and so on. You can also put the hash mark(s) at the end of the header, but this is not necessary. Here is an example of the three header:
 
 <<Ch13header, eval=FALSE, tidy=FALSE, engine='sh'>>=
 # A level one header
@@ -195,9 +195,9 @@ s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
 
 Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files custom render HTML documents.
 
-\subsection{Pandoc}\label{PandocDiscussion}\index{Pandoc}
+\subsection{Pandoc}\index{Pandoc}
 
-With a little customization you can include footnotes and Bibtex\index{BibTeX} into R Markdown documents. When you click on the \texttt{Knit HTML} button in RStudio it runs two commands: \texttt{knitr} to convert your \emph{.Rmd} file to \emph{.md} and then \texttt{markdownToHTML}\index{R command!markdownToHTML} from the \emph{markdown} package \citep{R-markdown}. What we need to do is reset \texttt{markdownToHTML} or create a new function to run Pandoc.
+With a little customization\label{PandocDiscussion} you can include footnotes and Bibtex\index{BibTeX} into R Markdown documents. When you click on the \texttt{Knit HTML} button in RStudio it runs two commands: \texttt{knitr} to convert your \emph{.Rmd} file to \emph{.md} and then \texttt{markdownToHTML}\index{R command!markdownToHTML} from the \emph{markdown} package \citep{R-markdown}. What we need to do is reset \texttt{markdownToHTML} or create a new function to run Pandoc.
 
 The simplest way to do this is to create a new R function\index{R command!function} that runs markdown files created by \emph{knitr} to Pandoc in order to create an HTML file:\footnote{This function is modified from one on the RStudio website. See below for more details.}
 
