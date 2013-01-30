@@ -212,20 +212,20 @@ You'll notice that after the code chunk we use \verb|input| to include the new \
 \input{Children/Chapter12/images12/BrewProcess.tex}
 \end{figure}
 
-\section{Creating Batch Reports}\index{batch reports}
+\section{Creating batch reports}\index{batch reports}
 
-\todo[inline]{Add discussion of \texttt{knit\_expand} when \emph{knitr} version 0.10 comes out.}
-
-When we create batch reports we want to some how subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks to produce multiple presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}): 
+When we create batch reports we want to somehow subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks in different presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew}\index{brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}): 
 
 \begin{itemize}
     \item create a \emph{brew} template document,
-    \item create a function to subset the data, brew and knit each file.
+    \item create a function to subset the data, brew, and knit each file.
 \end{itemize}
 
-Imagine that we are using the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}). 
+\emph{knitr}'s \verb|knit_expand| command can also be used to create batch reports.\index{R command!knit\_expand}\index{knitr!expand}\index{knitr!batch reports} Because \emph{brew} is the dominant way to create batch reports in R and currently has more capabilities than \verb|knit_expand| we will cover \emph{brew} rather than \verb|knit_expand| in detail.
 
-First, let's create a \emph{brew} template document. This document will include all of our markup and code chunks we want in our \emph{knitr} document. There is one small difference from regular knittable documents: it will use \emph{brew} syntax for including information from the data subset. Text in a \emph{brew} template document is printed as is unless it is between \emph{brew}'s delimiters.\index{brew delimiters} The delimiters are:\footnote{Note that the spaces between the delimiter and its contents are important.}
+Imagine that we are using the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}).\index{fertilizer}\footnote{The files needed to create this example are available at: \url{http://bit.ly/XJbyCK}.} 
+
+First, let's create a \emph{brew} template document. This document will include all of our markup and the code chunks we want in our \emph{knitr} document. There is one small difference from regular knittable documents: it will use \emph{brew} syntax to include information from the subsetted data. Text in a \emph{brew} template document is printed `as is' when we \texttt{brew} it unless it is between \emph{brew}'s delimiters.\index{brew!delimiters} The delimiters are:\footnote{Note that the spaces between the delimiter and its contents are important.}
 
 \begin{itemize}
     \item \texttt{\textless{}\textbackslash{}\# . . . \%\textgreater{}}: Comment delimiter, i.e. contents are thrown away when brewed.
@@ -260,7 +260,7 @@ per hectare of arable land.
         \end{kframe}
 \end{knitrout}
 
-\noindent There are a few things to note. The line \verb|<% NewFC <- FC %>| will create a vector called \emph{NewFC} from the object \emph{FC}. As we will see when we create the brew function, \emph{FC} are the values of \emph{FertilizerConsumption} for each country. We need to put \emph{FC} into a new object because if we typed \verb|<%= FC %>| \texttt{brew} would print the numbers literally, not in a numeric vector like we need later for the \texttt{mean} command. \verb|<%= Name %>| simply prints the country name. We'll se how to create \emph{Name} in the \emph{brew} function. We will save this template in \emph{BatchReports/Template}, i.e. in a subdirectory of \emph{BatchReports} called \emph{Template}.
+\noindent There are a few things to note. The line \verb|<% NewFC <- FC %>| will create a vector called \emph{NewFC} from the object \emph{FC}. As we will see when we create the \emph{brew} function, \emph{FC} contains the values of \emph{FertilizerConsumption} for each country. We need to put \emph{FC} into a new object because if we typed \verb|<%= FC %>| \emph{brew} would print the numbers literally, not in a numeric vector like we need later for the \texttt{mean} command. \verb|<%= Name %>| prints the country name in the subsetted data. We'll see how to create \emph{Name} in the \emph{brew} function below. We save this template in \emph{BatchReports/Template}, i.e. in a subdirectory of \emph{BatchReports} called \emph{Template}. Let's give it the file name \emph{BrewTemplate.Rnw}.
 
 Now let's create the R code to subset the data, \texttt{brew} and \texttt{knit} the reports:
 
@@ -280,7 +280,7 @@ COUNTRY <- as.character(unique(MainData$country))
 
 #### Create BatchReports Function ####
 BatchReports <- function(Name){
-  # Create files names for individual reports 
+  # Create file names for individual reports 
   ## Remove white space in country names
   CountryNoWhite <- gsub(" ", "", x = Name)
   KnitFile <- paste(CountryNoWhite, ".Rnw", sep = "")
@@ -307,18 +307,18 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
 
 \begin{enumerate}
     \item Set the working directory to \emph{/BatchReports}.
-    \item Download \emph{MainData.csv} using the \texttt{source\_GitHubData} function, as we've done before.
+    \item Download \emph{MainData.csv} using the \texttt{source\_GitHubData}\index{R command!source\_GitHubData} function, as we've done before.
     \item Create a vector for the country names in the data. We will use this vector to subset the data.
-    \item Create a \texttt{function}\index{R command!function} called \emph{BatchReports} for subsetting the data, brewing it, and knitting it. 
+    \item Create a \texttt{function}\index{R command!function}\index{R!functions} called \emph{BatchReports} for subsetting\index{R!subset} the data, brewing it, and knitting it. 
         \begin{itemize}
             \item The \texttt{function} command allows us create a new function.\footnote{User created functions are just like most other R function.} Arguments are specified in parentheses (these are also called the formals\index{R functions!formals}) and R expressions are put in the curly brackets that denote the function's body.\index{R functions!body} The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew and knit the data according to \emph{Name}'s value.\footnote{For more infromation on functions see Hadley Wickham's \emph{devtools} Wiki page on the topic: \url{https://github.com/hadley/devtools/wiki/Functions}.}
             \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{R command!gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{R command!paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
         \end{itemize}
-    \item \texttt{l\_ply} from the \emph{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value of \emph{COUNTRY}. 
-    \item Finally, we use the \texttt{unlink}\index{R command!unlink} command to delete all of the ancillary files used in to create the final batch report PDFs. Always be careful with the \texttt{unlink} command as it permanently deletes files. Because we used the asterisk wildcard (see page \pageref{AsteriskWildcard}) \texttt{unlink} will delete all files in the working directory with the extensions \emph{.aux}, \emph{.log}, \emph{.Rnw} and \emph{.tex}.
+    \item \texttt{l\_ply}\index{R command!l\_ply} from the \emph{plyr}\index{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value \emph{COUNTRY}. 
+    \item Finally, we use the \texttt{unlink}\index{R command!unlink} command to delete all of the ancillary files used in to create the final batch report PDFs. Always be careful with the \texttt{unlink} command as it permanently deletes files. Because we used the asterisk wildcard (see page \pageref{AsteriskWildcard})\index{R!wildcard}\index{wildcard} \texttt{unlink} will delete all files in the working directory with the extensions \texttt{.aux}, \texttt{.log}, \texttt{.Rnw} and \texttt{.tex}.
 \end{enumerate}
 
-Figure \ref{BrewExample} shows you a sample of what the final PDF created by this \emph{brew}/\emph{knitr} for Afghanistan looks like. This was a very simple example illustrating the basic process for combining \emph{brew} and \emph{knitr} to create batch reports. The process can be used to create much more complex documents and with with other markup languages. 
+Figure \ref{BrewExample} shows you a sample of what the final PDF created by this \emph{brew}/\emph{knitr} process for Afghanistan looks like. This was a very simple example illustrating the basic process for combining \emph{brew} and \emph{knitr} to create batch reports. The process can be used to create much more complex documents and with other markup languages. 
 
 \begin{figure}
     \caption{Example PDF created by \emph{brew} + \emph{knitr}}
@@ -326,3 +326,4 @@ Figure \ref{BrewExample} shows you a sample of what the final PDF created by thi
         \includegraphics[width=0.8\textwidth]{Children/Chapter12/images12/BrewExample.png}
         \vspace{1cm}
 \end{figure} 
+
