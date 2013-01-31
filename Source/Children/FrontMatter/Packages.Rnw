@@ -20,18 +20,22 @@ install.packages("apsrtable", "brew", "countrycode",
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror"\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
 
- Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify} for creating R Markdown/HTML slideshows (see Chapter \ref{MarkdownChapter}) is not currently on CRAN. It can be downloaded directly from GitHub\index{GitHub}. To do this first load the \emph{devtools} package \cite[]{R-devtools}. Then download \emph{Slidify}. Here is the complete code:
+ Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify} for creating R Markdown/HTML slideshows (see Chapter \ref{MarkdownChapter}) is not currently on CRAN. It can be downloaded directly from GitHub\index{GitHub}. To do this first load the \emph{devtools} package \cite[]{R-devtools}.\index{devtools} Then download \emph{slidify}. Here is the complete code:
 
 <<FrontSlidifyInstall, eval=FALSE, tidy=FALSE>>=
 # Load devtools
 library(devtools)
 
-# Install Slidify and ancillary libraries
+# Install slidify and ancillary libraries
 install_github("slidify", "ramnathv")
 install_github("slidifyLibraries", "ramnathv")
 @
 
-\noindent For more details see the \emph{Slidify} website: \url{http://ramnathv.github.com/slidify/start.html#}.
+\noindent For more details see the \emph{slidify} website: \url{http://ramnathv.github.com/slidify/start.html#}. Use the same procedures to also install the \emph{repmis}\index{repmis} package.\label{repmisInstall}
+
+<<FrontrepmisInstall, eval=FALSE>>=
+install_github("repmis", "christophergandrud")
+@
 
 If you are using Windows you will also need to install \emph{Rtools} \cite[]{Rtools}.\index{Rtools} You can download Rtools from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload} Please use the recommended installation to ensure that your system PATH\index{PATH} is set up correctly. Otherwise your computer will not know where the tools are.
 
@@ -61,6 +65,7 @@ toInstall <- c("animation",
                "openair",
                "plyr", 
                "quantmod",
+               "repmis",
                "reshape",
                "reshape2",
                "RCurl",

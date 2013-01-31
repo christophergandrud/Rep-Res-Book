@@ -305,21 +305,10 @@ names(DispropData)
 
 \paragraph{Loading data from secure URLs with {\tt{source\_GitHubData}}}
 
-To simplify the process of downloading data from secure URLs I've created a simple function called \verb|source_GitHubData|.\footnote{The function is based on \texttt{source\_url} from \emph{devtools}\index{devtools} \citep{R-devtools}.}\index{R command!source\_GitHubData} It is available at: \url{http://bit.ly/UOMkpd}.\footnote{The full version of the URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Functions/source_GitHubData.R}.} Load the function with the \verb|source_url| command in the \emph{devtools} package. We will discuss \verb|source_url| in more detail in Chapter \ref{StatsModel} (page \pageref{SourceSecureURL}). To load the function type:
-
-<<Ch6GitHubDataFunction, eval=FALSE>>=
-# Load devtools
-library(devtools)
-
-# Load source_GitHubData
-source_url("http://bit.ly/UOMkpd")
-@ 
-
-\noindent Now we can just enter the data set's URL stored, as before, in an object called \emph{UrlAddress}. 
+We can use the \verb|source_GitHubData| command in the \emph{repmis} package\footnote{Please see page \pageref{repmisInstall} for installation instructions. } \citep{R-repmis} to simplify the process of downloading data from secure URLs.\index{repmis}\index{R command!source\_GitHubData} To load the data stored at the URL in \emph{UrlAddress} with \verb|source_GitHubData| type: 
 
 <<Ch6UsesourceGitHubData, eval=FALSE>>=
-# Load disproportionality data
-DispropData <- source_GitHubData(url = UrlAddress)
+DispropData <- repmis::source_GitHubData(url = UrlAddress)
 @
 
 \subsection{Compressed data stored online}

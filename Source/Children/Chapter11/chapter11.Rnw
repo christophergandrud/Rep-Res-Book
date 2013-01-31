@@ -103,13 +103,10 @@ opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
 
 \hlcomment{#### Load and cite R packages ####}
 # Create list of packages
-PackagesUsed <- c(\hlstring{"devtools", "knitr", "ggplot2"})
-
-# Load LoadandCite function
-devtools::source_url({\hlstring{"http://bit.ly/UI95Oq"})
+PackagesUsed <- c(\hlstring{"devtools", "knitr", "ggplot2", "repmis"})
 
 # Load PackagesUsed and create .bib BibTeX file
-LoadandCite(PackagesUsed, file = \hlstring{"Packages.bib"}, install = FALSE)
+repmis::LoadandCite(PackagesUsed, file = \hlstring{"Packages.bib"}, install = FALSE)
 
 \hlcomment{#### Gather Democracy data from Pemstein et al. (2010) ####}
 \hlcomment{# For simplicity, store the URL in an object called 'url'.}
@@ -462,9 +459,9 @@ knitr::write_bib(PackagesUsed,
                  file = "Packages.bib")
 @
 
-\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R command!lapply} (list apply). This applies the function \texttt{library}\index{R command!lapply} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages. 
+\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R command!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R command!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages. 
 
-In the full LaTeX document example I showed you earlier there is a function (\texttt{LoadandCite})\index{R command!LoadandCite} that I created to simplify the process of loading and citing packages.\footnote{It can also install the packages if the option \texttt{install = TRUE}.} It available on the Book's GitHub Example repository and can be downloaded into R: i.e. \verb|devtools::source_url("http://bit.ly/UI95Oq")|.}
+The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R command!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}.} 
 
 \section{Presentations with LaTeX Beamer}
 
