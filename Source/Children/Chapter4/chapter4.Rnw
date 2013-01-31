@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 January 2012
+% Updated: 31 January 2012
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -53,10 +53,6 @@ It is generally good practice to avoid putting spaces in your file and directory
 
 When you use R, markup languages and many of the other tools covered in this book it is important to keep in mind what your current working directory is\index{working directory}.\index{current working directory} The working directory is the directory where the program automatically looks for files and other directories, unless you tell it to look elsewhere. It is also where it will save files. Later in this chapter we will cover commands for finding and changing the working directory.
 
-\section{Organizing your research project}
-
-Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's parent directory is called {\emph{ExampleProject}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contains further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
-
 \clearpage
 \thispagestyle{plain}
 \begin{landscape}
@@ -70,6 +66,8 @@ Figure \ref{ExampleTree} gives an example of how the files in a simple reproduci
 \end{figure}
 \end{landscape}
 
+
+
 \begin{wrapfigure}{r}{0.4\textwidth}
     \caption{An Example RStudio Project Menu}
     \label{ProjectMenu}
@@ -78,6 +76,9 @@ Figure \ref{ExampleTree} gives an example of how the files in a simple reproduci
     \end{center}
 \end{wrapfigure}
 
+\section{Organizing your research project}
+
+Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's parent directory is called {\emph{ExampleProject}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contains further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
 
 In addition to the main subdirectories of {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}} The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README} its contents will automatically be displayed on the repository's main page. If the \texttt{README} file is written using Markdown, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
@@ -251,6 +252,8 @@ ls
 ## chapter4.Rnw images4
 @
 
+\noindent As we saw earlier, R also has an \texttt{ls} command.\index{R command!ls} R's \texttt{ls} command lists items in the R workspace. The shell's \texttt{ls} command lists files and directories in the working directory.
+
 \paragraph{{\tt{mkdir}}}\index{shell command!mkdir}
 
 Use \texttt{mkdir} to create a new directory. For example, if I wanted to create a directory in my Linux root directory called {\emph{NewDirectory}} I would type:
@@ -332,7 +335,7 @@ system("echo Text to Add > ExampleEcho.md")
 @
 
 
-\section{File navigation in RStudio}\index{RStudio!Files pane}
+\section{File navigation in RStudio}\index{RStudio!Files pane}\index{RStudio}
 
 The RStudio \emph{Files} pane allows us to navigate and do some basic file manipulation. The left panel of Figure \ref{FilesPane} shows us what this pane looks like. The pane allows us to navigate to specific files and folder, delete and rename files. To select a folder as the working directory tick the dialog box next to the file then click the \texttt{More} button and select \texttt{Set As Working Directory}. Under the \texttt{More} button (\includegraphics[scale=0.5]{Children/Chapter4/images4/MoreIcon.png}) you will also find options to \texttt{Move} and \texttt{Copy} files (see the right pane of Figure \ref{FilesPane}.
 

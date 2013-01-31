@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 January 2013
+% Updated: 31 January 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -365,11 +365,11 @@ names(UDSData)
 There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Most of these packages use the sources' application programing interfaces (API).\index{API} APIs allow programs to interact with a website. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward and makes it easy to update data sets when new information becomes available. Some examples of these packages include: 
 
 \begin{itemize}
-    \item The \emph{openair} package \citep{R-openair}, which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database.\index{air quality}
-    \item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.\index{finance data}
-    \item The \emph{treebase} package by \cite{Boettiger2012} allows you to access phylogenetic\index{phylogenetic} data from TreeBASE.\footnote{\url{http://treebase.org}}
-    \item The \emph{twitteR} package \citep{R-twitteR} accesses Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from Twitter\index{Twitter} including tweets\index{tweet} and trending topics.
-    \item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's\index{World Bank} Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
+    \item The \emph{openair} package \citep{R-openair},\index{openair} which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database.\index{air quality}
+    \item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.\index{finance data}\index{Google!Finance}\index{Yahoo Finance}\index{US Federal Reserve}
+    \item The \emph{treebase} package by \cite{Boettiger2012} allows you to access phylogenetic\index{phylogenetic} data from TreeBASE.\footnote{\url{http://treebase.org}}\index{treebase}
+    \item The \emph{twitteR} package \citep{R-twitteR} accesses Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from Twitter\index{Twitter} including tweets\index{tweet} and trending topics.\index{twitteR}
+    \item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's\index{World Bank}\index{WDI} Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
     \item The rOpenSci\footnote{\url{http://ropensci.org/}}\index{rOpenSci} group has and is developing a number of packages for accessing scientific data from web-based sources with R. They have a comprehensive set of packages for accessing biological data and academic journals. For a list of their packages see: \url{http://ropensci.org/packages/index.html}. 
     \item Another fairly comprehensive and regularly updated list of APIs available as R package on Stack Exchange's\index{Stack Exchange} Cross Validated\index{Cross Validated} website.\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}}}
 \end{itemize}
@@ -390,17 +390,20 @@ WDIsearch("fertilizer consumption")
 
 \noindent This shows us a selection of indicator numbers and their names.\footnote{You can also search the World Bank Development Indicators website. The indicator numbers are at the end of each indicators' URL.} Let's gather data on countries' fertilizer consumption in kilograms per hectare of arable land. The indicator number for this variable is: AG.CON.FERT.ZS. We can use the command \texttt{WDI} to gather the data and put it in an object called \emph{FertConsumpData}.
 
-<<Ch6WDIFert, cache=TRUE>>=
+<<Ch6WDIFert, eval=FALSE>>=
 # Gather fertilizer consumption/hectare arable land data from WDI
 FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
-
-# Show head of FertConsump data frame
-head(FertConsumpData)
 @
+
+\noindent The data we downloaded looks like this:
 
 <<Ch6WDIFertSave, include=FALSE>>=
 # This ensures that the PDF will still compile even if the data is unavailable via WDI
 load(file = "/git_repositories/Rep-Res-Book/Source/Children/Chapter6/FertData.RData")
+@
+
+<<Ch6HeadFert>>=
+head(FertConsumpData)
 @
 
 \noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is a the countries' or regions' International Standards Organization's\index{ISO} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.

@@ -46,33 +46,34 @@ The current version of the book manuscript was compiled with RStudio (v. 0.97.24
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] MCMCpack_1.2-4      coda_0.16-1         knitcitations_0.1-0
-##  [4] bibtex_0.3-4        foreign_0.8-52      Zelig_4.1-1        
-##  [7] sandwich_2.2-9      boot_1.3-7          xtable_1.7-0       
-## [10] WDI_2.2             treebase_0.0-6      ape_3.0-6          
-## [13] texreg_1.17         tables_0.7          RCurl_1.95-3       
-## [16] bitops_1.0-4.2      reshape2_1.2.2      reshape_0.8.4      
-## [19] quantmod_0.3-17     TTR_0.21-1          xts_0.9-1          
-## [22] zoo_1.7-9           Defaults_1.1-1      plyr_1.8           
-## [25] openair_0.7-0       memisc_0.95-39      MASS_7.3-23        
-## [28] lattice_0.20-13     markdown_0.5.3      knitr_0.9          
-## [31] Hmisc_3.10-1        survival_2.37-2     httr_0.2           
-## [34] googleVis_0.3.3     RJSONIO_1.0-1       ggplot2_0.9.3      
-## [37] gdata_2.12.0        formatR_0.7         extrafont_0.13     
-## [40] estout_1.0.1-1      devtools_0.8        countrycode_0.9    
-## [43] brew_1.0-6          apsrtable_0.8-8     animation_2.1      
+##  [1] XML_3.95-0.1        twitteR_0.99.19     rjson_0.2.12       
+##  [4] knitcitations_0.2-0 bibtex_0.3-4        MCMCpack_1.2-4     
+##  [7] coda_0.16-1         foreign_0.8-52      Zelig_4.1-2        
+## [10] sandwich_2.2-9      boot_1.3-7          xtable_1.7-0       
+## [13] WDI_2.2             treebase_0.0-6      ape_3.0-7          
+## [16] texreg_1.17         tables_0.7          slidify_0.3.3      
+## [19] stargazer_2.0.1     RCurl_1.95-3        bitops_1.0-4.2     
+## [22] reshape2_1.2.2      reshape_0.8.4       quantmod_0.4-0     
+## [25] TTR_0.21-1          xts_0.9-3           zoo_1.7-9          
+## [28] Defaults_1.1-1      plyr_1.8            openair_0.7-0      
+## [31] memisc_0.95-39      MASS_7.3-23         lattice_0.20-13    
+## [34] markdown_0.5.4      knitr_1.0.5         Hmisc_3.10-1       
+## [37] survival_2.37-2     httr_0.2            googleVis_0.3.3    
+## [40] RJSONIO_1.0-1       ggplot2_0.9.3       gdata_2.12.0       
+## [43] formatR_0.7         extrafont_0.13      estout_1.0.1-1     
+## [46] devtools_0.8        countrycode_0.10    brew_1.0-6         
+## [49] apsrtable_0.8-8     animation_2.1      
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] car_2.0-15         cluster_1.14.3     codetools_0.2-8   
-##  [4] colorspace_1.2-0   data.table_1.8.6   dichromat_1.2-4   
-##  [7] digest_0.6.0       evaluate_0.4.3     gee_4.13-18       
+##  [4] colorspace_1.2-1   data.table_1.8.6   dichromat_2.0-0   
+##  [7] digest_0.6.1       evaluate_0.4.3     gee_4.13-18       
 ## [10] gtable_0.1.2       gtools_2.7.0       labeling_0.1      
 ## [13] Matrix_1.0-10      memoise_0.1        mgcv_1.7-22       
-## [16] munsell_0.4        nlme_3.1-106       parallel_2.15.2   
+## [16] munsell_0.4        nlme_3.1-107       parallel_2.15.2   
 ## [19] pkgmaker_0.10.1    proto_0.3-10       RColorBrewer_1.0-5
-## [22] rjson_0.2.11       Rttf2pt1_1.1       scales_0.2.3      
-## [25] stringr_0.6.2      twitteR_0.99.19    whisker_0.3-2     
-## [28] XML_3.95-0.1
+## [22] Rttf2pt1_1.1       scales_0.2.3       stringr_0.6.2     
+## [25] whisker_0.3-2      yaml_2.1.6
 ```
 
 

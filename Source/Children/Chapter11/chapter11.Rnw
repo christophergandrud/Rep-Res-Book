@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 30 January 2013
+% Updated: 31 January 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -188,7 +188,7 @@ source files available on GitHub at:
 \end{knitrout}
 }
 
-\noindent The \emph{knitr} code chunk\index{knitr!code chunk} syntax should be familiar to you from previous chapters, so let's unpack the LaTeX syntax from just after the first code chunk. New syntax shown in later parts of this example is discussed in the remainder of this section and the next section on bibliographies.
+\noindent The \emph{knitr} code chunk\index{knitr!code chunk} syntax should be familiar to you from previous chapters, so let's unpack the LaTeX syntax from just after the first code chunk, including the ``Create Title'' and ``Abstract'' parts. New syntax shown in later parts of this example is discussed in the remainder of this section and the next section on bibliographies.
 
 First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (page \ref{DoubleBS}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked. 
 
@@ -438,7 +438,7 @@ knitr::write_bib("xtable",
 
 \noindent \verb|write_bib| automatically assigns each entry a cite key using the format \verb|R-PACKAGE_NAME|, e.g. \verb|R-xtable|.
 
-\textbf{Warning:} \emph{knitr}'s \verb|write_bib| command currently does not have the ability to append the citations to an existing file, but instead writes them to a new file. If there is already a file with the same name it will overwrite the file. So, be very careful using this command to avoid accidental deletions. It is a good idea to have \verb|write_bib| always write to a file specifically for automatically generated package citations. You can include more than one bibliography in LaTeX's \texttt{bibliography} command. All you need to do is separate them with a comma.
+\textbf{Warning:} \emph{knitr}'s \verb|write_bib| command currently does not have the ability to append package citations to an existing file, but instead writes them to a new file. If there is already a file with the same name it will overwrite the file. So, be very careful using this command to avoid accidental deletions. It is a good idea to have \verb|write_bib| always write to a file specifically for automatically generated package citations. You can include more than one bibliography in LaTeX's \texttt{bibliography} command. All you need to do is separate them with a comma.
 
 <<Ch11TwoBibs, eval=FALSE, tidy=FALSE>>=
 \bibliography{Main.bib,Packages.bib}

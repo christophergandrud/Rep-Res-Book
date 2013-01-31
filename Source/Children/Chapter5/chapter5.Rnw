@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 January 2012
+% Updated: 31 January 2012
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -459,15 +459,15 @@ If you want more practice setting up GitHub in the command line, GitHub and the 
 
 \section{RStudio \& GitHub}
 
-When you open a Project with a Git repository in RStudio you will see a new \emph{Git} tab next to \emph{Workspace} and \emph{History} (see Figure \ref{GitTab}). From here you can do many of the things we covered in the previous section. Let's look at how to set up and use Git in RStudio Projects.
+When you open a Project\index{RStudio!Project}\index{RStudio} with a Git repository in RStudio you will see a new \emph{Git}\index{Git} tab next to \emph{Workspace} and \emph{History} (see Figure \ref{GitTab}). From here you can do many of the things we covered in the previous section. Let's look at how to set up and use Git in RStudio Projects.
 
 \subsection{Setting Up Git/GitHub with Projects}
 
-You can Git initialize new RStudio projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do any of these things RStudio automatically adds a \emph{.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory} and \emph{.RData} files. 
+You can Git initialize new RStudio Projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do any of these things RStudio automatically adds a \emph{.gitignore}\index{Git!.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory} and \emph{.RData} files. 
 
 \paragraph{Git with a new project}\label{NewProjectGit}
 
-To create a new project with Git version control go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}. In the box that appears (see Figure \ref{NewRStudioProject}) select \texttt{New Project} . Enter the Project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project}. 
+To create a new project with Git version control go to \texttt{Project} in the RStudio menu bar. Then click \texttt{Create Project \ldots}. In the box that appears (see Figure \ref{NewRStudioProject}) select \texttt{New Project}. Enter the Project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project}. 
 
 \paragraph{Git initialize existing projects}
 
@@ -475,7 +475,7 @@ If you have an existing RStudio Project and want to add Git version control to i
 
 \paragraph{Clone repository into a new project}
 
-Again go to \texttt{Project} in the RStudio menu bar to create a new project from a cloned GitHub Repository. Then click \texttt{Create Project \ldots}. Select the \texttt{Version Control} option and then \texttt{Git}. Finally paste the repository's URL in the field called \texttt{Repository URL:}, enter the directory you would like to locate the cloned repo in and click \texttt{Create Project}. 
+Again go to \texttt{Project} in the RStudio menu bar to create a new project from a cloned GitHub repository.\index{GitHub} Then click \texttt{Create Project \ldots}. Select the \texttt{Version Control} option and then \texttt{Git}. Finally paste the repository's URL in the field called \texttt{Repository URL:}, enter the directory you would like to locate the cloned repo in and click \texttt{Create Project}. 
 
 \begin{figure}
 	\caption{The RStudio Git More Drop Down Menu}
@@ -495,7 +495,7 @@ You can push an existing Project repository stored on your computer to a new rem
     \begin{center}
 
     \begin{subfigure}
-        \caption{{\emph{ExampleProject}} Git Tab}
+        \caption{New {\emph{ExampleProject}}' \emph{Git} Tab}
             \includegraphics[scale=0.6]{Children/Chapter5/images5/GitTab.png}
     \end{subfigure}
     \vspace{0.25cm}
@@ -509,9 +509,7 @@ You can push an existing Project repository stored on your computer to a new rem
 
 \subsection{Using Git in RStudio projects}
 
-The \emph{Git} tab allows you do to many of the same things with Git that we covered in the previous section. To add and commit files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's for ``add''. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add file names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
+The RStudio \emph{Git} tab\index{RStudio!Git tab} allows you to do many of the same things with Git that we covered in the previous section. In the top panel of Figure \ref{GitTab} you will see the \emph{Git} tab for a new RStudio Project called \emph{ExampleProject}. It has two files that have not been added or committed to Git. To add and commit the files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's for ``add''. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes}\index{RStudio!Review Changes window}\index{Git commit!add}\index{Git command!commit} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} on the upper-right side of the \textbf{Review Changes} window and click \texttt{Commit}. If you add file names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
 
-If you are using a GitHub repo that is associated with a remote repository on GitHub, you can push and pull it with the \texttt{Pull Branches} and \texttt{Push Branch} buttons in the \texttt{More} drop down menu. You can also use the same buttons in the \textbf{Review Changes} window.
-
-The \emph{Git} tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow\:Shell \ldots} option to open a new shell with the project set as the working directory to complete any other Git task you might want to do.
+If you are using a GitHub repo that is associated with a remote repository on GitHub,\index{GitHub} you can push and pull it with the \texttt{Pull Branches}\index{Git command!pull} and \texttt{Push Branch}\index{Git command!push} buttons in the \texttt{More} drop down menu. You can also use the same buttons in the \textbf{Review Changes} window. The \emph{Git} tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow{} Shell \ldots} option to open a new shell with the Project set as the working directory to complete any other Git task you might want to do.
 

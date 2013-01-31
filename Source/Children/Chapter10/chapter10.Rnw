@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 30 January 2013
+% Updated: 31 January 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -253,7 +253,7 @@ There are a number of very good resources for learning how to use \emph{ggplot2}
 
 Given that there is already extensive good documentation on \emph{ggplot2} we are not going to learn the full details of how to use the package here. Instead let's look at some examples of how to manipulate a data frame and a regression results object so that they can be graphed with \emph{ggplot2}. First we will create a multi-line time series plot. Then we will create a caterpillar plot of regression results. Along with giving you a general sense of how \emph{ggplot2} works, the examples illuminate how \emph{ggplot2} can be made part of a fully reproducible research workflow.\footnote{Note that everything we do here with \emph{ggplot2} can also be done with R's default graphics, though the appearance will be different.}
 
-Sometimes we may want to show how multiple variables change together overtime. For example, imagine we have data on inflation\index{inflation}\index{Federal Reserve} in the United States along with inflation forecasts made by the US Federal Reserve\index{US Federal Reserve} two quarters beforehand. The data is stored on GitHub at: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv}.\footnote{This data is from \cite{GandrudGrafstrom2012}. The example here partially recreates Figure 1 from that paper.} I've loaded the data into R and put it into an object called \emph{InflationData}. It looks like this:
+Sometimes we may want to show how multiple variables change together overtime. For example, imagine we have data on inflation\index{inflation}\index{US Federal Reserve} in the United States along with inflation forecasts made by the US Federal Reserve\index{US Federal Reserve} two quarters beforehand. The data is stored on GitHub at: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv}.\footnote{This data is from \cite{GandrudGrafstrom2012}. The example here partially recreates Figure 1 from that paper.} I've loaded the data into R and put it into an object called \emph{InflationData}. It looks like this:
 
 % Load inflation data
 <<Ch10LoadInflationData, include=FALSE>>=
@@ -503,12 +503,13 @@ Typing \verb|print(FCMap, tag = "chart")|\index{R command!print} in a knittable 
 ```{r, echo=FALSE, message=FALSE, results='asis'}
 # Create and print geo map
 devtools::source_url("http://bit.ly/VNnZxS")
+```
 @
 
 If you are using RStudio you will likely notice that \emph{googleVis} charts do not show up in the \textbf{Preview HTML}\index{RStudio!Preview HTML} window. To see the full HTML document with charts in your web browser just click the \texttt{View the page with the system web browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}).
 
 \paragraph{Important Note for Motion Charts}
 
-You may notice that Google motion charts\footnote{You can use the \texttt{gvisMotionChart}\index{R command{gvisMotionChart}} command to make these.}\index{motion chart} do not show up in the RStudio \textbf{Preview HTML}\index{RStudio!Preview HTML} window or even in your web browser when you open the knitted HTML version of the file. You just see a big blank space where you had hoped the chart would be. It will show up, however, if you use the \verb|plot| command on a \verb|gvis| motion chart object in the console. Motion charts can only be displayed when they are hosted on a web server or located in a directory `trusted' by Flash Player.\footnote{This is because motion charts and annotated time line charts rely on Flash,\index{Flash} unlike the other Google visualizations. For more information see Markus Gesmann's blog post at: \url{http://lamages.blogspot.com/2012/05/interactive-reports-in-r-with-knitr-and.html}.}\index{Flash Player}
+You may notice that Google motion charts\footnote{You can use the \texttt{gvisMotionChart}\index{R command!gvisMotionChart} command to make these.}\index{motion chart} do not show up in the RStudio \textbf{Preview HTML}\index{RStudio!Preview HTML} window or even in your web browser when you open the knitted HTML version of the file. You just see a big blank space where you had hoped the chart would be. It will show up, however, if you use the \verb|plot| command on a \verb|gvis| motion chart object in the console. Motion charts can only be displayed when they are hosted on a web server or located in a directory `trusted' by Flash Player.\footnote{This is because motion charts and annotated time line charts rely on Flash,\index{Flash} unlike the other Google visualizations. For more information see Markus Gesmann's blog post at: \url{http://lamages.blogspot.com/2012/05/interactive-reports-in-r-with-knitr-and.html}.}\index{Flash Player}
 
 The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio \textbf{Preview HTML} window do not. An easy way to solve this problem is to save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder\index{Dropbox!Public folder} and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub!Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player\index{Flash Player} see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.
