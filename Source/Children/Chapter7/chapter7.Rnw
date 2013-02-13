@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 January 2012
+% Updated: 13 February 2013
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -19,9 +19,17 @@ In order to successfully merge two or more data frames we need to make sure that
 
 Before doing anything to your data it is a good idea to take a look at it and see what needs to be done. Taking a little time to become acquainted with your data will help you avoid many error messages and much frustration. 
 
-You could of course just type a data frame object's name into the R console. This will print the entire data frame in your console. For data frames with more than a few variables and observations this is very impractical. We have already seen a number of commands that are useful for looking at parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, the \texttt{names}\index{R command!names} command shows you the variable names in a data frame object. The \texttt{head}\index{R command!head} command shows the names plus the first few observations in a data frame. The \texttt{tail}\index{R command!tail} shows the last few.
+You could of course just type a data frame object's name into the R console. This will print the entire data frame in your console. For data frames with more than a few variables and observations this is very impractical. We have already seen a number of commands that are useful for looking at parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, the \texttt{names}\index{R command!names} command shows you the variable names in a data frame object. The \texttt{head}\index{R command!head} command shows the names plus the first few observations in a data frame. The \texttt{tail}\index{R command!tail} shows the last few. 
 
-The \texttt{summary} command\index{R command!summary} is especially helpful for seeing not only basic descriptive statistics for all of the variables in a data frame, but also the variables' types. For example, let's us the \emph{FertConsumpData} object we created in Chapter \ref{DataGather}:
+Use the \texttt{dim}\index{R command!dim} (dimensions) command to quickly see the number of observations and variables (the number of rows and columns) in a data frame object. For example, let's us the \emph{FertConsumpData} object we created in Chapter \ref{DataGather} to test out \texttt{dim}:
+
+<<Ch7dim>>=
+dim(FertConsumpData)
+@
+
+\noindent The first number is the number of rows in the data frame (\Sexpr{dim(FertConsumpData)[[1]]}) and the second is the number of columns (\Sexpr{dim(FertConsumpData)[[2]]}). You can alse use the \texttt{nrow} command to find just the number of rows and \texttt{ncol} to see only the columns.\index{R command!nrow}\index{R command!ncol}
+
+The \texttt{summary} command\index{R command!summary} is especially helpful for seeing basic descriptive statistics for all of the variables in a data frame and also the variables' types. Here is an example:
 
 {\small
 <<Ch7SummaryExamp>>=
@@ -30,7 +38,7 @@ summary(FertConsumpData)
 @
 }
 
-\noindent We can immediately see that the variables \textbf{iso2c} and \textbf{country} are character strings. Because \emph{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year} we know they are numeric. Have a look over the summary to see if there is anything unexpected like lots of missing values (\textbf{NA's}) or unusual maximum and minimum values. You can of course run \emph{summary} on a particular variable by using the component selector (\verb|$|):
+\noindent We can immediately see that the variables \textbf{iso2c} and \textbf{country} are character strings. Because \texttt{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year} we know they are numeric. Have a look over the summary to see if there is anything unexpected like lots of missing values (\textbf{NA's}) or unusual maximum and minimum values. You can of course run \texttt{summary} on a particular variable by using the component selector (\verb|$|):
 
 <<Ch7SummarizeCompSelect>>=
 # Summarize the methane emissions variable from FertConsumpData 
@@ -38,6 +46,8 @@ summary(FertConsumpData$AG.CON.FERT.ZS)
 @
 
 \noindent We'll come back to why knowing this type of information is important for merging and data analysis later in this Chapter.
+
+Another important command for quickly summarizing a data frame is \texttt{table}\index{R command!table} This creates a contingency table\index{contingency table} with counts of the number of observations per combination of factor variables.
 
 You can view a portion of a data frame object with the \texttt{View} command.\index{R command!View} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab\index{RStudio!Workspace tab} and you will get something similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be able to see similar windows that you can interactively edit use the \texttt{fix}\index{R command!fix} command in the same way that you use \texttt{View}. This can be useful for small edits, but remember that the edits are not reproducible.
 
@@ -101,7 +111,7 @@ If one of our raw data sets is not in this format then we will need to reshape\i
     \end{tabular}
 \end{table}
 
-Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R command!reshape} command, both are loaded in R by default.  Another very helpful package is \emph{reshape2} \citep{R-reshape2}.\index{reshape2} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
+Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R command!reshape} command, both are loaded in R by default. \emph{reshape2} is a very helpful package for reshaping data \citep{R-reshape2}.\index{reshape2}\footnote{Note: confusingly the \emph{reshape2} package does not include the \texttt{reshape} command. The \texttt{reshape} command is part of R's built in \emph{stats} package.\index{stats} I don't cover that command here, because it is less flexible than what \emph{reshape2} can do. Also confusingly, as we will see later in this chapter when we rename variables, there is a \emph{reshape} package. It includes old versions of the \texttt{melt} and \texttt{cast} commands.\index{R command!melt}\index{R command!cast}} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
 
 Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{WideFert}. It looks like this:\footnote{Please see the Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data from wide to long format.}
 
@@ -328,12 +338,13 @@ MoltenFertSub$FertConsGroup[FertilizerConsumption
                             FertilizerConsumption < 150] <- 3
 MoltenFertSub$FertConsGroup[FertilizerConsumption 
                             >= 150] <- 4
-
-# Summarize FertConsGroup
-summary(MoltenFertSub$FertConsGroup)
+MoltenFertSub$FertConsGroup[is.na(FertilizerConsumption)] <- NA                           
 
 # Detach data frame
 detach(MoltenFertSub)
+
+# Summarize FertConsGroup
+summary(MoltenFertSub$FertConsGroup)
 @
 
 \noindent You'll notice that we don't have a factor variable yet, our new variable is numeric. We can use the \texttt{factor} command\index{R command!factor} to convert \emph{FertConsGroup} into a factor variable with the labels we want.\index{R!factor labels}
@@ -346,11 +357,26 @@ FCLabels <- c("low", "medium low", "medium high", "high")
 MoltenFertSub$FertConsGroup <- factor(MoltenFertSub$FertConsGroup,
                                         labels = FCLabels)
 
-# summarize FertConsGroup
+# Summarize FertConsGroup
 summary(MoltenFertSub$FertConsGroup)
 @
 
 \noindent We first created a character vector with the factor level labels and then applied using \texttt{factor}'s \texttt{labels} argument. Using \texttt{summary}\index{R command!summary} with a factor variable gives us its level labels as well as the number of observations per level.
+
+The \texttt{cut} command \index{R command!cut} provides a less code intensive way of creating factors from numeric ones and labeling factor levels. For example:
+
+<<Ch7Cut, tidy=FALSE>>=
+# Create a factor variable with the cut command
+FertFactor <- cut(MoltenFertSub$FertilizerConsumption, 
+                  breaks = c(-0.01, 14.99, 80, 150, 1000),
+                  labels = c("low", "medium low",
+                             "medium high", "high"))
+
+# Summarize FertFactor
+summary(FertFactor)
+@
+
+\noindent The \texttt{labels} argument lets us specify the factor levels' names. The \texttt{breaks} argument lets us specify at what values separate the factor levels. Note that we set the first break as \texttt{-0.01}, not because any country had negative fertilizer consumption, but because the intervals created by \texttt{break} exclude the left value and include the right value.\footnote{In mathematical notation the ``low'' level includes all values in the interval $(-0.01,\:14.99]$.} If we had used \texttt{0} then all of the observations where a country used effectively no fertilizer would be excluded from the ``low'' category. 
 
 \subsection{Changing variables types}\index{R!change variable type}
 
@@ -429,6 +455,10 @@ names(MergedData2)
 
 After merging data frames it is always a good idea to look at the result and make sure that the result of the merge are what you expected. Some post merging clean up may be required to get the data frame ready for statistical analysis.
 
+\paragraph{Big data}\index{big data}
+
+The \texttt{merge} command and many of the other data frame manipulation commands covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with a package like \emph{sqldf} \citep{R-sqldf}.\footnote{J.D. Long has a blog post on how to load large data sets into R using \emph{sqldf}: \url{http://www.cerebralmastication.com/2009/11/loading-big-data-into-r/} (posted 24 November 2009).}
+
 \subsection{Duplicate values}
 
 Duplicate observations are one thing to look out for after (and before) merging. You can use the \texttt{duplicated}\index{R command!duplicated}\index{R!duplicates} command to check for duplicates. Use the command in conjunction with subscripts to remove duplicate observations. For example, let's create a new object called \emph{DataDuplicates} from the iso2c-years that are duplicated in \emph{MergedData2}. Remember that \textbf{iso2c} and \textbf{year} are in the first and second columns of the data frame.
@@ -442,7 +472,7 @@ DataDuplicates <- MergedData2[duplicated(
 nrow(DataDuplicates)
 @
 
-\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. This is indicated by the fact that using the \texttt{nrow}\index{Rcommand!nrow} command\footnote{\texttt{nrow} returns the number of rows an object has.} we find that the \emph{MergedData2} data frame has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
+\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. This is indicated by the fact that using the \texttt{nrow}\index{Rcommand!nrow} command we find that the \emph{MergedData2} data frame has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
 
 To create a data set without duplicated observations (if there are duplicates) we just add an exclamation point (\texttt{!}) before \texttt{duplicated}--i.e. not duplicated--in the above code.\footnote{\texttt{!duplicated} is equivalent to the \texttt{unique} command.\index{R command!unique}}
 
@@ -487,6 +517,10 @@ names(FinalCleanedData)
 }
 
 \noindent Note if you are merging many data sets it can sometimes be good to clean up duplicate columns between each \texttt{merge} call.
+
+\vspace{2cm}
+
+This chapter has provided you with many tools for cleaning up your data to get it ready for statistical analysis. Before moving on to the next chapter to learn how to do statistical analysis as part of a reproducible workflow with \emph{knitr} it's important to reiterate that the commands we've covered in this chapter should usually be embedded in the types of data creation files we saw in Chapter \ref{DataGather}. These files are then tied together with a makefile into a process that should be able to take very raw data and clean it up for use in your analyses. Embedding these commands in data creation source code files, rather than just typing the commands into your R Console\index{R!Console} or manually changing data in Excel will make your research much more reproducible. It will be easier to backtrack and find mistakes that you may have made while transforming the data. Including new or updated data when it becomes available will also be much easier if you use a series of segmented data creation source code files that are tied together with a makefile.
 
 \section*{Appendix}\label{WideAppendix}
 

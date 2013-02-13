@@ -16,7 +16,7 @@ The main files used to create the manuscript of the book are in the `/Source` fo
 
 The book can be reproduced by using the R package *knitr*. To do this:
 
-1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) installed on your computer.
+1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) and the *knitr* R package installed on your computer. To install *knitr* type `install.packages("knitr")` into your R Console.
 
 2. Open the file *BookMake.R*. Change the directories for `ParentDirectory` and `SetUpDirectory` to directory you have the files *Rep-Res-Parent.Rnw* and *README.Rmd* located in.
 

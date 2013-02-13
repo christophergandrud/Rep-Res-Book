@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 January 2012
+% Updated: 13 February 2013
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -367,11 +367,13 @@ print.xtable(M1Table, type = "html", caption.placement = "top")
 ```
 @ 
 
-\noindent Notice that we also added the \texttt{caption.placement = "top"} argument. This will move the cation from the bottom of the table, as it is in Table \ref{BasicXtableSummary}, to the top. See the \emph{xtable} package documentation\footnote{\url{http://cran.r-project.org/web/packages/xtable/xtable.pdf}} for the full list of \texttt{print.xtable} options.
+\noindent If you intend to include multiple tables in your R Markdown document you will want all of the tables to be printed in HTML. You can place \verb|options("xtable.type" = "html")|\index{R command!options} in a code chunk near the beginning of your document.\footnote{Of course you will probably want to use the \texttt{include=FALSE} \emph{knitr}  option with this code chunk.} This simply makes it so that you don't need to include \verb|type = "html"| everytime you use \texttt{print}.
+
+Notice in the previous code example that we also added the \texttt{caption.placement = "top"} argument. This will move the cation from the bottom of the table, as it is in Table \ref{BasicXtableSummary}, to the top. See the \emph{xtable} package documentation\footnote{\url{http://cran.r-project.org/web/packages/xtable/xtable.pdf}} for the full list of \texttt{print.xtable} options.
 
 \subsubsection{\emph{apsrtable} for LaTeX}\index{apsrtable}
 
-The \emph{xtable} package is a very versatile tool for creating relatively well formatted tables from R objects. By default, however, it is not set up to output tables that compare multiple statistical model estimates in the style used by many prominent academic journals. The \emph{apsrtable} package is very useful for creating these types of tables.\footnote{It creates tables in the style used by the \emph{American Political Science Review},\index{APSR}--hence the package's name. The style is used by many other journals.}
+The \emph{xtable} package is a very versatile tool for creating relatively well formatted tables from R objects. By default, however, it is not set up to output tables that present estimates from multiple statistical model in the style used by many prominent academic journals. The \emph{apsrtable} package is very useful for creating these types of tables.\footnote{It creates tables in the style used by the \emph{American Political Science Review},\index{APSR}--hence the package's name. The style is used by many other journals.}
 
 Imagine we want to show the estimates from a number of nested regression models in a table like Table \ref{BasicApsrTableExample}. For example, to estimate nested regression models from the remaining variables in the \emph{swiss} data set we would type:
 
