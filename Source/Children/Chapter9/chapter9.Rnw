@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 February 2013
+% Updated: 14 February 2013
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -56,7 +56,7 @@ A LaTeX environment\label{LaTeXEnviron} is a part of the markup where special co
 
 \noindent LaTeX environments all follow the same general syntax:
 
-<<Ch9EnvironSyntax, eval=FALSE>>=
+<<Ch9EnvironSyntax, eval=FALSE, tidy=FALSE>>=
 \begin{ENVIRONMENT_NAME}
     . . .
     . . .
@@ -73,19 +73,19 @@ The \texttt{tabular} environment allows you to create tables in LaTeX. Let's wor
 
 To begin a simple tabular environment type \verb|\begin{tabular}{TABLE_SPEC}|. The \verb|TABLE_SPEC| argument allows you to specify the number of columns in a table and the alignment of text in each column. For example, to create a table with three columns, the first of which is left-justified and the latter two center-justified we type:
 
-<<Ch9BeginTabular1, eval=FALSE>>=
+<<Ch9BeginTabular1, eval=FALSE, tidy=FALSE>>=
 \begin{tabular}{l c c}
 @ 
 
 \noindent The \texttt{l} argument creates a left-justified column, \texttt{c} creates a centered one. If we wanted a right-justified column we would use \texttt{r}.\footnote{You can also specify a column's width by using \texttt{m\{WIDTH\}} instead. This will create a column of a specified width that is vertically justified in the middle. For example, \texttt{m\{3cm\}} would create a column with a width of 3 centimeters. Text in the column would automatically be wrapped onto multiple lines if need be. You can replace the \texttt{m} with either \texttt{p} or \texttt{b}. \texttt{p} vertically aligns the text at the top, \texttt{b} aligns it at the bottom.} Finally we can add a horizontal line between columns by adding a vertical bar \texttt{|} between the column arguments.\footnote{If you add two vertical bars (\texttt{||}) you will get two lines.} For example, to place a vertical line between the first and second column in our example table we would type:
 
- <<Ch9BeginTabular2, eval=FALSE>>=
+ <<Ch9BeginTabular2, eval=FALSE, tidy=FALSE>>=
 \begin{tabular}{l | c c}
 @ 
 
 Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.\index{escape character}}\index{LaTeX!ampersand} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double backslashes.\label{DoubleBS} For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
 
-<<Ch9TwoLineLaTeX1, eval=FALSE>>=
+<<Ch9TwoLineLaTeX1, eval=FALSE, tidy=FALSE>>=
 \begin{tabular}{l | c c}
     Observation & Variable1 & Variable2 \\
     Subject1 & a & b \\
@@ -93,7 +93,7 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
 
 \noindent It is common to demarcate the row with a table's column names--the first row--with horizontal lines. A horizontal line also often demarcates a table's end. You can add horizontal line in the \texttt{tabular} environment with the \verb|\hline| command.\footnote{The \texttt{\textbackslash{}hline} command works outside of the \texttt{tabular} environment as well.}
 
-<<Ch9TwoLineLaTeX2, eval=FALSE>>=
+<<Ch9TwoLineLaTeX2, eval=FALSE, tidy=FALSE>>=
 \begin{tabular}{l | c c}
     \hline
     Observation & Variable1 & Variable2 \\
@@ -134,7 +134,7 @@ Now let's enter content into our table. We saw earlier how CSV files delimit ind
 
 You might notice that the table we created so far lacks a title and is bunched very closely to the surrounding text. In LaTeX we can create a \texttt{table} float environment\index{LaTeX!float} to solve this problem. Float environments allow us to separate a table form the text, specify its location, and give it a caption.\footnote{We will see in the next chapter how to use \texttt{figure} floats as well.} To begin a \texttt{table} float environment use \verb|\begin{table}[POSITION_SPEC]|. The \verb|POSITION_SPEC|\label{POSITIONSPEC} argument allows us to determine the location of the table. It can be set to \texttt{h} for here, i.e. where the table is written in the text. It can also be \texttt{t} to place it on the top of a page or \texttt{b} for the bottom of the page. To set a title for the table use the \verb|\caption| command.\index{LaTeX command!caption} LaTeX automatically determines the table's number, so you only need to enter the text. You can also declare a cross-reference key for the table with the \verb|\label| command.\footnote{This command works throughout LaTeX. To reference the table type in the text of your document \texttt{\textbackslash{}ref\{KEY\}}, where \texttt{KEY} is what you set with the \texttt{\textbackslash{}label} command. Use \texttt{\textbackslash{}pageref}\index{LaTeX command!pageref} to reference the page number.}\index{LaTeX command!label} A \texttt{table} environment is of course closed with \verb|\end{table}|. Let's see a full example.
 
-<<Ch9LaTeXExampleFullFloat, eval=FALSE>>=
+<<Ch9LaTeXExampleFullFloat, eval=FALSE, tidy=FALSE>>=
 \begin{table}[t]
     \caption{Example Simple LaTeX Table}
     \label{ExLaTeXTable}
@@ -234,7 +234,7 @@ The \emph{xtable} package we will learn in the next section doesn't create table
 
 HTML uses element ``tags''\index{HTML!element tag} to begin and end tables. The main element we use to create tables is, well the \texttt{tables} element.\index{HTML element!tables} This is very similar to LaTeX's \texttt{tabular} environment. An HTML element generally begins with a start tag and ends with an end tag. Clearly this is very similar to LaTeX's \verb|\begin{}| and \verb|\end{}| commands. Begin tags are encapsulated in a greater than and less than sign and include the element tag name (\verb|<TAG>|). End tags are similar, but include a forward slash like this \verb|</TAG>|. The content of the element goes between the start and end tags. For example:
 
-<<Ch9HTMLElementTag, eval=FALSE>>=
+<<Ch9HTMLElementTag, eval=FALSE, tidy=FALSE>>=
 <table>
     . . .
     . . .
@@ -247,7 +247,7 @@ You can add element attributes\index{HTML element!attributes} inside of start ta
 
 Table rows are put inside of \texttt{tr}\index{HTML element!tr} (table rows) element tags. Individual cells are delimited with \texttt{td} (standard cell) tags.\index{HTML element!td} Here is what the first row of our example table looks like in basic HTML:
 
-<<Ch9HTMLTableFirst, eval=FALSE>>=
+<<Ch9HTMLTableFirst, eval=FALSE, tidy=FALSE>>=
 <table>
     <tr>
         <td>Observation</td> <td>Variable1</td> <td><Variable2/td>

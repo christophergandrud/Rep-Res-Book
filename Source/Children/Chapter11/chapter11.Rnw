@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 January 2013
+% Updated: 14 February 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -31,7 +31,7 @@ Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} f
         \end{center}
 \end{wrapfigure}
 
-There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated table comprehensively comparing many of these editors} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text 2\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.
+There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated table comprehensively comparing many of these editors} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
 
 \subsection{Basic LaTeX command syntax}\index{LaTeX!basic command syntax}
 
@@ -55,7 +55,7 @@ There are a number of places to find comprehensive lists of LaTeX commands. The 
 
 All LaTeX documents require a preamble\index{LaTeX!preamble}. The preamble goes at the very beginning of the document. The preamble usually starts with the \texttt{documentclass}\index{LaTeX command!documentclass} command. This specifies what type of presentation document you are creating--e.g. an article, a book, a slideshow,\footnote{``Slideshow'' is not a valid class. One slideshow class that we discuss later is called ``beamer''.} and so on. LaTeX refers to these as classes.\index{LaTeX!class} Classes specify a document's formatting. You can add options to \texttt{documentclass} to change the format of the entire document. For example, if we wanted to create an article class document with two columns we would type:
 
-<<Ch10DCOptions, eval=FALSE>>=
+<<Ch11DCOptions, eval=FALSE, tidy=FALSE>>=
 \documentclass[twocolumn]{article}
 @
 
@@ -63,7 +63,7 @@ In the preamble you can also specify other style options and load any extra pack
 
 The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{LaTeX environment!body} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnviron} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX!begin document} of your document starts by typing \verb|\begin{document}|. The very last line of you document is usually \verb|\end{document}|, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class\index{LaTeX class!article} document with a very simple preamble and body like this:
 
-<<Ch10FirstOpenDoc, eval=FALSE, tidy=FALSE>>=
+<<Ch11FirstOpenDoc, eval=FALSE, tidy=FALSE>>=
 \documentclass{article}
 
 \begin{document}
@@ -461,7 +461,7 @@ knitr::write_bib(PackagesUsed,
 
 \noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R command!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R command!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages. 
 
-The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R command!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}.} 
+The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R command!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}. You can have it install specific package versions by entering the version numbers with the \texttt{versions} argument. This is very useful for enabling the replication of analyses that rely on specific package versions.} 
 
 \section{Presentations with LaTeX Beamer}
 
