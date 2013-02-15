@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 February 2013
+% Updated: 15 February 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -71,7 +71,7 @@ Markdown has a similar command as LaTeX's \texttt{includegraphics}. It goes like
 ![ButterflyImage](HeliconiusMimicry.png)
 @
 
-\noindent Note that the file path can be a URL. You may, for example store an image in the Dropbox Public folder or on GitHub and use its URL to link to it in the Markdown document.\footnote{For images stored on GitHub use the URL for the raw version of the file} 
+\noindent Note that the file path can be a URL. You may, for example store an image in the Dropbox Public folder or on GitHub and use its URL to link to it in the Markdown document.\footnote{For images stored on GitHub\index{GitHub} use the URL for the raw version of the file.} 
 
 A final tip: if you are using RStudio's \textbf{Preview HTML}\index{RStudio!Preview HTML} window to preview your Markdown document images sourced from a URL will probably not show up. You should preview the document in your web browser instead. This is easy to do in RStudio by clicking on the \texttt{View the page with the system web browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). It's located at the top of the \textbf{Preview HTML} window.
 
@@ -237,7 +237,7 @@ devtools::source_url("http://bit.ly/TE0gTc")
 \noindent This code creates the plot that we see in Figure \ref{MarkdownScatterMatrix}. Because we have linked all the way back to the original data set \emph{MainData.csv}, any time it is updated by the makefile the update will automatically cascade all the way through to our final presentation document the next time we knit it.
 
 \begin{figure}
-    \caption{Example Markdown Scatterplot Matrix}
+    \caption{Example of a Scatterplot Matrix in a Markdown Document}
     \label{MarkdownScatterMatrix}
         \begin{center}
             \includegraphics[width=0.7\textwidth]{Children/Chapter10/images10/MarkdownScatterMatrix.png}
@@ -270,6 +270,7 @@ names(InflationData)
 }
 
 We want to create a plot with \textbf{Quarter} as the $x$ axis, inflation as the $y$ axis, and two lines. One line will represent \textbf{ActualInflation} and the other \textbf{EstimatedInflation}. To do this we need to reshape\index{reshape data} our data so that the inflation variables are in long format\index{long formatted data} like this:
+\vspace{0.5cm}
 
 \begin{tabular}{l l l}
     \hline
@@ -282,7 +283,7 @@ We want to create a plot with \textbf{Quarter} as the $x$ axis, inflation as the
     \ldots & & \\
     \hline
 \end{tabular}
-\vspace{0.1cm}
+\vspace{0.5cm}
 
 \noindent We can use the \texttt{melt} command from \emph{reshape2}\index{R command!melt}\index{reshape2} that we first saw in Chapter \ref{DataClean} (page \pageref{MeltReshape}) to reshape the data. The variable identifying the observations in this case is \texttt{Quarter}. The \textbf{ActualInflation} and \textbf{EstimatedInflation} variables are our ``measure'' variables in that they measure what we are interested in graphing: inflation. So let's melt the data:
 
