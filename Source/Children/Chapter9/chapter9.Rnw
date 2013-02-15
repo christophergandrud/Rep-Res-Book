@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 February 2013
+% Updated: 15 February 2013
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -513,13 +513,13 @@ NBSumDataFrame
 \vspace{0.5cm}
 
 <<Ch9NBTable, echo=FALSE, message=FALSE, results='asis'>>=
-# Load reshape package
-library(reshape)
+# Load plyr package
+library(plyr)
 
 # Change quantile variable names
-NBSumDataFrame <- rename(NBSumDataFrame, c(X2.5. = "2.5%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c(X50. = "50%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c("X2.5." = "2.5%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c("X50." = "50%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c("X97.5." = "97.5%"))
 
 
 # Reorder variables and remove the standard deviation
@@ -587,13 +587,13 @@ Source code for cleaning \emph{NBSumDataFrame} and using it to create a LaTeX ta
 
 <<Ch9NBSumClean, eval=FALSE, tidy=FALSE>>=
 # Load packages
-library(reshape)
+library(plyr)
 library(xtable)
 
 # Change quantile variable names
-NBSumDataFrame <- rename(NBSumDataFrame, c(X2.5. = "2.5%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c(X50. = "50%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c(X97.5. = "97.5%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c("X2.5." = "2.5%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c("X50." = "50%"))
+NBSumDataFrame <- rename(NBSumDataFrame, c("X97.5." = "97.5%"))
 
 
 # Reorder variables and remove the standard deviation variable

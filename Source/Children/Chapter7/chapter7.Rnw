@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 February 2013
+% Updated: 15 February 2013
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -111,7 +111,7 @@ If one of our raw data sets is not in this format then we will need to reshape\i
     \end{tabular}
 \end{table}
 
-Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R command!reshape} command, both are loaded in R by default. \emph{reshape2} is a very helpful package for reshaping data \citep{R-reshape2}.\index{reshape2}\footnote{Note: confusingly the \emph{reshape2} package does not include the \texttt{reshape} command. The \texttt{reshape} command is part of R's built in \emph{stats} package.\index{stats} I don't cover that command here, because it is less flexible than what \emph{reshape2} can do. Also confusingly, as we will see later in this chapter when we rename variables, there is a \emph{reshape} package. It includes old versions of the \texttt{melt} and \texttt{cast} commands.\index{R command!melt}\index{R command!cast}} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
+Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R command!reshape} command, both are loaded in R by default. \emph{reshape2} is a very helpful package for reshaping data \citep{R-reshape2}.\index{reshape2}\footnote{Note: confusingly the \emph{reshape2} package does not include the \texttt{reshape} command. The \texttt{reshape} command is part of R's built in \emph{stats} package.\index{stats} I don't cover that command here, because it is less flexible than what \emph{reshape2} can do.} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
 
 Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{WideFert}. It looks like this:\footnote{Please see the Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data from wide to long format.}
 
@@ -152,18 +152,15 @@ head(MoltenFert)
 
 \subsection{Renaming variables}\index{R!renaming variables}
 
-Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R command!rename} command in the \emph{reshape} package \citep{R-reshape}.\footnote{The \emph{reshape} package precedes \emph{reshape2}, which was created to improve the performance of the \texttt{melt} and \texttt{cast} commands}
+Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R command!rename} command in the \emph{plyr} package \citep{R-plyr}.
 
 To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
 
 <<Ch7Rename, tidy=FALSE>>=
-# Load reshape package
-library(reshape)
-
 # Rename variable = year, value = FertilizerConsumption
-MoltenFert <- rename(x = MoltenFert,
-                     replace = c(variable = "year",
-                                 value = "FertilizerConsumption"))
+MoltenFert <- plyr::rename(x = MoltenFert,
+                replace = c("variable" = "year",
+                            "value" = "FertilizerConsumption"))
 
 # Show MoltenFert
 head(MoltenFert)
@@ -305,7 +302,7 @@ MoltenFertSub$logFertConsumption <- log(
     \label{ExampleFactorRecode}
     \begin{center}
         \begin{tabular}{l l p{4cm}}
-            \hline\vspace{0.15cm}
+            \hline
             Number & Label & Value of \textbf{FertilizerConsumption} \\
             \hline\hline \\
             1 & low & $< 15$ \\
@@ -493,19 +490,15 @@ Another common post-merge clean up issue is duplicate variables. These are varia
 You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables and rename the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{gdata}\index{gdata} package \citep{R-gdata} has a useful function called \texttt{remove.vars}\index{R command!remove.vars} that can also remove variables from data frames. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove another unwanted variables as well, the extraneous \textbf{idn} variable:
 
 <<Ch7RemoveVars, tidy=FALSE>>=
-# Load gdata and reshape packages
-library(gdata)
-library(reshape)
-
 # Remove country.y, country and idn
-FinalCleanedData <- remove.vars(data = DataNotDuplicates,
+FinalCleanedData <- gdata::remove.vars(data = DataNotDuplicates,
                                 names = c("country.y",
                                         "country",
                                         "idn"))
 
 # Rename country.x = country
-FinalCleanedData <- rename(x = FinalCleanedData,
-                            replace = c(country.x =
+FinalCleanedData <- plyr::rename(FinalCleanedData,
+                            replace = c("country.x" =
                                         "country"))
 @
 
