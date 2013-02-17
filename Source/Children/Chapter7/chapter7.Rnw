@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 15 February 2013
+% Updated: 17 February 2013
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -290,12 +290,35 @@ As part of your data clean up process (or later during statistical analysis) you
 {\small
 <<Ch7LogFertComsump, tidy=FALSE>>=
 MoltenFertSub$logFertConsumption <- log(
-                                    MoltenFertSub$FertilizerConsumption
-                                    )
+                            MoltenFertSub$FertilizerConsumption
+                            )
+
+# Summarize the log transformed variable
+summary(MoltenFertSub$logFertConsumption)
 @
 }
 
 \noindent We can use a similar procedure to create new variables from R's many other mathematical commands and arithmetic operations.\footnote{E.g \texttt{+, -, *, /, \^} for addition, subtraction, multiplication, division and exponentiation, respectively.\index{R!addition}, \index{R!subtraction}\index{R!multiplication}\index{R!division}\index{R!exponentiation}}
+
+\label{Infinity}Notice that when we summarize the new log transformed variable that we have a minimum (and mean) value of \texttt{-Inf}.\index{R!-Inf}\index{infinity} This indicates that by logging the variable we have created observations with the value negative infinity. R calculates the natural logarithm of zero as negative infinity.\footnote{R connotes positive infinity with \texttt{Inf}.\index{positive infinity}\index{R!Inf}}\index{negative infinity} We probably don't want negative infinity values. There are a few ways to deal with this. We could drop all observations of \textbf{FertilizerConsumption} with the value zero before log transforming it. Another common solution is recoding zeros as some small nonnegative number like 0.001. For example:
+
+{\small
+<<Ch7LogFertComsumpAgain, tidy=FALSE>>=
+# Recode zeros in Fertilizer Consumption
+MoltenFertSub$FertilizerConsumption[
+                        MoltenFertSub$FertilizerConsumption == 0
+                        ] <- 0.001
+
+# Natural log transform Fertilizer Consumption
+MoltenFertSub$logFertConsumption <- log(
+                        MoltenFertSub$FertilizerConsumption
+                        )
+
+# Summarize the log transformed variable
+summary(MoltenFertSub$logFertConsumption)
+@
+}
+
 
 \begin{table}
     \caption{Example Factor Levels}

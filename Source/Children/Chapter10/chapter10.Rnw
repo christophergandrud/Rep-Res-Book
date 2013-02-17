@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 15 February 2013
+% Updated: 17 February 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -450,7 +450,7 @@ Markus Gesmann\index{Markus Gesmann} and Diego de Castillo's \emph{googleVis}\in
 
 Let's briefly look at how to make one type of figure with \emph{googleVis}: a Geo Map. This is created with the \texttt{gvisGeoMap} command.\index{gvisGeoMap}\index{R command!gvisGeoMap} We will use this example to illustrate how to incorporate \emph{googleVis} figures into R Markdown. For demonstrations of the the full range of plotting functions available visit the \emph{googleVis} website: \url{http://code.google.com/p/google-motion-charts-with-r/wiki/GadgetExamples#googleVis_Examples}. 
 
-Imagine that we want to map global fertilizer\index{fertilizer} consumption in 2003 using the World Bank\index{World Bank} data we gathered in Chapter \ref{DataGather}. Remember that the data was highly right skewed, so we will actually map the natural logarithm\index{logarithm}\index{R command!log} of the \textbf{FertilizerConsumption} variable. Assuming that we have already loaded the \emph{MainData.csv} data set, here is the code:
+Imagine that we want to map global fertilizer\index{fertilizer} consumption in 2003 using the World Bank\index{World Bank} data we gathered in Chapter \ref{DataGather}. Remember that the data was highly right skewed, so we will actually map the natural logarithm\index{logarithm}\index{R command!log} of the \textbf{FertilizerConsumption} variable.\footnote{You'll notice in the code below that we remove all values of \textbf{FertilizerConsumption} less than 0.1. This is that we can calculate integer values with the natural logarithm. See page \pageref{Infinity} for more details.} Assuming that we have already loaded the \emph{MainData.csv} data set, here is the code:
 
 <<Ch10GeoMap, eval=FALSE, tidy=FALSE>>=
 # Load googleVis
@@ -458,6 +458,9 @@ library(googleVis)
 
 # Subset MainData so that it only includes 2003
 SubData <- subset(MainData, year == 2003)
+
+# Keep values of FertilizerConsumption greater than 0.1
+SubData <- subset(SubData, FertilizerConsumption > 0.1)
 
 # Find the natural logarithm of FertilizerConsumption.
 ## Round the results to one decimal digit.

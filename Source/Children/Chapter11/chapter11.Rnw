@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 February 2013
+% Updated: 17 February 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -102,10 +102,11 @@ Here is a full LaTeX article class document with all of these changes added:
 opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
 
 \hlcomment{#### Load and cite R packages ####}
-# Create list of packages
+\hlcomment{# Create list of packages}
 PackagesUsed <- c(\hlstring{"devtools", "knitr", "ggplot2", "repmis"})
 
-# Load PackagesUsed and create .bib BibTeX file
+\hlcomment{# Load PackagesUsed and create .bib BibTeX file}
+\hlcomment{# Note must have repmis package installed.}
 repmis::LoadandCite(PackagesUsed, file = \hlstring{"Packages.bib"}, install = FALSE)
 
 \hlcomment{#### Gather Democracy data from Pemstein et al. (2010) ####}
@@ -144,8 +145,6 @@ Hertie School of Governance\textbackslash{}thanks\{Email: \textbackslash{}href\{
 \textbackslash{}end\{abstract\}
 
 %%%%%%%%%%% Article Main Text %%%%%%%%%%%%%
-This article gathers democracy data and graphs it. 
-
 \textbackslash{}section\{The Graph\} 
 
 I gathered data from \textbackslash{}cite\{Pemstein2010\} on countries' democracy level. They call their 
@@ -167,11 +166,12 @@ ggplot(UDSData, aes(x = year, y = mean)) +
 \textbackslash{}end\{figure\}
 
 %%%%%%%%%%% Reproducing the Document %%%%%
-\textbackslash{}section\*\{Reproducing the Document\}
+\textbackslash{}section\*\{Appendix: Reproducing the Document\}
 
 This document was created using R version 2.15.2 and the R package \textbackslash{}emph\{knitr\} 
-\textbackslash{}citep\{R-knitr\}. It also relied on the R packages \textbackslash{}emph\{devtools\} \textbackslash{}citep\{R-devtools\} 
-and \textbackslash{}emph\{ggplot2\} \textbackslash{}citep\{R-ggplot2\}. The document can be completely reproduced from 
+\textbackslash{}citep\{R-knitr\}. It also relied on the R packages \textbackslash{}emph\{devtools\} \textbackslash{}citep\{R-devtools\}, 
+\textbackslash{}emph\{ggplot2\} \textbackslash{}citep\{R-ggplot2\}, and \textbackslash{}emph\{repmis\} \textbackslash{}citep\{R-repmis\}. 
+The document can be completely reproduced from 
 source files available on GitHub at: 
 \textbackslash{}url\{https://github.com/christophergandrud/Rep-Res-Examples\}.
 

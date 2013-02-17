@@ -12,6 +12,9 @@
 # Find: doInstall <- FALSE in the code chunk labeled "FrontPackageCitations". 
 # Change the value `FALSE` to `TRUE` and run the code chunk.
 
+# Load knitr package
+library(knitr)
+
 # Specify working directories
 ## Rep-Res-Parent.Rnw
 ParentDirectory <- "/git_repositories/Rep-Res-Book/Source/"
