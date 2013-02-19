@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 February 2013
+% Updated: 19 February 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -11,7 +11,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 
 When you have your data cleaned and organized you will begin to examine it with statistical analyses. In this book we don't look at how to do statistical analysis in R (a subject that would and does take up many books). Instead we focus on how to make your analyses really reproducible. To do this you dynamically connect your data gathering and analysis source code to your presentation documents. When you dynamically connect your data gathering makefiles and analysis source code to your markup document you will be able to completely rerun your data gathering and analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analyses source code files.
 
-You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr} syntax. In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We will finally examine how to use \emph{knitr} with modular source code files. 
+You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr} syntax. In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
 
 The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
@@ -271,6 +271,34 @@ source_url("http://bit.ly/UOtH4L")
 \noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R command!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
 
 If you would like to use a particular version of a source code file stored on GitHub simply include that version's URL in the \verb|sourc_url| call. This can be particularly useful for replicating particular results. Linking to a particular version of a source code file will enable replication even if you later make changes to the file. To access the URL for a particular version of a file first click on the file on GitHub's website. Then click the \texttt{Hitory} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Finally, click on the \texttt{Raw} button to be taken to the text-only version of the file. Copy this page's URL and use it in \verb|source_url|.
+
+\section{Reproducibly Random: {\tt{set.seed}}}
+
+If you are including simulations in your analysis it is often a good idea to specify the random number generator state you used.\index{random number generator} This will allow others to exactly replicate your `randomly'--really pseudo-randomly--generated simulation results. Use the \texttt{set.seed} command in your source code files or code chunks to do this.\index{R command!set.seed} For example use the following code to set the random number generator state\footnote{See the \texttt{Random} help file for detailed information on R's random number generation capabilities by typing \texttt{?Random} into your console.} and randomly draw 1,000 numbers from a standard normal distribution\index{normal distribution} with a mean of 0 and a standard deviation of 2\index{standard deviation}. 
+
+<<Ch8SetSeed1>>=
+# Set seed as 125
+set.seed(125)
+
+# Draw 1000 numbers
+Draw1 <- rnorm(1000, mean = 0, sd = 2) 
+
+# Summarize Draw1
+summary(Draw1)
+@
+
+\noindent The \texttt{rnorm} command\index{R command!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show show you that we will draw the same numbers if we use the same seed, lets run the code again:
+
+<<Ch8SetSeed2>>=
+# Set seed as 125
+set.seed(125)
+
+# Draw 1000 numbers
+Draw2 <- rnorm(1000, mean = 0, sd = 2) 
+
+# Summarize Draw1
+summary(Draw2)
+@
 
 \section{Computationally intensive analyses}
 
