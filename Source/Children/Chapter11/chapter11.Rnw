@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 17 February 2013
+% Updated: 24 February 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -32,6 +32,8 @@ Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} f
 \end{wrapfigure}
 
 There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated table comprehensively comparing many of these editors} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
+
+If you are new to LaTeX you may be more comfortably using Lyx.\index{Lyx} Lyx has a Microsoft Word-type interface, but creates actual LaTeX documents. It also has \emph{knitr} integration. See page \pageref{LyxAppendix} for how to set up and use \emph{knitr} and Lyx.
 
 \subsection{Basic LaTeX command syntax}\index{LaTeX!basic command syntax}
 
@@ -263,18 +265,18 @@ To specify double left quotation marks (``) use two back ticks (\verb|``|). For 
 
 LaTeX is particularly popular among quantitative researchers and mathematicians because it is very good at rendering mathematics. A complete listing of every math command would take up quite a bit of space.\footnote{See the Netherlands TeX user group list mentioned earlier for an extensive compilation of math commands.} I am briefly going to discuss how to include math in a LaTeX document. This discussion includes a few math examples. 
 
-To include math inline with your text place the math in between two dollar signs (\verb|$$|).\index{LaTeX!\$} For example, \verb|$s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}$| produces $s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}$ in our final document.\footnote{Instead of dollar signs you can also use \textbackslash{}( . . . \textbackslash).} We can display math separate from the text with two dollar signs on either side of our math commands (\verb|$$ . . . $$|).\footnote{Equivalently, use \textbackslash{}[ . . . \textbackslash{}] or the \texttt{display} environment.\index{LaTeX environment!display} To number display equations use the \texttt{equation} environment.\index{LaTeX environment!equation}} For example, 
+To include math inline with your text place the math in between two dollar signs (\verb|$$|).\index{LaTeX!\$} For example, \verb|$s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}$| produces $s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}$ in our final document.\footnote{Instead of dollar signs you can also use \textbackslash{}( . . . \textbackslash).} We can display math separate from the text with two dollar signs on either side of our math commands (\verb|$$ . . . $$|).\footnote{Equivalently, use \textbackslash{}[ . . . \textbackslash{}] or the \texttt{display} environment.\index{LaTeX environment!display} To number display equations use the \texttt{equation} environment.\index{LaTeX environment!equation}} For example, 
 
 <<Ch11Math, eval=FALSE, engine='sh'>>=
 $$
-s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 $$
 @ 
 
 \noindent gives us:
 
 $$
-s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 $$
 
 \subsection{Lists}\index{LaTeX!lists}
@@ -621,4 +623,8 @@ devtools::source\_url(\hlstring{"http://bit.ly/VRKphr"})
 \end{kframe}
 \end{knitrout}
 }
+
+\vspace{2cm}
+
+In this chapter we have learned the knitty-gritty of how to create simple LaTeX documents--articles and slideshows--that we can embed our reproducible research in using \emph{knitr}. In the next chapter we look at more complex LaTeX documents, including theses, books, and batch reports.
 

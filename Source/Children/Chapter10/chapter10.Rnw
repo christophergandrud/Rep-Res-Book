@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 17 February 2013
+% Updated: 24 February 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -444,7 +444,7 @@ devtools::source_url("https://raw.github.com/christophergandrud/Rep-Res-Examples
 %%%%%%%%%%%%% googleVis
 \section{JavaScript graphs with \emph{googleVis}}\index{googleVis}
 
-Markus Gesmann\index{Markus Gesmann} and Diego de Castillo's \emph{googleVis}\index{googleVis} package \citeyearpar{R-googleVis} allows us to use Google's Visualization API\index{API} from within R to create interactive tables, plots and maps with Google Chart Tools.\index{Google Chart Tools} Because the visualizations are written in JavaScript\index{JavaScript} they can be included in HTML presentation documents created by R Markdown. Unfortunately, they cannot be directly\footnote{The example in this Chapter is a from a screenshot.} included in LaTeX produced PDFs. The \emph{animation}\index{animation} package \citep{R-animation} does have some limited features for including interactive visualizations in PDFs (as well as HTML documents) and is worth investigating if you want to do this. 
+Markus Gesmann and Diego de Castillo's \emph{googleVis}\index{googleVis} package \citeyearpar{R-googleVis} allows us to use Google's Visualization API\index{API} from within R to create interactive tables, plots and maps with Google Chart Tools.\index{Google Chart Tools} Because the visualizations are written in JavaScript\index{JavaScript} they can be included in HTML presentation documents created by R Markdown. Unfortunately, they cannot be directly\footnote{The example in this Chapter is a from a screenshot.} included in LaTeX produced PDFs. The \emph{animation}\index{animation} package \citep{R-animation} does have some limited features for including interactive visualizations in PDFs (as well as HTML documents) and is worth investigating if you want to do this. 
 
 \paragraph{Basic googleVis figures}
 
@@ -513,3 +513,7 @@ If you are using RStudio you will likely notice that \emph{googleVis} charts do 
 You may notice that Google motion charts\footnote{You can use the \texttt{gvisMotionChart}\index{R command!gvisMotionChart} command to make these.}\index{motion chart} do not show up in the RStudio \textbf{Preview HTML}\index{RStudio!Preview HTML} window or even in your web browser when you open the knitted HTML version of the file. You just see a big blank space where you had hoped the chart would be. It will show up, however, if you use the \verb|plot| command on a \verb|gvis| motion chart object in the console. Motion charts can only be displayed when they are hosted on a web server or located in a directory `trusted' by Flash Player.\footnote{This is because motion charts and annotated time line charts rely on Flash,\index{Flash} unlike the other Google visualizations. For more information see Markus Gesmann's blog post at: \url{http://lamages.blogspot.com/2012/05/interactive-reports-in-r-with-knitr-and.html}.}\index{Flash Player}
 
 The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio \textbf{Preview HTML} window do not. An easy way to solve this problem is to save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder\index{Dropbox!Public folder} and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub!Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player\index{Flash Player} see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.
+
+\vspace{2cm}
+
+In this chapter we have learned how to take results from our statistical analyses and other information from our data and dynamically present them in figures using \emph{knitr}. In the next three chapters we will learn how to take the tables we created in Chapter \ref{TablesChapter} and the figures we created in this chapter and embed them in full LaTeX and Markdown presentation documents.

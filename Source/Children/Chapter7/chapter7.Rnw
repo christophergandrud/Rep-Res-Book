@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 17 February 2013
+% Updated: 24 February 2013
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -199,9 +199,8 @@ ggplot(data = MoltenFert, aes(FertilizerConsumption)) +
         geom_density() +
         xlab("\n Fertilizer Consumption") + ylab("Density\n") +
         theme_bw()
-
 @
-    {\scriptsize{Source: World Bank (2012)}}
+    {\scriptsize{Source: World Bank (2012). See the Chapter Appendix for the source code to create this figure.}}
 \end{figure} 
 
 {\small
@@ -402,7 +401,7 @@ summary(FertFactor)
 
 Sometimes a variable will have the wrong type. For example, a numeric variable may be incorrectly made a character string when a data set is imported from Excel. You can change variables' types with a number of commands. We already saw how to convert a numeric variable to a factor variable with the \texttt{factor}\index{R command!factor} command. Unsurprisingly, to convert a variable to a character use \texttt{character}\index{R command!character} and \texttt{numeric}\index{R command!numeric} to convert it to a numeric type variable. We can place \texttt{as.} before these commands (e.g. \texttt{as.factor})\index{R command!as.factor}\index{R command!as.} as a way of coercing a change in type.\index{R!coercion}
 
-Though these commands have straightforward names, a word of caution is necessary. Always try to understand why a variable is not of the type you would expect. Often times variables have unexpected types because they are coded (or miscoded) in a way that you didn't anticipate. Changing the variables' types, especially when using \texttt{as.}, can introduce new errors. Make sure that the conversion made the changes you expected.
+\textbf{Warning:} Though these commands have straightforward names, a word of caution is necessary. Always try to understand why a variable is not of the type you would expect. Often times variables have unexpected types because they are coded (or miscoded) in a way that you didn't anticipate. Changing the variables' types, especially when using \texttt{as.}, can introduce new errors. Make sure that the conversion made the changes you expected.
 
 \section{Merging data sets}\index{R!merging}\index{merge}
 
@@ -410,7 +409,7 @@ In the previous section we learned crucial skills for cleaning up data sets. Whe
 
 \subsection{Binding}\index{R!binding}
 
-As we saw in Chapter \ref{GettingStartedRKnitr}, if your data sets are in the same order--rows in all of the data sets represent the same observation of the same subject--then you can simply use the \texttt{cbind}\index{R command!cbind} command to bind columns from the data sets together. This situation is often very rare when merging real-world data. If your data sets are not in exactly the same order you will create a data set with nonsensical rows that combine data from multiple observations. Therefore, you should avoid using \texttt{cbind} for merging most real-world data.
+As we saw in Chapter \ref{GettingStartedRKnitr}, if your data sets are in the same order--rows in all of the data sets represent the same observation of the same subject--then you can simply use the \texttt{cbind}\index{R command!cbind} command to bind columns from the data sets together. This situation is unusual when merging real-world data. If your data sets are not in exactly the same order you will create a data set with nonsensical rows that combine data from multiple observations. Therefore, you should avoid using \texttt{cbind} for merging most real-world data.
 
 If you have data sets with the exact same columns and variable types and you just want to attach one under the other you can use the \texttt{rbind}\index{rbind} command. It binds the rows in one object to the rows in another.\footnote{Some statistical programs refer to this type of action as ``appending''\index{append} one data set to another.} It has the same syntax as \texttt{cbind} (see page \pageref{cbind}). Again, you should be cautious when using this command, though it is more difficult to accidentally create a nonsensical data set with \texttt{rbind}. R will give you an error if it cannot match your objects' columns.
 
@@ -504,7 +503,7 @@ DataNotDuplicates <- MergedData2[!duplicated(
 
 \noindent Note that if you do have duplicated values in your data set and you run a similar procedure on it, it will drop duplicated values that have a lower order in the data frame. To keep the lowest ordered value and drop duplicates higher in the data set use \texttt{duplicated}'s \texttt{fromLast} argument like this: \texttt{fromLast =TRUE}.
 
-A word of caution is in order. Look over your data set and the source code that created the data set to try to understand why duplicates occurred. There may be a fundamental problem in the way you are handling your data that resulted in the duplicated observations.
+\textbf{Warning:} look over your data set and the source code that created the data set to try to understand why duplicates occurred. There may be a fundamental problem in the way you are handling your data that resulted in the duplicated observations.
 
 \subsection{Duplicate columns}\index{R!duplicate variables}
 
@@ -580,4 +579,17 @@ FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country,
 DispropData$iso2c <- countrycode(DispropData$country, 
                                     origin = "country.name",
                                     destination = "iso2c")
+@
+
+R code for creating Figure \ref{FertilizerConsumptionDens}.
+
+<<Chr7FigDensity, eval=FALSE>>=
+# Load ggplot2
+library(ggplot2)
+
+# Create histogram
+ggplot(data = MoltenFert, aes(FertilizerConsumption)) +
+        geom_density() +
+        xlab("\n Fertilizer Consumption") + ylab("Density\n") +
+        theme_bw()
 @

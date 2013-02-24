@@ -1,7 +1,7 @@
 % Chapter Chapter 13 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 February 2013
+% Updated: 24 February 2013
 
 <<set-parent13, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -168,14 +168,14 @@ Markdown by itself can't format mathematical equations. We can create LaTeX styl
 Because backslashes are Markdown escape characters, in many Markdown editors you will have to use two backslashes to create math environments with MathJax. For example, in LaTeX and RStudio's\index{RStudio!Markdown math} Markdown you can create a display equation like this:
 
 \[
-s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 \]
 
 \noindent by typing:
 
 <<Ch13Equation1, eval=FALSE, tidy=FALSE, engine='sh'>>=
 \[
-s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 \]
 @
 
@@ -183,7 +183,7 @@ s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
 
 <<Ch13Equation2, eval=FALSE, tidy=FALSE, engine='sh'>>=
 \\[
-s^{2} = \frac{\sum(x - \bar{x}^2)}{n - 1}
+s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 \\]
 @
 
@@ -448,6 +448,42 @@ Finally there is the \texttt{mode} option. The mode option determines how to loa
 
 \emph{slidify} R Markdown documents use very similar syntax to ordinary R Markdown documents. \emph{knitr} code chunks are written in the same way as regular R Markdown. An important difference is that three dashes (\verb|---|) delimit individual slide frames, not a horizontal line. Importantly, you need to have an empty line before and after the three dashes or else a new slide will not be created. Two hash marks (\verb|##|) are used to indicate a slide's title.\footnote{One hash mark creates a slide title formatted in the same way as the text.} 
 
+Here is code to include in a \emph{index.html} file that will create a very simple, but full \emph{knitr} HTML5 slideshow with \emph{slidify} using the syntax we just discussed:
+
+<<Ch13SlidifyExample, eval=FALSE>>=
+---
+title       : Example slidify and knitr Slideshow
+subtitle    : 
+author      : Christopher Gandrud
+job         : 
+framework   : io2012        
+highlighter : highlight.js  
+hitheme     : tomorrow       
+widgets     : []            
+mode        : selfcontained 
+--- 
+
+## Access the Code
+
+The code to create the following figure is available online.
+
+To access it we can type: 
+
+```{r, eval=FALSE}
+# Access and run the code to create a caterpillar plot
+devtools::source_url("http://bit.ly/VRKphr")
+```
+
+---
+
+## The Figure
+
+```{r, echo=FALSE, message=FALSE}
+# Access and run the code to create a caterpillar plot
+devtools::source_url("http://bit.ly/VRKphr")
+```
+@
+
 \paragraph{Compiling a slideshow}
 
 Use the \verb|slidify|\index{R command!slidify} command to compile an R Markdown file into a slideshow. This code runs \emph{knitr} and renders our R Markdown file into a slideshow:
@@ -528,6 +564,8 @@ git push origin gh-pages
 
 If you want to create more complex websites with R Markdown and host them on GitHub you might want to look into Jekyll\footnote{\url{https://help.github.com/articles/using-jekyll-with-pages}}\index{Jekyll} or the slightly newer Ruhoh\index{Ruhoh} platform.\footnote{\url{http://ruhoh.com/}}  Jason Fisher has a useful blog post about how to combine Jekyll with \emph{knitr}. See:\url{http://jfisher-usgs.github.com/r/2012/07/03/knitr-jekyll/} (posted 3 July 2012). And of course, because R Markdown creates HTML markup files you can use virtually any other web hosting service to make your presentation documents widely available.
 
+\vpace{2cm}
 
+In this chapter we have learned a number of tools for dynamically presenting our reproducible research on the web. Though LaTeX and PDFs will likely remain the main tools for presenting research in published journals and books for some time to come, choosing to also make your research available in online native formats can make it more accessible to general readers and allow you to take advantage of interactive tools like \emph{googleVis}. Before moving on to the concluding chapter lets quickly look at a simple example of a complete reproducible research project created using the tools covered in this book.
 
   
