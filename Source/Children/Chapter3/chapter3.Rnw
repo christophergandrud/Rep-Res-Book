@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 February 2013
+% Updated: 26 February 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -25,7 +25,7 @@ To get you started with reproducible research, we'll cover some very basic R\ind
     \item packages.
 \end{itemize}
 
-Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a {\tt{\textgreater}} (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started. 
+Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started. 
 
 \begin{figure}[th!]
     \caption{R Startup Console}
@@ -43,7 +43,7 @@ If you've read a description of R before, you will probably have seen it referre
 
 Objects can have a number of different types. Let's make two simple objects. The first is a numeric type object. The other is a character object. We can choose almost any name\label{ObjectNames}\index{R!object names} we want for our objects as long as it begins with an alphabetic character and does not contain spaces.\footnote{It is common for people to use either periods (\texttt{.}) or capital letters (referred to as CamelBack) to separate words in object names instead of using spaces. For example: {\emph{new.data}} or {\emph{NewData}} rather than {\emph{new data}}.} Let's call our numeric object {\emph{Number}}.\index{R!numeric} It is a good idea to give each object a unique name to avoid conflicts and confusion. Also make sure that object names are different from the names of their components, e.g. individual variable names. This will avoid many complications like accidentally overwriting an object or confusing R about what object or component you are referring to.
 
-To put something into the object we use the assignment operator\index{R!assigmnent operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow'.}: {\tt{\textless -}}. Let's assign the number 10 to our {\emph{Number}} object.
+To put something into the object we use the assignment operator\index{R!assigmnent operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow'.} (\verb|<-|). Let's assign the number 10 to our {\emph{Number}} object.
 
 <<Ch3NumericObject>>=
 Number <- 10
@@ -147,7 +147,7 @@ You will notice in the output for \emph{StringNumObject} that the strings in the
 mean(StringNumObject$ChacterVect)
 @
 
-\subsection{Component Selection}
+\subsection{Component Selection}\label{ComponentSelect}
 
 The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (\texttt{\$}) between the name of our data frame object name and the \textbf{CharcterVect} variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector}\footnote{It's also sometimes called the element name operator.} It basically extracts a part--component--of an object. In the previous example it extracted the \textbf{CharacterVect} column from the {\emph{StringNumObject}} and fed it to the \texttt{mean} command, which tried (in this case unsuccessfully) to find its mean.
 
@@ -574,8 +574,8 @@ Here is an example of how you can center align all of the figures in Sweave-styl
     \begin{kframe}
         \begin{alltt}
 \textless{\textless}ChunkLabel, include=FALSE\textgreater{\textgreater}=
-# Center align all knitr figures
-opts_chunk$set(fig.align='center')
+\hlcomment{# Center align all knitr figures}
+opts_chunk$\hlfunctioncall{set}(fig.align='center')
 @
         \end{alltt}
     \end{kframe}
@@ -593,8 +593,8 @@ You set package options in a similar way as global chunk options with {\tt{opts\
         \begin{kframe}
             \begin{alltt}
 \textless{\textless}ChunkLabel, include=FALSE\textgreater{\textgreater}=
-# Turn off knitr progress bar
-opts_knit$set(progress=FALSE)
+\hlcomment{# Turn off knitr progress bar}
+opts_knit$\hlfunctioncall{set}(progress=FALSE)
 @
             \end{alltt}
         \end{kframe}
@@ -704,7 +704,7 @@ texi2pdf(file = "Example.tex")
 
 \vspace{2cm}
 
-We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. they enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to orginize files created with these tools into reproducible research projects. Note: if you do not have much experience using LaTeX or Markdown (and haven't done so already) please take a few moments to skim through chapters \ref{LatexChapter} and \ref{MarkdownChapter} to get a better sense of how these markup languages work.
+We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to orginize files created with these types of tools into reproducible research projects. 
 
 \section*{Appendix: knitr and Lyx}\label{LyxAppendix}
 

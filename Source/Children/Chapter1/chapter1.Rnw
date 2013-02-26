@@ -1,7 +1,7 @@
 % Chapter Chapter 1 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 February 2013
+% Updated: 26 February 2013
 
 <<set-parent1, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -131,7 +131,7 @@ In this book we will focus on learning how to use the widely available and highl
 \section{Why use R, knitr, and RStudio for reproducible research?}
 
 \paragraph{Why R?}
-Why use a statistical programming language like R for reproducible research? R has a very active development community that is constantly expanding what it is capable of. As we will see in this book this enables researchers across a wide range of disciplines to gather data and run statistical analyses. Using the {\emph{knitr}} package, you can connect your R-based analysess to presentation documents created with markup languages\index{markup language} such as LaTeX and Markdown. This allows you to dynamically and reproducibly present results in articles, slideshows, and webpages. 
+Why use a statistical programming language like R for reproducible research? R has a very active development community that is constantly expanding what it is capable of. As we will see in this book this enables researchers across a wide range of disciplines to gather data and run statistical analyses. Using the {\emph{knitr}} package, you can connect your R-based analyses to presentation documents created with markup languages\index{markup language} such as LaTeX and Markdown. This allows you to dynamically and reproducibly present results in articles, slideshows, and webpages. 
 
 The way you interact with R has benefits for reproducible research. In general you interact with R (or any other programming and markup language) by explicitly writing down your steps as source code\index{source code}. This promotes reproducibility more than your typical interactions with Graphical User Interface (GUI)\index{Graphical User Interface}\index{GUI} programs like\index{SPSS} SPSS\footnote{I know you can write scripts in statistical programs like SPSS, but doing so is not encouraged by the program's interface and you often have to learn multiple languages for writing scripts that run analyses, create graphics, and deal with matrices.} and Microsoft Word\index{Microsoft Word}. When you write R code and embed it in presentation documents created using markup languages you are forced to explicitly state the steps you took to do your research. When you do research by clicking through drop down menus in GUI programs, your steps are lost, or at least documenting them requires considerable extra effort. Also it is generally more difficult to dynamically embed your analysis in presentation documents created by GUI word processing programs in a way that will be accessible to other researchers both now and in the future. I'll come back to these points in Chapter \ref{GettingStartedRR}.
 
@@ -143,7 +143,7 @@ The simple answer is that {\emph{knitr}} has the same capabilities as \emph{Swea
 
 \paragraph{Why RStudio?}
 
-\index{RStudio}Why use the RStudio integrated development environment for reproducible research? R by itself has the capabilities necessary to gather data, analyse it, and, with a little help from {\emph{knitr}} and markup languages, present results in a way that is highly reproducible. RStudio allows you to do all of these things, but simplifies many of them and allows you to navigate through them more easily. It is a happy medium between R's text-based interface and a pure GUI. 
+\index{RStudio}Why use the RStudio integrated development environment for reproducible research? R by itself has the capabilities necessary to gather data, analyze it, and, with a little help from {\emph{knitr}} and markup languages, present results in a way that is highly reproducible. RStudio allows you to do all of these things, but simplifies many of them and allows you to navigate through them more easily. It is a happy medium between R's text-based interface and a pure GUI. 
 
 Not only does RStudio do many of the things that R can do, but more easily, it is also a very good stand alone editor for writing documents with LaTeX and Markdown. For LaTeX documents it can, for example, insert frequently used commands like \texttt{\textbackslash{}section\{\}} for numbered sections (see Chapter \ref{LatexChapter}).\footnote{If you are more comfortable with a what-you-see-is-what-you-get (WYSIWYG)\index{WYSIWYG} word processor like Microsoft Word, you might be interested in exploring Lyx\index{Lyx}. It is a WYSIWYG-like LaTeX editor that works with {\emph{knitr}}. It doesn't work with the other markup languages covered in this book. For more information see: \url{http://www.lyx.org/}. I give some brief information on using Lyx with \emph{knitr} in Chapter 3's Appendix.}  There are many LaTeX editors available, both open source and paid. But RStudio is currently the best program for creating reproducible LaTeX and Markdown documents. It has full syntax highlighting\index{syntax highlighting}. It's syntax highlighting can even distinguish between R code and markup commands in the same document. It can spell check LaTeX and Markdown documents. It handles {\emph{knitr}} code chunks\index{code chunk} beautifully (see Chapter \ref{GettingStartedRKnitr}). 
 
@@ -189,16 +189,16 @@ To that end, I can recommend a number of resources that cover more of the nitty-
 \begin{itemize}
     \item Michael J. Crawley's \citeyearpar{Crawley2013} encyclopaedic R book, appropriately titled, \textbf{The R Book} published by Wiley.
     
-    \item Similarly, Robert I. Kabacoff's \citeyearpar{Kabacoff2012} useful book \textbf{R in Action} published by Manning. He also maintains a very helpful website called Quick-R (\url{http://www.statmethods.net/}).
+    \item Robert I. Kabacoff's \citeyearpar{Kabacoff2012} book \textbf{R in Action} published by Manning is also useful. In addition he maintains a very helpful website called Quick-R (\url{http://www.statmethods.net/}).
 
     \item Norman Matloff's \citeyearpar{Matloff2011} tour through the programming language aspects of  R called \textbf{The Art of R Programming: A Tour of Statistical Design Software} published by No Starch Press.
     
-    \item For an excellent introduction to the command line\index{command line} in Linux and Mac, though also helpful for Windows users running PowerShell (see Chapter 2) see William E. Shotts Jr.'s \citeyearpar{ShottsJr2012} book \textbf{The Linux Command Line: A Complete Introduction} also published by No Starch Press.
+    \item For an excellent introduction to the command line\index{command line} in Linux and Mac, see William E. Shotts Jr.'s \citeyearpar{ShottsJr2012} book \textbf{The Linux Command Line: A Complete Introduction} also published by No Starch Press. It is  also helpful for Windows users running PowerShell (see Chapter \ref{DirectoriesChapter}).
     
     \item The RStudio website (\url{http://www.rstudio.com/ide/docs/}) has a number of useful tutorials on how to use {\emph{knitr}} with LaTeX and Markdown.
 \end{itemize}
 
-That being said, my goal is for this book to be {\emph{self-sufficient}}. A reader without a detailed understanding of these programs will be able to understand and use the commands and procedures I cover in this book. While learning how to use R and the other programs I personally often encountered illustrative examples that included commands, variables, and other things that were not well explained in the texts that I was reading. This caused me to waste many hours trying to figure out, for example, what the \texttt{\$} is used for (preview: it's the component selector). I hope to save you from this wasted time by either providing a brief explanation of possibly frustrating and mysterious things and/or pointing you in the direction of good explanations.
+That being said, my goal is for this book to be {\emph{self-sufficient}}. A reader without a detailed understanding of these programs will be able to understand and use the commands and procedures I cover in this book. While learning how to use R and the other programs I personally often encountered illustrative examples that included commands, variables, and other things that were not well explained in the texts that I was reading. This caused me to waste many hours trying to figure out, for example, what the \texttt{\$} is used for (preview: it's the component selector, see page \pageref{ComponentSelect}). I hope to save you from this wasted time by either providing a brief explanation of possibly frustrating and mysterious things and/or pointing you in the direction of good explanations.
 
 \subsection{How to read this book}
 
@@ -206,9 +206,9 @@ This book gives you a workflow. It has a beginning, middle, and end. So, unlike 
 
 That being said, readers with more experience using tools like R or LaTeX may want to skip over the nitty-gritty parts of the book that describe how to manipulate data frames or compile LaTeX documents into PDFs. Please feel free to skip these sections.
 
+\paragraph{More experienced R users}
 
-
-If you are experienced with R in particular you may want to skip over the first section of Chapter \ref{GettingStartedRKnitr}: Getting Started with R/RStudio. But don't skip over the whole chapter. The latter parts contain important information on the {\emph{knitr}} package. If you are experienced with R data manipulation you may also want to skip Chapter \ref{DataClean}.
+If you are an experienced R users you may want to skip over the first section of Chapter \ref{GettingStartedRKnitr}: Getting Started with R/RStudio. But don't skip over the whole chapter. The latter parts contain important information on the {\emph{knitr}} package. If you are experienced with R data manipulation you may also want to skip all of Chapter \ref{DataClean}.
 
 \paragraph{More experienced LaTeX users}
 
@@ -218,13 +218,11 @@ If you are familiar with LaTeX you might want to skip the first part of Chapter 
 
 If you do not have experience with LaTeX or Markdown you may benefit from reading, or at least skimming the introductory chapters on these top topics (chapters \ref{LatexChapter} and \ref{MarkdownChapter}) before reading Part III.
 
-When possible I try to give concrete examples in this book that can be used as you read along. A number of longer examples are also accessible on an accompanying GitHub repository (see Chapter \ref{Storing}). You can find it here: \url{https://github.com/christophergandrud/Rep-Res-Examples}.
-
 \subsection{Reproduce this book}
 
 This book practices what it preaches. It can be reproduced. I wrote the book using the programs and methods that I describe. Full documentation and source files can be found at the book's GitHub\index{GitHub} repository. Feel free to read and even use (within reason and with attribution, of course) the book's source code. You can find it at: \url{https://github.com/christophergandrud/Rep-Res-Book}. This is especially useful if you want to know how to do something in the book that I don't directly cover in the text.
 
-\todo[inline]{Before publication, the repository is private and cannot be accessed publicly.} 
+If you notice any errors or places where the book can be improved please report them on the book's GitHub Issues page: \url{https://github.com/christophergandrud/Rep-Res-Book/issues}.
 
 \subsection{Contents overview}
 

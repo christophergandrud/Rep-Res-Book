@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 February 2013
+% Updated: 26 February 2013
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -41,7 +41,7 @@ summary(FertConsumpData)
 \noindent We can immediately see that the variables \textbf{iso2c} and \textbf{country} are character strings. Because \texttt{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year} we know they are numeric. Have a look over the summary to see if there is anything unexpected like lots of missing values (\textbf{NA's}) or unusual maximum and minimum values. You can of course run \texttt{summary} on a particular variable by using the component selector (\verb|$|):
 
 <<Ch7SummarizeCompSelect>>=
-# Summarize the methane emissions variable from FertConsumpData 
+# Summarize the fertilizer consumption variable from FertConsumpData 
 summary(FertConsumpData$AG.CON.FERT.ZS)
 @
 
@@ -200,7 +200,7 @@ ggplot(data = MoltenFert, aes(FertilizerConsumption)) +
         xlab("\n Fertilizer Consumption") + ylab("Density\n") +
         theme_bw()
 @
-    {\scriptsize{Source: World Bank (2012). See the Chapter Appendix for the source code to create this figure.}}
+    {\scriptsize{Source: World Bank (2012). See the Chapter's Appendix for the source code to create this figure.}}
 \end{figure} 
 
 {\small
@@ -462,7 +462,7 @@ MergedData2 <- merge(FinRegulatorData, DispropData,
                     union("iso2c", "year"),
                     all = TRUE)
 
-# Merge combined data frame with MoltenFert
+# Merge combined data frame with MoltenFertSub
 MergedData2 <- merge(MergedData2, MoltenFertSub,
                     union("iso2c", "year"),
                     all = TRUE)
@@ -476,7 +476,7 @@ After merging data frames it is always a good idea to look at the result and mak
 
 \paragraph{Big data}\index{big data}
 
-The \texttt{merge} command and many of the other data frame manipulation commands covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with a package like \emph{sqldf} \citep{R-sqldf}.\footnote{J.D. Long has a blog post on how to load large data sets into R using \emph{sqldf}: \url{http://www.cerebralmastication.com/2009/11/loading-big-data-into-r/} (posted 24 November 2009).}
+Before discussing post-merge clean up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation commands covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use the \emph{data.table} package \citep{R-data.table}. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{sqldf} \citep{R-sqldf}.\footnote{J.D. Long has a blog post on how to load large data sets into R using \emph{sqldf}: \url{http://www.cerebralmastication.com/2009/11/loading-big-data-into-r/} (posted 24 November 2009).}
 
 \subsection{Duplicate values}
 
@@ -535,7 +535,7 @@ names(FinalCleanedData)
 
 \vspace{2cm}
 
-This chapter has provided you with many tools for cleaning up your data to get it ready for statistical analysis. Before moving on to the next chapter to learn how to do statistical analysis as part of a reproducible workflow with \emph{knitr} it's important to reiterate that the commands we've covered in this chapter should usually be embedded in the types of data creation files we saw in Chapter \ref{DataGather}. These files are then tied together with a makefile into a process that should be able to take very raw data and clean it up for use in your analyses. Embedding these commands in data creation source code files, rather than just typing the commands into your R Console\index{R!Console} or manually changing data in Excel will make your research much more reproducible. It will be easier to backtrack and find mistakes that you may have made while transforming the data. Including new or updated data when it becomes available will also be much easier if you use a series of segmented data creation source code files that are tied together with a makefile.
+This chapter has provided you with many tools for cleaning up your data to get it ready for statistical analysis. Before moving on to the next chapter to learn how to incorporate statistical analysis as part of a reproducible workflow with \emph{knitr} it's important to reiterate that the commands we've covered in this chapter should usually be embedded in the types of data creation files we saw in Chapter \ref{DataGather}. These files can then be tied together with a makefile into a process that should be able to relatively easily take very raw data and clean it up for use in your analyses. Embedding these commands in data creation source code files, rather then just typing the commands into your R Console\index{R!Console} or manually changing data in Excel will make your research much more reproducible. It will also make it easier to backtrack and find mistakes that you may have made while transforming the data. Including new or updated data when it becomes available will also be much easier if you use a series of segmented data creation source code files that are tied together with a makefile.
 
 \section*{Appendix}\label{WideAppendix}
 
@@ -581,13 +581,13 @@ DispropData$iso2c <- countrycode(DispropData$country,
                                     destination = "iso2c")
 @
 
-R code for creating Figure \ref{FertilizerConsumptionDens}.
+R code for creating Figure \ref{FertilizerConsumptionDens}:
 
-<<Chr7FigDensity, eval=FALSE>>=
+<<Chr7FigDensity, eval=FALSE, tidy=FALSE>>=
 # Load ggplot2
 library(ggplot2)
 
-# Create histogram
+# Create density plot
 ggplot(data = MoltenFert, aes(FertilizerConsumption)) +
         geom_density() +
         xlab("\n Fertilizer Consumption") + ylab("Density\n") +

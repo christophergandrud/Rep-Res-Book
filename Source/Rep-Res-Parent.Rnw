@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% 16 January 2013
+% 26 February 2013
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
@@ -84,8 +84,10 @@
 % Table of Contents
 \tableofcontents
 
-% Convert Stylistic Conventions child documnet from Markdown to LaTex and include
+% Convert Stylistic Conventions child document from Markdown to LaTex and include
 \chapter*{Stylistic Conventions}\label{StylisticConventions}
+
+\addcontentsline{toc}{chapter}{Stylistic Conventions}
 
 <<ChildStylisticConventions, include=FALSE, engine="sh">>=
 pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
@@ -94,16 +96,20 @@ pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
 \input{StyleTemp.tex}
 
 % Include page on installing R packages used in the book
-<<ChildFrontPackages, child=c('Children/FrontMatter/Packages.Rnw')>>=
+<<ChildFrontPackages, child=c('Children/FrontMatter/Packages.Rnw', 'Children/FrontMatter/AdditionalResources/AdditionalResources.Rnw')>>=
 @
 
+% Add lists of figures and tables
 \listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
 \listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
 
 
 \mainmatter
 
-% Start arabic numeral page counter
+% Start Arabic numeral page counter
 \setcounter{page}{1}
 
 % Part 1, include child documents
@@ -127,11 +133,12 @@ pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
 % Part 4, include child documents
 \part{Presentation Documents}
 
-<<Child4, child=c('Children/Chapter11/chapter11.Rnw', 'Children/Chapter12/chapter12.Rnw', 'Children/Chapter13/chapter13.Rnw', 'Children/ExampleProject/ExampleProject.Rnw', 'Children/Chapter14/chapter14.Rnw'), eval=TRUE, warning=FALSE>>=
+<<Child4, child=c('Children/Chapter11/chapter11.Rnw', 'Children/Chapter12/chapter12.Rnw', 'Children/Chapter13/chapter13.Rnw', 'Children/Chapter14/chapter14.Rnw'), eval=TRUE, warning=FALSE>>=
 @
 
-% Include bibliotraphy
+% Include bibliography
 \clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
 \bibliographystyle{apa}
 \bibliography{rep-res-book.bib,rep-res-PackagesCited}
 
