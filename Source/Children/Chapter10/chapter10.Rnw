@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 February 2013
+% Updated: 9 March 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -126,7 +126,7 @@ You can set a knitted figure's alignment using \texttt{fig.align}. The option ca
 
 \paragraph{Other figure chunk options}
 
-The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation documents the way that you want.  The option \texttt{fig.cap}\index{knitr option!fig.cap} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{knitr option!fig.lb} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so can sometimes result in very long lists of options that are difficult to read.} Please see the official \emph{knitr} code chunk options webpage for more information: \url{http://yihui.name/knitr/options#chunk_options}.
+The previous options are probably the most commonly used ways of adjusting figures with \emph{knitr}. However, \emph{knitr} has many other chunk options to help you adjust your figures so that they are incorporated into your presentation documents the way that you want.  The option \texttt{fig.cap}\index{knitr option!fig.cap} allows you to set a figure's LaTeX caption and \texttt{fig.lb}\index{knitr option!fig.lb} allows you to set the label.\footnote{In this chapter we will set these options in the markup rather than the code chunk. I prefer doing this because \emph{knitr} options need to be on the same line and so can sometimes result in very long lists of options that are difficult to read.} As we will see below (page \pageref{DevTalk}), you can use the \verb|dev| option to choose the figure's output file format, e.g. PDF, PNG, JPEG. Please see the official \emph{knitr} code chunk options webpage for more information on figure chunk options: \url{http://yihui.name/knitr/options#chunk_options}.
  
 \subsection{Global options}
 
@@ -199,7 +199,7 @@ plot(x = cars$speed, y = cars$dist,
 @
 \end{figure} 
 
-\noindent This code produces the Figure \ref{BasicFigureExample}.\footnote{Note that I did not specify the center environement. This is because it is specified in a \emph{knitr} global chunk option.} If you are familiar with R graphics you will notice that we did not need to tell \emph{knitr} to save the file in a particular format. Instead, behind the scenes it automatically saves the plot as a PDF file in a folder called \emph{figure} that is a child of the current working directory.
+\noindent This code produces the Figure \ref{BasicFigureExample}.\footnote{Note that I did not specify the center environement. This is because it is specified in a \emph{knitr} global chunk option.} If you are familiar with R graphics you will notice that we did not need to tell \emph{knitr} to save the file in a particular format. Instead, behind the scenes it automatically saves the plot as a PDF file in a folder called \emph{figure} that is a child of the current working directory. You can choose the figure file's format with the \texttt{dev} (graphical device) chunk option.\index{knitr option!dev}\label{DevTalk} For example, to save the figure in a PNG formatted file simply add the chunk option \verb|dev='PNG'|. You can choose any graphical device format supported by R. For a full list of R's graphical devices type \verb|?Devices| into your console.\index{R!graphical device} One reason you might want to change the format is to reduce your presentation document's file size. Using a bitmap format like PNG will create smaller files than PDFs, though lower quality images. 
 
 We could of course simply link to the original R source code file stored on GitHub\index{GitHub} with the \verb|source_url|\index{R command!source\_url} command. Let's look at an example of this with a different source code file. Remember in Chapter \ref{DataGather} we used a makefile to gather data from three different sources on the internet. The CSV is called \emph{MainData.csv} and is stored on GitHub at:\url{http://bit.ly/V0ldsf}.\footnote{The full version of the URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/DataGather_Merge/MainData.csv}} We can download this data into R and make a scatterplot matrix with this code:\index{scatterplot matrix}
 
