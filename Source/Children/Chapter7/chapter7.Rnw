@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 7 March 2013
+% Updated: 13 March 2013
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -483,7 +483,7 @@ Before discussing post-merge clean up it is important to highlight ways to handl
 Duplicate observations are one thing to look out for after (and before) merging. You can use the \texttt{duplicated}\index{R command!duplicated}\index{R!duplicates} command to check for duplicates. Use the command in conjunction with subscripts to remove duplicate observations. For example, let's create a new object called \emph{DataDuplicates} from the iso2c-years that are duplicated in \emph{MergedData2}. Remember that \textbf{iso2c} and \textbf{year} are in the first and second columns of the data frame.
 
 <<Ch7Duplicated, tidy=FALSE>>=
-# Created a data frame of unique country-years
+# Created a data frame of duplicated country-years
 DataDuplicates <- MergedData2[duplicated(
                                 MergedData2[, 1:2]), ]
 
@@ -491,17 +491,17 @@ DataDuplicates <- MergedData2[duplicated(
 nrow(DataDuplicates)
 @
 
-\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. This is indicated by the fact that using the \texttt{nrow}\index{Rcommand!nrow} command we find that the \emph{MergedData2} data frame has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
+\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. We know this because \texttt{nrow}\index{Rcommand!nrow} tells us that the data frame with the duplicated values has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
 
 To create a data set without duplicated observations (if there are duplicates) we just add an exclamation point (\texttt{!}) before \texttt{duplicated}--i.e. not duplicated--in the above code.\footnote{\texttt{!duplicated} is equivalent to the \texttt{unique} command.\index{R command!unique}}
 
 <<Ch7NotDuplicated, tidy=FALSE>>=
-# Created a data frame of duplicated country-years
+# Created a data frame of unique country-years
 DataNotDuplicates <- MergedData2[!duplicated(
                                 MergedData2[, 1:2]), ]
 @
 
-\noindent Note that if you do have duplicated values in your data set and you run a similar procedure on it, it will drop duplicated values that have a lower order in the data frame. To keep the lowest ordered value and drop duplicates higher in the data set use \texttt{duplicated}'s \texttt{fromLast} argument like this: \texttt{fromLast =TRUE}.
+\noindent Note that if you do have duplicated values in your data set and you run a similar procedure on it, it will drop duplicated values that have a lower order in the data frame. To keep the lowest ordered value and drop duplicates higher in the data set use \texttt{duplicated}'s \texttt{fromLast} argument like this: \texttt{fromLast = TRUE}.
 
 \textbf{Warning:} look over your data set and the source code that created the data set to try to understand why duplicates occurred. There may be a fundamental problem in the way you are handling your data that resulted in the duplicated observations.
 
