@@ -31,12 +31,12 @@ doInstall <- FALSE
 in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `TRUE` and run the code chunk
 
 ### Session Info
-The current version of the book manuscript was compiled with RStudio (v. 0.97.3) with the following R session:
+The current version of the book manuscript was compiled with [RStudio](http://www.rstudio.com/) (v. 0.97.336) with the following R session:
 
 
 ```
-## R version 2.15.3 (2013-03-01)
-## Platform: x86_64-apple-darwin9.8.0/x86_64 (64-bit)
+## R version 3.0.0 (2013-04-03)
+## Platform: x86_64-apple-darwin10.8.0 (64-bit)
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
@@ -46,35 +46,35 @@ The current version of the book manuscript was compiled with RStudio (v. 0.97.3)
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] MCMCpack_1.2-4        coda_0.16-1           foreign_0.8-52       
-##  [4] Zelig_4.1-3           sandwich_2.2-9        boot_1.3-7           
-##  [7] xtable_1.7-1          WDI_2.2               treebase_0.0-6       
-## [10] ape_3.0-7             texreg_1.22           tables_0.7           
-## [13] sqldf_0.4-6.4         RSQLite.extfuns_0.0.1 RSQLite_0.11.2       
-## [16] chron_2.3-43          gsubfn_0.6-5          proto_0.3-10         
-## [19] DBI_0.2-5             slidify_0.3.3         stargazer_3.0.1      
-## [22] RCurl_1.95-4.1        bitops_1.0-4.2        reshape2_1.2.2       
-## [25] repmis_0.02.2         quantmod_0.4-0        TTR_0.21-1           
+##  [1] coda_0.16-1           foreign_0.8-53        Zelig_4.1-3          
+##  [4] sandwich_2.2-10       boot_1.3-9            xtable_1.7-1         
+##  [7] WDI_2.2               treebase_0.0-6        ape_3.0-8            
+## [10] texreg_1.22           tables_0.7            sqldf_0.4-6.4        
+## [13] RSQLite.extfuns_0.0.1 RSQLite_0.11.2        chron_2.3-43         
+## [16] gsubfn_0.6-5          proto_0.3-10          DBI_0.2-5            
+## [19] slidify_0.3.3         stargazer_3.0.1       RJSONIO_1.0-3        
+## [22] RCurl_1.95-4.1        bitops_1.0-5          reshape2_1.2.2       
+## [25] repmis_0.2.3          quantmod_0.4-0        TTR_0.22-0           
 ## [28] xts_0.9-3             zoo_1.7-9             Defaults_1.1-1       
-## [31] plyr_1.8              openair_0.8-1         memisc_0.96-3        
-## [34] MASS_7.3-23           lattice_0.20-13       markdown_0.5.4       
+## [31] plyr_1.8              openair_0.8-1         memisc_0.96-4        
+## [34] MASS_7.3-26           lattice_0.20-15       markdown_0.5.4       
 ## [37] Hmisc_3.10-1          survival_2.37-4       httr_0.2             
-## [40] googleVis_0.3.3       RJSONIO_1.0-1         ggplot2_0.9.3.1      
-## [43] gdata_2.12.0          formatR_0.7           extrafont_0.13       
-## [46] estout_1.2            devtools_1.1          data.table_1.8.8     
-## [49] countrycode_0.11      brew_1.0-6            apsrtable_0.8-8      
-## [52] animation_2.1         knitr_1.1            
+## [40] googleVis_0.4.2       ggplot2_0.9.3.1       gdata_2.12.0         
+## [43] formatR_0.7           extrafont_0.13        estout_1.2           
+## [46] devtools_1.1          data.table_1.8.8      countrycode_0.13     
+## [49] brew_1.0-6            apsrtable_0.8-8       animation_2.1        
+## [52] knitr_1.1            
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] car_2.0-16         cluster_1.14.3     colorspace_1.2-1  
+##  [1] car_2.0-16         cluster_1.14.4     colorspace_1.2-1  
 ##  [4] dichromat_2.0-0    digest_0.6.3       evaluate_0.4.3    
-##  [7] gee_4.13-18        gtable_0.1.2       gtools_2.7.0      
-## [10] labeling_0.1       Matrix_1.0-11      memoise_0.1       
-## [13] mgcv_1.7-22        munsell_0.4        nlme_3.1-108      
-## [16] parallel_2.15.3    RColorBrewer_1.0-5 rjson_0.2.12      
-## [19] Rttf2pt1_1.1       scales_0.2.3       stringr_0.6.2     
-## [22] tcltk_2.15.3       twitteR_1.1.0      whisker_0.3-2     
-## [25] XML_3.95-0.2       yaml_2.1.7
+##  [7] gtable_0.1.2       gtools_2.7.1       labeling_0.1      
+## [10] Matrix_1.0-12      memoise_0.1        mgcv_1.7-22       
+## [13] munsell_0.4        nlme_3.1-109       parallel_3.0.0    
+## [16] RColorBrewer_1.0-5 rjson_0.2.12       Rttf2pt1_1.1      
+## [19] scales_0.2.3       stringr_0.6.2      tcltk_3.0.0       
+## [22] twitteR_1.1.0      whisker_0.1        XML_3.95-0.2      
+## [25] yaml_2.1.7
 ```
 
 
