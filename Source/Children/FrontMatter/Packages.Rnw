@@ -9,15 +9,15 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately. To install most of the user-written packages discussed in this book copy the following code and paste it into your R console:
 
 <<FrontInstallPackages, eval=FALSE, tidy=FALSE>>=
-install.packages("apsrtable", "brew", "countrycode",
+install.packages(c("apsrtable", "brew", "countrycode",
                 "devtools", "formatR", "gdata", "ggplot2", 
                 "googleVis", "httr", "knitr", 
                 "markdown", "openair", "plyr", 
-                "quantmod", "reshape2",
+                "quantmod", "repmis", "reshape2",
                 "RCurl", "rjson", "RJSONIO", "stargazer",
                 "texreg", "tools", "treebase",
                 "twitteR", "WDI", "XML",                 
-                "xtable", "Zelig")
+                "xtable", "Zelig"))
 @
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror"\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
@@ -33,11 +33,7 @@ install_github("slidify", "ramnathv")
 install_github("slidifyLibraries", "ramnathv")
 @
 
-\noindent For more details see the \emph{slidify} website: \url{http://ramnathv.github.com/slidify/start.html#}. Use the same procedures to also install the \emph{repmis}\index{repmis} package \citep{R-repmis}.\label{repmisInstall}
-
-<<FrontrepmisInstall, eval=FALSE>>=
-install_github("repmis", "christophergandrud")
-@
+\noindent For more details see the \emph{slidify} website: \url{http://ramnathv.github.com/slidify/start.html#}. 
 
 If you are using Windows you will also need to install \emph{Rtools} \cite[]{Rtools}.\index{Rtools} You can download \emph{Rtools} from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload} Please use the recommended installation to ensure that your system PATH\index{PATH} is set up correctly. Otherwise your computer will not know where the tools are.
 
@@ -45,7 +41,8 @@ If you are using Windows you will also need to install \emph{Rtools} \cite[]{Rto
 # Install & load required packages as well as all cited packages
 ## Based on https://gist.github.com/3710171
 ## See also http://bit.ly/PbabKd
-## Note: if you are installing doInstall is TRUE then remove the slidify package from this list and install it separately using the instructions above.
+## Note: if you are installing doInstall is TRUE then remove the slidify package from this list and install it separately using the instructions above. 
+## If doInstall is TRUE then you will need to remove the slidify package from the list. Install it using the directions above.
 
 doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
 toInstall <- c("animation",
