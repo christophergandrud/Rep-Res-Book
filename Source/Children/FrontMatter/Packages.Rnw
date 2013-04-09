@@ -22,6 +22,16 @@ install.packages(c("apsrtable", "brew", "countrycode",
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror"\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
 
+In Chapter \ref{TablesChapter} we use the \emph{Zelig} package \citep{R-Zelig}\index{R package!Zelig} to create a simple Bayesian normal linear regression. For this to work properly you will need to install an additional package called \emph{ZeligBayesian} \citep{R-ZeligBayesian}. To do this type the following code into your R console: \label{ZeligBayes}\index{R package!ZeligBayesian}
+
+<<ZeligBayesian, eval=FALSE, tidy=FALSE>>=
+install.packages(
+                 "ZeligBayesian",
+                 repos = "http://r.iq.harvard.edu/",
+                 type  = "source"
+                 )
+@
+
  Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify} for creating R Markdown/HTML slideshows (see Chapter \ref{MarkdownChapter}) is not currently on CRAN. It can be downloaded directly from GitHub\index{GitHub}. To do this first load the \emph{devtools} package \cite[]{R-devtools}.\index{devtools} Then download \emph{slidify}. Here is the complete code:
 
 <<FrontSlidifyInstall, eval=FALSE, tidy=FALSE>>=
@@ -82,7 +92,8 @@ toInstall <- c("animation",
                "WDI", 
                "XML",                    
                "xtable", 
-               "Zelig")
+               "Zelig",
+               "ZeligBayesian")
 
 if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org")}
 lapply(toInstall, library, character.only = TRUE)
