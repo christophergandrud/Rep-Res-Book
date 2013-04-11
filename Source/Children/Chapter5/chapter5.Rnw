@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 February 2013
+% Updated: 11 April 2013
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -61,29 +61,39 @@ When you sign up for Dropbox and install the program\footnote{See \url{https://w
 
 \subsection{Accessing Data}
 
-There are two similar, but importantly different ways to access data stored on Dropbox. All files stored on Dropbox have a URL address through which they can be accessed from a computer connected to the internet. Some of these files can be easily loaded directly into R, while others must me manually (point-and-click) downloaded onto your computer and then loaded into R. Files in the Dropbox \emph{Public}\index{Dropbox!Public folder} folder can be downloaded directly into R. Files not in the \emph{Public} folder have to be downloaded manually.\footnote{This is not completely true. It could be possible to create a web scraper\index{web scraper} that could download data from a file not in your \emph{Public} folder. However, this is a hassle and not practical, especially given that accessing files from the \emph{Public} folder is so easy.} Either way you find a file's URL address by first right-clicking on the file icon in your Dropbox folder. 
+All files stored on Dropbox have a URL address through which they can be accessed from a computer connected to the internet. Files in either the Dropbox \emph{Public}\index{Dropbox!Public folder}\footnote{Note: if you created your Dropbox account after 4 October 2012 you will not automatically have a \emph{Public} folder. To enable the folder on your account see this website: \url{https://www.dropbox.com/help/16/en}.\label{EnablePublicFolder}\index{Dropbox!enable Public folder}} folder or in other, non-Public folders can be downloaded into R, though downloading them requires different methods. Let's quickly look at how to download files from the Public folder. In the next chapter (see page \pageref{DropboxNonPublic}) we'll look at how to download data from non-Public Dropbox folders into R.
 
-Note: if you created your Dropbox account after 4 October 2012 you will not automatically have a \emph{Public} folder. To enable the folder on your account see this website: \url{https://www.dropbox.com/help/16/en}.\label{EnablePublicFolder}\index{Dropbox!enable Public folder}
+If the file is stored in the \emph{Public} folder, right-click on the file icon in your Dropbox folder. Then click \texttt{Dropbox} in the menu that pops up followed by \emph{Copy Public Link}.\label{PublicLink} This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). Once you have the URL you can load the file directly into R using the \verb|source_data| command in the \emph{repmis} package\index{repmis} \citep{R-repmis} for plain-text or the \texttt{source}\index{R command!source} command in base R for source code files (see Chapter \ref{StatsModel}).
 
-If the file is stored in the \emph{Public} folder, you go to \texttt{Dropbox} in the menu that pops up, then click \emph{Copy Public Link}.\label{PublicLink} This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). Once you have the URL you can load the file directly into R using the \texttt{read.table} command for data frames or the \texttt{source} command for source code files (see Chapter \ref{StatsModel}).
-
-To give you a preview let's download data on financial regulator type directly into R from Dropbox from my Public folder. The data set's URL is: \url{http://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.\footnote{This data is from \cite{Gandrud2012}} I've used the URL shortening service bitly\index{bitly}\footnote{See \url{https://bitly.com/}.} to make this link fit on the page.\label{ReadTable}
+Let's download data on financial regulator type directly into R from my Dropbox Public folder. The data set's URL is: \url{https://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.
 
 <<Ch5PublicFolderDownload, tidy=FALSE>>=
 # Download data on Financial Regulators 
 # stored in a Dropbox Public folder
-FinRegulatorData <- read.table("http://bit.ly/PhjaPM", 
-                    			sep = ",", header = TRUE)
+
+# Load repmis
+library(repmis)
+
+# Place the URL into the object FinURL
+## Done to fit the URL on the printed page
+FinURL <- paste0("https://dl.dropbox.com/u/12581470/code/",
+				 "Replicability_code/Fin_Trans_Replication",
+				 "_Journal/Data/public.fin.msm.model.csv")
+
+# Download data
+FinRegulatorData <- source_data(FinURL, 
+                    			sep = ",", 
+                    			header = TRUE)
                     
-# Show variables in Data
+# Show variables in FinRegulatorData
 names(FinRegulatorData)
 @
 
-\noindent Storing files in the \emph{Public} folder clearly makes replication easier because R can directly access these files.
+Let's go through this code. The command \texttt{paste0}\index{R command!paste0} simply pastes the multiple strings in the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the rows are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. 
 
-When the file is not in your \emph{Public} folder you also go to \texttt{Dropbox} after right-clicking on the file. Then choose \texttt{Get Link}. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar and share it with others.
+When the file is not in your \emph{Public} folder you also go to \texttt{Dropbox} after right-clicking on the file. Then choose \texttt{Get Link}. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar and share it with others. You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. If the file is in your \emph{Public} folder, right-click on it and then select \texttt{Copy Public Link}. When you hover your cursor over a file or folder not in the \emph{Public} Folder you will see a chain-link icon (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) appear on the far right. Clicking on this icon will get you the link.
 
-You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. If the file is in your \emph{Public} folder, right-click on it and then select \texttt{Copy Public Link}. When you hover your cursor over a file or folder not in the \emph{Public} Folder you will see a chain-link icon (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) appear on the far right. Clicking on this icon will get you the link.
+In either case you cannot use the \verb|source_data| command to download data from non-Public folders into R. In the next chapter we'll see how to import this type of data into R (see page \pageref{DropboxNonPublic}). To give you a preview: we'll use the \verb|source_DropboxData|\index{R command!source\_DropboxData} command from the \emph{repmis}\index{repmis} package.
 
 \subsection{Collaboration}
 

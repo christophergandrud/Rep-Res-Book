@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 4 April 2013
+% Updated: 11 April 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -227,7 +227,15 @@ You can use Make to build almost any project from the shell, not just run R sour
 
 Now that we've covered the big picture, let's learn the different tools you will need to know to gather data from different types of sources. The most straightforward place to load data from is a local file, e.g. one stored on your computer. Though storing your data locally does not really encourage reproducibility, most research projects will involve loading data this way at some point. The tools you will learn for importing locally stored data files will also be important for most of the other methods further on. 
 
-As we have seen, plain-text file based data stored on your computer can be loaded into R using the \texttt{read.table}\index{R command!read.table} command (see \pageref{ReadTable}). If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the column separator, whether or not you want the first line to be treated as variable labels, and other options. This is initially easier than using \texttt{read.table}. But it is less reproducible.
+Data stored in plain-text files on your computer can be loaded into R using the \texttt{read.table}\index{R command!read.table} command. For example, imagine we have a CSV file called \emph{TestData.csv} stored in the current working directory. To load the data set into R simply type:
+
+<<Ch6LocalReadTable, eval=FALSE, tidy=FALSE>>=
+TestData <- read.table("TestData.csv", sep = ",", header = TRUE)
+@
+
+\noindent See page \pageref{SepHeadExplain} for a discussion of the arguments in this command.
+
+If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the column separator, whether or not you want the first line to be treated as variable labels, and other options. This is initially easier than using \texttt{read.table}. But it is less reproducible.
 
 If the data is not stored in plain-text format, but is instead saved in a format created by another statistical program such as SPSS,\index{SPSS} SAS,\index{SAS} or Stata,\index{Stata} we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
@@ -262,26 +270,19 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
     \item the file is not embedded in a larger HTML\index{HTML} website.
 \end{itemize}
 
-\noindent We have discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL in your web browser. If you only see the raw plain-text data, you are probably good to go.\footnote{If the data is embedded in a larger website--the way data is usually stored on the cloud version of Dropbox--you may still be able to download it into R. However, this can be difficult and varies depending on the structure of the website. So, I do not cover it in this book.}
-
-To import the data simply include the URL as the file name in your \texttt{read.table} command. We saw in Chapter \ref{Storing} how to download a CSV data file from a Dropbox \emph{Public} folder with the shortened URL \texttt{http://bit.ly/PhjaPM}:
-
-<<Ch6httpLoad, eval=FALSE, tidy=FALSE>>=
-FinRegulatorData <- read.table("http://bit.ly/PhjaPM", 
-                                sep = ",", header = TRUE)
-@
+\noindent We already discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL in your web browser. If you only see the raw plain-text data, you are probably good to go. To import the data simply include the URL as the file's name in your \texttt{read.table} command. 
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
-\noindent We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}.\index{R command!textConnection} The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a large HTML website apply to secure web addresses as well.
+\noindent However, storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}.\index{R command!textConnection} The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to secure web addresses as well.
 
-Let's try an example. I have data in comma-separated values format stored on a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.}\label{RawGitHub} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
+Let's try an example. I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.}\label{RawGitHub} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
 
 <<Ch6UrlObject, echo=FALSE>>=
 # Put URL address into the object UrlAddress
-UrlAddress <- paste("https://raw.github.com/christophergandrud/",
+UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
                 "Disproportionality_Data/master/",
-                "Disproportionality.csv", sep = "")
+                "Disproportionality.csv")
 @
 
 {\small
@@ -294,7 +295,8 @@ DataUrl <- getURL(UrlAddress)
 
 # Convert Data into a data frame
 DispropData <- read.table(textConnection(DataUrl), 
-                                     sep = ",", header = TRUE)
+                                     sep = ",", 
+                                     header = TRUE)
                     
 # Show variables in data
 names(DispropData)
@@ -303,12 +305,36 @@ names(DispropData)
 
 \noindent If running \texttt{getURL(UrlAddress)} gives you an error about an \texttt{SSL certificate problem} simply add the argument \texttt{ssl.verifypeer = FALSE}. This allows you to skip certification verification and access the data.\footnote{For more details see the \emph{RCurl} help page at \url{http://www.omegahat.org/RCurl/FAQ.html}.} 
 
-\paragraph{Loading data from secure URLs with {\tt{source\_GitHubData}}}
+\paragraph{Loading data from secure URLs with {\tt{source\_data}}}
 
-We can use the \verb|source_GitHubData| command in the \emph{repmis} package \citep{R-repmis} to simplify the process of downloading data from secure URLs.\index{repmis}\index{R command!source\_GitHubData} To load the data stored at the URL in \emph{UrlAddress} with \verb|source_GitHubData| type: 
+We can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from secure URLs.\index{repmis}\index{R command!source\_data} In Chapter \ref{Storing} we saw an example of how to use \verb|source_data| to download data stored in a Dropbox Public folder. Here is another example, using the same data stored on GitHub as in the previous example. To load the data stored at the URL in \emph{UrlAddress} with \verb|source_data| type:\footnote{\emph{repmis} also has a \texttt{source\_GitHubData} command.\index{R command!source\_GitHubData} This is very similar to \texttt{source\_data}, the only difference being that it has the defaults \texttt{sep = ","} and \texttt{header = TRUE}.} 
 
-<<Ch6UsesourceGitHubData, eval=FALSE>>=
-DispropData <- repmis::source_GitHubData(url = UrlAddress)
+<<Ch6UsesourceGitHubData, eval=FALSE, tidy=FALSE>>=
+DispropData <- repmis::source_data(url = UrlAddress,
+                                         sep = ",",
+                                         header = TRUE)
+@
+
+\paragraph{Loading data from Dropbox non-Public folders}\label{DropboxNonPublic}
+
+Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-Public folders are a little tricky to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. Instead the plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this file. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R command!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) it's Dropbox key.\index{Dropbox!key}
+
+To find the file's key simply click on the \texttt{Share Link} button next to the file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) on the Dropbox website. Look at the URL for the webpage that appears. Here's an example:
+
+\vspace{0.25cm}
+
+\includegraphics[scale=0.5]{Children/Chapter6/images6/DropboxURL.png}
+
+\vspace{0.25cm}
+
+\noindent You can see that the last part of the URL (\texttt{fin\_research\_note.csv}) is the data file's name. The key is the string of letters and numbers just after \texttt{https://www.dropbox.com/s/}, i.e. \texttt{exh4iobbm2p5p1v}. Now that we have the file name and key we can download the data into R using \verb|source_DropboxData|. For example:
+
+<<Ch6sourceDropboxData, tidy=FALSE>>=
+# Download data from a Dropbox non-Public folder
+FinDataFull <- repmis::source_DropboxData("fin_research_note.csv",
+                                  "exh4iobbm2p5p1v",
+                                  sep = ",",
+                                  header = TRUE)
 @
 
 \subsection{Compressed data stored online}
