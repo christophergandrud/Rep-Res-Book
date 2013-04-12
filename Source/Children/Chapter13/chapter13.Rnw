@@ -1,7 +1,7 @@
 % Chapter Chapter 13 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 6 April 2013
+% Updated: 12 April 2013
 
 <<set-parent13, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -189,11 +189,11 @@ s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 
 \section{Markdown with Pandoc and Custom CSS}
 
-Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files to render Markdown documents into HTML.
+Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files to render Markdown documents into HTML. We will also look at two ways to run Pandoc from R. The first is via the \texttt{system} command. The second is via \emph{knitr}'s \texttt{pandoc} wrapper command.\index{wrapper} 
 
 \subsection{Pandoc}\index{Pandoc}
 
-With a little customization\label{PandocDiscussion} you can include footnotes and BibTeX bibliographies\index{BibTeX} into R Markdown documents. When you click on the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button in RStudio\index{RStudio} it runs two commands: \texttt{knit} to convert your \texttt{.Rmd} file to \texttt{.md} and then \texttt{markdownToHTML}\index{R command!markdownToHTML} from the \emph{markdown} package \citep{R-markdown} to convert the Markdown file to HTML.\index{HTML} What we need to do is create a new function to run Pandoc instead of \texttt{markdownToHTML} or reset \texttt{markdownToHTML}.
+With a little customization\label{PandocDiscussion} you can include footnotes and BibTeX bibliographies\index{BibTeX} in R Markdown documents. When you click on the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button in RStudio\index{RStudio} it runs two commands: \texttt{knit} to convert your \texttt{.Rmd} file to \texttt{.md} and then \texttt{markdownToHTML}\index{R command!markdownToHTML} from the \emph{markdown} package \citep{R-markdown} to convert the Markdown file to HTML.\index{HTML} What we need to do is create a new function to run Pandoc instead of \texttt{markdownToHTML} or reset \texttt{markdownToHTML}.
 
 The simplest way to do this is to create a new R function\index{R command!function} that runs Markdown files created by \emph{knitr} through Pandoc to create an HTML file:\footnote{The function here is modified from one on the RStudio website. See below for more details.}
 
@@ -218,7 +218,7 @@ knitr::knit("Example.Rmd", "Example.md")
 pandocToHTML("Example.md", "Example.html")
 @
 
-\noindent In RStudio\index{RStudio} you can use this type of function rather than \texttt{markdownToHTML} when you click \emph{Knit HTML}. To do this you need to set a new \texttt{option} in an invisible file called \emph{.Rprofile}.\footnote{You can either create a new \emph{.Rprofie} document in your working directory or change the master file always used by R. The location of this file varies by operating system.}\index{R!.Rprofile} Changing this file allows you to alter how R works. Note: using Pandoc rather than \emph{markdownToHTML} from the \emph{markdown} package allows us to use footnotes and bibliographies. However, we also lose functions, like automatic MathJax support. It would take some work (not covered here) get the best of both worlds. You will have to decide whether Pandoc or the default RStudio renderer is the best way to render your document based on what you want to do. 
+\noindent In RStudio\index{RStudio} you can use this type of function rather than \texttt{markdownToHTML} when you click \emph{Knit HTML}. To do this you need to set a new \texttt{option} in an invisible file called \emph{.Rprofile}.\footnote{You can either create a new \emph{.Rprofie} document in your working directory or change the master file always used by R. The location of this file varies by operating system.}\index{R!.Rprofile} Changing this file allows you to alter how R works. Note: using Pandoc rather than \emph{markdownToHTML} from the \emph{markdown} package allows us to use footnotes and bibliographies. However, we also lose functions, like automatic MathJax support. It would take some work (not covered here) to get the best of both worlds. You will have to decide whether Pandoc or the default RStudio renderer is the best way to render your document based on what you want to do. 
 
 Here is the code to add to the \emph{.Rprofile} so that you can use Pandoc when you click \texttt{Knit HTML}.\footnote{This code is from the RStudio website: (\url{http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering}.}
 
@@ -233,15 +233,15 @@ options(rstudio.markdownToHTML =
 
 \paragraph{Footnotes with Pandoc}\index{Pandoc!footnotes}\index{Markdown!footnotes}
 
-Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown extensions.\index{Pandoc!Markdown Extensions} Pandoc Markdown extensions add functions to regular Markdown syntax. I am only going to discuss two of the most important extensions for reproducible Markdown documents: footnotes and bibliographies with BibTeX. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
+Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown extensions.\index{Pandoc!Markdown Extensions} Pandoc Markdown extensions add functions to regular Markdown syntax. I am only going to discuss two of the most important extensions for reproducible Markdown research documents: footnotes and BibTeX bibliographies. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
 
-To create what Pandoc calls an ``inline note'' use the \verb|^[NOTE]| syntax.\index{Pandoc!inline note} For example:
+To create what Pandoc calls an ``inline note'' type footnote use the \verb|^[NOTE]| syntax.\index{Pandoc!inline note} For example:
 
 <<Ch13PandocInlineNotes, eval=FALSE, tidy=FALSE, engine='sh'>>=
 This is some text.^[This is an inline footnote.]
 @
 
-\noindent When rendered a hyper-link number will appear after ``text.''. It will link to the note (``This is an inline footnote.'') at the bottom of the page.
+\noindent When rendered, a hyper-link number will appear after ``text.''. It will link to the note (``This is an inline footnote.'') at the bottom of the page.
 
 \paragraph{Bibliographies with Pandoc}\index{Pandoc!bibliographies}\index{Markdown!bibliographies}
 
@@ -341,6 +341,43 @@ pandocToHTML <-
         \end{center}
 \end{figure}
 
+\subsection{\emph{knitr}'s Pandoc command}\label{KnitrPandoc}
+
+An alternative way to convert Markdown documents to other formats is \emph{knitr}'s \texttt{pandoc} command.\index{knitr!pandoc}\index{R command!pandoc} The syntax is pretty straightforward. Imagine we want to convert a very simple Markdown document called \emph{SimpleExmple.md} to HTML. Imagine also that the document has no bibliography or other custom options, so we can simply use:
+
+<<Ch13KnitPandoc1, eval=FALSE, tidy=FALSE>>=
+knitr::pandoc("SimpleExmple.md", format = "html")
+@ 
+
+We can add Pandoc options, like bibliographies and CSS files, by embedding them at the beginning of the document. For example:
+
+<<Ch13PandocKnitr, eval=FALSE, tidy=FALSE>>=
+<!--Pandoc
+format: html
+css: Markdown.css
+bibliography: PandocBib.bib
+-->
+
+# Example Pandoc + knitr Markdown Document
+## Christopher Gandrud
+### 14 January 2013
+
+-----
+
+This is some text.^[This is an inline footnote.]
+
+This is a *knitr* code chunk:
+
+```{r}
+plot(cars$speed, cars$dist)
+```
+
+This is a citation [see @Donohue2009, 10].
+@
+
+\noindent The document is the same as our example from earlier, except at the very beginning we added an HTML comment: \verb|<!--Pandoc . . . -->|. Inside of this comment we added our CSS and bibliography options using Debian Control File syntax.\index{Debian Control File} Basically this just means that we write the Pandoc option name (e.g. \texttt{css}), a colon, then the value (e.g. \texttt{Markdown.css}). Note that each option is on its own line.\footnote{See Yihui Xie's help page for more information: \url{http://yihui.name/knitr/demo/pandoc/}.} Now whenever we use the \texttt{pandoc} command these options will be applied.\footnote{You can also place the options in a separate text file and tell \texttt{pandoc} where it is with the \texttt{config} option.}
+
+%%%%%%%%%%%%% Slidify %%%%%%%%%%%%%%%%%%
 \section{Presentations with \texttt{slidify}}
 
 It is possible to create reproducible HTML5 slideshows\index{slideshow}\index{HTML5} with R Markdown using Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify}.\footnote{For more information about slidify please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. There are a number of advantages to creating HTML presentations:
@@ -450,7 +487,7 @@ Finally there is the \texttt{mode} option. The mode option determines how to loa
 
 Here is code to include in a \emph{index.html} file that will create a very simple, but full \emph{knitr} HTML5 slideshow with \emph{slidify} using the syntax we just discussed:
 
-<<Ch13SlidifyExample, eval=FALSE>>=
+<<Ch13SlidifyExample, eval=FALSE, tidy=FALSE>>=
 ---
 title       : Example slidify and knitr Slideshow
 subtitle    : 

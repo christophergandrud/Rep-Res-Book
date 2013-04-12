@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 February 2013
+% Updated: 12 April 2013
 
 <<set-parent12, include=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -171,10 +171,10 @@ This chapter is very short
 We can use \emph{knitr}'s parent-child functions in any of the markup languages it supports. For example, we can \texttt{knit} R Markdown children into R Markdown parent documents. We don't look at specific examples in this book. The \emph{knitr} options syntax is the same, but as usual syntax for opening and closing the code chunks is specific to the the markup language.
 
 
-%%%%%%%%%%% Child documents in other markup language %%%%%
+%%%%%%%%%%% Child documents in another markup language %%%%%
 \section{Child documents in a different markup language}
 
-Because {\emph{knitr}} is able to run not only R code but also command line programs,\index{command line} you can use the Pandoc \index{Pandoc} program to convert child documents written in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document by including the Pandoc commands in a code chunk with the \texttt{engine} option set to either \verb|'bash'| or \verb|'sh'|.\footnote{Alternatively you can run Pandoc in an R code chunk using the {\tt{system}} command.} 
+Because {\emph{knitr}} is able to run not only R code but also command line programs,\index{command line} you can use the Pandoc \index{Pandoc} program to convert child documents written in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document by including the Pandoc commands in a code chunk with the \texttt{engine} option set to either \verb|'bash'| or \verb|'sh'|.\footnote{Alternatively you can run Pandoc in an R code chunk using the {\tt{system}} command.\index{R command!system} For example: \texttt{system("pandoc Children/FrontMattter/StylisticConventions.md -f markdown -t latex -o StyleTemp.tex")}. \emph{knitr} also has a \texttt{pandoc} command\index{knitr!pandoc} that is a wrapper for converting Markdown documents to other formats with Pandoc. However, \emph{knitr} does not run \emph{knitr} commands when they are in code chunks. See page \pageref{KnitrPandoc} for details on how to use the \texttt{pandoc} command.} 
 
 For example, the Stylistic Conventions (page \pageref{StylisticConventions}) part of this book is written in Markdown. The source file is called {\emph{StylisticConventions.md}} and is in a subdirectory of the parent's directory called: \emph{Children/FrontMatter} It was faster to write the list of conventions using the simpler Markdown syntax than LaTeX, which as we saw has a more complicated way of creating lists. However, I wanted to include this file in the LaTeX produced book. Pandoc can convert the Markdown document\index{Markdown} into a LaTeX file. This file can then be input into the main document with the LaTeX command \texttt{input}.\index{LaTeX command!input}
 
@@ -268,10 +268,10 @@ Now let's create the R code to subset the data, \texttt{brew} and \texttt{knit} 
 setwd("/BatchReports")
 
 #### Download Data ####
-# Load source_GitHubData
-devtools::source_url("http://bit.ly/UOMkpd")
+# Load repmis
+library(repmis)
                      
-# Download data)
+# Download data
 MainData <- source_GitHubData("http://bit.ly/V0ldsf")
 
 # Create vector of country names
