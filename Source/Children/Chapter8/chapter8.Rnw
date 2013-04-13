@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 February 2013
+% Updated: 13 April 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -302,9 +302,9 @@ summary(Draw2)
 
 \section{Computationally intensive analyses}
 
-Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make knitting the document frustrating because it will take a long time. There are at least two solutions to this problem: the \texttt{cache} chunk option and makfiles.\index{makefile} We discussed makefiles Chapter \ref{DataGather}, so lets look at how to work with the \texttt{cache} option.\index{knitr option!cache} 
+Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make writing the document frustrating because it will take a long time to knit it each time you make changes. There are at least two solutions to this problem: the \texttt{cache} chunk option and makfiles.\index{makefile} We discussed makefiles Chapter \ref{DataGather}, so lets look at how to work with the \texttt{cache} option.\index{knitr option!cache} 
 
-When you set \verb|cache=TRUE| for the code chunk that contains the analysis the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see page \pageref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
+When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see page \pageref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
 
 Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R command!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
 
@@ -342,6 +342,7 @@ Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
+\noindent If the code chunk you want to cache creates many objects, but you only want to save a few of them you can use \emph{knitr}'s' \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save. 
 \vspace{2cm}
 
 In this chapter we covered in more detail key \emph{knitr} syntax for including code chunks in our presentation documents. This and other tools we learned in this chapter are important for tying our statistical analyses directly to its advertising, i.e. our presentation documents. In the next two chapters we will learn how to take the output from our statistical analysis and, using \emph{knitr}, present the results with dynamically created tables and figures. 
