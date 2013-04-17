@@ -4,7 +4,7 @@ I use the following conventions throughout this book:
 
 - **Abstract Variables**
 
-Abstract variables, i.e. variables that do not represent specific objects in an example, are in `ALL CAPS TYPWRITER TEXT`. 
+Abstract variables, i.e. variables that do not represent specific objects in an example, are in `ALL CAPS TYPEWRITER TEXT`. 
 
 - **Clickable Buttons**
 
@@ -32,7 +32,7 @@ Objects are printed in *italics*. I use CamelBack for object names.
 
 - **Object Columns**
 
-Data frame object columns are printed in *italics*
+Data frame object columns are printed in *italics*.
 
 
 - **Packages**
