@@ -59,7 +59,7 @@ You can run the commands in this file one by one or run the make-like file by pu
 
 R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see Section \ref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than its output, Make will run it. If the source's time stamp is older than its output, Make will skip it.
 
-In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipie} to create the targets from the prerequisites. The general form is:
+In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipe} to create the targets from the prerequisites. The general form is:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -67,7 +67,7 @@ In Make terminology the output files are called ``targets''\index{Make!targets} 
     \begin{kframe}
         \begin{verbatim}
 TARGET ... : PREREQUISITE ...
-    RECIPIE
+    RECIPE
     ... 
     ...
             \end{verbatim}
