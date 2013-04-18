@@ -1,13 +1,13 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 17 April 2013
+% Updated: 18 April 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 @
 
-\chapter{Statistical Modelling and knitr}\label{StatsModel}
+\chapter{Statistical Modelling and {\normalfont{knitr}}}\label{StatsModel}
 
 When you have your data cleaned and organized you will begin to examine it with statistical analyses. In this book we don't look at how to do statistical analysis in R (a subject that would and does take up many books). Instead we focus on how to make your analyses really reproducible. To do this you dynamically connect your data gathering and analysis source code to your presentation documents. When you dynamically connect your data gathering makefiles and analysis source code to your markup document you will be able to completely rerun your data gathering and analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analyses source code files.
 
@@ -15,15 +15,15 @@ You can dynamically tie your data gathering, statistical analyses and presentati
 
 The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
-\textbf{Reminder:} Before discussing the details of how to incorporate you analysis into your source code, it's important to reiterate something we discussed in Chapter \ref{GettingStartedRR}. The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for file path names, syntax can change depending on what operating system you are using.  So it is important to have your R session info available (see page \pageref{SessionInfoHow} for details) to make your research more reproducible and future proof. If someone reproducing your research has this information they will be able to download your files and use the exact version of the software that you used. For example, CRAN\index{CRAN archive} maintains an archive of previous R package versions that can be downloaded.\footnote{See: \url{http://cran.r-project.org/src/contrib/Archive/}.} Previous versions of R itself can also be downloaded through CRAN.\footnote{See: \url{http://cran.r-project.org/src/base/}.}
+\textbf{Reminder:} Before discussing the details of how to incorporate your analysis into your source code, it's important to reiterate something we discussed in Chapter \ref{GettingStartedRR}. The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for file path names, syntax can change depending on what operating system you are using.  So it is important to have your R session info available (see Section \ref{SessionInfoHow} for details) to make your research more reproducible and future proof. If someone reproducing your research has this information they will be able to download your files and use the exact version of the software that you used. For example, CRAN\index{CRAN archive} maintains an archive of previous R package versions that can be downloaded.\footnote{See: \url{http://cran.r-project.org/src/contrib/Archive/}.} Previous versions of R itself can also be downloaded through CRAN.\footnote{See: \url{http://cran.r-project.org/src/base/}.}
 
-\section{Incorporating analyses into the markup}
+\section{Incorporating Analyses into the Markup}
 
 For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your \emph{knitr} markup document. In this section we will learn how to set \emph{knitr} options for handling these code chunks. For a list of the chunk options covered here see Table \ref{ChunkOptionsTable}.
 
 \subsection{Full code chunks}
 
-By default {\emph{knitr}}\index{knitr!code chunk options} code chunks are run by R, the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the points where the code chunk was written in the knittable markup. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
+By default {\emph{knitr}}\index{knitr!code chunk options} code chunks are run by R, and the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the points where the code chunk was written in the knittable markup. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
 
 \paragraph{{\tt{include}}}\index{knitr option!include}
 
@@ -59,7 +59,7 @@ MoltenFert <- melt(data = FertConsumpData,
 
 \paragraph{{\tt{results}}}\index{knitr option!results}
 
-We will look at the \texttt{results} option in more detail in the next two chapters (see especially page \pageref{ResultsOptions}). However let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{hide} shows the code, but not the results. Warnings, errors, and messages will still be printed.
+We will look at the \texttt{results} option in more detail in the next two chapters (see especially Section \ref{ResultsOptions}). However let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{results='hide'} shows the code, but not the results. Warnings, errors, and messages will still be printed.
 
 \paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{knitr option!warning}\index{knitr option!error}\index{knitr option!message}
 
@@ -189,15 +189,15 @@ Many of the programming language values \texttt{engine} can take are listed in T
     \end{center}
 \end{table}
 
-\section{Dynamically including modular analysis files}
+\section{Dynamically Including Modular Analysis Files}
 
 There are a number of reasons why you might want to have your R source code located in separate files from your markup documents even if you compile them together with \emph{knitr}.
 
 First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code folding and chunk management options. There are just too many things going on in one document. 
 
-Second, you may want to use the same code in multiple documents--an article and slide show presentation for example. It is nice to not have to copy and paste the same code into multiple places. Instead it is easier to have multiple documents link to the same source code file. When you make changes to this source code file, the changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
+Second, you may want to use the same code in multiple documents--an article and slide show presentation, for example. It is nice to not have to copy and paste the same code into multiple places. Instead it is easier to have multiple documents link to the same source code file. When you make changes to this source code file, the changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
 
-Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled modular files that are explicitly tied together in the markup file with \emph{knitr} it is easy for them to find the specific bits of code that they are interested in.
+Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled modular files that are explicitly tied together in the markup file with \emph{knitr}, it is easy for them to find the specific bits of code that they are interested in.
 
 \subsection{Source from a local file}
 
@@ -214,7 +214,7 @@ source("/ExampleProject/Analysis/MainAnalysis.R"}
 
 \paragraph{Sourcing a makefile in a code chunk}
 
-In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R command!system} command (see page \pageref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
+In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures, and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R command!system} command (see Section \ref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -247,18 +247,18 @@ Sourcing from your computer is fine if you are working alone and do not want oth
 
 Let's look at a quick example of sourcing an R function\index{R functions} that has been made available at a non-secure URL. Paul Johnson created a function called \emph{outreg}\index{outreg} for creating LaTeX tables from R objects. He has made the function available on his website at: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}. You can directly load this function into your workspace with \texttt{source}.
 
-{\small
+{\small{
 <<Ch8OutregSource, eval=FALSE>>=
 # Load Paul Johnson' outreg function
 source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
 @
-}
+}}
 
 \noindent Now you can use \texttt{outreg} like any other function you have loaded.
 
 \subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}\index{https}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (page \pageref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
 
 <<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
@@ -287,7 +287,7 @@ Draw1 <- rnorm(1000, mean = 0, sd = 2)
 summary(Draw1)
 @
 
-\noindent The \texttt{rnorm} command\index{R command!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show show you that we will draw the same numbers if we use the same seed, lets run the code again:
+\noindent The \texttt{rnorm} command\index{R command!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show you that we will draw the same numbers if we use the same seed, let's run the code again:
 
 <<Ch8SetSeed2>>=
 # Set seed as 125
@@ -300,11 +300,11 @@ Draw2 <- rnorm(1000, mean = 0, sd = 2)
 summary(Draw2)
 @
 
-\section{Computationally intensive analyses}
+\section{Computationally Intensive Analyses}
 
-Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make writing the document frustrating because it will take a long time to knit it each time you make changes. There are at least two solutions to this problem: the \texttt{cache} chunk option and makfiles.\index{makefile} We discussed makefiles Chapter \ref{DataGather}, so lets look at how to work with the \texttt{cache} option.\index{knitr option!cache} 
+Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make writing the document frustrating because it will take a long time to knit it each time you make changes. There are at least two solutions to this problem: the \texttt{cache} chunk option and makefiles.\index{makefile} We discussed makefiles in Chapter \ref{DataGather}, so let's look at how to work with the \texttt{cache} option.\index{knitr option!cache} 
 
-When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see page \pageref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
+When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis, the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see Section \ref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
 
 Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R command!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
 
@@ -324,7 +324,7 @@ Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
-\noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R command!rnorm} to take a random sample of size 1000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
+\noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R command!rnorm} to take a random sample of size 1,000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
