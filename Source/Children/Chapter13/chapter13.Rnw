@@ -187,7 +187,7 @@ s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 \\]
 @
 
-To get in line equations simply use parentheses instead of square brackets as in LaTeX, e.g. \verb|\( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \)|.
+To make inline equations simply use parentheses instead of square brackets as in LaTeX, e.g. \verb|\( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \)|.
 
 \section{Markdown with Pandoc and Custom CSS}
 
@@ -382,24 +382,101 @@ This is a citation [see @Donohue2009, 10].
 %%%%%%%%%%%%% Presentations %%%%%%%%%%%%%%%%%%
 \section{Slideshows with Markdown, \emph{knitr}, and HTML}
 
-
-
-
-%%%%%%%%%%%%%% R Presentations %%%%%%%%
-\subsection{Slideshows with Markdown, \emph{knitr}, and RStudio R Presentations}
-
-The easiest, but less customizable way to create HTML slideshows is with RStudio's new R Presentation documents.\footnote{This feature is only available from RStudio version 0.98.} 
-
-%%%%%%%%%%%%%% Slidify %%%%%%%%%%%%%%%%
-\subsection{Slideshows with Markdown, \emph{knitr}, and \texttt{slidify}}
-
-It is also possible to create reproducible HTML5 slideshows\index{slideshow}\index{HTML5} with R Markdown using Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify}.\footnote{For more information about slidify please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. There are a number of advantages to creating HTML presentations:
+Because Markdown and \emph{knitr} Markdown documents can be compiled into HTML it is possible to use them to create HTML slideshows. There are a number of advantages to creating HTML presentations:
 
 \begin{itemize}
     \item You can use the relatively simple Markdown syntax.
     \item HTML presentations are a nice native way to show content on the web.
     \item \emph{slidify} presentations can incorporate virtually any content that can be included in a webpage. This includes interactive content, like motion charts created by \emph{googleVis}\index{googleVis} (see Chapter \ref{FiguresChapter}).
 \end{itemize} 
+
+
+Lets look at how to create HTML slideshows from Markdown documents using (a) RStudio's built in capabilities--R Presentations--and the \emph{slidify} R package. R Presentations are probably easier to make than \emph{slidify} slideshows, but they are less customizable.
+
+
+%%%%%%%%%%%%%% R Presentations %%%%%%%%
+\subsection{Slideshows with Markdown, \emph{knitr}, and RStudio R Presentations}
+
+The easiest, but less customizable way to create HTML slideshows is with RStudio's new R Presentation\index{R Presentation}\index{RStudio!R Presentation} documents.\footnote{This feature is only available from RStudio version 0.98.} To get started go to RStudio click \texttt{File} \textrightarrow \: \texttt{New} \textrightarrow \: \texttt{R Presentation}. RStudio will then ask you to give the presentation a name and save it in a particular file. The reason RStudio does this is because an R Presentation is not just one file. Instead it includes:
+
+\begin{itemize}
+	\item An \emph{.Rpres}\index{Rpres} file, which is very similar to a \emph{knitr} Markdown \emph{Rmd} file.
+	\item An \emph{.md} Markdown file created from the \emph{.Rpres} file.
+	\item \emph{knitr} cache and figure folders, also created from the \emph{.Rpres} file.
+\end{itemize}
+
+\paragraph{Editing and compiling the presentation}
+
+You change the presentation's content by editing the \emph{.Rpres} file with the normal \emph{knitr} Markdown syntax we've covered so far. The only difference is how you create new slides. Luckily the syntax for this is also very simple. Just type the slides title then at least three equal signs (\verb|===|). For example, 
+
+<<Ch13RPresTitle, eval=FALSE, tidy=FALSE, engine='sh'>>=
+This is an Example .Rpres Slide Title
+===
+@ 
+
+\noindent The very first slide is automatically the title slide and will be formatted differently from the rest.\footnote{As of this writing it is a blue slide with white letters.} Here is an example of a complete \emph{.Rpres} file. 
+
+<<Ch13RPresFullExample, eval=FALSE, tidy=FALSE>>=
+Example R Presentation 
+===
+
+## Christopher Gandrud
+
+## 1 July 2013
+
+Access the Code
+===
+
+The code to create the following figure is available online.
+
+To access it we can type:
+
+```{r, eval=FALSE}
+# Access and run the code to create a caterpillar plot 
+
+devtools::source_url("http://bit.ly/VRKphr")
+```
+
+Caterpillar Plot
+===
+
+```{r, echo=FALSE, message=FALSE}
+# Access and run the code to create a caterpillar plot 
+
+devtools::source_url("http://bit.ly/VRKphr")
+```
+
+Fertilizer Consumption Map (2003)
+===
+
+```{r CreategvisGeoMap, echo=FALSE, message=FALSE, results='asis'} 
+# Create geo map of global fertilizer consumption for 2003
+devtools::source_url("http://bit.ly/VNnZxS")
+```
+@
+
+\noindent This example includes four slides and three code chunks. The last code chunk uses the \emph{googleVis}\index{googleVis} package to create the global map of fertilizer consumption we saw earlier in Figure \ref{GeoMapImage}. Because the slideshow we are creating is in HTML, the map will be fully dynamic. Note that like before you will not be able to see the map in the RStudio preview, only in your web browser.
+
+To compile the slideshow either click the \texttt{Preview} button (\includegraphics[scale=0.35]{Children/Chapter13/images13/PreviewButton.png}) or save the \emph{.Rpres} document. When you do this you can view your updated slideshow in the \emph{Presentation} pane.\index{RStudio!Presentation pane} For example, see Figure \ref{PresentPane}. You can navigate through the slideshow sing the arrow buttons at the bottom right of the \emph{Presentation} pane. If you click the magnifying glass icon (\includegraphics[scale=0.35]{Children/Chapter13/images13/MagGlass.png}) at the top of the \emph{Presentation} pane you will get a much larger view of the slideshow. You can also view the slideshow in your web browser by clicking on the \texttt{More} icon (\includegraphics[scale=0.35]{Children/Chapter13/images13/MorePres.png}) then \texttt{View in Browser}.
+
+\paragraph{Publishing R Presentation slideshows}
+
+You can use RStudio to show your presentation. However, is probably not the best way for others to see it. \emph{googleVis} images won't show up and other people need to have RStudio. So, you will probably want to either publish the presentation to an HTML file and host it on a Dropbox\index{Dropbox} \emph{Public} folder, for example, or publish it directly to RPubs.\index{RPubs} To create a standalone HTML file simply click the \texttt{More} button in the \emph{Presentation} pane, then \texttt{Save as Webpage...}. Under the \texttt{More} button you can also chose the option \texttt{Publish to RPubs...}. We'll look more at these options later in this chapter. 
+
+\begin{figure}
+	\caption{RStudio R Presentation Pane}
+	\label{PresentPane}
+	\begin{center}
+		\includegraphics[width=\textwidth]{Children/Chapter13/images13/PresentationPane.png}
+	\end{center}
+\end{figure} 
+
+
+
+%%%%%%%%%%%%%% Slidify %%%%%%%%%%%%%%%%
+\subsection{Slideshows with Markdown, \emph{knitr}, and \texttt{slidify}}
+
+It is also possible to create reproducible HTML5 slideshows\index{slideshow}\index{HTML5} with R Markdown using Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify}.\footnote{For more information about slidify please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. 
 
 \noindent There are a number of steps to create an HTML5 slideshow with \emph{slidify}:
 
