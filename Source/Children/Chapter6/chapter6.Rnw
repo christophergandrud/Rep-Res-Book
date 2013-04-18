@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 11 April 2013
+% Updated: 18 April 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -14,7 +14,7 @@ How you gather your data directly impacts how reproducible your research will be
 In this chapter we'll learn how to gather quantitative data in a reproducible and, in some cases, fully replicable way. We'll start by learning how to use data gathering makefiles to organize your whole data gathering process so that it can be completely reproduced. Then we will learn the details of how to actually load data into R from various sources, both locally on your computer and remotely via the internet. In the next chapter (Chapter \ref{DataClean}) we'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
 
 %%%%%%%%%%%%% Organizing data gathering
-\section{Organize your data gathering: makefiles}
+\section{Organize Your Data Gathering: Makefiles}
 
 Before getting into the details of using R to gather data, let's start by creating a plan to organize the process. Organizing your data gathering process from the beginning of a research project improves the possibility of reproducibility and can save you significant effort over the course of the project by making it easier to add and regather data later on. 
 
@@ -28,7 +28,7 @@ The files for the examples used in this section can be downloaded from GitHub at
 
 \subsection{R Make-like files}
 
-When you create make-like files in R to organize and run your data gathing you usually only need one or two commands {\tt{setwd}}\index{R command!setwd} and {\tt{source}}\index{R command!soure}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command more in the Chapter \ref{StatsModel}.}  Lets see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
+When you create make-like files in R to organize and run your data gathering you usually only need one or two commands, {\tt{setwd}}\index{R command!setwd} and {\tt{source}}\index{R command!soure}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command more in the Chapter \ref{StatsModel}.}  Let's see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
 
 <<Ch5ExampleRMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
 ################
@@ -57,7 +57,7 @@ You can run the commands in this file one by one or run the make-like file by pu
 
 \subsection{GNU Make}
 
-R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see page \pageref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than it's output, Make will run it. If the source's time stamp is older than it's output, Make will skip it.
+R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see Section \ref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than its output, Make will run it. If the source's time stamp is older than its output, Make will skip it.
 
 In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipie} to create the targets from the prerequisites. The general form is:
 
@@ -74,11 +74,11 @@ TARGET ... : PREREQUISITE ...
         \end{kframe}
 \end{knitrout}
 
-Note that, unlike in R, tabs are important in Make. They indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If a target is newer than its prerequisite Make does not run the prerequisite.
+Note that, unlike in R, tabs are important in Make. They indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If a target is newer than its prerequisite. Make does not run the prerequisite.
 
-The basic idea of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data and save it in CSV\index{CSV} format. 
+The basic idea of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data, and save it in CSV\index{CSV} format. 
 
-\subsubsection{Example Makefile}
+\subsubsection{Example makefile}
 
 The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files we already have. The makefile we are going to create runs prerequisite files by the alphanumeric order of their file names. So we need to make sure that the files are named in the order that we want to run them. Now let's look at the actual makefile:
 
@@ -90,7 +90,7 @@ The first thing we need to do is create a new file called \emph{Makefile}\footno
 ################
 # Example Makefile
 # Christopher Gandrud
-# Updated 15 January 2013
+# Updated 1 Julyy 2013
 # Influenced by Rob Hyndman (31 October 2012)
 # See: http://robjhyndman.com/researchtips/makefiles/
 ################
@@ -123,25 +123,25 @@ cleanMerge:
     \end{kframe}
 \end{knitrout}
 
-\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros''\index{Make!macros} in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{ROUT} with a period (\texttt{.}) as its value. In Make, and Unix-like shells periods indicate the current directory. The next line allows us to specify a variable for the outfile created by running the \emph{MergeData.R} file. This will be useful later when we create a target for removing this file to ensure that the \emph{MergeData.R} file is always run.
+\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros''\index{Make!macros} in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{ROUT} with a period (\texttt{.}) as its value. In Make and Unix-like shells, periods indicate the current directory. The next line allows us to specify a variable for the outfile created by running the \emph{MergeData.R} file. This will be useful later when we create a target for removing this file to ensure that the \emph{MergeData.R} file is always run.
 
-The third executed line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \texttt{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. In make (and Unix-like shells generally) a dollar sign (\verb|$|)\index{Make!\$} followed by a variable name substitutes the value of the variable in place of the name.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \citep{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
+The third executed line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \texttt{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. In Make (and Unix-like shells generally) a dollar sign (\verb|$|)\index{Make!\$} followed by a variable name substitutes the value of the variable in place of the name.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \cite{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.} 
 
 You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wildcard'',\index{wildcard}\label{AsteriskWildcard} a special character that allows you to select file names that follow a particular pattern. Using \verb|*.R| selects any file name that ends in \texttt{.R}.  
 
 Why did we also include the actual word \texttt{wildcard}?\index{Make function!wildcard}\index{Make!wildcard} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 
-The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \texttt{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R outfile contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your make files gives you an error like \texttt{make: *** [Gather.Rout] Error 1}.\index{Make!Error 1}} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but with the file extension \texttt{.Rout}.
+The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \texttt{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R outfile contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your makefiles gives you an error like \texttt{make: *** [Gather.Rout] Error 1}.\index{Make!Error 1}} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but with the file extension \texttt{.Rout}.
 
-The second part of the makefile tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{Make!targets} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target, it is what Make tries to create when you enter the command \texttt{make} in the shell with no arguments. We will see later how to instruct Make to compile different targets.
+The second part of the makefile tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{Make!targets} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target; it is what Make tries to create when you enter the command \texttt{make} in the shell with no arguments. We will see later how to instruct Make to compile different targets.
 
 The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CMD BATCH $<|) run the R source code files in the directory.  The first line specifies that the \texttt{.Rout} files are the targets of the \texttt{.R} files. The percent sign (\verb|%|) is another wildcard.\index{Make!\%} Unlike the asterisk, it replaces the selected file names throughout the command used to create the target.
 
-The dollar and less than signs (\verb|$<|) indicate the first prerequisite for the target, i.e. the \texttt{.R} files. \texttt{R CMD BATCH}\index{R CMD BATCH} is a way to call R from a Unix-like shell, run source files and output the results to other files.\footnote{You will need to make sure that R is in your PATH. Setting this up is different on different systems. If on Mac and Linux you can load R from the Terminal by typing \texttt{R}, R is in your PATH. The usual R installation usually sets this up correctly. There are different methods for changing the file path on different versions of Windows.} The outfiles it creates have the extension \texttt{.Rout}.
+The dollar and less than signs (\verb|$<|) indicate the first prerequisite for the target, i.e. the \texttt{.R} files. \texttt{R CMD BATCH}\index{R CMD BATCH} is a way to call R from a Unix-like shell, run source files, and output the results to other files.\footnote{You will need to make sure that R is in your PATH. Setting this up is different on different systems. If on Mac and Linux you can load R from the Terminal by typing \texttt{R}, R is in your PATH. The usual R installation usually sets this up correctly. There are different methods for changing the file path on different versions of Windows.} The outfiles it creates have the extension \texttt{.Rout}.
 
 The next two lines specify another target: \texttt{clean}. When you type \texttt{make clean} into your shell Make will follow the recipe: \verb|rm -fv $(OUT_FILES)|.\index{shell command!rm} This removes (deletes) the \texttt{.Rout} files. The \texttt{f} argument (force) ignores  files that don't exist and the \texttt{v} argument (verbose) instructs Make to tell you what is happening when it runs. When you delete the \texttt{.Rout} files, Make will run all of the \texttt{.R} files the next time you call it.
 
-The last two lines help us solve a problem created by the fact that our simple makefile doesn't push changes downstream. For example, if we make a change to \emph{Gather2.R} and run \texttt{make}, only \emph{Gather2.R} will be rerun. The new data frame will not be added to the final merged data set. To overcome this problem the last two lines of code create a target called \texttt{cleanMerge} this removes only the \emph{MergeData.Rout} file. 
+The last two lines help us solve a problem created by the fact that our simple makefile doesn't push changes downstream. For example, if we make a change to \emph{Gather2.R} and run \texttt{make}, only \emph{Gather2.R} will be rerun. The new data frame will not be added to the final merged data set. To overcome this problem the last two lines of code create a target called \texttt{cleanMerge}, this removes only the \emph{MergeData.Rout} file. 
 
 \paragraph{Running the MakeFile}
 
@@ -204,8 +204,8 @@ make cleanMerge all
 
 \subsubsection{Makefiles and RStudio Projects}
 
-You can run makfiles from RStudio's \emph{Build} tab.\index{RStudio!Build} For the type of makefile we have been using, the main advantage of running it from within RStudio is that you don't have to toggle between RStudio and the shell. Everything is in one place. 
-Imagine that the directory with our Makefile is an RStudio Project.\index{RStudio!Projects} If a Project already contains a Makefile, RStudio will automatically open a \emph{Build} tab on the \emph{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
+You can run makefiles from RStudio's \emph{Build} tab.\index{RStudio!Build} For the type of makefile we have been using, the main advantage of running it from within RStudio is that you don't have to toggle between RStudio and the shell. Everything is in one place. 
+Imagine that the directory with our makefile is an RStudio Project.\index{RStudio!Projects} If a Project already contains a makefile, RStudio will automatically open a \emph{Build} tab on the \emph{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
 
 The \emph{Build} tab has buttons you can click to \texttt{Build All} (this is equivalent to \texttt{make all}), and, in the \texttt{More} drop down menu, \texttt{Clean all} (\texttt{i.e. make clean}) and \texttt{i.e. Clean and Rebuild} (\texttt{make clean all}). As you can see in Figure \ref{BuildTab}, the Tab shows you the same output you get in the shell.
 
@@ -217,13 +217,13 @@ The \emph{Build} tab has buttons you can click to \texttt{Build All} (this is eq
         \end{center}
 \end{figure}  
 
-\subsubsection{Other information about Makefiles}
+\subsubsection{Other information about makefiles}
 
 Note that Make relies heavily on commands and syntax of the shell program that you are using. The above example was written and tested on a Mac. It should work on other Unix-like computers without modification.
 
 You can use Make to build almost any project from the shell, not just run R source code files. It was an integral part of early reproducible computational research \citep{Fomel2009, Buckheit1995}. Rob Hyndman more recently posted a description of the makefile he uses to create a project with R and LaTeX.\footnote{See his blog at: \url{http://robjhyndman.com/researchtips/makefiles/}. Posted 31 October 2012. This method largely replicates what we do in this book with \emph{knitr}. Nonetheless, it has helpful information about Make that can be used in other tasks. It was in fact helpful for writing this section of the book.} The complete source of information on GNU Make is the official online manual. It is available at: \url{http://www.gnu.org/software/make/manual/}.
 
-\section{Importing locally stored data sets}
+\section{Importing Locally Stored Data Sets}
 
 Now that we've covered the big picture, let's learn the different tools you will need to know to gather data from different types of sources. The most straightforward place to load data from is a local file, e.g. one stored on your computer. Though storing your data locally does not really encourage reproducibility, most research projects will involve loading data this way at some point. The tools you will learn for importing locally stored data files will also be important for most of the other methods further on. 
 
@@ -257,7 +257,7 @@ If you have data stored in a spreadsheet format such as Excel's\index{Microsoft 
 
 To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before it was loaded into R. Ideally the documentation would be written in a text file saved in the same directory as the raw data file. 
 
-\section{Importing data sets from the internet}
+\section{Importing Data Sets from the Internet}
 
 There are many ways to import data that is stored on the internet directly into R. We have to use different methods depending on where and how the data is stored. 
 
@@ -276,7 +276,7 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
 
 \noindent However, storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}.\index{R command!textConnection} The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to secure web addresses as well.
 
-Let's try an example. I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.}\label{RawGitHub} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See page \pageref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
+Let's try an example. I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.}\label{RawGitHub} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See Section \ref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
 
 <<Ch6UrlObject, echo=FALSE>>=
 # Put URL address into the object UrlAddress
@@ -381,12 +381,12 @@ There are a growing number of packages that can gather data directly from a vari
 
 \begin{itemize}
     \item The \emph{openair} package \citep{R-openair},\index{openair} which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database.\index{air quality}
-    \item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.\index{finance data}\index{Google!Finance}\index{Yahoo Finance}\index{US Federal Reserve}
+    \item The \emph{quantmod} package \citep{R-quantmod} allows you to access data from Google Finance,\footnote{\url{http://www.google.com/finance}} Yahoo Finance,\footnote{\url{http://finance.yahoo.com/}} and the US Federal Reserve's FRED\footnote{\url{http://research.stlouisfed.org/fred2/}} economic database.\index{finance data}\index{Google!Finance}\index{Yahoo Finance}\index{US Federal Reserve}
     \item The \emph{treebase} package by \cite{Boettiger2012} allows you to access phylogenetic\index{phylogenetic} data from TreeBASE.\footnote{\url{http://treebase.org}}\index{treebase}
     \item The \emph{twitteR} package \citep{R-twitteR} accesses Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from Twitter\index{Twitter} including tweets\index{tweet} and trending topics.\index{twitteR}
     \item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's\index{World Bank}\index{WDI} Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
     \item The rOpenSci\footnote{\url{http://ropensci.org/}}\index{rOpenSci} group has and is developing a number of packages for accessing scientific data from web-based sources with R. They have a comprehensive set of packages for accessing biological data and academic journals. For a list of their packages see: \url{http://ropensci.org/packages/index.html}. 
-    \item Another fairly comprehensive and regularly updated list of APIs available as R package on Stack Exchange's\index{Stack Exchange} Cross Validated\index{Cross Validated} website.\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}}}
+    \item Stack Exchange's\index{Stack Exchange} Cross Validated\index{Cross Validated} website\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}} also has a fairly comprehensive and regularly updated list of APIs available as R packages.}
 \end{itemize}
 
 \paragraph{API Package Example: World Bank Development Indicators}
@@ -403,7 +403,7 @@ WDIsearch("fertilizer consumption")
 @
 }
 
-\noindent This shows us a selection of indicator numbers and their names.\footnote{You can also search the World Bank Development Indicators website. The indicator numbers are at the end of each indicators' URL.} Let's gather data on countries' fertilizer consumption in kilograms per hectare of arable land. The indicator number for this variable is: AG.CON.FERT.ZS. We can use the command \texttt{WDI} to gather the data and put it in an object called \emph{FertConsumpData}.
+\noindent This shows us a selection of indicator numbers and their names.\footnote{You can also search the World Bank Development Indicators website. The indicator numbers are at the end of each indicator's URL.} Let's gather data on countries' fertilizer consumption in kilograms per hectare of arable land. The indicator number for this variable is: AG.CON.FERT.ZS. We can use the command \texttt{WDI} to gather the data and put it in an object called \emph{FertConsumpData}.
 
 <<Ch6WDIFert, eval=FALSE>>=
 FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
@@ -420,11 +420,11 @@ load(file = "/git_repositories/Rep-Res-Book/Source/Children/Chapter6/FertData.RD
 head(FertConsumpData)
 @
 
-\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is a the countries' or regions' International Standards Organization's\index{ISO} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
+\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is the countries' or regions' International Standards Organization's\index{ISO} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
 
-\section{Advanced Automatic Data Gathering: web scraping}
+\section{Advanced Automatic Data Gathering: Web Scraping}
 
-If a package does not already exist to access data from a particular website there are other ways to automatically ``scrape'' data from the website with R.\index{web scraping} This section briefly discusses some of the R's web scraping tools and techniques to get you headed in the right direction to do more advanced data gathering.
+If a package does not already exist to access data from a particular website there are other ways to automatically ``scrape'' data from the website with R.\index{web scraping} This section briefly discusses some of R's web scraping tools and techniques to get you headed in the right direction to do more advanced data gathering.
 
 \paragraph{The general process}
 
@@ -432,7 +432,7 @@ Simple web scraping involves downloading a file from the internet, parsing\index
 
 This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R command!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formated data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation"}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
 
-There are more websites with API's\index{API} than R packages designed specifically to access each one. If an API is available \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier. 
+There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier. 
 
 As of the time when I was writing this book Brian Abelson's \emph{scraply} \index{scraply} package was not on CRAN.\index{CRAN} I would like to bring your attention to it now though because it may turn out to be a useful addition to the R web scraping tool chest. It looks like an especially promising way of handling errors that might occur while scraping a website. Errors are a persistent issue in web scraping. More information is available at the package's GitHub site: \url{https://github.com/abelsonlive/scraply/}.
 
@@ -442,7 +442,7 @@ Beyond learning about the various R packages that are useful for R web scraping,
 
 \begin{itemize}
     \item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
-    \item Regular Expressions:\index{regular expressions} Web scraping often involves finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag\index{HTML tag} IDs that are particular to a given website and change across the site based on a particular pattern. You can use regular expressions to deal with these situations. R has a comprehensive, if bare bones introduction to regular expressions. To access it type \verb|?regex|\index{R!regex} into your R console.
+    \item Regular Expressions:\index{regular expressions} Web scraping often involves finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag\index{HTML tag} IDs that are particular to a given website and change across the site based on a particular pattern. You can use regular expressions to deal with these situations. R has a comprehensive if bare bones introduction to regular expressions. To access it type \verb|?regex|\index{R!regex} into your R console.
     \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} packages \citep{R-plyr}\index{plyr} is also particularly useful.
 \end{itemize}
 

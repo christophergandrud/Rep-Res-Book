@@ -39,9 +39,9 @@ Data frame object columns are printed in *italics*.
 
 **R** packages are printed in *italics*.
 
-- **Windows**
+- **Windows an RStudio Panes**
 
-Open windows are written in **bold** text.
+Open windows and RStudio panes are written in *italics*.
 
 - **Variable Names**
 
