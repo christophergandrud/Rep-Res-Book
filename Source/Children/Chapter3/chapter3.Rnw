@@ -388,7 +388,7 @@ There is an important pane that does not show up when you open RStudio for the f
 
 Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}} and R Markdown and R LaTeX in more detail in the next section. 
 
-R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Source} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code you don't need to highlight the code, you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R command!soure}. The icon next to \texttt{Source} is for compiling RStudio Notebooks\index{RStudio!Notebook}. We will look at RStudio Notebooks later in this chapter.
+R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Source} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R command!soure}. The icon next to \texttt{Source} is for compiling RStudio Notebooks\index{RStudio!Notebook}. We will look at RStudio Notebooks later in this chapter.
 
 \begin{figure}[ht]
     \caption{RStudio Source Code Pane Top Bars}
@@ -414,11 +414,11 @@ R source code files have the file extension \texttt{.R}. When you create a new s
         
     \end{center}
 \end{figure}
-
+\setcounter{figure}{3}
 
 
 %%%%%%%%%%%%% Using knitr
-\section{Using knitr: the basics}
+\section{Using \emph{knitr}: the Basics}
 
 To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn some of the basic concepts and syntax. The concepts are the same regardless of the markup language we are knitting R code with, but much of the syntax varies by markup language.
 
@@ -438,7 +438,7 @@ Let's take a quick, abstract look at what the \emph{knitr} package does. As I've
 
 When you save a knitable file use a file extension that indicates (a) that it is knitable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}. LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}} \cite[]{Leisch2002}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
 
-\subsection{Code Chunks}
+\subsection{Code chunks}
 
 When you want to include R code into your markup presentation documents, place them in a code chunk\index{code chunk}\index{knitr!code chunk}. Code chunk syntax differs depending on the markup language we are using to write our documents. Let's see the syntax for R Markdown and R LaTeX files. If you are unfamiliar with basic LaTeX or Markdown syntax you might want to skim chapters \ref{LatexChapter} and \ref{MarkdownChapter} to familiarize yourself with it before reading this section.
 
@@ -506,9 +506,9 @@ To explicitly assign chunk labels in R Markdown documents place the label name i
 
 \paragraph{Code chunk options}
 
-There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Maybe we want the figure to be formatted on a page in a certain way. To make these changes, and many others we can specify code chunk options\index{knitr!code chunk options}.
+There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Maybe we want the figure to be formatted on a page in a certain way. To make these changes and many others we can specify code chunk options\index{knitr!code chunk options}.
 
-Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document we can use the option \texttt{echo=FALSE}.\index{knitr option!echo} 
+Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document, we can use the option \texttt{echo=FALSE}.\index{knitr option!echo} 
 
 <<MarkdownChunkOptionExample, tidy=FALSE, eval=FALSE>>=
 ```{r ChunkLabel, echo=FALSE}
@@ -566,7 +566,7 @@ Throughout this book we will look at a number of different code chunk options. A
 
 So far we have only looked at how to set local options\index{knitr!local chunk options} in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options\index{knitr!global chunk options}. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the \verb|fig.align='center'| option in each code chunk that creates a figure, I set the option globally.
 
-To set a global option first create a new code chunk at the beginning of your document\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be placed after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{include=FALSE}} so that {\emph{knitr}} doesn't include the code in your presentation document. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+To set a global option first create a new code chunk at the beginning of your document.\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be placed after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{include=FALSE}} so that {\emph{knitr}} doesn't include the code in your presentation document. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
 
 Here is an example of how you can center align all of the figures in Sweave-style code chunks. Place the following code at the beginning of the document:
 
@@ -583,7 +583,7 @@ opts_chunk$\hlfunctioncall{set}(fig.align='center')
     \end{kframe}
 \end{knitrout}
 
-\subsection{knitr package options}
+\subsection{\emph{knitr} package options}
 
 {\emph{Knitr}} package options\index{knitr!package options} affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk.\footnote{The {\emph{knitr}} progress bar looks like this {\tt{|>>>>>>| 100\%}} and indicates how much of a code chunk has been run.} You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
@@ -610,9 +610,9 @@ You can also set hooks\index{knitr!hook}. Hooks come in two types: chunk hooks a
 %%%%%%%%%% Knitr & RStudio
 \subsection{\emph{knitr} \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}} and the markup languages knitr works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents in RStudio than plain R. Most of the RStudio/{\emph{knitr}} features are accessed in the \emph{Source} pane\index{RStudio!Source pane}. The Source pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the \emph{Source} pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the \emph{Source} pane.} We have already seen some of the features the Source pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
+RStudio is highly integrated with {\emph{knitr}} and the markup languages \emph{knitr} works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents in RStudio than plain R. Most of the RStudio/{\emph{knitr}} features are accessed in the \emph{Source} pane\index{RStudio!Source pane}. The \emph{Source} pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the \emph{Source} pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the \emph{Source} pane.} We have already seen some of the features the \emph{Source} pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
 
-\paragraph{Compiling R source code notebooks}
+\paragraph{Compiling R source code Notebooks}
 
 If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}. 
 
@@ -627,9 +627,9 @@ If you want to create a Notebook from an open R source code file simply click th
     \end{center}
 \end{figure}
 
-\paragraph{R Markdown} The second image in figure \ref{SourcePanes} is what the Source pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunksIcon.png}). In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the Source pane (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunkNav.png}). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the Source pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful buttons in the R Markdown Source pane's top bar include the \texttt{ABC} spell check icon and \texttt{MD} icon, which gives you a Markdown syntax reference file in the Help pane.
+\paragraph{R Markdown} The second image in Figure \ref{SourcePanes} is what the \emph{Source} pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunksIcon.png}). In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the \emph{Source} pane (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunkNav.png}). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the \emph{Source} pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful buttons in the R Markdown \emph{Source} pane's top bar include the \texttt{ABC} spell check icon and question mark icon, which gives you a Markdown syntax reference file in the Help pane.
 
-Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code in the Source pane. This makes your source code much easier to read and navigate. RStudio can also fold code chunks.\index{code folding} This makes navigating through long documents, with long code chunks, much easier. In the first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If you click this arrow the code chunk will collapse to look like the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
+Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code in the \emph{Source} pane. This makes your source code much easier to read and navigate. RStudio can also fold code chunks.\index{code folding} This makes navigating through long documents, with long code chunks, much easier. In the first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If you click this arrow the code chunk will collapse to look like the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
 
 You may also notice that there are code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To enable this option create a comment line with at least one hash before the comment text and at least four after it like this:
 
@@ -657,7 +657,7 @@ You may also notice that there are code folding arrows on lines 27 and 34 in the
 
 \paragraph{R LaTeX}
 
-You can see in the final image in Figure \ref{SourcePanes} that many of the Source pane options for R LaTeX files are the same as R Markdown files. The key differences being that there is a \texttt{Compile PDF} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompilePDF.png}) instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R LaTeX file's directory. There is also a \texttt{Format} icon instead of \texttt{MD}. This actually inserts LaTeX formatting commands into your document for things such as section headings and bullet lists. These commands can be very tedious to type out by hand otherwise.
+You can see in the final image in Figure \ref{SourcePanes} that many of the \emph{Source} pane options for R LaTeX files are the same as R Markdown files, the key differences being that there is a \texttt{Compile PDF} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompilePDF.png}) instead of \texttt{Knit HTML}. Clicking this icon knits the file and creates a PDF file in your R LaTeX file's directory. There is also a \texttt{Format} icon instead of the question mark icon. This actually inserts LaTeX formatting commands into your document for things such as section headings and bullet lists. These commands can be very tedious to type out by hand otherwise.
 
 
 \paragraph{Change default .Rnw knitter}
@@ -706,7 +706,7 @@ texi2pdf(file = "Example.tex")
 
 \vspace{2cm}
 
-We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to orginize files created with these types of tools into reproducible research projects. 
+We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to organize files created with these types of tools into reproducible research projects. 
 
 \section*{Appendix: knitr and Lyx}\label{LyxAppendix}
 
