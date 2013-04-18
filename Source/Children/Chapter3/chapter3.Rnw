@@ -1,18 +1,18 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 April 2013
+% Updated: 18 April 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 @
 
-\chapter{Getting Started with R, RStudio, and knitr}\label{GettingStartedRKnitr}
+\chapter{Getting Started with R, RStudio, and \normalfont{knitr}}\label{GettingStartedRKnitr}
 
 If you have rarely or never used R before, the first section of this chapter gives you enough information to be able to get started and understand the R code I use throughout the book. For more detailed introductions on how to use R please refer to the resources I mentioned in Chapter \ref{Intro} (page \pageref{OtherBooks}). Experienced R users might want to skip the first section. In the second section I'll give a brief overview of RStudio. I highlight the key features of the main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package, how to use it in R, and how it is integrated into RStudio.
 
 %%%%%%%%%%%%% Using R
-\section{Using R: the basics}
+\section{Using R: the Basics}
 
 To get you started with reproducible research, we'll cover some very basic R\index{syntax} syntax--the rules for talking to R. I cover key parts of the R language including:
 
@@ -25,7 +25,7 @@ To get you started with reproducible research, we'll cover some very basic R\ind
     \item packages.
 \end{itemize}
 
-Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You know if a new R session has started if you get the same startup information is printed in the Terminal window.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started. 
+Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You will know you are in a new R session because the same type of startup information as in Figure \ref{RBlankMain} will be printed in your Terminal.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started. 
 
 \begin{figure}[th!]
     \caption{R Startup Console}
@@ -37,7 +37,7 @@ Before discussing each of these in detail let's open R and look around.\footnote
 
 \subsection{Objects}\label{Objects}
 
-If you've read a description of R before, you will probably have seen it referred to as an `object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, like a vector of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section.\footnote{Somewhat confusingly, commands and functions are themselves objects. In this Chapter I treat them as distinct from other object types to avoid confusion.} Now let's create a few objects.
+If you've read a description of R before, you will probably have seen it referred to as an `object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, like a vector of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section.\footnote{Somewhat confusingly, commands and functions are themselves objects. In this chapter I treat them as distinct from other object types to avoid confusion.} Now let's create a few objects.
 
 \paragraph{Numeric \& string objects}
 
@@ -55,7 +55,7 @@ Number <- 10
 Number
 @
 
-\noindent Lets's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included here to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. They make it easier to copy and past code into R from a document created by {\emph{knitr}} because R will ignore everything after a hash.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
+\noindent Let's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included here to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. They make it easier to copy and paste code into R from a document created by {\emph{knitr}} because R will ignore everything after a hash.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
 
 Creating an object with words and other characters--a character object--is very similar. The only difference is that you enclose the character string\index{R!character strings} (letters in a word for example) inside of single or double quotation\index{R!quotation marks} marks (\verb|''|, or \verb|""|).\footnote{Single and double quotation marks are interchangeable in R for this purpose. In this book I always use double quotes, except for \emph{knitr} code chunk options.} To create an object called \emph{Words} that contains the character string ``Hello World":\label{StringObject}
 
@@ -77,7 +77,7 @@ class(Words)
 
 \paragraph{Vector \& data frame objects}
 
-So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects,\index{scalar} though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame}\index{R!data frame} type objects and are roughly equivalent the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse" \cite[]{Matloff2011}. Knowing how to use vectors\index{vector}\index{R!vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list}\index{R!list object} and matrices\index{matrix}\index{R!matrix object}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
+So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects,\index{scalar} though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame}\index{R!data frame} type objects and are roughly equivalent to the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse" \cite[]{Matloff2011}. Knowing how to use vectors\index{vector}\index{R!vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list}\index{R!list object} and matrices\index{matrix}\index{R!matrix object}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
 
 \noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type" in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
 
@@ -99,7 +99,7 @@ CharacterVect <- c("Albania", "Botswana", "Cambodia")
 CharacterVect
 @
 
-To give you a preview of what we are going to do when we start working with real data sets, lets combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{R command!cbind} function. This function binds the two vectors together side-by-side as columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind}\index{R command!rbind} function.}\label{cbind}
+To give you a preview of what we are going to do when we start working with real data sets, let's combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{R command!cbind} function. This function binds the two vectors together side-by-side as columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind}\index{R command!rbind} function.}\label{cbind}
 
 <<Ch3cbind>>=
 StringNumObject <- cbind(CharacterVect, NumericVect)
@@ -108,7 +108,7 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
 StringNumObject
 @
 
-\noindent By binding these two objects together we've created a new matrix\index{matrix} object.\footnote{Matrices are vectors with columns as well as rows.} You can see that the numbers in the {\emph{NumericVect}} column are between quotation marks. Matrices, like vectors can only have one data type. \\[0.25cm]
+\noindent By binding these two objects together we've created a new matrix\index{matrix} object.\footnote{Matrices are vectors with columns as well as rows.} You can see that the numbers in the {\emph{NumericVect}} column are between quotation marks. Matrices, like vectors, can only have one data type. \\[0.25cm]
 
 \noindent {\bf{Data frames}}
 
@@ -139,7 +139,7 @@ row.names(StringNumObject) <- c("First", "Second", "Third")
 row.names(StringNumObject)
 @
 
-\noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example include it as a variable in a regression. You can use the \emph{row.names} command to assign the row.names values to a regular column (for an example see page \pageref{RowNamesTidy}). 
+\noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example, include it as a variable in a regression. You can use the \texttt{row.names} command to assign the row.names values to a regular column (for an example see page \pageref{RowNamesTidy}). 
 
 You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{R command!mean} command:
 
@@ -147,7 +147,7 @@ You will notice in the output for \emph{StringNumObject} that the strings in the
 mean(StringNumObject$ChacterVect)
 @
 
-\subsection{Component Selection}\label{ComponentSelect}
+\subsection{Component selection}\label{ComponentSelect}
 
 The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (\texttt{\$}) between the name of our data frame object name and the \textbf{CharcterVect} variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector}\footnote{It's also sometimes called the element name operator.} It basically extracts a part--component--of an object. In the previous example it extracted the \textbf{CharacterVect} column from the {\emph{StringNumObject}} and fed it to the \texttt{mean} command, which tried (in this case unsuccessfully) to find its mean.
 
@@ -166,7 +166,7 @@ NewNumeric
 
 Using the component selector can create long repetitive code if you want to select many components. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{R command!attach} and \texttt{with}\index{R command!with}. 
 
-The \texttt{attach} command attaches a database to R's search path.\footnote{You can see what is in your current search path with the \texttt{search}\index{R command!search} command. Just type \texttt{search()} into your R console.}\index{R!search path} R will then search the database for variables you specify. You don't need to use the component selector to tell R again to look in a particular data frame after you have attached it. For example, let's attach the \emph{cars} data, that comes with R. It has two variables \textbf{speed} and \textbf{dist}.\footnote{For more information on this data set type \texttt{?cars}\index{R command!?} into your R console.}
+The \texttt{attach} command attaches a database to R's search path.\footnote{You can see what is in your current search path with the \texttt{search}\index{R command!search} command. Just type \texttt{search()} into your R console.}\index{R!search path} R will then search the database for variables you specify. You don't need to use the component selector to tell R again to look in a particular data frame after you have attached it. For example, let's attach the \emph{cars} data that comes with R. It has two variables, \textbf{speed} and \textbf{dist}.\footnote{For more information on this data set type \texttt{?cars}\index{R command!?} into your R console.}
 
 {\small
 <<Ch3Attach>>=
@@ -186,7 +186,7 @@ detach(cars)
 
 \noindent We used the \texttt{head}\index{R command!head} command to see just the first few values of each variable. It is a good idea to \texttt{detach}\index{R command!detach} a data frame after you are done using it, to avoid confusing R. 
 
-Similarly you can use \texttt{with} when you run commands (see page \pageref{FunctionsCommands} for more details) using a particular database. For example, we can find the mean of \emph{NumericVect} \texttt{with} the \emph{StringNumObject} data frame:
+Similarly you can use \texttt{with} when you run commands using a particular database (see Section \ref{FunctionsCommands} for more details about commands). For example, we can find the mean of \emph{NumericVect} \texttt{with} the \emph{StringNumObject} data frame:
 
 <<Ch3With, tidy=FALSE>>=
 with(StringNumObject, {
@@ -195,7 +195,7 @@ with(StringNumObject, {
 )
 @
 
-\noindent You can see in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{More appropriately the second, part or ``argument"\index{R!argument} or the \textbf{with} command (see page \pageref{arguments}) is called the ``expression",\index{expression, R} because it can contain more than one R command or statement.} goes second in curly brackets (\verb|{}|).
+\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{Using R terminology the second ``argument"\index{R!argument}--the code after the comma--of the \textbf{with} command is called an ``expression",\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
 
 For examples in this book I largely avoid using the \texttt{attach} and \texttt{with} commands. I mostly use the component selector. Though it creates longer code, I find that code written with the component selector is easier to follow. It's always clear which object we are selecting a component from. Nonetheless, \textbf{attach} and \textbf{with} are very useful for streamlining your R code.
 
@@ -203,13 +203,13 @@ For examples in this book I largely avoid using the \texttt{attach} and \texttt{
 
 Another way to select parts of an object is to use subscripts\index{subscripts}\index{R!subscripts}. You have already seen subscripts in the output from our examples so far. They are denoted with square braces (\texttt{[]}). We can use subscripts to select not only columns from data frames but also rows and individual values. As we began to see in some of the previous output, each part of a data frame has an address captured by its row and column number. We can tell R to find a part of an object by putting the row number/name, column number/name, or both in square braces. The first part denotes the rows and separated by a comma (\texttt{,}) are the columns. 
 
-To give you an idea of how this works lets use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
+To give you an idea of how this works let's use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
 
 <<Ch3HeadSwiss>>=
 head(cars)
 @
 
-\noindent We can see a data frame with information on various cars speeds (\textbf{speed}) and stopping distances (\textbf{dist}). If we want to select only the third through seventh rows we can use the following subscript commands:
+\noindent We can see a data frame with information on various cars' speeds (\textbf{speed}) and stopping distances (\textbf{dist}). If we want to select only the third through seventh rows we can use the following subscript commands:
 
 <<Ch3FirstSeventhRows>>=
 cars[3:7, ]
@@ -258,7 +258,7 @@ MeanNumericVect <- mean(x = NumericVect)
 
 \subsection{Arguments}\label{arguments}
 
-Arguments\index{R!command argument} modify what commands do. In our most recent example we gave the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we wanted to find the mean of {\emph{NumericVect}}. Arguments use the \texttt{ARGUMENTLABEL = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} In this case\textbf{x} is the argument label\index{R!argument label}. 
+Arguments\index{R!command argument} modify what commands do. In our most recent example we gave the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we wanted to find the mean of {\emph{NumericVect}}. Arguments use the \texttt{ARGUMENTLABEL = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} In this case \textbf{x} is the argument label\index{R!argument label}. 
 
 To find all of the arguments that a command can accept look at the {\bf{Arguments}} section of the command's help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,\index{R!?}
 
@@ -266,9 +266,9 @@ To find all of the arguments that a command can accept look at the {\bf{Argument
 ?mean
 @
 
-\noindent The help file\index{R!help file} will also tell you the default values that the arguments are set to. Clearly, you do not need to explicitly set an argument if you want to use it's default value.
+\noindent The help file\index{R!help file} will also tell you the default values that the arguments are set to. Clearly, you do not need to explicitly set an argument if you want to use its default value.
 
-You do have to be fairly precise with the syntax for your argument's values. Values for logical arguments\index{logical}\index{R!logical values} must written as \texttt{TRUE} or \texttt{FALSE}.\footnote{They can be abbreviated \texttt{T} and \texttt{F}.} Arguments that accept character stings require quotation marks.
+You do have to be fairly precise with the syntax for your argument's values. Values for logical arguments\index{logical}\index{R!logical values} must written as \texttt{TRUE} or \texttt{FALSE}.\footnote{They can be abbreviated \texttt{T} and \texttt{F}.} Arguments that accept character strings require quotation marks.
 
 Let's see how to use multiple arguments with the \texttt{round} command.\index{R command!round} This command rounds a vector of numbers. We can use the \texttt{digits}\index{R!digits} argument to specify how many decimal places we want the numbers rounded to. To round the object \emph{MeanNumericVect} to one decimal place type:
 
@@ -278,7 +278,7 @@ round(x = MeanNumericVect, digits = 1)
 
 \noindent Note that arguments are separated by commas. 
 
-Some arguments do not need to be explicitly labeled. For example we could have written:
+Some arguments do not need to be explicitly labeled. For example, we could have written:
 
 <<Ch3ArgeNoLabel>>=
 # Find mean of NumericVect
@@ -295,7 +295,7 @@ round(mean(NumericVect), digits = 1)
 
 \subsection{The workspace \& history}
 
-All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R command!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are all of the objects created to knit the book up to this point.}
+All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R command!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
 
 {\small
 <<Ch3LS>>=
@@ -335,7 +335,7 @@ When you enter a command into R it becomes part of your history.\index{R!history
 
 \subsection{Global R options}\label{ROptions}
 
-In R you can set global options with the \texttt{options} command\index{R command!options}\index{R!global options} This lets you set how R runs and outputs commands through an entire R session. For example, to have output rounded to one decimal place set the \texttt{digits}\index{digits} argument:
+In R you can set global options with the \texttt{options} command.\index{R command!options}\index{R!global options} This lets you set how R runs and outputs commands through an entire R session. For example, to have output rounded to one decimal place set the \texttt{digits}\index{digits} argument:
 
 <<Ch3Options, eval=FALSE>>=
 options(digits = 1)
@@ -345,7 +345,7 @@ options(digits = 1)
 
 Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R command!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. 
 
-For the code you need to install all of the packages used in this book see page \pageref{ReqPackages}. When you install a package, you will likely be given a list of mirrors\index{mirrors, CRAN} from which you can download the package. Simply select the mirror closest to you.
+For the code you need to install all of the packages used in this book, see page \pageref{ReqPackages}. When you install a package, you will likely be given a list of mirrors\index{mirrors, CRAN} from which you can download the package. Simply select the mirror closest to you.
 
 Once you have installed a package you need to load it so that you can use its functions. Use the \texttt{library} command to load a package.\footnote{You will probably see R packages referred to as ``libraries'', though this is a misnomer. See this blog post by Carlisle Rainey for a discussion: \url{http://www.carlislerainey.com/2013/01/02/packages-v-libraries-in-r/?utm_source=rss&utm_medium=rss&utm_campaign=packages-v-libraries-in-r} (posted 2 January 2013).} Use the following code to load the {\emph{ggplot2}} package that we use in Chapter \ref{FiguresChapter} to create figures.
 
@@ -361,7 +361,7 @@ Finally, if you want to make sure R uses a command from a specific package you c
 ggplot2::qplot(. . .)
 @
 
-\noindent We can use the double-colon to simplify our code by removing the need to include \verb|library(. . .)|. Though, I generally prefer loading all of the packages used in a source code file at the beginning with \texttt{library}, this makes it clearer right up front what packages are used.
+\noindent We can use the double-colon to simplify our code by removing the need to include \verb|library(. . .)|. Using the double-colon in this way ensures that R will use the command from the particular package you want and makes it clear to a source code reader what package a command comes from.
 
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
