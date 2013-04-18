@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 9 March 2013
+% Updated: 18 April 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -15,9 +15,9 @@ In this chapter we will learn about basic LaTeX document structures and syntax a
 
 \section{The Basics}
 
-In this section we will look at how to create a LaTeX article including what editor programs to use, the basic structure of a LaTeX document, including preamble and body, LaTeX syntax for creating headings, paragraphs, lines, text formatting, math, lists, footnotes, and cross-references. I will assume that you already have a fully functioning TeX distribution\index{TeX distribution} installed on your computer. See page \pageref{InstallMarkup} for information on how to install TeX.
+In this section we will look at how to create a LaTeX article including what editor programs to use, the basic structure of a LaTeX document, including preamble and body, LaTeX syntax for creating headings, paragraphs, lines, text formatting, math, lists, footnotes, and cross-references. I will assume that you already have a fully functioning TeX distribution\index{TeX distribution} installed on your computer. See Section \ref{InstallMarkup} for information on how to install TeX.
 
-\subsection{Getting Started with LaTeX Editors}
+\subsection{Getting started with LaTeX editors}
 
 As I mentioned earlier, RStudio\index{RStudio!LaTeX editor} is a fully functional LaTeX editor in addition to being an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \textrightarrow{} {\tt{R Sweave}}. 
 
@@ -31,9 +31,9 @@ Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} f
         \end{center}
 \end{wrapfigure}
 
-There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated table comprehensively comparing many of these editors} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
+There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated a table that comprehensively compares many of these editors.} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
 
-If you are new to LaTeX you may be more comfortably using Lyx.\index{Lyx} Lyx has a Microsoft Word-type interface, but creates actual LaTeX documents. It also has \emph{knitr} integration. See page \pageref{LyxAppendix} for how to set up and use \emph{knitr} and Lyx.
+If you are new to LaTeX you may be more comfortably using Lyx.\index{Lyx} Lyx has a Microsoft Word-type interface, but creates actual LaTeX documents. It also has \emph{knitr} integration. See Chapter \ref{GettingStartedRKnitr}'s Appendix for how to set up and use \emph{knitr} and Lyx.
 
 \subsection{Basic LaTeX command syntax}\index{LaTeX!basic command syntax}
 
@@ -63,7 +63,7 @@ All LaTeX documents require a preamble\index{LaTeX!preamble}. The preamble goes 
 
 In the preamble you can also specify other style options and load any extra packages\index{LaTeX!packages} you may want to use.\footnote{The command to load a package in LaTeX is \texttt{\textbackslash{}usepackage}.\index{LaTeX command!usepackage} For example, if you include \texttt{\textbackslash{}usepackage\{url\}} in the preamble of your document you will be able to specify URL links in the body with the command \texttt{\textbackslash{}url\{SOMEURL\}}.\index{LaTeX package!url}}
 
-The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{LaTeX environment!body} See Chapter \ref{TablesChapter} page \pageref{LaTeXEnviron} for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX!begin document} of your document starts by typing \verb|\begin{document}|. The very last line of you document is usually \verb|\end{document}|, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class\index{LaTeX class!article} document with a very simple preamble and body like this:
+The preamble is often followed by the body of your document. It is specified with the \texttt{body} environment.\index{LaTeX environment!body} See Chapter \ref{TablesChapter} (Section \ref{LaTeXEnviron}) for more details about LaTeX environments. You tell LaTeX where the body\index{LaTeX!begin document} of your document starts by typing \verb|\begin{document}|. The very last line of your document is usually \verb|\end{document}|, indicating that your document has ended. When you open a new R Sweave file in RStudio it creates an article class\index{LaTeX class!article} document with a very simple preamble and body like this:
 
 <<Ch11FirstOpenDoc, eval=FALSE, tidy=FALSE>>=
 \documentclass{article}
@@ -78,11 +78,11 @@ The preamble is often followed by the body of your document. It is specified wit
 
 \noindent This is all you need to get a very basic article class document working. If you want the document to be of another class simply change \texttt{article} to something else, a \texttt{book} for example.
 
-Let's begin to modify the markup. First we will include in the preamble the (\texttt{hyperref})\index{LaTeX package!hyperref} for clickable hyperlinks and \texttt{natbib}\index{LaTeX package!natbib} for bibliography formatting.\index{bibliography} We will discuss \texttt{natbib} in more detail below. Note that in general, and unlike in R, almost all of the LaTeX packages you will use are installed on you computer when you installed the TeX distribution.
+Let's begin to modify the markup. First we will include in the preamble the (\texttt{hyperref})\index{LaTeX package!hyperref} for clickable hyperlinks and \texttt{natbib}\index{LaTeX package!natbib} for bibliography formatting.\index{bibliography} We will discuss \texttt{natbib} in more detail below. Note that in general, and unlike in R, almost all of the LaTeX packages you will use are installed on your computer when you installed the TeX distribution.
 
 Next it's often a good idea to include \emph{knitr} code chunks that specify features of the document as a whole. These can include global chunk options\index{knitr!global chunk options} as well as loading data and packages used throughout the document.
 
-Then it's a good idea to specify title information just after the \texttt{document} environment begins.\index{LaTeX environment!document} Use the \texttt{title}\index{LaTeX command!title} command to add a title, the \texttt{author}\index{LaTeX!author} command to add author information and \texttt{date}\index{LaTeX command!date} to specify the date.\footnote{In some document classes the current data will automatically be included if you don't specify the date.} Then include the \texttt{maketitle} command.\index{LaTeX command!maketitle} This will place your title and author information in the body of the document. If you are writing an article you may also want to follow \texttt{maketitle} with an abstract. Unsurprisingly, you can use the \texttt{abstract}\index{LaTeX environment!abstract} environment to include this.
+Then it's a good idea to specify title information just after the \texttt{document} environment begins.\index{LaTeX environment!document} Use the \texttt{title}\index{LaTeX command!title} command to add a title, the \texttt{author}\index{LaTeX!author} command to add author information, and \texttt{date}\index{LaTeX command!date} to specify the date.\footnote{In some document classes the current data will automatically be included if you don't specify the date.} Then include the \texttt{maketitle} command.\index{LaTeX command!maketitle} This will place your title and author information in the body of the document. If you are writing an article you may also want to follow \texttt{maketitle} with an abstract. Unsurprisingly, you can use the \texttt{abstract}\index{LaTeX environment!abstract} environment to include this.
 
 Here is a full LaTeX article class document with all of these changes added:
 
@@ -189,7 +189,7 @@ source files available on GitHub at:
 
 \noindent The \emph{knitr} code chunk\index{knitr!code chunk} syntax should be familiar to you from previous chapters, so let's unpack the LaTeX syntax from just after the first code chunk, including the ``Create Title'' and ``Abstract'' parts. New syntax shown in later parts of this example is discussed in the remainder of this section and the next section on bibliographies.
 
-First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (page \ref{DoubleBS}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked. 
+First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (Section \ref{LaTeXTables}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author's name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked. 
 
 \subsection{Headings}\index{LaTeX!headings}
 
@@ -199,7 +199,7 @@ Earlier in the chapter we briefly saw how to create section-level headings with 
 
 In LaTeX paragraphs are simply created by adding a blank line between lines. It will format all of the tabs for the beginning of paragraphs based on the document's class rules. As we discussed before, writing tabs in the markup version of your document does nothing in the compiled document. They are generally used just to make the markup easier for people to read.\index{LaTeX!tabs}
 
-Note that adding more blank lines between paragraphs will not add extra space between the paragraphs in the final document. To specify the space following paragraphs (or almost any line) use the \texttt{vspace} (vertical space) command.\index{LaTeX command!vspace} for example to add three centimeters of vertical space on a page type: \verb|\vspace{3cm}|. This gives us the following space:
+Note that adding more blank lines between paragraphs will not add extra space between the paragraphs in the final document. To specify the space following paragraphs (or almost any line) use the \texttt{vspace} (vertical space) command.\index{LaTeX command!vspace} For example, to add three centimeters of vertical space on a page type: \verb|\vspace{3cm}|. This gives us the following space:
 
 \vspace{3cm}
 
@@ -255,7 +255,7 @@ You can change the size of code chunks that \emph{knitr} places in presentation 
 
 \paragraph{Diacritics}\index{LaTeX!diacritics}
 
-You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX directly. For example to create a letter c with a cedilla (\c{c}) you need to type \verb|\c{c}|. To create an `a' with an acute accent (\'{a}) type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them with in LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.\index{LaTeX!internationalization}\index{LaTeX!non-English characters}
+You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX directly. For example to create a letter c with a cedilla (\c{c}) you need to type \verb|\c{c}|. To create an `a' with an acute accent (\'{a}) type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them within LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.\index{LaTeX!internationalization}\index{LaTeX!non-English characters}
 
 \paragraph{Quotation marks}\index{LaTeX!quotation marks}
 
@@ -263,21 +263,21 @@ To specify double left quotation marks (``) use two back ticks (\verb|``|). For 
 
 \subsection{Math}\index{LaTeX!math}\label{MathLaTeX}
 
-LaTeX is particularly popular among quantitative researchers and mathematicians because it is very good at rendering mathematics. A complete listing of every math command would take up quite a bit of space.\footnote{See the Netherlands TeX user group list mentioned earlier for an extensive compilation of math commands.} I am briefly going to discuss how to include math in a LaTeX document. This discussion includes a few math examples. 
+LaTeX is particularly popular among quantitative researchers and mathematicians because it is very good at rendering mathematics. A complete listing of every math command would take up quite a bit of space.\footnote{See the Netherlands TeX user group list mentioned earlier for an extensive compilation of math commands.} I am briefly going to discuss how to include math in a LaTeX document. This discussion includes a few math syntax examples. 
 
-To include math inline with your text place the math in between two dollar signs (\verb|$$|).\index{LaTeX!\$} For example, \verb|$s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}$| produces $s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}$ in our final document.\footnote{Instead of dollar signs you can also use \textbackslash{}( . . . \textbackslash).} We can display math separate from the text with two dollar signs on either side of our math commands (\verb|$$ . . . $$|).\footnote{Equivalently, use \textbackslash{}[ . . . \textbackslash{}] or the \texttt{display} environment.\index{LaTeX environment!display} To number display equations use the \texttt{equation} environment.\index{LaTeX environment!equation}} For example, 
+To include math inline with your text place the math syntax in between backslashes and parentheses, i.e. \verb|\( . . . \)|. For example, \verb|\(s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}\)| produces \(s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}\) in our final document.\footnote{Instead of backslashes and parentheses you can also use a pair of dollar signs (\texttt{\$\ldots \$})\index{LaTeX!\$}. Though it will still work in most cases, the dollar sign math syntax is deprecated.} We can display math separately from the text by placing the math commands inside of backslashes and square brackets: \verb|\[ . . . \]|.\footnote{Equivalently, use two pairs of dollar signs (\texttt{\$\$\ldots \$\$}) or the \texttt{display} environment.\index{LaTeX environment!display} To number display equations use the \texttt{equation} environment.\index{LaTeX environment!equation}} For example, 
 
 <<Ch11Math, eval=FALSE, engine='sh'>>=
-$$
+\[
 s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
-$$
+\]
 @ 
 
 \noindent gives us:
 
-$$
+\[
 s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
-$$
+\]
 
 \subsection{Lists}\index{LaTeX!lists}
 
@@ -329,7 +329,7 @@ Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \te
 
 \subsection{Cross-references}\index{LaTeX!cross-references}
 
-LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labeling R objects (see page \pageref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be. 
+LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labeling R objects (see Section \ref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be. 
 
 If you place the \texttt{label} on the same line as a heading command \texttt{ref} will place the heading number. If \texttt{label} is in a \texttt{table} or \texttt{figure} environment you will get the table or figure number. You can also use \texttt{pageref} instead of \texttt{ref} to include the page number. Finally, loading the \emph{hyperref}\index{LaTeX package!hyperref} package makes cross-references (or footnote) clickable. Clicking on them will take you to the item the reference is referring to.
 
@@ -356,7 +356,7 @@ BibTeX bibliographies are stored in plain-text files with the extension \texttt{
 
 \noindent \verb|DOCUMENT_TYPE| specifies what type of document--article, book, webpage, and so on--the citation is for. This determines what items the citation can and needs to include. Then we have the \verb|CITE_KEY|.\index{BibTeX!citation keys} This is the reference's label that you will use to include the citation in your presentation documents. We'll look more at this later in the section. Each citation must have a unique \verb|CITE_KEY|. A common way to write these keys is to use the author's surname and the publication year, e.g. \verb|Donohue2009|. The cite key is followed by the other citation attributes such as \texttt{author}, \texttt{title}, and \texttt{year}. These attributes all follow the same syntax: \verb|ATTRIBUTE = {. . .}|.
 
-It's worth taking a moment to discuss the syntax for the BibTeX author attribute. First multiple author names are separated by \texttt{and}. Second, BibTeX assumes that the last word for each author is their surname. If you would like multiple words to be taken as the ``surname'' then enclose these word's in curly brackets. If we wanted to cite the World Bank\index{World Bank, citing} as an author we write \verb|{World Bank}|, otherwise it will be formatted ``Bank, World" in the presentation document.
+It's worth taking a moment to discuss the syntax for the BibTeX author attribute. First multiple author names are separated by \texttt{and}. Second, BibTeX assumes that the last word for each author is their surname. If you would like multiple words to be taken as the ``surname'' then enclose these words in curly brackets. If we wanted to cite the World Bank\index{World Bank, citing} as an author we write \verb|{World Bank}|; otherwise it will be formatted ``Bank, World" in the presentation document.
 
 Here is a complete BibTeX entry for \cite{Donohue2009}:
 
@@ -385,11 +385,11 @@ Here is a complete BibTeX entry for \cite{Donohue2009}:
 
 When you want to include citations from a BibTeX file in your LaTeX document you first use the \texttt{bibliography}\index{LaTeX command!bibliography} command. For example, if the BibTeX file is called \emph{Main.bib} and it is in the same directory as your markup document then type: \verb|\bibliography{Main.bib}|. You can use a bibliography stored in another directory, just include the appropriate file path information. Usually \texttt{bibliography} is placed right before \verb|\end{document}| so that it appears at the end of the compiled presentation document.
 
-You can also specify how you would like the references to be formatted using the \texttt{bibliographystyle}\index{LaTeX command!bibliographystyle} command. For example, this book uses the American Psychological Association (APA)\index{APA} style for references. To set this I included \verb|\bibliographystyle{apa}| directly before \texttt{bibliography}. The default style\footnote{It is referred to in LaTeX as the plain style.} is to number citations (e.g. [1]) rather than include author-year information\footnote{This is sometimes referred to as the ``Harvard'' style.} used by the APA. You will need to include the LaTeX package \emph{natbib}\index{LaTeX package!Natbib} in your preamble to be able to use author-year citation styles. This book includes \verb|\usepackage[authoryear]{natbib}| in it's preamble.\index{author-year citations}\index{Harvard style citations}
+You can also specify how you would like the references to be formatted using the \texttt{bibliographystyle}\index{LaTeX command!bibliographystyle} command. For example, this book uses the American Psychological Association (APA)\index{APA} style for references. To set this I included \verb|\bibliographystyle{apa}| directly before \texttt{bibliography}. The default style\footnote{It is referred to in LaTeX as the plain style.} is to number citations (e.g. [1]) rather than include author-year information\footnote{This is sometimes referred to as the ``Harvard'' style.} used by the APA. You will need to include the LaTeX package \emph{natbib}\index{LaTeX package!Natbib} in your preamble to be able to use author-year citation styles. This book includes \verb|\usepackage[authoryear]{natbib}| in its preamble.\index{author-year citations}\index{Harvard style citations}
 
 Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donohue2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example if we wanted to cite the tenth page of \cite{Donohue2009} we type: \verb|\cite[10]{Donohue2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donohue2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donohue2009}| gives us \cite[see][10]{Donohue2009}.
 
-If you are using an author-year style you can use a variety of \emph{natbib} of commands to change what information is included in the parentheses. For a selection of these commands and examples see Table \ref{NatbibTable}.
+If you are using an author-year style you can use a variety of \emph{natbib} commands to change what information is included in the parentheses. For a selection of these commands and examples see Table \ref{NatbibTable}.
 
 \begin{table}
     \caption{A Selection of \emph{natbib} In-text Citation Style Commands}
@@ -427,7 +427,7 @@ citation("xtable")
 toBibtex(citation("xtable"))
 @
 
-The {\emph{knitr}} package create BibTeX bibliographies for R packages with the \verb|write_bib|\index{R command!write\_bib} command. Let's make a BibTeX file called \emph{Packages.bib} containing citation information for the \emph{xtable} package.
+The {\emph{knitr}} package creates BibTeX bibliographies for R packages with the \verb|write_bib|\index{R command!write\_bib} command. Let's make a BibTeX file called \emph{Packages.bib} containing citation information for the \emph{xtable} package.
 
 <<Ch10OneBib, eval=FALSE, tidy=FALSE>>=
 # Create package BibTeX file
@@ -443,7 +443,7 @@ knitr::write_bib("xtable",
 \bibliography{Main.bib,Packages.bib}
 @
 
-We can use these techniques to automatically create a BibTeX file with citation information for all of the packages used in a research project. Simply make a character vector of the names of package that you would like to include in your bibliography. Then run this through \verb|write_bib|. 
+We can use these techniques to automatically create a BibTeX file with citation information for all of the packages used in a research project. Simply make a character vector of the names of packages that you would like to include in your bibliography. Then run this through \verb|write_bib|. 
 
 You can make sure you are citing all of the key packages used in a knitted document by (a) creating a vector of all of the packages and then (b) using this in the following code to both load the packages and write the bibliography:
 
@@ -484,7 +484,7 @@ In this section we will take a brief look at the basics of creating slideshows w
 
 \subsection{Beamer basics}
 
-{\emph{knitr}} largely works the same way in in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
+{\emph{knitr}} largely works the same way in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
 
 \paragraph{The Beamer preamble}
 
@@ -512,7 +512,7 @@ After the preamble you start your document as usual by beginning the \texttt{doc
 
 \paragraph{Title frames}\index{LaTeX!beamer title frames}
 
-One important difference from regular a LaTeX article is that dinstead of using \texttt{maketitle} to place your title information, in beamer you place the \texttt{titlepage}\index{LaTeX command!titlepage} inside of a frame by itself. 
+One important difference from a regular LaTeX article is that instead of using \texttt{maketitle} to place your title information, in beamer you place the \texttt{titlepage}\index{LaTeX command!titlepage} inside of a frame by itself. 
 
 \paragraph{Sections \& outlines}
 
@@ -553,7 +553,7 @@ Lists work the same way in beamer as they do in other LaTeX document classes. Th
 
 \subsection{\emph{knitr} with LaTeX slideshows}
 
-\emph{knitr} code chunks have the same syntax in LaTeX slideshows as in other LaTeX documents. You do need to make one change to the \texttt{frame} options however to include highlighted {\emph{knitr}} code chunks on your slides. You should add the \texttt{fragile} option to the \texttt{frame} command.\footnote{For a detailed discussion of why you need to use the \texttt{fragile} option with the \texttt{verbatim} environment\index{LaTeX environment!verbatim} that {\emph{knitr}} uses to display highlighted text in LaTeX documents see this blog post by Pieter Belmans: \url{http://pbelmans.wordpress.com/2011/02/20/why-latex-beamer-needs-fragile-when-using-verbatim/} (posted 20 February 2011).} Here is an example:
+\emph{knitr} code chunks have the same syntax in LaTeX slideshows as in other LaTeX documents. You do need to make one change to the \texttt{frame} options, however, to include highlighted {\emph{knitr}} code chunks on your slides. You should add the \texttt{fragile} option to the \texttt{frame} command.\footnote{For a detailed discussion of why you need to use the \texttt{fragile} option with the \texttt{verbatim} environment\index{LaTeX environment!verbatim} that {\emph{knitr}} uses to display highlighted text in LaTeX documents see this blog post by Pieter Belmans: \url{http://pbelmans.wordpress.com/2011/02/20/why-latex-beamer-needs-fragile-when-using-verbatim/} (posted 20 February 2011).} Here is an example:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -568,7 +568,7 @@ Lists work the same way in beamer as they do in other LaTeX document classes. Th
         \end{kframe}
 \end{knitrout}
 
-\noindent Here is a complete knittable Beamer example:
+\noindent Here is a complete knittable beamer example:
 
 {\scriptsize
 \begin{knitrout}
