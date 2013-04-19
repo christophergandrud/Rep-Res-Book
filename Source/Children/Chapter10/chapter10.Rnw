@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 April 2013
+% Updated: 19 April 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -177,8 +177,8 @@ Now let's see how to create this plot with \emph{knitr} and include it in a LaTe
     \textbackslash{}label\{BasicFigureExample\}
 \textless{\textless}echo=FALSE, fig.align='center', out.width='8cm', out.height='8cm'\textgreater{\textgreater}=
 \hlfunctioncall{plot}(x = cars$speed, y = cars$dist,
-     xlab = \hlstring{"\hlfunctioncall{Speed} (mph)"},
-     ylab = \hlstring{"Stopping \hlfunctioncall{Distance} (ft)"},
+     xlab = \hlstring{"Speed (mph)"},
+     ylab = \hlstring{"Stopping Distance (ft)"},
      cex.lab = 1.5)
 @
 \textbackslash{}end\{figure\}
@@ -497,7 +497,7 @@ plot(FCMap)
 
 \paragraph{Including \emph{googleVis} in knitted documents}
 
-Typing \verb|print(FCMap, tag = "chart")|\index{R command!print} in a knittable document would print the entire JavaScript code needed to create the map. Much like we saw with tables produced with \emph{xtable} and \emph{apsrtable} in Chapter \ref{TablesChapter}, we need to change the code chunk \texttt{results} option to include the map as a map rather than as JavaScript markup. To have the visualization show up in your HTML output, rather than the code block, simply set the code chunk option\index{knitr option!results} to \verb|results='asis'|. For example, the full code needed to create and print \emph{FCMap} is available at: \url{http://bit.ly/VNnZxS}.\footnote{The full URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/GoogleVisMap.R}.} To knit the map into an R Markdown document we type:
+Typing \verb|print(FCMap, tag = "chart")|\index{R command!print} in a knittable document would print the entire JavaScript code needed to create the map. Much like we saw with tables produced with \emph{xtable} and \emph{apsrtable} in Chapter \ref{TablesChapter}, we need to change the code chunk \texttt{results} option to include the map as a map rather than as JavaScript markup. To have the visualization show up in your HTML output, rather than the code block, simply set the code chunk option\index{knitr option!results} to \verb|results='asis'|.\footnote{You can use \texttt{results='asis'} to include almost any type of JavaScript graphics. For an example using the D3 JavaScript library\index{D3 JavaScript library}\index{JavaScript} and \emph{knitr} see this page by Yihui Xie: \url{http://yihui.name/knitr/demo/javascript/}.} For example, the full code needed to create and print \emph{FCMap} is available at: \url{http://bit.ly/VNnZxS}.\footnote{The full URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/GoogleVisMap.R}.} To knit the map into an R Markdown document we type:
 
 <<Ch10MapKnit, eval=FALSE, tidy=FALSE>>=
 ```{r, echo=FALSE, message=FALSE, results='asis'}
