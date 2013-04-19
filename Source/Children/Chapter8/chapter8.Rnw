@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 April 2013
+% Updated: 19 April 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -67,7 +67,7 @@ If you don't want to include the warnings, messages, and error messages that R o
 
 \paragraph{{\tt{cache}}}\index{knitr option!cache}
 
-If you want run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default.
+If you want run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
 
 Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached. Packages that are loaded in cached chunks cannot be accessed by other chunks.
 
@@ -168,7 +168,7 @@ print "Reproducible Research"
 Many of the programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. Please note that currently the range of functions \emph{knitr} supports for these languages is less extensive than what it supports for R. For example, there is no colored syntax highlighting.
 
 \begin{table}[ht]
-    \caption{\emph{knitr} \texttt{engine} Values}
+    \caption{A Selection of \emph{knitr} \texttt{engine} Values}
     \label{EngineOptions}
     \begin{center}
         \begin{tabular}{l p{2.25cm}}
@@ -177,12 +177,14 @@ Many of the programming language values \texttt{engine} can take are listed in T
             \hline\hline
             \texttt{awk} & Awk\index{Awk} \\
             \texttt{bash} & Bash\index{Bash} \\
+            \texttt{coffeescript} & CoffeeScript\index{CoffeeScript} \\ 
             \texttt{gawk} & Gawk\index{Gawk} \\
             \texttt{haskell} & Haskell\index{Haskell} \\
             \texttt{highlight} & Highlight\index{knitr!highlight} \\ 
             \texttt{python} & Python\index{Python} \\
             \texttt{R} & R (default) \\[0.25cm]
             \texttt{ruby} & Ruby\index{Ruby} \\
+            \texttt{sas} & SAS\index{SAS} \\
             \texttt{sh} & sh shell \\
             \hline
         \end{tabular}
@@ -342,7 +344,7 @@ Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
-\noindent If the code chunk you want to cache creates many objects, but you only want to save a few of them you can use \emph{knitr}'s' \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save. 
+\noindent \label{CacheVars} If the code chunk you want to cache creates many objects, but you only want to save a few of them you can use \emph{knitr}'s' \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save. 
 \vspace{2cm}
 
 In this chapter we covered in more detail key \emph{knitr} syntax for including code chunks in our presentation documents. This and other tools we learned in this chapter are important for tying our statistical analyses directly to its advertising, i.e. our presentation documents. In the next two chapters we will learn how to take the output from our statistical analysis and, using \emph{knitr}, present the results with dynamically created tables and figures. 

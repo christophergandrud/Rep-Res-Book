@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 April 2013
+% Updated: 19 April 2013
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -39,7 +39,7 @@ On Windows computers you can have multiple root directories, one for each storag
 
 You will probably not store all of your files in the root directory. This would get very messy. Instead you will likely store your files in subdirectories of the root directory. Inside of these subdirectories may be further subdirectories and so on.  Directories inside of other directories are also referred to as child directories\index{child directory} of a parent directory\index{parent directory}.
 
-On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: e.g. \verb|C:\\ExampleProject\\Data|. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell R to interpret the next character or sequence of characters differently. For example, on page \pageref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab rather than the letter ``t''. Add another escape character to neutralize the escape character so that R interprets it as a backslash. In other words use an escape character to escape the escape character. Another option for writing Windows file names in R is to use one forward slash (\texttt{/}).  
+On Windows computers separate subdirectories are indicated with a back slash (\textbackslash{}). For example if we have a folder called {\emph{Data}} inside of a folder called {\emph{ExampleProject}} which is located in the C root directory it has the address \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data}.\footnote{For more information on Windows file path names see this helpful website: \url{http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx}} When you type Windows file paths into R you need to use two backslashes rather than one: e.g. \verb|C:\\ExampleProject\\Data|. This is because the \texttt{\textbackslash{}} is an escape character\index{escape character} in R.\footnote{As we will see in Part IV, it is also a LaTeX escape character.} Escape characters tell R to interpret the next character or sequence of characters differently. For example, in Section \ref{TSVEscape} you'll see how \texttt{\textbackslash{}t} can be interpreted by R as a tab rather than the letter ``t''. Add another escape character to neutralize the escape character so that R interprets it as a backslash. In other words use an escape character to escape the escape character. Another option for writing Windows file names in R is to use one forward slash (\texttt{/}).  
 
 On Unix-like systems, including Mac computers, directories are indicated with a forward slash (\texttt{/}). The file path of the {\emph{Data}} file on a Unix-like system would be: \texttt{/ExampleProject/Data}. Remember that a forward slash with nothing before it indicates the root directory. So \texttt{/ExampleProject/Data} has a different meaning than \texttt{ExampleProject/Data}. In the former \emph{ExampleProject} is a subdirectory of the root. In the latter \emph{ExampleProject} is a subdirectory of the current working directory (see below for details about working directories). This is also true in Windows.
 
@@ -77,7 +77,7 @@ When you use R, markup languages, and many of the other tools covered in this bo
 
 Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's parent directory is called {\emph{ExampleProject}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contains further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
 
-In addition to the main subdirectories of {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \texttt{README}, its contents will automatically be displayed on the repository's main page. If the \texttt{README} file is written using Markdown, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
+In addition to the main subdirectories of {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \emph{README}, its contents will automatically be displayed on the repository's main page. If the \emph{README} file is written using Markdown (e.g. \emph{README.md}, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
 It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown. Simply include the \texttt{sessionInfo()}\index{R command!sessionInfo} command in a \emph{knitr} code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
@@ -89,7 +89,7 @@ toLatex(sessionInfo())
 
 \section{Setting Directories as RStudio Projects}
 
-If you are using RStudio, you may want to organize your files as Projects\index{RStudio!Projects}.\label{CreateRStudioProject} You can turn a normal directory into an RStudio Project by clicking on \texttt{Project} in the RStudio menu bar and selecting \texttt{Create Project\ldots}. A new window will pop up. Select the option \texttt{Existing Directory}. Find the directory you want to turn into an RStudio Project by clicking on the \texttt{Browse} button. Finally, select \texttt{Create Project}. You will also notice in the Create Project pop up window that you can build new project directories and create a project from a directory already under version control\index{version control} (we'll do this at the end of Chapter \ref{Storing}). When you create a new project you will see that RStudio has put a file with the extension \texttt{.Rproj} into the directory.
+If you are using RStudio, you may want to organize your files as Projects\index{RStudio!Projects}.\label{CreateRStudioProject} You can turn a normal directory into an RStudio Project by clicking on \texttt{File} in the RStudio menu bar and selecting \texttt{New Project\ldots}. A new window will pop up. Select the option \texttt{Existing Directory}. Find the directory you want to turn into an RStudio Project by clicking on the \texttt{Browse} button. Finally, select \texttt{Create Project}. You will also notice in the Create Project pop up window that you can build new project directories and create a project from a directory already under version control\index{version control} (we'll do this at the end of Chapter \ref{Storing}). When you create a new project you will see that RStudio has put a file with the extension \texttt{.Rproj} into the directory.
 
 Making your research project directories RStudio Projects is useful for a number of reasons:
 
@@ -99,7 +99,7 @@ Making your research project directories RStudio Projects is useful for a number
     \item You can set project specific options like whether PDF presentation documents should be compiled with \emph{Sweave} or {\emph{knitr}}.
     \item When you close the project your R workspace and history are saved in the project directory if you want.
     \item It helps you version control your files.
-    \item You can build your Project--run the files in a specific way--with Makefiles.
+    \item You can build your Project--run the files in a specific way--with makefiles.
 \end{itemize}
 
 \noindent We will look at many of these points in more detail in the next few chapters.
@@ -221,7 +221,7 @@ As we just saw, to change the working directory in the shell just use the {\tt{c
 cd C:/Users/Me/Desktop
 @
 
-\noindent If you are in a child directory and want to change the working directory to the previous working directory simply type:
+\noindent If you are in a child directory and want to change the working directory to the previous working directory you were in simply type:
 
 <<Ch4ChildtoParent, eval=FALSE, engine='sh'>>=
 cd -
@@ -341,7 +341,7 @@ The \emph{Files} pane is a GUI, so our actions in the \emph{Files} pane are not 
 \begin{figure}
     \caption{The RStudio Files Pane} 
     \label{FilesPane}
-    \vspace{0.2cm}
+    \vspace{0.25cm}
     \centering
         \mbox{
             \subfigure{\includegraphics[width=0.4\textwidth]{Children/Chapter4/images4/RStudioFiles.png}}\quad

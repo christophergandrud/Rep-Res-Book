@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 April 2013
+% Updated: 19 April 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -59,7 +59,7 @@ You can run the commands in this file one by one or run the make-like file by pu
 
 R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see Section \ref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than its output, Make will run it. If the source's time stamp is older than its output, Make will skip it.
 
-In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipe} to create the targets from the prerequisites. The general form is:
+In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipe} to create the targets from the prerequisites. The recipe is basically just the code you want to run to make the target file. The general form is:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
@@ -90,7 +90,7 @@ The first thing we need to do is create a new file called \emph{Makefile}\footno
 ################
 # Example Makefile
 # Christopher Gandrud
-# Updated 1 Julyy 2013
+# Updated 1 July 2013
 # Influenced by Rob Hyndman (31 October 2012)
 # See: http://robjhyndman.com/researchtips/makefiles/
 ################
@@ -205,7 +205,7 @@ make cleanMerge all
 \subsubsection{Makefiles and RStudio Projects}
 
 You can run makefiles from RStudio's \emph{Build} tab.\index{RStudio!Build} For the type of makefile we have been using, the main advantage of running it from within RStudio is that you don't have to toggle between RStudio and the shell. Everything is in one place. 
-Imagine that the directory with our makefile is an RStudio Project.\index{RStudio!Projects} If a Project already contains a makefile, RStudio will automatically open a \emph{Build} tab on the \emph{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}.\footnote{If a project doesn't have a makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
+Imagine that the directory with our makefile is an RStudio Project.\index{RStudio!Projects} If a Project already contains a makefile, RStudio will automatically open a \emph{Build} tab on the \emph{Workspace/History} pane, the same place where the \emph{Git} tab appears (see Figure \ref{BuildTab}).\footnote{If a project doesn't have a makefile you can still set up RStudio Build. Click on \texttt{Build} in the Menu bar then \texttt{Configure Build Tools . . .}. Select \texttt{Makefile} from the drop down menu then \texttt{Ok}. You will still need to manually add a Makefile in the Project's root directory.} 
 
 The \emph{Build} tab has buttons you can click to \texttt{Build All} (this is equivalent to \texttt{make all}), and, in the \texttt{More} drop down menu, \texttt{Clean all} (\texttt{i.e. make clean}) and \texttt{i.e. Clean and Rebuild} (\texttt{make clean all}). As you can see in Figure \ref{BuildTab}, the Tab shows you the same output you get in the shell.
 
@@ -233,9 +233,9 @@ Data stored in plain-text files on your computer can be loaded into R using the 
 TestData <- read.table("TestData.csv", sep = ",", header = TRUE)
 @
 
-\noindent See page \pageref{SepHeadExplain} for a discussion of the arguments in this command.
+\noindent See Section \ref{SepHeadExplain} for a discussion of the arguments in this command.
 
-If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the column separator, whether or not you want the first line to be treated as variable labels, and other options. This is initially easier than using \texttt{read.table}. But it is less reproducible.
+If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the column separator, whether or not you want the first line to be treated as variable labels, and other options. This is initially easier than using \texttt{read.table}. But it is much less reproducible.
 
 If the data is not stored in plain-text format, but is instead saved in a format created by another statistical program such as SPSS,\index{SPSS} SAS,\index{SAS} or Stata,\index{Stata} we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
@@ -274,7 +274,7 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
-\noindent However, storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} We have to take a few extra steps to download data from a secure URL. You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We need the help of the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}.\index{R command!textConnection} The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to secure web addresses as well.
+\noindent However, storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We have to take a few extra steps to download data from a secure URL. We need the help of the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} and \texttt{textConnection}.\index{R command!textConnection} The latter command is in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to secure web addresses as well.
 
 Let's try an example. I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{To find the URL for the raw version of a file on the GitHub website simply click the \texttt{Raw} button on the right just above the file preview.}\label{RawGitHub} Imagine that we put the address as a character string into an object called \emph{UrlAddress} (not shown).\footnote{See Section \ref{Objects} for how to put a character string into an object. I do not show how this was done in the book, due to space constraints.} To download it into R we could use this code:
 
@@ -307,7 +307,7 @@ names(DispropData)
 
 \paragraph{Loading data from secure URLs with {\tt{source\_data}}}
 
-We can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from secure URLs.\index{repmis}\index{R command!source\_data} In Chapter \ref{Storing} we saw an example of how to use \verb|source_data| to download data stored in a Dropbox Public folder. Here is another example, using the same data stored on GitHub as in the previous example. To load the data stored at the URL in \emph{UrlAddress} with \verb|source_data| type:\footnote{\emph{repmis} also has a \texttt{source\_GitHubData} command.\index{R command!source\_GitHubData} This is very similar to \texttt{source\_data}, the only difference being that it has the defaults \texttt{sep = ","} and \texttt{header = TRUE}.} 
+We can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from secure URLs.\index{repmis}\index{R command!source\_data} In Chapter \ref{Storing} we saw an example of how to use \verb|source_data| to download data stored in a Dropbox \emph{Public} folder. Here is another example, using the same data stored on GitHub as in the previous example. To load the data stored at the URL in \emph{UrlAddress} with \verb|source_data| type:\footnote{\emph{repmis} also has a \texttt{source\_GitHubData} command.\index{R command!source\_GitHubData} This is very similar to \texttt{source\_data}, the only difference being that it has the defaults \texttt{sep = ","} and \texttt{header = TRUE}.} 
 
 <<Ch6UsesourceGitHubData, eval=FALSE, tidy=FALSE>>=
 DispropData <- repmis::source_data(url = UrlAddress,
@@ -317,7 +317,7 @@ DispropData <- repmis::source_data(url = UrlAddress,
 
 \paragraph{Loading data from Dropbox non-Public folders}\label{DropboxNonPublic}
 
-Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-Public folders are a little tricky to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. Instead the plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this file. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R command!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) it's Dropbox key.\index{Dropbox!key}
+Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. The plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this webpage. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R command!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) it's Dropbox key.\index{Dropbox!key}
 
 To find the file's key simply click on the \texttt{Share Link} button next to the file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) on the Dropbox website. Look at the URL for the webpage that appears. Here's an example:
 
@@ -386,7 +386,7 @@ There are a growing number of packages that can gather data directly from a vari
     \item The \emph{twitteR} package \citep{R-twitteR} accesses Twitter's\footnote{\url{https://twitter.com/}} API. This allows you to download data from Twitter\index{Twitter} including tweets\index{tweet} and trending topics.\index{twitteR}
     \item The \emph{WDI} package \citep{R-WDI} allows you to directly download data from the World Bank's\index{World Bank}\index{WDI} Development Indicators database.\footnote{\url{http://data.worldbank.org/data-catalog/world-development-indicators}} This database includes numerous country-level economic, health, and environment variables. 
     \item The rOpenSci\footnote{\url{http://ropensci.org/}}\index{rOpenSci} group has and is developing a number of packages for accessing scientific data from web-based sources with R. They have a comprehensive set of packages for accessing biological data and academic journals. For a list of their packages see: \url{http://ropensci.org/packages/index.html}. 
-    \item Stack Exchange's\index{Stack Exchange} Cross Validated\index{Cross Validated} website\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}} also has a fairly comprehensive and regularly updated list of APIs available as R packages.}
+    \item Stack Exchange's\index{Stack Exchange} Cross Validated\index{Cross Validated} website\footnote{{\small{\url{http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r}}}} also has a fairly comprehensive and regularly updated list of APIs accessible from R packages.
 \end{itemize}
 
 \paragraph{API Package Example: World Bank Development Indicators}

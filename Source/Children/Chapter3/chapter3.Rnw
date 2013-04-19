@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 April 2013
+% Updated: 19 April 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -9,7 +9,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with R, RStudio, and {\normalfont{knitr}}}\label{GettingStartedRKnitr}
 
-If you have rarely or never used R before, the first section of this chapter gives you enough information to be able to get started and understand the R code I use throughout the book. For more detailed introductions on how to use R please refer to the resources I mentioned in Chapter \ref{Intro} (page \pageref{OtherBooks}). Experienced R users might want to skip the first section. In the second section I'll give a brief overview of RStudio. I highlight the key features of the main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package, how to use it in R, and how it is integrated into RStudio.
+If you have rarely or never used R before, the first section of this chapter gives you enough information to be able to get started and understand the R code I use throughout the book. For more detailed introductions on how to use R please refer to the resources I mentioned in Chapter \ref{Intro} (Section \ref{OtherBooks}). Experienced R users might want to skip the first section. In the second section I'll give a brief overview of RStudio. I highlight the key features of the main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package, how to use it in R, and how it is integrated into RStudio.
 
 %%%%%%%%%%%%% Using R
 \section{Using R: the Basics}
@@ -139,7 +139,7 @@ row.names(StringNumObject) <- c("First", "Second", "Third")
 row.names(StringNumObject)
 @
 
-\noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example, include it as a variable in a regression. You can use the \texttt{row.names} command to assign the row.names values to a regular column (for an example see page \pageref{RowNamesTidy}). 
+\noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example, include it as a variable in a regression. You can use the \texttt{row.names} command to assign the row.names values to a regular column (for an example see Section \ref{RowNamesTidy}). 
 
 You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{R command!mean} command:
 
@@ -195,7 +195,7 @@ with(StringNumObject, {
 )
 @
 
-\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{Using R terminology the second ``argument"\index{R!argument}--the code after the comma--of the \textbf{with} command is called an ``expression",\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
+\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{Using R terminology the second ``argument"\index{R!argument} value--the code after the comma--of the \textbf{with} command is called an ``expression",\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
 
 For examples in this book I largely avoid using the \texttt{attach} and \texttt{with} commands. I mostly use the component selector. Though it creates longer code, I find that code written with the component selector is easier to follow. It's always clear which object we are selecting a component from. Nonetheless, \textbf{attach} and \textbf{with} are very useful for streamlining your R code.
 
@@ -355,13 +355,13 @@ library(ggplot2)
 
 \noindent Please note that for the examples in this book I only specify what package a command is from if it is not loaded by default when you start an R session. 
 
-Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R command!double-colon operator}\index{R command!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from \emph{ggplot2} we type:
+Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R command!double-colon operator}\index{R command!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from the \emph{ggplot2} package we type:
 
 <<Ch3ColonOperator, eval=FALSE>>=
 ggplot2::qplot(. . .)
 @
 
-\noindent We can use the double-colon to simplify our code by removing the need to include \verb|library(. . .)|. Using the double-colon in this way ensures that R will use the command from the particular package you want and makes it clear to a source code reader what package a command comes from.
+\noindent We can use the double-colon to simplify our code as we don't need to include \verb|library(. . .)|. Using the double-colon in this way ensures that R will use the command from the particular package you want and makes it clear to a source code reader what package a command comes from.
 
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
@@ -388,7 +388,7 @@ There is an important pane that does not show up when you open RStudio for the f
 
 Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}} and R Markdown and R LaTeX in more detail in the next section. 
 
-R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Source} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R command!soure}. The icon next to \texttt{Source} is for compiling RStudio Notebooks\index{RStudio!Notebook}. We will look at RStudio Notebooks later in this chapter.
+R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Script} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R command!soure}. The icon next to \texttt{Source} is for compiling RStudio Notebooks\index{RStudio!Notebook}. We will look at RStudio Notebooks later in this chapter.
 
 \begin{figure}[ht]
     \caption{RStudio Source Code Pane Top Bars}
@@ -627,7 +627,7 @@ If you want to create a Notebook from an open R source code file simply click th
     \end{center}
 \end{figure}
 
-\paragraph{R Markdown} The second image in Figure \ref{SourcePanes} is what the \emph{Source} pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunksIcon.png}). In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the \emph{Source} pane (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunkNav.png}). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the \emph{Source} pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful buttons in the R Markdown \emph{Source} pane's top bar include the \texttt{ABC} spell check icon and question mark icon, which gives you a Markdown syntax reference file in the Help pane.
+\paragraph{R Markdown} The second image in Figure \ref{SourcePanes} is what the \emph{Source} pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunksIcon.png}). In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the \emph{Source} pane (e.g. \includegraphics[scale=0.5]{Children/Chapter3/images3/ChunkNav.png}). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the \emph{Source} pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful buttons in the R Markdown \emph{Source} pane's top bar include the \texttt{ABC} spell check icon and question mark icon, which gives you a Markdown syntax reference file in the Help pane.
 
 Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code in the \emph{Source} pane. This makes your source code much easier to read and navigate. RStudio can also fold code chunks.\index{code folding} This makes navigating through long documents, with long code chunks, much easier. In the first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If you click this arrow the code chunk will collapse to look like the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
 
@@ -662,7 +662,7 @@ You can see in the final image in Figure \ref{SourcePanes} that many of the \emp
 
 \paragraph{Change default .Rnw knitter}
 
-By default RStudio is set up to use Sweave\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of Sweave to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Options} window\index{RStudio!Options window}. Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave files using:". Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.} 
+By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of \emph{Sweave} to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Global Options...}.\index{RStudio!Options window} Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave Rnw files using:". Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.} 
 
 \subsection{\emph{knitr} \& R}
 
@@ -714,7 +714,7 @@ You may be more comfortable using a what-you-see-is-what-you-get\index{WYSIWYG} 
 
 \paragraph{Set Up}
 
-To set up Lyx so that it can compile \texttt{.Rnw} files click \texttt{Document} in the menu bar then \texttt{Settings}. In the left-hand panel the second option is \texttt{Modules}. Click on \texttt{Modules} and select \texttt{Rnw (knitr)}. Click \texttt{Add} then \texttt{Ok}. Now, compile your LaTeX document in the normal Lyx way.
+To set up Lyx so that it can compile \texttt{.Rnw} files, click \texttt{Document} in the menu bar then \texttt{Settings}. In the left-hand panel the second option is \texttt{Modules}. Click on \texttt{Modules} and select \texttt{Rnw (knitr)}. Click \texttt{Add} then \texttt{Ok}. Now, compile your LaTeX document in the normal Lyx way.
 
 \paragraph{Code Chunks}
 
