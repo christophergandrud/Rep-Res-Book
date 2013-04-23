@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 April 2013
+% Updated: 23 April 2013
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -91,7 +91,7 @@ FinRegulatorData <- source_data(FinURL,
 names(FinRegulatorData)
 @
 
-Let's go through this code. The command \texttt{paste0}\index{R command!paste0} simply pastes the multiple strings I've used to write the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} You do not have to do this. You could just use one long continuous string. I only split it up and pasted it back together so that the URL would fit on the printed page. We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's rows are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. 
+Let's go through this code. The command \texttt{paste0}\index{R command!paste0} simply pastes the multiple strings I've used to write the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} You do not have to do this. You could just use one long continuous string. I only split it up and pasted it back together so that the URL would fit on the printed page. We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's rows are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files.
 
 When the file is not in your \emph{Public} folder you also go to \texttt{Dropbox} after right-clicking on the file. Then choose \texttt{Get Link}. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar and share it with others. You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. When you hover your cursor over a file or folder not in the \emph{Public} Folder you will see a chain-link icon (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) appear on the far right. Clicking on this icon will get you the link.
 
@@ -423,9 +423,52 @@ git push --tags
 
 \subsection{Accessing on GitHub}
 
-\paragraph{Downloading into R \& viewing files}
+\paragraph{Downloading into R}\label{GitDownload}
 
-In Chapter \ref{DataGather} we will learn how to load data from a text file stored on GitHub directly into R. In general it is similar to loading data from Dropbox Public folders, but because the files are stored on a secure server it requires a few extra steps. See Section \ref{SecureDataDownload} for more details.
+In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R command!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this got to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the ``raw" (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}. 
+
+<<Ch5URLAddress, tidy=FALSE>>=
+UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
+                "Disproportionality_Data/master/",
+                "Disproportionality.csv")
+@
+
+\noindent Now we can simply stick this object into \verb|source_data|:
+
+<<Ch5sourceDataGitHub, tidy=FALSE>>=
+# Download data
+DispropData <- repmis::source_data(UrlAddress)
+
+# Show variable names
+names(DispropData)
+@
+
+\noindent \verb|source_data| download the most recent version of the file from the master branch.
+
+One very nice feature GiHub has for reproducible research is that you can download a particular version of a file--from a particular git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use the a files raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{Hitory} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, use this URL with \verb|source_data|. 
+
+For example, I have an old version of the disproportionality data where the variable names began with a capital letter. To download it I find that particular version of the file's URL and use it in \verb|source_data|:
+
+<<Ch5sourceDataOld, tidy=FALSE>>=
+OldUrlAddress <- paste0("https://raw.github.com/",
+					"christophergandrud/",
+					"Disproportionality_Data/",
+					"1a59d360b36eade3b183d6336a",
+					"2262df4f9555d1/",
+					"Disproportionality.csv")
+
+# Download old disproportionality data
+DispropOld <- repmis::source_data(OldUrlAddress)
+
+# Show variable names
+names(DispropOld)
+@
+
+You can see in this example that the file's URL is similar to the one we saw previously. However instead of \verb|master| after \verb|Disproportionality_Data| we instead have this strange series of number and letters: \verb|1a59d360b36ea| \ldots. This is the commit's SHA-1 hash.\index{SHA-1 hash}
+
+As we will see in Chapter \ref{StatsModel} (Section \ref{sourceurl}) you can also easily run source code files in R directly downloaded from GitHub with the \verb|source_url| command.
+
+\paragraph{Viewing files}
 
 The GitHub web user interface also allows you, your collaborators (see below) or, if the repo is public, anyone to look at text files with a web browser. Collaborators can actually also create, modify, and commit changes in the web user interface. This can be useful for making small changes, especially from a mobile device without a full installation of Git. Anyone with a GitHub account can suggest changes to files in a public repository on the repo's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a designated collaborator, their edits will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{Git command!pull} in Git terminology. See the next section for more details.} This can be a useful way for independent researchers to fix errors.
 

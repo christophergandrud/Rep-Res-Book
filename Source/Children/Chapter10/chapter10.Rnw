@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 April 2013
+% Updated: 23 April 2013
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -205,7 +205,7 @@ We could of course simply link to the original R source code file stored on GitH
 
 <<Ch10ScatterPlotMatrix, eval=FALSE, tidy=FALSE>>=
 # Download data
-MainData <- repmis::source_GitHubData("http://bit.ly/V0ldsf")
+MainData <- repmis::source_data("http://bit.ly/V0ldsf")
 
 # Subset MainData so that it only includes the year 2003
 SubData <- subset(MainData, year == 2003)
@@ -220,7 +220,7 @@ SubData <- SubData[, c("reg_4state",
 pairs(x = SubData)
 @
 
-\noindent This\index{R command!source\_GitHubData} is a lot of code, but you should be familiar with most of it. You will notice that after downloading the data we cleaned it up in preparation for plotting with the \texttt{pairs} command\index{R command!pairs} by removing data from all years other than 2003 and all of the country-year identifying variables. Finally, we created the scatterplot matrix with \texttt{pairs}.
+\noindent This\index{R command!source\_data} is a lot of code, but you should be familiar with most of it. You will notice that after downloading the data we cleaned it up in preparation for plotting with the \texttt{pairs} command\index{R command!pairs} by removing data from all years other than 2003 and all of the country-year identifying variables. Finally, we created the scatterplot matrix with \texttt{pairs}.
 
 To dynamically include the plot in our final document, we don't need to include all of this code in a code chunk in our markup document. A file containing the code is available on GitHub.\footnote{See: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/ScatterPlotMatrix.R}.} So we only need to use \verb|source_url| to link to it. I've shortened the raw source code file's URL to: \url{http://bit.ly/TE0gTc}. Let's look at the syntax for knitting this into an R Markdown file:
 
@@ -255,12 +255,12 @@ Given that there is already extensive good documentation on \emph{ggplot2} we ar
 Sometimes we may want to show how multiple variables change together overtime. For example, imagine we have data on inflation\index{inflation}\index{US Federal Reserve} in the United States along with inflation forecasts made by the US Federal Reserve\index{US Federal Reserve} two quarters beforehand. The data is stored on GitHub at: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv}.\footnote{This data is from \cite{GandrudGrafstrom2012}. The example here partially recreates Figure 1 from that paper.} I've loaded the data into R and put it into an object called \emph{InflationData}. It looks like this:
 
 % Load inflation data
-<<Ch10LoadInflationData, include=FALSE>>=
+<<Ch10LoadInflationData, include=FALSE, message=FALSE>>=
 # Create URL object
 InflationUrl <- "https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv"
 
 # Load data
-InflationData <- repmis::source_GitHubData(InflationUrl)
+InflationData <- repmis::source_data(InflationUrl)
 @
 
 {\small

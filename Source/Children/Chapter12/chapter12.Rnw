@@ -272,7 +272,7 @@ setwd("/BatchReports")
 library(repmis)
                      
 # Download data
-MainData <- source_GitHubData("http://bit.ly/V0ldsf")
+MainData <- source_data("http://bit.ly/V0ldsf")
 
 # Create vector of country names
 COUNTRY <- as.character(unique(MainData$country))
@@ -306,7 +306,7 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
 
 \begin{enumerate}
     \item Set the working directory to \emph{/BatchReports}.
-    \item Download \emph{MainData.csv} using the \texttt{source\_GitHubData}\index{R command!source\_GitHubData} function, as we've done before.
+    \item Download \emph{MainData.csv} using the \texttt{source\_data}\index{R command!source\_data} function, as we've done before.
     \item Create a vector for the country names in the data. We will use this vector to subset the data.
     \item Create a \texttt{function}\index{R command!function}\index{R!functions} called \emph{BatchReports} for subsetting\index{R!subset} the data, brewing it, and knitting it. 
         \begin{itemize}
