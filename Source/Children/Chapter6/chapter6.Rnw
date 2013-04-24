@@ -274,13 +274,13 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
-\noindent However, storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We have to take a few extra measures to download data from a secure URL. Let's look at three methods for downloading data into R: \verb|source_data|, \verb|source_DropboxData|, and the \emph{RCurl} package.
+\noindent Storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We have to use different commands to download data from secure URLs. Let's look at three methods for downloading data into R: \verb|source_data|, \verb|source_DropboxData|, and the \emph{RCurl} package.
 
 \paragraph{Loading data from secure URLs with {\tt{source\_data}}}\label{SecureData6}
 
-As we saw in Chapter \ref{Storing}, we can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from Dropbox \emph{Public} folders (Section \ref{EnablePublicFolder}) and GitHub (Section \ref{GitDownload}).\index{repmis}\index{R command!source\_data} You can use \verb|source_data| to download data in plain-text format from almost any secure URL, as long as the file is not embedded in a larger HTML website. 
+As we saw in Chapter \ref{Storing}, we can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from Dropbox \emph{Public} folders (Section \ref{EnablePublicFolder}) and GitHub (Section \ref{GitDownload}).\index{repmis}\index{R command!source\_data} You can use \verb|source_data| to download data in plain-text format from almost any URL, as long as the file is not embedded in a larger HTML website. 
 
-One problem for reproducible research with sourcing data located on the internet is that the file may change without us knowing. This could change the results we get. Luckily, we can solve this problem with \verb|source_data|. In Chapter \ref{Storing} we saw that when we run the \verb|source_data| command we not only download a data file, but also find its SHA-1 hash.\index{SHA-1 hash} The SHA-1 hash is basically a unique number for the file. If the file changes, its SHA-1 hash will change. Once we know the file's SHA-1 hash we can use \verb|source_data|'s \verb|sha1| argument to make sure the file that we downloaded is the same as the one we intended to download. 
+One problem for reproducible research with sourcing data located on the internet is that data files may change without us knowing. This could change the results we get. Luckily, we can solve this problem with \verb|source_data|. In Chapter \ref{Storing} we saw that when we run the \verb|source_data| command we not only download a data file, but also find its SHA-1 hash.\index{SHA-1 hash} The SHA-1 hash is basically a unique number for the file. If the file changes, its SHA-1 hash will change. Once we know the file's SHA-1 hash we can use \verb|source_data|'s \verb|sha1| argument to make sure the file that we downloaded is the same as the one we intended to download. 
 
 For example, let's find the SHA-1 hash for the disproportionality data set we downloaded in the last chapter (Section \ref{GitDownload}):\footnote{Remember we placed the file's raw GitHub URL address inside of the object \emph{UrlAddress}.}
 
@@ -290,7 +290,7 @@ DispropData <- repmis::source_data(UrlAddress)
 @
 }}
 
-\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{195637339e8483d}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.} 
+\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{195637339e8483d}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.} 
 
 {\footnotesize{
 <<Ch6SHA1compare, tidy=FALSE>>=
@@ -299,11 +299,11 @@ DispropData <- repmis::source_data(OldUrlAddress,
 @
 }}
 
-\noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a result. This may not be practical while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
+\noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
 
 \paragraph{Loading data from Dropbox non-Public folders with {\tt{source\_DropboxData}}}\label{DropboxNonPublic}
 
-Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. The plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this webpage. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R command!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) it's Dropbox key.\index{Dropbox!key}
+Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. The plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this webpage. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R command!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) its Dropbox key.\index{Dropbox!key}
 
 To find the file's key simply click on the \texttt{Share Link} button next to the file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) on the Dropbox website. Look at the URL for the webpage that appears. Here's an example:
 
@@ -327,7 +327,7 @@ FinDataFull <- repmis::source_DropboxData("fin_research_note.csv",
 
 A more laborious way to download data from a secure URL that does not rely on \emph{repmis} is to use the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} as well as \verb|read.table|\index{R command!read.table} and \texttt{textConnection}.\index{R command!textConnection} The latter commands are in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to this method as well.
 
-Let's try an example. To download the data file we used in Section \ref{GitDownLoad} it into R we could use this code:
+Let's try an example. To download the data file we used in Section \ref{GitDownload} it into R we could use this code:
 
 {\small
 <<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE>>=
@@ -463,4 +463,3 @@ Beyond learning about the various R packages that are useful for R web scraping,
 \vspace{2cm}
 
 In this chapter we have learned how to reproducibly gather data from a number of sources. If the data we are using is available online we may be able to create really reproducible data gathering files. These files have commands that others can execute with makefiles that allow them to actually regather the exact data we used. The techniques we can use to gather online data also make it easy to update our data when new information becomes available. Of course it may not always be possible to have really reproducible data gathering. Nonetheless, you should always aim to make it clear to others (and yourself) how you gathered your data. In the next chapter we will learn how to clean and merge multiple data files so that they can easily be used in our statistical analyses.
-
