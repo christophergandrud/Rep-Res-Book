@@ -262,7 +262,7 @@ source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
 
 If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
 
-<<Ch8SourceURLExample, message=FALSE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
+<<Ch8SourceURLExample, message=TRUE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
 library(devtools)
 
@@ -273,6 +273,8 @@ source_url("http://bit.ly/UOtH4L")
 \noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R command!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
 
 Remember from Chapter \ref{Storing} (Section \ref{GitDownload}),\label{sourceurl} if you would like to use a particular version of a file stored on GitHub simply include that version's URL in the \verb|sourc_url| call. This can be particularly useful for replicating particular results. Linking to a particular version of a source code file will enable replication even if you later make changes to the file. To access the URL for a particular version of a file first click on the file on GitHub's website. Then click the \texttt{Hitory} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Finally, click on the \texttt{Raw} button to be taken to the text-only version of the file. Copy this page's URL and use it in \verb|source_url|.
+
+Also, just like with \verb|source_data|\index{R command!source\_data}, we set the \verb|sha1| argumentcan to tell \verb|source_url| to make sure that the source code file it is downloading is the one we intended.\index{SHA-1 hash}
 
 \section{Reproducibly Random: {\tt{set.seed}}}
 

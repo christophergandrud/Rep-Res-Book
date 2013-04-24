@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 April 2013
+% Updated: 24 April 2013
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -93,6 +93,8 @@ names(FinRegulatorData)
 
 Let's go through this code. The command \texttt{paste0}\index{R command!paste0} simply pastes the multiple strings I've used to write the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} You do not have to do this. You could just use one long continuous string. I only split it up and pasted it back together so that the URL would fit on the printed page. We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's rows are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files.
 
+You're probably also wondering about the line that begins \emph{\texttt{\#\# SHA-1 hash of}} \ldots. The long string of numbers and letters at the end of this line is basically a unique number that \verb|source_data| assigns to the file called an SHA-1 hash. We'll see SHA-1\index{SHA-1 hash} hashes more in the next section on GitHub (Section \ref{GitHubMain}) and in Chapter \ref{DataGather} (Section \ref{SecureData6}). To give you a preview: it allows us to see if the file that we downloaded is the file we thought we downloaded.
+
 When the file is not in your \emph{Public} folder you also go to \texttt{Dropbox} after right-clicking on the file. Then choose \texttt{Get Link}. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar and share it with others. You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. When you hover your cursor over a file or folder not in the \emph{Public} Folder you will see a chain-link icon (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) appear on the far right. Clicking on this icon will get you the link.
 
 In either case you cannot use the \verb|source_data| command to download data from non-Public folders into R. In the next chapter we'll see how to import this type of data into R (see Section \ref{DropboxNonPublic}). To give you a preview: we'll use the \verb|source_DropboxData|\index{R command!source\_DropboxData} command from the \emph{repmis}\index{repmis} package.
@@ -107,7 +109,7 @@ Dropbox has a simple version control system. Every time you save a document a ne
 
 Note that with a free Dropbox account, previous versions of a file are only stored for \textbf{30 days}. To be able to save previous versions for more than 30 days you will need a paid account. For more details see: \url{https://www.dropbox.com/help/113/en}.
 
-\section{Storing Your Files in the Cloud: GitHub}\index{GitHub}
+\section{Storing Your Files in the Cloud: GitHub}\index{GitHub}\label{GitHubMain}
 
 Dropbox adequately meets our four basic criteria for reproducible data storage. It is easy to set up and use. GitHub meets the criteria and more, especially when it comes to version control. It is, however, less straightforward at first. In this section we will learn enough of the basics to get you started using GitHub to store, access, collaborate on, and version control your research.
 
@@ -435,6 +437,7 @@ UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
 
 \noindent Now we can simply stick this object into \verb|source_data|:
 
+{\small{
 <<Ch5sourceDataGitHub, tidy=FALSE>>=
 # Download data
 DispropData <- repmis::source_data(UrlAddress)
@@ -442,20 +445,21 @@ DispropData <- repmis::source_data(UrlAddress)
 # Show variable names
 names(DispropData)
 @
+}}
 
-\noindent \verb|source_data| download the most recent version of the file from the master branch.
+\noindent \verb|source_data| download the most recent version of the file from the master branch. As we saw in Section \ref{SepHeadExplain}, running \verb|source_data| gives us a line beginning \emph{\texttt{\#\# SHA-1 hash of}} \ldots. \textbf{Note:} this SHA-1 hash\index{SHA-1 hash} is different from the file's Git commit's SHA-1 hash we discussed earlier. The \verb|source_data| SHA-1 hash is specific to the file, and has nothing to do with Git. We will look at this hash more in Chapter \ref{DataGather} (Section \ref{SecureData6}). 
 
-One very nice feature GiHub has for reproducible research is that you can download a particular version of a file--from a particular git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use the a files raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{Hitory} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, use this URL with \verb|source_data|. 
+Luckily, we can actually use \verb|source_data| to download a particular version of a file--from a particular git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use a file's raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{Hitory} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, copy this page's URL address and use it with \verb|source_data|. 
 
 For example, I have an old version of the disproportionality data where the variable names began with a capital letter. To download it I find that particular version of the file's URL and use it in \verb|source_data|:
 
+{\small{
 <<Ch5sourceDataOld, tidy=FALSE>>=
-OldUrlAddress <- paste0("https://raw.github.com/",
-					"christophergandrud/",
-					"Disproportionality_Data/",
-					"1a59d360b36eade3b183d6336a",
-					"2262df4f9555d1/",
-					"Disproportionality.csv")
+OldUrlAddress <- paste0("https://raw.github.com/christophergandrud/",
+						"Disproportionality_Data/",
+						"1a59d360b36eade3b183d6336a",
+						"2262df4f9555d1/",
+						"Disproportionality.csv")
 
 # Download old disproportionality data
 DispropOld <- repmis::source_data(OldUrlAddress)
@@ -463,10 +467,11 @@ DispropOld <- repmis::source_data(OldUrlAddress)
 # Show variable names
 names(DispropOld)
 @
+}}
 
-You can see in this example that the file's URL is similar to the one we saw previously. However instead of \verb|master| after \verb|Disproportionality_Data| we instead have this strange series of number and letters: \verb|1a59d360b36ea| \ldots. This is the commit's SHA-1 hash.\index{SHA-1 hash}
+\noindent You can see in this example that the file's URL is similar to the one we saw in the previous example. However, instead of \verb|master| after \verb|Disproportionality_Data| we have this strange series of number and letters: \verb|1a59d360b36ea| \ldots. This is the \emph{commit's} SHA-1 hash.\index{SHA-1 hash}
 
-As we will see in Chapter \ref{StatsModel} (Section \ref{sourceurl}) you can also easily run source code files in R directly downloaded from GitHub with the \verb|source_url| command.
+As we will see in Chapter \ref{StatsModel} (Section \ref{sourceurl}) we will use a very similar process to easily run source code files in R directly downloaded from GitHub with the \verb|source_url| command.
 
 \paragraph{Viewing files}
 

@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 April 2013
+% Updated: 24 April 2013
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -11,7 +11,7 @@ set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
 
 Graphs and other visual methods, discussed in the next chapter, can often be more effective ways to present descriptive and inferential statistics than tables.\footnote{This is especially true of the small-print, high-density coefficient estimate tables that are sometimes descriptively called `train schedule' tables.} Nonetheless, tables of parameter estimates, descriptive statistics, and so on can sometimes be important tools for describing your data and presenting research findings. Learning how to dynamically connect statistical results with tables in your presentation documents aids reproducibility and can ultimately save you a lot of time.
 
-Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors. It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
+Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors.\footnote{For example, in a replication of Reinhart and Rogoff's much cited \citeyearpar{RR2010} study of economic growth and public debt \cite{Herndon2013} found a number of apparent transcription errors. Analysis results in the original spreadsheets appear to not have been entered into the paper's tables accurately.} It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
 
 The goal of this chapter is for you to learn how to dynamically create tables for your presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both LaTeX and Markdown/HTML documents. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only packages available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{R package!table} \emph{memisc} \citep{R-memisc},\index{R command!memisc}\index{memisc} and \emph{estout} \citep{R-estout}\index{estout} packages as well as Paul Johnson's \texttt{outreg}\index{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} I personally also really like the \emph{stargazer} package \citep{R-stargazer}. It has a similar syntax to \emph{apsrtable} and is particularly good for showing results from multiple models estimated using different model types in one table.
 
