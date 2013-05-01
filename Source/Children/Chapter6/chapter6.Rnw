@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 April 2013
+% Updated: 1 May 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -253,7 +253,7 @@ StataData <- read.dta(file = "Data1.dta")
 library(help="foreign")
 @
 
-If you have data stored in a spreadsheet format such as Excel's\index{Microsoft Excel} \emph{.xlsx}, it may be best to first clean up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information--notes, colors, and so on--that will not be part of the data frame.
+If you have data stored in a spreadsheet format such as Excel's\index{Microsoft Excel} \emph{.xlsx}, it may be best to first clean up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information such as notes, colors, and so on that will not be part of the data frame.
 
 To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before it was loaded into R. Ideally the documentation would be written in a text file saved in the same directory as the raw data file. 
 
@@ -460,6 +460,6 @@ Beyond learning about the various R packages that are useful for R web scraping,
     \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} packages \citep{R-plyr}\index{plyr} is also particularly useful.
 \end{itemize}
 
-\vspace{2cm}
+\subsection*{Chapter Summary}
 
 In this chapter we have learned how to reproducibly gather data from a number of sources. If the data we are using is available online we may be able to create really reproducible data gathering files. These files have commands that others can execute with makefiles that allow them to actually regather the exact data we used. The techniques we can use to gather online data also make it easy to update our data when new information becomes available. Of course it may not always be possible to have really reproducible data gathering. Nonetheless, you should always aim to make it clear to others (and yourself) how you gathered your data. In the next chapter we will learn how to clean and merge multiple data files so that they can easily be used in our statistical analyses.

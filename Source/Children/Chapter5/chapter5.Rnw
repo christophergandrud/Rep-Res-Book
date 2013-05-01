@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 25 April 2013
+% Updated: 1 May 2013
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -427,7 +427,7 @@ git push --tags
 
 \paragraph{Downloading into R}\label{GitDownload}
 
-In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R command!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this got to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}. 
+In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R command!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}. 
 
 <<Ch5URLAddress, tidy=FALSE>>=
 UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
@@ -449,7 +449,7 @@ names(DispropData)
 
 \noindent \verb|source_data| downloaded the most recent version of the file from the master branch. As we saw in Section \ref{SepHeadExplain}, running \verb|source_data| gives us a line beginning \emph{\texttt{\#\# SHA-1 hash of}} \ldots. \textbf{Note:} this SHA-1 hash\index{SHA-1 hash} is different from the file's Git commit's SHA-1 hash we discussed earlier. The \verb|source_data| SHA-1 hash is specific to the \emph{file}, and has nothing to do with Git. We will look at this hash more in Chapter \ref{DataGather} (Section \ref{SecureData6}). 
 
-We can actually use \verb|source_data| to download a particular version of a file--from a particular Git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use a file's raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{Hitory} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, copy this page's URL address and use it with \verb|source_data|. 
+We can actually use \verb|source_data| to download a particular version of a file--from a particular Git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use a file's raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, copy this page's URL address and use it with \verb|source_data|. 
 
 For example, I have an old version of the disproportionality data where the variable names begin with a capital letter. To download it I find this particular version of the file's URL and use it in \verb|source_data|:
 
@@ -572,6 +572,6 @@ The RStudio \emph{Git} tab\index{RStudio!Git tab} allows you to do many of the s
 
 If you are using a GitHub repo that is associated with a remote repository on GitHub,\index{GitHub} you can push and pull it with the \texttt{Pull Branches}\index{Git command!pull} and \texttt{Push Branch}\index{Git command!push} buttons in the \texttt{More} drop down menu. You can also use the same buttons in the \textbf{Review Changes} window. The \emph{Git} tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow{} Shell \ldots} option to open a new shell with the Project set as the working directory to complete any other Git task you might want to do.
 
-\vspace{2cm}
+\subsection*{Chapter Summary}
 
 In this chapter we have primarily learned how to store text-based reproducible research files in ways that allow us and others to access them easily from many locations, enable collaboration, and keep a record of previous versions. In the next chapter we will learn how to use text-based files to reproducibly gather data that we can use in our statistical analyses.
