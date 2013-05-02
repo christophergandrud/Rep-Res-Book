@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% 23 April 2013
+% 2 May 2013
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
@@ -140,13 +140,19 @@ pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
 @
 
 % Include bibliography
-\clearpage
-\addcontentsline{toc}{chapter}{Bibliography}
+\cleardoublepage
+\addcontentsline{toc}{chapter}{\bibname}
 \bibliographystyle{apa}
+\markboth{\bibname}{\bibname}
 \bibliography{rep-res-book,rep-res-PackagesCited}
-
-% Include index
-\clearpage
+ 
+ 
+%Include index
+\let\myindtmp\indexspace %to tighten up the index
+\renewcommand{\indexspace}{\myindtmp\vspace*{-2pt}}
+ 
+\cleardoublepage
+\markboth{\indexname}{\indexname}
 \printindex
 
 \end{document}
