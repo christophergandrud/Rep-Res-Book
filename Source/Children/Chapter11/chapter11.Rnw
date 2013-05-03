@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 25 April 2013
+% Updated: 3 May 2013
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -170,7 +170,7 @@ ggplot(UDSData, aes(x = year, y = mean)) +
 %%%%%%%%%%% Reproducing the Document %%%%%
 \textbackslash{}section\*\{Appendix: Reproducing the Document\}
 
-This document was created using R version 2.15.2 and the R package \textbackslash{}emph\{knitr\} 
+This document was created using R version 3.0.0 and the R package \textbackslash{}emph\{knitr\} 
 \textbackslash{}citep\{R-knitr\}. It also relied on the R packages 
 \textbackslash{}emph\{ggplot2\} \textbackslash{}citep\{R-ggplot2\} and \textbackslash{}emph\{repmis\} \textbackslash{}citep\{R-repmis\}. 
 The document can be completely reproduced from 
@@ -189,7 +189,7 @@ source files available on GitHub at:
 
 \noindent The \emph{knitr} code chunk\index{knitr!code chunk} syntax should be familiar to you from previous chapters, so let's unpack the LaTeX syntax from just after the first code chunk, including the ``Create Title'' and ``Abstract'' parts. New syntax shown in later parts of this example is discussed in the remainder of this section and the next section on bibliographies.
 
-First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (Section \ref{LaTeXTables}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author's name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked. 
+First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (Section \ref{LaTeXTables}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author's name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank-yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked. 
 
 \subsection{Headings}\index{LaTeX!headings}
 
@@ -329,7 +329,7 @@ Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \te
 
 \subsection{Cross-references}\index{LaTeX!cross-references}
 
-LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labeling R objects (see Section \ref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be. 
+LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labelling R objects (see Section \ref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be. 
 
 If you place the \texttt{label} on the same line as a heading command \texttt{ref} will place the heading number. If \texttt{label} is in a \texttt{table} or \texttt{figure} environment you will get the table or figure number. You can also use \texttt{pageref} instead of \texttt{ref} to include the page number. Finally, loading the \emph{hyperref}\index{LaTeX package!hyperref} package makes cross-references (or footnote) clickable. Clicking on them will take you to the item the reference is referring to.
 

@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 April 2013
+% Updated: 3 May 2013
 
 <<set-parent12, include=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -141,7 +141,7 @@ Rather than using the \texttt{input} or \texttt{include} commands, we use the \t
 
 \noindent This is the same thing as using the \texttt{child} option in a code chunk. Note also that you can continue to use \texttt{input}, \texttt{include}, and code chunks with the \texttt{child} option in the same document if you like. 
 
-When you have your child code chunks in your parent document set up, just \texttt{knit} the parent like you would any other knittable file. The knittable children will be knit and included everytime you knit the parent document.
+When you have your child code chunks in your parent document set up, just \texttt{knit} the parent like you would any other knittable file. The knittable children will be knit and included every time you knit the parent document.
 
 \subsection{Knitting child documents}
 
@@ -164,7 +164,7 @@ This chapter is very short
 \end{kframe}
 \end{knitrout}
 
-\noindent You can also use \verb|set_parent| with \verb|Sexpr|. When you have set the parent document you can \texttt{knit} the child document by itself. In addition to knitting the code chunks \emph{knitr} will include all of the preamble information from the parent document as well as \verb|\begin{docuement}| and \verb|\end{document}|.\footnote{If you are using custom LaTeX style files (they have the file extension \texttt{.sty}) then \emph{knitr} won't include these in the knitted document unless you include a copy of the style file in the child document's directory.}
+\noindent You can also use \verb|set_parent| with \verb|Sexpr|. When you have set the parent document you can \texttt{knit} the child document by itself. In addition to knitting the code chunks \emph{knitr} will include all of the preamble information from the parent document as well as \verb|\begin{document}| and \verb|\end{document}|.\footnote{If you are using custom LaTeX style files (they have the file extension \texttt{.sty}) then \emph{knitr} won't include these in the knitted document unless you include a copy of the style file in the child document's directory.}
 
 \paragraph{Other markup languages}
 
@@ -310,7 +310,7 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
     \item Create a vector for the country names in the data. We will use this vector to subset the data.
     \item Create a \texttt{function}\index{R command!function}\index{R!functions} called \emph{BatchReports} for subsetting\index{R!subset} the data, brewing it, and knitting it. 
         \begin{itemize}
-            \item The \texttt{function} command allows us create a new function.\footnote{User created functions are just like most other R function.} Arguments are specified in parentheses (these are also called the formals\index{R functions!formals}) and R expressions are put in the curly brackets that denote the function's body.\index{R functions!body} The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew, and knit the data according to \emph{Name}'s value.\footnote{For more infromation on functions see Hadley Wickham's \emph{devtools} Wiki page on the topic: \url{https://github.com/hadley/devtools/wiki/Functions}.}
+            \item The \texttt{function} command allows us create a new function.\footnote{User created functions are just like most other R function.} Arguments are specified in parentheses (these are also called the formals\index{R functions!formals}) and R expressions are put in the curly brackets that denote the function's body.\index{R functions!body} The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew, and knit the data according to \emph{Name}'s value.\footnote{For more information on functions see Hadley Wickham's \emph{devtools} Wiki page on the topic: \url{https://github.com/hadley/devtools/wiki/Functions}.}
             \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{R command!gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{R command!paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
         \end{itemize}
     \item \texttt{l\_ply}\index{R command!l\_ply} from the \emph{plyr}\index{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value \emph{COUNTRY}. 
