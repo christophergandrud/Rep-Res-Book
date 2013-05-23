@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 1 May 2013
+% Updated: 23 May 2013
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -113,7 +113,7 @@ Note that with a free Dropbox account, previous versions of a file are only stor
 
 Dropbox adequately meets our four basic criteria for reproducible data storage. It is easy to set up and use. GitHub meets the criteria and more, especially when it comes to version control. It is, however, less straightforward at first. In this section we will learn enough of the basics to get you started using GitHub to store, access, collaborate on, and version control your research.
 
-GitHub is an interface and cloud hosting service built on top of the Git\index{Git} version control system.\footnote{I used Git version 1.7.9.6 for this book.} Git does the version control. GitHub stores the data remotely as well as providing a number of other features, some of which we look at below. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded" computer programs--in what Git calls ``repositories"\index{Git!repository}--repos\index{GitHub!repo}\index{repo} for short--by making it easy for a number of collaborators to work together to build computer programs. This seems very far from reproducible research.
+GitHub is an interface and cloud hosting service built on top of the Git\index{Git} version control system.\footnote{I used Git version 1.7.9.6 for this book.} Git does the version control. GitHub stores the data remotely as well as providing a number of other features, some of which we look at below. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded'' computer programs--in what Git calls ``repositories''\index{Git!repository}--repos\index{GitHub!repo}\index{repo} for short--by making it easy for a number of collaborators to work together to build computer programs. This seems very far from reproducible research.
 
 Remember that as reproducible researchers we are building projects out of interconnected text files. In important ways this is exactly the same as building a computer program. Computer programs are also basically large collections of interconnected text files. Like computer programmers, we need ways to store, version control, access, and collaborate on our text files. Because GitHub is very actively used by people with similar needs (who are also really good programmers), the interface offers many highly developed and robust features for reproducible researchers.
 
@@ -200,7 +200,7 @@ git add README.md
 git add .
 @
 
-\noindent When we want Git to track changes made to files added to the repository we can use the \texttt{commit}\index{Git command!commit} command. In Git language we are ``committing" the changes to the repository.
+\noindent When we want Git to track changes made to files added to the repository we can use the \texttt{commit}\index{Git command!commit} command. In Git language we are ``committing'' the changes to the repository.
 
 <<Ch5Commit, eval=FALSE, engine='sh'>>=
 # Commit changes
@@ -274,7 +274,7 @@ git checkout --
 
 \paragraph{Tags}
 
-SHA-1 hashes are a bit cumbersome to use as a reference number. What was the hash number for that one commit? To solve this problem you can add bookmarks, known as ``tags",\index{Git!tag}\index{Git command!tag} to particularly important commits. Imagine we just committed our first full draft of a project. We want to tag it as version 0.1, i.e. ``v0.1''. To do this use Git's tag command:
+SHA-1 hashes are a bit cumbersome to use as a reference number. What was the hash number for that one commit? To solve this problem you can add bookmarks, known as ``tags'',\index{Git!tag}\index{Git command!tag} to particularly important commits. Imagine we just committed our first full draft of a project. We want to tag it as version 0.1, i.e. ``v0.1''. To do this use Git's tag command:
 
 <<Ch5TagMake, eval=FALSE, engine='sh'>>=
 # Tag most recent commit v0.1
@@ -349,7 +349,7 @@ figure/*
 *.tex
 @
 
-\noindent The asterisk (\verb|*|) is a ``wildcard"\index{wildcard} and stands for any character. In other words, it tells Git to look for files with any name that end with a specified file extension. This is faster than writing out the full name of every file you want to ignore individually. It also makes it easy to copy the rules into new repos. You'll notice the \texttt{cache/*} and \texttt{figure/*} rules. These tell Git to ignore all of the files in the \emph{cache} and \emph{figure} directories. These files are the product of caching code chunks and creating figures with \emph{knitr}, respectively.
+\noindent The asterisk (\verb|*|) is a ``wildcard''\index{wildcard} and stands for any character. In other words, it tells Git to look for files with any name that end with a specified file extension. This is faster than writing out the full name of every file you want to ignore individually. It also makes it easy to copy the rules into new repos. You'll notice the \texttt{cache/*} and \texttt{figure/*} rules. These tell Git to ignore all of the files in the \emph{cache} and \emph{figure} directories. These files are the product of caching code chunks and creating figures with \emph{knitr}, respectively.
 
 Git will not ignore files that have already been committed to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{Git command!rm} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking so that it could be ignored type:
 

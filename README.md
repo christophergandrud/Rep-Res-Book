@@ -36,7 +36,7 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 
 
 ```
-## R version 3.0.0 (2013-04-03)
+## R version 3.0.1 (2013-05-16)
 ## Platform: x86_64-apple-darwin10.8.0 (64-bit)
 ## 
 ## locale:
@@ -47,35 +47,36 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] foreign_0.8-53        ZeligBayesian_0.1     MCMCpack_1.3-2       
+##  [1] foreign_0.8-53        ZeligBayesian_0.1     MCMCpack_1.3-3       
 ##  [4] coda_0.16-1           Zelig_4.1-3           sandwich_2.2-10      
 ##  [7] boot_1.3-9            xtable_1.7-1          WDI_2.2              
-## [10] treebase_0.0-6        ape_3.0-8             texreg_1.25          
-## [13] tables_0.7            sqldf_0.4-6.4         RSQLite.extfuns_0.0.1
-## [16] RSQLite_0.11.3        chron_2.3-43          gsubfn_0.6-5         
-## [19] proto_0.3-10          DBI_0.2-6             slidify_0.3.3        
-## [22] stargazer_3.0.1       RJSONIO_1.0-3         RCurl_1.95-4.1       
-## [25] bitops_1.0-5          reshape2_1.2.2        repmis_0.2.5         
-## [28] quantmod_0.4-0        TTR_0.22-0            xts_0.9-3            
-## [31] zoo_1.7-9             Defaults_1.1-1        plyr_1.8             
-## [34] openair_0.8-5         memisc_0.96-4         MASS_7.3-26          
-## [37] lattice_0.20-15       markdown_0.5.4        knitcitations_0.4-4  
-## [40] bibtex_0.3-5          Hmisc_3.10-1          survival_2.37-4      
-## [43] httr_0.2              googleVis_0.4.2       ggplot2_0.9.3.1      
-## [46] gdata_2.12.0          formatR_0.7           extrafont_0.14       
-## [49] estout_1.2            digest_0.6.3          devtools_1.2         
-## [52] data.table_1.8.8      countrycode_0.13      brew_1.0-6           
-## [55] apsrtable_0.8-8       animation_2.2         knitr_1.2            
+## [10] ROAuth_0.9.3          treebase_0.0-6        ape_3.0-8            
+## [13] texreg_1.25           tables_0.7            sqldf_0.4-6.4        
+## [16] RSQLite.extfuns_0.0.1 RSQLite_0.11.3        chron_2.3-43         
+## [19] gsubfn_0.6-5          proto_0.3-10          DBI_0.2-7            
+## [22] slidify_0.3.3         stargazer_3.0.1       RJSONIO_1.0-3        
+## [25] RCurl_1.95-4.1        bitops_1.0-5          reshape2_1.2.2       
+## [28] repmis_0.2.5          quantmod_0.4-0        TTR_0.22-0           
+## [31] xts_0.9-3             zoo_1.7-9             Defaults_1.1-1       
+## [34] plyr_1.8              openair_0.8-5         memisc_0.96-4        
+## [37] MASS_7.3-26           lattice_0.20-15       markdown_0.5.4       
+## [40] knitcitations_0.4-4   bibtex_0.3-5          Hmisc_3.10-1.1       
+## [43] survival_2.37-4       httr_0.2              googleVis_0.4.2      
+## [46] ggplot2_0.9.3.1       gdata_2.12.0.2        formatR_0.7          
+## [49] extrafont_0.14        estout_1.2            digest_0.6.3         
+## [52] devtools_1.2          data.table_1.8.8      countrycode_0.13     
+## [55] brew_1.0-6            apsrtable_0.8-8       animation_2.2        
+## [58] knitr_1.2            
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] car_2.0-16          cluster_1.14.4      colorspace_1.2-2   
+##  [1] car_2.0-17          cluster_1.14.4      colorspace_1.2-2   
 ##  [4] dichromat_2.0-0     evaluate_0.4.3      gtable_0.1.2       
 ##  [7] gtools_2.7.1        labeling_0.1        latticeExtra_0.6-24
 ## [10] Matrix_1.0-12       memoise_0.1         mgcv_1.7-22        
-## [13] munsell_0.4         nlme_3.1-109        parallel_3.0.0     
+## [13] munsell_0.4         nlme_3.1-109        parallel_3.0.1     
 ## [16] RColorBrewer_1.0-5  rjson_0.2.12        Rttf2pt1_1.2       
-## [19] scales_0.2.3        stringr_0.6.2       tcltk_3.0.0        
-## [22] twitteR_1.1.0       whisker_0.1         XML_3.95-0.2       
+## [19] scales_0.2.3        stringr_0.6.2       tcltk_3.0.1        
+## [22] twitteR_1.1.6       whisker_0.3-2       XML_3.95-0.2       
 ## [25] yaml_2.1.7
 ```
 

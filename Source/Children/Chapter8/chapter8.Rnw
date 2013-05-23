@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 1 May 2013
+% Updated: 23 May 2013
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -81,7 +81,7 @@ Sometimes you may want to have R code or output show up inline with the rest of 
 
 There are a number of ways to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font\index{texttt} commonly used in LaTeX produced documents to indicate that some text is code (I use typewriter font for this purpose in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you \texttt{2 + 2} in your text. Note that in LaTeX curly brackets (\verb|{}|) work exactly like parentheses in R, i.e. they enclose a command's arguments.
 
-However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler\index{compiler} will still try to run the code inside of the command as if it were LaTeX markup. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}| because they have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). The backslash is an escape character in LaTeX. 
+However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler\index{compiler} will still try to run the code inside of the command as if it were LaTeX markup. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}|. They have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). The backslash is an escape character in LaTeX. 
 
 Probably the better option is to use the \verb|\verb| command\index{LaTeX command!verb}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\texttt|' in the text. We would type:
 

@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 May 2013
+% Updated: 23 May 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -57,7 +57,7 @@ Number
 
 \noindent Let's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included here to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. They make it easier to copy and paste code into R from a document created by {\emph{knitr}} because R will ignore everything after a hash.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
 
-Creating an object with words and other characters--a character object--is very similar. The only difference is that you enclose the character string\index{R!character strings} (letters in a word for example) inside of single or double quotation\index{R!quotation marks} marks (\verb|''|, or \verb|""|).\footnote{Single and double quotation marks are interchangeable in R for this purpose. In this book I always use double quotes, except for \emph{knitr} code chunk options.} To create an object called \emph{Words} that contains the character string ``Hello World":\label{StringObject}
+Creating an object with words and other characters--a character object--is very similar. The only difference is that you enclose the character string\index{R!character strings} (letters in a word for example) inside of single or double quotation\index{R!quotation marks} marks (\verb|''|, or \verb|""|).\footnote{Single and double quotation marks are interchangeable in R for this purpose. In this book I always use double quotes, except for \emph{knitr} code chunk options.} To create an object called \emph{Words} that contains the character string ``Hello World'':\label{StringObject}
 
 <<Ch3CharacterObject>>=
 Words <- "Hello World"
@@ -69,7 +69,7 @@ An object's type is important to keep in mind as it determines what we can do to
 mean(Words)
 @
 
-\noindent Trying to find the mean of our {\emph{Words}} object gives us a warning message and returns the value {\tt{NA}}\index{NA}\index{R!NA}: not applicable. You can also think of {\tt{NA}} as meaning ``missing".\index{missing}\index{R!missing} To find out an object's type use the {\tt{class}}\index{R command!class}\index{class} command. For example:
+\noindent Trying to find the mean of our {\emph{Words}} object gives us a warning message and returns the value {\tt{NA}}\index{NA}\index{R!NA}: not applicable. You can also think of {\tt{NA}} as meaning ``missing''.\index{missing}\index{R!missing} To find out an object's type use the {\tt{class}}\index{R command!class}\index{class} command. For example:
 
 <<Ch3ClassCommand>>=
 class(Words)
@@ -77,9 +77,9 @@ class(Words)
 
 \paragraph{Vector \& data frame objects}
 
-So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects,\index{scalar} though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame}\index{R!data frame} type objects and are roughly equivalent to the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse" \cite[]{Matloff2011}. Knowing how to use vectors\index{vector}\index{R!vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list}\index{R!list object} and matrices\index{matrix}\index{R!matrix object}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
+So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects,\index{scalar} though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame}\index{R!data frame} type objects and are roughly equivalent to the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse'' \cite[]{Matloff2011}. Knowing how to use vectors\index{vector}\index{R!vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list}\index{R!list object} and matrices\index{matrix}\index{R!matrix object}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
 
-\noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type" in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
+\noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type'' in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
 
 Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (concatenate)\index{concatenate}\index{R command!c}\index{R command!concatenate} function:
 
@@ -195,7 +195,7 @@ with(StringNumObject, {
 )
 @
 
-\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{Using R terminology the second ``argument"\index{R!argument} value--the code after the comma--of the \textbf{with} command is called an ``expression",\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
+\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{Using R terminology the second ``argument''\index{R!argument} value--the code after the comma--of the \textbf{with} command is called an ``expression'',\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
 
 For examples in this book I largely avoid using the \texttt{attach} and \texttt{with} commands. I mostly use the component selector. Though it creates longer code, I find that code written with the component selector is easier to follow. It's always clear which object we are selecting a component from. Nonetheless, \textbf{attach} and \textbf{with} are very useful for streamlining your R code.
 
@@ -617,9 +617,9 @@ RStudio is highly integrated with {\emph{knitr}} and the markup languages \emph{
 
 \paragraph{Compiling R source code Notebooks}
 
-If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook"\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}. 
+If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook''\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}. 
 
-If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emph{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish". Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.\label{PublishRPubs}
+If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emph{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish''. Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.\label{PublishRPubs}
 
 \begin{figure}
     \caption{RStudio Notebook Example}
@@ -665,7 +665,7 @@ You can see in the final image in Figure \ref{SourcePanes} that many of the \emp
 
 \paragraph{Change default .Rnw knitter}
 
-By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of \emph{Sweave} to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Global Options...}.\index{RStudio!Options window} Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave Rnw files using:". Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.} 
+By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of \emph{Sweave} to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Global Options...}.\index{RStudio!Options window} Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave Rnw files using:''. Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.} 
 
 \subsection{\emph{knitr} \& R}
 
