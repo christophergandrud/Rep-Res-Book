@@ -80,4 +80,6 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 ## [25] yaml_2.1.7
 ```
 
+---
 
+(c) Christopher Gandrud (2013)
