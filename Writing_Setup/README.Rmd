@@ -31,7 +31,7 @@ doInstall <- FALSE
 
 in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `TRUE` and run the code chunk.
 
-**Note:** the LaTeX file will compile with warnings. Warnings related to the subfigures should be ignored (the process that creates these warnings were kept for stylistic reasons.) 
+**Note:** the LaTeX file will compile with warnings. Warnings related to the subfigures should be ignored (the process that creates these warnings was kept despite the warnings for stylistic reasons.) But because of this you will need to compile the document a few times to get the full text with bibliography and index.
 
 #### Reproducing the Book in Windows.
 
