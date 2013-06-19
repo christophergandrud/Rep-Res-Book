@@ -11,7 +11,7 @@ The files in this repository comprise the draft version of **Reproducible Resear
 
 ### File Organization
 
-The main files used to create the manuscript of the book are in the `/Source` folder. This folder contains the parent *knitr* `.Rnw` file in the `/Source/Parent/` directory. Child documents for the book chapters are in the `/Source/Children/` directory and child files for the book's frontmatter are in the `/Source/FrontMatter/` directory.
+The main files used to create the manuscript of the book are in the `/Source` folder. This folder contains the parent *knitr* `.Rnw` file in the `/Source/Parent/` directory. Child documents for the book chapters are in the `/Source/Children/` directory and child files for the book's front matter are in the `/Source/FrontMatter/` directory.
 
 ### Reproduce the Book
 
@@ -29,7 +29,14 @@ Note: To install the R packages used to compile the book open the *Source/Childr
 doInstall <- FALSE
 ```
 
-in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `TRUE` and run the code chunk
+in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `TRUE` and run the code chunk.
+
+**Note:** the LaTeX file will compile with warnings. Warnings related to the subfigures should be ignored (the process that creates these warnings were kept for stylistic reasons.) 
+
+#### Reproducing the Book in Windows.
+
+If you would like to reproduce the book and are using Windows you will need to install [RTools](http://cran.r-project.org/bin/windows/Rtools/installer.html). Please use the recommended installation to en- sure that your system PATH is set up correctly. Otherwise your computer will not know where the tools are.
+
 
 ### Session Info
 The current version of the book manuscript was compiled with [RStudio](http://www.rstudio.com/) (v. 0.98.134 developer build) with the following R session:
@@ -47,38 +54,39 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] foreign_0.8-53        ZeligBayesian_0.1     MCMCpack_1.3-3       
+##  [1] foreign_0.8-54        ZeligBayesian_0.1     MCMCpack_1.3-3       
 ##  [4] coda_0.16-1           Zelig_4.1-3           sandwich_2.2-10      
 ##  [7] boot_1.3-9            xtable_1.7-1          WDI_2.2              
 ## [10] ROAuth_0.9.3          treebase_0.0-6        ape_3.0-8            
 ## [13] texreg_1.25           tables_0.7            sqldf_0.4-6.4        
-## [16] RSQLite.extfuns_0.0.1 RSQLite_0.11.3        chron_2.3-43         
+## [16] RSQLite.extfuns_0.0.1 RSQLite_0.11.4        chron_2.3-43         
 ## [19] gsubfn_0.6-5          proto_0.3-10          DBI_0.2-7            
 ## [22] slidify_0.3.3         stargazer_3.0.1       RJSONIO_1.0-3        
 ## [25] RCurl_1.95-4.1        bitops_1.0-5          reshape2_1.2.2       
-## [28] repmis_0.2.5          quantmod_0.4-0        TTR_0.22-0           
-## [31] xts_0.9-3             zoo_1.7-9             Defaults_1.1-1       
+## [28] repmis_0.2.5.1        quantmod_0.4-0        TTR_0.22-0           
+## [31] xts_0.9-4             zoo_1.7-10            Defaults_1.1-1       
 ## [34] plyr_1.8              openair_0.8-5         memisc_0.96-4        
-## [37] MASS_7.3-26           lattice_0.20-15       markdown_0.5.4       
-## [40] knitcitations_0.4-4   bibtex_0.3-5          Hmisc_3.10-1.1       
-## [43] survival_2.37-4       httr_0.2              googleVis_0.4.2      
+## [37] MASS_7.3-26           lattice_0.20-15       markdown_0.5.5       
+## [40] knitcitations_0.4-7   bibtex_0.3-5          Hmisc_3.10-1.1       
+## [43] survival_2.37-4       httr_0.2              googleVis_0.4.3      
 ## [46] ggplot2_0.9.3.1       gdata_2.12.0.2        formatR_0.7          
 ## [49] extrafont_0.14        estout_1.2            digest_0.6.3         
-## [52] devtools_1.2          data.table_1.8.8      countrycode_0.13     
+## [52] devtools_1.2          data.table_1.8.8      countrycode_0.14     
 ## [55] brew_1.0-6            apsrtable_0.8-8       animation_2.2        
 ## [58] knitr_1.2            
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] car_2.0-17          cluster_1.14.4      colorspace_1.2-2   
+##  [1] car_2.0-18          cluster_1.14.4      colorspace_1.2-2   
 ##  [4] dichromat_2.0-0     evaluate_0.4.3      gtable_0.1.2       
 ##  [7] gtools_2.7.1        labeling_0.1        latticeExtra_0.6-24
-## [10] Matrix_1.0-12       memoise_0.1         mgcv_1.7-22        
+## [10] Matrix_1.0-12       memoise_0.1         mgcv_1.7-24        
 ## [13] munsell_0.4         nlme_3.1-109        parallel_3.0.1     
 ## [16] RColorBrewer_1.0-5  rjson_0.2.12        Rttf2pt1_1.2       
 ## [19] scales_0.2.3        stringr_0.6.2       tcltk_3.0.1        
 ## [22] twitteR_1.1.6       whisker_0.3-2       XML_3.95-0.2       
 ## [25] yaml_2.1.7
 ```
+
 
 ---
 
