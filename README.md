@@ -90,4 +90,4 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 
 ---
 
-(c) Christopher Gandrud (2013)
+&copy; Christopher Gandrud (2013)
