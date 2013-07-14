@@ -35,7 +35,7 @@ in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `
 
 #### Reproducing the Book in Windows.
 
-If you would like to reproduce the book and are using Windows you will need to install [RTools](http://cran.r-project.org/bin/windows/Rtools/installer.html). Please use the recommended installation to ensure that your system PATH is set up correctly. Otherwise your computer will not know where the tools are.
+If you would like to reproduce the book and are using Windows you will need to install [RTools](http://cran.r-project.org/bin/windows/Rtools/installer.html). Please use the recommended installation to ensure that your system PATH is set up correctly. Otherwise your computer will not know where the tools are. Also see the instructions for setting up the [extrafont](https://github.com/wch/extrafont) package (embedding the fonts is not strictly necessary however).
 
 
 ### Session Info
