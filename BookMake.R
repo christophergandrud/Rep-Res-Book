@@ -1,7 +1,7 @@
 #################
 # Make file for the book Reproducible Research with R and RStudio
 # Christopher Gandrud
-# Updated: 12 January 2013
+# Updated: 14 July 2013
 #################
 
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
@@ -27,6 +27,8 @@ setwd(ParentDirectory)
 knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 
 # Embed fonts
+# This is largely for complete replication purposes only and is not necessary.
+## If using Windows please see extrafont set up instructions at https://github.com/wch/extrafont
 extrafont::embed_fonts("Rep-Res-Parent.pdf")
 
 # Clean up /git_repositories/Rep-Res-Book/Source/Parent/
