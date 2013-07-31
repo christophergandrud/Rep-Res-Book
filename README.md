@@ -19,7 +19,7 @@ The book can be reproduced by using the R package *knitr*. To do this:
 
 1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) installed on your computer.
 
-2. Open the file *BookMake.R*. Change the directories for `ParentDirectory` and `SetUpDirectory` to directory you have the files *Rep-Res-Parent.Rnw* and *README.Rmd* located in.
+2. Place this repository in a file called `git_repositories` in your root directory.
 
 3. Run the *BookMake.R* make file in R. Note: you must install the *knitr* R package before running this file.
 
@@ -36,6 +36,11 @@ in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to `
 #### Reproducing the Book in Windows.
 
 If you would like to reproduce the book and are using Windows you will need to install [RTools](http://cran.r-project.org/bin/windows/Rtools/installer.html). Please use the recommended installation to ensure that your system PATH is set up correctly. Otherwise your computer will not know where the tools are. Also see the instructions for setting up the [extrafont](https://github.com/wch/extrafont) package (embedding the fonts is not strictly necessary however).
+
+
+#### Reproducing this Book in Linux
+
+You will need to install the the R packages RCurl and XML seperately. See [this post](https://github.com/cboettig/treeBASE/issues/5) for more details.
 
 
 ### Session Info
