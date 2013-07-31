@@ -29,15 +29,15 @@ knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 # Embed fonts
 # This is largely for complete replication purposes only and is not necessary.
 ## If using Windows please see extrafont set up instructions at https://github.com/wch/extrafont
-extrafont::embed_fonts("Rep-Res-Parent.pdf")
+# extrafont::embed_fonts("Rep-Res-Parent.pdf")
 
 # Clean up /git_repositories/Rep-Res-Book/Source/Parent/
-DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", 
-                                                      "Rep-Res-Parent.pdf", 
-                                                      "krantz.cls", "figure", 
-                                                      "cache")
-                       )
-unlink(DeleteFiles)
+# DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", 
+#                                                      "Rep-Res-Parent.pdf", 
+#                                                      "krantz.cls", "figure", 
+#                                                      "cache")
+#                       )
+# unlink(DeleteFiles)
 
 #### README ####
 # Change working directory to /Rep-Res-Book/Writing_Setup/
