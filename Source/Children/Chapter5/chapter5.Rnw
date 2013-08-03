@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 May 2013
+% Updated: 3 August 2013
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -259,7 +259,7 @@ It is useful to step back for a second and try to understand what Git is doing w
 
 <<Ch5CheckoutBasic, eval=FALSE, engine='sh'>>=
 # Checkout latest commit
-git checkout --
+git checkout -- .
 @
 
 \noindent You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|---| with the commit reference.\index{Git!commit reference} The reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage} (see below for more information on how to create a GitHub webpage).\footnote{You can also search your commit history and roll back to a previous commit using only the command line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the right-hand side of the repo's webpage. This will show you all of the commits. A portion of this book's commit history is shown in Figure \ref{BookHistory}. By clicking on {\tt{Browse Code}} you can see what the files at any commit looked like. Above this button is another with a series of numbers and letters. This is the commit's SHA-1 hash\footnote{Secure Hash Algorithm}.\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file. 
