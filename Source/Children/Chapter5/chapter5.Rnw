@@ -207,7 +207,7 @@ git add .
 git commit -a -m "First Commit, created README file"
 @
 
-\noindent The \texttt{-a} (all) option commits changes made to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} option like: \texttt{"First Commit, created README file"}. Messages help you remember general details about individual commits. This is helpful when you want to revert to old versions. \textbf{Remember:} Git only tracks changes when you commit them. 
+\noindent Note: the files won't appear on GitHub yet. Later in the chapter we will learn how to push commits to your remote GitHub repository. The \texttt{-a} (all) option commits changes made to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} option like: \texttt{"First Commit, created README file"}. Messages help you remember general details about individual commits. This is helpful when you want to revert to old versions. \textbf{Remember:} Git only tracks changes when you commit them. 
 
 Finally, you can use the \texttt{status} command for details about your repository, including uncommitted changes. Generally it's a good idea to use the \texttt{-s} (short) option, so that the output is more readable.
 
@@ -255,7 +255,7 @@ git status -s
 
 \paragraph{Checkout}\index{Git command!checkout}
 
-It is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{Objects}}. Commit objects\index{Git!commit object}\footnote{Other Git objects include trees\index{Git!tree} (sort of like directories), tags\index{Git!tag} (bookmarks for important points in a repo's history), and blobs\index{Git!blob} (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
+It is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{objects}}. Commit objects\index{Git!commit object}\footnote{Other Git objects include trees\index{Git!tree} (sort of like directories), tags\index{Git!tag} (bookmarks for important points in a repo's history), and blobs\index{Git!blob} (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
 
 <<Ch5CheckoutBasic, eval=FALSE, engine='sh'>>=
 # Checkout latest commit
