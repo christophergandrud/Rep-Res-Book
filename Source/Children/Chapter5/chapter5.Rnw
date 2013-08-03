@@ -288,6 +288,15 @@ git tag -a v0.1 -m "First draft"
 git checkout v0.1
 @
 
+\noindent This will create a new ``branch'' with a generic name \emph{(detached from v0.1)} where you can make changes and commit them. If plan to checkout a previous tagged version and make changes to it, it is a good idea to specifically name the branch using the \verb|-b| argument.\footnote{If you don't then the new branch will have a ``detached head'' which will create problems using the branch in the future.} For example, to give it the name \emph{v0.1Brance} type:
+
+<<Ch5CheckoutTagNamed, eval=FALSE, engine='sh'>>=
+# Checkout v0.1 as v0.1Brance
+git checkout v0.1 -b v0.1Branch
+@
+
+\noindent What is a branch?
+
 \paragraph{Branches}
 
 Sometimes you may want to work on an alternative version of your project and then merge changes made to this alternative version back into the main one. For example the main version could be the most stable current copy of your research, while the alternative version could be a place where you test out new ideas. Git allows you to create a new \emph{branch}\index{Git!branch}\index{Git command!branch} (alternative version of the repo) which can be merged back into the \emph{master} (main) branch. To see what branch you are using type:
