@@ -41,11 +41,11 @@ When you create make-like files in R to organize and run your data gathering you
 setwd("/ExampleProject/Data/")
 
 # Gather and clean up raw data files.
-source("GatherSource/IndvDataGather/Gather1.R")
+source("GatherSource/Gather1.R")
 
-source("GatherSource/IndvDataGather/Gather2.R")
+source("GatherSource/Gather2.R")
 
-source("GatherSource/IndvDataGather/Gather3.R")
+source("GatherSource/Gather3.R")
     
 # Merge cleaned data frames into data frame object CleanedData
 source("GatherSource/MergeData.R")
@@ -74,7 +74,7 @@ TARGET ... : PREREQUISITE ...
         \end{kframe}
 \end{knitrout}
 
-Note that, unlike in R, tabs are important in Make. They indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If a target is newer than its prerequisite. Make does not run the prerequisite.
+Note that, unlike in R, tabs are important in Make. They indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If a target is newer than its prerequisite, Make does not run the prerequisite.
 
 The basic idea of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data, and save it in CSV\index{CSV} format. 
 
