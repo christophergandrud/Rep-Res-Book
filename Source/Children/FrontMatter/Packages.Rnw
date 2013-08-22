@@ -44,7 +44,21 @@ install_github("slidifyLibraries", "ramnathv")
 
 \noindent For more details see the \emph{slidify} website: \url{http://ramnathv.github.com/slidify/start.html#}. 
 
+\paragraph{Special issues for Windows and Linux Users}
+
 If you are using Windows you will also need to install \emph{Rtools} \cite[]{Rtools}.\index{Rtools} You can download \emph{Rtools} from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload} Please use the recommended installation to ensure that your system PATH\index{PATH} is set up correctly. Otherwise your computer will not know where the tools are.
+
+On Linux you will need to install the \emph{RCurl} \citep{R-RCurl}\index{RCurl} and \emph{XML}\index{XML} \citep{R-XML} packages seperately. Use your Terminal\index{Terminal} to install these packages with the following code:
+
+<<PackagesRCurlLinux, echo=TRUE, eval=FALSE, engine='sh'>>=
+sudo apt-get update
+
+sudo apt-get install libcurl4-gnutls-dev
+
+sudo apt-get install r-cran-xml
+sudo apt-get install libxml2-dev
+@
+
 
 <<FrontPackageCitations, include=FALSE>>=
 # Install & load required packages as well as all cited packages
