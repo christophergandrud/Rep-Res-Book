@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 May 2013
+% Updated: 22 August 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -30,7 +30,7 @@ The files for the examples used in this section can be downloaded from GitHub at
 
 When you create make-like files in R to organize and run your data gathering you usually only need one or two commands, {\tt{setwd}}\index{R command!setwd} and {\tt{source}}\index{R command!source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command more in the Chapter \ref{StatsModel}.}  Let's see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
 
-<<Ch5ExampleRMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
+<<Ch6ExampleRMake, eval=FALSE, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
 ################
 # Example R make-like file
 # Christopher Gandrud
@@ -41,11 +41,9 @@ When you create make-like files in R to organize and run your data gathering you
 setwd("/ExampleProject/Data/")
 
 # Gather and clean up raw data files.
-source("/GatherSource/IndvDataGather/Gather1.R")
-
-source("/GatherSource/IndvDataGather/Gather2.R")
-
-source("/GatherSource/IndvDataGather/Gather3.R")
+source("GatherSource/Gather1.R") 
+source("GatherSource/Gather2.R") 
+source("GatherSource/Gather3.R")
     
 # Merge cleaned data frames into data frame object CleanedData
 source("GatherSource/MergeData.R")
