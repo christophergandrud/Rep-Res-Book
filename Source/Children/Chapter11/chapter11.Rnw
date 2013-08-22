@@ -100,33 +100,33 @@ Here is a full LaTeX article class document with all of these changes added:
 
 %% Set knitr global options and gather data
 \textless{}\textless{}Global, include=FALSE\textgreater{}\textgreater{}=
-\hlcomment{#### Set chunk options ####}
-opts_chunk$\hlfunctioncall{set}(fig.align=\hlstring{'center'})
+\hlcom{#### Set chunk options ####}
+opts_chunk$\hlkwd{set}(fig.align=\hlstr{'center'})
 
-\hlcomment{#### Load and cite R packages ####}
-\hlcomment{# Create list of packages}
-PackagesUsed <- c(\hlstring{"knitr", "ggplot2", "repmis"})
+\hlcom{#### Load and cite R packages ####}
+\hlcom{# Create list of packages}
+PackagesUsed <- c(\hlstr{"knitr", "ggplot2", "repmis"})
 
-\hlcomment{# Load PackagesUsed and create .bib BibTeX file}
-\hlcomment{# Note must have repmis package installed.}
-repmis::LoadandCite(PackagesUsed, file = \hlstring{"Packages.bib"}, install = FALSE)
+\hlcom{# Load PackagesUsed and create .bib BibTeX file}
+\hlcom{# Note must have repmis package installed.}
+repmis::LoadandCite(PackagesUsed, file = \hlstr{"Packages.bib"}, install = FALSE)
 
-\hlcomment{#### Gather Democracy data from Pemstein et al. (2010) ####}
-\hlcomment{# For simplicity, store the URL in an object called 'url'.}
-url <- \hlstring{"http://bit.ly/S0vxk2"}
+\hlcom{#### Gather Democracy data from Pemstein et al. (2010) ####}
+\hlcom{# For simplicity, store the URL in an object called 'url'.}
+url <- \hlstr{"http://bit.ly/S0vxk2"}
 
-\hlcomment{# Create a temporary file called 'temp' to put the zip file into.}
-temp <- \hlfunctioncall{tempfile}()
+\hlcom{# Create a temporary file called 'temp' to put the zip file into.}
+temp <- \hlkwd{tempfile}()
 
-\hlcomment{# Download the compressed file into the temporary file.}
-\hlfunctioncall{download.file}(url, temp)
+\hlcom{# Download the compressed file into the temporary file.}
+\hlkwd{download.file}(url, temp)
 
-\hlcomment{# Decompress the file and convert it into a dataframe}
-\hlcomment{# class object called 'data'.}
-UDSData <- \hlfunctioncall{read.csv}(\hlfunctioncall{gzfile}(temp, \hlstring{"uds_summary.csv"}))
+\hlcom{# Decompress the file and convert it into a dataframe}
+\hlcom{# class object called 'data'.}
+UDSData <- \hlkwd{read.csv}(\hlkwd{gzfile}(temp, \hlstr{"uds_summary.csv"}))
 
-\hlcomment{# Delete the temporary file.}
-\hlfunctioncall{unlink}(temp)
+\hlcom{# Delete the temporary file.}
+\hlkwd{unlink}(temp)
 
 @
 
@@ -157,12 +157,12 @@ UDS scores over time for all of the countries in their sample.
     \textbackslash{}caption\{Mean UDS Scores\}
     \textbackslash{}label\{DemPlot\}
 \textless{}\textless{}echo=FALSE, message=FALSE, warining=FALSE, out.width='7cm', out.height='7cm'\textgreater{}\textgreater{}=
-\hlcomment{# Graph UDS scores}
+\hlcom{# Graph UDS scores}
 ggplot(UDSData, aes(x = year, y = mean)) +
 ggplot(UDSData, aes(x = year, y = mean)) +
         geom_point(alpha = I(0.1)) +
         stat_smooth(size = 2) +
-        ylab(\hlstring{"Democracy Score"}) + xlab(\hlstring{""}) +
+        ylab(\hlstr{"Democracy Score"}) + xlab(\hlstr{""}) +
         theme\_bw()
 @
 \textbackslash{}end\{figure\}
@@ -602,8 +602,8 @@ Lists work the same way in beamer as they do in other LaTeX document classes. Th
     
         To access it we can type:
 \textless{}\textless{}eval=FALSE\textgreater{}\textgreater{}=
-\hlcomment{# Access and run the code to create a caterpillar plot}
-devtools::source\_url(\hlstring{"http://bit.ly/VRKphr"})
+\hlcom{# Access and run the code to create a caterpillar plot}
+devtools::source\_url(\hlstr{"http://bit.ly/VRKphr"})
 @
 \textbackslash{}end\{frame\}
 
@@ -612,8 +612,8 @@ devtools::source\_url(\hlstring{"http://bit.ly/VRKphr"})
 \textbackslash{}begin\{frame\}[fragile]
     \textbackslash{}frametitle\{The resulting figure\}
 \textless{}\textless{}echo=FALSE, message=FALSE, out.width='\textbackslash{}\textbackslash{}textwidth', out.height='0.8\textbackslash{}\textbackslash{}textheight'\textgreater{}\textgreater{}=
-\hlcomment{# Access and run the figure code}
-devtools::source\_url(\hlstring{"http://bit.ly/VRKphr"})
+\hlcom{# Access and run the figure code}
+devtools::source\_url(\hlstr{"http://bit.ly/VRKphr"})
 @ 
 \textbackslash{}end\{frame\}
 

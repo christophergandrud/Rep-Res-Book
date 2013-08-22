@@ -31,11 +31,11 @@ Use \texttt{include=FALSE} if you don't want to include anything in the text of 
 
 \paragraph{{\tt{eval}}}\index{knitr option!eval}
 
-The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run.
+The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run. You can alternatively use a numerical vector with \texttt{echo}. The numbers in the vector tell \emph{knitr} which expressions in the chunk to evaluate. For example, if you only want to evaluate the first two expressions simply set \texttt{eval=1:2}.
 
 \paragraph{{\tt{echo}}}\index{knitr option!echo}
 
-If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} (which it is by default) then source code will be included in the presentation document.
+If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} then source code will be included in the presentation document. As with \texttt{eval} you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
 
 \paragraph{{\tt{tidy}}}\index{knitr option!tidy}
 
@@ -318,11 +318,11 @@ Imagine that in a cached code chunk we create an object called \emph{Sample}. Th
     \begin{kframe}
         \begin{alltt}
 \textless{}\textless{}Sample, cahe=TRUE\textgreater{}\textgreater{}=
-\hlcomment{# Create data}
-Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
+\hlcom{# Create data}
+Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
 
-\hlcomment{# Save sample}
-\hlfunctioncall{save}(Sample, file = \hlstring{"Sample.RData"})
+\hlcom{# Save sample}
+\hlkwd{save}(Sample, file = \hlstr{"Sample.RData"})
 @
             \end{alltt}
         \end{kframe}
@@ -336,11 +336,11 @@ Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
     \begin{kframe}
         \begin{alltt}
 \textless{}\textless{}Histogram\textgreater{}\textgreater{}=
-\hlcomment{# Load Sample}
-\hlfunctioncall{load}(file = \hlcomment{"Sample.RData"})
+\hlcom{# Load Sample}
+\hlkwd{load}(file = \hlcom{"Sample.RData"})
 
-\hlcomment{# Create histogram}
-\hlfunctioncall{hist}(Sample)
+\hlcom{# Create histogram}
+\hlkwd{hist}(Sample)
 @
             \end{alltt}
         \end{kframe}
