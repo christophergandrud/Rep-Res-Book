@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 August 2013
+% Updated: 21 August 2013
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -30,11 +30,11 @@ The files for the examples used in this section can be downloaded from GitHub at
 
 When you create make-like files in R to organize and run your data gathering you usually only need one or two commands, {\tt{setwd}}\index{R command!setwd} and {\tt{source}}\index{R command!source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command more in the Chapter \ref{StatsModel}.}  Let's see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
 
-<<Ch5ExampleRMake, error=FALSE, message=FALSE, warning=FALSE, tidy=FALSE>>=
+<<Ch6ExampleRMake, eval=FALSE, tidy=FALSE>>=
 ################
 # Example R make-like file
 # Christopher Gandrud
-# Updated 3 August 2013
+# Updated 21 August 2013
 ################
 
 # Set working directory
@@ -239,7 +239,7 @@ If you are using RStudio you can do the same thing with drop down menus. To open
 
 If the data is not stored in plain-text format, but is instead saved in a format created by another statistical program such as SPSS,\index{SPSS} SAS,\index{SAS} or Stata,\index{Stata} we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
-<<Ch6Stata, error=FALSE>>=
+<<Ch6Stata, eval=FALSE, tidy=FALSE>>=
 # Load foreign package
 library(foreign)
 
