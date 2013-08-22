@@ -11,7 +11,7 @@ The files in this repository comprise the draft version of **Reproducible Resear
 
 ### File Organization
 
-The main files used to create the manuscript of the book are in the `/Source` folder. This folder contains the parent *knitr* `.Rnw` file in the `/Source/Parent/` directory. Child documents for the book chapters are in the `/Source/Children/` directory and child files for the book's front matter are in the `/Source/FrontMatter/` directory.
+The main files used to create the manuscript of the book are in the `Source` folder. This folder contains the parent *knitr* `.Rnw` file in the `Source/Parent/` directory. Child documents for the book chapters are in the `Source/Children/` directory and child files for the book's front matter are in the `Source/FrontMatter/` directory.
 
 ### Reproduce the Book
 
