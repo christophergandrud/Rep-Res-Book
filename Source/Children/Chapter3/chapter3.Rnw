@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 May 2013
+% Updated: 22 August 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
@@ -45,13 +45,13 @@ Objects can have a number of different types. Let's make two simple objects. The
 
 To put something into the object we use the assignment operator\index{R!assigmnent operator}\footnote{The assignment operator is sometimes also referred to as the `gets arrow'.} (\verb|<-|). Let's assign the number 10 to our {\emph{Number}} object.
 
-<<Ch3NumericObject>>=
+<<Ch3NumericObject, echo=TRUE>>=
 Number <- 10
 @
 
 \noindent To see the contents of our object, type its name.
 
-<<Ch3NumberSee>>=
+<<Ch3NumberSee, echo=TRUE>>=
 Number
 @
 
@@ -59,19 +59,19 @@ Number
 
 Creating an object with words and other characters--a character object--is very similar. The only difference is that you enclose the character string\index{R!character strings} (letters in a word for example) inside of single or double quotation\index{R!quotation marks} marks (\verb|''|, or \verb|""|).\footnote{Single and double quotation marks are interchangeable in R for this purpose. In this book I always use double quotes, except for \emph{knitr} code chunk options.} To create an object called \emph{Words} that contains the character string ``Hello World'':\label{StringObject}
 
-<<Ch3CharacterObject>>=
+<<Ch3CharacterObject, echo=TRUE>>=
 Words <- "Hello World"
 @
 
 An object's type is important to keep in mind as it determines what we can do to it. For example, you cannot take the mean\index{R command!mean}\index{mean} of a character object like the {\emph{Words}} object:
 
-<<Ch3ClassError>>=
+<<Ch3ClassError, echo=TRUE>>=
 mean(Words)
 @
 
 \noindent Trying to find the mean of our {\emph{Words}} object gives us a warning message and returns the value {\tt{NA}}\index{NA}\index{R!NA}: not applicable. You can also think of {\tt{NA}} as meaning ``missing''.\index{missing}\index{R!missing} To find out an object's type use the {\tt{class}}\index{R command!class}\index{class} command. For example:
 
-<<Ch3ClassCommand>>=
+<<Ch3ClassCommand, echo=TRUE>>=
 class(Words)
 @
 
@@ -83,7 +83,7 @@ So far we have only looked at objects with a single number or character string.\
 
 Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (concatenate)\index{concatenate}\index{R command!c}\index{R command!concatenate} function:
 
-<<Ch3NumericVector>>=
+<<Ch3NumericVector, echo=TRUE>>=
 NumericVect <- c(2.8, 2, 14.8)
 
 # Show NumericVect's contents
@@ -92,7 +92,7 @@ NumericVect
 
 Vectors of character strings are created in a similar way. The only major difference is that each character string is enclosed in quotation marks like this:
 
-<<Ch3CharcterVector>>=
+<<Ch3CharcterVector, echo=TRUE>>=
 CharacterVect <- c("Albania", "Botswana", "Cambodia")
 
 # Show CharacterVect's contents
@@ -101,7 +101,7 @@ CharacterVect
 
 To give you a preview of what we are going to do when we start working with real data sets, let's combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{R command!cbind} function. This function binds the two vectors together side-by-side as columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind}\index{R command!rbind} function.}\label{cbind}
 
-<<Ch3cbind>>=
+<<Ch3cbind, echo=TRUE>>=
 StringNumObject <- cbind(CharacterVect, NumericVect)
 
 # Show StringNumObject's contents
@@ -114,7 +114,7 @@ StringNumObject
 
 If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame}\index{R command!data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.\label{data.frame}
 
-<<Ch3dataframe, tidy=FALSE>>=
+<<Ch3dataframe, echo=TRUE, tidy=FALSE>>=
 StringNumObject <- data.frame(CharacterVect, NumericVect)
 
 # Display contents of StringNumObject data frame
@@ -125,13 +125,13 @@ StringNumObject
 
 You can see the data frame's names\index{R command!names}\index{R!names attribute} attribute.\footnote{Matrices can also have a names attribute.} It is the column names. You can use the \texttt{names} command to see any data frame's names:\footnote{You can also use \texttt{names} to assign names for the entire data frame. For example, \texttt{names(StringNumObject) <- c("Variable1", "Variable2")}}
 
-<<Ch10Names>>=
+<<Ch10Names, echo=TRUE>>=
 names(StringNumObject)
 @
 
 You will also notice that the first column of the data set has no name and is a series of numbers. This is the row.names attribute.\index{row.names attribute} Data frame rows can be given any name as long as each row name is unique. We can use the \texttt{row.names} command\index{R command!row.names} to set the row names from a vector. For example,
 
-<<Ch3ReassignRowNames>>=
+<<Ch3ReassignRowNames, echo=TRUE>>=
 # Reassign row.names
 row.names(StringNumObject) <- c("First", "Second", "Third")
 
@@ -143,7 +143,7 @@ row.names(StringNumObject)
 
 You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{R command!mean} command:
 
-<<Ch3CharcterVectorMean>>=
+<<Ch3CharcterVectorMean, echo=TRUE>>=
 mean(StringNumObject$ChacterVect)
 @
 
@@ -153,7 +153,7 @@ The last bit of code we just saw will probably be confusing. Why do we have a do
 
 We can of course use the component selector to create new objects with parts of other objects. Imagine that we have the {\emph{StringNumObject}} and want an object with only the information in the numbers column. Let's use the following code:
 
-<<Ch3CompSelect>>=
+<<Ch3CompSelect, echo=TRUE>>=
 NewNumeric <- StringNumObject$NumericVect
 
 # Display contents of NewNumeric
@@ -169,7 +169,7 @@ Using the component selector can create long repetitive code if you want to sele
 The \texttt{attach} command attaches a database to R's search path.\footnote{You can see what is in your current search path with the \texttt{search}\index{R command!search} command. Just type \texttt{search()} into your R console.}\index{R!search path} R will then search the database for variables you specify. You don't need to use the component selector to tell R again to look in a particular data frame after you have attached it. For example, let's attach the \emph{cars} data that comes with R. It has two variables, \textbf{speed} and \textbf{dist}.\footnote{For more information on this data set type \texttt{?cars}\index{R command!?} into your R console.}
 
 {\small
-<<Ch3Attach>>=
+<<Ch3Attach, echo=TRUE>>=
 # Attach cars to search path
 attach(cars)
 
@@ -188,7 +188,7 @@ detach(cars)
 
 Similarly you can use \texttt{with} when you run commands using a particular database (see Section \ref{FunctionsCommands} for more details about commands). For example, we can find the mean of \emph{NumericVect} \texttt{with} the \emph{StringNumObject} data frame:
 
-<<Ch3With, tidy=FALSE>>=
+<<Ch3With, echo=TRUE, tidy=FALSE>>=
 with(StringNumObject, {
     mean(NumericVect)
     }
@@ -205,31 +205,31 @@ Another way to select parts of an object is to use subscripts\index{subscripts}\
 
 To give you an idea of how this works let's use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
 
-<<Ch3HeadSwiss>>=
+<<Ch3HeadSwiss, echo=TRUE>>=
 head(cars)
 @
 
 \noindent We can see a data frame with information on various cars' speeds (\textbf{speed}) and stopping distances (\textbf{dist}). If we want to select only the third through seventh rows we can use the following subscript commands:
 
-<<Ch3FirstSeventhRows>>=
+<<Ch3FirstSeventhRows, echo=TRUE>>=
 cars[3:7, ]
 @
 
 \noindent The colon (\texttt{:})\index{R!sequence}\index{R command!:} creates a sequence of whole numbers from 3 to 7. To select the fourth row of the \textbf{dist} column we can type:
 
-<<Ch3FourthSecond>>=
+<<Ch3FourthSecond, echo=TRUE>>=
 cars[4, 2]
 @
 
 \noindent An equivalent way to do this is:
 
-<<Ch3FourthDist>>=
+<<Ch3FourthDist, echo=TRUE>>=
 cars[4, "dist"]
 @
 
 \noindent Finally, we can even include a vector of column names to select:
 
-<<Ch3FourthBoth>>=
+<<Ch3FourthBoth, echo=TRUE>>=
 cars[4, c("speed", "dist")]
 @ 
 
@@ -237,20 +237,20 @@ cars[4, c("speed", "dist")]
 
 If objects are the nouns of the R language, functions and commands\index{R!commands}\index{R!functions}\footnote{For the purposes of this book I treat the two as the same.} are the verbs. They do things to objects. Let's use the \texttt{mean} command as an example. This command takes the mean of a numeric vector object. Remember our {\emph{NumericVect}} object from before:
 
-<<ShowNumericVect>>=
+<<ShowNumericVect, echo=TRUE>>=
 # Show contents of NumericVect
 NumericVect
 @
 
 \noindent To find the mean of this object simply type:
 
-<<MeanNumericVect>>=
+<<MeanNumericVect, echo=TRUE>>=
 mean(x = NumericVect)
 @
 
 \noindent We use the assignment operator to place a command's output into an object. For example:
 
-<<MeanNumericVectAssign>>=
+<<MeanNumericVectAssign, echo=TRUE>>=
 MeanNumericVect <- mean(x = NumericVect)
 @
 
@@ -262,7 +262,7 @@ Arguments\index{R!command argument} modify what commands do. In our most recent 
 
 To find all of the arguments that a command can accept look at the {\bf{Arguments}} section of the command's help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,\index{R!?}
 
-<<Ch3HelpMean, eval=FALSE, tidy=FALSE>>=
+<<Ch3HelpMean, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 ?mean
 @
 
@@ -272,7 +272,7 @@ You do have to be fairly precise with the syntax for your argument's values. Val
 
 Let's see how to use multiple arguments with the \texttt{round} command.\index{R command!round} This command rounds a vector of numbers. We can use the \texttt{digits}\index{R!digits} argument to specify how many decimal places we want the numbers rounded to. To round the object \emph{MeanNumericVect} to one decimal place type:
 
-<<Ch3Round>>=
+<<Ch3Round, echo=TRUE>>=
 round(x = MeanNumericVect, digits = 1)
 @
 
@@ -280,7 +280,7 @@ round(x = MeanNumericVect, digits = 1)
 
 Some arguments do not need to be explicitly labeled. For example, we could have written:
 
-<<Ch3ArgeNoLabel>>=
+<<Ch3ArgeNoLabel, echo=TRUE>>=
 # Find mean of NumericVect
 mean(NumericVect)
 @
@@ -289,7 +289,7 @@ mean(NumericVect)
 
 Finally, you can stack arguments inside of other arguments. To have R find the mean of {\emph{NumericVect}} and round it to one decimal place use:
 
-<<Ch3StackedArgs>>=
+<<Ch3StackedArgs, echo=TRUE>>=
 round(mean(NumericVect), digits = 1)
 @
 
@@ -298,26 +298,26 @@ round(mean(NumericVect), digits = 1)
 All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R command!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
 
 {\small
-<<Ch3LS>>=
+<<Ch3LS, echo=TRUE>>=
 ls()
 @
 }
 
 You can remove specific objects from the workspace using the \texttt{rm} command\index{R command!rm}. For example, to remove the \texttt{CharacterVect} and \texttt{Words} objects type:
 
-<<Ch3RM, eval=FALSE>>=
+<<Ch3RM, echo=TRUE, eval=FALSE>>=
 rm(CharacterVect, Words)
 @
 
 To save the entire workspace into a binary--not plain-text--RData file use the \texttt{save.image}\index{R command!save.image}\label{SaveLoadWS} command. The main argument of \texttt{save.image} is the location and name of the file you want to save the workspace into. If you don't specify the file path it will be saved into your current working directory (see Chapter \ref{DirectoriesChapter} for information on files paths and working directories). For example, to save the current workspace in a file called \emph{DecemberWorkspace.RData} in the current working directory type:
 
-<<Ch3Workspace, eval=FALSE>>=
+<<Ch3Workspace, echo=TRUE, eval=FALSE>>=
 save.image(file = "DecemberWorkspace.RData")
 @
 
 \noindent Use the \texttt{load}\index{R command!load} command to load a saved workspace back into R:
 
-<<Ch3LoadWS, eval=FALSE>>=
+<<Ch3LoadWS, echo=TRUE, eval=FALSE>>=
 load(file = "DecemberWorkspace.RData")
 @
 
@@ -325,7 +325,7 @@ You should generally avoid having R automatically save your workspace when you q
 
 One of the few times when saving your workspace is very useful is when it includes an object that was computationally difficult and took a long time to create. In this case you can save only the large object with the \texttt{save} command.\footnote{The \texttt{save.image} command is just a special case of \texttt{save}.}\index{R command!save}\label{RSave} For example, if we have a very large object called \emph{Comp} we can save it to a file called \emph{Comp.RData} like this:
 
-<<Ch3Comp, eval=FALSE>>=
+<<Ch3Comp, echo=TRUE, eval=FALSE>>=
 save(Comp, file = "Comp.RData")
 @
 
@@ -337,7 +337,7 @@ When you enter a command into R it becomes part of your history.\index{R!history
 
 In R you can set global options with the \texttt{options} command.\index{R command!options}\index{R!global options} This lets you set how R runs and outputs commands through an entire R session. For example, to have output rounded to one decimal place set the \texttt{digits}\index{digits} argument:
 
-<<Ch3Options, eval=FALSE>>=
+<<Ch3Options, echo=TRUE, eval=FALSE>>=
 options(digits = 1)
 @
 
@@ -349,7 +349,7 @@ For the code you need to install all of the packages used in this book, see page
 
 Once you have installed a package you need to load it so that you can use its functions. Use the \texttt{library} command to load a package.\footnote{You will probably see R packages referred to as ``libraries'', though this is a misnomer. See this blog post by Carlisle Rainey for a discussion: \url{http://www.carlislerainey.com/2013/01/02/packages-v-libraries-in-r/?utm_source=rss&utm_medium=rss&utm_campaign=packages-v-libraries-in-r} (posted 2 January 2013).} Use the following code to load the {\emph{ggplot2}} package that we use in Chapter \ref{FiguresChapter} to create figures.
 
-<<Ch3Library, warning=FALSE, message=FALSE>>=
+<<Ch3Library, echo=TRUE, warning=FALSE, message=FALSE>>=
 library(ggplot2)
 @
 
@@ -357,7 +357,7 @@ library(ggplot2)
 
 Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R command!double-colon operator}\index{R command!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from the \emph{ggplot2} package we type:
 
-<<Ch3ColonOperator, eval=FALSE>>=
+<<Ch3ColonOperator, echo=TRUE, eval=FALSE>>=
 ggplot2::qplot(. . .)
 @
 
@@ -449,7 +449,7 @@ When you want to include R code into your markup presentation documents, place t
 
 In R Markdown\index{R Markdown} files we begin a code chunk by writing the head:\index{knitr!code chunk head} \verb|```{r}|. A code chunk is closed--ended--simply with: \verb|```|. For example:
 
-<<Ch3FirstMDExample, tidy=FALSE, eval=FALSE>>=
+<<Ch3FirstMDExample, echo=TRUE, tidy=FALSE, eval=FALSE>>=
 ```{r}
 # Example of an R Markdown code chunk
 StringNumObject <- cbind(CharacterVect, NumericVect)
@@ -636,7 +636,7 @@ Another useful RStudio {\emph{knitr}} integration feature is that RStudio can pr
 
 You may also notice that there are code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To enable this option create a comment line with at least one hash before the comment text and at least four after it like this:
 
-<<CommentFold>>=
+<<CommentFold, echo=TRUE>>=
 #### An RStudio Foldable Comment ####
 @ 
 
@@ -671,13 +671,13 @@ By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compilin
 
 As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command.\index{R command!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first set us the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
-<<Ch3RawKnitSetwd, eval=FALSE, tidy=FALSE>>=
+<<Ch3RawKnitSetwd, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 setwd("~/Documents/")
 @
 
 \noindent Then you knit the file:
 
-<<Ch3RawKnit, eval=FALSE, tidy=FALSE>>=
+<<Ch3RawKnit, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 knit(input = "Example.Rmd", output = "Example.md")
 @
 
@@ -691,13 +691,13 @@ mardownToHTML(file = "Example.md", output = "Example.html")
 
 \noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines \texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}.\index{R command!knit2html} You use it like this:
 
-<<Ch3RMDtoHTML, eval=FALSE, tidy=FALSE>>= 
+<<Ch3RMDtoHTML, echo=TRUE, eval=FALSE, tidy=FALSE>>= 
 knit2html(file = "Example.Rmd", output = "Example.html")
 @
 
 \noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}}\index{R command!texi2pdf} command in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX\index{BibTeX} for bibliographies). Here is a {\tt{texi2pdf}} example:
 
-<<CH3tex2pdf, eval=TRUE, error=FALSE, tidy=FALSE>>=
+<<CH3tex2pdf, echo=TRUE, eval=TRUE, error=FALSE, tidy=FALSE>>=
 # Load tools package
 library(tools)
 
