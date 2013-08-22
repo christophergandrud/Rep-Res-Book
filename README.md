@@ -57,37 +57,38 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] foreign_0.8-54        ZeligBayesian_0.1     MCMCpack_1.3-3       
-##  [4] coda_0.16-1           Zelig_4.1-3           sandwich_2.2-10      
-##  [7] boot_1.3-9            xtable_1.7-1          WDI_2.2              
-## [10] ROAuth_0.9.3          treebase_0.0-6        ape_3.0-9            
-## [13] texreg_1.28           tables_0.7            sqldf_0.4-6.4        
-## [16] RSQLite.extfuns_0.0.1 RSQLite_0.11.4        chron_2.3-43         
-## [19] gsubfn_0.6-5          proto_0.3-10          DBI_0.2-7            
-## [22] slidify_0.3.3         stargazer_4.0         RJSONIO_1.0-3        
-## [25] RCurl_1.95-4.1        bitops_1.0-5          reshape2_1.2.2       
-## [28] repmis_0.2.6.1        quantmod_0.4-0        TTR_0.22-0           
-## [31] xts_0.9-5             zoo_1.7-10            Defaults_1.1-1       
-## [34] plyr_1.8              openair_0.8-5         memisc_0.96-6        
-## [37] MASS_7.3-27           lattice_0.20-15       markdown_0.6.3       
-## [40] knitcitations_0.4-7   bibtex_0.3-6          Hmisc_3.12-2         
-## [43] Formula_1.1-1         survival_2.37-4       httr_0.2             
-## [46] googleVis_0.4.3       ggplot2_0.9.3.1       gdata_2.13.2         
-## [49] formatR_0.8           extrafont_0.14        estout_1.2           
-## [52] digest_0.6.3          devtools_1.3          data.table_1.8.8     
-## [55] countrycode_0.14      brew_1.0-6            apsrtable_0.8-8      
-## [58] animation_2.2         knitr_1.2            
+##  [1] reshape_0.8.4         foreign_0.8-54        ZeligBayesian_0.1    
+##  [4] MCMCpack_1.3-3        coda_0.16-1           Zelig_4.1-3          
+##  [7] sandwich_2.2-10       boot_1.3-9            xtable_1.7-1         
+## [10] WDI_2.2               ROAuth_0.9.3          treebase_0.0-6       
+## [13] ape_3.0-9             texreg_1.28           tables_0.7           
+## [16] sqldf_0.4-6.4         RSQLite.extfuns_0.0.1 RSQLite_0.11.4       
+## [19] chron_2.3-43          gsubfn_0.6-5          proto_0.3-10         
+## [22] DBI_0.2-7             slidify_0.3.3         stargazer_4.0        
+## [25] RJSONIO_1.0-3         RCurl_1.95-4.1        bitops_1.0-5         
+## [28] reshape2_1.2.2        repmis_0.2.6.1        quantmod_0.4-0       
+## [31] TTR_0.22-0            xts_0.9-5             zoo_1.7-10           
+## [34] Defaults_1.1-1        plyr_1.8              openair_0.8-5        
+## [37] memisc_0.96-6         MASS_7.3-28           lattice_0.20-15      
+## [40] markdown_0.6.3        knitcitations_0.4-7   bibtex_0.3-6         
+## [43] Hmisc_3.12-2          Formula_1.1-1         survival_2.37-4      
+## [46] httr_0.2              googleVis_0.4.3       ggplot2_0.9.3.1      
+## [49] gdata_2.13.2          formatR_0.9           extrafont_0.14       
+## [52] estout_1.2            digest_0.6.3          devtools_1.3         
+## [55] data.table_1.8.8      countrycode_0.14      brew_1.0-6           
+## [58] apsrtable_0.8-8       animation_2.2         knitr_1.4.1          
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] car_2.0-18          cluster_1.14.4      colorspace_1.2-2   
-##  [4] dichromat_2.0-0     evaluate_0.4.5      gtable_0.1.2       
-##  [7] gtools_3.0.0        labeling_0.2        latticeExtra_0.6-24
-## [10] Matrix_1.0-12       memoise_0.1         mgcv_1.7-24        
-## [13] munsell_0.4.2       nlme_3.1-110        parallel_3.0.1     
-## [16] RColorBrewer_1.0-5  rjson_0.2.12        rpart_4.1-1        
-## [19] Rttf2pt1_1.2        scales_0.2.3        stringr_0.6.2      
-## [22] tcltk_3.0.1         twitteR_1.1.7       whisker_0.3-2      
-## [25] XML_3.95-0.2        yaml_2.1.7
+##  [1] car_2.0-18          cluster_1.14.4      codetools_0.2-8    
+##  [4] colorspace_1.2-2    dichromat_2.0-0     evaluate_0.4.7     
+##  [7] gtable_0.1.2        gtools_3.0.0        highr_0.2.1        
+## [10] labeling_0.2        latticeExtra_0.6-24 Matrix_1.0-12      
+## [13] memoise_0.1         mgcv_1.7-24         munsell_0.4.2      
+## [16] nlme_3.1-110        parallel_3.0.1      RColorBrewer_1.0-5 
+## [19] rjson_0.2.12        rpart_4.1-1         Rttf2pt1_1.2       
+## [22] scales_0.2.3        stringr_0.6.2       tcltk_3.0.1        
+## [25] twitteR_1.1.7       whisker_0.3-2       XML_3.95-0.2       
+## [28] yaml_2.1.7
 ```
 
 
