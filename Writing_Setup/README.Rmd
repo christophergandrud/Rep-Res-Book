@@ -17,7 +17,7 @@ The main files used to create the manuscript of the book are in the `Source` fol
 
 The book can be reproduced by using the R package *knitr*. To do this:
 
-1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) installed on your computer.
+1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) installed on your computer. If you will be using *knitr* version 1.4 or greater make sure to also install Andre Simon's [highlighter utility](http://www.andre-simon.de/zip/download.html).
 
 2. Place this repository in a file called `git_repositories` in your root directory.
 
