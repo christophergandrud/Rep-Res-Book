@@ -7,7 +7,7 @@
 
 ---
 
-The files in this repository comprise the draft version of **Reproducible Research with R and RStudio**.
+The files in this repository comprise the source code for creating **Reproducible Research with R and RStudio**.
 
 ### File Organization
 
