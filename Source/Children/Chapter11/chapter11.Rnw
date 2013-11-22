@@ -354,18 +354,18 @@ BibTeX bibliographies are stored in plain-text files with the extension \texttt{
 \end{kframe}
 \end{knitrout}
 
-\noindent \verb|DOCUMENT_TYPE| specifies what type of document--article, book, webpage, and so on--the citation is for. This determines what items the citation can and needs to include. Then we have the \verb|CITE_KEY|.\index{BibTeX!citation keys} This is the reference's label that you will use to include the citation in your presentation documents. We'll look more at this later in the section. Each citation must have a unique \verb|CITE_KEY|. A common way to write these keys is to use the author's surname and the publication year, e.g. \verb|Donohue2009|. The cite key is followed by the other citation attributes such as \texttt{author}, \texttt{title}, and \texttt{year}. These attributes all follow the same syntax: \verb|ATTRIBUTE = {. . .}|.
+\noindent \verb|DOCUMENT_TYPE| specifies what type of document--article, book, webpage, and so on--the citation is for. This determines what items the citation can and needs to include. Then we have the \verb|CITE_KEY|.\index{BibTeX!citation keys} This is the reference's label that you will use to include the citation in your presentation documents. We'll look more at this later in the section. Each citation must have a unique \verb|CITE_KEY|. A common way to write these keys is to use the author's surname and the publication year, e.g. \verb|Donoho2009|. The cite key is followed by the other citation attributes such as \texttt{author}, \texttt{title}, and \texttt{year}. These attributes all follow the same syntax: \verb|ATTRIBUTE = {. . .}|.
 
 It's worth taking a moment to discuss the syntax for the BibTeX author attribute. First multiple author names are separated by \texttt{and}. Second, BibTeX assumes that the last word for each author is their surname. If you would like multiple words to be taken as the ``surname'' then enclose these words in curly brackets. If we wanted to cite the World Bank\index{World Bank, citing} as an author we write \verb|{World Bank}|; otherwise it will be formatted ``Bank, World'' in the presentation document.
 
-Here is a complete BibTeX entry for \cite{Donohue2009}:
+Here is a complete BibTeX entry for \cite{Donoho2009}:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
     \begin{kframe}
         \begin{alltt}
-@article\{Donohue2009,
-  author = \{David L Donohue and Arian Maleki and Morteza 
+@article\{Donoho2009,
+  author = \{David L Donoho and Arian Maleki and Morteza 
   Shahram and Inam Ur Rahman and Victoria Stodden\},
   title = \{Reproducible research in computational harmonic 
     analysis\},
@@ -387,7 +387,7 @@ When you want to include citations from a BibTeX file in your LaTeX document you
 
 You can also specify how you would like the references to be formatted using the \texttt{bibliographystyle}\index{LaTeX command!bibliographystyle} command. For example, this book uses the American Psychological Association (APA)\index{APA} style for references. To set this I included \verb|\bibliographystyle{apa}| directly before \texttt{bibliography}. The default style\footnote{It is referred to in LaTeX as the plain style.} is to number citations (e.g. [1]) rather than include author-year information\footnote{This is sometimes referred to as the ``Harvard'' style.} used by the APA. You will need to include the LaTeX package \emph{natbib}\index{LaTeX package!Natbib} in your preamble to be able to use author-year citation styles. This book includes \verb|\usepackage[authoryear]{natbib}| in its preamble.\index{author-year citations}\index{Harvard style citations}
 
-Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donohue2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example if we wanted to cite the tenth page of \cite{Donohue2009} we type: \verb|\cite[10]{Donohue2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donohue2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donohue2009}| gives us \cite[see][10]{Donohue2009}.
+Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donoho2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example if we wanted to cite the tenth page of \cite{Donoho2009} we type: \verb|\cite[10]{Donoho2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donoho2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donoho2009}| gives us \cite[see][10]{Donoho2009}.
 
 If you are using an author-year style you can use a variety of \emph{natbib} commands to change what information is included in the parentheses. For a selection of these commands and examples see Table \ref{NatbibTable}.
 
@@ -399,11 +399,11 @@ If you are using an author-year style you can use a variety of \emph{natbib} com
                 \hline
                 Command Example & Output \\[0.25cm]
                 \hline\hline
-                \verb|\cite{Donohue2009}| & \cite{Donohue2009} \\
-                \verb|\citep{Donohue2009}| & \citep{Donohue2009} \\
-                \verb|\citeauthor{Donohue2009}| & \citeauthor{Donohue2009} \\
-                \verb|\citeyear{Donohue2009}| & \citeyear{Donohue2009} \\
-                \verb|\citeyearpar{Donohue2009}| & \citeyearpar{Donohue2009} \\
+                \verb|\cite{Donoho2009}| & \cite{Donoho2009} \\
+                \verb|\citep{Donoho2009}| & \citep{Donoho2009} \\
+                \verb|\citeauthor{Donoho2009}| & \citeauthor{Donoho2009} \\
+                \verb|\citeyear{Donoho2009}| & \citeyear{Donoho2009} \\
+                \verb|\citeyearpar{Donoho2009}| & \citeyearpar{Donoho2009} \\
                 \hline
             \end{tabular}
         \end{center}
