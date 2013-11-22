@@ -262,10 +262,10 @@ pandocToHTML <-
 Now in the text of our document we can add the citation:
 
 <<Ch13BibTeXCite, eval=FALSE, tidy=FALSE, engine='sh'>>=
-This is a citation [@Donohue2009].
+This is a citation [@Donoho2009].
 @
 
-\noindent Pandoc uses \emph{natbib}\index{LaTeX package!natbib}\index{bibliography}\index{in-text citation} by default so the citation \verb|[@Donohue2009]| will appear as (Donohue et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donohue2009, 10]|. This will create an in-text citation that looks like this: (see Donohue et al. 2009, 10), To include only the year and not the authors' surnames, add a minus sign, e.g. \verb|[-@Donohue2009]|. See the Pandoc README website for more options.
+\noindent Pandoc uses \emph{natbib}\index{LaTeX package!natbib}\index{bibliography}\index{in-text citation} by default so the citation \verb|[@Donoho2009]| will appear as (Donoho et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donoho2009, 10]|. This will create an in-text citation that looks like this: (see Donoho et al. 2009, 10), To include only the year and not the authors' surnames, add a minus sign, e.g. \verb|[-@Donoho2009]|. See the Pandoc README website for more options.
 
 Here is a complete example of an R Markdown document that includes footnotes and bibliographies.
 
@@ -284,7 +284,7 @@ This is a *knitr* code chunk:
 plot(cars$speed, cars$dist)
 ```
 
-This is a citation [see @Donohue2009, 10].
+This is a citation [see @Donoho2009, 10].
 @
 
 \noindent Note you can find this file, the bibliography, plus commands to render the document at: \url{http://bit.ly/X7BXu9}.\footnote{The full URL is: \url{https://github.com/christophergandrud/Rep-Res-Examples/tree/master/RMarkdownExamples/ExamplePandocKnitrMarkdown}.}
@@ -374,7 +374,7 @@ This is a *knitr* code chunk:
 plot(cars$speed, cars$dist)
 ```
 
-This is a citation [see @Donohue2009, 10].
+This is a citation [see @Donoho2009, 10].
 @
 
 \noindent The document is the same as our example from earlier, except at the very beginning we added an HTML comment: \verb|<!--Pandoc . . . -->|. Inside of this comment we added our CSS and bibliography options using Debian Control File syntax.\index{Debian Control File} Basically this just means that we write the Pandoc option name (e.g. \texttt{css}), a colon, then the value (e.g. \texttt{Markdown.css}). Note that each option is on its own line.\footnote{See Yihui Xie's help page for more information: \url{http://yihui.name/knitr/demo/pandoc/}.} Now whenever we use the \texttt{pandoc} command these options will be applied.\footnote{You can also place the options in a separate text file and tell \texttt{pandoc} where it is with the \texttt{config} option.}
