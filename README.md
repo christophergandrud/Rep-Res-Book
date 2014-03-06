@@ -25,7 +25,7 @@ The book can be reproduced by using the R package *knitr*. To do this:
 
 Note: To install the R packages used to compile the book open the *Source/Children/FrontMatter/Packages.Rnw*. Find:
 
-```
+```{S}
 doInstall <- FALSE
 ```
 
@@ -47,7 +47,7 @@ You will need to install the the R packages RCurl and XML seperately. See [this 
 The current version of the book manuscript was compiled with [RStudio](http://www.rstudio.com/) (v. 0.98.134 developer build) with the following R session:
 
 
-```
+```{S}
 ## R version 3.0.1 (2013-05-16)
 ## Platform: x86_64-apple-darwin10.8.0 (64-bit)
 ## 
@@ -95,4 +95,4 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 
 ---
 
-&copy; Christopher Gandrud (2013)
+&copy; Christopher Gandrud (2014)
