@@ -42,56 +42,66 @@ If you would like to reproduce the book and are using Windows you will need to i
 You will need to install the the R packages RCurl and XML seperately. See [this post](https://github.com/cboettig/treeBASE/issues/5) for more details.
 
 ### Session Info
-The current version of the book manuscript was compiled with [RStudio](http://www.rstudio.com/) (v. 0.98.269 developer build) with the following R session:
+The current version of the book manuscript was compiled with [RStudio](http://www.rstudio.com/) (v. 0.98.707 developer build) with the following R session:
 
 
 ```
-## R version 3.0.2 (2013-09-25)
+## R version 3.0.3 (2014-03-06)
 ## Platform: x86_64-apple-darwin10.8.0 (64-bit)
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
-##  [1] tools     grid      splines   stats     graphics  grDevices utils    
+##  [1] tools     splines   grid      stats     graphics  grDevices utils    
 ##  [8] datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] XML_3.95-0.2          twitteR_1.1.7         rjson_0.2.13         
-##  [4] reshape_0.8.4         foreign_0.8-55        ZeligBayesian_0.1    
-##  [7] MCMCpack_1.3-3        coda_0.16-1           Zelig_4.2-1          
-## [10] sandwich_2.2-10       boot_1.3-9            xtable_1.7-1         
-## [13] WDI_2.4               ROAuth_0.9.3          treebase_0.0-6       
-## [16] ape_3.0-10            texreg_1.29.6         tables_0.7           
-## [19] sqldf_0.4-6.4         RSQLite.extfuns_0.0.1 RSQLite_0.11.4       
-## [22] chron_2.3-44          gsubfn_0.6-5          proto_0.3-10         
-## [25] DBI_0.2-7             slidify_0.3.3         stargazer_4.5.1      
-## [28] RJSONIO_1.0-3         RCurl_1.95-4.1        bitops_1.0-6         
-## [31] reshape2_1.2.2        repmis_0.3            quantmod_0.4-0       
-## [34] TTR_0.22-0            xts_0.9-7             zoo_1.7-10           
-## [37] Defaults_1.1-1        plyr_1.8              openair_0.8-5        
-## [40] memisc_0.96-7         MASS_7.3-29           lattice_0.20-23      
-## [43] markdown_0.6.3        knitcitations_0.4-7   bibtex_0.3-6         
-## [46] Hmisc_3.12-2          Formula_1.1-1         survival_2.37-4      
-## [49] httr_0.2              googleVis_0.4.5       ggplot2_0.9.3.1      
-## [52] gdata_2.13.2          formatR_0.9           extrafont_0.15       
-## [55] estout_1.2            digest_0.6.3          devtools_1.2.99      
-## [58] data.table_1.8.10     countrycode_0.16      brew_1.0-6           
-## [61] apsrtable_0.8-8       animation_2.2         knitr_1.5            
+##  [1] ZeligBayesian_0.1     MCMCpack_1.3-3        coda_0.16-1          
+##  [4] Zelig_4.2-1           sandwich_2.3-0        boot_1.3-10          
+##  [7] xtable_1.7-3          WDI_2.4               ROAuth_0.9.3         
+## [10] treebase_0.0-7.1      ape_3.1-1             texreg_1.31          
+## [13] tables_0.7.64         sqldf_0.4-7           RSQLite.extfuns_0.0.1
+## [16] RSQLite_0.11.4        DBI_0.2-7             gsubfn_0.6-5         
+## [19] proto_0.3-10          slidify_0.3.3         stargazer_5.0        
+## [22] RJSONIO_1.0-3         RCurl_1.95-4.1        bitops_1.0-6         
+## [25] reshape2_1.2.2        repmis_0.2.8          quantmod_0.4-0       
+## [28] TTR_0.22-0            xts_0.9-7             zoo_1.7-11           
+## [31] Defaults_1.1-1        plyr_1.8.1            openair_0.9-2        
+## [34] memisc_0.96-9         MASS_7.3-30           markdown_0.6.4       
+## [37] knitcitations_0.5-0   bibtex_0.3-6          Hmisc_3.14-3         
+## [40] Formula_1.1-1         survival_2.37-7       lattice_0.20-27      
+## [43] httr_0.2              googleVis_0.4.7       ggplot2_0.9.3.1      
+## [46] gdata_2.13.2          formatR_0.10          extrafont_0.16       
+## [49] estout_1.2            digest_0.6.4          devtools_1.4.1       
+## [52] data.table_1.9.2      countrycode_0.16      brew_1.0-6           
+## [55] apsrtable_0.8-8       animation_2.2         knitr_1.5            
+## [58] DataCombine_0.1.21   
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] car_2.0-19          cluster_1.14.4      codetools_0.2-8    
-##  [4] colorspace_1.2-3    dichromat_2.0-0     evaluate_0.5       
-##  [7] extrafontdb_1.0     gtable_0.1.2        gtools_2.6.1       
-## [10] highr_0.2.1         labeling_0.2        latticeExtra_0.6-26
-## [13] Matrix_1.0-14       memoise_0.1         mgcv_1.7-26        
-## [16] munsell_0.4.2       nlme_3.1-111        nnet_7.3-7         
-## [19] parallel_3.0.2      RColorBrewer_1.0-5  rpart_4.1-3        
-## [22] Rttf2pt1_1.2        scales_0.2.3        stringr_0.6.2      
-## [25] tcltk_3.0.2         whisker_0.3-2       yaml_2.1.8
+##  [1] car_2.0-19                chron_2.3-45             
+##  [3] cluster_1.15.0            colorspace_1.2-4         
+##  [5] dichromat_2.0-0           evaluate_0.5.1           
+##  [7] extrafontdb_1.0           forecast_5.2             
+##  [9] fracdiff_1.4-2            gtable_0.1.2             
+## [11] gtools_3.3.1              highr_0.3                
+## [13] labeling_0.2              latticeExtra_0.6-26      
+## [15] Matrix_1.1-2-2            memoise_0.1              
+## [17] mgcv_1.7-28               munsell_0.4.2            
+## [19] nlme_3.1-115              nnet_7.3-7               
+## [21] parallel_3.0.3            quadprog_1.5-5           
+## [23] R.cache_0.9.0             R.methodsS3_1.6.1        
+## [25] R.oo_1.18.0               R.utils_1.29.8           
+## [27] RColorBrewer_1.0-5        Rcpp_0.11.0              
+## [29] RcppArmadillo_0.4.100.2.1 rjson_0.2.13             
+## [31] Rttf2pt1_1.3              scales_0.2.3             
+## [33] stringr_0.6.2             tcltk_3.0.3              
+## [35] timeDate_3010.98          tseries_0.10-32          
+## [37] twitteR_1.1.7             whisker_0.3-2            
+## [39] XML_3.95-0.2              yaml_2.1.10
 ```
 
 
 ---
 
-(c) Christopher Gandrud (2013)
+(c) Christopher Gandrud (2014)
