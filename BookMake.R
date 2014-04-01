@@ -8,7 +8,7 @@
 # It also updates the main README file.
 
 ## Installing required packages
-# Note: To install the R packages used to compile the book open the Source/FrontMatter/Packages.Rnw. 
+# Note: To install the R packages used to compile the book open the Source/Children/FrontMatter/Packages.Rnw. 
 # Find: doInstall <- FALSE in the code chunk labeled "FrontPackageCitations". 
 # Change the value `FALSE` to `TRUE` and run the code chunk.
 
