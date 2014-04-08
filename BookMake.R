@@ -1,7 +1,7 @@
 #################
 # Make file for the book Reproducible Research with R and RStudio
 # Christopher Gandrud
-# Updated: 31 July 2013
+# Updated: 8 April 2014
 #################
 
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
