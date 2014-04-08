@@ -44,4 +44,6 @@ knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 setwd(SetupDirectory)
 
 # Knit README file
-knitr::knit(input = "README.Rmd", output = "/git_repositories/Rep-Res-Book/README.md")
+OutReadme <- "/git_repositories/Rep-Res-Book/README.md" # Change as needed
+
+knitr::knit(input = "README.Rmd", output = OutReadme)
