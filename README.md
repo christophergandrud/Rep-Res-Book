@@ -1,11 +1,12 @@
 # [Reproducible Research with R and RStudio](http://christophergandrud.github.io/RepResR-RStudio/)
 
+[<img src="http://3.bp.blogspot.com/-f8MFbNEoyGU/UYNGekqEkTI/AAAAAAAAGOM/Dq36pI06kTQ/s320/RepResCover.jpg" align="right" />](http://www.amazon.com/dp/1466572841)
+
 ### [Christopher Gandrud](http://christophergandrud.blogspot.com/p/biocontact.html)
 
-### [CRC Press/Chapman & Hall division of Taylor & Francis](http://www.crcpress.com/product/isbn/9781466572843)
+### [CRC Press/Chapman & Hall](http://www.crcpress.com/product/isbn/9781466572843)
 
 
----
 
 The files in this repository comprise the source code for creating **Reproducible Research with R and RStudio**.
 
@@ -17,15 +18,13 @@ The main files used to create the manuscript of the book are in the `Source` fol
 
 The book can be reproduced by using the R package *knitr*. To do this:
 
-1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) installed on your computer. Also install Andre Simon's [highlighter utility](http://www.andre-simon.de/zip/download.html).
+1. Make sure you have [R](http://www.r-project.org/) and [LaTeX](http://www.latex-project.org/ftp.html) installed on your computer. If you will be using *knitr* version 1.4 or greater make sure to also install Andre Simon's [highlighter utility](http://www.andre-simon.de/zip/download.html).
 
-2. Place this repository in a file called `git_repositories` in your root directory.
-
-3. Run the *BookMake.R* make file in R. Note: you must install the *knitr* R package before running this file.
+2. Run the *BookMake.R* make file in R. Note: you must install the *knitr* R package before running this file.
 
 Note: To install the R packages used to compile the book open the *Source/Children/FrontMatter/Packages.Rnw*. Find:
 
-```
+```{S}
 doInstall <- FALSE
 ```
 
@@ -45,8 +44,13 @@ You will need to install the the R packages RCurl and XML seperately. See [this 
 The current version of the book manuscript was compiled with [RStudio](http://www.rstudio.com/) (v. 0.98.707 developer build) with the following R session:
 
 
+<<<<<<< HEAD
 ```
 ## R version 3.0.3 (2014-03-06)
+=======
+```{S}
+## R version 3.0.1 (2013-05-16)
+>>>>>>> 42f085abaafcc5e54f278149bb832308b3e37908
 ## Platform: x86_64-apple-darwin10.8.0 (64-bit)
 ## 
 ## locale:
@@ -104,4 +108,8 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 
 ---
 
+<<<<<<< HEAD
 (c) Christopher Gandrud (2014)
+=======
+&copy; Christopher Gandrud (2014)
+>>>>>>> 42f085abaafcc5e54f278149bb832308b3e37908

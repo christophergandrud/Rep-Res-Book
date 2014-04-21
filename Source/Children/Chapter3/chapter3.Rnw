@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 March 2014
+% Updated: 22 August 2013
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -499,7 +499,7 @@ Each chunk has a label.\index{knitr!code chunk label} When a code chunk creates 
 
 To explicitly assign chunk labels in R Markdown documents place the label name inside of the braces after the \texttt{r}. If we wanted to use the label \texttt{ChunkLabel} we type:
 
-<<MarkdownChunkLabel, eval=FALSE, tidy=FALSE>>=
+<<MarkdownChunkLabel, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 ```{r ChunkLabel}
 # Example chunk label
 ```
@@ -513,7 +513,7 @@ There are many times when we want to change how our code chunks are knitted and 
 
 Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document, we can use the option \texttt{echo=FALSE}.\index{knitr option!echo} 
 
-<<MarkdownChunkOptionExample, tidy=FALSE, eval=FALSE>>=
+<<MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE, eval=FALSE>>=
 ```{r ChunkLabel, echo=FALSE}
 StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
