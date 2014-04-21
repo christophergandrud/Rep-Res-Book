@@ -110,8 +110,4 @@ The current version of the book manuscript was compiled with [RStudio](http://ww
 
 ---
 
-<<<<<<< HEAD
-(c) Christopher Gandrud (2014)
-=======
 &copy; Christopher Gandrud (2014)
->>>>>>> 42f085abaafcc5e54f278149bb832308b3e37908
