@@ -1,7 +1,7 @@
 #################
 # Make file for the book Reproducible Research with R and RStudio
 # Christopher Gandrud
-# Updated: 31 July 2013
+# Updated: 8 April 2014
 #################
 
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
@@ -44,4 +44,6 @@ knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 setwd(SetupDirectory)
 
 # Knit README file
-knitr::knit(input = "README.Rmd", output = "/git_repositories/Rep-Res-Book/README.md")
+OutReadme <- "/git_repositories/Rep-Res-Book/README.md" # Change as needed
+
+knitr::knit(input = "README.Rmd", output = OutReadme)
