@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 May 2014
+% Updated: 31 May 2014
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -330,9 +330,9 @@ Let's try an example. To download the data file we used in Section \ref{GitDownl
 {\small
 <<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE>>=
 # Put URL address into the object UrlAddress
-UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
-                "Disproportionality_Data/master/",
-                "Disproportionality.csv")
+UrlAddress <- paste0("https://raw.githubusercontent.com/",
+                    "christophergandrud/Disproportionality_Data/",
+                    "master/Disproportionality.csv")
 
 # Download Electoral disproportionality data
 DataUrl <- RCurl::getURL(UrlAddress)
@@ -425,7 +425,7 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 
 <<Ch6WDIFertSave, include=FALSE>>=
 # This ensures that the PDF will still compile even if the data is unavailable via WDI
-load(file = "/git_repositories/Rep-Res-Book/Source/Children/Chapter6/FertData.RData")
+load(file = "Children/Chapter6/FertData.RData")
 @
 
 <<Ch6HeadFert>>=
@@ -455,7 +455,7 @@ Beyond learning about the various R packages that are useful for R web scraping,
 \begin{itemize}
     \item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
     \item Regular Expressions:\index{regular expressions} Web scraping often involves finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag\index{HTML tag} IDs that are particular to a given website and change across the site based on a particular pattern. You can use regular expressions to deal with these situations. R has a comprehensive if bare bones introduction to regular expressions. To access it type \verb|?regex|\index{R!regex} into your R console.
-    \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} package \citep{R-plyr}\index{plyr} is also particularly useful.
+    \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} package \citep{R-plyr}\index{plyr} and \citep{R-dplyr}\index{dplyr} (for data frames) are also particularly useful.
 \end{itemize}
 
 \subsection*{Chapter Summary}
