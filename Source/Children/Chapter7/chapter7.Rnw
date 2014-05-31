@@ -122,12 +122,13 @@ Let's imagine that the fertilizer consumption data we previously downloaded from
 <<Ch7WideCreate, include=FALSE>>=
 # Reshape Wide
 MoltenFert <- melt(data = FertConsumpData, 
-                    id.vars = c("iso2c", "country", "year"), measure.vars= "AG.CON.FERT.ZS")
+                    id.vars = c("iso2c", "country", "year"), 
+                    measure.vars= "AG.CON.FERT.ZS")
 
 # Cast MoltenFert to year wide format
 WideFert <- dcast(data = MoltenFert, 
                     formula = iso2c + country ~ year, 
-                    value_var = "AG.CON.FERT.ZS")
+                    value.var = "value")
 
 # Order Wide Fert by country
 WideFert <- WideFert[order(WideFert$country), ]

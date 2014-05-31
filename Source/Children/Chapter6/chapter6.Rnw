@@ -368,20 +368,20 @@ Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pem
 <<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
 # For simplicity, store the URL in an object called 'url'.
 url <- "http://bit.ly/1jXJgDh"
-
+ 
 # Create a temporary file called 'temp' to put the zip file into.
 temp <- tempfile()
-
+ 
 # Download the compressed file into the temporary file.
 download.file(url, temp)
-
+ 
 # Decompress the file and convert it into a dataframe
 # class object called 'data'.
 UDSData <- read.csv(gzfile(temp, "uds_summary.csv"))
-
+ 
 # Delete the temporary file.
 unlink(temp)
-
+ 
 # Show variables in data
 names(UDSData)
 @ 
@@ -417,7 +417,7 @@ WDIsearch("fertilizer consumption")
 
 \noindent This shows us a selection of indicator numbers and their names.\footnote{You can also search the World Bank Development Indicators website. The indicator numbers are at the end of each indicator's URL.} Let's gather data on countries' fertilizer consumption in kilograms per hectare of arable land. The indicator number for this variable is: AG.CON.FERT.ZS. We can use the command \texttt{WDI} to gather the data and put it in an object called \emph{FertConsumpData}.
 
-<<Ch6WDIFert, eval=FALSE>>=
+<<Ch6WDIFert, eval=TRUE>>=
 FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 @
 
@@ -425,7 +425,7 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 
 <<Ch6WDIFertSave, include=FALSE>>=
 # This ensures that the PDF will still compile even if the data is unavailable via WDI
-load(file = "Children/Chapter6/FertData.RData")
+#load(file = "Source/Children/Chapter6/FertData.RData")
 @
 
 <<Ch6HeadFert>>=
