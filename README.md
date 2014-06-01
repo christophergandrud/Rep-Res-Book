@@ -1,8 +1,10 @@
 # [Reproducible Research with R and RStudio](http://christophergandrud.github.io/RepResR-RStudio/)
 
+[<img src="http://3.bp.blogspot.com/-f8MFbNEoyGU/UYNGekqEkTI/AAAAAAAAGOM/Dq36pI06kTQ/s320/RepResCover.jpg" align="right" />](http://www.amazon.com/dp/1466572841)
+
 ### [Christopher Gandrud](http://christophergandrud.blogspot.com/p/biocontact.html)
 
-### [CRC Press/Chapman & Hall division of Taylor & Francis](http://www.crcpress.com/product/isbn/9781466572843)
+### [CRC Press/Chapman & Hall](http://www.crcpress.com/product/isbn/9781466572843)
 
 
 ---
