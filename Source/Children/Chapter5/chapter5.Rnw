@@ -439,7 +439,8 @@ git push --tags
 In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R command!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}. 
 
 <<Ch5URLAddress, tidy=FALSE>>=
-UrlAddress <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+UrlAddress <- paste0("https://raw.githubusercontent.com/",
+                "christophergandrud/",
                 "Disproportionality_Data/master/",
                 "Disproportionality.csv")
 @
@@ -465,7 +466,8 @@ For example, I have an old version of the disproportionality data where the vari
 {\small{
 <<Ch5sourceDataOld, tidy=FALSE>>=
 # Create object containing the file's URL
-OldUrlAddress <- paste0("https://raw.githubusercontent.com/christophergandrud/",
+OldUrlAddress <- paste0("https://raw.githubusercontent.com/",
+                    "christophergandrud/",
 					"Disproportionality_Data/",
 					"1a59d360b36eade3b183d6336a",
 					"2262df4f9555d1/",

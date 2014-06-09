@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 11 May 2014
+% Updated: 9 June 2014
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -36,26 +36,6 @@ The \texttt{eval} option determines whether or not the code in a chunk will be r
 \paragraph{{\tt{echo}}}\index{knitr option!echo}
 
 If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} then source code will be included in the presentation document. As with \texttt{eval} you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
-
-\paragraph{{\tt{tidy}}}\index{knitr option!tidy}
-
-If you do echo your code in your presentation document you may want to manually format it in a particular way. By default \texttt{knitr} `tidies' the code using the \emph{formatR}\index{formatR} package. To turn this off simply set the option \verb|tidy=FALSE|. For example, this code chunk has \verb|tidy=FALSE| so that I could put the arguments on separate lines:
-
-<<Ch8TidyFalse, eval=FALSE, tidy=FALSE>>=
-MoltenFert <- melt(data = FertConsumpData,
-                    id.vars = c("iso2c", "country", "year"),
-                    measure.vars= "AG.CON.FERT.ZS")
-@
-
-\noindent This is what the same code looks like when \verb|tidy=TRUE|:\footnote{I changed the font size so that it would fit on the page.}
-
-{\scriptsize
-<<Ch8TidyTrue, eval=FALSE>>=
-MoltenFert <- melt(data = FertConsumpData,
-                    id.vars = c("iso2c", "country", "year"),
-                    measure.vars= "AG.CON.FERT.ZS")
-@
-}
 
 \paragraph{{\tt{results}}}\index{knitr option!results}
 
