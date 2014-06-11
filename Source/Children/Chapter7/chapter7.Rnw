@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 March 2014
+% Updated: 11 June 2014
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -557,9 +557,9 @@ MoltenFert <- melt(data = FertConsumpData,
                     measure.vars= "AG.CON.FERT.ZS")
 
 # Cast MoltenFert to year wide format
-WideFert <- dcast(data = MoltenFert, 
-                    formula = iso2c + country ~ year, 
-                    value_var = "AG.CON.FERT.ZS")
+WideFert <- dcast(MoltenFert,
+                  formula = iso2c + country ~ year,
+                  value.var = "value") 
 
 # Order WideFert by country
 WideFert <- WideFert[order(WideFert$country), ]
