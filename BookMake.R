@@ -15,7 +15,7 @@
 # Load knitr package
 library(knitr)
 
-# Specify working directories.
+# Specify working directories. Change as needed.
 ## Rep-Res-Parent.Rnw
 ParentDirectory <- "/git_repositories/Rep-Res-Book/Source/"
 ## README.Rmd
