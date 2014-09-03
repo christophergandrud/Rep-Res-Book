@@ -1,7 +1,7 @@
 % Chapter Chapter 1 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 25 August 2014
+% Updated: 2 September 2014
 
 <<set-parent1, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -34,6 +34,13 @@ In practice, research needs to be {\emph{easy}} for independent researchers to r
 
 In particular you will learn tools for dynamically ``{\emph{knitting}}''\index{knit}\footnote{Much of the reproducible computational research and literate programming literatures have traditionally used the term ``weave''\index{weave} to describe the process of combining source code and presentation documents \cite[see][101]{Knuth1992}. In the R community weave is usually used to describe the combination of source code and LaTeX documents. The term ``knit'' reflects the vocabulary of the {\emph{knitr}} R package\index{knitr} (knit + R). It is used more generally to describe weaving with a variety of markup languages. Because of this, I use the term knit rather than weave in this book.} the data and the source code together with your presentation documents. Combined with well organized source files and clearly and completely commented code, independent researchers will be able to understand how you obtained your results. This will make your computational research easily reproducible.
 
+%%%%%%%%%%%%%% Reproducibility vs. Replicability %%%%%%%%%%%%%
+
+\section{Reproducibility vs. Replicability}
+
+It is important to distinguish between research that is reproducible and research that is replicable. These are two related concepts that are nonetheless distinct, but often confused. If a piece of research is reproducible then independent researchers are able to come to the same conclusions as an original study using the \emph{same data and code} as the original. Research is replicable when independent researchers come to the same conclusions using \emph{different data} and \emph{different code and even methods}.
+
+
 %%%%%%%%%%%%%% Why should research be reproducible? %%%%%%%%%%%%%
 
 \section{Why Should Research Be Reproducible?}
@@ -45,7 +52,9 @@ Reproducibility research is one of the main components of science. If that's not
 Replicability has been a key part of scientific inquiry from perhaps the 1200s \cite[]{Bacon1267,Nosek2012}. It has even been called the ``demarcation between science and non-science'' \cite[2]{Braude1979}. Why is replication so important for scientific inquiry?
 
 \paragraph{Standard to judge scientific claims}
-Replication, or at the least reproducibility, opens claims to scrutiny; allowing us to keep what works and discard what doesn't. Science, according to the American Physical Society, ``is the systematic enterprise of gathering knowledge \ldots organizing and condensing that knowledge into testable laws and theories.'' The ``ultimate standard'' for evaluating these scientific claims is whether or not the claims can be replicated \cite[]{Peng2011,Kelly2006}. Research findings cannot even really be considered ``genuine contribution[s] to human knowledge'' until they have been verified through replication \cite[38]{Stodden2009}. Replication ``requires the complete and open exchange of data, procedures, and materials''. Scientific conclusions that are not replicable should be abandoned or modified ``when confronted with more complete or reliable \ldots evidence''.\footnote{See the American Physical Society's website at \url{http://www.aps.org/policy/statements/99_6.cfm}. See also \cite{Fomel2009}.}
+Replication opens claims to scrutiny; allowing us to keep what works and discard what doesn't. Science, according to the American Physical Society, ``is the systematic enterprise of gathering knowledge \ldots organizing and condensing that knowledge into testable laws and theories.'' The ``ultimate standard'' for evaluating these scientific claims is whether or not the claims can be replicated \cite[]{Peng2011,Kelly2006}. Research findings cannot even really be considered ``genuine contribution[s] to human knowledge'' until they have been verified through replication \cite[38]{Stodden2009}. Replication ``requires the complete and open exchange of data, procedures, and materials''. Scientific conclusions that are not replicable should be abandoned or modified ``when confronted with more complete or reliable \ldots evidence''.\footnote{See the American Physical Society's website at \url{http://www.aps.org/policy/statements/99_6.cfm}. See also \cite{Fomel2009}.}
+
+Reproducibility enhances replicability. If other researchers are able to clearly understand how a finding was originally made then they will be better able to conduct comparable research in meaningful attempts to replicate the original findings. Sometimes strict replicability is not possible, for example, when it is only possible to gather one data set on a population of interest. In these cases reproducibility is a ``minimum standard'' for judging scientific claims when replication is not possible \citep{Peng2011}. It is important to note that though reproducibility is a minimum standard for judging scientific claims, ``a study can be reproducible and still be wrong'' in the sense that the purported causal relationship is not true in the real world \citep{Peng2014}.
 
 \paragraph{Avoiding effort duplication \& encouraging cumulative knowledge development}
 Not only is reproducibility crucial for evaluating scientific claims, it can also help enable the cumulative growth of future scientific knowledge \citep{Kelly2006,King1995}. Reproducible research cuts down on the amount of time scientists have to spend gathering data or developing procedures that have already been collected or figured out. Because researchers do not have to discover on their own things that have already been done, they can more quickly apply these data and procedures to building on established findings and developing new knowledge.
