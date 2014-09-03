@@ -1,10 +1,10 @@
 % Chapter Chapter 2 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 14 July 2013
+% Updated: 22 May 2014
 
 <<set-parent2, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Getting Started with Reproducible Research}\label{GettingStartedRR}
@@ -66,7 +66,7 @@ In order to reproduce your research others must be able to know what you did. Yo
 Before discussing the other tips it's important to learn a key part of documenting with R. You should \emph{record your session info\index{session info}}. Many things in R have stayed the same since it was introduced in the early 1990s. This makes it easy for future researchers to recreate what was done in the past. However, things can change from one version of R to another and from one version of an R package to another. Also, the way R functions and especially how R packages are handled can vary across different operating systems, so it's important to note what system you used. Finally, you may have R set to load packages\index{packages} by default (see Section \ref{Packages} for information about packages). These packages might be necessary to run your code, but other people might not know what packages and what versions of the packages were loaded from just looking at your source code. The \texttt{sessionInfo} command\index{R command!sessionInfo} in R prints a record of all of these things. The information from the session I used to create this book is:
 
 {\footnotesize{
-<<Ch2SessionInfoPlain, tidy=TRUE>>=
+<<Ch2SessionInfoPlain, echo=TRUE, tidy=TRUE>>=
 # Print R session info
 sessionInfo()
 @
@@ -92,7 +92,7 @@ Treat all of your research files as if someone who has not worked on the project
 \paragraph{Commenting}
 In R everything on a line after a hash character--{\tt{\#}}--(also known as number, pound, or sharp) is ignored by R, but is readable to people who open the file. The hash character is a comment declaration\index{comment declaration} character. You can use the {\tt{\#}} to place comments telling other people what you are doing. Here are some examples:
 
-<<Ch2CommentHash>>=
+<<Ch2CommentHash, echo=TRUE>>=
 # A complete comment line
 2 + 2 # A comment after R code
 @
@@ -120,11 +120,11 @@ He also suggests that all of your source code files should begin with a comment 
 
 \noindent You may also want to include other information in the header such as what files it depends on, what output files it produces, what version of the programming language you are using, or sources that may have influenced the code. Here is an example of a minimal file header for an R source code file that creates the third figure in an article titled `My Article':
 
-<<Ch2CommentHeader, tidy=FALSE>>=
+<<Ch2CommentHeader, echo=TRUE, tidy=FALSE>>=
 ##################
 # R Source code file used to create Figure 3 in My 'Article'
 # Created by Christopher Gandrud
-# Updated 1 May 2013
+# Updated 22 May 2014
 ##################
 @
 
@@ -187,5 +187,3 @@ One rule of thumb for organizing your research in files is to limit the amount o
 Because we have so many ways to link files together there is really no need to lump many different operations into one file. So, we can make our files modular. One source code file should be used to complete one or just a few tasks. Breaking your operations into discrete parts will also make it easier for you and others to find errors \cite[490]{Nagler1995}.
 
 Chapter \ref{DirectoriesChapter} discusses file organization in much more detail. Chapter \ref{Storing} teaches you a number of ways to make your files accessible through the cloud computing services Dropbox\index{Dropbox} and GitHub\index{GitHub}.
-
-

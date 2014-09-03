@@ -1,10 +1,10 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 August 2013
+% Updated: 31 May 2014
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Storing, Collaborating, Accessing Files, \& Versioning}\label{Storing}
@@ -39,9 +39,9 @@ write.table(Data, "/ExampleProject/Data/DataFiles/MainData.csv",
                  sep = ",")
 @
 
-\noindent The \texttt{sep = ","} argument specifies that we want to use a comma to separate the values. For CSV files you can use a modified version of this command called \texttt{write.csv}\index{R command!write.csv}. This command simply makes it so that you don't have to write \texttt{sep = ","}.\footnote{\texttt{write.csv} is a `wrapper'\index{wrapper} for \emph{write.table}.} 
+\noindent The \texttt{sep = ","} argument specifies that we want to use commas to separate values into columns. For CSV files you can use a modified version of this command called \texttt{write.csv}\index{R command!write.csv}. This command simply makes it so that you don't have to write \texttt{sep = ","}.\footnote{\texttt{write.csv} is a `wrapper'\index{wrapper} for \emph{write.table}.} 
 
-If you want to save your data with rows separated by tabs, rather than commas, simply set the argument \verb|sep = "\t"| and set the file extension to \texttt{.tsv}.\label{TSVEscape}
+If you want to save your data with values separated by tabs, rather than commas, simply set the argument \verb|sep = "\t"| and set the file extension to \texttt{.tsv}.\label{TSVEscape}
 
 R is able to save data in a wide variety of other file formats, mostly through the {\emph{foreign}} package (see Chapter \ref{DataGather}). These formats may be less future proof than simple text-formatted data files.
 
@@ -84,14 +84,14 @@ FinURL <- paste0("https://dl.dropbox.com/u/12581470/code/",
 
 # Download data
 FinRegulatorData <- source_data(FinURL, 
-                    			sep = ",", 
-                    			header = TRUE)
+                   		sep = ",", 
+                   		header = TRUE)
                     
 # Show variables in FinRegulatorData
 names(FinRegulatorData)
 @
 
-\noindent Let's go through this code. The command \texttt{paste0}\index{R command!paste0} simply pastes the multiple strings I've used to write the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} You do not have to do this. You could just use one long continuous string. I only split it up and pasted it back together so that the URL would fit on the printed page. We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's rows are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files.
+\noindent Let's go through this code. The command \texttt{paste0}\index{R command!paste0} simply pastes the multiple strings I've used to write the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} You do not have to do this. You could just use one long continuous string. I only split it up and pasted it back together so that the URL would fit on the printed page. We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's values are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files.
 
 You're probably also wondering about the line that begins \emph{\texttt{\#\# SHA-1 hash of}} \ldots. The long string of numbers and letters at the end of this line is basically a unique ID that \verb|source_data| assigns to the file. It is called an SHA-1 hash. We'll see SHA-1\index{SHA-1 hash} hashes more in the next section on GitHub (Section \ref{GitHubMain}) and in Chapter \ref{DataGather} (Section \ref{SecureData6}). To give you a preview: it allows us to see if the file that we downloaded is the file we thought we downloaded.
 
@@ -207,7 +207,7 @@ git add .
 git commit -a -m "First Commit, created README file"
 @
 
-\noindent The \texttt{-a} (all) option commits changes made to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} option like: \texttt{"First Commit, created README file"}. Messages help you remember general details about individual commits. This is helpful when you want to revert to old versions. \textbf{Remember:} Git only tracks changes when you commit them. 
+\noindent Note: the files won't appear on GitHub yet. Later in the chapter we will learn how to push commits to your remote GitHub repository. The \texttt{-a} (all) option commits changes made to all of the files that have been added to the repository. You can include a message with the commit using the \texttt{-m} option like: \texttt{"First Commit, created README file"}. Messages help you remember general details about individual commits. This is helpful when you want to revert to old versions. \textbf{Remember:} Git only tracks changes when you commit them. 
 
 Finally, you can use the \texttt{status} command for details about your repository, including uncommitted changes. Generally it's a good idea to use the \texttt{-s} (short) option, so that the output is more readable.
 
@@ -255,14 +255,14 @@ git status -s
 
 \paragraph{Checkout}\index{Git command!checkout}
 
-It is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{Objects}}. Commit objects\index{Git!commit object}\footnote{Other Git objects include trees\index{Git!tree} (sort of like directories), tags\index{Git!tag} (bookmarks for important points in a repo's history), and blobs\index{Git!blob} (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
+It is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}} folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{objects}}. Commit objects\index{Git!commit object}\footnote{Other Git objects include trees\index{Git!tree} (sort of like directories), tags\index{Git!tag} (bookmarks for important points in a repo's history), and blobs\index{Git!blob} (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
 
 <<Ch5CheckoutBasic, eval=FALSE, engine='sh'>>=
 # Checkout latest commit
-git checkout --
+git checkout -- .
 @
 
-\noindent You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|---| with the commit reference.\index{Git!commit reference} The reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage} (see below for more information on how to create a GitHub webpage).\footnote{You can also search your commit history and roll back to a previous commit using only the command line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the right-hand side of the repo's webpage. This will show you all of the commits. A portion of this book's commit history is shown in Figure \ref{BookHistory}. By clicking on {\tt{Browse Code}} you can see what the files at any commit looked like. Above this button is another with a series of numbers and letters. This is the commit's SHA-1 hash\footnote{Secure Hash Algorithm}.\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file. 
+\noindent Note that there is a space between the two dashed lines and the period. You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|--| with the commit reference.\index{Git!commit reference} Note that the period at the end is still very important to include after the commit reference. The commit reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage} (see below for more information on how to create a GitHub webpage).\footnote{You can also search your commit history and roll back to a previous commit using only the command line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the right-hand side of the repo's webpage. This will show you all of the commits. A portion of this book's commit history is shown in Figure \ref{BookHistory}. By clicking on {\tt{Browse Code}} you can see what the files at any commit looked like. Above this button is another with a series of numbers and letters. This is the commit's SHA-1 hash\footnote{Secure Hash Algorithm}.\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file. 
 
 \begin{figure}[t]
     \caption{Part of this Book's GitHub Repository Commit History Page}
@@ -287,6 +287,15 @@ git tag -a v0.1 -m "First draft"
 # Checkout v0.1
 git checkout v0.1
 @
+
+\noindent This will create a new ``branch'' with a generic name \emph{(detached from v0.1)} where you can make changes and commit them. If plan to checkout a previous tagged version and make changes to it, it is a good idea to specifically name the branch using the \verb|-b| argument.\footnote{If you don't then the new branch will have a ``detached head'' which will create problems using the branch in the future.} For example, to give it the name \emph{v0.1Brance} type:
+
+<<Ch5CheckoutTagNamed, eval=FALSE, engine='sh'>>=
+# Checkout v0.1 as v0.1Brance
+git checkout v0.1 -b v0.1Branch
+@
+
+\noindent What is a branch?
 
 \paragraph{Branches}
 
@@ -333,7 +342,7 @@ git merge Test
 
 \paragraph{Having Git ignore files}
 
-There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files or cached files from \emph{knitr} or other files that are byproducts of compiling an R LaTeX document. To have Git ignore particular files simply create a file called \emph{.gitignore}.\footnote{Note that like \emph{.git}, \emph{.gitignore} files are hidden.}\index{Git!.gitignore}\index{Git!ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository or in a subdirectory to ignore files in that subdirectory. You can also place one in a child directory to ignore files only in that directory. In the \emph{.gitignore} file add ignore rules by simply including the names of the files that you want to have Git ignore. For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling an R LaTeX file would look something like this:
+There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files or cached files from \emph{knitr} or other files that are byproducts of compiling an R LaTeX document (see Chapter \ref{StatsModel}). To have Git ignore particular files simply create a file called \emph{.gitignore}.\footnote{Note that like \emph{.git}, \emph{.gitignore} files are hidden.}\index{Git!.gitignore}\index{Git!ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository or in a subdirectory to ignore files in that subdirectory. In the \emph{.gitignore} file add ignore rules by simply including the names of the files that you want to have Git ignore. For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling an R LaTeX file would look something like this:
 
 <<Ch5gitignore, eval=FALSE, engine='sh'>>=
 # Ignore LaTeX compile byproduct files #
@@ -371,7 +380,7 @@ To create a new repository on GitHub go to your main GitHub account webpage and 
 
 \paragraph{Clone a new remote repository}
 
-If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{Git!clone} The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Image that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy its URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in \ldots} button.}\label{GitClone}
+If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{Git!clone} The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Imagine that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy its URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in \ldots} button.}\label{GitClone}
 
 <<Ch5Clone, eval=FALSE, engine='sh'>>=
 # Change working directory 
@@ -427,10 +436,11 @@ git push --tags
 
 \paragraph{Downloading into R}\label{GitDownload}
 
-In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R command!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.github.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}. 
+In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R command!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}. Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}. 
 
 <<Ch5URLAddress, tidy=FALSE>>=
-UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
+UrlAddress <- paste0("https://raw.githubusercontent.com/",
+                "christophergandrud/",
                 "Disproportionality_Data/master/",
                 "Disproportionality.csv")
 @
@@ -456,11 +466,12 @@ For example, I have an old version of the disproportionality data where the vari
 {\small{
 <<Ch5sourceDataOld, tidy=FALSE>>=
 # Create object containing the file's URL
-OldUrlAddress <- paste0("https://raw.github.com/christophergandrud/",
-				"Disproportionality_Data/",
-				"1a59d360b36eade3b183d6336a",
-				"2262df4f9555d1/",
-				"Disproportionality.csv")
+OldUrlAddress <- paste0("https://raw.githubusercontent.com/",
+                    "christophergandrud/",
+					"Disproportionality_Data/",
+					"1a59d360b36eade3b183d6336a",
+					"2262df4f9555d1/",
+					"Disproportionality.csv")
 
 # Download old disproportionality data
 DispropOld <- repmis::source_data(OldUrlAddress)

@@ -1,10 +1,10 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 May 2013
+% Updated: 16 March 2014
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Showing Results with Figures}\label{FiguresChapter}
@@ -122,7 +122,7 @@ Similarly, we can set the width of a \emph{knitr} created figure using the \text
 
 \paragraph{{\tt{fig.align}}}\index{knitr option!fig.align}
 
-You can set a knitted figure's alignment using \texttt{fig.align}. The option can be set to \texttt{left}, \texttt{center}, or \texttt{right}. To center a figure add \verb|fig.align='center'|. Note that this option only works with R LaTeX and R HTML.\index{R HTML} You probably noticed before that there was no way to change a figure's alignment in straight Markdown syntax. 
+You can set a knitted figure's alignment using \texttt{fig.align}. The option can be set to \texttt{left}, \texttt{center}, or \texttt{right}. To center a figure add \verb|fig.align='center'|. 
 
 \paragraph{Other figure chunk options}
 
@@ -138,7 +138,7 @@ If you want all of your figures to share the same options-e.g. same height and a
         \begin{kframe}
             \begin{alltt}
 \textless{\textless}include=FALSE\textgreater{\textgreater}=
-opts_chunk$\hlfunctioncall{set.}(fig.align = \hlstring{"center"}, out.width = \hlstring{"0.8\textbackslash{}\textbackslash{}textwidth"})
+opts_chunk$\hlkwd{set.}(fig.align = \hlstr{"center"}, out.width = \hlstr{"0.8\textbackslash{}\textbackslash{}textwidth"})
 @
             \end{alltt}
         \end{kframe}
@@ -176,9 +176,9 @@ Now let's see how to create this plot with \emph{knitr} and include it in a LaTe
     \textbackslash{}caption\{Example Simple Scatter Plot Using \textbackslash{}texttt\{plot\}\}
     \textbackslash{}label\{BasicFigureExample\}
 \textless{\textless}echo=FALSE, fig.align='center', out.width='8cm', out.height='8cm'\textgreater{\textgreater}=
-\hlfunctioncall{plot}(x = cars$speed, y = cars$dist,
-     xlab = \hlstring{"Speed (mph)"},
-     ylab = \hlstring{"Stopping Distance (ft)"},
+\hlkwd{plot}(x = cars$speed, y = cars$dist,
+     xlab = \hlstr{"Speed (mph)"},
+     ylab = \hlstr{"Stopping Distance (ft)"},
      cex.lab = 1.5)
 @
 \textbackslash{}end\{figure\}
@@ -201,7 +201,7 @@ plot(x = cars$speed, y = cars$dist,
 
 \noindent This code produces Figure \ref{BasicFigureExample}.\footnote{Note that I did not specify the center environment. This is because it is specified in a \emph{knitr} global chunk option.} If you are familiar with R graphics you will notice that we did not need to tell \emph{knitr} to save the file in a particular format. Instead, behind the scenes it automatically saves the plot as a PDF file in a folder called \emph{figure} that is a child of the current working directory. You can choose the figure file's format with the \texttt{dev} (graphical device) chunk option.\index{knitr option!dev}\label{DevTalk} For example, to save the figure in a PNG formatted file simply add the chunk option \verb|dev='PNG'|. You can choose any graphical device format supported by R. For a full list of R's graphical devices type \verb|?Devices| into your console.\index{R!graphical device} One reason you might want to change the format is to reduce your presentation document's file size. Using a bitmap format like PNG will create smaller files than PDFs, though lower quality images. 
 
-We could of course simply link to the original R source code file stored on GitHub\index{GitHub} with the \verb|source_url|\index{R command!source\_url} command. Let's look at an example of this with a different source code file. Remember in Chapter \ref{DataGather} we used a makefile to gather data from three different sources on the internet. The CSV is called \emph{MainData.csv} and is stored on GitHub at:\url{http://bit.ly/V0ldsf}.\footnote{The full version of the URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/DataGather_Merge/MainData.csv}} We can download this data into R and make a scatterplot matrix with this code:\index{scatterplot matrix}
+We could of course simply link to the original R source code file stored on GitHub\index{GitHub} with the \verb|source_url|\index{R command!source\_url} command. Let's look at an example of this with a different source code file. Remember in Chapter \ref{DataGather} we used a makefile to gather data from three different sources on the internet. The CSV is called \emph{MainData.csv} and is stored on GitHub at:\url{http://bit.ly/V0ldsf}.\footnote{The full version of the URL is: \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/DataGather_Merge/MainData.csv}} We can download this data into R and make a scatterplot matrix with this code:\index{scatterplot matrix}
 
 <<Ch10ScatterPlotMatrix, eval=FALSE, tidy=FALSE>>=
 # Download data
@@ -222,7 +222,7 @@ pairs(x = SubData)
 
 \noindent This\index{R command!source\_data} is a lot of code, but you should be familiar with most of it. You will notice that after downloading the data we cleaned it up in preparation for plotting with the \texttt{pairs} command\index{R command!pairs} by removing data from all years other than 2003 and all of the country-year identifying variables. Finally, we created the scatterplot matrix with \texttt{pairs}.
 
-To dynamically include the plot in our final document, we don't need to include all of this code in a code chunk in our markup document. A file containing the code is available on GitHub.\footnote{See: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/ScatterPlotMatrix.R}.} So we only need to use \verb|source_url| to link to it. I've shortened the raw source code file's URL to: \url{http://bit.ly/TE0gTc}. Let's look at the syntax for knitting this into an R Markdown file:
+To dynamically include the plot in our final document, we don't need to include all of this code in a code chunk in our markup document. A file containing the code is available on GitHub.\footnote{See: \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/ScatterPlotMatrix.R}.} So we only need to use \verb|source_url| to link to it. I've shortened the raw source code file's URL to: \url{http://bit.ly/TE0gTc}. Let's look at the syntax for knitting this into an R Markdown file:
 
 {\scriptsize
 <<Ch9ScatterplotMatrixMarkdown, eval=FALSE, tidy=FALSE>>=
@@ -252,12 +252,12 @@ There are a number of very good resources for learning how to use \emph{ggplot2}
 
 Given that there is already extensive good documentation on \emph{ggplot2} we are not going to learn the full details of how to use the package here. Instead let's look at some examples of how to manipulate a data frame and a regression results object so that they can be graphed with \emph{ggplot2}. First we will create a multi-line time series plot. Then we will create a caterpillar plot of regression results. Along with giving you a general sense of how \emph{ggplot2} works, the examples illuminate how \emph{ggplot2} can be made part of a fully reproducible research workflow.\footnote{Note that everything we do here with \emph{ggplot2} can also be done with R's default graphics, though the appearance will be different.}
 
-Sometimes we may want to show how multiple variables change together overtime. For example, imagine we have data on inflation\index{inflation}\index{US Federal Reserve} in the United States along with inflation forecasts made by the US Federal Reserve\index{US Federal Reserve} two quarters beforehand. The data is stored on GitHub at: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv}.\footnote{This data is from \cite{GandrudGrafstrom2012}. The example here partially recreates Figure 1 from that paper.} I've loaded the data into R and put it into an object called \emph{InflationData}. It looks like this:
+Sometimes we may want to show how multiple variables change together overtime. For example, imagine we have data on inflation\index{inflation}\index{US Federal Reserve} in the United States along with inflation forecasts made by the US Federal Reserve\index{US Federal Reserve} two quarters beforehand. The data is stored on GitHub at: \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv}.\footnote{This data is from \cite{GandrudGrafstrom2012}. The example here partially recreates Figure 1 from that paper.} I've loaded the data into R and put it into an object called \emph{InflationData}. It looks like this:
 
 % Load inflation data
 <<Ch10LoadInflationData, include=FALSE, message=FALSE>>=
 # Create URL object
-InflationUrl <- "https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv"
+InflationUrl <- "https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationData.csv"
 
 # Load data
 InflationData <- repmis::source_data(InflationUrl)
@@ -329,7 +329,7 @@ print(LinePlot)
 
 \noindent You can see we set the $x$ and $y$ axes using the \textbf{Quarter} and \textbf{value} variables. We told \emph{ggplot} that elements in the geometric layer should have lines with different colors and line types (dashed, dotted, and so on) based on the value of \textbf{variable} that they represent. \verb|geom_line| specifies that we want to add a line geometric layer.\footnote{Remember from Chapter \ref{GettingStartedRKnitr} that commands must be followed by parentheses. These layers are commands so they need to be followed by parentheses.} \verb|scale_color_discrete| and \verb|scale_linetype|\index{ggplot2!scale\_color\_discrete}\index{ggplot2!scale\_linetype} are used here to hide the plot's legend title with \verb|name = ""| and customize the legend's labels with \verb|labels = . . .|.\index{ggplot2!labels} You can also use them to determine the specific colors and line types you would like to use. \texttt{xlab} and \texttt{ylab} set the axes' labels. You can add a title with \texttt{ggtitle}.\index{ggplot2!ggtitle} Finally, I added \verb|theme_bw|\index{ggplot2!theme\_bw} so that the plot would use a simple black and white theme. We added the argument \verb|base_size = 15| to increase the plot's font size.\index{ggplot2!base\_size}
 
-All of the code required to create this graph is on GitHub at: \url{http://bit.ly/VEvGJG}.\footnote{The full URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationLineGraph.R}.} So to knit the graph like Figure \ref{ggplot2Line} into an R Sweave-style LaTeX document we type:
+All of the code required to create this graph is on GitHub at: \url{http://bit.ly/VEvGJG}.\footnote{The full URL is: \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/InflationLineGraph.R}.} So to knit the graph like Figure \ref{ggplot2Line} into an R Sweave-style LaTeX document we type:
 
 {\scriptsize
 \begin{knitrout}
@@ -342,8 +342,8 @@ All of the code required to create this graph is on GitHub at: \url{http://bit.l
     \textbackslash{}label\{ggplot2Line\}
         \textbackslash{}begin\{center\}
 \textless{\textless}echo=FALSE, message=FALSE, warning=FALSE, out.width='10cm', out.height='8cm'\textgreater{\textgreater}=
-\hlcomment{# Create plot}
-devtools::\hlfunctioncall{source_url}(\hlstring{"http://bit.ly/VEvGJG"})
+\hlcom{# Create plot}
+devtools::\hlkwd{source_url}(\hlstr{"http://bit.ly/VEvGJG"})
 @
         \textbackslash{}end\{center\}
 \textbackslash{}end\{figure\}
@@ -437,7 +437,7 @@ ggplot(data = NBSum2DF, aes(x = reorder(Variable, X2.5.),
 % Actually include plot
 <<Ch10PlotCatPlot, echo=FALSE, message=FALSE, out.width='0.6\\textwidth', out.height='0.3\\textheight'>>=
 # Create plot
-devtools::source_url("https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/CaterpillarPlot.R")
+devtools::source_url("https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/CaterpillarPlot.R")
 @
  \end{figure}   
 
@@ -485,7 +485,7 @@ To view the figure on your computer simply use \emph{googleVis}'s \texttt{plot} 
 plot(FCMap)
 @
 
-\noindent This will open your default web browser and show you an image like that in Figure \ref{GeoMapImage}. Note that you need to be connected to the internet to view figures created by \emph{googleVis}, otherwise your image will not be able to access the required JavaScript\index{JavaScript} files from the Google Visualization API.\index{API}
+\noindent This will open your default web browser and show you an image like that in Figure \ref{GeoMapImage}. If you are using RStudio version 0.98.441 or later the plot will be displayed in a \emph{Viewer} pane within RStudio that is similar to the \emph{Plots} pane. Note that you need to be connected to the internet to view figures created by \emph{googleVis}, otherwise your image will not be able to access the required JavaScript\index{JavaScript} files from the Google Visualization API.\index{API}
 
 \begin{figure}
     \caption{Screenshot of a \emph{googleVis} Geo Map}
@@ -497,7 +497,7 @@ plot(FCMap)
 
 \paragraph{Including \emph{googleVis} in knitted documents}
 
-Typing \verb|print(FCMap, tag = "chart")|\index{R command!print} in a knittable document would print the entire JavaScript code needed to create the map. Much like we saw with tables produced with \emph{xtable} and \emph{apsrtable} in Chapter \ref{TablesChapter}, we need to change the code chunk \texttt{results} option to include the map as a map rather than as JavaScript markup. To have the visualization show up in your HTML output, rather than the code block, simply set the code chunk option\index{knitr option!results} to \verb|results='asis'|.\footnote{You can use \texttt{results='asis'} to include almost any type of JavaScript graphics. For an example using the D3 JavaScript library\index{D3 JavaScript library}\index{JavaScript} and \emph{knitr} see this page by Yihui Xie: \url{http://yihui.name/knitr/demo/javascript/}.} For example, the full code needed to create and print \emph{FCMap} is available at: \url{http://bit.ly/VNnZxS}.\footnote{The full URL is: \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/GoogleVisMap.R}.} To knit the map into an R Markdown document we type:
+Typing \verb|print(FCMap, tag = "chart")|\index{R command!print} in a knittable document would print the entire JavaScript code needed to create the map. Much like we saw with tables produced with \emph{xtable} and \emph{apsrtable} in Chapter \ref{TablesChapter}, we need to change the code chunk \texttt{results} option to include the map as a map rather than as JavaScript markup. To have the visualization show up in your HTML output, rather than the code block, simply set the code chunk option\index{knitr option!results} to \verb|results='asis'|.\footnote{You can use \texttt{results='asis'} to include almost any type of JavaScript graphics. For an example using the D3 JavaScript library\index{D3 JavaScript library}\index{JavaScript} and \emph{knitr} see this page by Yihui Xie: \url{http://yihui.name/knitr/demo/javascript/}.} For example, the full code needed to create and print \emph{FCMap} is available at: \url{http://bit.ly/VNnZxS}.\footnote{The full URL is: \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/GoogleVisMap.R}.} To knit the map into an R Markdown document we type:
 
 <<Ch10MapKnit, eval=FALSE, tidy=FALSE>>=
 ```{r, echo=FALSE, message=FALSE, results='asis'}

@@ -1,15 +1,15 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 June 2013
+% Updated: 11 June 2014
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Preparing Data for Analysis}\label{DataClean}
 
-Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean it up so that it can be merged it into a single data file. In this chapter we will learn how to create the data gather and merging files we saw in the last chapter. The chapter also includes information on recoding and transforming variables. This is important for merging data, but will be very useful information in later chapters as well. If you are very familiar with data transformations in R you may want to skip onto the next chapter. 
+Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean it up so that it can be merged it into a single data file. In this chapter we will learn how to create the data gather and merging files we saw in the last chapter. The chapter also includes information on recoding and transforming variables. This is important for merging data, but will be very useful information in later chapters as well. If you are very familiar with data transformations in R you may want to skip onto the next chapter.
 
 \section{Cleaning Data for Merging}
 
@@ -17,9 +17,9 @@ In order to successfully merge two or more data frames we need to make sure that
 
 \subsection{Get a handle on your data}
 
-Before doing anything to your data it is a good idea to take a look at it and see what needs to be done. Taking a little time to become acquainted with your data will help you avoid many error messages and much frustration. 
+Before doing anything to your data it is a good idea to take a look at it and see what needs to be done. Taking a little time to become acquainted with your data will help you avoid many error messages and much frustration.
 
-You could of course just type a data frame object's name into the R console. This will print the entire data frame in your console. For data frames with more than a few variables and observations this is very impractical. We have already seen a number of commands that are useful for looking at parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, the \texttt{names}\index{R command!names} command shows you the variable names in a data frame object. The \texttt{head}\index{R command!head} command shows the names plus the first few observations in a data frame. The \texttt{tail}\index{R command!tail} shows the last few. 
+You could of course just type a data frame object's name into the R console. This will print the entire data frame in your console. For data frames with more than a few variables and observations this is very impractical. We have already seen a number of commands that are useful for looking at parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, the \texttt{names}\index{R command!names} command shows you the variable names in a data frame object. The \texttt{head}\index{R command!head} command shows the names plus the first few observations in a data frame. The \texttt{tail}\index{R command!tail} shows the last few.
 
 Use the \texttt{dim}\index{R command!dim} (dimensions) command to quickly see the number of observations and variables (the number of rows and columns) in a data frame object. For example, let's use the \emph{FertConsumpData} object we created in Chapter \ref{DataGather} to test out \texttt{dim}:
 
@@ -42,7 +42,7 @@ summary(FertConsumpData)
 \noindent We can immediately see that the variables \textbf{iso2c} and \textbf{country} are character strings. Because \texttt{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year}, we know they are numeric. Have a look over the summary to see if there is anything unexpected like lots of missing values (\textbf{NA's}) or unusual maximum and minimum values. You can of course run \texttt{summary} on a particular variable by using the component selector (\verb|$|):
 
 <<Ch7SummarizeCompSelect>>=
-# Summarize fertilizer consumption variable from FertConsumpData 
+# Summarize fertilizer consumption variable from FertConsumpData
 summary(FertConsumpData$AG.CON.FERT.ZS)
 @
 
@@ -101,7 +101,7 @@ If one of our raw data sets is not in this format then we will need to reshape\i
     \label{ExampleWide}
     \begin{tabular}{l c c c}
         \\[0.15cm]
-        \hline 
+        \hline
         Subject & Time1 & Time2 & Time3 \\
         \hline \\[0.1cm]
         Subject1 & & & \\[0.25cm]
@@ -121,34 +121,36 @@ Let's imagine that the fertilizer consumption data we previously downloaded from
 
 <<Ch7WideCreate, include=FALSE>>=
 # Reshape Wide
-MoltenFert <- melt(data = FertConsumpData, 
-                    id.vars = c("iso2c", "country", "year"), measure.vars= "AG.CON.FERT.ZS")
+MoltenFert <- melt(data = FertConsumpData,
+                    id.vars = c("iso2c", "country", "year"),
+                    measure.vars= "AG.CON.FERT.ZS")
 
 # Cast MoltenFert to year wide format
-WideFert <- dcast(data = MoltenFert, 
-                    formula = iso2c + country ~ year, 
-                    value_var = "AG.CON.FERT.ZS")
+WideFert <- dcast(data = MoltenFert,
+                    formula = iso2c + country ~ year,
+                    value.var = "value")
 
 # Order Wide Fert by country
 WideFert <- WideFert[order(WideFert$country), ]
 @
 
 <<Ch7ShowWideFert>>=
-head(WideFert)
+# Show the first 7 columns
+head(WideFert[, 1:7])
 @
 
 \noindent We can use \emph{reshape2}'s \texttt{melt}\index{melt}\index{R command!melt}\label{MeltReshape} command to reshape this data from wide to long format. The term ``melt'' is intended to evoke an image of the data melting down from a wide to long format.\footnote{The opposite \texttt{cast} command (\texttt{dcast}\index{cast}\index{R command!dcast}\index{dcast}\index{R command!dcast} in the case of data frames) is supposed to evoke an image of casting out the data from long to wide format. See Section \ref{WideAppendix} for an example using the \texttt{dcast} command.} In our \emph{WideFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be melted. These variables identify the data set's subjects. We can tell \texttt{melt} that they are id variables with the \texttt{id.vars} argument. The remaining columns (i.e. \textbf{2002}, \textbf{2003}, \textbf{2004} and \textbf{2005}) will be melted into two new variables: \textbf{variable}, and \textbf{value}. The former will contain the years and the later will contain the fertilizer consumption data. Here is the full code:
 
 <<Ch7MeltFert, tidy=FALSE>>=
 # Melt WideFert
-MoltenFert <- melt(data = WideFert, 
+MoltenFert <- melt(data = WideFert,
                     id.vars = c("iso2c", "country"))
 
 # Show MoltenFert
 head(MoltenFert)
-@ 
+@
 
-\noindent Objects created by \texttt{melt} are often referred to as ``molten'' data in the \emph{reshape2} documentation. That is why I've given our new data frame the name \emph{MoltenFert}. 
+\noindent Objects created by \texttt{melt} are often referred to as ``molten'' data in the \emph{reshape2} documentation. That is why I've given our new data frame the name \emph{MoltenFert}.
 
 \subsection{Renaming variables}\index{R!renaming variables}
 
@@ -179,11 +181,11 @@ MoltenFert <- MoltenFert[order(MoltenFert$country,
 
 # Show MoltenFert
 head(MoltenFert)
-@ 
+@
 
 \subsection{Subsetting data}\index{R!subsetting data}
 
-Sometimes you may want to use only a subset of a data frame. For example, the density plot in Figure \ref{FertilizerConsumptionDens} shows us that the \emph{MoltenFert} data has a few very extreme values. We can use the \texttt{subset}\index{subset}\index{R command!subset} command to examine these outliers,\index{outliers} for example countries that have fertilizer consumption greater than 1000 kilograms per hectare.  
+Sometimes you may want to use only a subset of a data frame. For example, the density plot in Figure \ref{FertilizerConsumptionDens} shows us that the \emph{MoltenFert} data has a few very extreme values. We can use the \texttt{subset}\index{subset}\index{R command!subset} command to examine these outliers,\index{outliers} for example countries that have fertilizer consumption greater than 1000 kilograms per hectare.
 
 \begin{figure}
     \caption{Density Plot of Fertilizer Consumption (kilograms per hectare of arable land)}
@@ -201,12 +203,12 @@ ggplot(data = MoltenFert, aes(FertilizerConsumption)) +
         theme_bw()
 @
     {\scriptsize{See the Chapter's Appendix for the source code to create this figure.}}
-\end{figure} 
+\end{figure}
 
 {\small
 <<Ch7SubsetOutliers, tidy=FALSE>>=
 # Create outlier data frame
-FertOutliers <- subset(x = MoltenFert, 
+FertOutliers <- subset(x = MoltenFert,
                         FertilizerConsumption > 1000)
 
 # Show FertOutliers
@@ -229,10 +231,10 @@ MoltenFertSub <- subset(x = MoltenFertSub,
                         country != "Arab World")
 @
 
-\noindent We can also use \texttt{subset} to remove observations with missing values (\texttt{NA}) for \textbf{FertilizerConsumption}. 
+\noindent We can also use \texttt{subset} to remove observations with missing values (\texttt{NA}) for \textbf{FertilizerConsumption}.
 
 <<Ch7IsNotNA, tidy=FALSE>>=
-# Remove observations of FertilizerConsumption 
+# Remove observations of FertilizerConsumption
 # with missing values
 MoltenFertSub <- subset(x = MoltenFertSub,
                              !is.na(FertilizerConsumption))
@@ -259,10 +261,10 @@ summary(MoltenFertSub$FertilizerConsumption)
         \verb|a & b| & a \& b \\
         \verb|isTRUE(a)| & determine if a is TRUE \\
         \hline \\
-        \verb|is.na| & missing\\ 
+        \verb|is.na| & missing\\
         \verb|!is.na| & not missing \\
         \verb|duplicated| & duplicated observation \\
-        \verb|!duplicated| & not a duplicated observation \\ 
+        \verb|!duplicated| & not a duplicated observation \\
         \hline
     \end{tabular}
     \end{center}
@@ -276,7 +278,7 @@ You may want to recode your variables. In particular when you merge data sets to
 
 <<Ch7RecodeString, tidy=FALSE>>=
 # Recode country == "Korea, Rep."" to "South Korea"
-MoltenFertSub$country[MoltenFertSub$country == 
+MoltenFertSub$country[MoltenFertSub$country ==
                         "Korea, Rep."] <- "South Korea"
 @
 
@@ -345,19 +347,19 @@ We can create factor variables from numeric or string variables. For example, we
 # Attach MoltenFertSub data frame
 attach(MoltenFertSub)
 
-# Created new FertConsGroup variable based on 
+# Created new FertConsGroup variable based on
 # FertilizerConsumption
-MoltenFertSub$FertConsGroup[FertilizerConsumption 
+MoltenFertSub$FertConsGroup[FertilizerConsumption
                             < 15] <- 1
-MoltenFertSub$FertConsGroup[FertilizerConsumption 
-                            >= 15 & 
+MoltenFertSub$FertConsGroup[FertilizerConsumption
+                            >= 15 &
                             FertilizerConsumption < 80] <- 2
-MoltenFertSub$FertConsGroup[FertilizerConsumption 
-                            >= 80 & 
+MoltenFertSub$FertConsGroup[FertilizerConsumption
+                            >= 80 &
                             FertilizerConsumption < 150] <- 3
-MoltenFertSub$FertConsGroup[FertilizerConsumption 
+MoltenFertSub$FertConsGroup[FertilizerConsumption
                             >= 150] <- 4
-MoltenFertSub$FertConsGroup[is.na(FertilizerConsumption)] <- NA                           
+MoltenFertSub$FertConsGroup[is.na(FertilizerConsumption)] <- NA
 
 # Detach data frame
 detach(MoltenFertSub)
@@ -386,7 +388,7 @@ The \texttt{cut} command \index{R command!cut} provides a less code intensive wa
 
 <<Ch7Cut, tidy=FALSE>>=
 # Create a factor variable with the cut command
-FertFactor <- cut(MoltenFertSub$FertilizerConsumption, 
+FertFactor <- cut(MoltenFertSub$FertilizerConsumption,
                   breaks = c(-0.01, 14.99, 80, 150, 1000),
                   labels = c("low", "medium low",
                              "medium high", "high"))
@@ -395,7 +397,7 @@ FertFactor <- cut(MoltenFertSub$FertilizerConsumption,
 summary(FertFactor)
 @
 
-\noindent The \texttt{labels} argument lets us specify the factor levels' names. The \texttt{breaks} argument lets us specify at what values separate the factor levels. Note that we set the first break as \texttt{-0.01}, not because any country had negative fertilizer consumption, but because the intervals created by \texttt{break} exclude the left value and include the right value.\footnote{In mathematical notation the ``low'' level includes all values in the interval $(-0.01,\:14.99]$.} If we had used \texttt{0} then all of the observations where a country used effectively no fertilizer would be excluded from the ``low'' category. 
+\noindent The \texttt{labels} argument lets us specify the factor levels' names. The \texttt{breaks} argument lets us specify at what values separate the factor levels. Note that we set the first break as \texttt{-0.01}, not because any country had negative fertilizer consumption, but because the intervals created by \texttt{break} exclude the left value and include the right value.\footnote{In mathematical notation the ``low'' level includes all values in the interval $(-0.01,\:14.99]$.} If we had used \texttt{0} then all of the observations where a country used effectively no fertilizer would be excluded from the ``low'' category.
 
 \subsection{Changing variable types}\index{R!change variable type}
 
@@ -425,12 +427,12 @@ Generally, the safest and most effective way to merge two data sets together is 
 library(countrycode)
 
 # FinRegulatorData
-FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country, 
+FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country,
                                     origin = "country.name",
                                     destination = "iso2c")
 
 # DispropData
-DispropData$iso2c <- countrycode(DispropData$country, 
+DispropData$iso2c <- countrycode(DispropData$country,
                                     origin = "country.name",
                                     destination = "iso2c")
 @
@@ -448,7 +450,7 @@ MergedData1 <- merge(x = MergedData1,
                      by = "iso2c",
                      all = TRUE)
 
-# Show MergedData1 variables 
+# Show MergedData1 variables
 names(MergedData1)
 @
 
@@ -469,7 +471,7 @@ MergedData2 <- merge(MergedData2, MoltenFertSub,
 
 # Show MergedData2 variable names
 names(MergedData2)
-@ 
+@
 
 
 After merging data frames it is always a good idea to look at the result and make sure it is what you expected. Some post merging clean up may be required to get the data frame ready for statistical analysis.
@@ -493,7 +495,7 @@ nrow(DataDuplicates)
 
 \noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. We know this because \texttt{nrow}\index{R command!nrow} tells us that the data frame with the duplicated values has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
 
-To create a data set without duplicated observations (if there are duplicates) we just add an exclamation point (\texttt{!}) before \texttt{duplicated}--i.e. not duplicated--in the above code.\footnote{\texttt{!duplicated} is equivalent to the \texttt{unique} command.\index{R command!unique}}
+To create a data set without duplicated observations (if there are duplicates) we just add an exclamation point (\texttt{!}) before \texttt{duplicated}--i.e. not duplicated--in the above code.
 
 <<Ch7NotDuplicated, tidy=FALSE>>=
 # Created a data frame of unique country-years
@@ -542,7 +544,7 @@ This chapter has provided you with many tools for cleaning up your data to get i
 R code for turning \emph{FertConsumData} into year-wide format:
 
 <<Ch7WideCreateShow, eval=FALSE, tidy=FALSE>>=
-# Load WDI and reshape2 package 
+# Load WDI and reshape2 package
 library(WDI)
 library(reshape2)
 
@@ -551,14 +553,14 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 
 # Melt data
 ## Note: data must be melted before it can be cast.
-MoltenFert <- melt(data = FertConsumpData, 
-                    id.vars = c("iso2c", "country", "year"), 
+MoltenFert <- melt(data = FertConsumpData,
+                    id.vars = c("iso2c", "country", "year"),
                     measure.vars= "AG.CON.FERT.ZS")
 
 # Cast MoltenFert to year wide format
-WideFert <- dcast(data = MoltenFert, 
-                    formula = iso2c + country ~ year, 
-                    value_var = "AG.CON.FERT.ZS")
+WideFert <- dcast(MoltenFert,
+                  formula = iso2c + country ~ year,
+                  value.var = "value")
 
 # Order WideFert by country
 WideFert <- WideFert[order(WideFert$country), ]
@@ -571,12 +573,12 @@ R code for creating iso2c country codes with the \emph{countrycode} package:\lab
 library(countrycode)
 
 # FinRegulatorData
-FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country, 
+FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country,
                                     origin = "country.name",
                                     destination = "iso2c")
 
 # DispropData
-DispropData$iso2c <- countrycode(DispropData$country, 
+DispropData$iso2c <- countrycode(DispropData$country,
                                     origin = "country.name",
                                     destination = "iso2c")
 @

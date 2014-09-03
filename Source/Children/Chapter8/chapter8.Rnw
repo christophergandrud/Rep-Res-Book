@@ -1,10 +1,10 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 May 2013
+% Updated: 9 June 2014
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Statistical Modelling and {\normalfont{knitr}}}\label{StatsModel}
@@ -31,31 +31,11 @@ Use \texttt{include=FALSE} if you don't want to include anything in the text of 
 
 \paragraph{{\tt{eval}}}\index{knitr option!eval}
 
-The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run.
+The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run. You can alternatively use a numerical vector with \texttt{echo}. The numbers in the vector tell \emph{knitr} which expressions in the chunk to evaluate. For example, if you only want to evaluate the first two expressions simply set \texttt{eval=1:2}.
 
 \paragraph{{\tt{echo}}}\index{knitr option!echo}
 
-If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} (which it is by default) then source code will be included in the presentation document.
-
-\paragraph{{\tt{tidy}}}\index{knitr option!tidy}
-
-If you do echo your code in your presentation document you may want to manually format it in a particular way. By default \texttt{knitr} `tidies' the code using the \emph{formatR}\index{formatR} package. To turn this off simply set the option \verb|tidy=FALSE|. For example, this code chunk has \verb|tidy=FALSE| so that I could put the arguments on separate lines:
-
-<<Ch8TidyFalse, eval=FALSE, tidy=FALSE>>=
-MoltenFert <- melt(data = FertConsumpData,
-                    id.vars = c("iso2c", "country", "year"),
-                    measure.vars= "AG.CON.FERT.ZS")
-@
-
-\noindent This is what the same code looks like when \verb|tidy=TRUE|:\footnote{I changed the font size so that it would fit on the page.}
-
-{\scriptsize
-<<Ch8TidyTrue, eval=FALSE>>=
-MoltenFert <- melt(data = FertConsumpData,
-                    id.vars = c("iso2c", "country", "year"),
-                    measure.vars= "AG.CON.FERT.ZS")
-@
-}
+If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} then source code will be included in the presentation document. As with \texttt{eval} you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
 
 \paragraph{{\tt{results}}}\index{knitr option!results}
 
@@ -165,7 +145,7 @@ print "Reproducible Research"
 
 \includegraphics[scale = 0.6]{Children/Chapter8/images8/RubyRR.png}
 
-Many of the programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. Please note that currently the range of functions \emph{knitr} supports for these languages is less extensive than what it supports for R. For example, there is no colored syntax highlighting.
+Many of the programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. To enable more complete syntax highlighing for non-R languages you will need to download Andre Simon's \emph{highlighter} utility.\index{highlighter} Installation instructions can be found on his website at: \url{http://www.andre-simon.de/zip/download.html}.
 
 \begin{table}[ht]
     \caption{A Selection of \emph{knitr} \texttt{engine} Values}
@@ -260,7 +240,7 @@ source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
 
 \subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}\index{https}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.github.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
 
 <<Ch8SourceURLExample, message=TRUE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
@@ -317,12 +297,12 @@ Imagine that in a cached code chunk we create an object called \emph{Sample}. Th
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
-\textless{}\textless{}Sample, cahe=TRUE\textgreater{}\textgreater{}=
-\hlcomment{# Create data}
-Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
+\textless{}\textless{}Sample, cache=TRUE\textgreater{}\textgreater{}=
+\hlcom{# Create data}
+Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
 
-\hlcomment{# Save sample}
-\hlfunctioncall{save}(Sample, file = \hlstring{"Sample.RData"})
+\hlcom{# Save sample}
+\hlkwd{save}(Sample, file = \hlstr{"Sample.RData"})
 @
             \end{alltt}
         \end{kframe}
@@ -336,11 +316,11 @@ Sample <- \hlfunctioncall{rnorm}(n = 1000, mean = 5, sd = 2)
     \begin{kframe}
         \begin{alltt}
 \textless{}\textless{}Histogram\textgreater{}\textgreater{}=
-\hlcomment{# Load Sample}
-\hlfunctioncall{load}(file = \hlcomment{"Sample.RData"})
+\hlcom{# Load Sample}
+\hlkwd{load}(file = \hlcom{"Sample.RData"})
 
-\hlcomment{# Create histogram}
-\hlfunctioncall{hist}(Sample)
+\hlcom{# Create histogram}
+\hlkwd{hist}(Sample)
 @
             \end{alltt}
         \end{kframe}

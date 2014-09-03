@@ -1,10 +1,14 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
+<<<<<<< HEAD
 % Updated: 21 April 2014
+=======
+% Updated: 31 May 2014
+>>>>>>> e533fdeecb1e1b59abde5fa394e090f78316e74c
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Gathering Data with R}\label{DataGather}
@@ -34,7 +38,7 @@ When you create make-like files in R to organize and run your data gathering you
 ################
 # Example R make-like file
 # Christopher Gandrud
-# Updated 15 January 2013
+# Updated 21 August 2013
 ################
 
 # Set working directory
@@ -72,7 +76,7 @@ TARGET ... : PREREQUISITE ...
         \end{kframe}
 \end{knitrout}
 
-Note that, unlike in R, tabs are important in Make. They indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If a target is newer than its prerequisite. Make does not run the prerequisite.
+Note that, unlike in R, tabs are important in Make. They indicate what lines are the recipe. Make uses the recipe to ensure that targets are newer than prerequisites. If a target is newer than its prerequisite, Make does not run the prerequisite.
 
 The basic idea of reproducible data gathering with Make is similar to what we saw before, with a few twists and some new syntax. Let's see an example that does what we did before: gather data from three sources, clean and merge the data, and save it in CSV\index{CSV} format. 
 
@@ -330,9 +334,9 @@ Let's try an example. To download the data file we used in Section \ref{GitDownl
 {\small
 <<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE>>=
 # Put URL address into the object UrlAddress
-UrlAddress <- paste0("https://raw.github.com/christophergandrud/",
-                "Disproportionality_Data/master/",
-                "Disproportionality.csv")
+UrlAddress <- paste0("https://raw.githubusercontent.com/",
+                    "christophergandrud/Disproportionality_Data/",
+                    "master/Disproportionality.csv")
 
 # Download Electoral disproportionality data
 DataUrl <- RCurl::getURL(UrlAddress)
@@ -368,20 +372,20 @@ Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pem
 <<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
 # For simplicity, store the URL in an object called 'url'.
 url <- "http://bit.ly/1jXJgDh"
-
+ 
 # Create a temporary file called 'temp' to put the zip file into.
 temp <- tempfile()
-
+ 
 # Download the compressed file into the temporary file.
 download.file(url, temp)
-
+ 
 # Decompress the file and convert it into a dataframe
 # class object called 'data'.
 UDSData <- read.csv(gzfile(temp, "uds_summary.csv"))
-
+ 
 # Delete the temporary file.
 unlink(temp)
-
+ 
 # Show variables in data
 names(UDSData)
 @ 
@@ -417,7 +421,7 @@ WDIsearch("fertilizer consumption")
 
 \noindent This shows us a selection of indicator numbers and their names.\footnote{You can also search the World Bank Development Indicators website. The indicator numbers are at the end of each indicator's URL.} Let's gather data on countries' fertilizer consumption in kilograms per hectare of arable land. The indicator number for this variable is: AG.CON.FERT.ZS. We can use the command \texttt{WDI} to gather the data and put it in an object called \emph{FertConsumpData}.
 
-<<Ch6WDIFert, eval=FALSE>>=
+<<Ch6WDIFert, eval=TRUE>>=
 FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 @
 
@@ -425,7 +429,7 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 
 <<Ch6WDIFertSave, include=FALSE>>=
 # This ensures that the PDF will still compile even if the data is unavailable via WDI
-load(file = "/git_repositories/Rep-Res-Book/Source/Children/Chapter6/FertData.RData")
+#load(file = "Source/Children/Chapter6/FertData.RData")
 @
 
 <<Ch6HeadFert>>=
@@ -444,7 +448,7 @@ Simple web scraping involves downloading a file from the internet, parsing\index
 
 This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R command!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formatted data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation''}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
 
-There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier. 
+There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier. 
 
 As of the time when I was writing this book Brian Abelson's \emph{scraply} \index{scraply} package was not on CRAN.\index{CRAN} It may turn out to be a useful addition to the R web scraping tool chest. It looks like an especially promising way of handling errors that might occur while scraping a website. Errors are a persistent issue in web scraping. More information is available at the package's GitHub site: \url{https://github.com/abelsonlive/scraply/}.
 
@@ -455,7 +459,7 @@ Beyond learning about the various R packages that are useful for R web scraping,
 \begin{itemize}
     \item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
     \item Regular Expressions:\index{regular expressions} Web scraping often involves finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag\index{HTML tag} IDs that are particular to a given website and change across the site based on a particular pattern. You can use regular expressions to deal with these situations. R has a comprehensive if bare bones introduction to regular expressions. To access it type \verb|?regex|\index{R!regex} into your R console.
-    \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} package \citep{R-plyr}\index{plyr} is also particularly useful.
+    \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{plyr} package \citep{R-plyr}\index{plyr} and \citep{R-dplyr}\index{dplyr} (for data frames) are also particularly useful.
 \end{itemize}
 
 \subsection*{Chapter Summary}

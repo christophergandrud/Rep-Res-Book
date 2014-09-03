@@ -1,10 +1,10 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 May 2013
+% Updated: 9 June 2014
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Getting Started with File Management}\label{DirectoriesChapter}
@@ -83,7 +83,7 @@ It is good practice to dynamically include the system information for the R sess
 
 You can also dynamically include session info in a LaTeX document. To do this use the {\tt{toLatex}} command in a code chunk. The code chunk should have the option \verb|results='asis'|. The code is:
 
-<<Ch4SessionInfoLatex, eval=FALSE>>=
+<<Ch4SessionInfoLatex, eval=FALSE, echo=TRUE>>=
 toLatex(sessionInfo())
 @
 
@@ -133,7 +133,7 @@ list.files()
 
 The {\tt{setwd}} command sets the current working directory\index{working directory}. For example, if we are on a Mac or other Unix-like computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Figure \ref{ExampleTree}) like this:
 
-<<Ch4SetWorkingDir, eval=FALSE>>=
+<<Ch4SetWorkingDir, eval=FALSE, echo=TRUE>>=
 setwd("/ExampleProject/Data/GatherSource")
 @ 
 
@@ -143,7 +143,7 @@ setwd("/ExampleProject/Data/GatherSource")
 
 Sometimes you may want to create a new directory. You can use the {\tt{dir.create}} command to do this.\footnote{Note: you will need the correct system permissions to be able to do this.} For example to create a {\emph{ExampleProject}} file in the root \emph{C} directory on a Windows computer type:
 
-<<Ch4dir.create, eval=FALSE>>=
+<<Ch4dir.create, eval=FALSE, echo=TRUE>>=
 dir.create("C:\\ExampleProject")
 @
 
@@ -151,7 +151,7 @@ dir.create("C:\\ExampleProject")
 
 Similarly, you can create a new blank file with the \texttt{file.create} command. To add a blank R source code file called {\emph{SourceCode.R}} to the {\emph{ExampleProject}} directory on the \emph{C} drive use:
 
-<<CH4File, eval=FALSE>>=
+<<CH4File, eval=FALSE, echo=TRUE>>=
 file.create("C:\\ExampleProject\\SourceCode.R")
 @
 
@@ -159,7 +159,7 @@ file.create("C:\\ExampleProject\\SourceCode.R")
 
 If you want to create a new file and put text into it use the \texttt{cat} (concatenate and print) command. For example to create a new file in the current working directory called \emph{ExampleEcho.md} that includes the text ``Reproducible Research with R and RStudio'' type:
 
-<<Ch4cat1, eval=FALSE, tidy=FALSE>>=
+<<Ch4cat1, eval=FALSE, tidy=FALSE, echo=TRUE>>=
 cat("Reproducible Research with R and RStudio",
     file = "ExampleCat.md")
 @
@@ -168,7 +168,7 @@ cat("Reproducible Research with R and RStudio",
 
 You can use \texttt{cat} to print the contents of one or more objects to a file. \textbf{Warning:} The \texttt{cat} command will overwrite existing files with the new contents. To add the text to existing files use the \texttt{append = TRUE} argument.
 
-<<Ch4cat2, eval=FALSE, tidy = FALSE>>=
+<<Ch4cat2, eval=FALSE, tidy = FALSE, echo=TRUE>>=
 cat("More Text", file = "ExampleCat.md",
     append = TRUE)
 @
@@ -177,7 +177,7 @@ cat("More Text", file = "ExampleCat.md",
 
 You can use the {\tt{unlink}} command to delete files and directories. 
 
-<<CH4Unlink, eval=FALSE>>=
+<<CH4Unlink, eval=FALSE, echo=TRUE>>=
 unlink("C:\\ExampleProject\\SourceCode.R")
 @
 
@@ -187,27 +187,27 @@ unlink("C:\\ExampleProject\\SourceCode.R")
 
 You can use the \texttt{file.rename} to, obviously, rename a file. It can also be used to move a file from one directory to another. For example, imagine that we want to move the \emph{ExampleCat.md} file from the directory \emph{ExampleProject} to one called \emph{MarkdownFiles} that we already created.\footnote{The \texttt{file.rename} command won't create new directories. To move a file to a new directory you will need to create the directory first with \texttt{dir.create}.}
 
-<<Ch4filerename, eval=FALSE, tidy=FALSE>>=
+<<Ch4filerename, eval=FALSE, tidy=FALSE, echo=TRUE>>=
 file.rename(from = "C:\\ExampleProject\\ExampleCat.md", 
             to = "C:\\MarkdownFiles\\ExampleCat.md")
 @
 
 \paragraph{{\tt{file.copy}}}\index{R command!file.copy}
 
-The \texttt{file.rename} fully moves a file from one directory to another. To copy the file to another directory use the \texttt{file.rename} command. It has the same syntax as \texttt{file.rename}:
+The \texttt{file.rename} fully moves a file from one directory to another. To copy the file to another directory use the \texttt{file.copy} command. It has the same syntax as \texttt{file.rename}:
 
-<<Ch4filecopy, eval=FALSE, tidy=FALSE>>=
+<<Ch4filecopy, eval=FALSE, tidy=FALSE, echo=TRUE>>=
 file.copy(from = "C:\\ExampleProject\\ExampleCat.md", 
             to = "C:\\MarkdownFiles\\ExampleCat.md")
 @
 
 \section{Unix-like Shell Commands for File Management} 
 
-Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program\index{Unix-like shell program} to manipulate files in large projects. Unix-like shell programs including Bash on Mac and Linux\index{Bash} and Windows PowerShell\index{PowerShell} allow you to type commands to interact with your computer's operating system.\footnote{You can access Bash via the Terminal program\index{Terminal} on Mac OS 10 and Linux computers. It is the default shell on Mac and Linux, so it loads automatically when you open the Terminal. Windows PowerShell comes installed with Windows.} We will especially return to shell commands in the next chapter when we discuss Git\index{Git} version control and makefiles\index{makefile} for collecting data in Chapter \ref{DataGather}, as well as the command line program\footnote{A command line program\index{command line program}\index{command line} is just a program you run from a shell.} Pandoc (Chapter \ref{LargeDocs}). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating files. We are just going to cover some of the basic and most useful commands for file management. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s \citeyearpar{ShottsJr2012} book on the Linux command line. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}. The commands discussed in this chapter should work in both Unix-like shells and Windows PowerShell.
+Though this book is mostly focused on using R for reproducible research it can be useful to use a Unix-like shell program\index{Unix-like shell program} to manipulate files in large projects. Unix-like shell programs including Bash on Mac and Linux\index{Bash} and Windows PowerShell\index{PowerShell} allow you to type commands to interact with your computer's operating system.\footnote{You can access Bash via the Terminal program\index{Terminal} on Mac OS 10 and Linux computers. It is the default shell on Mac and Linux, so it loads automatically when you open the Terminal. Windows PowerShell comes installed with Windows.} We will especially return to shell commands in the next chapter when we discuss Git\index{Git} version control and makefiles\index{makefile} for collecting data in Chapter \ref{DataGather}, as well as the command line program\footnote{A command line program\index{command line program}\index{command line} is just a program you run from a shell.} Pandoc (Chapter \ref{LargeDocs} and \ref{MarkdownChapter}). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating files. We are just going to cover some of the basic and most useful commands for file management. For good introductions for Unix and Mac OS 10 computers see William E. Shotts Jr.'s \citeyearpar{ShottsJr2012} book on the Linux command line. For Windows users, Microsoft maintains a tutorial on Windows PowerShell at \url{http://technet.microsoft.com/en-us/library/hh848793}. The commands discussed in this chapter should work in both Unix-like shells and Windows PowerShell.
 
 It's important at this point to highlight a key difference between R and Unix-like shell syntax. In shell commands you don't need to put parentheses around your arguments. For example if I want to change my working directory to my Mac Desktop in a shell using the \texttt{cd} command I simply type:\footnote{Many shell code examples in other sources include the shell prompt, like the \texttt{\$} in Bash or \texttt{\textgreater{}} in PowerShell. These are like R's \texttt{\textgreater{}} prompt. I don't include the prompt in code examples in this book because you don't type them.}
 
-<<Ch4ShellIntroExample, eval=FALSE, engine='sh'>>=
+<<Ch4ShellIntroExample, eval=FALSE, engine='sh', echo=TRUE>>=
 cd /Users/Me/Desktop
 @
 
@@ -217,13 +217,13 @@ cd /Users/Me/Desktop
 
 As we just saw, to change the working directory in the shell just use the {\tt{cd}} (change directory) command. Here is an example of changing the directory in Windows PowerShell:
 
-<<Ch4cdPowerShell, eval=FALSE, engine='sh'>>=
+<<Ch4cdPowerShell, eval=FALSE, engine='sh', echo=TRUE>>=
 cd C:/Users/Me/Desktop
 @
 
 \noindent If you are in a child directory and want to change the working directory to the previous working directory you were in simply type:
 
-<<Ch4ChildtoParent, eval=FALSE, engine='sh'>>=
+<<Ch4ChildtoParent, eval=FALSE, engine='sh', echo=TRUE>>=
 cd -
 @
 
@@ -233,7 +233,7 @@ cd -
 
 To find your current working directory use the \texttt{pwd} command (present working directory). This is essentially the same as R's \texttt{getwd} command.
 
-<<Ch4pwd, eval=FALSE, engine='sh'>>=
+<<Ch4pwd, eval=FALSE, engine='sh', echo=TRUE>>=
 pwd
 
 ## /Users/Me/Desktop
@@ -243,7 +243,7 @@ pwd
 
 The \texttt{ls} (list) command works very similarly to R's \texttt{list.files} command. It shows you what is in the current working directory.
 
-<<Ch4ls, eval=FALSE, tidy=FALSE, engine='sh'>>=
+<<Ch4ls, eval=FALSE, tidy=FALSE, engine='sh', echo=TRUE>>=
 ls
 
 ## chapter4.Rnw images4
@@ -255,19 +255,19 @@ ls
 
 Use \texttt{mkdir} to create a new directory. For example, if I wanted to create a directory in my Linux root directory called {\emph{NewDirectory}} I would type:
 
-<<Ch4mkdir, eval=FALSE, engine='sh'>>=
+<<Ch4mkdir, eval=FALSE, engine='sh', echo=TRUE>>=
 mkdir /NewDirectory
 @
 
 \noindent If running this code on Mac or Linux gives you an error message like this:
 
-<<Ch4mkdirError, eval=FALSE, engine='sh'>>=
+<<Ch4mkdirError, eval=FALSE, engine='sh', echo=TRUE>>=
 mkdir: /NewDirectory: Permission denied
 @
 
 \noindent you simply need to use the \texttt{sudo}\index{shell command!sudo} command to run the command with higher privileges. 
 
-<<Ch4Sudo, eval=FALSE, engine='sh'>>=
+<<Ch4Sudo, eval=FALSE, engine='sh', echo=TRUE>>=
 sudo mkdir /NewDirectory
 @
 
@@ -277,19 +277,19 @@ sudo mkdir /NewDirectory
 
 There are a number of ways to create new files in Unix-like shells. One of the simplest ways is with the \texttt{echo} command. This command simply prints its arguments. For example:
 
-<<Ch4Echo1, engine='sh'>>=
+<<Ch4Echo1, engine='sh', echo=TRUE>>=
 echo Reproducible Research with R and RStudio
 @
 
 \noindent If you add the greater than symbol (\verb|>|) after the text you want to print and then a file name, \texttt{echo} will create the file (if it doesn't already exist) in the current working directory then print the text into the file.
 
-<<Ch4Echo2, eval=FALSE, engine='sh'>>=
+<<Ch4Echo2, eval=FALSE, engine='sh', echo=TRUE>>=
 echo Reproducible Research with R and RStudio > ExampleEcho.md
 @
 
 \noindent Using only one greater than sign will completely erase the \emph{ExampleEcho.md} file's contents and replace them with \texttt{Reproducible Research with R and RStudio}. To add the text at the end of an existing file use two greater than signs (\verb|>>|).
 
-<<Ch4Echo3, eval=FALSE, engine='sh'>>=
+<<Ch4Echo3, eval=FALSE, engine='sh', echo=TRUE>>=
 echo More text. >> ExampleEcho.md
 @
 
@@ -299,7 +299,7 @@ echo More text. >> ExampleEcho.md
 
 The {\tt{rm}} command is similar to R's {\tt{unlink}} command. It removes (deletes) files or directories. Again, be careful when using this command, because it permanently deletes the files or directories.
 
-<<Ch4rm, eval=FALSE, engine='sh'>>=
+<<Ch4rm, eval=FALSE, engine='sh', echo=TRUE>>=
 rm ExampleEcho.md
 @
 
@@ -309,7 +309,7 @@ rm ExampleEcho.md
 
 To move a file from one directory to another with the shell use the \texttt{mv} (move) command. For example, to move the file \emph{ExampleEcho.md} from \emph{ExampleProjects} to \emph{MarkdownFiles} use the following code and imagine both directories are in the root directory:\footnote{If they were not in the root directory we would not place a forward slash at the begining.}
 
-<<Ch4mv, eval=FALSE, engine='sh'>>=
+<<Ch4mv, eval=FALSE, engine='sh', echo=TRUE>>=
 mv /ExampleProject/ExampleEcho.md /MarkdownFiles
 @
 
@@ -319,7 +319,7 @@ mv /ExampleProject/ExampleEcho.md /MarkdownFiles
 
 The \texttt{mv} command completely moves a file from one directory to another. To copy a version of the file to a new directory use the \texttt{cp} command. The syntax is similar to \texttt{mv}:
 
-<<Ch4cp, eval=FALSE, engine='sh'>>=
+<<Ch4cp, eval=FALSE, engine='sh', echo=TRUE>>=
 cp /ExampleProject/ExampleEcho.md /MarkdownFiles
 @
 
@@ -327,7 +327,7 @@ cp /ExampleProject/ExampleEcho.md /MarkdownFiles
 
 You can run shell commands from within R using R's \texttt{system} command. For example, to run the \texttt{echo} command from within R type:
 
-<<Ch4System, eval=FALSE>>=
+<<Ch4System, eval=FALSE, echo=TRUE>>=
 system("echo Text to Add > ExampleEcho.md")
 @
 

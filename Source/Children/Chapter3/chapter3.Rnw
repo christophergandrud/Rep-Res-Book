@@ -1,10 +1,10 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 August 2013
+% Updated: 7 June 2014
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Getting Started with R, RStudio, and {\normalfont{knitr}}}\label{GettingStartedRKnitr}
@@ -114,7 +114,7 @@ StringNumObject
 
 If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame}\index{R command!data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.\label{data.frame}
 
-<<Ch3dataframe, tidy=FALSE, echo=TRUE>>=
+<<Ch3dataframe, echo=TRUE, tidy=FALSE>>=
 StringNumObject <- data.frame(CharacterVect, NumericVect)
 
 # Display contents of StringNumObject data frame
@@ -298,7 +298,7 @@ round(mean(NumericVect), digits = 1)
 All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R command!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
 
 {\small
-<<Ch3LS>>=
+<<Ch3LS, echo=TRUE>>=
 ls()
 @
 }
@@ -469,8 +469,8 @@ Traditional Sweave-style\index{knitr!Sweave-style} code chunks begin with the fo
     \color{fgcolor}\begin{kframe}
         \begin{alltt}
 \textless\textless \textgreater\textgreater=
-\hlcomment{# Example of a Sweave-style code chunk}
-StringNumObject <- \hlfunctioncall{cbind}(CharacterVect, NumericVect)
+\hlcom{# Example of a Sweave-style code chunk}
+StringNumObject <- \hlkwd{cbind}(CharacterVect, NumericVect)
 @
         \end{alltt}
     \end{kframe}
@@ -527,7 +527,6 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
     \begin{kframe}
         \begin{verbatim}
 %% begin.rcode ChunkLabel, echo=FALSE
-% # Example of a non-evaluated code chunk
 % StringNumObject <- cbind(CharacterVect, NumericVect)
 %%
             \end{verbatim}
@@ -579,8 +578,8 @@ Here is an example of how you can center align all of the figures in Sweave-styl
     \begin{kframe}
         \begin{alltt}
 \textless{\textless}ChunkLabel, include=FALSE\textgreater{\textgreater}=
-\hlcomment{# Center align all knitr figures}
-opts_chunk$\hlfunctioncall{set}(fig.align='center')
+\hlcom{# Center align all knitr figures}
+opts_chunk$\hlkwd{set}(fig.align='center')
 @
         \end{alltt}
     \end{kframe}
@@ -598,8 +597,8 @@ You set package options in a similar way as global chunk options with {\tt{opts\
         \begin{kframe}
             \begin{alltt}
 \textless{\textless}ChunkLabel, include=FALSE\textgreater{\textgreater}=
-\hlcomment{# Turn off knitr progress bar}
-opts_knit$\hlfunctioncall{set}(progress=FALSE)
+\hlcom{# Turn off knitr progress bar}
+opts_knit$\hlkwd{set}(progress=FALSE)
 @
             \end{alltt}
         \end{kframe}
@@ -669,7 +668,7 @@ By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compilin
 
 \subsection{\emph{knitr} \& R}
 
-As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command.\index{R command!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first set us the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
+As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command.\index{R command!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first use the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
 <<Ch3RawKnitSetwd, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 setwd("~/Documents/")
@@ -697,7 +696,7 @@ knit2html(file = "Example.Rmd", output = "Example.html")
 
 \noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}}\index{R command!texi2pdf} command in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX\index{BibTeX} for bibliographies). Here is a {\tt{texi2pdf}} example:
 
-<<CH3tex2pdf, echo=TRUE, eval=TRUE, error=FALSE, tidy=FALSE>>=
+<<CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 # Load tools package
 library(tools)
 

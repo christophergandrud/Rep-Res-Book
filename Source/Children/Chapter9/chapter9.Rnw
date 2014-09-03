@@ -1,10 +1,10 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 May 2013
+% Updated: 16 March 2014
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('/git_repositories/Rep-Res-Book/Source/Rep-Res-Parent.Rnw')
+set_parent('Rep-Res-Parent.Rnw')
 @
 
 \chapter{Showing Results with Tables}\label{TablesChapter}
@@ -192,7 +192,7 @@ Subject1    | a          | b
 
 \noindent Note that it is not necessary to line up the vertical bars. You just need to have the same number of them on each row.
 
-You can specify each column's text justification using colons on the dashed row. For example this code will create the center-right-right justified formatted table we made earlier:
+You can specify each column's text justification using colons on the dashed row. For example this code will create the left-center-center justified formatted table we made earlier:
 
 <<Ch9MarkdownTableust, eval=FALSE>>=
 Observation | Variable1 | Variable2 
@@ -203,7 +203,7 @@ Subject3    | e         | f
 Subject4    | g         | c       
 @
 
-\noindent To create a right-justified column simply use a colon on only the right side of the dashes. 
+\noindent To create a left-justified column simply use a colon on only the left side of the dashes. 
 
 The ultimate look of a Markdown table is highly dependent on the CSS style file you are using (see Chapter \ref{MarkdownChapter} for how to change your CSS style file). The default RStudio CSS style\footnote{The CSS file can be found at: \url{https://github.com/rstudio/markdown/blob/master/inst/resources/markdown.css}.} formats our table to look like this:
 
@@ -243,7 +243,7 @@ HTML uses element ``tags''\index{HTML!element tag} to begin and end tables. The 
 
 \noindent As in LaTeX you are not required to tab the content of a table element; however, it does make the markup document easier to read and, as the number of tags proliferates, easier to write.
 
-You can add element attributes\index{HTML element!attributes} inside of start tags.\footnote{These work like arguments in R in that they change how the element is evaluated.} For example, to add a border to the table use: \verb|<table border="1">|.\index{HTML!table borders}
+You can add element attributes\index{HTML element!attributes} inside of start tags.\footnote{These work like arguments in R in that they change how the element is evaluated.} For example, to add a border to the table use: \verb|<table border="1">|.\footnote{Whether or not a border appears is determined by whether or not the style sheet you are using includes borders. The default RStudio style sheet does not include table borders.}\index{HTML!table borders}
 
 Table rows are put inside of \texttt{tr}\index{HTML element!tr} (table rows) element tags. Individual cells are delimited with \texttt{td} (standard cell) tags.\index{HTML element!td} Here is what the first row of our example table looks like in basic HTML:
 
@@ -286,7 +286,7 @@ Table rows are put inside of \texttt{tr}\index{HTML element!tr} (table rows) ele
 
 \section{Creating Tables from R Objects}
 
-Just as the \texttt{read.csv} command turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an object--e.g. a matrix, data frame--the output from a statistical analysis and so on--and turn them into LaTeX and HTML tables. In this section we will learn how to do this with the \emph{xtable} and \emph{apsrtable} packages.
+Just as the \texttt{write.csv} command turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an object--e.g. a matrix, data frame--the output from a statistical analysis and so on--and turn them into LaTeX and HTML tables. In this section we will learn how to do this with the \emph{xtable} and \emph{apsrtable} packages.
 
 \subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects} 
 
@@ -300,7 +300,7 @@ M1 <- lm(Examination ~ Education, data = swiss)
 class(M1)
 @
 
-\noindent By using the \texttt{class}\index{R command!class} command we can see that \emph{M1} is of the \texttt{lm} class. \emph{M1} contains items estimated by the linear regression model\footnote{If you are unfamiliar with the syntax of R statistical estimation models the previous code might be confusing. In general `response' ($Y$) variables are written first and are separated from the `explanatory' ($X$) variables by a tilde (\texttt{$\sim$}).\index{R!tilde} Crawley \cite[107]{Crawley2005} notes that you can read $Y \sim X$ as `$Y$ is modeled as a function of $X$'. The individual response variables are generally separated by plus signs (\texttt{+}), indicating that they are included in the model, not that they are added. For more information see Crawley \citeyearpar[][Ch. 7]{Crawley2005}.} such as the coefficient estimates and their standard errors. To get a summary of a model object's contents use the \texttt{summary}\index{R command!summary} command like this:
+\noindent By using the \texttt{class}\index{R command!class} command we can see that \emph{M1} is of the \texttt{lm} class. \emph{M1} contains items estimated by the linear regression model\footnote{If you are unfamiliar with the syntax of R statistical estimation models the previous code might be confusing. In general `response' ($Y$) variables are written first and are separated from the `explanatory' ($X$) variables by a tilde (\texttt{$\sim$}).\index{R!tilde} Crawley \citeyearpar[107]{Crawley2005} notes that you can read $Y \sim X$ as `$Y$ is modeled as a function of $X$'. In later examples we will see that individual explanatory variables are generally separated by plus signs (\texttt{+}), indicating that they are included in the model, not that they are added. For more information see Crawley \citeyearpar[][Ch. 7]{Crawley2005}.} such as the coefficient estimates and their standard errors. To get a summary of a model object's contents use the \texttt{summary}\index{R command!summary} command like this:
 
 <<Ch9SimpleSwissSummary>>=
 # Show summary of M1 model object
@@ -318,14 +318,14 @@ Let's first look at how to create LaTeX tables with \emph{xtable} by creating a 
     \begin{kframe}
         \begin{alltt}
 \textless{\textless}results='asis', echo=FALSE\textgreater{\textgreater}=
-\hlcomment{# Load xtable }
-\hlfunctioncall{library}(xtable)
+\hlcom{# Load xtable}
+\hlstd{library}(xtable)
 
-\hlcomment{# Create LaTeX table from M1 and show the output markup}
-\hlfunctioncall{xtable}(M1, caption = "Linear Regression,
-                            Dependent Variable: Exam Score",
-           label = \hlstring{"BasicXtableSummary"},
-           digits = 1)
+\hlcom{# Create LaTeX table from M1 and show the output markup}
+\hlstd{xtable}(M1, \hlkwc{caption} = \hlstr{"Linear Regression,}
+                        \hlstr{Dependent Variable: Exam Score"},
+           \hlkwc{label} = \hlstr{"BasicXtableSummary"},
+                \hlkwc{digits} = 1)
 @
         \end{alltt}
     \end{kframe}
@@ -403,12 +403,12 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
         \textbackslash{}begin\{center\}
 
 \textless{\textless}results='asis', echo=FALSE\textgreater{\textgreater}=
-\hlcomment{# Load apsrtable package}
-\hlfunctioncall{library}(apsrtable)
+\hlcom{# Load apsrtable package}
+\hlkwd{library}(apsrtable)
 
-\hlcomment{# Create nested regression model table}
-\hlfunctioncall{apsrtable}(M1, M2, M3, M4, M5, Sweave = TRUE,
-          stars = \hlstring{"default"}) 
+\hlcom{# Create nested regression model table}
+\hlkwd{apsrtable}(M1, M2, M3, M4, M5, Sweave = TRUE,
+          stars = \hlstr{"default"}) 
 @
         \textbackslash{}end\{center\}
 \textbackslash{}end\{table\}
@@ -543,11 +543,11 @@ Imagine that we want to create a Markdown file with a table describing the varia
 Variable <- names(swiss)
 
 # Create variable description vector
-Description <- c("common standardized fertility measure’",
+Description <- c("common standardized fertility measures",
                  "% of males involved in agriculture as occupation",
                  "% draftees receiving highest mark on army examination",
                  "% education beyond primary school for draftees",
-                 "% 'catholic’ (as opposed to ‘protestant’)",
+                 "% 'catholic' (as opposed to 'protestant')",
                  "% live births who live less than 1 year"
                   )
 @
