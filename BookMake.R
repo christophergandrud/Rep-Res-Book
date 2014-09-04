@@ -1,7 +1,7 @@
 #################
 # Make file for the book Reproducible Research with R and RStudio
 # Christopher Gandrud
-# Updated: 8 April 2014
+# Updated: 4 September 2014
 #################
 
 # This R source code compiles the manuscript for the book Reproducible Research with R and RStudio.
@@ -19,7 +19,7 @@ library(knitr)
 ## Rep-Res-Parent.Rnw
 ParentDirectory <- "/git_repositories/Rep-Res-Book/Source/"
 ## README.Rmd
-SetupDirectory <- "/git_repositories/Rep-Res-Book/Writing_Setup/"
+SetupDirectory <- "/git_repositories/Rep-Res-Book/"
 
 ##### Create PDF Book Manuscript ####
 # Compile the book's parent document
@@ -31,19 +31,8 @@ knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 ## If using Windows please see extrafont set up instructions at https://github.com/wch/extrafont
 # extrafont::embed_fonts("Rep-Res-Parent.pdf")
 
-# Clean up /git_repositories/Rep-Res-Book/Source/Parent/
-# DeleteFiles <- setdiff(list.files(ParentDirectory), c("Rep-Res-Parent.Rnw", 
-#                                                      "Rep-Res-Parent.pdf", 
-#                                                      "krantz.cls", "figure", 
-#                                                      "cache")
-#                       )
-# unlink(DeleteFiles)
-
 #### README ####
 # Change working directory to /Rep-Res-Book/Writing_Setup/
 setwd(SetupDirectory)
 
-# Knit README file
-OutReadme <- "/git_repositories/Rep-Res-Book/README.md" # Change as needed
-
-knitr::knit(input = "README.Rmd", output = OutReadme)
+knitr::knit(input = "README.Rmd", output = "README.md")

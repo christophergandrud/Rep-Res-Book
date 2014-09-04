@@ -89,29 +89,28 @@ following R session:
 ## [22] reshape2_1.4          repmis_0.2.9          quantmod_0.4-0       
 ## [25] TTR_0.22-0            xts_0.9-7             zoo_1.7-11           
 ## [28] Defaults_1.1-1        plyr_1.8.1            memisc_0.96-9        
-## [31] MASS_7.3-34           markdown_0.7.4        knitr_1.6            
-## [34] knitcitations_1.0-1   Hmisc_3.14-4          Formula_1.1-2        
-## [37] survival_2.37-7       lattice_0.20-29       httr_0.5             
-## [40] googleVis_0.5.5       ggplot2_1.0.0         gdata_2.13.3         
-## [43] formatR_1.0           extrafont_0.16        estout_1.2           
-## [46] dplyr_0.2             digest_0.6.4          devtools_1.5         
-## [49] data.table_1.9.2      countrycode_0.17      brew_1.0-6           
-## [52] apsrtable_0.8-8       animation_2.3        
+## [31] MASS_7.3-34           markdown_0.7.4        knitcitations_1.0-1  
+## [34] Hmisc_3.14-4          Formula_1.1-2         survival_2.37-7      
+## [37] lattice_0.20-29       httr_0.5              googleVis_0.5.5      
+## [40] ggplot2_1.0.0         gdata_2.13.3          formatR_1.0          
+## [43] extrafont_0.16        estout_1.2            dplyr_0.2            
+## [46] digest_0.6.4          devtools_1.5          data.table_1.9.2     
+## [49] countrycode_0.17      brew_1.0-6            apsrtable_0.8-8      
+## [52] animation_2.3         knitr_1.6            
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] assertthat_0.1      bibtex_0.3-6        car_2.0-21         
-##  [4] chron_2.3-45        cluster_1.15.2      codetools_0.2-9    
-##  [7] colorspace_1.2-4    evaluate_0.5.5      extrafontdb_1.0    
-## [10] gtable_0.1.2        gtools_3.4.1        highr_0.3          
-## [13] labeling_0.3        latticeExtra_0.6-26 lubridate_1.3.3    
-## [16] memoise_0.2.1       munsell_0.4.2       nnet_7.3-8         
-## [19] parallel_3.1.1      R.cache_0.10.0      R.methodsS3_1.6.1  
-## [22] R.oo_1.18.0         R.utils_1.33.0      RColorBrewer_1.0-5 
-## [25] Rcpp_0.11.2         RefManageR_0.8.34   rJava_0.9-6        
-## [28] rjson_0.2.14        Rttf2pt1_1.3.2      scales_0.2.4       
-## [31] stringr_0.6.2       tcltk_3.1.1         twitteR_1.1.7      
-## [34] whisker_0.3-2       xlsx_0.5.7          xlsxjars_0.6.1     
-## [37] XML_3.98-1.1
+##  [4] chron_2.3-45        cluster_1.15.2      colorspace_1.2-4   
+##  [7] evaluate_0.5.5      extrafontdb_1.0     gtable_0.1.2       
+## [10] gtools_3.4.1        highr_0.3           labeling_0.3       
+## [13] latticeExtra_0.6-26 lubridate_1.3.3     memoise_0.2.1      
+## [16] munsell_0.4.2       nnet_7.3-8          parallel_3.1.1     
+## [19] R.cache_0.10.0      R.methodsS3_1.6.1   R.oo_1.18.0        
+## [22] R.utils_1.33.0      RColorBrewer_1.0-5  Rcpp_0.11.2        
+## [25] RefManageR_0.8.34   rJava_0.9-6         rjson_0.2.14       
+## [28] Rttf2pt1_1.3.2      scales_0.2.4        stringr_0.6.2      
+## [31] tcltk_3.1.1         twitteR_1.1.7       whisker_0.3-2      
+## [34] xlsx_0.5.7          xlsxjars_0.6.1      XML_3.98-1.1
 ```
 
 ---
