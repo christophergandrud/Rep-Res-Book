@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 March 2014
+% Updated: 18 September 2014
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -11,7 +11,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 Graphs and other visual methods, discussed in the next chapter, can often be more effective ways to present descriptive and inferential statistics than tables.\footnote{This is especially true of the small-print, high-density coefficient estimate tables that are sometimes descriptively called `train schedule' tables.} Nonetheless, tables of parameter estimates, descriptive statistics, and so on can sometimes be important tools for describing your data and presenting research findings. Learning how to dynamically connect statistical results with tables in your presentation documents aids reproducibility and can ultimately save you a lot of time.
 
-Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors.\footnote{For example, in a replication of Reinhart and Rogoff's much cited \citeyearpar{RR2010} study of economic growth and public debt \cite{Herndon2013} found a number of apparent transcription errors. Analysis results in the original spreadsheets appear to not have been entered into the paper's tables accurately.} It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you. 
+Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors.\footnote{For example, in a replication of Reinhart and Rogoff's much cited \citeyearpar{RR2010} study of economic growth and public debt \cite{Herndon2013} found a number of apparent transcription errors. Analysis results in the original spreadsheets appear to not have been entered into the paper's tables accurately.} It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you.
 
 The goal of this chapter is for you to learn how to dynamically create tables for your presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both LaTeX and Markdown/HTML documents. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only packages available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{R package!table} \emph{memisc} \citep{R-memisc},\index{R command!memisc}\index{memisc} and \emph{estout} \citep{R-estout}\index{estout} packages as well as Paul Johnson's \texttt{outreg}\index{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} I personally also really like the \emph{stargazer} package \citep{R-stargazer}. It has a similar syntax to \emph{apsrtable} and is particularly good for showing results from multiple models estimated using different model types in one table.
 
@@ -30,7 +30,7 @@ The most important \texttt{knitr} chunk option for showing tables is \texttt{res
   \verb|'hide'|.
 \end{itemize}
 
-\noindent The value \texttt{hide} clearly hides the results of your code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} is the simplest option as it writes the raw markup form of the table into the presentation document, not as a highlighted code chunk, but as markup. It is then compiled as table markup with the rest of the document. \texttt{markup} uses an output hook\index{knitr!hook}\index{knitr!hook} to mark up the results in a predefined way. In this chapter we will work with examples using the \texttt{asis} option.\footnote{Note that the \texttt{results} option is a major difference in syntax between \emph{knitr} and \emph{Sweave}.\index{Sweave} In \emph{Sweave} the equivalent option is \texttt{results=TEX}.\index{Sweave}} 
+\noindent The value \texttt{hide} clearly hides the results of your code chunk from your presentation document. To include tables created from R objects in your LaTeX or Markdown output you should set \verb|results='asis'| or \verb|results='markup'|. \texttt{asis} is the simplest option as it writes the raw markup form of the table into the presentation document, not as a highlighted code chunk, but as markup. It is then compiled as table markup with the rest of the document. \texttt{markup} uses an output hook\index{knitr!hook}\index{knitr!hook} to mark up the results in a predefined way. In this chapter we will work with examples using the \texttt{asis} option.\footnote{Note that the \texttt{results} option is a major difference in syntax between \emph{knitr} and \emph{Sweave}.\index{Sweave} In \emph{Sweave} the equivalent option is \texttt{results=TEX}.\index{Sweave}}
 
 \section{Table Basics}
 
@@ -69,19 +69,19 @@ In this chapter we will learn about two types of environments you need for table
 
 \paragraph{The \texttt{tabular} environment}\index{LaTeX environment!tabular}
 
-The \texttt{tabular} environment allows you to create tables in LaTeX. Let's work through the basic syntax for a simple table.\footnote{For a comprehensive overview see the LaTeX Wiki page on tables: \url{http://en.wikibooks.org/wiki/LaTeX/Tables}.} 
+The \texttt{tabular} environment allows you to create tables in LaTeX. Let's work through the basic syntax for a simple table.\footnote{For a comprehensive overview see the LaTeX Wiki page on tables: \url{http://en.wikibooks.org/wiki/LaTeX/Tables}.}
 
 To begin a simple tabular environment type \verb|\begin{tabular}{TABLE_SPEC}|. The \verb|TABLE_SPEC| argument allows you to specify the number of columns in a table and the alignment of text in each column. For example, to create a table with three columns, the first of which is left-justified and the latter two center-justified we type:
 
 <<Ch9BeginTabular1, eval=FALSE, tidy=FALSE>>=
 \begin{tabular}{l c c}
-@ 
+@
 
 \noindent The \texttt{l} argument creates a left-justified column, \texttt{c} creates a centered one. If we wanted a right-justified column we would use \texttt{r}.\footnote{You can also specify a column's width by using \texttt{m\{WIDTH\}} instead. Be sure to load the \emph{array} package in the preamble for this to work.\index{LaTeX package!array} Using \texttt{m} will create a column of a specified width that is vertically justified in the middle. For example, \texttt{m\{3cm\}} would create a column with a width of 3 centimeters. Text in the column would automatically be wrapped onto multiple lines if need be. You can replace the \texttt{m} with either \texttt{p} or \texttt{b}. \texttt{p} vertically aligns the text at the top, \texttt{b} aligns it at the bottom.} Finally we can add a horizontal line between columns by adding a vertical bar \texttt{|} between the column arguments.\footnote{If you add two vertical bars (\texttt{||}) you will get two lines.} For example, to place a vertical line between the first and second column in our example table we would type:
 
  <<Ch9BeginTabular2, eval=FALSE, tidy=FALSE>>=
 \begin{tabular}{l | c c}
-@ 
+@
 
 Now let's enter content into our table. We saw earlier how CSV files delimit individual columns with commas. In LaTeX's \texttt{tabular} environment columns are delimited with ampersands (\verb|&|).\footnote{If you want to include an ampersand in the text of your LaTeX document you need to escape it like this: \texttt{\textbackslash{}\&}.\index{escape character}}\index{LaTeX!ampersand} In CSV tables new lines are delimited by starting a new line. In LaTeX tables you use two backslashes (\verb|\\|).\footnote{You can use two backslashes outside of the \texttt{tabular} environment as well to force a new line. Also, to increase the space between the line you can add a vertical width argument to the double backslashes. For example, \texttt{\textbackslash{}\textbackslash{}[0.3cm]} will give you a three centimeter gap between the current line and the next one.} Here is a simple example of the first two lines of a table:
 
@@ -185,9 +185,9 @@ Markdown table syntax, as with all Markdown syntax, is generally much simpler th
 You do not need to declare any new environments to start creating a Markdown table. Just start typing. Columns are delimited in Markdown tables with a vertical bar (\texttt{|}). Rows are started with a new line. To indicate the head of the table--usually the row(s) containing the column names--separate it from the body of the table with a row of dashes (e.g. \verb|----|). Here is an example based on the table we created in the previous section:
 
 <<Ch9MarkdownTable2Row, eval=FALSE>>=
-Observation | Variable1  | Variable2 
------------ | ---------- | --------- 
-Subject1    | a          | b        
+Observation | Variable1  | Variable2
+----------- | ---------- | ---------
+Subject1    | a          | b
 @
 
 \noindent Note that it is not necessary to line up the vertical bars. You just need to have the same number of them on each row.
@@ -195,15 +195,15 @@ Subject1    | a          | b
 You can specify each column's text justification using colons on the dashed row. For example this code will create the left-center-center justified formatted table we made earlier:
 
 <<Ch9MarkdownTableust, eval=FALSE>>=
-Observation | Variable1 | Variable2 
-:---------- | :-------: | :-------: 
-Subject1    | a         | b        
-Subject2    | c         | d        
-Subject3    | e         | f        
-Subject4    | g         | c       
+Observation | Variable1 | Variable2
+:---------- | :-------: | :-------:
+Subject1    | a         | b
+Subject2    | c         | d
+Subject3    | e         | f
+Subject4    | g         | c
 @
 
-\noindent To create a left-justified column simply use a colon on only the left side of the dashes. 
+\noindent To create a left-justified column simply use a colon on only the left side of the dashes.
 
 The ultimate look of a Markdown table is highly dependent on the CSS style file you are using (see Chapter \ref{MarkdownChapter} for how to change your CSS style file). The default RStudio CSS style\footnote{The CSS file can be found at: \url{https://github.com/rstudio/markdown/blob/master/inst/resources/markdown.css}.} formats our table to look like this:
 
@@ -217,9 +217,9 @@ The ultimate look of a Markdown table is highly dependent on the CSS style file 
 
 <<Ch9MarkdownTableHeading, eval=FALSE, engine='sh'>>=
 ### Example Simple Markdown Table
-Observation | Variable1 | Variable2 
-:---------- | :-------: | :-------: 
-Subject1    | a         | b         
+Observation | Variable1 | Variable2
+:---------- | :-------: | :-------:
+Subject1    | a         | b
 @
 
 \noindent will produce something like this:
@@ -276,7 +276,7 @@ Table rows are put inside of \texttt{tr}\index{HTML element!tr} (table rows) ele
         </tr>
         <tr>
             <td>Subject4</td> <td>f</td> <td>f</td>
-        </tr>      
+        </tr>
     </tbody>
 </table>
 @
@@ -288,7 +288,7 @@ Table rows are put inside of \texttt{tr}\index{HTML element!tr} (table rows) ele
 
 Just as the \texttt{write.csv} command turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an object--e.g. a matrix, data frame--the output from a statistical analysis and so on--and turn them into LaTeX and HTML tables. In this section we will learn how to do this with the \emph{xtable} and \emph{apsrtable} packages.
 
-\subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects} 
+\subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects}
 
 The \emph{xtable} and \emph{apsrtable} packages are fairly easy to use if you want to convert an object of a class that they support into a table. Different R statistical model estimation commands can produce model summaries of different classes. For example, the \texttt{lm} (linear model) command creates model summaries of the \texttt{lm} class. For example, let's create a simple linear regression using the \emph{swiss} data frame and \texttt{lm}\index{R command!lm}\index{simple linear regression} command. This data frame is included with R by default. The simple linear regression model we are going to make has the \emph{swiss} variable \textbf{Examination} as the dependent variable and \textbf{Education} as the only independent variable.\footnote{For a description of these variables type \texttt{?swiss} into the console}
 
@@ -333,15 +333,15 @@ Let's first look at how to create LaTeX tables with \emph{xtable} by creating a 
 
 \noindent When included in an R Sweave-style LaTeX document this code will create a table exactly like Table \ref{BasicXtableSummary}.
 
-Let's go through this code, working from the outside in. First you'll notice that we've set two \emph{knitr} code chunk options. As we discussed earlier, \verb|results='asis'| allows us to include the LaTeX formatted table created by \emph{xtable}. The next option \verb|echo=FALSE| hides the code from being shown in our final document. The \emph{xtable} command creates the summary table of our \emph{M1} model object. Not only does it produce both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments it automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 1} argument to. This specifies that I want numbers in the table to be rounded to one decimal digit. 
+Let's go through this code, working from the outside in. First you'll notice that we've set two \emph{knitr} code chunk options. As we discussed earlier, \verb|results='asis'| allows us to include the LaTeX formatted table created by \emph{xtable}. The next option \verb|echo=FALSE| hides the code from being shown in our final document. The \emph{xtable} command creates the summary table of our \emph{M1} model object. Not only does it produce both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments it automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 1} argument to. This specifies that I want numbers in the table to be rounded to one decimal digit.
 
 % Actually show M1Table in the text
 <<Ch9xtableSummaryPrint, results='asis', echo=FALSE>>=
-# Load xtable 
+# Load xtable
 library(xtable)
 
 # Create LaTeX table from M1 and show the output markup
-xtable(M1, caption = "Linear Regression, Dependent 
+xtable(M1, caption = "Linear Regression, Dependent
                                  Variable: Exam Score",
            label = "BasicXtableSummary",
            digits = 1)
@@ -357,7 +357,7 @@ We can use \emph{xtable} and the \texttt{print.xtable}\index{print.xtable} comma
 library(xtable)
 
 # Create an xtable object from M1
-M1Table <- xtable(M1, caption = "Linear Regression, Dependent 
+M1Table <- xtable(M1, caption = "Linear Regression, Dependent
                                  Variable: Exam Score",
                       label = "BasicXtableSummary",
                       digits = 1)
@@ -365,7 +365,7 @@ M1Table <- xtable(M1, caption = "Linear Regression, Dependent
 # Create HTML summary table of M1Table
 print.xtable(M1Table, type = "html", caption.placement = "top")
 ```
-@ 
+@
 
 \noindent If you intend to include multiple tables in your R Markdown document you will want all of the tables to be printed in HTML. You can place \verb|options("xtable.type" = "html")|\index{R command!options} in a code chunk near the beginning of your document.\footnote{Of course you will probably want to use the \texttt{include=FALSE} \emph{knitr}  option with this code chunk.} This simply makes it so that you don't need to include \verb|type = "html"| every time you use \texttt{print}.
 
@@ -408,7 +408,7 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
 
 \hlcom{# Create nested regression model table}
 \hlkwd{apsrtable}(M1, M2, M3, M4, M5, Sweave = TRUE,
-          stars = \hlstr{"default"}) 
+          stars = \hlstr{"default"})
 @
         \textbackslash{}end\{center\}
 \textbackslash{}end\{table\}
@@ -416,7 +416,7 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
     \end{kframe}
 \end{knitrout}
 
-\noindent Let's go over this code. The first thing that you probably notice is that we manually created the \texttt{table} and \texttt{center} environments as well as set the \texttt{caption} and \texttt{label}. You do not necessarily need to do this. If you set \texttt{apsrtable}'s \texttt{Sweave} argument to \texttt{FALSE}, it will create the \texttt{table} environment and allow you to determine the caption and cross-reference label with the \texttt{caption} and \texttt{label} arguments. Nonetheless \texttt{Sweave=TRUE} is useful if, for example, you create the table in a separate R source code file and want to incorporate it into multiple LaTeX documents and be able to set different labels and titles in each. 
+\noindent Let's go over this code. The first thing that you probably notice is that we manually created the \texttt{table} and \texttt{center} environments as well as set the \texttt{caption} and \texttt{label}. You do not necessarily need to do this. If you set \texttt{apsrtable}'s \texttt{Sweave} argument to \texttt{FALSE}, it will create the \texttt{table} environment and allow you to determine the caption and cross-reference label with the \texttt{caption} and \texttt{label} arguments. Nonetheless \texttt{Sweave=TRUE} is useful if, for example, you create the table in a separate R source code file and want to incorporate it into multiple LaTeX documents and be able to set different labels and titles in each.
 
 In the LaTeX caption you'll notice \verb|\emph{apsrtable}|. In LateX the \texttt{emph}\index{LaTeX!emph} command italicizes text (we'll see this again in Chapter \ref{LatexChapter}). You can also include LaTeX commands like this in \texttt{apsrtable}'s \texttt{caption} argument.
 
@@ -432,7 +432,7 @@ library(apsrtable)
 
 # Create nested regression model table
 apsrtable(M1, M2, M3, M4, M5, Sweave = TRUE,
-          stars = "default") 
+          stars = "default")
 @
     \end{center}
 \end{table}
@@ -452,7 +452,7 @@ To use the \emph{lscape} package first place \verb|\usepackage{lscape}| in your 
 The \emph{apsrtable} and \emph{xtable} packages are very convenient for model objects they know how to handle. With supported class objects \emph{xtable} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that they need to create tables. With unsupported classes, however, they don't know where to look for these things. Luckily, there is a work around. You tell \texttt{xtable} where to find elements you want to include in your table. \texttt{xtable} can handle matrix and data frame class objects. The rows of these objects become table rows and the columns become the table columns. So, to create tables with non-supported class objects you need to:
 
 \begin{enumerate}
-    \item find and extract the information from the unsupported class object that you want in the table, 
+    \item find and extract the information from the unsupported class object that you want in the table,
     \item convert this information into a matrix or data frame where the rows and columns of the object correspond to the rows and columns of the table that you want to create,
     \item use \emph{xtable} with this object to create the table.
 \end{enumerate}
@@ -464,7 +464,7 @@ Imagine that you want to create a results table showing the covariate names, coe
 library(Zelig)
 
 # Estimate model
-NBModel <- zelig(Examination ~ Education, model = "normal.bayes", 
+NBModel <- zelig(Examination ~ Education, model = "normal.bayes",
                     data = swiss, cite = FALSE)
 
 # Find NBModel's class
@@ -482,7 +482,7 @@ library(xtable)
 NBTable <- xtable(NBModel)
 @
 }
-\noindent With unsupported class objects you have to create the summary yourself and extract the elements that you want from it manually. A good knowledge of vectors, matrices, and component selection is very handy for this (see Chapter \ref{GettingStartedRKnitr}). 
+\noindent With unsupported class objects you have to create the summary yourself and extract the elements that you want from it manually. A good knowledge of vectors, matrices, and component selection is very handy for this (see Chapter \ref{GettingStartedRKnitr}).
 
 First, create a summary\index{R command!summary} of your output object {\emph{NBModel}}:
 
@@ -490,7 +490,7 @@ First, create a summary\index{R command!summary} of your output object {\emph{NB
 NBModelSum <- summary(NBModel)
 @
 
-\noindent This creates a new object of the class \texttt{summary.MCMCZelig}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{NBModelSum} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names}\index{R command!names} command. 
+\noindent This creates a new object of the class \texttt{summary.MCMCZelig}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{NBModelSum} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names}\index{R command!names} command.
 
 <<Ch9MCMCSummaryNames>>=
 names(NBModelSum)
@@ -523,7 +523,7 @@ NBSumDataFrame <- rename(NBSumDataFrame, c("X97.5." = "97.5%"))
 
 
 # Reorder variables and remove the standard deviation
-NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]  
+NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]
 
 # Create table
 xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression", label = "CoefEstTable")
@@ -533,7 +533,7 @@ It may take some hunting to find what you want, but a similar process can be use
 
 \subsection{Creating variable description documents with \emph{xtable}}\label{VarDescriptTables}
 
-You can use \emph{xtable} to create a table describing variables in your data set and insert these into Markdown documents created with the concatenate and print (\texttt{cat}) command (see Section \ref{catR}).\index{R command!cat} This is useful because our data so far has been stored in plain-text files. Unlike binary Stata or SAS data files, plain-text data files do not include variable descriptions. 
+You can use \emph{xtable} to create a table describing variables in your data set and insert these into Markdown documents created with the concatenate and print (\texttt{cat}) command (see Section \ref{catR}).\index{R command!cat} This is useful because our data so far has been stored in plain-text files. Unlike binary Stata or SAS data files, plain-text data files do not include variable descriptions.
 
 Imagine that we want to create a Markdown file with a table describing the variables from the \emph{swiss} data frame. First we will create two vectors: one for the variable names and the other for the variable descriptions.
 
@@ -553,7 +553,7 @@ Description <- c("common standardized fertility measures",
 @
 }
 
-\noindent In the first line we use the \texttt{names} command to create a vector of the \emph{swiss} data frame's column names. Then we simply create a vector of descriptions with the concatenate command (\texttt{c}).\index{R command!concatenate}\index{R command!c} Now we can combine these vectors into a matrix and use it to create an HTML table.
+\noindent In the first line we use the \texttt{names} command to create a vector of the \emph{swiss} data frame's column names. Then we simply create a vector of descriptions with the combine command (\texttt{c}).\index{R command!combine}\index{R command!c} Now we can combine these vectors into a matrix and use it to create an HTML table.
 
 <<Ch9CbindDescript, results='hide'>>=
 # Combine Variable and Description variables into a matrix
@@ -577,13 +577,13 @@ cat("# Swiss Data Variable Descriptions \n",
     )
 @
 
-\noindent The first part of the \texttt{cat} command here is the title of the document. As we will see in Chapter \ref{MarkdownChapter} hashes (\verb|#|) create headers. The \verb|\n| creates a new line in the Markdown document. The next line is information on the \emph{swiss} data frame's source. We then include the HTML table in the \emph{DescriptTable} object and save it to a file called \emph{SwissVariableDescriptions.md}. 
+\noindent The first part of the \texttt{cat} command here is the title of the document. As we will see in Chapter \ref{MarkdownChapter} hashes (\verb|#|) create headers. The \verb|\n| creates a new line in the Markdown document. The next line is information on the \emph{swiss} data frame's source. We then include the HTML table in the \emph{DescriptTable} object and save it to a file called \emph{SwissVariableDescriptions.md}.
 
 It is convenient to simply include the creation of this table in your data gathering makefiles and have it saved into the same directory as your data. This way it will be easy to update as you update your data and easy to find. If you are storing your data on GitHub it will automatically render the variable description Markdown file and make it easy for others to read. See this book's makefile example for more information: \url{http://bit.ly/YnMKBG}.\footnote{The long URL is: \url{https://github.com/christophergandrud/Rep-Res-Examples/tree/master/DataGather_Merge}.}
 
 \subsection*{Chapter Summary}
 
-In this chapter we have learned how to take the results from our statistical analyses and other information from our data and dynamically present it in LaTeX and Markdown documents with \emph{knitr}. In the next chapter we will do the same thing with figures. 
+In this chapter we have learned how to take the results from our statistical analyses and other information from our data and dynamically present it in LaTeX and Markdown documents with \emph{knitr}. In the next chapter we will do the same thing with figures.
 
 \section*{Appendix}
 
@@ -601,11 +601,11 @@ NBSumDataFrame <- rename(NBSumDataFrame, c("X97.5." = "97.5%"))
 
 
 # Reorder variables and remove the standard deviation variable
-NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")] 
+NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]
 
 # Create table
-xtable(NBTable, caption = "Coefficient Estimates Predicting 
-                            Examination Scores in Swiss Cantons 
+xtable(NBTable, caption = "Coefficient Estimates Predicting
+                            Examination Scores in Swiss Cantons
                             (1888) Found Using Bayesian Normal
                             Linear Regression")
 @

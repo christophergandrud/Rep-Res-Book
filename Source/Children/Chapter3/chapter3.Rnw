@@ -25,7 +25,7 @@ To get you started with reproducible research, we'll cover some very basic R\ind
     \item packages.
 \end{itemize}
 
-Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You will know you are in a new R session because the same type of startup information as in Figure \ref{RBlankMain} will be printed in your Terminal.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started. 
+Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You will know you are in a new R session because the same type of startup information as in Figure \ref{RBlankMain} will be printed in your Terminal.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started.
 
 \begin{figure}[th!]
     \caption{R Startup Console}
@@ -55,7 +55,7 @@ Number <- 10
 Number
 @
 
-\noindent Let's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included here to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. They make it easier to copy and paste code into R from a document created by {\emph{knitr}} because R will ignore everything after a hash.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.   
+\noindent Let's briefly breakdown this output. \texttt{10} is clearly the contents of {\emph{Number}}. The double hash (\texttt{\#\#}) is included here to tell you that this is output rather than R code.\footnote{The double hash is generated automatically by {\emph{knitr}}. They make it easier to copy and paste code into R from a document created by {\emph{knitr}} because R will ignore everything after a hash.} If you type the commands in your R Console, you will not get the double hash in your output. Finally, \texttt{[1]} is the row number of the object that 10 is on. Clearly our object only has one row.
 
 Creating an object with words and other characters--a character object--is very similar. The only difference is that you enclose the character string\index{R!character strings} (letters in a word for example) inside of single or double quotation\index{R!quotation marks} marks (\verb|''|, or \verb|""|).\footnote{Single and double quotation marks are interchangeable in R for this purpose. In this book I always use double quotes, except for \emph{knitr} code chunk options.} To create an object called \emph{Words} that contains the character string ``Hello World'':\label{StringObject}
 
@@ -79,9 +79,9 @@ class(Words)
 
 So far we have only looked at objects with a single number or character string.\footnote{These might be called scalar objects,\index{scalar} though in R scalars are just vectors with a length of 1.} Clearly we often want to use objects that have many strings and numbers. In R these are usually data frame\index{data frame}\index{R!data frame} type objects and are roughly equivalent to the data structures you would be familiar with from using a program such as Microsoft Excel. We will be using data frames extensively throughout the book. Before looking at data frames it is useful to first look at the simpler objects that make up data frames. These are called vectors. Vectors are R's ``workhorse'' \cite[]{Matloff2011}. Knowing how to use vectors\index{vector}\index{R!vector} will be especially helpful when you clean up raw data in Chapter \ref{DataClean} and make tables in Chapter \ref{TablesChapter}.\footnote{If you want information about other types of R objects such as lists\index{list}\index{R!list object} and matrices\index{matrix}\index{R!matrix object}, Chapter 1 of Norman Matloff's \citeyearpar{Matloff2011} book is a really good place to look.} \\[0.25cm]
 
-\noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type'' in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns. 
+\noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type'' in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns.
 
-Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (concatenate)\index{concatenate}\index{R command!c}\index{R command!concatenate} function:
+Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (combine)\index{combine}\index{R command!c}\index{R command!combine} function:
 
 <<Ch3NumericVector, echo=TRUE>>=
 NumericVect <- c(2.8, 2, 14.8)
@@ -139,7 +139,7 @@ row.names(StringNumObject) <- c("First", "Second", "Third")
 row.names(StringNumObject)
 @
 
-\noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example, include it as a variable in a regression. You can use the \texttt{row.names} command to assign the row.names values to a regular column (for an example see Section \ref{RowNamesTidy}). 
+\noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example, include it as a variable in a regression. You can use the \texttt{row.names} command to assign the row.names values to a regular column (for an example see Section \ref{RowNamesTidy}).
 
 You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{R command!mean} command:
 
@@ -164,7 +164,7 @@ NewNumeric
 
 \paragraph{{\tt{attach}} and {\tt{with}}}
 
-Using the component selector can create long repetitive code if you want to select many components. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{R command!attach} and \texttt{with}\index{R command!with}. 
+Using the component selector can create long repetitive code if you want to select many components. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{R command!attach} and \texttt{with}\index{R command!with}.
 
 The \texttt{attach} command attaches a database to R's search path.\footnote{You can see what is in your current search path with the \texttt{search}\index{R command!search} command. Just type \texttt{search()} into your R console.}\index{R!search path} R will then search the database for variables you specify. You don't need to use the component selector to tell R again to look in a particular data frame after you have attached it. For example, let's attach the \emph{cars} data that comes with R. It has two variables, \textbf{speed} and \textbf{dist}.\footnote{For more information on this data set type \texttt{?cars}\index{R command!?} into your R console.}
 
@@ -184,7 +184,7 @@ detach(cars)
 @
 }
 
-\noindent We used the \texttt{head}\index{R command!head} command to see just the first few values of each variable. It is a good idea to \texttt{detach}\index{R command!detach} a data frame after you are done using it, to avoid confusing R. 
+\noindent We used the \texttt{head}\index{R command!head} command to see just the first few values of each variable. It is a good idea to \texttt{detach}\index{R command!detach} a data frame after you are done using it, to avoid confusing R.
 
 Similarly you can use \texttt{with} when you run commands using a particular database (see Section \ref{FunctionsCommands} for more details about commands). For example, we can find the mean of \emph{NumericVect} \texttt{with} the \emph{StringNumObject} data frame:
 
@@ -201,7 +201,7 @@ For examples in this book I largely avoid using the \texttt{attach} and \texttt{
 
 \subsection{Subscripts}
 
-Another way to select parts of an object is to use subscripts\index{subscripts}\index{R!subscripts}. You have already seen subscripts in the output from our examples so far. They are denoted with square braces (\texttt{[]}). We can use subscripts to select not only columns from data frames but also rows and individual values. As we began to see in some of the previous output, each part of a data frame has an address captured by its row and column number. We can tell R to find a part of an object by putting the row number/name, column number/name, or both in square braces. The first part denotes the rows and separated by a comma (\texttt{,}) are the columns. 
+Another way to select parts of an object is to use subscripts\index{subscripts}\index{R!subscripts}. You have already seen subscripts in the output from our examples so far. They are denoted with square braces (\texttt{[]}). We can use subscripts to select not only columns from data frames but also rows and individual values. As we began to see in some of the previous output, each part of a data frame has an address captured by its row and column number. We can tell R to find a part of an object by putting the row number/name, column number/name, or both in square braces. The first part denotes the rows and separated by a comma (\texttt{,}) are the columns.
 
 To give you an idea of how this works let's use the {\emph{cars}} data set that comes with R. Use the \texttt{head} command to get a sense of what this data set looks like.
 
@@ -231,7 +231,7 @@ cars[4, "dist"]
 
 <<Ch3FourthBoth, echo=TRUE>>=
 cars[4, c("speed", "dist")]
-@ 
+@
 
 \subsection{Functions and commands}\label{FunctionsCommands}
 
@@ -254,11 +254,11 @@ mean(x = NumericVect)
 MeanNumericVect <- mean(x = NumericVect)
 @
 
-\noindent Notice that we typed the command's name then enclosed the object name in parentheses immediately afterwards. This is the basic syntax that all commands use, i.e. \texttt{COMMAND(ARGUMENTS)}. If you don't want to explicitly include an argument \emph{you still need to type the parentheses after the command}. 
+\noindent Notice that we typed the command's name then enclosed the object name in parentheses immediately afterwards. This is the basic syntax that all commands use, i.e. \texttt{COMMAND(ARGUMENTS)}. If you don't want to explicitly include an argument \emph{you still need to type the parentheses after the command}.
 
 \subsection{Arguments}\label{arguments}
 
-Arguments\index{R!command argument} modify what commands do. In our most recent example we gave the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we wanted to find the mean of {\emph{NumericVect}}. Arguments use the \texttt{ARGUMENTLABEL = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} In this case \textbf{x} is the argument label\index{R!argument label}. 
+Arguments\index{R!command argument} modify what commands do. In our most recent example we gave the \texttt{mean} command one argument (\texttt{x = NumericVect}) telling it that we wanted to find the mean of {\emph{NumericVect}}. Arguments use the \texttt{ARGUMENTLABEL = VALUE} syntax.\footnote{Note: you do not have to put spaces between the argument label and the equals sign or the equals sign and the value. However, having spaces can make your code easier for other people to read.} In this case \textbf{x} is the argument label\index{R!argument label}.
 
 To find all of the arguments that a command can accept look at the {\bf{Arguments}} section of the command's help file\index{help file}. To access the help file type: \texttt{?COMMAND}. For example,\index{R!?}
 
@@ -276,7 +276,7 @@ Let's see how to use multiple arguments with the \texttt{round} command.\index{R
 round(x = MeanNumericVect, digits = 1)
 @
 
-\noindent Note that arguments are separated by commas. 
+\noindent Note that arguments are separated by commas.
 
 Some arguments do not need to be explicitly labeled. For example, we could have written:
 
@@ -343,7 +343,7 @@ options(digits = 1)
 
 \subsection{Installing new packages and loading commands}\label{Packages}
 
-Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R command!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}. 
+Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R command!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}.
 
 For the code you need to install all of the packages used in this book, see page \pageref{ReqPackages}. When you install a package, you will likely be given a list of mirrors\index{mirrors, CRAN} from which you can download the package. Simply select the mirror closest to you.
 
@@ -353,7 +353,7 @@ Once you have installed a package you need to load it so that you can use its fu
 library(ggplot2)
 @
 
-\noindent Please note that for the examples in this book I only specify what package a command is from if it is not loaded by default when you start an R session. 
+\noindent Please note that for the examples in this book I only specify what package a command is from if it is not loaded by default when you start an R session.
 
 Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R command!double-colon operator}\index{R command!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from the \emph{ggplot2} package we type:
 
@@ -380,13 +380,13 @@ When you first open RStudio\index{RStudio} you should see a default window that 
     \end{center}
 \end{figure}
 
-In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help}} pane. We will discuss the \emph{Files}\index{RStudio!Files pane} pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The \emph{Plots} pane\index{RStudio!Plots pane} is where figures you create in R appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The \emph{Packages} pane\index{RStudio!Packages pane} shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their help files (just click on the package name), update the packages, and even install new packages. Finally, the \emph{Help} pane\index{RStudio!Help pane} shows you help files. You can search for help files and search within help files using this pane.  
+In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help}} pane. We will discuss the \emph{Files}\index{RStudio!Files pane} pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The \emph{Plots} pane\index{RStudio!Plots pane} is where figures you create in R appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The \emph{Packages} pane\index{RStudio!Packages pane} shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their help files (just click on the package name), update the packages, and even install new packages. Finally, the \emph{Help} pane\index{RStudio!Help pane} shows you help files. You can search for help files and search within help files using this pane.
 
 \paragraph{The {\normalfont{Source}} pane}
 
-There is an important pane that does not show up when you open RStudio for the first time. This is the {\emph{Source}} pane.\index{RStudio!Source pane} The \emph{Source} pane is where you create, edit, and run your source code files. It also functions as an editor for your markup files. It is the center of reproducible research in RStudio. 
+There is an important pane that does not show up when you open RStudio for the first time. This is the {\emph{Source}} pane.\index{RStudio!Source pane} The \emph{Source} pane is where you create, edit, and run your source code files. It also functions as an editor for your markup files. It is the center of reproducible research in RStudio.
 
-Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}} and R Markdown and R LaTeX in more detail in the next section. 
+Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}} and R Markdown and R LaTeX in more detail in the next section.
 
 R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Script} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R command!source}. The icon next to \texttt{Source} is for compiling RStudio Notebooks\index{RStudio!Notebook}. We will look at RStudio Notebooks later in this chapter.
 
@@ -394,27 +394,27 @@ R source code files have the file extension \texttt{.R}. When you create a new s
     \caption{RStudio Source Code Pane Top Bars}
     \label{SourcePanes}
     \begin{center}
-    
+
         \begin{subfigure}
             \caption{R Source Code}
             \label{fig:Rsource}
             \includegraphics[width = \textwidth]{Children/Chapter3/images3/RSourceBar.png}
         \end{subfigure}
         \vspace{0.5cm}
-        
+
         \begin{subfigure}
             \caption{R Markdown Files}
             \label{fig:RMarkdown}
             \includegraphics[width = \textwidth]{Children/Chapter3/images3/MarkdownSourceBar.png}
         \end{subfigure}
         \vspace{0.5cm}
-        
+
         \begin{subfigure}
             \caption{R LaTeX Files}
             \label{fig:RLaTeX}
             \includegraphics[width = \textwidth]{Children/Chapter3/images3/LaTeXSourceBar.png}
         \end{subfigure}
-        
+
     \end{center}
 \end{figure}
 \setcounter{figure}{3}
@@ -427,7 +427,7 @@ To get started with {\emph{knitr}}\index{knitr} in R or RStudio we need to learn
 
 \subsection{What \emph{knitr} does}
 
-Let's take a quick, abstract look at what the \emph{knitr} package does. As I've mentioned, \emph{knitr} ties together your presentation of results with the creation of those results. The \emph{knitr} process takes three steps (see Figure \ref{KnitProcess}). First we create a knittable markup document. This contains both the analysis code and the presentation document's markup--the text and rules for how to format the text. \emph{knitr} then \emph{knits}: i.e. it runs the analysis code and converts the output into the markup language you are using according to the rules that you tell it to. It inserts the marked-up results into a document that only contains markup for the presentation document. You \emph{compile}\index{compile markup} this markup document as you would if you hadn't used \emph{knitr} into your final PDF document or webpage presenting your results. 
+Let's take a quick, abstract look at what the \emph{knitr} package does. As I've mentioned, \emph{knitr} ties together your presentation of results with the creation of those results. The \emph{knitr} process takes three steps (see Figure \ref{KnitProcess}). First we create a knittable markup document. This contains both the analysis code and the presentation document's markup--the text and rules for how to format the text. \emph{knitr} then \emph{knits}: i.e. it runs the analysis code and converts the output into the markup language you are using according to the rules that you tell it to. It inserts the marked-up results into a document that only contains markup for the presentation document. You \emph{compile}\index{compile markup} this markup document as you would if you hadn't used \emph{knitr} into your final PDF document or webpage presenting your results.
 
 \begin{figure}
     \caption{The {\emph{knitr}} Process}
@@ -511,13 +511,13 @@ To explicitly assign chunk labels in R Markdown documents place the label name i
 
 There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Maybe we want the figure to be formatted on a page in a certain way. To make these changes and many others we can specify code chunk options\index{knitr!code chunk options}.
 
-Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document, we can use the option \texttt{echo=FALSE}.\index{knitr option!echo} 
+Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document, we can use the option \texttt{echo=FALSE}.\index{knitr option!echo}
 
 <<MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE, eval=FALSE>>=
 ```{r ChunkLabel, echo=FALSE}
 StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
-@ 
+@
 
 \noindent Note that all labels and code chunk options must be on the same line. Options are separated by commas. The syntax for {\emph{knitr}} options is the same regardless of the markup language. Here is the same chunk option in Rtex-style syntax:
 
@@ -541,7 +541,7 @@ Throughout this book we will look at a number of different code chunk options. A
   \begin{center}
   \label{ChunkOptionsTable}
   \begin{tabular}{l c p{6cm}}
-    \hline  
+    \hline
     Chunk Option Label & Type & Description \\[0.25cm] \hline\hline
     \texttt{cache} & Logical & Whether or not to save results from the code chunk in a cache database. Note: cached chunks are only run when they are changed. \\[0.25cm]
     \texttt{cache.vars} & Character Vector & Specify the variable names to save in the cache database. \\[0.25cm]
@@ -554,7 +554,7 @@ Throughout this book we will look at a number of different code chunk options. A
     \texttt{include} & Logical & When \texttt{include=FALSE} the chunk is evaluated, but the results are not included in the presentation document. \\[0.25cm]
     \texttt{message} & Logical & Whether or not to include R messages. \\[0.25cm]
     \texttt{out.height} & Numeric & Set figures' heights in the presentation document. \\[0.25cm]
-    \texttt{out.width} & Numeric & Set figures' widths in the presentation document. \\[0.25cm]   
+    \texttt{out.width} & Numeric & Set figures' widths in the presentation document. \\[0.25cm]
     \texttt{results} & Character & How to include results in the presentation document. \\[0.25cm]
     \texttt{tidy} & Logical & Whether or not to have \emph{knitr} format printed code chunks. \\[0.25cm]
     \texttt{warning} & Logical & Whether or not to include warnings. \\[0.25cm]
@@ -568,7 +568,7 @@ Throughout this book we will look at a number of different code chunk options. A
 
 So far we have only looked at how to set local options\index{knitr!local chunk options} in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options\index{knitr!global chunk options}. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the \verb|fig.align='center'| option in each code chunk that creates a figure, I set the option globally.
 
-To set a global option first create a new code chunk at the beginning of your document.\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be placed after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{include=FALSE}} so that {\emph{knitr}} doesn't include the code in your presentation document. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option. 
+To set a global option first create a new code chunk at the beginning of your document.\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be placed after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{include=FALSE}} so that {\emph{knitr}} doesn't include the code in your presentation document. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option.
 
 Here is an example of how you can center align all of the figures in Sweave-style code chunks. Place the following code at the beginning of the document:
 
@@ -616,7 +616,7 @@ RStudio is highly integrated with {\emph{knitr}} and the markup languages \emph{
 
 \paragraph{Compiling R source code Notebooks}
 
-If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook''\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}. 
+If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook''\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}.
 
 If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emph{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then click the \texttt{Compile} button in the window that pops up. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish''. Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.\label{PublishRPubs}
 
@@ -624,7 +624,7 @@ If you want to create a Notebook from an open R source code file simply click th
     \caption{RStudio Notebook Example}
     \label{NotebookExample}
     \begin{center}
-    
+
 \includegraphics[scale=0.4]{Children/Chapter3/images3/NotebookExample.png}
     \end{center}
 \end{figure}
@@ -637,7 +637,7 @@ You may also notice that there are code folding arrows on lines 27 and 34 in the
 
 <<CommentFold, echo=TRUE>>=
 #### An RStudio Foldable Comment ####
-@ 
+@
 
 \noindent You will be able to fold all of the text after this comment up until the next similarly formatted comment (or the end of the chunk).
 
@@ -645,15 +645,15 @@ You may also notice that there are code folding arrows on lines 27 and 34 in the
     \caption{Folding Code Chunks in RStudio}
     \label{CodeFold}
     \setlength{\belowcaptionskip}{5pt}
-    \centering    
-    \begin{subfigure}  
-        \caption{Not Folded}   
+    \centering
+    \begin{subfigure}
+        \caption{Not Folded}
         \includegraphics[width = \textwidth]{Children/Chapter3/images3/MarkdownNoCollapse.png}
     \end{subfigure} \\[0.5cm]
-    
+
     \begin{subfigure}
         \caption{Folded}
-        \includegraphics[width = \textwidth]{Children/Chapter3/images3/MarkdownCollapse.png}        
+        \includegraphics[width = \textwidth]{Children/Chapter3/images3/MarkdownCollapse.png}
     \end{subfigure}
 \end{figure}
 
@@ -664,7 +664,7 @@ You can see in the final image in Figure \ref{SourcePanes} that many of the \emp
 
 \paragraph{Change default .Rnw knitter}
 
-By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of \emph{Sweave} to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Global Options...}.\index{RStudio!Options window} Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave Rnw files using:''. Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.} 
+By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of \emph{Sweave} to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Global Options...}.\index{RStudio!Options window} Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave Rnw files using:''. Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.}
 
 \subsection{\emph{knitr} \& R}
 
@@ -684,13 +684,13 @@ knit(input = "Example.Rmd", output = "Example.md")
 
 In this example, using the \textbf{knit} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R command!markdownToHTML} command from the {\emph{markdown}} package, i.e.
 
-<<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>= 
+<<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>=
 mardownToHTML(file = "Example.md", output = "Example.html")
 @
 
 \noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines \texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}.\index{R command!knit2html} You use it like this:
 
-<<Ch3RMDtoHTML, echo=TRUE, eval=FALSE, tidy=FALSE>>= 
+<<Ch3RMDtoHTML, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 knit2html(file = "Example.Rmd", output = "Example.html")
 @
 
@@ -708,11 +708,11 @@ texi2pdf(file = "Example.tex")
 
 \subsection*{Chapter Summary}
 
-We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to organize files created with these types of tools into reproducible research projects. 
+We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to organize files created with these types of tools into reproducible research projects.
 
 \section*{Appendix: knitr and Lyx}\label{LyxAppendix}
 
-You may be more comfortable using a what-you-see-is-what-you-get\index{WYSIWYG} editor, similar to Microsoft Word. Lyx\index{Lyx}\index{knitr!Lyx} is a WYSIWYG LaTeX editor that can be used with \emph{knitr}. I don't cover Lyx in detail in this book, but here is a little information to get you started. 
+You may be more comfortable using a what-you-see-is-what-you-get\index{WYSIWYG} editor, similar to Microsoft Word. Lyx\index{Lyx}\index{knitr!Lyx} is a WYSIWYG LaTeX editor that can be used with \emph{knitr}. I don't cover Lyx in detail in this book, but here is a little information to get you started.
 
 \paragraph{Set Up}
 
@@ -721,5 +721,3 @@ To set up Lyx so that it can compile \texttt{.Rnw} files, click \texttt{Document
 \paragraph{Code Chunks}
 
 Enter code chunks into TeX Code blocks within your Lyx documents. To create a new TeX Code block select \texttt{Insert} from the menu bar then \texttt{TeX Code}.
-
-
