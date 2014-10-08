@@ -81,16 +81,16 @@ following R session:
 ## other attached packages:
 ##  [1] ZeligBayesian_0.1     MCMCpack_1.3-3        coda_0.16-1          
 ##  [4] Zelig_4.2-1           sandwich_2.3-2        boot_1.3-11          
-##  [7] xtable_1.7-3          WDI_2.4               ROAuth_0.9.3         
+##  [7] xtable_1.7-4          WDI_2.4               ROAuth_0.9.3         
 ## [10] texreg_1.33           tables_0.7.79         sqldf_0.4-7.1        
 ## [13] RSQLite.extfuns_0.0.1 RSQLite_0.11.4        DBI_0.3.0            
 ## [16] gsubfn_0.6-6          proto_0.3-10          stargazer_5.1        
 ## [19] RJSONIO_1.3-0         RCurl_1.95-4.3        bitops_1.0-6         
-## [22] reshape2_1.4          repmis_0.2.9          quantmod_0.4-0       
+## [22] reshape2_1.4          repmis_0.3            quantmod_0.4-0       
 ## [25] TTR_0.22-0            xts_0.9-7             zoo_1.7-11           
 ## [28] Defaults_1.1-1        plyr_1.8.1            memisc_0.96-9        
 ## [31] MASS_7.3-34           markdown_0.7.4        knitcitations_1.0-1  
-## [34] Hmisc_3.14-4          Formula_1.1-2         survival_2.37-7      
+## [34] Hmisc_3.14-5          Formula_1.1-2         survival_2.37-7      
 ## [37] lattice_0.20-29       httr_0.5              googleVis_0.5.5      
 ## [40] ggplot2_1.0.0         gdata_2.13.3          formatR_1.0          
 ## [43] extrafont_0.16        estout_1.2            dplyr_0.2            
@@ -99,18 +99,19 @@ following R session:
 ## [52] animation_2.3         knitr_1.6            
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] assertthat_0.1      bibtex_0.3-6        car_2.0-21         
-##  [4] chron_2.3-45        cluster_1.15.2      colorspace_1.2-4   
-##  [7] evaluate_0.5.5      extrafontdb_1.0     gtable_0.1.2       
-## [10] gtools_3.4.1        highr_0.3           labeling_0.3       
-## [13] latticeExtra_0.6-26 lubridate_1.3.3     memoise_0.2.1      
-## [16] munsell_0.4.2       nnet_7.3-8          parallel_3.1.1     
-## [19] R.cache_0.10.0      R.methodsS3_1.6.1   R.oo_1.18.0        
-## [22] R.utils_1.33.0      RColorBrewer_1.0-5  Rcpp_0.11.2        
-## [25] RefManageR_0.8.34   rJava_0.9-6         rjson_0.2.14       
-## [28] Rttf2pt1_1.3.2      scales_0.2.4        stringr_0.6.2      
-## [31] tcltk_3.1.1         twitteR_1.1.7       whisker_0.3-2      
-## [34] xlsx_0.5.7          xlsxjars_0.6.1      XML_3.98-1.1
+##  [1] acepack_1.3-3.3     assertthat_0.1      bibtex_0.3-6       
+##  [4] car_2.0-21          chron_2.3-45        cluster_1.15.3     
+##  [7] colorspace_1.2-4    evaluate_0.5.5      extrafontdb_1.0    
+## [10] foreign_0.8-61      gtable_0.1.2        gtools_3.4.1       
+## [13] highr_0.3           labeling_0.3        latticeExtra_0.6-26
+## [16] lubridate_1.3.3     memoise_0.2.1       munsell_0.4.2      
+## [19] nnet_7.3-8          parallel_3.1.1      R.cache_0.10.0     
+## [22] R.methodsS3_1.6.1   R.oo_1.18.0         R.utils_1.33.0     
+## [25] RColorBrewer_1.0-5  Rcpp_0.11.2         RefManageR_0.8.34  
+## [28] rJava_0.9-6         rjson_0.2.14        rpart_4.1-8        
+## [31] Rttf2pt1_1.3.2      scales_0.2.4        stringr_0.6.2      
+## [34] tcltk_3.1.1         twitteR_1.1.7       whisker_0.3-2      
+## [37] xlsx_0.5.7          xlsxjars_0.6.1      XML_3.98-1.1
 ```
 
 ---
