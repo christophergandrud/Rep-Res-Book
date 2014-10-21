@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%
 % Reproducible research workflow + link commands (Short Example)
 % Christopher Gandrud
-% Updated 18 February 2013
+% Updated 21 October 2014
 %%%%%%%%%%%%%%
 
 % Define colors for figure
@@ -16,28 +16,28 @@
 
 % Set node styles
 %% File nodes
-\tikzstyle{File} = [draw=Blue, 
-                    rectangle, 
-                    text width=6.3em, 
+\tikzstyle{File} = [draw=Blue,
+                    rectangle,
+                    text width=6.3em,
                     font=\scriptsize]
 
 % Raw Data nodes
-\tikzstyle{RawData} = [draw=LiteBlue, 
-                       %fill=LiteBlue, 
+\tikzstyle{RawData} = [draw=LiteBlue,
+                       %fill=LiteBlue,
                        decorate,
                        decoration={random steps,
                                    segment length=2pt,
                                    amplitude=2pt},
-                       inner sep=0.25cm, 
+                       inner sep=0.25cm,
                        font=\scriptsize]
-                    
+
 % Separator line style
 \tikzstyle{sepline} = [draw,
                         very thick,
                         color=GrayLine]
-                        
-% Link command nodes       
-\tikzstyle{Links} = [draw=none, 
+
+% Link command nodes
+\tikzstyle{Links} = [draw=none,
                           text width=6em,
                           text=DarkBlue,
                           font=\small]
@@ -53,7 +53,7 @@
     \node (Gather2) at (-3, 4) [File]{Gather2.R};
 
     \node (MergeData) at (0.5, 5) [File]{Makefile \\ MergeData.R};
-    \node (DataFile) at (0.5, 4) [File]{MainData.csv}; 
+    \node (DataFile) at (0.5, 4) [File]{MainData.csv};
 
     \node (Scatter) at (3.8, 4.5) [File]{ScatterUDSFert.R};
     \node (GoogleVis) at (3.8, 3.5) [File]{GoogleVisMap.R};
@@ -71,11 +71,11 @@
     \draw [->] (Data2) -- (Gather2);
     \draw [->] (Gather1) -- (MergeData);
     \draw [->] (Gather2) -- (MergeData);
-    \draw [->] (MergeData) -- (DataFile); 
+    \draw [->] (MergeData) -- (DataFile);
 
-    \draw [->] (DataFile) -- (Scatter); 
-    \draw [->] (DataFile) -- (GoogleVis);  
-   
+    \draw [->] (DataFile) -- (Scatter);
+    \draw [->] (DataFile) -- (GoogleVis);
+
     \draw [->] (Scatter) -- (ArticleK);
     \draw [->] (Scatter) -- (SlideshowK);
     \draw [->] (GoogleVis) -- (WebsiteK);
@@ -83,19 +83,19 @@
     \draw [->] (ArticleK) -- (Article);
     \draw [->] (SlideshowK) -- (Slideshow);
     \draw [->] (WebsiteK) -- (Website);
-    
-    
+
+
     \path [sepline] (-3.5, 0.75) -- (11, 0.75);
-    
+
     % Link command nodes
 
     \node (importData) at (-1, -1) [Links]{\texttt{download.file} \\ \texttt{Make} \\ \texttt{merge}\\ \texttt{WDI} };
 
     \node (Figs) at (3, -1) [Links]{\texttt{read.csv}};
- 
+
     \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \texttt{source}};
 
-  
 
-  
+
+
 \end{tikzpicture}

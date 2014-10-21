@@ -1,26 +1,22 @@
 % Example Project Explanation For Reproducible Research in R and RStudio
 % Christopher Gandrud
-% Updated: 16 March 2014
-
-<<set-parentExampleProject, echo=FALSE, results='hide', cache=FALSE>>=
-set_parent('Rep-Res-Parent.Rnw')
-@
+% Updated: 21 October 2014
 
 \chapter*{Additional Resources}
 
 \addcontentsline{toc}{chapter}{Additional Resources}
 
-Additional resources that supplement the examples in this book can be freely downloaded and experimented with. These resources include short updates, longer examples discussed in individual chapters as well as a complete short reproducible research project. 
+Additional resources that supplement the examples in this book can be freely downloaded and experimented with. These resources include longer examples discussed in individual chapters and a complete short reproducible research project.
 
 \subsection*{Updates}
 
-Many of the reproducible research tools discussed in this book are improving rapidly. Because of this I will regularly post updates to the content covered in the book at: \url{http://christophergandrud.github.io/RepResR-RStudio/}.
+Many of the reproducible research tools discussed in this book are improving rapidly. Because of this I will regularly post updates to the content covered in the book at: \url{http://christophergandrud.github.io/RepResR-RStudio/errata.htm}.
 
 \subsection*{Chapter Examples}
 
 \addcontentsline{toc}{subsection}{Chapter Examples}
 
-Longer examples discussed in individual chapters, including files to dynamically download data, code for creating figures, and markup files for creating presentation documents, can be accessed at: \url{https://github.com/christophergandrud/Rep-Res-Examples}. Throughout the book I refer to each file's specific URL so that you can locate it from any computer. Please see Chapter \ref{Storing} for more information on downloading files from GitHub, where the examples are stored.\index{GitHub}
+Longer examples discussed in individual chapters, including files to dynamically download data, code for creating figures, and markup files for creating presentation documents, can be accessed at: \url{https://github.com/christophergandrud/Rep-Res-Examples}. Throughout the book I refer to each file's specific URL. Please see Chapter \ref{Storing} for more information on downloading files from GitHub, where the examples are stored.\index{GitHub}
 
 \subsection*{Short Example Project}
 
@@ -30,30 +26,28 @@ To download a full (though very short) example of a reproducible research projec
 
 The following two figures give you a sense of how the example's files are organized. Figure \ref{ExampProjeFiles} shows how the files are organized in the file system. Figure \ref{ExampProjDiagram} illustrates how the main files are dynamically tied together. In the \emph{Data} directory we have files to gather raw data from the \cite{WorldBank2013} on fertilizer consumption and from \cite{Pemstein2010} on countries' levels of democracy. They are tied to the data through the \texttt{WDI}\index{WDI} and \texttt{download.file} commands.\index{R command!download.file} A \emph{Makefile}\index{Makefile} can run \emph{Gather1.R} and \emph{Gather2.R} to gather and clean the data. It runs \emph{MergeData.R} to merge the data into one data file called \emph{MainData.csv}. It also automatically generates a variable description file and a \emph{README.md}\index{README} recording the session info.\index{R!session info}
 
-The \emph{Analysis} folder contains two files that create figures presenting this data. They are tied to \emph{MainData.csv} with the \texttt{read.csv} command.\index{R command!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with \emph{knitr} and the \texttt{source} command.\index{R command!source} 
+The \emph{Analysis} folder contains two files that create figures presenting this data. They are tied to \emph{MainData.csv} with the \texttt{read.csv} command.\index{R command!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with \emph{knitr} and the \texttt{source} command.\index{R command!source}
 
 Though a simple example, hopefully these files will give you a complete sense of how a reproducible research project can be organized. Please feel free to experiment with different ways of organizing the files and tying them together to make your research really reproducible.
 
 \clearpage
 \thispagestyle{plain}
-\begin{landscape}
-	\begin{figure}[th!]
-		\caption{Short Example Project File Tree}
-		\label{ExampProjeFiles}
-		\begin{center}
-			\input{Children/FrontMatter/AdditionalResources/imagesExamp/FileTree.tex}
-	    \end{center}
-	\end{figure}
-\end{landscape}
+    \begin{figure}[th!]
+        \caption{Short Example Project File Tree}
+        \label{ExampProjeFiles}
+        \begin{center}
+            \input{Children/FrontMatter/AdditionalResources/imagesExamp/FileTree.tex}
+        \end{center}
+    \end{figure}
 
 \clearpage
 \thispagestyle{plain}
 \begin{landscape}
-	\begin{figure}[th!]
-		\caption{Short Example Main File Ties}
-		\label{ExampProjDiagram}
-		\begin{center}
-			\input{Children/FrontMatter/AdditionalResources/imagesExamp/ExampDiagram.tex}
-		\end{center}
-	\end{figure}
+    \begin{figure}[th!]
+        \caption{Short Example Main File Ties}
+        \label{ExampProjDiagram}
+        \begin{center}
+            \input{Children/FrontMatter/AdditionalResources/imagesExamp/ExampDiagram.tex}
+        \end{center}
+    \end{figure}
 \end{landscape}
