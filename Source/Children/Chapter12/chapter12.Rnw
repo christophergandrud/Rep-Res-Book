@@ -11,13 +11,13 @@ set_parent('Rep-Res-Parent.Rnw')
 
 In the previous chapter we learned the basics of how to make LaTeX documents to create and present research findings. So far we have only learned how to create short documents, like articles and slideshows. For longer and more complex documents, like theses and books, a single LaTeX markup file can become very unwieldy very quickly, especially when it includes \emph{knitr} code chunks as well. Ideally we would segment the markup file into individual chapter files, for example, and then bring them all together when we compile the whole document. This would allow us to benefit from a modular file structure while producing one presentation document with continuous section and page numbering. To do this we can take advantage of LaTeX and \emph{knitr} to separate markup files into manageable pieces. Like directories, these pieces are called \textbf{child} files, which are combined using a \textbf{parent} document.
 
-Many of these tools can also be used to create batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In the latter part of this chapter we will rely on {\emph{knitr}} and the \emph{brew} package \citep{R-brew} to create batch reports. 
+Many of these tools can also be used to create batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In the latter part of this chapter we will rely on {\emph{knitr}} and the \emph{brew} package \citep{R-brew} to create batch reports.
 
 In this chapter we will first briefly discuss how to plan a large document's file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{input}\index{LaTeX command!input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} \citep{Pandoc2012} to convert child documents written in non-LaTeX markup languages and include them into a LaTeX parent. After this we will look at how to create batch reports.
 
 \section{Planning Large Documents}
 
-Before discussing the specifics of each of these methods, it's worth taking a moment to carefully plan the structure of our child and parent documents. Books and theses have a natural parent-child structure, i.e. they are single documents comprised of multiple chapters. They often include other child-like features such as title pages, bibliographies, figures, and appendices. You could include most of these features directly into one markup file. Clearly this file would become very large and unwieldy. It would be difficult to find one part or section to edit. If your presentation markup files are difficult to navigate, they are difficult to reproduce.  
+Before discussing the specifics of each of these methods, it's worth taking a moment to carefully plan the structure of our child and parent documents. Books and theses have a natural parent-child structure, i.e. they are single documents comprised of multiple chapters. They often include other child-like features such as title pages, bibliographies, figures, and appendices. You could include most of these features directly into one markup file. Clearly this file would become very large and unwieldy. It would be difficult to find one part or section to edit. If your presentation markup files are difficult to navigate, they are difficult to reproduce.
 
 Instead of one long markup file you can break the document at natural division points, like chapters, into multiple child documents.\index{child files}\index{parent document} These can then be combined with a parent document. The parent document acts like the skeleton that organizes the children in a specific order. The parent document can be compiled and all of the children will be in the right place. In LaTeX a parent document will include the preamble where the document class (\texttt{book} for example\index{LaTeX class!book}) is set and all of the necessary LaTeX packages are loaded. It also includes \emph{knitr} global options, the \texttt{maketitle}, \verb|\begin{document}| and \verb|\end{document}|, and the \texttt{bibliography.} When you compile the parent document you will compile the entire document. Notice that if the parent document contains the preamble and so on, that the children cannot contain this information as well. This can create some issues if you only want to compile one chapter rather than the whole document. We will see how to overcome this problem with \emph{knitr} later in the chapter.
 
@@ -25,7 +25,7 @@ To make your many child and parent documents manageable, it is a good idea to st
 
 \section{Large Documents with Traditional LaTeX}
 
-Imagine that we are writing a book with three chapters. No part of the document includes \emph{knitr} code chunks. We can split the book into three child documents and place them in a subdirectory of the parent document's folder called \emph{Children}. The child documents should not contain a preamble, \verb|\begin{document}|, or \verb|\end{document}|. Because they are chapters we will begin the documents simply with the \texttt{chapter} heading.\index{LaTeX command!chapter} For example, the chapter in this book has: 
+Imagine that we are writing a book with three chapters. No part of the document includes \emph{knitr} code chunks. We can split the book into three child documents and place them in a subdirectory of the parent document's folder called \emph{Children}. The child documents should not contain a preamble, \verb|\begin{document}|, or \verb|\end{document}|. Because they are chapters we will begin the documents simply with the \texttt{chapter} heading.\index{LaTeX command!chapter} For example, the chapter in this book has:
 
 {\scriptsize
 <<Ch12ChapterName, eval=FALSE, tidy=FALSE>>=
@@ -40,18 +40,19 @@ Imagine that we are writing a book with three chapters. No part of the document 
 Now in the parent document we can place the \texttt{input}\index{LaTeX command!input} command where we would like the child to show up in the final document. If we want there to be a clear page on either side of the included document we should use the \texttt{include}\index{LaTeX command!include} command instead. In the \texttt{input} or \texttt{include} command we simply place the child document's file path. Here is an example parent document with three child documents (\emph{Chapter1.tex}, \emph{Chapter2.tex} and \emph{Chapter3.tex}) all located in a subdirectory of the parent document called \emph{Children}:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
+    \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
 %%%%%%%%%%%%%% Article Preamble %%%%%%%%%%%%%%
 \textbackslash{}documentclass\{book\}
 
 %% Load LaTeX packages
-\textbackslash{}usepackage\{hyperref\} 
-\textbackslash{}usepackage\{makeidx\} 
+\textbackslash{}usepackage\{hyperref\}
+\textbackslash{}usepackage\{makeidx\}
 \textbackslash{}usepackage[authoryear]\{natbib\}
 
-%% Start document body 
+%% Start document body
 \textbackslash{}begin\{document\}
 
 %%%%%%%%%%%%% Create title %%%%%%%%%%%%%%%%%
@@ -79,7 +80,7 @@ Now in the parent document we can place the \texttt{input}\index{LaTeX command!i
 \textbackslash{}input\{Children/Chapter3.tex\}
 
 %%%%%%%%% Bibliography %%%%%%%%%%%%%%%%%%%%
-\textbackslash{}bibliographystyle\{apa\} 
+\textbackslash{}bibliographystyle\{apa\}
 \textbackslash{}bibliography\{Main.bib,Packages.bib\}
 
 %%%%%%%%% Index %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -110,7 +111,7 @@ Sometimes we want to make sure that an index, a bibliography, or some other item
 
 \paragraph{Index}\index{LaTeX!indices}
 
-You can automatically create an index with the \emph{makeidx} (make index) LaTeX package.\index{LaTeX package!makeidx} To set up this package include it in your preamble. Then near the beginning of your document enable the index by placing \verb|\makeindex|. You will probably want the actual index to be printed near the end of the document. To do this place \verb|\printindex| after the bibliography or somewhere else before \verb|\end{document}|. Throughout the child documents you can use \verb|\index{INDEX_KEY}| at places you would like the index to refer to. For example, if we wanted to create an index entry for this spot in this book with the \verb|INDEX_KEY| ``indices'' we type: \verb|\index{indices}|. 
+You can automatically create an index with the \emph{makeidx} (make index) LaTeX package.\index{LaTeX package!makeidx} To set up this package include it in your preamble. Then near the beginning of your document enable the index by placing \verb|\makeindex|. You will probably want the actual index to be printed near the end of the document. To do this place \verb|\printindex| after the bibliography or somewhere else before \verb|\end{document}|. Throughout the child documents you can use \verb|\index{INDEX_KEY}| at places you would like the index to refer to. For example, if we wanted to create an index entry for this spot in this book with the \verb|INDEX_KEY| ``indices'' we type: \verb|\index{indices}|.
 
 %%%%%%%%%%%%% Knitted Child Documents %%%%%%%%%%%%%%
 \section{\emph{knitr} and Large Documents}\index{knitr!large documents}
@@ -119,12 +120,12 @@ LaTeX's own parent-child functions are very useful if you are creating plain, no
 
 \subsection{The parent document}
 
-Like regular LaTeX parent documents, knittable parent documents include commands to create the preamble, front matter, bibliography, and so on. {\emph{knitr}} global chunk options\index{knitr!global chunk options} and package/data loading should also be set at the beginning of the parent document if you want them to apply to the entire thing. 
+Like regular LaTeX parent documents, knittable parent documents include commands to create the preamble, front matter, bibliography, and so on. {\emph{knitr}} global chunk options\index{knitr!global chunk options} and package/data loading should also be set at the beginning of the parent document if you want them to apply to the entire thing.
 
 Rather than using the \texttt{input} or \texttt{include} commands, we use the \texttt{child}\index{knitr!child option} code chunk option to include child documents with \emph{knitr}. The \texttt{child} option simply takes as its value the child document's file path. For example:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
     \begin{kframe}
         \begin{alltt}
 \textless{}\textless{}SetChild, child='Children/Chapter1.Rnw', include=FALSE\textgreater{}\textgreater{}=
@@ -139,7 +140,7 @@ Rather than using the \texttt{input} or \texttt{include} commands, we use the \t
 \Sexpr{knit_child('Children/Chapter1.Rnw')}
 @
 
-\noindent This is the same thing as using the \texttt{child} option in a code chunk. Note also that you can continue to use \texttt{input}, \texttt{include}, and code chunks with the \texttt{child} option in the same document if you like. 
+\noindent This is the same thing as using the \texttt{child} option in a code chunk. Note also that you can continue to use \texttt{input}, \texttt{include}, and code chunks with the \texttt{child} option in the same document if you like.
 
 When you have your child code chunks in your parent document set up, just \texttt{knit} the parent like you would any other knittable file. The knittable children will be knit and included every time you knit the parent document.
 
@@ -148,7 +149,7 @@ When you have your child code chunks in your parent document set up, just \textt
 You can use \emph{knitr} to compile individual child documents. To do this place a code chunk at the beginning of the child document. In the code chunk (not as a option) use the \verb|set_parent| command to specify where the parent file is. Here is an example child file with a parent located at \emph{/ExampleProject/Book/Parent.Rnw}:
 
  \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
     \begin{kframe}
         \begin{alltt}
 %%%%%%%%% Set parent %%%%%%%%%
@@ -174,7 +175,7 @@ We can use \emph{knitr}'s parent-child functions in any of the markup languages 
 %%%%%%%%%%% Child documents in another markup language %%%%%
 \section{Child Documents in a Different Markup Language}
 
-Because {\emph{knitr}} is able to run not only R code but also command line programs,\index{command line} you can use the Pandoc \index{Pandoc} program to convert child documents written in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document by including the Pandoc commands in a code chunk with the \texttt{engine} option set to either \verb|'bash'| or \verb|'sh'|.\footnote{Alternatively you can run Pandoc in an R code chunk using the {\tt{system}} command.\index{R command!system} For example: \texttt{system("pandoc Children/FrontMattter/StylisticConventions.md -f markdown -t latex -o StyleTemp.tex")}. \emph{knitr} also has a \texttt{pandoc} command\index{knitr!pandoc} that is a wrapper for converting Markdown documents to other formats with Pandoc. However, \emph{knitr} does not run \emph{knitr} commands when they are in code chunks. See Section \ref{KnitrPandoc} for details on how to use the \texttt{pandoc} command.} 
+Because {\emph{knitr}} is able to run not only R code but also command line programs,\index{command line} you can use the Pandoc \index{Pandoc} program to convert child documents written in a different markup language into the primary markup language you are using for your document. If you have Pandoc installed on your computer,\footnote{Pandoc installation instructions can be found at: \url{http://johnmacfarlane.net/pandoc/installing.html}.} you can call it directly from your parent document by including the Pandoc commands in a code chunk with the \texttt{engine} option set to either \verb|'bash'| or \verb|'sh'|.\footnote{Alternatively you can run Pandoc in an R code chunk using the {\tt{system}} command.\index{R command!system} For example: \texttt{system("pandoc Children/FrontMattter/StylisticConventions.md -f markdown -t latex -o StyleTemp.tex")}. \emph{knitr} also has a \texttt{pandoc} command\index{knitr!pandoc} that is a wrapper for converting Markdown documents to other formats with Pandoc. However, \emph{knitr} does not run \emph{knitr} commands when they are in code chunks. See Section \ref{KnitrPandoc} for details on how to use the \texttt{pandoc} command.}
 
 For example, the Stylistic Conventions (page \pageref{StylisticConventions}) part of this book is written in Markdown. The source file is called {\emph{StylisticConventions.md}} and is in a subdirectory of the parent's directory called: \emph{Children/FrontMatter} It was faster to write the list of conventions using the simpler Markdown syntax than LaTeX, which as we saw has a more complicated way of creating lists. However, I wanted to include this file in the LaTeX produced book. Pandoc can convert the Markdown document\index{Markdown} into a LaTeX file. This file can then be input into the main document with the LaTeX command \texttt{input}.\index{LaTeX command!input}
 
@@ -182,7 +183,7 @@ In the parent document I added a code chunk with the following command to conver
 
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
@@ -198,9 +199,9 @@ pandoc Children/FrontMattter/StylisticConventions.md -f markdown \textbackslash{
         \end{kframe}
 \end{knitrout}
 
-\noindent The options {\tt{-f markdown}} and {\tt{-t latex}} tell Pandoc to convert {\emph{StylisticConventions.md}} from Markdown to LaTeX syntax. {\tt{-o StyleTemp.tex}} instructs Pandoc to save the resulting LaTeX markup to a new file called {\emph{StyleTemp.tex}}. 
+\noindent The options {\tt{-f markdown}} and {\tt{-t latex}} tell Pandoc to convert {\emph{StylisticConventions.md}} from Markdown to LaTeX syntax. {\tt{-o StyleTemp.tex}} instructs Pandoc to save the resulting LaTeX markup to a new file called {\emph{StyleTemp.tex}}.
 
-I only need to include a backslash (\textbackslash{}) at the end of the first line because I wanted to split the code over two lines. The code wouldn't fit on this page otherwise. The backslash tells the shell not to treat the following line as a different line. Unlike in R, the shell only recognizes a command's arguments if they are on the same line as the command. 
+I only need to include a backslash (\textbackslash{}) at the end of the first line because I wanted to split the code over two lines. The code wouldn't fit on this page otherwise. The backslash tells the shell not to treat the following line as a different line. Unlike in R, the shell only recognizes a command's arguments if they are on the same line as the command.
 
 You'll notice that after the code chunk we use \verb|input| to include the new \emph{StyleTemp.tex} document. Note that using this method to include a child document that needs to be knit will require extra steps not covered in this book.
 
@@ -213,7 +214,7 @@ You'll notice that after the code chunk we use \verb|input| to include the new \
 
 \section{Creating Batch Reports}\index{batch reports}
 
-When we create batch reports we want to somehow subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks in different presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew}\index{brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}): 
+When we create batch reports we want to somehow subset a data set into multiple pieces and use these pieces as the input for \emph{knitr} code chunks in different presentation documents for each subset of the data set. The \emph{brew} package \citep{R-brew}\index{brew} is maybe the most popular tool for creating batch reports in R. Using \emph{brew} with multiple subsets of a data set adds two steps to the process of creating \emph{knitr} presentation documents (see Figure \ref{BrewFig}):
 
 \begin{itemize}
     \item create a \emph{brew} template document,
@@ -222,7 +223,7 @@ When we create batch reports we want to somehow subset a data set into multiple 
 
 \emph{knitr}'s \verb|knit_expand| command can also be used to create batch reports.\index{R command!knit\_expand}\index{knitr!expand}\index{knitr!batch reports} Because \emph{brew} is the dominant way to create batch reports in R and currently has more capabilities than \verb|knit_expand| we will cover \emph{brew} rather than \verb|knit_expand| in detail.
 
-Imagine that we are using the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}).\index{fertilizer}\footnote{The files needed to create this example are available at: \url{http://bit.ly/XJbyCK}.} 
+Imagine that we are using the \emph{MainData} data set discussed in the previous chapters and we want to create a LaTeX document for each country displaying its average fertilizer consumption (\emph{FertilizerConsumption}).\index{fertilizer}\footnote{The files needed to create this example are available at: \url{http://bit.ly/XJbyCK}.}
 
 First, let's create a \emph{brew} template document. This document will include all of our markup and the code chunks we want in our \emph{knitr} document. There is one small difference from regular knittable documents: it will use \emph{brew} syntax to include information from the subsetted data. Text in a \emph{brew} template document is printed `as is' when we \texttt{brew} it unless it is between \emph{brew}'s delimiters.\index{brew!delimiters} The delimiters are:\footnote{Note that the spaces between the delimiter and its contents are important.}
 
@@ -235,7 +236,7 @@ First, let's create a \emph{brew} template document. This document will include 
 \noindent In the following example we use the latter two. Here is our \emph{brew} template:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
@@ -250,7 +251,7 @@ First, let's create a \emph{brew} template document. This document will include 
 
 \vspace{1cm}
 
-The mean fertilizer consumption for \textless{}%= Name %\textgreater{} is 
+The mean fertilizer consumption for \textless{}%= Name %\textgreater{} is
 \textbackslash{}Sexpr\{round(mean(NewFC), digits = 1)\} kilograms
 per hectare of arable land.
 
@@ -270,7 +271,7 @@ setwd("/BatchReports")
 #### Download Data ####
 # Load repmis
 library(repmis)
-                     
+
 # Download data
 MainData <- source_data("http://bit.ly/V0ldsf")
 
@@ -279,14 +280,14 @@ COUNTRY <- as.character(unique(MainData$country))
 
 #### Create BatchReports Function ####
 BatchReports <- function(Name){
-  # Create file names for individual reports 
+  # Create file names for individual reports
   ## Remove white space in country names
   CountryNoWhite <- gsub(" ", "", x = Name)
   KnitFile <- paste(CountryNoWhite, ".Rnw", sep = "")
 
   # Subset data
   SubData <- subset(MainData, country == Name)
-  
+
   # Create vector of the country's fertilizer consumption
   FC <- SubData$FertilizerConsumption
 
@@ -308,16 +309,16 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
     \item Set the working directory to \emph{/BatchReports}.
     \item Download \emph{MainData.csv} using the \texttt{source\_data}\index{R command!source\_data} function, as we've done before.
     \item Create a vector for the country names in the data. We will use this vector to subset the data.
-    \item Create a \texttt{function}\index{R command!function}\index{R!functions} called \emph{BatchReports} for subsetting\index{R!subset} the data, brewing it, and knitting it. 
+    \item Create a \texttt{function}\index{R command!function}\index{R!functions} called \emph{BatchReports} for subsetting\index{R!subset} the data, brewing it, and knitting it.
         \begin{itemize}
             \item The \texttt{function} command allows us create a new function.\footnote{User created functions are just like most other R function.} Arguments are specified in parentheses (these are also called the formals\index{R functions!formals}) and R expressions are put in the curly brackets that denote the function's body.\index{R functions!body} The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew, and knit the data according to \emph{Name}'s value.\footnote{For more information on functions see Hadley Wickham's \emph{devtools} Wiki page on the topic: \url{https://github.com/hadley/devtools/wiki/Functions}.}
-            \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{R command!gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{R command!paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs. 
+            \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{R command!gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{R command!paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs.
         \end{itemize}
-    \item \texttt{l\_ply}\index{R command!l\_ply} from the \emph{plyr}\index{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value \emph{COUNTRY}. 
+    \item \texttt{l\_ply}\index{R command!l\_ply} from the \emph{plyr}\index{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value \emph{COUNTRY}.
     \item Finally, we use the \texttt{unlink}\index{R command!unlink} command to delete all of the ancillary files used to create the final batch report PDFs. Always be careful with the \texttt{unlink} command as it permanently deletes files. Because we used the asterisk wildcard (see Section \ref{AsteriskWildcard})\index{R!wildcard}\index{wildcard} \texttt{unlink} will delete all files in the working directory with the extensions \texttt{.aux}, \texttt{.log}, \texttt{.Rnw} and \texttt{.tex}.
 \end{enumerate}
 
-Figure \ref{BrewExample} shows you a sample of what the final PDF created by this \emph{brew}/\emph{knitr} process for Afghanistan looks like. This was a very simple example illustrating the basic process for combining \emph{brew} and \emph{knitr} to create batch reports. The process can be used to create much more complex documents and with other markup languages. 
+Figure \ref{BrewExample} shows you a sample of what the final PDF created by this \emph{brew}/\emph{knitr} process for Afghanistan looks like. This was a very simple example illustrating the basic process for combining \emph{brew} and \emph{knitr} to create batch reports. The process can be used to create much more complex documents and with other markup languages.
 
 \begin{figure}
     \caption{Snippet of an Example PDF Document Created with \emph{brew} + \emph{knitr}}
@@ -325,8 +326,8 @@ Figure \ref{BrewExample} shows you a sample of what the final PDF created by thi
         \vspace{0.5cm}
         \includegraphics[width=0.8\textwidth]{Children/Chapter12/images12/BrewExample.png}
         \vspace{1cm}
-\end{figure} 
+\end{figure}
 
 \subsection*{Chapter Summary}
 
-In this chapter we have learned how to create more complex LaTeX documents to present our reproducible research. In particular we learned how to take advantage of parent and child document structures using both basic LaTeX and \emph{knitr} tools. These allow us to more easily work with very large presentation documents. We saw how Pandoc can be combined with these tools so that we can create our documents using multiple mark up languages. We also learned how to create \emph{brew} templates that can be used to create multiple documents presenting information from subsets of our data. In the next chapter we will learn how to create documents for presenting reproducible research on the web with Markdown and other tools such as Pandoc. 
+In this chapter we have learned how to create more complex LaTeX documents to present our reproducible research. In particular we learned how to take advantage of parent and child document structures using both basic LaTeX and \emph{knitr} tools. These allow us to more easily work with very large presentation documents. We saw how Pandoc can be combined with these tools so that we can create our documents using multiple mark up languages. We also learned how to create \emph{brew} templates that can be used to create multiple documents presenting information from subsets of our data. In the next chapter we will learn how to create documents for presenting reproducible research on the web with Markdown and other tools such as Pandoc.

@@ -66,7 +66,7 @@ However, the \verb|\texttt| command isn't always ideal, because your LaTeX compi
 Probably the better option is to use the \verb|\verb| command\index{LaTeX command!verb}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\texttt|' in the text. We would type:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{verbatim}
@@ -131,7 +131,7 @@ Including dynamic code in the body of your R Markdown text is similar to includi
 You are not limited to dynamically including just R code in your presentation documents. {\emph{knitr}} can run code from a variety of other languages including: Python\index{Python}, Ruby, Bash, Haskell, and Awk. All you have to do to dynamically include code from one of these languages is use the \texttt{engine}\index{knitr option!engine} code chunk option to tell \emph{knitr} which language you are using. For example, to dynamically include a simple line of Ruby code in an R Markdown document type:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
     \begin{kframe}
         \begin{verbatim}
 ```{r engine='ruby'}
@@ -199,7 +199,7 @@ source("/ExampleProject/Analysis/MainAnalysis.R"}
 In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures, and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R command!system} command (see Section \ref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
@@ -293,7 +293,7 @@ When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that
 Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R command!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
@@ -311,7 +311,7 @@ Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
 \noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R command!rnorm} to take a random sample of size 1,000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
