@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 March 2014
+% Updated: 21 November 2014
 
 <<set-parent12, include=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -252,7 +252,7 @@ First, let's create a \emph{brew} template document. This document will include 
 \vspace{1cm}
 
 The mean fertilizer consumption for \textless{}%= Name %\textgreater{} is
-\textbackslash{}Sexpr\{round(mean(NewFC), digits = 1)\} kilograms
+\textbackslash{}Sexpr\{round(mean(NewFC, na.rm = TRUE), digits = 1)\} kilograms
 per hectare of arable land.
 
 \textbackslash{}end\{document\}
@@ -297,7 +297,7 @@ BatchReports <- function(Name){
 }
 
 #### Run function and clean up ####
-plyr::l_ply(COUNTRY, BatchReports)
+lapply(COUNTRY, BatchReports)
 
 # Keep only pdf reports
 unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
@@ -314,7 +314,7 @@ unlink(c("*.aux", "*.log", "*.Rnw", "*.tex"))
             \item The \texttt{function} command allows us create a new function.\footnote{User created functions are just like most other R function.} Arguments are specified in parentheses (these are also called the formals\index{R functions!formals}) and R expressions are put in the curly brackets that denote the function's body.\index{R functions!body} The expressions do things with the arguments. Our argument here is \texttt{Name} and the contents of the curly brackets subset, brew, and knit the data according to \emph{Name}'s value.\footnote{For more information on functions see Hadley Wickham's \emph{devtools} Wiki page on the topic: \url{https://github.com/hadley/devtools/wiki/Functions}.}
             \item An important step in the \texttt{BatchReports} function is creating a new name to give our brewed and knit files. Some country names like ``United Arab Emirates'' have white spaces in them. We cannot run LaTeX on a file with a name containing white spaces. We remove the white spaces with the \texttt{gsub} command\index{R command!gsub}, i.e. we substitute a space with no white space. We then use the \texttt{paste}\index{R command!paste} command to create a name that will be used for the brewed file. \emph{knitr} will automatically create a name for the final PDFs.
         \end{itemize}
-    \item \texttt{l\_ply}\index{R command!l\_ply} from the \emph{plyr}\index{plyr} package allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value \emph{COUNTRY}.
+    \item \texttt{lapply}\index{R command!lapply} allows us to run our \texttt{BatchReports} function separately for every value of the \emph{COUNTRY} vector. \texttt{BatchReport}'s \emph{Name} argument takes the value \emph{COUNTRY}. Note: it is important to end the \emph{BrewTemplate.Rnw} with a blank line for \texttt{lapply} to work correctly.
     \item Finally, we use the \texttt{unlink}\index{R command!unlink} command to delete all of the ancillary files used to create the final batch report PDFs. Always be careful with the \texttt{unlink} command as it permanently deletes files. Because we used the asterisk wildcard (see Section \ref{AsteriskWildcard})\index{R!wildcard}\index{wildcard} \texttt{unlink} will delete all files in the working directory with the extensions \texttt{.aux}, \texttt{.log}, \texttt{.Rnw} and \texttt{.tex}.
 \end{enumerate}
 

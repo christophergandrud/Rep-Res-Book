@@ -13,12 +13,12 @@ To install most of the user-written packages used in this book, copy the followi
 <<FrontInstallPackages, eval=FALSE, tidy=FALSE>>=
 install.packages(c("apsrtable", "brew", "countrycode",
                 "devtools", "dplyr", "digest",
-                "ggplot2", "googleVis", "httr", "knitcitations",
-                "knitr", "rmarkdown", "plyr",
+                "ggplot2", "googleVis", "httr",
+                "knitcitations", "knitr",
                 "quantmod", "repmis", "reshape2",
-                "RCurl", "rjson", "RJSONIO", "stargazer",
-                "texreg", "tools", "WDI", "XML", "xtable",
-                "Zelig"))
+                "RCurl", "rjson", "RJSONIO", "rmarkdown",
+                "stargazer", "texreg", "tools", "WDI",
+                "XML", "xtable", "Zelig"))
 @
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror''\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
@@ -75,7 +75,6 @@ toInstall <- c("animation",
                "knitr",
                "markdown",
                "memisc",
-               "plyr",
                "quantmod",
                "repmis",
                "reshape2",
@@ -101,9 +100,6 @@ if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org"
 lapply(toInstall, library, character.only = TRUE)
 
 # Write citations to bibtex file
-
-########## Need to find file path fix ##########################################
-
 knitr::write_bib(toInstall,
               file = "rep-res-PackagesCited.bib")
 
