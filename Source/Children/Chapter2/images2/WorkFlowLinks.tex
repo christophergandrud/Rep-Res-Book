@@ -16,30 +16,30 @@
 
 % Set node styles
 %% Workflow stage nodes
-\tikzstyle{Stage} = [draw=Blue, 
-                     %fill=Blue, 
-                     rectangle, 
-                     text width=7em, 
-                     inner sep=0.5cm, 
+\tikzstyle{Stage} = [draw=Blue,
+                     %fill=Blue,
+                     rectangle,
+                     text width=7em,
+                     inner sep=0.5cm,
                      font=\small]
 
 % Raw Data nodes
-\tikzstyle{RawData} = [draw=LiteBlue, 
-                       %fill=LiteBlue, 
+\tikzstyle{RawData} = [draw=LiteBlue,
+                       %fill=LiteBlue,
                        decorate,
                        decoration={random steps,
                                    segment length=2pt,
                                    amplitude=2pt},
-                       inner sep=0.25cm, 
+                       inner sep=0.25cm,
                        font=\scriptsize]
-                    
+
 % Separator line style
 \tikzstyle{sepline} = [draw,
                         very thick,
                         color=GrayLine]
-                        
-% Link command nodes       
-\tikzstyle{Links} = [draw=none, 
+
+% Link command nodes
+\tikzstyle{Links} = [draw=none,
                           text width=6em,
                           text=DarkBlue,
                           font=\footnotesize]
@@ -50,8 +50,8 @@
     % Raw Data Nodes
     \node (Data1) at (-3, 7) [RawData]{Raw Data};
     \node (Data2) at (-3, 5) [RawData]{Raw Data};
-    \node (Data3) at (-3, 3) [RawData]{Raw Data}; 
-    
+    \node (Data3) at (-3, 3) [RawData]{Raw Data};
+
     % Workflow stage nodes
     \node (DataGather) at (0.5, 5) [Stage, text width= 6em]{Data Gather};
     \node (Analysis) at (5.5, 5) [Stage, text width= 4em]{Analysis};
@@ -65,19 +65,19 @@
     \draw [<->, very thick] (DataGather) -- (Analysis);
     \draw [<->, very thick] (Analysis) -- (Presentation1);
     \draw [<->, very thick] (Analysis) -- (Presentation2);
-    
+
     \draw [<->, very thick] (Presentation1) -- (Presentation2);
-    
+
     \path [sepline] (-3.5, 0.75) -- (11, 0.75);
     \path [sepline] (11.5, 9) -- (11.5, 1.5);
-    
+
     % Link command nodes
- 
+
     \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ Pandoc \\ \texttt{![]()}};
-    \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \texttt{source} \\ \texttt{source\_url} \\ \texttt{print(xtable())} };
+    \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \emph{rmarkdown} \\ \texttt{source} \\ \texttt{source\_url} \\ \texttt{kable} \\ \texttt{print(xtable())} \\ \texttt{texreg} };
     \node (readData) at (3, -1) [Links]{\texttt{source\_data} \\ \texttt{source\_DropboxData} \\ \texttt{read.table} \\ \texttt{getURL} };
-    
+
     \node (importData) at (-1, -1.3) [Links]{ \texttt{Make} \\ \texttt{download.file} \\ \texttt{source\_data} \\ \texttt{source\_DropboxData} \\ \texttt{read.table} \\ \texttt{merge}\\ \texttt{getURL} \\ API-based packages };
 
-  
+
 \end{tikzpicture}

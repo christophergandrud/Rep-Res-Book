@@ -6,13 +6,15 @@ set_parent('Rep-Res-Parent.Rnw')
 
 \addcontentsline{toc}{chapter}{Required R Packages}
 
-In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately. To install most of the user-written packages used in this book, copy the following code and paste it into your R console:
+In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately. \textbf{Note:} in general you should aim to minimize the number of packages that your research depends on. Doing so will lessen the possibility that your code will ``break'' when a package is updated. This book depends on relatively many packages because it is a special purpose of illustrating a variety of tools that you can use for reproducible research.
+
+To install most of the user-written packages used in this book, copy the following code and paste it into your R console:
 
 <<FrontInstallPackages, eval=FALSE, tidy=FALSE>>=
 install.packages(c("apsrtable", "brew", "countrycode",
-                "devtools", "dplyr", "digest", "gdata",
+                "devtools", "dplyr", "digest",
                 "ggplot2", "googleVis", "httr", "knitcitations",
-                "knitr", "Rmarkdown", "plyr",
+                "knitr", "rmarkdown", "plyr",
                 "quantmod", "repmis", "reshape2",
                 "RCurl", "rjson", "RJSONIO", "stargazer",
                 "texreg", "tools", "WDI", "XML", "xtable",
@@ -65,7 +67,6 @@ toInstall <- c("animation",
                "estout",
                "extrafont",
                "formatR",
-               "gdata",
                "ggplot2",
                "googleVis",
                "httr",
@@ -80,6 +81,7 @@ toInstall <- c("animation",
                "reshape2",
                "RCurl",
                "rjson",
+               "rmarkdown",
                "RJSONIO",
                "stargazer",
                "survival",
@@ -99,6 +101,9 @@ if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org"
 lapply(toInstall, library, character.only = TRUE)
 
 # Write citations to bibtex file
+
+########## Need to find file path fix ##########################################
+
 knitr::write_bib(toInstall,
               file = "rep-res-PackagesCited.bib")
 

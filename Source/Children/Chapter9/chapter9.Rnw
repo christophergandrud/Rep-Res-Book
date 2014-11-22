@@ -513,13 +513,13 @@ NBSumDataFrame
 \vspace{0.5cm}
 
 <<Ch9NBTable, echo=FALSE, message=FALSE, results='asis'>>=
-# Load plyr package
-library(plyr)
+# Load dplyr package
+library(dplyr)
 
 # Change quantile variable names
-NBSumDataFrame <- rename(NBSumDataFrame, c("X2.5." = "2.5%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c("X50." = "50%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c("X97.5." = "97.5%"))
+NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "2.5%" = X2.5.)
+NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "50%" = X50.)
+NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "97.5%" = X97.5.)
 
 
 # Reorder variables and remove the standard deviation
@@ -528,6 +528,8 @@ NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]
 # Create table
 xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression", label = "CoefEstTable")
 @
+
+\noindent Note that the new variable names are in quotation marks, in contrast to the example from Chapter \ref{DataClean}. The quotation marks allow us to specify a name that begins with a number and has special characters like \texttt{\%}.
 
 It may take some hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be useful for creating graphics as we will see in Chapter \ref{FiguresChapter}.} Hunting for what you want can be easier if you look inside of objects by clicking on them in RStudio's \emph{Workspace} pane.
 
@@ -591,13 +593,13 @@ Source code for cleaning \emph{NBSumDataFrame} and using it to create a LaTeX ta
 
 <<Ch9NBSumClean, eval=FALSE, tidy=FALSE>>=
 # Load packages
-library(plyr)
+library(dplyr)
 library(xtable)
 
 # Change quantile variable names
-NBSumDataFrame <- rename(NBSumDataFrame, c("X2.5." = "2.5%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c("X50." = "50%"))
-NBSumDataFrame <- rename(NBSumDataFrame, c("X97.5." = "97.5%"))
+NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "2.5%" = X2.5.)
+NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "50%" = X50.)
+NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "97.5%" = X97.5.)
 
 
 # Reorder variables and remove the standard deviation variable

@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 October 2014
+% Updated: 22 November 2014
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -154,15 +154,15 @@ head(MoltenFert)
 
 \subsection{Renaming variables}\index{R!renaming variables}
 
-Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R command!rename} command in the \emph{plyr} package \citep{R-plyr}.
+Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R command!rename}\index{rename variable} command in the \emph{dplyr} package \citep{R-dplyr}.
 
 To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
 
 <<Ch7Rename, tidy=FALSE>>=
 # Rename variable = year, value = FertilizerConsumption
-MoltenFert <- plyr::rename(x = MoltenFert,
-                replace = c("variable" = "year",
-                            "value" = "FertilizerConsumption"))
+MoltenFert <- dplyr::rename(MoltenFert,
+                        year = variable, 
+                        FertilizerConsumption = value)
 
 # Show MoltenFert
 head(MoltenFert)
@@ -511,19 +511,17 @@ DataNotDuplicates <- MergedData2[!duplicated(
 
 Another common post-merge clean up issue is duplicate variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. For example, in our previous merged data examples there are three country name variables: \textbf{country.x}, \textbf{country.y}, and \textbf{country} to signify which data frame they are from.\footnote{The former two were created in the first merge between \emph{FinRegulatorData} and \emph{DispropData}. When the second merge was completed there were no variables named \textbf{country} in the MergeData2 data frame, so \textbf{country} did not need to be renamed in the new merged data set.}
 
-You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables and rename the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{gdata}\index{gdata} package \citep{R-gdata} has a useful function called \texttt{remove.vars}\index{R command!remove.vars} that can also remove variables from data frames. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove another unwanted variable as well, the extraneous \textbf{idn} variable:
+You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables\index{drop variable} and rename\index{R command!rename} the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{dplyr}\index{dplyr} package \citep{R-dplyr} has a useful function called \texttt{select}\index{R command!select} that can also remove variables from data frames. To remove variables simply write a minus sign (\texttt{-}) and then the variable name without quotes. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove another unwanted variable as well, the extraneous \textbf{X} and \textbf{idn} variables:
 
 <<Ch7RemoveVars, tidy=FALSE>>=
-# Remove country.y, country, and idn
-FinalCleanedData <- gdata::remove.vars(data = DataNotDuplicates,
-                                names = c("country.y",
-                                        "country",
-                                        "idn"))
+# Remove country.y, country, X, and idn
+FinalCleanedData <- dplyr::select(DataNotDuplicates,
+                                -country.y, -country,
+                                -X, -idn)
 
 # Rename country.x = country
-FinalCleanedData <- plyr::rename(FinalCleanedData,
-                            replace = c("country.x" =
-                                        "country"))
+FinalCleanedData <- dplyr::rename(FinalCleanedData,
+                            country = country.x)
 @
 
 {\footnotesize
@@ -533,7 +531,7 @@ names(FinalCleanedData)
 @
 }
 
-\noindent Note if you are merging many data sets it can sometimes be good to clean up duplicate columns between each \texttt{merge} call.
+\noindent You can select specific variables to keep with the \texttt{select} function by writing the variables' names without a minus sign. \textbf{Note} if you are merging many data sets it can sometimes be good to clean up duplicate columns between each \texttt{merge} call.
 
 \subsection*{Chapter Summary}
 
