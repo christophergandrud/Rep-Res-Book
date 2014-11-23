@@ -287,10 +287,20 @@ mean(NumericVect)
 
 \noindent R will do its best to figure out what you want and will only give up when it can't. This will generate an error message. However, to avoid any misunderstandings between yourself and R it can be good practice to label most of your arguments. This will also make your code easier for other people to read, i.e. it will be more reproducible.
 
-Finally, you can stack arguments inside of other arguments. To have R find the mean of {\emph{NumericVect}} and round it to one decimal place use:
+You can stack arguments inside of other arguments. To have R find the mean of {\emph{NumericVect}} and round it to one decimal place use:
 
 <<Ch3StackedArgs, echo=TRUE>>=
 round(mean(NumericVect), digits = 1)
+@
+
+\noindent Stacking functions inside of each other can create code that is difficult to read. Another option that potentially makes more easily understandable code is piping\index{pipe} using the pipe function (\texttt{\%>\%}) from the \emph{dplyr} \citep{R-dplyr}\index{dplyr}\index{R command!\%>\%} package. The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of \emph{NumericVect} and then round it to one decimal place use:
+
+<<Ch3Pipe, echo=TRUE>>=
+# Load dplyr package
+library(dplyr)
+
+# Find mean of NumericVect and round to 1 decimal place
+mean(NumericVect) %>% round(digits = 1)
 @
 
 \subsection{The workspace \& history}
