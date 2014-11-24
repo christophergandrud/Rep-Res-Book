@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 8 October 2014
+% Updated: 24 November 2014
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -441,9 +441,9 @@ If a package does not already exist to access data from a particular website the
 
 Simple web scraping involves downloading a file from the internet, parsing\index{parse} it (i.e. reading it), and extracting the data you are interested in then putting it into a data frame object. We already saw a simple example of this when we downloaded data from the a secure HTTPS website. We downloaded a website's content from a URL address into R with the \texttt{getURL}\index{R command!getURL} command. We then parsed the downloaded text as a CSV formatted data file, extracted it, and put it into a new data frame object.
 
-This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R command!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formatted data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation''}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
+This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R command!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formatted data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} Inaddition, the helpful \emph{rvest} \citep{R-rvest} package was recently developed to provide an easy to use set of functions with capabilities similar to and often more capable than \emph{XML}.\index{rvest} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation''}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
 
-There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier. As of the time when I was writing the second edition of this book Hadley Wickham's \emph{rvest} \index{rvest} package was not on CRAN.\index{CRAN} However, it may turn out to be a useful addition to the R web scraping tool chest. More information is available at the package's GitHub site: \url{https://github.com/hadley/rvest}.
+There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier.
 
 \paragraph{More tools to learn for web scraping}
 
