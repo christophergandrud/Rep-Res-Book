@@ -195,9 +195,9 @@ Markdown is simple and easy to use. But being simple means that it lacks importa
 
 \subsection{Pandoc}\index{Pandoc}
 
-With a little customization\label{PandocDiscussion} you can include footnotes and BibTeX bibliographies\index{BibTeX} in R Markdown documents. When you click on the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button in RStudio\index{RStudio} it runs two commands: \texttt{knit} to convert your \texttt{.Rmd} file to \texttt{.md} and then \texttt{markdownToHTML}\index{R command!markdownToHTML} from the \emph{markdown} package \citep{R-markdown} to convert the Markdown file to HTML.\index{HTML} What we need to do is create a new function to run Pandoc instead of \texttt{markdownToHTML} or reset \texttt{markdownToHTML}.
+With a little customization\label{PandocDiscussion} you can include footnotes and BibTeX bibliographies\index{BibTeX} in R Markdown documents. When you click on the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button in RStudio\index{RStudio} it runs two commands: \texttt{knit} to convert your \texttt{.Rmd} file to \texttt{.md} and then \texttt{markdownToHTML}\index{R function!markdownToHTML} from the \emph{markdown} package \citep{R-markdown} to convert the Markdown file to HTML.\index{HTML} What we need to do is create a new function to run Pandoc instead of \texttt{markdownToHTML} or reset \texttt{markdownToHTML}.
 
-The simplest way to do this is to create a new R function\index{R command!function} that runs Markdown files created by \emph{knitr} through Pandoc to create an HTML file:\footnote{The function here is modified from one on the RStudio website. See below for more details.}
+The simplest way to do this is to create a new R function\index{R function!function} that runs Markdown files created by \emph{knitr} through Pandoc to create an HTML file:\footnote{The function here is modified from one on the RStudio website. See below for more details.}
 
 <<Ch13PandocFunction, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
@@ -208,7 +208,7 @@ pandocToHTML <-  function(inputFile, outputFile)
 }
 @
 
-\noindent The \texttt{system}\index{R command!system} sends the following code to your computer's command line shell where it runs Pandoc. \texttt{shQuote} allows us to use quotes as strings that can be parsed by the shell.\index{shell}\index{command line} In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. For example, we saw in the previous chapter how to use Pandoc to output a Markdown file to markup languages other than HTML. See Section \ref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}. 
+\noindent The \texttt{system}\index{R function!system} sends the following code to your computer's command line shell where it runs Pandoc. \texttt{shQuote} allows us to use quotes as strings that can be parsed by the shell.\index{shell}\index{command line} In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. For example, we saw in the previous chapter how to use Pandoc to output a Markdown file to markup languages other than HTML. See Section \ref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}. 
 
 Imagine that we have a file called \emph{Example.Rmd} in our working directory. This is how we \texttt{knit} it and render it with Pandoc:
 
@@ -295,7 +295,7 @@ You can customize the appearance of your Markdown files with custom CSS style sh
 
 \paragraph{Rendering Markdown files using custom CSS}\index{Markdown!custom CSS}
 
-It is simple to use a custom CSS file with the \texttt{markdownToHTML}\index{R command!markdownToHTML} command. Just save your custom \emph{.css} file in the working directory and use the \texttt{stylesheet} argument with \texttt{markdownToHTML}. Imagine we want to \texttt{knit} our \emph{Example.Rmd} file using a custom style sheet called \emph{Markdown.css}. Both files are in the working directory.
+It is simple to use a custom CSS file with the \texttt{markdownToHTML}\index{R function!markdownToHTML} command. Just save your custom \emph{.css} file in the working directory and use the \texttt{stylesheet} argument with \texttt{markdownToHTML}. Imagine we want to \texttt{knit} our \emph{Example.Rmd} file using a custom style sheet called \emph{Markdown.css}. Both files are in the working directory.
 
  <<Ch13CustomCSS1, eval=FALSE, tidy=FALSE>>=
 # knit file to Example.md
@@ -345,7 +345,7 @@ pandocToHTML <-
 
 \subsection{\emph{knitr}'s \texttt{pandoc} command}\label{KnitrPandoc}
 
-An alternative way to convert Markdown documents to other formats is \emph{knitr}'s \texttt{pandoc} command.\index{knitr!pandoc}\index{R command!pandoc} The syntax is pretty straightforward. Imagine we want to convert a very simple Markdown document called \emph{SimpleExample.Rmd} to HTML. Imagine also that the document has no bibliography or other custom options, so we can simply use:
+An alternative way to convert Markdown documents to other formats is \emph{knitr}'s \texttt{pandoc} command.\index{knitr!pandoc}\index{R function!pandoc} The syntax is pretty straightforward. Imagine we want to convert a very simple Markdown document called \emph{SimpleExample.Rmd} to HTML. Imagine also that the document has no bibliography or other custom options, so we can simply use:
 
 <<Ch13KnitPandoc1, eval=FALSE, tidy=FALSE>>=
 knitr::pandoc("SimpleExample.Rmd", format = "html")
@@ -481,10 +481,10 @@ It is also possible to create reproducible HTML5 slideshows\index{slideshow} wit
 \noindent There are a number of steps to create an HTML5 slideshow with \emph{slidify}:
 
 \begin{enumerate}
-    \item Initialize a slideshow with the \verb|author|\index{R command!author} command.
+    \item Initialize a slideshow with the \verb|author|\index{R function!author} command.
     \item Edit the slideshow's main R Markdown file, called \emph{index.Rmd} by default. This includes both the slideshow's header and body.
-    \item Use the \verb|slidify|\index{R command!slidify} command to run \emph{knitr} and compile the slideshow. 
-    \item Publish the slideshow online with the \verb|publish| command.\index{R command!publish}
+    \item Use the \verb|slidify|\index{R function!slidify} command to run \emph{knitr} and compile the slideshow. 
+    \item Publish the slideshow online with the \verb|publish| command.\index{R function!publish}
 \end{enumerate}
 
 \noindent We will cover each step in turn.
@@ -528,7 +528,7 @@ install_github("slidifyLibraries", "ramnathv")
 
 \paragraph{Initializing a new slideshow}
 
-Use the \verb|author|\index{R command!author} command to create a new slideshow. Imagine we want to create a new slideshow in the \emph{Presentation} folder of our \emph{ExampleProject} called \emph{MySlideShow}. To do this type:\index{R command!library}
+Use the \verb|author|\index{R function!author} command to create a new slideshow. Imagine we want to create a new slideshow in the \emph{Presentation} folder of our \emph{ExampleProject} called \emph{MySlideShow}. To do this type:\index{R function!library}
 
 <<Ch13slidifyAuthor, eval=FALSE>>=
 # Set working directory
@@ -613,7 +613,7 @@ devtools::source_url("http://bit.ly/VRKphr")
 
 \paragraph{Compiling a slideshow}
 
-Use the \verb|slidify|\index{R command!slidify} command to compile the \emph{index.Rmd} file into a slideshow. This code runs \emph{knitr} and renders our R Markdown file into an HTML slideshow:
+Use the \verb|slidify|\index{R function!slidify} command to compile the \emph{index.Rmd} file into a slideshow. This code runs \emph{knitr} and renders our R Markdown file into an HTML slideshow:
 
 <<Ch13slidifyFile, eval=FALSE>>=
 # Change to slideshow's working directory
@@ -627,7 +627,7 @@ slidify("index.Rmd")
 
 \paragraph{Publishing slidify slideshows}
 
-You can of course show slideshows on your own computer by opening the \emph{index.html} file in a web browser. If you want to make your slideshow available to anyone with an internet connection use slidify's \verb|publish| command.\index{R command!publish} This will allow you to publish your presentation via GitHub\index{GitHub}, Dropbox\index{Dropbox}, or RPubs\index{RPubs}. Let's look at how to publish to GitHub and Dropbox.
+You can of course show slideshows on your own computer by opening the \emph{index.html} file in a web browser. If you want to make your slideshow available to anyone with an internet connection use slidify's \verb|publish| command.\index{R function!publish} This will allow you to publish your presentation via GitHub\index{GitHub}, Dropbox\index{Dropbox}, or RPubs\index{RPubs}. Let's look at how to publish to GitHub and Dropbox.
 
 To publish our example \emph{MySlideShow} on GitHub first create a new GitHub repository\index{GitHub!repository} called `MySlideShow' (see Section \ref{NewGitHubRepo} for instructions on how to create a new repository). Make sure the repository is empty, i.e. has no files in it. Then type in R:
 
@@ -665,7 +665,7 @@ GitHub also offers a free hosting service for webpages. These can be much more c
 
 Clicking \texttt{Publish} creates a new orphan branch\footnote{An orphan branch is a branch with a different root from other repository branches. Another way of think about this is that they have their own history.}\index{Git!orphan branch} called \emph{gh-pages}.\index{GitHub!gh-pages branch} When these branches are pushed to GitHub it will create a website based around a file called \emph{index.html} that you include in the branch. This will be the website's main page. 
 
-If you want to create more customized and larger websites with GitHub pages you can manually create a GitHub Pages orphan branch and push it to GitHub. This is essentially what \emph{slidify} did for us with its \texttt{publish}\index{R command!publish} command. Imagine we have our working directory set as a repository containing an R Markdown file that we have rendered into an HTML file called \emph{index.html}.\index{HTML} Let's create a new orphan branch:
+If you want to create more customized and larger websites with GitHub pages you can manually create a GitHub Pages orphan branch and push it to GitHub. This is essentially what \emph{slidify} did for us with its \texttt{publish}\index{R function!publish} command. Imagine we have our working directory set as a repository containing an R Markdown file that we have rendered into an HTML file called \emph{index.html}.\index{HTML} Let's create a new orphan branch:
 
 <<Ch13GHPages1, eval=FALSE, tidy=FALSE, engine='sh'>>=
 # Create orphan gh-pages branch

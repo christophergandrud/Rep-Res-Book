@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 September 2014
+% Updated: 17 December 2014
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -13,7 +13,7 @@ Graphs and other visual methods, discussed in the next chapter, can often be mor
 
 Manually typing results into tables by hand is tedious, not very reproducible, and can introduce errors.\footnote{For example, in a replication of Reinhart and Rogoff's much cited \citeyearpar{RR2010} study of economic growth and public debt \cite{Herndon2013} found a number of apparent transcription errors. Analysis results in the original spreadsheets appear to not have been entered into the paper's tables accurately.} It's especially tedious to retype tables to reflect changes you made to your data and models. Fortunately, you don't actually need to create tables by hand. There are many ways to have R do the work for you.
 
-The goal of this chapter is for you to learn how to dynamically create tables for your presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \emph{xtable}\index{xtable} \cite[]{R-xtable} and \emph{apsrtable}\index{apsrtable} packages \cite[]{R-apsrtable}. \emph{xtable} can create tables for both LaTeX and Markdown/HTML documents. \emph{apsrtable} usually produces publication quality tables more easily than \emph{xtable}. Unfortunately it only works with LaTeX and is less flexible with objects of classes it does not support.\footnote{These are not the only packages available in R for creating presentation document tables from R objects. Others include the \emph{tables} \citep{R-tables},\index{R package!table} \emph{memisc} \citep{R-memisc},\index{R command!memisc}\index{memisc} and \emph{estout} \citep{R-estout}\index{estout} packages as well as Paul Johnson's \texttt{outreg}\index{outreg} function (see: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}).} I personally also really like the \emph{stargazer} package \citep{R-stargazer}. It has a similar syntax to \emph{apsrtable} and is particularly good for showing results from multiple models estimated using different model types in one table.
+The goal of this chapter is for you to learn how to dynamically create tables for your presentation documents written in LaTeX and Markdown. We will first learn the simple \emph{knitr} syntax we need to dynamically include tables created from R objects. Then we will learn how to actually create the tables. There are a number of ways to turn R objects into tables that can be dynamically included in LaTeX or Markdown/HTML markup. In this chapter we mostly focus on the \texttt{kable} function in \emph{knitr}\index{R function!kable} \cite[]{R-xtable} and \emph{texreg}\index{texreg}\index{R package!texreg} packages \cite[]{R-texreg}. \texttt{kable} can create tables for both LaTeX and Markdown/HTML documents. \emph{texreg} usually produces publication quality tables more easily than \texttt{kable}. Unfortunately it is less flexible with objects of classes it does not support.\footnote{These are not the only packages available in R for creating presentation document tables from R objects. I personally really like the \emph{stargazer} package \citep{R-stargazer}. It has a similar syntax to \emph{texreg} and is particularly good for showing results from multiple models estimated using different model types in one table.}
 
 \textbf{Warning:} Automating table creation removes the possibility of adding errors to the presentation of your analyses by incorrectly copying output, a big potential problem in hand-created tables. However, it is not error free. You could easily create inaccurate tables with coding errors. So, as always, it is important to `eyeball' the output. Does it make sense? If you select a couple values in the R output do they match what is in the presentation document's table? If not, you need to go back to the code and see where things have gone wrong. With that caveat, let's start making tables.
 
@@ -290,7 +290,7 @@ Just as the \texttt{write.csv} command turns an R data frame into a CSV formatte
 
 \subsection{\emph{xtable} \& \emph{apsrtable} basics with supported class objects}
 
-The \emph{xtable} and \emph{apsrtable} packages are fairly easy to use if you want to convert an object of a class that they support into a table. Different R statistical model estimation commands can produce model summaries of different classes. For example, the \texttt{lm} (linear model) command creates model summaries of the \texttt{lm} class. For example, let's create a simple linear regression using the \emph{swiss} data frame and \texttt{lm}\index{R command!lm}\index{simple linear regression} command. This data frame is included with R by default. The simple linear regression model we are going to make has the \emph{swiss} variable \textbf{Examination} as the dependent variable and \textbf{Education} as the only independent variable.\footnote{For a description of these variables type \texttt{?swiss} into the console}
+The \emph{xtable} and \emph{apsrtable} packages are fairly easy to use if you want to convert an object of a class that they support into a table. Different R statistical model estimation commands can produce model summaries of different classes. For example, the \texttt{lm} (linear model) command creates model summaries of the \texttt{lm} class. For example, let's create a simple linear regression using the \emph{swiss} data frame and \texttt{lm}\index{R function!lm}\index{simple linear regression} command. This data frame is included with R by default. The simple linear regression model we are going to make has the \emph{swiss} variable \textbf{Examination} as the dependent variable and \textbf{Education} as the only independent variable.\footnote{For a description of these variables type \texttt{?swiss} into the console}
 
 <<Ch9SimpleSwissRegression>>=
 # Fit simple linear regression model
@@ -300,14 +300,14 @@ M1 <- lm(Examination ~ Education, data = swiss)
 class(M1)
 @
 
-\noindent By using the \texttt{class}\index{R command!class} command we can see that \emph{M1} is of the \texttt{lm} class. \emph{M1} contains items estimated by the linear regression model\footnote{If you are unfamiliar with the syntax of R statistical estimation models the previous code might be confusing. In general `response' ($Y$) variables are written first and are separated from the `explanatory' ($X$) variables by a tilde (\texttt{$\sim$}).\index{R!tilde} Crawley \citeyearpar[107]{Crawley2005} notes that you can read $Y \sim X$ as `$Y$ is modeled as a function of $X$'. In later examples we will see that individual explanatory variables are generally separated by plus signs (\texttt{+}), indicating that they are included in the model, not that they are added. For more information see Crawley \citeyearpar[][Ch. 7]{Crawley2005}.} such as the coefficient estimates and their standard errors. To get a summary of a model object's contents use the \texttt{summary}\index{R command!summary} command like this:
+\noindent By using the \texttt{class}\index{R function!class} command we can see that \emph{M1} is of the \texttt{lm} class. \emph{M1} contains items estimated by the linear regression model\footnote{If you are unfamiliar with the syntax of R statistical estimation models the previous code might be confusing. In general `response' ($Y$) variables are written first and are separated from the `explanatory' ($X$) variables by a tilde (\texttt{$\sim$}).\index{R!tilde} Crawley \citeyearpar[107]{Crawley2005} notes that you can read $Y \sim X$ as `$Y$ is modeled as a function of $X$'. In later examples we will see that individual explanatory variables are generally separated by plus signs (\texttt{+}), indicating that they are included in the model, not that they are added. For more information see Crawley \citeyearpar[][Ch. 7]{Crawley2005}.} such as the coefficient estimates and their standard errors. To get a summary of a model object's contents use the \texttt{summary}\index{R function!summary} command like this:
 
 <<Ch9SimpleSwissSummary>>=
 # Show summary of M1 model object
 summary(M1)
 @
 
-To find a full list of object classes that \emph{xtable} supports type \texttt{methods(xtable)}\index{R command!methods} into the R Console after you have loaded the package. To see \emph{apsrtable}'s supported classes type \verb|showMethods("modelInfo")|\index{R command!showMethods} into your console.
+To find a full list of object classes that \emph{xtable} supports type \texttt{methods(xtable)}\index{R function!methods} into the R Console after you have loaded the package. To see \emph{apsrtable}'s supported classes type \verb|showMethods("modelInfo")|\index{R function!showMethods} into your console.
 
 \paragraph{\emph{xtable} for LaTeX}
 
@@ -367,11 +367,11 @@ print.xtable(M1Table, type = "html", caption.placement = "top")
 ```
 @
 
-\noindent If you intend to include multiple tables in your R Markdown document you will want all of the tables to be printed in HTML. You can place \verb|options("xtable.type" = "html")|\index{R command!options} in a code chunk near the beginning of your document.\footnote{Of course you will probably want to use the \texttt{include=FALSE} \emph{knitr}  option with this code chunk.} This simply makes it so that you don't need to include \verb|type = "html"| every time you use \texttt{print}.
+\noindent If you intend to include multiple tables in your R Markdown document you will want all of the tables to be printed in HTML. You can place \verb|options("xtable.type" = "html")|\index{R function!options} in a code chunk near the beginning of your document.\footnote{Of course you will probably want to use the \texttt{include=FALSE} \emph{knitr}  option with this code chunk.} This simply makes it so that you don't need to include \verb|type = "html"| every time you use \texttt{print}.
 
 Notice in the previous code example that we also added the \texttt{caption.placement = "top"} argument. This will move the caption from the bottom of the table, as it is in Table \ref{BasicXtableSummary}, to the top. See the \emph{xtable} package documentation\footnote{\url{http://cran.r-project.org/web/packages/xtable/xtable.pdf}} for the full list of \texttt{print.xtable} options.
 
-\subsubsection{\emph{apsrtable} for LaTeX}\index{apsrtable}
+\subsubsection{\emph{texreg} for LaTeX}\index{texreg}
 
 The \emph{xtable} package is a very versatile tool for creating relatively well formatted tables from R objects. By default, however, it is not set up to output tables that present estimates from multiple statistical models in the style used by many prominent academic journals. The \emph{apsrtable} package is very useful for creating these types of tables.\footnote{It creates tables in the style used by the \emph{American Political Science Review},\index{APSR} hence the package's name. The style is used by many other journals.}
 
@@ -391,24 +391,23 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
             Infant.Mortality + Fertility, data = swiss)
 @
 
-\noindent We can now include these model objects in one table with \emph{apsrtable}.
+\noindent We can now include these model objects in one table with \emph{texreg}.
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
     \begin{kframe}
         \begin{alltt}
 \textbackslash{}begin\{table\}
-    \textbackslash{}caption\{Example Nested Estimates Table with \textbackslash{}emph\{aprstable\}\}
-    \textbackslash{}label\{BasicApsrTableExample\}
+    \textbackslash{}caption\{Example Nested Estimates Table with \textbackslash{}emph\{texreg\}\}
+    \textbackslash{}label\{BasictexregTableExample\}
         \textbackslash{}begin\{center\}
 
 \textless{\textless}results='asis', echo=FALSE\textgreater{\textgreater}=
-\hlcom{# Load apsrtable package}
-\hlkwd{library}(apsrtable)
+\hlcom{# Load texreg package}
+\hlkwd{library}(texreg)
 
 \hlcom{# Create nested regression model table}
-\hlkwd{apsrtable}(M1, M2, M3, M4, M5, Sweave = TRUE,
-          stars = \hlstr{"default"})
+\hlkwd{texreg}(list(M1, M2, M3, M4, M5))
 @
         \textbackslash{}end\{center\}
 \textbackslash{}end\{table\}
@@ -416,11 +415,7 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
     \end{kframe}
 \end{knitrout}
 
-\noindent Let's go over this code. The first thing that you probably notice is that we manually created the \texttt{table} and \texttt{center} environments as well as set the \texttt{caption} and \texttt{label}. You do not necessarily need to do this. If you set \texttt{apsrtable}'s \texttt{Sweave} argument to \texttt{FALSE}, it will create the \texttt{table} environment and allow you to determine the caption and cross-reference label with the \texttt{caption} and \texttt{label} arguments. Nonetheless \texttt{Sweave=TRUE} is useful if, for example, you create the table in a separate R source code file and want to incorporate it into multiple LaTeX documents and be able to set different labels and titles in each.
-
-In the LaTeX caption you'll notice \verb|\emph{apsrtable}|. In LateX the \texttt{emph}\index{LaTeX!emph} command italicizes text (we'll see this again in Chapter \ref{LatexChapter}). You can also include LaTeX commands like this in \texttt{apsrtable}'s \texttt{caption} argument.
-
-You'll notice another argument in \texttt{apsrtable}: \verb|starts='default'|. This uses the \texttt{lm} model summary default of showing three statistical significance stars.\index{significance stars} You can change this to showing only one star (\verb|"1"|) and define the significance level you would like this star to denote with the \texttt{lev} argument. By default it is set to \texttt{lev = 0.05}. To hide the stars altogether use \verb|starts='0'|.
+\noindent Notice that we placed the fitted model objects in a list when we called \texttt{texreg}. In the LaTeX caption you'll notice \verb|\emph{texreg}|. In LateX the \texttt{emph}\index{LaTeX!emph} command italicizes text (we'll see this again in Chapter \ref{LatexChapter}). By default \texttt{texreg}: \verb|stars = c(0.001, 0.01, 0.05)| to determine at what p-values to display statistical significance stars. This is the same as the \texttt{lm} model summary default showing three sets of statistical significance stars.\index{significance stars} You can define the significance levels by assigning a different numeric vector to the \texttt{stars} argument.. To hide the stars altogether use \verb|stars=''|.
 
 \begin{table}
     \caption{Example Nested Estimates Table with \emph{aprstable}}
@@ -428,18 +423,17 @@ You'll notice another argument in \texttt{apsrtable}: \verb|starts='default'|. T
     \begin{center}
 <<Ch9BasicApsrTable, echo=FALSE, results='asis'>>=
 # Load apsrtable package
-library(apsrtable)
+library(texreg)
 
 # Create nested regression model table
-apsrtable(M1, M2, M3, M4, M5, Sweave = TRUE,
-          stars = "default")
+texreg(list(M1, M2, M3, M4, M5))
 @
     \end{center}
 \end{table}
 
-There are many other changes you can make to tables created with \emph{apsrtable}. You can change the column and coefficient names, determine what type of standard errors to show, and so on. For the full list of arguments see the help file by typing \texttt{?apsrtable} into your R Console.
+There are many other changes you can make to tables created with \emph{texreg}. You can change the column and coefficient names, determine what type of standard errors to show, and so on. For the full list of arguments see the help file by typing \texttt{?texreg} into your R Console.
 
-Finally, note that you need to include the \texttt{dcolumn}\index{dcolumn} package in your LaTeX preamble, i.e. \verb|\usepackage{dcolumn}| (see page \pageref{LaTeXPreamble} for a discussion of LaTeX preambles) to include the tables created by \emph{apsrtable}.
+Finally, note that you need to include the \texttt{dcolumn}\index{dcolumn} package in your LaTeX preamble, i.e. \verb|\usepackage{dcolumn}| (see page \pageref{LaTeXPreamble} for a discussion of LaTeX preambles) to include the tables created by \emph{texreg}.
 
 \paragraph{LaTeX landscape tables}\index{LaTeX!landscape}
 
@@ -457,7 +451,7 @@ The \emph{apsrtable} and \emph{xtable} packages are very convenient for model ob
     \item use \emph{xtable} with this object to create the table.
 \end{enumerate}
 
-Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions estimated from a Bayesian normal linear regression using the \emph{Zelig}\index{Zelig} package \cite[]{Goodrich2007,R-Zelig}\footnote{Remember you will need to have installed the \emph{ZeligBayesian} package. Please see page \pageref{ZeligBayes}\index{R package!ZeligBayesian} for more details.} and data from the \emph{swiss} data frame. Let's run the model:
+Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions estimated from a Bayesian normal linear regression using the \emph{Zelig}\index{Zelig} package \cite[]{Goodrich2007,R-Zelig}\footnote{Remember you will need to have installed the \emph{ZeligBayesian} package. Please see page \pageref{ZeligBayes}\index{ZeligBayesian} for more details.} and data from the \emph{swiss} data frame. Let's run the model:
 
 <<Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE>>=
 # Load Zelig package
@@ -471,7 +465,7 @@ NBModel <- zelig(Examination ~ Education, model = "normal.bayes",
 class(NBModel)
 @
 
-Using the \texttt{class}\index{R command!class}\index{R command!zelig} command we see that the model output object in \emph{NBModel} is of both the \texttt{zelig} and \texttt{normal.bayes} classes.\index{normal Bayesian linear regression} These class are not supported by \emph{xtable}. If you try to create a table summarizing the estimates in \emph{NBTable} you will get the following error:
+Using the \texttt{class}\index{R function!class}\index{R function!zelig} command we see that the model output object in \emph{NBModel} is of both the \texttt{zelig} and \texttt{normal.bayes} classes.\index{normal Bayesian linear regression} These class are not supported by \emph{xtable}. If you try to create a table summarizing the estimates in \emph{NBTable} you will get the following error:
 
 {\small
 <<Ch9BadTable>>=
@@ -484,13 +478,13 @@ NBTable <- xtable(NBModel)
 }
 \noindent With unsupported class objects you have to create the summary yourself and extract the elements that you want from it manually. A good knowledge of vectors, matrices, and component selection is very handy for this (see Chapter \ref{GettingStartedRKnitr}).
 
-First, create a summary\index{R command!summary} of your output object {\emph{NBModel}}:
+First, create a summary\index{R function!summary} of your output object {\emph{NBModel}}:
 
 <<Ch9MCMCSummary>>=
 NBModelSum <- summary(NBModel)
 @
 
-\noindent This creates a new object of the class \texttt{summary.MCMCZelig}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{NBModelSum} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names}\index{R command!names} command.
+\noindent This creates a new object of the class \texttt{summary.MCMCZelig}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{NBModelSum} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names}\index{R function!names} command.
 
 <<Ch9MCMCSummaryNames>>=
 names(NBModelSum)
@@ -535,7 +529,7 @@ It may take some hunting to find what you want, but a similar process can be use
 
 \subsection{Creating variable description documents with \emph{xtable}}\label{VarDescriptTables}
 
-You can use \emph{xtable} to create a table describing variables in your data set and insert these into Markdown documents created with the concatenate and print (\texttt{cat}) command (see Section \ref{catR}).\index{R command!cat} This is useful because our data so far has been stored in plain-text files. Unlike binary Stata or SAS data files, plain-text data files do not include variable descriptions.
+You can use \emph{xtable} to create a table describing variables in your data set and insert these into Markdown documents created with the concatenate and print (\texttt{cat}) command (see Section \ref{catR}).\index{R function!cat} This is useful because our data so far has been stored in plain-text files. Unlike binary Stata or SAS data files, plain-text data files do not include variable descriptions.
 
 Imagine that we want to create a Markdown file with a table describing the variables from the \emph{swiss} data frame. First we will create two vectors: one for the variable names and the other for the variable descriptions.
 
@@ -555,7 +549,7 @@ Description <- c("common standardized fertility measures",
 @
 }
 
-\noindent In the first line we use the \texttt{names} command to create a vector of the \emph{swiss} data frame's column names. Then we simply create a vector of descriptions with the combine command (\texttt{c}).\index{R command!combine}\index{R command!c} Now we can combine these vectors into a matrix and use it to create an HTML table.
+\noindent In the first line we use the \texttt{names} command to create a vector of the \emph{swiss} data frame's column names. Then we simply create a vector of descriptions with the combine command (\texttt{c}).\index{R function!combine}\index{R function!c} Now we can combine these vectors into a matrix and use it to create an HTML table.
 
 <<Ch9CbindDescript, results='hide'>>=
 # Combine Variable and Description variables into a matrix

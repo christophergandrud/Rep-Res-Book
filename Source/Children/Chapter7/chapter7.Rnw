@@ -19,17 +19,17 @@ In order to successfully merge two or more data frames we need to make sure that
 
 Before doing anything to your data it is a good idea to take a look at it and see what needs to be done. Taking a little time to become acquainted with your data will help you avoid many error messages and much frustration.
 
-You could of course just type a data frame object's name into the R console. This will print the entire data frame in your console. For data frames with more than a few variables and observations this is very impractical. We have already seen a number of commands that are useful for looking at parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, the \texttt{names}\index{R command!names} command shows you the variable names in a data frame object. The \texttt{head}\index{R command!head} command shows the names plus the first few observations in a data frame. The \texttt{tail}\index{R command!tail} shows the last few.
+You could of course just type a data frame object's name into the R console. This will print the entire data frame in your console. For data frames with more than a few variables and observations this is very impractical. We have already seen a number of commands that are useful for looking at parts of your data. As we saw in Chapter \ref{GettingStartedRKnitr}, the \texttt{names}\index{R function!names} command shows you the variable names in a data frame object. The \texttt{head}\index{R function!head} command shows the names plus the first few observations in a data frame. The \texttt{tail}\index{R function!tail} shows the last few.
 
-Use the \texttt{dim}\index{R command!dim} (dimensions) command to quickly see the number of observations and variables (the number of rows and columns) in a data frame object. For example, let's use the \emph{FertConsumpData} object we created in Chapter \ref{DataGather} to test out \texttt{dim}:
+Use the \texttt{dim}\index{R function!dim} (dimensions) command to quickly see the number of observations and variables (the number of rows and columns) in a data frame object. For example, let's use the \emph{FertConsumpData} object we created in Chapter \ref{DataGather} to test out \texttt{dim}:
 
 <<Ch7dim>>=
 dim(FertConsumpData)
 @
 
-\noindent The first number is the number of rows in the data frame (\Sexpr{dim(FertConsumpData)[[1]]}) and the second is the number of columns (\Sexpr{dim(FertConsumpData)[[2]]}). You can also use the \texttt{nrow} command to find just the number of rows and \texttt{ncol} to see only the columns.\index{R command!nrow}\index{R command!ncol}
+\noindent The first number is the number of rows in the data frame (\Sexpr{dim(FertConsumpData)[[1]]}) and the second is the number of columns (\Sexpr{dim(FertConsumpData)[[2]]}). You can also use the \texttt{nrow} command to find just the number of rows and \texttt{ncol} to see only the columns.\index{R function!nrow}\index{R function!ncol}
 
-The \texttt{summary} command\index{R command!summary} is especially helpful for seeing basic descriptive statistics for all of the variables in a data frame and also the variables' types. Here is an example:
+The \texttt{summary} command\index{R function!summary} is especially helpful for seeing basic descriptive statistics for all of the variables in a data frame and also the variables' types. Here is an example:
 
 {\small
 <<Ch7SummaryExamp>>=
@@ -48,13 +48,13 @@ summary(FertConsumpData$AG.CON.FERT.ZS)
 
 \noindent We'll come back to why knowing this type of information is important for merging and data analysis later in this chapter.
 
-Another important command for quickly summarizing a data frame is \texttt{table}.\index{R command!table} This creates a contingency table\index{contingency table} with counts of the number of observations per combination of factor variables.
+Another important command for quickly summarizing a data frame is \texttt{table}.\index{R function!table} This creates a contingency table\index{contingency table} with counts of the number of observations per combination of factor variables.
 
-You can view a portion of a data frame object with the \texttt{View} command.\index{R command!View} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab\index{RStudio!Workspace tab} and you will get something similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be able to see similar windows that you can interactively edit use the \texttt{fix}\index{R command!fix} command in the same way that you use \texttt{View}. This can be useful for small edits, but remember that the edits are not reproducible.
+You can view a portion of a data frame object with the \texttt{View} command.\index{R function!View} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the \emph{Workspace} tab\index{RStudio!Workspace tab} and you will get something similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be able to see similar windows that you can interactively edit use the \texttt{fix}\index{R function!fix} command in the same way that you use \texttt{View}. This can be useful for small edits, but remember that the edits are not reproducible.
 
 \subsection{Reshaping data}\index{R!reshaping data}
 
-Obviously it is usually a good idea if your data sets are kept in data frame type objects. See Chapter \ref{GettingStartedRKnitr} (Section \ref{data.frame}) for how to convert objects into data frames with the \texttt{data.frame} command.\index{R command!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in ``long'' format\index{long formatted data}. This usually means that data frame columns are variables and rows are specific observations (see Table \ref{ExampleLong}).
+Obviously it is usually a good idea if your data sets are kept in data frame type objects. See Chapter \ref{GettingStartedRKnitr} (Section \ref{data.frame}) for how to convert objects into data frames with the \texttt{data.frame} command.\index{R function!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in ``long'' format\index{long formatted data}. This usually means that data frame columns are variables and rows are specific observations (see Table \ref{ExampleLong}).
 
 \begin{table}[h!]
     \caption{Long Formatted Data Example}
@@ -111,7 +111,7 @@ If one of our raw data sets is not in this format then we will need to reshape\i
     \end{tabular}
 \end{table}
 
-Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R command!reshape} command, both are loaded in R by default. \emph{reshape2} is a very helpful package for reshaping data \citep{R-reshape2}.\index{reshape2}\footnote{Note: confusingly the \emph{reshape2} package does not include the \texttt{reshape} command. The \texttt{reshape} command is part of R's built in \emph{stats} package.\index{stats} I don't cover that command here, because it is less flexible than what \emph{reshape2} can do.} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
+Reshaping data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R function!reshape} command, both are loaded in R by default. \emph{reshape2} is a very helpful package for reshaping data \citep{R-reshape2}.\index{reshape2}\footnote{Note: confusingly the \emph{reshape2} package does not include the \texttt{reshape} command. The \texttt{reshape} command is part of R's built in \emph{stats} package.\index{stats} I don't cover that command here, because it is less flexible than what \emph{reshape2} can do.} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will cover some of \emph{reshape2}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
 
 Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{WideFert}. It looks like this:\footnote{Please see the chapter's Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data from wide to long format.}
 
@@ -139,7 +139,7 @@ WideFert <- WideFert[order(WideFert$country), ]
 head(WideFert[, 1:7])
 @
 
-\noindent We can use \emph{reshape2}'s \texttt{melt}\index{melt}\index{R command!melt}\label{MeltReshape} command to reshape this data from wide to long format. The term ``melt'' is intended to evoke an image of the data melting down from a wide to long format.\footnote{The opposite \texttt{cast} command (\texttt{dcast}\index{cast}\index{R command!dcast}\index{dcast}\index{R command!dcast} in the case of data frames) is supposed to evoke an image of casting out the data from long to wide format. See Section \ref{WideAppendix} for an example using the \texttt{dcast} command.} In our \emph{WideFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be melted. These variables identify the data set's subjects. We can tell \texttt{melt} that they are id variables with the \texttt{id.vars} argument. The remaining columns (i.e. \textbf{2002}, \textbf{2003}, \textbf{2004} and \textbf{2005}) will be melted into two new variables: \textbf{variable}, and \textbf{value}. The former will contain the years and the later will contain the fertilizer consumption data. Here is the full code:
+\noindent We can use \emph{reshape2}'s \texttt{melt}\index{melt}\index{R function!melt}\label{MeltReshape} command to reshape this data from wide to long format. The term ``melt'' is intended to evoke an image of the data melting down from a wide to long format.\footnote{The opposite \texttt{cast} command (\texttt{dcast}\index{cast}\index{R function!dcast}\index{dcast}\index{R function!dcast} in the case of data frames) is supposed to evoke an image of casting out the data from long to wide format. See Section \ref{WideAppendix} for an example using the \texttt{dcast} command.} In our \emph{WideFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be melted. These variables identify the data set's subjects. We can tell \texttt{melt} that they are id variables with the \texttt{id.vars} argument. The remaining columns (i.e. \textbf{2002}, \textbf{2003}, \textbf{2004} and \textbf{2005}) will be melted into two new variables: \textbf{variable}, and \textbf{value}. The former will contain the years and the later will contain the fertilizer consumption data. Here is the full code:
 
 <<Ch7MeltFert, tidy=FALSE>>=
 # Melt WideFert
@@ -154,14 +154,14 @@ head(MoltenFert)
 
 \subsection{Renaming variables}\index{R!renaming variables}
 
-Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R command!rename}\index{rename variable} command in the \emph{dplyr} package \citep{R-dplyr}.
+Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{MoltenFert} data frame has two variables--\textbf{variable} and \textbf{value}--that would be easier to understand if they were renamed \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R function!rename}\index{rename variable} command in the \emph{dplyr} package \citep{R-dplyr}.
 
 To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
 
 <<Ch7Rename, tidy=FALSE>>=
 # Rename variable = year, value = FertilizerConsumption
 MoltenFert <- dplyr::rename(MoltenFert,
-                        year = variable, 
+                        year = variable,
                         FertilizerConsumption = value)
 
 # Show MoltenFert
@@ -172,7 +172,7 @@ head(MoltenFert)
 
 You may have noticed that as a result of melting \emph{WideFert} the data is now ordered by year then country name. Typically TSCS data is sorted by country then year, or more generally: subject-year. Though not required for merging in R\footnote{Unlike in other statistical programs.} some statistical analyses assume that the data is ordered in a specific way. Well-ordered data is also easier for people to read.
 
-We can order observations in our data set using the \texttt{order} command.\index{R command!order}\index{sort}\index{order} For example, to order \emph{MoltenFert} by country-year we type:
+We can order observations in our data set using the \texttt{order} command.\index{R function!order}\index{sort}\index{order} For example, to order \emph{MoltenFert} by country-year we type:
 
 <<Ch7Order, tidy=FALSE>>=
 # Order MoltenFert by country-year
@@ -185,7 +185,7 @@ head(MoltenFert)
 
 \subsection{Subsetting data}\index{R!subsetting data}
 
-Sometimes you may want to use only a subset of a data frame. For example, the density plot in Figure \ref{FertilizerConsumptionDens} shows us that the \emph{MoltenFert} data has a few very extreme values. We can use the \texttt{subset}\index{subset}\index{R command!subset} command to examine these outliers,\index{outliers} for example countries that have fertilizer consumption greater than 1000 kilograms per hectare.
+Sometimes you may want to use only a subset of a data frame. For example, the density plot in Figure \ref{FertilizerConsumptionDens} shows us that the \emph{MoltenFert} data has a few very extreme values. We can use the \texttt{subset}\index{subset}\index{R function!subset} command to examine these outliers,\index{outliers} for example countries that have fertilizer consumption greater than 1000 kilograms per hectare.
 
 \begin{figure}
     \caption{Density Plot of Fertilizer Consumption (kilograms per hectare of arable land)}
@@ -270,7 +270,7 @@ summary(MoltenFertSub$FertilizerConsumption)
     \end{center}
 \end{table}
 
-Let's step back one second. I've introduced a number of new logical operators\index{R!logical operators} and a new command in the four subsetting examples. The first example included a very simple one, the greater than sign (\verb|>|). The second example included the less than or equal to operator: \verb|<=|. The third example included the not equal operator: \verb|!=|.\index{R!not equal} In R exclamation points (\verb|!|) generally denote `not'.\index{R!exclamation point} We used this again in the final example in combination with the \texttt{is.na} command.\index{R command!is.na} This command indicates if an element is missing, so \verb|!is.na| means ``not missing''. For the full list of R's logical operators see Table \ref{LogicalOp}. You can use these operators and commands when subsetting data and throughout R.
+Let's step back one second. I've introduced a number of new logical operators\index{R!logical operators} and a new command in the four subsetting examples. The first example included a very simple one, the greater than sign (\verb|>|). The second example included the less than or equal to operator: \verb|<=|. The third example included the not equal operator: \verb|!=|.\index{R!not equal} In R exclamation points (\verb|!|) generally denote `not'.\index{R!exclamation point} We used this again in the final example in combination with the \texttt{is.na} command.\index{R function!is.na} This command indicates if an element is missing, so \verb|!is.na| means ``not missing''. For the full list of R's logical operators see Table \ref{LogicalOp}. You can use these operators and commands when subsetting data and throughout R.
 
 \subsection{Recoding string/numeric variables}\index{R!recode}
 
@@ -286,7 +286,7 @@ MoltenFertSub$country[MoltenFertSub$country ==
 
 \subsection{Creating new variables from old}
 
-As part of your data clean up process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log}\index{R command!log}\index{log} command and assign a new variable that we'll call \textbf{logFertConsumption}.
+As part of your data clean up process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log}\index{R function!log}\index{log} command and assign a new variable that we'll call \textbf{logFertConsumption}.
 
 {\small
 <<Ch7LogFertComsump, tidy=FALSE>>=
@@ -340,7 +340,7 @@ summary(MoltenFertSub$logFertConsumption)
 
 \paragraph{Creating factor variables}\index{R!factors}
 
-We can create factor variables from numeric or string variables. For example, we may want to turn the continuous numeric \textbf{FertilizerConsumption} variable into an ordered categorical (i.e. factor) variable.\index{factor variable} Imagine that we want to create a factor variable called \textbf{FertConsGroup} with four levels called `low', `medium low', `medium high', `high'. To do this let's first create a new numeric variable based on the values listed in Table \ref{ExampleFactorRecode}. Now let's use a procedure that is similar to the variable recoding we did earlier:\footnote{In this code I attached the data frame \emph{MoltenFertSub}\index{R command!attach} so that it is easier to read.\index{R!attach}}
+We can create factor variables from numeric or string variables. For example, we may want to turn the continuous numeric \textbf{FertilizerConsumption} variable into an ordered categorical (i.e. factor) variable.\index{factor variable} Imagine that we want to create a factor variable called \textbf{FertConsGroup} with four levels called `low', `medium low', `medium high', `high'. To do this let's first create a new numeric variable based on the values listed in Table \ref{ExampleFactorRecode}. Now let's use a procedure that is similar to the variable recoding we did earlier:\footnote{In this code I attached the data frame \emph{MoltenFertSub}\index{R function!attach} so that it is easier to read.\index{R!attach}}
 
 <<Ch7FactorNumeric, tidy=FALSE>>=
 #### Create numeric factor levels variable ####
@@ -368,7 +368,7 @@ detach(MoltenFertSub)
 summary(MoltenFertSub$FertConsGroup)
 @
 
-\noindent You'll notice that we don't have a factor variable yet; our new variable is numeric. We can use the \texttt{factor} command\index{R command!factor} to convert \emph{FertConsGroup} into a factor variable with the labels we want.\index{R!factor labels}
+\noindent You'll notice that we don't have a factor variable yet; our new variable is numeric. We can use the \texttt{factor} command\index{R function!factor} to convert \emph{FertConsGroup} into a factor variable with the labels we want.\index{R!factor labels}
 
 <<Ch7ChangetoFactor, tidy=FALSE>>=
 # Create vector of factor level labels
@@ -382,9 +382,9 @@ MoltenFertSub$FertConsGroup <- factor(MoltenFertSub$FertConsGroup,
 summary(MoltenFertSub$FertConsGroup)
 @
 
-\noindent We first created a character vector with the factor level labels and then applied using \texttt{factor}'s \texttt{labels} argument. Using \texttt{summary}\index{R command!summary} with a factor variable gives us its level labels as well as the number of observations per level.
+\noindent We first created a character vector with the factor level labels and then applied using \texttt{factor}'s \texttt{labels} argument. Using \texttt{summary}\index{R function!summary} with a factor variable gives us its level labels as well as the number of observations per level.
 
-The \texttt{cut} command \index{R command!cut} provides a less code intensive way of creating factors from numeric ones and labelling factor levels. For example:
+The \texttt{cut} command \index{R function!cut} provides a less code intensive way of creating factors from numeric ones and labelling factor levels. For example:
 
 <<Ch7Cut, tidy=FALSE>>=
 # Create a factor variable with the cut command
@@ -401,7 +401,7 @@ summary(FertFactor)
 
 \subsection{Changing variable types}\index{R!change variable type}
 
-Sometimes a variable will have the wrong type. For example, a numeric variable may be incorrectly made a character string when a data set is imported from Excel. You can change variables' types with a number of commands. We already saw how to convert a numeric variable to a factor variable with the \texttt{factor}\index{R command!factor} command. Unsurprisingly, to convert a variable to a character use \texttt{character}\index{R command!character} and \texttt{numeric}\index{R command!numeric} to convert it to a numeric type variable. We can place \texttt{as.} before these commands (e.g. \texttt{as.factor})\index{R command!as.factor}\index{R command!as.} as a way of coercing a change in type.\index{R!coercion}
+Sometimes a variable will have the wrong type. For example, a numeric variable may be incorrectly made a character string when a data set is imported from Excel. You can change variables' types with a number of commands. We already saw how to convert a numeric variable to a factor variable with the \texttt{factor}\index{R function!factor} command. Unsurprisingly, to convert a variable to a character use \texttt{character}\index{R function!character} and \texttt{numeric}\index{R function!numeric} to convert it to a numeric type variable. We can place \texttt{as.} before these commands (e.g. \texttt{as.factor})\index{R function!as.factor}\index{R function!as.} as a way of coercing a change in type.\index{R!coercion}
 
 \textbf{Warning:} Though these commands have straightforward names, a word of caution is necessary. Always try to understand why a variable is not of the type you would expect. Often times variables have unexpected types because they are coded (or miscoded) in a way that you didn't anticipate. Changing the variables' types, especially when using \texttt{as.}, can introduce new errors. Make sure that the conversion made the changes you expected.
 
@@ -411,13 +411,13 @@ In the previous section we learned crucial skills for cleaning up data sets. Whe
 
 \subsection{Binding}\index{R!binding}
 
-As we saw in Chapter \ref{GettingStartedRKnitr}, if your data sets are in the same order--rows in all of the data sets represent the same observation of the same subject--then you can simply use the \texttt{cbind}\index{R command!cbind} command to bind columns from the data sets together. This situation is unusual when merging real-world data. If your data sets are not in exactly the same order you will create a data set with nonsensical rows that combine data from multiple observations. Therefore, you should avoid using \texttt{cbind} for merging most real-world data.
+As we saw in Chapter \ref{GettingStartedRKnitr}, if your data sets are in the same order--rows in all of the data sets represent the same observation of the same subject--then you can simply use the \texttt{cbind}\index{R function!cbind} command to bind columns from the data sets together. This situation is unusual when merging real-world data. If your data sets are not in exactly the same order you will create a data set with nonsensical rows that combine data from multiple observations. Therefore, you should avoid using \texttt{cbind} for merging most real-world data.
 
 If you have data sets with the exact same columns and variable types and you just want to attach one under the other you can use the \texttt{rbind}\index{rbind} command. It binds the rows in one object to the rows in another.\footnote{Some statistical programs refer to this type of action as ``appending''\index{append} one data set to another.} It has the same syntax as \texttt{cbind} (see page \pageref{cbind}). Again, you should be cautious when using this command, though it is more difficult to accidentally create a nonsensical data set with \texttt{rbind}. R will give you an error if it cannot match your objects' columns.
 
 \subsection{The merge command}
 
-Generally, the safest and most effective way to merge two data sets together is with the \texttt{merge}\index{merge}\index{R command!merge} command. Imagine that we want to merge our \emph{MoltenFertSub} data frame with two other data frames we created in Chapter \ref{DataGather}: \emph{FinRegulatorData} and \emph{DispropData}. The simplest way to do this is to use the merge command twice, i.e.:
+Generally, the safest and most effective way to merge two data sets together is with the \texttt{merge}\index{merge}\index{R function!merge} command. Imagine that we want to merge our \emph{MoltenFertSub} data frame with two other data frames we created in Chapter \ref{DataGather}: \emph{FinRegulatorData} and \emph{DispropData}. The simplest way to do this is to use the merge command twice, i.e.:
 
 <<Ch7AddIsoCodes, include=FALSE>>=
 ## Add iso2c codes to FinRegulatorData and DispropData
@@ -478,11 +478,11 @@ After merging data frames it is always a good idea to look at the result and mak
 
 \paragraph{Big data}\index{big data}
 
-Before discussing post-merge clean up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation commands covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use the \emph{data.table} package \citep{R-data.table}. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{sqldf} \citep{R-sqldf}.\footnote{J.D. Long has a blog post on how to load large data sets into R using \emph{sqldf}: \url{http://www.cerebralmastication.com/2009/11/loading-big-data-into-r/} (posted 24 November 2009).}
+Before discussing post-merge clean up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation commands covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use the \emph{data.table} package \citep{R-data.table}. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{dplyr} \citep{R-dplyr}\index{dplyr}.\footnote{See the \emph{dplyr} vignette on using the package with SQL databases at \url{http://cran.r-project.org/web/packages/dplyr/vignettes/databases.html}.}
 
 \subsection{Duplicate values}
 
-Duplicate observations are one thing to look out for after (and before) merging. You can use the \texttt{duplicated}\index{R command!duplicated}\index{R!duplicates} command to check for duplicates. Use the command in conjunction with subscripts to remove duplicate observations. For example, let's create a new object called \emph{DataDuplicates} from the iso2c-years that are duplicated in \emph{MergedData2}. Remember that \textbf{iso2c} and \textbf{year} are in the first and second columns of the data frame.
+Duplicate observations are one thing to look out for after (and before) merging. You can use the \texttt{duplicated}\index{R function!duplicated}\index{R!duplicates} command to check for duplicates. Use the command in conjunction with subscripts to remove duplicate observations. For example, let's create a new object called \emph{DataDuplicates} from the iso2c-years that are duplicated in \emph{MergedData2}. Remember that \textbf{iso2c} and \textbf{year} are in the first and second columns of the data frame.
 
 <<Ch7Duplicated, tidy=FALSE>>=
 # Created a data frame of duplicated country-years
@@ -493,7 +493,7 @@ DataDuplicates <- MergedData2[duplicated(
 nrow(DataDuplicates)
 @
 
-\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. We know this because \texttt{nrow}\index{R command!nrow} tells us that the data frame with the duplicated values has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
+\noindent In this data frame there are \Sexpr{nrow(DataDuplicates)} duplicated iso2c-year observations. We know this because \texttt{nrow}\index{R function!nrow} tells us that the data frame with the duplicated values has \Sexpr{nrow(DataDuplicates)} rows, i.e. \Sexpr{nrow(DataDuplicates)} observations.
 
 To create a data set without duplicated observations (if there are duplicates) we just add an exclamation point (\texttt{!}) before \texttt{duplicated}--i.e. not duplicated--in the above code.
 
@@ -511,7 +511,7 @@ DataNotDuplicates <- MergedData2[!duplicated(
 
 Another common post-merge clean up issue is duplicate variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. For example, in our previous merged data examples there are three country name variables: \textbf{country.x}, \textbf{country.y}, and \textbf{country} to signify which data frame they are from.\footnote{The former two were created in the first merge between \emph{FinRegulatorData} and \emph{DispropData}. When the second merge was completed there were no variables named \textbf{country} in the MergeData2 data frame, so \textbf{country} did not need to be renamed in the new merged data set.}
 
-You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables\index{drop variable} and rename\index{R command!rename} the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{dplyr}\index{dplyr} package \citep{R-dplyr} has a useful function called \texttt{select}\index{R command!select} that can also remove variables from data frames. To remove variables simply write a minus sign (\texttt{-}) and then the variable name without quotes. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove another unwanted variable as well, the extraneous \textbf{X} and \textbf{idn} variables:
+You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables\index{drop variable} and rename\index{R function!rename} the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{dplyr}\index{dplyr} package \citep{R-dplyr} has a useful function called \texttt{select}\index{R function!select} that can also remove variables from data frames. To remove variables simply write a minus sign (\texttt{-}) and then the variable name without quotes. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove another unwanted variable as well, the extraneous \textbf{X} and \textbf{idn} variables:
 
 <<Ch7RemoveVars, tidy=FALSE>>=
 # Remove country.y, country, X, and idn

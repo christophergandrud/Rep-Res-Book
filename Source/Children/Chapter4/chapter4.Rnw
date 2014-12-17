@@ -85,7 +85,7 @@ Figure \ref{ExampleTree} gives an example of how the files in a simple reproduci
 
 In addition to the main subdirectories of {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \emph{README}, its contents will automatically be displayed on the repository's main page. If the \emph{README} file is written using Markdown (e.g. \emph{README.md}, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
-It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown. Simply include the \texttt{sessionInfo()}\index{R command!sessionInfo} command in a \emph{knitr} code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
+It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown. Simply include the \texttt{sessionInfo()}\index{R function!sessionInfo} command in a \emph{knitr} code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
 You can also dynamically include session info in a LaTeX document. To do this use the {\tt{toLatex}} command in a code chunk. The code chunk should have the option \verb|results='asis'|. The code is:
 
@@ -115,7 +115,7 @@ Making your research project directories RStudio Projects is useful for a number
 
 R has a range of commands for handling and navigating through files. Including these commands in your source code files allows you to more easily replicate your actions.
 
-\paragraph{{\tt{getwd}}}\index{R command!getwd}
+\paragraph{{\tt{getwd}}}\index{R function!getwd}
 
 To find your current working directory use the \texttt{getwd} command:
 
@@ -125,7 +125,7 @@ getwd()
 
 \noindent The example here shows you the current working directory that was used while knitting this chapter.
 
-\paragraph{{\tt{list.files}}}\index{R command!list.files}
+\paragraph{{\tt{list.files}}}\index{R function!list.files}
 
 Use the \texttt{list.files} command to see all of the files and subdirectories in the current working directory. You can list the files in other directories too by adding the directory path as an argument to the command.
 
@@ -135,7 +135,7 @@ list.files()
 
 \noindent You can see that the \emph{Chapter4} folder has the file \emph{chapter4.Rnw} (the markup file used to create this chapter) and a child directory called \emph{images4} where I stored the original versions of the figures included in this chapter.
 
-\paragraph{{\tt{setwd}}}\index{R command!setwd}
+\paragraph{{\tt{setwd}}}\index{R function!setwd}
 
 The {\tt{setwd}} command sets the current working directory\index{working directory}. For example, if we are on a Mac or other Unix-like computer we can set the working directory to the {\emph{GatherSource}} directory in our Example Project (see Figure \ref{ExampleTree}) like this:
 
@@ -145,7 +145,7 @@ setwd("/ExampleProject/Data/GatherSource")
 
 \noindent Now R will automatically look in the {\emph{GatherSource}} folder for files and will save new files into this folder, unless we explicitly tell it to do otherwise.
 
-\paragraph{{\tt{dir.create}}}\index{R command!dir.create}
+\paragraph{{\tt{dir.create}}}\index{R function!dir.create}
 
 Sometimes you may want to create a new directory. You can use the {\tt{dir.create}} command to do this.\footnote{Note: you will need the correct system permissions to be able to do this.} For example to create a {\emph{ExampleProject}} file in the root \emph{C} directory on a Windows computer type:
 
@@ -153,7 +153,7 @@ Sometimes you may want to create a new directory. You can use the {\tt{dir.creat
 dir.create("C:\\ExampleProject")
 @
 
-\paragraph{{\tt{file.create}}}\index{R command!file.create}
+\paragraph{{\tt{file.create}}}\index{R function!file.create}
 
 Similarly, you can create a new blank file with the \texttt{file.create} command. To add a blank R source code file called {\emph{SourceCode.R}} to the {\emph{ExampleProject}} directory on the \emph{C} drive use:
 
@@ -161,7 +161,7 @@ Similarly, you can create a new blank file with the \texttt{file.create} command
 file.create("C:\\ExampleProject\\SourceCode.R")
 @
 
-\paragraph{{\tt{cat}}}\index{R command!cat}\label{catR}
+\paragraph{{\tt{cat}}}\index{R function!cat}\label{catR}
 
 If you want to create a new file and put text into it use the \texttt{cat} (concatenate and print) command. For example to create a new file in the current working directory called \emph{ExampleEcho.md} that includes the text ``Reproducible Research with R and RStudio'' type:
 
@@ -179,7 +179,7 @@ cat("More Text", file = "ExampleCat.md",
     append = TRUE)
 @
 
-\paragraph{{\tt{unlink}}}\index{R command!unlink}
+\paragraph{{\tt{unlink}}}\index{R function!unlink}
 
 You can use the {\tt{unlink}} command to delete files and directories.
 
@@ -189,7 +189,7 @@ unlink("C:\\ExampleProject\\SourceCode.R")
 
 \noindent \textbf{Warning:} the \texttt{unlink} command permanently deletes files, so be very careful using this command.
 
-\paragraph{{\tt{file.rename}}}\index{R command!file.rename}
+\paragraph{{\tt{file.rename}}}\index{R function!file.rename}
 
 You can use the \texttt{file.rename} to, obviously, rename a file. It can also be used to move a file from one directory to another. For example, imagine that we want to move the \emph{ExampleCat.md} file from the directory \emph{ExampleProject} to one called \emph{MarkdownFiles} that we already created.\footnote{The \texttt{file.rename} command won't create new directories. To move a file to a new directory you will need to create the directory first with \texttt{dir.create}.}
 
@@ -198,7 +198,7 @@ file.rename(from = "C:\\ExampleProject\\ExampleCat.md",
             to = "C:\\MarkdownFiles\\ExampleCat.md")
 @
 
-\paragraph{{\tt{file.copy}}}\index{R command!file.copy}
+\paragraph{{\tt{file.copy}}}\index{R function!file.copy}
 
 The \texttt{file.rename} fully moves a file from one directory to another. To copy the file to another directory use the \texttt{file.copy} command. It has the same syntax as \texttt{file.rename}:
 
@@ -255,7 +255,7 @@ ls
 ## chapter4.Rnw images4
 @
 
-\noindent As we saw earlier, R also has an \texttt{ls} command.\index{R command!ls} R's \texttt{ls} command lists items in the R workspace. The shell's \texttt{ls} command lists files and directories in the working directory.
+\noindent As we saw earlier, R also has an \texttt{ls} command.\index{R function!ls} R's \texttt{ls} command lists items in the R workspace. The shell's \texttt{ls} command lists files and directories in the working directory.
 
 \paragraph{{\tt{mkdir}}}\index{shell command!mkdir}
 
@@ -329,7 +329,7 @@ The \texttt{mv} command completely moves a file from one directory to another. T
 cp /ExampleProject/ExampleEcho.md /MarkdownFiles
 @
 
-\paragraph{{\tt{system}} (R command)}\index{R command!system}\label{systemRcommand}\index{R!shell commands}
+\paragraph{{\tt{system}} (R command)}\index{R function!system}\label{systemRcommand}\index{R!shell commands}
 
 You can run shell commands from within R using R's \texttt{system} command. For example, to run the \texttt{echo} command from within R type:
 

@@ -413,7 +413,7 @@ If you are using an author-year style you can use a variety of \emph{natbib} com
 
 Researchers are pretty good about citing others' articles and data. However, citations of R packages used in analyses is very inconsistent. This is unfortunate not only because correct attribution is not being given to those who worked to create the packages, but also because it makes reproducibility harder. Not citing packages obscures important steps that were taken in the research process, primarily which package versions were used. Fortunately, there are R tools for quickly and dynamically generating package BibTeX files, including the versions of the packages you are using. They will automatically update the citations each time you compile your document to reflect any changes made to the packages.
 
-You can automatically create citations for R packages using the \texttt{citation}\index{R command!citation} command inside of a code chunk. For example if you want the citation information for the \texttt{xtable}\index{xtable} package you simply type:
+You can automatically create citations for R packages using the \texttt{citation}\index{R function!citation} command inside of a code chunk. For example if you want the citation information for the \texttt{xtable}\index{xtable} package you simply type:
 
 {\small
 <<Ch11IntroCite>>=
@@ -421,13 +421,13 @@ citation("xtable")
 @
 }
 
-\noindent This gives you both the plain citation as well as the BibTeX version. If you only want the BibTeX version of the citation you can use the \texttt{toBibtex} command.\index{R command!toBibTeX}
+\noindent This gives you both the plain citation as well as the BibTeX version. If you only want the BibTeX version of the citation you can use the \texttt{toBibtex} command.\index{R function!toBibTeX}
 
 <<Ch11IntrotoBibtex>>=
 toBibtex(citation("xtable"))
 @
 
-The {\emph{knitr}} package creates BibTeX bibliographies for R packages with the \verb|write_bib|\index{R command!write\_bib} command. Let's make a BibTeX file called \emph{Packages.bib} containing citation information for the \emph{xtable} package.
+The {\emph{knitr}} package creates BibTeX bibliographies for R packages with the \verb|write_bib|\index{R function!write\_bib} command. Let's make a BibTeX file called \emph{Packages.bib} containing citation information for the \emph{xtable} package.
 
 <<Ch10OneBib, eval=FALSE, tidy=FALSE>>=
 # Create package BibTeX file
@@ -461,9 +461,9 @@ knitr::write_bib(PackagesUsed,
                  file = "Packages.bib")
 @
 
-\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R command!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R command!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages. 
+\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R function!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R function!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages. 
 
-The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R command!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}. You can have it install specific package versions by entering the version numbers with the \texttt{versions} argument. This is very useful for enabling the replication of analyses that rely on specific package versions.} 
+The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R function!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}. You can have it install specific package versions by entering the version numbers with the \texttt{versions} argument. This is very useful for enabling the replication of analyses that rely on specific package versions.} 
 
 \section{Presentations with LaTeX Beamer}
 

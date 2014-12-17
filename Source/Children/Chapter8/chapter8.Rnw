@@ -81,7 +81,7 @@ Probably the better option is to use the \verb|\verb| command\index{LaTeX comman
 
 If you want to dynamically show the results of some R code in your \emph{knitr} LaTeX produced text you can use \verb|\Sexpr|\index{Sexpr}.\index{knitr!Sexpr} This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from \emph{Sweave}.} Its structure is more like a LaTeX command's structure than {\emph{knitr}}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the \verb|<<>>= . . . @| syntax you use for block code chunks. 
 
-For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the lengths of 141 major rivers recorded in miles. You can simply use the \texttt{mean}\index{R command!mean} command to find the mean and the \texttt{round}\index{R command!round} command to round the result to the nearest whole number:
+For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the lengths of 141 major rivers recorded in miles. You can simply use the \texttt{mean}\index{R function!mean} command to find the mean and the \texttt{round}\index{R function!round} command to round the result to the nearest whole number:
 
 <<Ch8MeanRivers>>=
 round(mean(rivers), digits = 0)
@@ -100,7 +100,7 @@ is \Sexpr{round(mean(rivers), digits = 0)} miles.
     The mean length of 141 major rivers in North America is \Sexpr{round(mean(rivers), digits = 0)} miles. 
 \end{quote}
 
-\noindent R code included inline with \texttt{Sexpr} is evaluated using current R options.\index{R!global options} So if you want all of the output from \texttt{Sepxr} to be rounded to the same number of digits, for example, it might be a good idea to set this in a code chunk with R's \texttt{options} command.\index{R command!options} See page \pageref{ROptions} for more details.
+\noindent R code included inline with \texttt{Sexpr} is evaluated using current R options.\index{R!global options} So if you want all of the output from \texttt{Sepxr} to be rounded to the same number of digits, for example, it might be a good idea to set this in a code chunk with R's \texttt{options} command.\index{R function!options} See page \pageref{ROptions} for more details.
 
 \subsubsection{Markdown}
 
@@ -183,7 +183,7 @@ Third, other researchers trying to replicate your work might only be interested 
 
 \subsection{Source from a local file}
 
-Usually in the early stages of your research you may want to run code stored in analysis files located on your computer. Doing this is simple. The \emph{knitr} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk, you save it to its own file and use the \texttt{source}\index{R command!source} command to access it.\footnote{We used the \texttt{source} command in Chapter \ref{DataGather} in our make-like data gathering file.} For example, in an R Markdown file we could run the R code in a file called \emph{MainAnalysis.R} from our \emph{ExampleProject} like this:
+Usually in the early stages of your research you may want to run code stored in analysis files located on your computer. Doing this is simple. The \emph{knitr} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk, you save it to its own file and use the \texttt{source}\index{R function!source} command to access it.\footnote{We used the \texttt{source} command in Chapter \ref{DataGather} in our make-like data gathering file.} For example, in an R Markdown file we could run the R code in a file called \emph{MainAnalysis.R} from our \emph{ExampleProject} like this:
 
 <<MarkdownLocalSource, eval=FALSE, tidy=FALSE>>=
 ```{r, include=FALSE}
@@ -196,7 +196,7 @@ source("/ExampleProject/Analysis/MainAnalysis.R"}
 
 \paragraph{Sourcing a makefile in a code chunk}
 
-In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures, and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R command!system} command (see Section \ref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
+In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures, and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R function!system} command (see Section \ref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -225,7 +225,7 @@ One final note on including makefiles in your \emph{knitr} presentation document
 
 \subsection{Source from a non-secure URL (\texttt{http})}\index{http}
 
-Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest method is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{R command!source} command the same way as we did before with the \texttt{read.table}\index{R command!read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included included with this book.}
+Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest method is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{R function!source} command the same way as we did before with the \texttt{read.table}\index{R function!read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included included with this book.}
 
 Let's look at a quick example of sourcing an R function\index{R functions} that has been made available at a non-secure URL. Paul Johnson created a function called \emph{outreg}\index{outreg} for creating LaTeX tables from R objects. He has made the function available on his website at: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}. You can directly load this function into your workspace with \texttt{source}.
 
@@ -240,7 +240,7 @@ source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
 
 \subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}\index{https}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R function!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
 
 <<Ch8SourceURLExample, message=TRUE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
@@ -250,15 +250,15 @@ library(devtools)
 source_url("http://bit.ly/UOtH4L")
 @
 
-\noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R command!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
+\noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R function!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
 
 Similar to what we saw in Chapter \ref{Storing} (Section \ref{GitDownload}),\label{sourceurl} if you would like to use a particular version of a file stored on GitHub\index{GitHub} simply include that version's URL in the \verb|source_url| call. This can be useful for replicating particular results. Linking to a particular version of a source code file will enable replication even if you later make changes to the file. To access the URL for a particular version of a file first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Finally, click on the \texttt{Raw} button to be taken to the text-only version of the file. Copy this page's URL and use it in \verb|source_url|.
 
-Also, just like with \verb|source_data|\index{R command!source\_data}, we can set the \verb|sha1| argument to tell \verb|source_url| to make sure that the source code file it is downloading is the one we intended.\index{SHA-1 hash} This will work regardless of whether or not the file is stored on GitHub.
+Also, just like with \verb|source_data|\index{R function!source\_data}, we can set the \verb|sha1| argument to tell \verb|source_url| to make sure that the source code file it is downloading is the one we intended.\index{SHA-1 hash} This will work regardless of whether or not the file is stored on GitHub.
 
 \section{Reproducibly Random: {\tt{set.seed}}}
 
-If you are including simulations in your analysis it is often a good idea to specify the random number generator state you used.\index{random number generator} This will allow others to exactly replicate your `randomly'--really pseudo-randomly--generated simulation results. Use the \texttt{set.seed} command in your source code files or code chunks to do this.\index{R command!set.seed} For example use the following code to set the random number generator state\footnote{See the \texttt{Random} help file for detailed information on R's random number generation capabilities by typing \texttt{?Random} into your console.} and randomly draw 1,000 numbers from a standard normal distribution\index{normal distribution} with a mean of 0 and a standard deviation of 2\index{standard deviation}. 
+If you are including simulations in your analysis it is often a good idea to specify the random number generator state you used.\index{random number generator} This will allow others to exactly replicate your `randomly'--really pseudo-randomly--generated simulation results. Use the \texttt{set.seed} command in your source code files or code chunks to do this.\index{R function!set.seed} For example use the following code to set the random number generator state\footnote{See the \texttt{Random} help file for detailed information on R's random number generation capabilities by typing \texttt{?Random} into your console.} and randomly draw 1,000 numbers from a standard normal distribution\index{normal distribution} with a mean of 0 and a standard deviation of 2\index{standard deviation}. 
 
 <<Ch8SetSeed1>>=
 # Set seed as 125
@@ -271,7 +271,7 @@ Draw1 <- rnorm(1000, mean = 0, sd = 2)
 summary(Draw1)
 @
 
-\noindent The \texttt{rnorm} command\index{R command!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show you that we will draw the same numbers if we use the same seed, let's run the code again:
+\noindent The \texttt{rnorm} command\index{R function!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show you that we will draw the same numbers if we use the same seed, let's run the code again:
 
 <<Ch8SetSeed2>>=
 # Set seed as 125
@@ -290,7 +290,7 @@ Sometimes you may want to include computationally intensive analyses that take a
 
 When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis, the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see Section \ref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
 
-Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R command!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
+Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R function!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -308,7 +308,7 @@ Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
-\noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R command!rnorm} to take a random sample of size 1,000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
+\noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R function!rnorm} to take a random sample of size 1,000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}

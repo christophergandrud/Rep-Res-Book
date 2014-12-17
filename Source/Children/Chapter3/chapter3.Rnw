@@ -63,13 +63,13 @@ Creating an object with words and other characters--a character object--is very 
 Words <- "Hello World"
 @
 
-An object's type is important to keep in mind as it determines what we can do to it. For example, you cannot take the mean\index{R command!mean}\index{mean} of a character object like the {\emph{Words}} object:
+An object's type is important to keep in mind as it determines what we can do to it. For example, you cannot take the mean\index{R function!mean}\index{mean} of a character object like the {\emph{Words}} object:
 
 <<Ch3ClassError, echo=TRUE>>=
 mean(Words)
 @
 
-\noindent Trying to find the mean of our {\emph{Words}} object gives us a warning message and returns the value {\tt{NA}}\index{NA}\index{R!NA}: not applicable. You can also think of {\tt{NA}} as meaning ``missing''.\index{missing}\index{R!missing} To find out an object's type use the {\tt{class}}\index{R command!class}\index{class} command. For example:
+\noindent Trying to find the mean of our {\emph{Words}} object gives us a warning message and returns the value {\tt{NA}}\index{NA}\index{R!NA}: not applicable. You can also think of {\tt{NA}} as meaning ``missing''.\index{missing}\index{R!missing} To find out an object's type use the {\tt{class}}\index{R function!class}\index{class} command. For example:
 
 <<Ch3ClassCommand, echo=TRUE>>=
 class(Words)
@@ -81,7 +81,7 @@ So far we have only looked at objects with a single number or character string.\
 
 \noindent {\bf{Vectors}} \\[0.25cm] Vectors are the ``fundamental data type'' in R \cite[]{Matloff2011}. They are simply an ordered group of numbers, character strings, and so on.\footnote{In a vector every member of the group must be of the same type. If you want an ordered group of values with different types you can use lists.} It may be useful to think of basically all R objects as composed of vectors. For example, data frames are basically multiple vectors of the same length--i.e. they have the same number of rows--attached together to form columns.
 
-Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (combine)\index{combine}\index{R command!c}\index{R command!combine} function:
+Let's create a simple numeric vector containing the numbers 2.8, 2, and 14.8. To do this we will use the \texttt{c} (combine)\index{combine}\index{R function!c}\index{R function!combine} function:
 
 <<Ch3NumericVector, echo=TRUE>>=
 NumericVect <- c(2.8, 2, 14.8)
@@ -99,7 +99,7 @@ CharacterVect <- c("Albania", "Botswana", "Cambodia")
 CharacterVect
 @
 
-To give you a preview of what we are going to do when we start working with real data sets, let's combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{R command!cbind} function. This function binds the two vectors together side-by-side as columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind}\index{R command!rbind} function.}\label{cbind}
+To give you a preview of what we are going to do when we start working with real data sets, let's combine the two vectors {\emph{NumericVect}} and {\emph{CharacterVect}} into a new object with the \texttt{cbind}\index{R function!cbind} function. This function binds the two vectors together side-by-side as columns.\footnote{If you want to combine objects as if they were rows of the same column(s) use the \texttt{rbind}\index{R function!rbind} function.}\label{cbind}
 
 <<Ch3cbind, echo=TRUE>>=
 StringNumObject <- cbind(CharacterVect, NumericVect)
@@ -112,7 +112,7 @@ StringNumObject
 
 \noindent {\bf{Data frames}}
 
-If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame}\index{R command!data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.\label{data.frame}
+If we want to have an object with rows and columns and allow the columns to contain data with different types, we need to use data frames\index{data frame}. Let's use the \texttt{data.frame}\index{R function!data.frame} command to combine the {\emph{NumericVect}} and {\emph{CharacterVect}} objects.\label{data.frame}
 
 <<Ch3dataframe, echo=TRUE, tidy=FALSE>>=
 StringNumObject <- data.frame(CharacterVect, NumericVect)
@@ -123,13 +123,13 @@ StringNumObject
 
 \noindent There are a few important things to notice in this output. The first is that because we used the same name for the data frame object as the previous matrix object, R deleted the matrix object and replaced it with the data frame. This is something to keep in mind when you are creating new objects. In general it is a better idea to assign elements to new objects rather than overwriting old ones. This will help avoid accidentally using an object you had not intended to. It also allows you to more easily change previously run source code.
 
-You can see the data frame's names\index{R command!names}\index{R!names attribute} attribute.\footnote{Matrices can also have a names attribute.} It is the column names. You can use the \texttt{names} command to see any data frame's names:\footnote{You can also use \texttt{names} to assign names for the entire data frame. For example, \texttt{names(StringNumObject) <- c("Variable1", "Variable2")}}
+You can see the data frame's names\index{R function!names}\index{R!names attribute} attribute.\footnote{Matrices can also have a names attribute.} It is the column names. You can use the \texttt{names} command to see any data frame's names:\footnote{You can also use \texttt{names} to assign names for the entire data frame. For example, \texttt{names(StringNumObject) <- c("Variable1", "Variable2")}}
 
 <<Ch10Names, echo=TRUE>>=
 names(StringNumObject)
 @
 
-You will also notice that the first column of the data set has no name and is a series of numbers. This is the row.names attribute.\index{row.names attribute} Data frame rows can be given any name as long as each row name is unique. We can use the \texttt{row.names} command\index{R command!row.names} to set the row names from a vector. For example,
+You will also notice that the first column of the data set has no name and is a series of numbers. This is the row.names attribute.\index{row.names attribute} Data frame rows can be given any name as long as each row name is unique. We can use the \texttt{row.names} command\index{R function!row.names} to set the row names from a vector. For example,
 
 <<Ch3ReassignRowNames, echo=TRUE>>=
 # Reassign row.names
@@ -141,7 +141,7 @@ row.names(StringNumObject)
 
 \noindent You can see in this example how the \texttt{row.names} command can also be used to print the row names.\footnote{Note that this is really only useful for data frames with few rows.} The row.names attribute does not behave like a regular data frame column. You cannot, for example, include it as a variable in a regression. You can use the \texttt{row.names} command to assign the row.names values to a regular column (for an example see Section \ref{RowNamesTidy}).
 
-You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{R command!mean} command:
+You will notice in the output for \emph{StringNumObject} that the strings in the \textbf{CharacterVect} column are no longer in quotation marks. This does not mean that they are somehow now numeric data. To prove this try to find the mean of \textbf{CharacterVect} by running it through the \texttt{mean}\index{R function!mean} command:
 
 <<Ch3CharcterVectorMean, echo=TRUE>>=
 mean(StringNumObject$ChacterVect)
@@ -164,9 +164,9 @@ NewNumeric
 
 \paragraph{{\tt{attach}} and {\tt{with}}}
 
-Using the component selector can create long repetitive code if you want to select many components. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{R command!attach} and \texttt{with}\index{R command!with}.
+Using the component selector can create long repetitive code if you want to select many components. You have to write the object name, a dollar sign, and the component name every time you want to select a component. You can streamline your code by using commands such as \texttt{attach}\index{R function!attach} and \texttt{with}\index{R function!with}.
 
-The \texttt{attach} command attaches a database to R's search path.\footnote{You can see what is in your current search path with the \texttt{search}\index{R command!search} command. Just type \texttt{search()} into your R console.}\index{R!search path} R will then search the database for variables you specify. You don't need to use the component selector to tell R again to look in a particular data frame after you have attached it. For example, let's attach the \emph{cars} data that comes with R. It has two variables, \textbf{speed} and \textbf{dist}.\footnote{For more information on this data set type \texttt{?cars}\index{R command!?} into your R console.}
+The \texttt{attach} command attaches a database to R's search path.\footnote{You can see what is in your current search path with the \texttt{search}\index{R function!search} command. Just type \texttt{search()} into your R console.}\index{R!search path} R will then search the database for variables you specify. You don't need to use the component selector to tell R again to look in a particular data frame after you have attached it. For example, let's attach the \emph{cars} data that comes with R. It has two variables, \textbf{speed} and \textbf{dist}.\footnote{For more information on this data set type \texttt{?cars}\index{R function!?} into your R console.}
 
 {\small
 <<Ch3Attach, echo=TRUE>>=
@@ -184,7 +184,7 @@ detach(cars)
 @
 }
 
-\noindent We used the \texttt{head}\index{R command!head} command to see just the first few values of each variable. It is a good idea to \texttt{detach}\index{R command!detach} a data frame after you are done using it, to avoid confusing R.
+\noindent We used the \texttt{head}\index{R function!head} command to see just the first few values of each variable. It is a good idea to \texttt{detach}\index{R function!detach} a data frame after you are done using it, to avoid confusing R.
 
 Similarly you can use \texttt{with} when you run commands using a particular database (see Section \ref{FunctionsCommands} for more details about commands). For example, we can find the mean of \emph{NumericVect} \texttt{with} the \emph{StringNumObject} data frame:
 
@@ -195,7 +195,7 @@ with(StringNumObject, {
 )
 @
 
-\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R command!mean} command\footnote{Using R terminology the second ``argument''\index{R!argument} value--the code after the comma--of the \textbf{with} command is called an ``expression'',\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
+\noindent You can see that in the \texttt{with} command the data frame object goes first and then the \texttt{mean}\index{R function!mean} command\footnote{Using R terminology the second ``argument''\index{R!argument} value--the code after the comma--of the \textbf{with} command is called an ``expression'',\index{expression, R} because it can contain more than one R command or statement. See Section \ref{arguments} for a more comprehensive discussion of R command arguments.} goes second in curly brackets (\verb|{}|).
 
 For examples in this book I largely avoid using the \texttt{attach} and \texttt{with} commands. I mostly use the component selector. Though it creates longer code, I find that code written with the component selector is easier to follow. It's always clear which object we are selecting a component from. Nonetheless, \textbf{attach} and \textbf{with} are very useful for streamlining your R code.
 
@@ -215,7 +215,7 @@ head(cars)
 cars[3:7, ]
 @
 
-\noindent The colon (\texttt{:})\index{R!sequence}\index{R command!:} creates a sequence of whole numbers from 3 to 7. To select the fourth row of the \textbf{dist} column we can type:
+\noindent The colon (\texttt{:})\index{R!sequence}\index{R function!:} creates a sequence of whole numbers from 3 to 7. To select the fourth row of the \textbf{dist} column we can type:
 
 <<Ch3FourthSecond, echo=TRUE>>=
 cars[4, 2]
@@ -270,7 +270,7 @@ To find all of the arguments that a command can accept look at the {\bf{Argument
 
 You do have to be fairly precise with the syntax for your argument's values. Values for logical arguments\index{logical}\index{R!logical values} must written as \texttt{TRUE} or \texttt{FALSE}.\footnote{They can be abbreviated \texttt{T} and \texttt{F}.} Arguments that accept character strings require quotation marks.
 
-Let's see how to use multiple arguments with the \texttt{round} command.\index{R command!round} This command rounds a vector of numbers. We can use the \texttt{digits}\index{R!digits} argument to specify how many decimal places we want the numbers rounded to. To round the object \emph{MeanNumericVect} to one decimal place type:
+Let's see how to use multiple arguments with the \texttt{round} command.\index{R function!round} This command rounds a vector of numbers. We can use the \texttt{digits}\index{R!digits} argument to specify how many decimal places we want the numbers rounded to. To round the object \emph{MeanNumericVect} to one decimal place type:
 
 <<Ch3Round, echo=TRUE>>=
 round(x = MeanNumericVect, digits = 1)
@@ -293,7 +293,7 @@ You can stack arguments inside of other arguments. To have R find the mean of {\
 round(mean(NumericVect), digits = 1)
 @
 
-\noindent Stacking functions inside of each other can create code that is difficult to read. Another option that potentially makes more easily understandable code is piping\index{pipe} using the pipe function (\texttt{\%>\%}) that you can access from the \emph{dplyr} \citep{R-dplyr}\index{dplyr}\index{R command!\%>\%} package.\footnote{The \texttt{\%>\%} was introduced in the \emph{magrittr} package \citep{R-magrittr}.\index{magrittr} You can access the pipe function by loading this package as well.} The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of \emph{NumericVect} and then round it to one decimal place use:
+\noindent Stacking functions inside of each other can create code that is difficult to read. Another option that potentially makes more easily understandable code is piping\index{pipe} using the pipe function (\texttt{\%>\%}) that you can access from the \emph{dplyr} \citep{R-dplyr}\index{dplyr}\index{R function!\%>\%} package.\footnote{The \texttt{\%>\%} was introduced in the \emph{magrittr} package \citep{R-magrittr}.\index{magrittr} You can access the pipe function by loading this package as well.} The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of \emph{NumericVect} and then round it to one decimal place use:
 
 <<Ch3Pipe, echo=TRUE>>=
 # Load dplyr package
@@ -305,7 +305,7 @@ mean(NumericVect) %>% round(digits = 1)
 
 \subsection{The workspace \& history}
 
-All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R command!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
+All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R function!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
 
 {\small
 <<Ch3LS, echo=TRUE>>=
@@ -313,19 +313,19 @@ ls()
 @
 }
 
-You can remove specific objects from the workspace using the \texttt{rm} command\index{R command!rm}. For example, to remove the \texttt{CharacterVect} and \texttt{Words} objects type:
+You can remove specific objects from the workspace using the \texttt{rm} command\index{R function!rm}. For example, to remove the \texttt{CharacterVect} and \texttt{Words} objects type:
 
 <<Ch3RM, echo=TRUE, eval=FALSE>>=
 rm(CharacterVect, Words)
 @
 
-To save the entire workspace into a binary--not plain-text--RData file use the \texttt{save.image}\index{R command!save.image}\label{SaveLoadWS} command. The main argument of \texttt{save.image} is the location and name of the file you want to save the workspace into. If you don't specify the file path it will be saved into your current working directory (see Chapter \ref{DirectoriesChapter} for information on files paths and working directories). For example, to save the current workspace in a file called \emph{DecemberWorkspace.RData} in the current working directory type:
+To save the entire workspace into a binary--not plain-text--RData file use the \texttt{save.image}\index{R function!save.image}\label{SaveLoadWS} command. The main argument of \texttt{save.image} is the location and name of the file you want to save the workspace into. If you don't specify the file path it will be saved into your current working directory (see Chapter \ref{DirectoriesChapter} for information on files paths and working directories). For example, to save the current workspace in a file called \emph{DecemberWorkspace.RData} in the current working directory type:
 
 <<Ch3Workspace, echo=TRUE, eval=FALSE>>=
 save.image(file = "DecemberWorkspace.RData")
 @
 
-\noindent Use the \texttt{load}\index{R command!load} command to load a saved workspace back into R:
+\noindent Use the \texttt{load}\index{R function!load} command to load a saved workspace back into R:
 
 <<Ch3LoadWS, echo=TRUE, eval=FALSE>>=
 load(file = "DecemberWorkspace.RData")
@@ -333,7 +333,7 @@ load(file = "DecemberWorkspace.RData")
 
 You should generally avoid having R automatically save your workspace when you quit and reload it when you start R again. Instead, when you return to working on a project rerun the source code files. This avoids any complications caused when you use an object in your workspace that is left over from running an older version of the source code.\footnote{For example, imagine you create an object, then change the source code you used to create the object. However, there is a syntax error in the new version of the source code. The old object won't be overwritten and you will be mistakenly using the old object in future commands.} In general I also recommend against saving data in binary RData formatted files. Because they are not text files they are not human readable and are much less future proof.
 
-One of the few times when saving your workspace is very useful is when it includes an object that was computationally difficult and took a long time to create. In this case you can save only the large object with the \texttt{save} command.\footnote{The \texttt{save.image} command is just a special case of \texttt{save}.}\index{R command!save}\label{RSave} For example, if we have a very large object called \emph{Comp} we can save it to a file called \emph{Comp.RData} like this:
+One of the few times when saving your workspace is very useful is when it includes an object that was computationally difficult and took a long time to create. In this case you can save only the large object with the \texttt{save} command.\footnote{The \texttt{save.image} command is just a special case of \texttt{save}.}\index{R function!save}\label{RSave} For example, if we have a very large object called \emph{Comp} we can save it to a file called \emph{Comp.RData} like this:
 
 <<Ch3Comp, echo=TRUE, eval=FALSE>>=
 save(Comp, file = "Comp.RData")
@@ -341,11 +341,11 @@ save(Comp, file = "Comp.RData")
 
 \paragraph{R history}
 
-When you enter a command into R it becomes part of your history.\index{R!history} To see the most recent commands in your history use the \texttt{history}\index{R command!history} command. You can also use the up and down arrows on your keyboard when your cursor is in the R console to scroll through your history.
+When you enter a command into R it becomes part of your history.\index{R!history} To see the most recent commands in your history use the \texttt{history}\index{R function!history} command. You can also use the up and down arrows on your keyboard when your cursor is in the R console to scroll through your history.
 
 \subsection{Global R options}\label{ROptions}
 
-In R you can set global options with the \texttt{options} command.\index{R command!options}\index{R!global options} This lets you set how R runs and outputs commands through an entire R session. For example, to have output rounded to one decimal place set the \texttt{digits}\index{digits} argument:
+In R you can set global options with the \texttt{options} command.\index{R function!options}\index{R!global options} This lets you set how R runs and outputs commands through an entire R session. For example, to have output rounded to one decimal place set the \texttt{digits}\index{digits} argument:
 
 <<Ch3Options, echo=TRUE, eval=FALSE>>=
 options(digits = 1)
@@ -353,7 +353,7 @@ options(digits = 1)
 
 \subsection{Installing new packages and loading commands}\label{Packages}
 
-Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R command!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}.
+Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R function!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}.
 
 For the code you need to install all of the packages used in this book, see page \pageref{ReqPackages}. When you install a package, you will likely be given a list of mirrors\index{mirrors, CRAN} from which you can download the package. Simply select the mirror closest to you.
 
@@ -365,7 +365,7 @@ library(ggplot2)
 
 \noindent Please note that for the examples in this book I only specify what package a command is from if it is not loaded by default when you start an R session.
 
-Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R command!double-colon operator}\index{R command!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from the \emph{ggplot2} package we type:
+Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R function!double-colon operator}\index{R function!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from the \emph{ggplot2} package we type:
 
 <<Ch3ColonOperator, echo=TRUE, eval=FALSE>>=
 ggplot2::qplot(. . .)
@@ -398,7 +398,7 @@ There is an important pane that does not show up when you open RStudio for the f
 
 Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}} and R Markdown and R LaTeX in more detail in the next section.
 
-R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Script} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R command!source}.
+R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Script} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R function!source}.
 
 \begin{figure}[ht]
     \caption{RStudio Source Code Pane Top Bars}
@@ -713,7 +713,7 @@ By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compilin
 
 \subsection{\emph{knitr} \& R}
 
-As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command.\index{R command!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first use the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
+As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command.\index{R function!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first use the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
 <<Ch3RawKnitSetwd, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 setwd("~/Documents/")
@@ -727,19 +727,19 @@ knit(input = "Example.Rmd", output = "Example.md")
 
 \noindent You use the same steps for all other knittable document types. Note that if you do not specify the output file, {\emph{knitr}} will determine what the file name and extension should be. In this example it would come up with the same name and location as we gave it.
 
-In this example, using the \textbf{knit} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R command!markdownToHTML} command from the {\emph{markdown}} package, i.e.
+In this example, using the \textbf{knit} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R function!markdownToHTML} command from the {\emph{markdown}} package, i.e.
 
 <<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>=
 mardownToHTML(file = "Example.md", output = "Example.html")
 @
 
-\noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines \texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}.\index{R command!knit2html} You use it like this:
+\noindent This is a bit tedious. Luckily, there is a command in the {\emph{knitr}} package that combines \texttt{markdownToHTML} and \texttt{knit}. It is called \texttt{knit2html}.\index{R function!knit2html} You use it like this:
 
 <<Ch3RMDtoHTML, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 knit2html(file = "Example.Rmd", output = "Example.html")
 @
 
-\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}}\index{R command!texi2pdf} command in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX\index{BibTeX} for bibliographies). Here is a {\tt{texi2pdf}} example:
+\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}}\index{R function!texi2pdf} command in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX\index{BibTeX} for bibliographies). Here is a {\tt{texi2pdf}} example:
 
 <<CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 # Load tools package

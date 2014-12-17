@@ -28,7 +28,7 @@ The files for the examples used in this section can be downloaded from GitHub at
 
 \subsection{R Make-like files}
 
-When you create make-like files in R to organize and run your data gathering you usually only need one or two commands, {\tt{setwd}}\index{R command!setwd} and {\tt{source}}\index{R command!source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command more in the Chapter \ref{StatsModel}.}  Let's see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
+When you create make-like files in R to organize and run your data gathering you usually only need one or two commands, {\tt{setwd}}\index{R function!setwd} and {\tt{source}}\index{R function!source}. As we talked about in Chapter \ref{DirectoriesChapter}, {\tt{setwd}} simply tells R where to look for and place files. {\tt{source}} tells R to run code in an R source code file.\footnote{We use the {\tt{source}} command more in the Chapter \ref{StatsModel}.}  Let's see what an R data make file might look like for our example project (see Figure \ref{ExampleTree}). The file paths in this example are for Unix-like systems and the make-like file is called \emph{Makefile.R}.
 
 <<Ch6ExampleRMake, eval=FALSE, tidy=FALSE>>=
 ################
@@ -225,7 +225,7 @@ You can use Make to build almost any project from the shell, not just run R sour
 
 Now that we've covered the big picture, let's learn the different tools you will need to know to gather data from different types of sources. The most straightforward place to load data from is a local file, e.g. one stored on your computer. Though storing your data locally does not really encourage reproducibility, most research projects will involve loading data this way at some point. The tools you will learn for importing locally stored data files will also be important for most of the other methods further on.
 
-Data stored in plain-text files on your computer can be loaded into R using the \texttt{read.table}\index{R command!read.table} command. For example, imagine we have a CSV file called \emph{TestData.csv} stored in the current working directory. To load the data set into R simply type:
+Data stored in plain-text files on your computer can be loaded into R using the \texttt{read.table}\index{R function!read.table} command. For example, imagine we have a CSV file called \emph{TestData.csv} stored in the current working directory. To load the data set into R simply type:
 
 <<Ch6LocalReadTable, eval=FALSE, tidy=FALSE>>=
 TestData <- read.table("TestData.csv", sep = ",", header = TRUE)
@@ -276,7 +276,7 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
 
 \paragraph{Loading data from secure URLs with {\tt{source\_data}}}\label{SecureData6}
 
-As we saw in Chapter \ref{Storing}, we can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from Dropbox \emph{Public} folders (Section \ref{EnablePublicFolder}) and GitHub (Section \ref{GitDownload}).\index{repmis}\index{R command!source\_data} You can use \verb|source_data| to download data in plain-text format from almost any URL, as long as the file is not embedded in a larger HTML website.
+As we saw in Chapter \ref{Storing}, we can use the \verb|source_data| command in the \emph{repmis} package to simplify the process of downloading data from Dropbox \emph{Public} folders (Section \ref{EnablePublicFolder}) and GitHub (Section \ref{GitDownload}).\index{repmis}\index{R function!source\_data} You can use \verb|source_data| to download data in plain-text format from almost any URL, as long as the file is not embedded in a larger HTML website.
 
 One problem for reproducible research with sourcing data located on the internet is that data files may change without us knowing. This could change the results we get. Luckily, we can solve this problem with \verb|source_data|. In Chapter \ref{Storing} we saw that when we run the \verb|source_data| command we not only download a data file, but also find its SHA-1 hash.\index{SHA-1 hash} The SHA-1 hash is basically a unique number for the file. If the file changes, its SHA-1 hash will change. Once we know the file's SHA-1 hash we can use \verb|source_data|'s \verb|sha1| argument to make sure the file that we downloaded is the same as the one we intended to download.
 
@@ -301,7 +301,7 @@ DispropData <- repmis::source_data(OldUrlAddress,
 
 \paragraph{Loading data from Dropbox non-Public folders with {\tt{source\_DropboxData}}}\label{DropboxNonPublic}
 
-Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. The plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this webpage. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R command!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) its Dropbox key.\index{Dropbox!key}
+Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. The plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this webpage. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R function!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) its Dropbox key.\index{Dropbox!key}
 
 To find the file's key simply click on the \texttt{Share Link} button next to the file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) on the Dropbox website. Look at the URL for the webpage that appears. Here's an example:
 
@@ -323,7 +323,7 @@ FinDataFull <- repmis::source_DropboxData("fin_research_note.csv",
 
 \paragraph{Loading data using {\normalfont{RCurl}}}
 
-A more laborious way to download data from a secure URL that does not rely on \emph{repmis} is to use the \texttt{getURL}\index{getURL}\index{R command!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} as well as \verb|read.table|\index{R command!read.table} and \texttt{textConnection}.\index{R command!textConnection} The latter commands are in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to this method as well.
+A more laborious way to download data from a secure URL that does not rely on \emph{repmis} is to use the \texttt{getURL}\index{getURL}\index{R function!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} as well as \verb|read.table|\index{R function!read.table} and \texttt{textConnection}.\index{R function!textConnection} The latter commands are in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to this method as well.
 
 Let's try an example. To download the data file we used in Section \ref{GitDownload} it into R we could use this code:
 
@@ -354,10 +354,10 @@ names(DispropData)
 Sometimes data files are large, making them difficult to store and download without compressing\index{file compression} them. There are a number of compression methods such as Zip\index{Zip} and Tar\index{Tar}.\footnote{Tar archives are sometimes referred to as `tar balls'.\index{tar balls}} Zip files have the extension {\tt{.zip}} and Tar files use extensions such as {\tt{.tar}} and {\tt{.gz}}. In most cases\footnote{Some formats that require the {\emph{foreign}} package to open are more difficult. This is because functions such as {\tt{read.dta}} for opening Stata {\tt{.dta}} files only accept file names or URLs as arguments, not connections, which you create for unzipped files.} you can download, decompress, and create data frame objects from these files directly in R. To do this you need to:\footnote{The description of this process is based on a Stack Overflow comment by Dirk Eddelbuettel (see {\url{http://stackoverflow.com/questions/3053833/using-r-to-download-zipped-data-file-extract-and-import-data?answertab=votes\#tab-top}}, posted 10 June 2010.)}
 
 \begin{itemize}
-    \item create a temporary file with {\tt{tempfile}} to store the zipped file, which you will later remove with the {\tt{unlink command}}\index{R command!unlink} at the end,
-    \item download the file with {\tt{download.file}},\index{R command!download.file}
-    \item decompress the file with one of the {\tt{connections}}\index{R command!connections} commands in base R,\footnote{To find a full list of commands type {\tt{?connections}} into the R console.}
-    \item read the file with {\tt{read.table}}.\index{R command!read.table}
+    \item create a temporary file with {\tt{tempfile}} to store the zipped file, which you will later remove with the {\tt{unlink command}}\index{R function!unlink} at the end,
+    \item download the file with {\tt{download.file}},\index{R function!download.file}
+    \item decompress the file with one of the {\tt{connections}}\index{R function!connections} commands in base R,\footnote{To find a full list of commands type {\tt{?connections}} into the R console.}
+    \item read the file with {\tt{read.table}}.\index{R function!read.table}
 \end{itemize}
 
 \noindent The reason that we have to go through so many extra steps is that compressed files are more than just a single file and contain a number of files as well as metadata.\index{metadata}
@@ -439,9 +439,9 @@ If a package does not already exist to access data from a particular website the
 
 \paragraph{The general process}
 
-Simple web scraping involves downloading a file from the internet, parsing\index{parse} it (i.e. reading it), and extracting the data you are interested in then putting it into a data frame object. We already saw a simple example of this when we downloaded data from the a secure HTTPS website. We downloaded a website's content from a URL address into R with the \texttt{getURL}\index{R command!getURL} command. We then parsed the downloaded text as a CSV formatted data file, extracted it, and put it into a new data frame object.
+Simple web scraping involves downloading a file from the internet, parsing\index{parse} it (i.e. reading it), and extracting the data you are interested in then putting it into a data frame object. We already saw a simple example of this when we downloaded data from the a secure HTTPS website. We downloaded a website's content from a URL address into R with the \texttt{getURL}\index{R function!getURL} command. We then parsed the downloaded text as a CSV formatted data file, extracted it, and put it into a new data frame object.
 
-This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R command!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formatted data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} Inaddition, the helpful \emph{rvest} \citep{R-rvest} package was recently developed to provide an easy to use set of functions with capabilities similar to and often more capable than \emph{XML}.\index{rvest} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation''}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
+This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R function!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formatted data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} Inaddition, the helpful \emph{rvest} \citep{R-rvest} package was recently developed to provide an easy to use set of functions with capabilities similar to and often more capable than \emph{XML}.\index{rvest} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation''}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
 
 There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier.
 
