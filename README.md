@@ -65,50 +65,21 @@ following R session:
 
 
 ```
-## R version 3.1.1 (2014-07-10)
-## Platform: x86_64-apple-darwin13.3.0 (64-bit)
+## R version 3.1.2 (2014-10-31)
+## Platform: x86_64-apple-darwin14.0.0 (64-bit)
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
-##  [1] tools     splines   grid      stats     graphics  grDevices utils    
-##  [8] datasets  methods   base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] ZeligBayesian_0.1   MCMCpack_1.3-3      coda_0.16-1        
-##  [4] Zelig_4.2-1         sandwich_2.3-2      boot_1.3-13        
-##  [7] xtable_1.7-4        WDI_2.4             ROAuth_0.9.3       
-## [10] texreg_1.34         tables_0.7.79       sqldf_0.4-10       
-## [13] RSQLite_1.0.0       DBI_0.3.1           gsubfn_0.6-6       
-## [16] proto_0.3-10        stargazer_5.1       RJSONIO_1.3-0      
-## [19] rmarkdown_0.3.12    RCurl_1.95-4.3      bitops_1.0-6       
-## [22] reshape2_1.4        repmis_0.3.2        quantmod_0.4-2     
-## [25] TTR_0.22-0          xts_0.9-7           zoo_1.7-11         
-## [28] plyr_1.8.1          memisc_0.96-10      MASS_7.3-35        
-## [31] markdown_0.7.4      knitcitations_1.0.4 Hmisc_3.14-5       
-## [34] Formula_1.1-2       survival_2.37-7     lattice_0.20-29    
-## [37] httr_0.5            googleVis_0.5.6     ggplot2_1.0.0      
-## [40] formatR_1.0         extrafont_0.16      estout_1.2         
-## [43] dplyr_0.3.0.2       digest_0.6.4        devtools_1.6.1     
-## [46] data.table_1.9.4    countrycode_0.17    brew_1.0-6         
-## [49] apsrtable_0.8-8     animation_2.3       knitr_1.8.1        
+## [1] knitr_1.8.4
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] acepack_1.3-3.3     assertthat_0.1      bibtex_0.3-6       
-##  [4] car_2.0-22          chron_2.3-45        cluster_1.15.3     
-##  [7] colorspace_1.2-4    evaluate_0.5.5      extrafontdb_1.0    
-## [10] foreign_0.8-61      gtable_0.1.2        highr_0.4          
-## [13] htmltools_0.2.7     labeling_0.3        latticeExtra_0.6-26
-## [16] lazyeval_0.1.9      lubridate_1.3.3     magrittr_1.0.1     
-## [19] memoise_0.2.1       munsell_0.4.2       nnet_7.3-8         
-## [22] parallel_3.1.1      R.cache_0.10.0      R.methodsS3_1.6.1  
-## [25] R.oo_1.18.0         R.utils_1.34.0      RColorBrewer_1.0-5 
-## [28] Rcpp_0.11.3         RefManageR_0.8.40   rJava_0.9-6        
-## [31] rjson_0.2.15        rpart_4.1-8         Rttf2pt1_1.3.2     
-## [34] scales_0.2.4        stringr_0.6.2       tcltk_3.1.1        
-## [37] twitteR_1.1.7       xlsx_0.5.7          xlsxjars_0.6.1     
-## [40] XML_3.98-1.1
+## [1] evaluate_0.5.5 formatR_1.0    highr_0.4      stringr_0.6.2 
+## [5] tools_3.1.2
 ```
 
 ---
