@@ -354,9 +354,9 @@ Let's look at how to create LaTeX tables with \emph{xtable} by creating a table 
 
 \hlcom{# Create LaTeX table from M1 and show the output markup}
 \hlstd{xtable}(M1, \hlkwc{caption} = \hlstr{"Linear Regression,}
-    \hlstr{Dependent Variable: Exam Score"},
-    \hlkwc{label} = \hlstr{"BasicXtableSummary"},
-    \hlkwc{digits} = 1)
+        \hlstr{Dependent Variable: Exam Score"},
+        \hlkwc{label} = \hlstr{"BasicXtableSummary"},
+        \hlkwc{digits} = 1)
 @
         \end{alltt}
     \end{kframe}
@@ -373,9 +373,9 @@ library(xtable)
 
 # Create LaTeX table from M1 and show the output markup
 xtable(M1, caption = "Linear Regression, Dependent
-Variable: Exam Score",
-label = "BasicXtableSummary",
-digits = 1)
+        Variable: Exam Score",
+        label = "BasicXtableSummary",
+        digits = 1)
 @
 
 \paragraph{\emph{xtable} for Markdown/HTML}
@@ -430,31 +430,26 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
 
 \noindent We can now include these model objects in one LaTeX table with \emph{texreg}.
 
-<<Ch9BasictexregTable1,eval=FALSE>>=
+<<Ch9BasictexregTable1, results='asis'>>=
 # Load texreg package
 library(texreg)
+
+# Create custom coefficient names
+cust_coef <- c('(Intercept)', 'Education', 'Agriculture',
+                'Catholic', 'Infant Mortality',
+                'Fertility')
 
 # Create nested regression model table
 texreg(list(M1, M2, M3, M4, M5),
     caption = 'Nested Estimates Table with \\emph{texreg}',
     caption.above = TRUE,
-    label = 'Basic_texregTable')
+    label = 'Basic_texregTable',
+    custom.coef.names = cust_coef)
 @
 
-\noindent Notice that we placed the model objects in a list when we called \texttt{texreg}. \texttt{texreg} automatically created the \texttt{table} and \texttt{tabular} environments and by default centers the table.\footnote{Use the \texttt{center = FALSE} argument to override centering. If you would like to only create the \texttt{tabular} environment use the argument \texttt{table = FALSE}. Creating your own \texttt{table} environment can be useful in situations where you want more customizability.} We added a caption and reference label with the \texttt{caption} and \texttt{label} arguments respectively. By default the caption is placed below the table, so we used \texttt{caption.above = TRUE} to place it on top.
+\noindent Notice that we placed the model objects in a list when we called \texttt{texreg}. \texttt{texreg} automatically created the \texttt{table} and \texttt{tabular} environments and by default centers the table.\footnote{Use the \texttt{center = FALSE} argument to override centering. If you would like to only create the \texttt{tabular} environment use the argument \texttt{table = FALSE}. Creating your own \texttt{table} environment can be useful in situations where you want more customizability.} We added a caption and reference label with the \texttt{caption} and \texttt{label} arguments respectively. By default the caption is placed below the table, so we used \texttt{caption.above = TRUE} to place it on top. Finally, we created custom coefficient names with \texttt{custom.coef.names} that are a bit tidier than the variable names in our R dataset. Your readers will appreciate easily discernable coefficient names.
 
 In the LaTeX caption you'll notice \verb|\\emph{texreg}|. In LateX the \texttt{emph}\index{LaTeX!emph} command italicizes text (we'll see this again in Chapter \ref{LatexChapter}). We added an additional escape character \verb|\| so that R would not try to interpret the \texttt{e} and instead feed it to LaTeX. By default \texttt{texreg}: \verb|stars = c(0.001, 0.01, 0.05)| to determine at what p-values to display statistical significance stars. This is the same as the \texttt{lm} model summary default showing three sets of statistical significance stars.\index{significance stars} You can define the significance levels by assigning a different numeric vector to the \texttt{stars} argument.
-
-<<Ch9BasictexregTable2, echo=FALSE, results='asis'>>=
-# Load texreg package
-library(texreg)
-
-# Create nested regression model table
-texreg(list(M1, M2, M3, M4, M5),
-    caption = 'Nested Estimates Table with \\emph{texreg}',
-    caption.above = TRUE,
-    label = 'Basic_texregTable')
-@
 
 There are many other changes you can make to tables created with \emph{texreg}. You can change the column and coefficient names, determine what type of standard errors to show, and so on. For the full list of arguments see the help file by typing \texttt{?texreg} into your R Console.
 
@@ -466,8 +461,9 @@ You can also use the \emph{texreg} package to create tables in HTML documents. I
 
 <<Ch9htmlreg, eval=FALSE>>=
 htmlreg(list(M1, M2, M3, M4, M5),
-caption = 'Nested Estimates Table in HTML Document',
-caption.above = TRUE)
+        caption = 'Nested Estimates Table in HTML Document',
+        caption.above = TRUE,
+        custom.coef.names = cust_coef)
 @
 
 \noindent Notice that we did not include the \texttt{label} argument as this is not available in HTML. The resulting table looks like this:\\[0.5cm]
@@ -505,7 +501,7 @@ More generally, to rescale a table use
 
 \subsection{\emph{xtable} with non-supported class objects}\label{NonSupportedClasses}
 
-The \emph{apsrtable} and \emph{xtable} packages are very convenient for model objects they know how to handle. With supported class objects \emph{xtable} knows where to look for the vectors containing the things--coefficient names, standard errors, and so on--that they need to create tables. With unsupported classes, however, they don't know where to look for these things. Luckily, there is a work around. You tell \texttt{xtable} where to find elements you want to include in your table. \texttt{xtable} can handle matrix and data frame class objects. The rows of these objects become table rows and the columns become the table columns. So, to create tables with non-supported class objects you need to:
+The \emph{texreg} and \emph{xtable} packages are very convenient for model objects they know how to handle. With supported class objects the functions in these packages know where to look for the vectors containing the things--coefficient names, standard errors, and so on--that they need to create tables. With unsupported classes, however, they don't know where to look for these things. Luckily, there is a work around. You tell \texttt{xtable} where to find elements you want to include in your table. \texttt{xtable} can handle matrix and data frame class objects. The rows of these objects become table rows and the columns become the table columns. So, to create tables with non-supported class objects you need to:
 
 \begin{enumerate}
     \item find and extract the information from the unsupported class object that you want in the table,
