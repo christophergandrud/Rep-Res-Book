@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 9 September 2014
+% Updated: 18 December 2014
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -18,7 +18,7 @@ Careful file management is crucial for reproducible research. Remember two of th
 
 \noindent Apart from the times when you have an email exchange (or even meet in person) with someone interested in reproducing your research, the main information independent researchers have about the procedures is what they access in files you make available: data files, analysis files, and presentation files. If these files are well organized and the way they are tied together is clear, replication will be much easier. File management is also important for you as a researcher, because if your files are well organized you will be able to more easily make changes, benefit from work you have already done, and collaborate with others.
 
-Using tools such as R, {\emph{knitr}}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program}\index{command line} allow you to control files--creating, deleting, relocating--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths.
+Using tools such as R, {\emph{knitr}}, and markup languages like LaTeX requires fairly detailed knowledge of where files are stored in your computer. Handling files to enable reproducibly may require you to use command line tools to access and organize your files. R and Unix-like shell programs\index{Unix-like shell program}\index{command line} allow you to control files--creating, deleting, relocating--in powerful and really reproducible ways. By typing these commands you are documenting every step you took. This is a major advantage over graphical user interface-type systems where you organize files by clicking and dragging them with the cursor. However, text commands require you to know your files' specific addresses--their file paths.\index{file path}
 
 In this chapter we discuss how a reproducible research project may be organized and cover the basics of file path naming conventions\index{file path naming conventions} in Unix-like operating systems, such as Mac OS X and Linux, as well as Windows. We then learn how to organize them with RStudio Projects\index{RStudio!Projects}. Finally, we'll cover some basic R and Unix-like shell commands for manipulating files as well as how to navigate through files in RStudio in the {\emph{Files}} pane. The skills you will learn in this chapter will be heavily used in the next chapter (Chapter \ref{Storing}) and throughout the book.
 
@@ -27,7 +27,7 @@ In this chapter we work with locally stored files\index{locally stored}, i.e. fi
 
 \section{File Paths \& Naming Conventions}
 
-All of the operating systems\index{operating systems} covered in this book organize files in hierarchical directories\index{directories}, also know as file trees. To a large extent, directories can be thought of as the folders you usually see on your Windows or Mac desktop.\footnote{To simplify things, I use the terms `directory' and `folder' interchangeably in this book.} They are called `hierarchical' because directories\index{hierarchical directories} are located inside of other directories, as in Figure \ref{ExampleTree}.
+All of the operating systems\index{operating systems} covered in this book organize files in hierarchical directories\index{directories}, also know as file trees. To a large extent, directories can be thought of as the folders you usually see on your Windows or Mac desktop.\footnote{To simplify things, I use the terms `directory' and `folder' interchangeably in this book.} They are called hierarchical because directories\index{hierarchical directories} are located inside of other directories, as in Figure \ref{ExampleTree}.
 
 \subsection{Root directories}
 
@@ -51,7 +51,7 @@ When you use R, markup languages, and many of the other tools covered in this bo
 
 \subsection{Absolute vs. relative paths}
 
-For reproducible research, collaborative research, and even you if you even change the computer you work on, it is a good idea to use relative rather than absolute file paths.\index{relative file path}\index{absolute file path} Absolute file paths give the entire path of a given file or directory on a specific system. For example, \texttt{/ExampleProject/Data} is an absolute path as it specifies the path of the \emph{Data} child directory all the way back to the root directory. However, if our current working directory is \emph{ExampleProject} and we want to link to the \emph{Data} child directory or a file in it, we don't need the absolute path. We could simply use \texttt{Data/}, i.e. the path relative to the working directory.
+For reproducible research, collaborative research, and even you if you even change the computer you work on, it is a good idea to use relative rather than absolute file paths.\index{file path!relative}\index{file path!absolute} Absolute file paths give the entire path of a given file or directory on a specific system. For example, \texttt{/ExampleProject/Data} is an absolute path as it specifies the path of the \emph{Data} child directory all the way back to the root directory. However, if our current working directory is \emph{ExampleProject} and we want to link to the \emph{Data} child directory or a file in it, we don't need the absolute path. We could simply use \texttt{Data/}, i.e. the path relative to the working directory.
 
 It is good practice to use relative paths when possible and organize your files such that using relative paths is easy. This makes your code less dependent on the particular file structure of a particular computer. For example, imagine you use \texttt{C:\textbackslash{}ExampleProject\textbackslash{}Data} in your source code to link to the \emph{Data} directory. Someone--a collaborator, a researcher reproducing your work, or even you--then tries to run the code on a different computer. The code will break if they are, for instance, using a Unix-like system or has placed \emph{ExampleProject} in a different partition of their hard drive then their code will break. This can be fixed relatively straightforwardly by updating the file path in the source. However, this is tedious and unnecessary if you use relative file paths.
 
@@ -59,17 +59,21 @@ It is good practice to use relative paths when possible and organize your files 
 
 It is generally good practice to avoid putting spaces in your file and directory names. For example, I called the example project parent directory ``ExampleProject'' rather than ``Example Project''. Spaces in file and directory names can sometimes create problems for computer programs trying to read the file path. The program may believe that the space indicates that the path name has ended. To make multi-word names easily readable without using spaces, adopt a convention such as CamelBack\index{CamelBack}. In CamelBack new words are indicated with capital letters, while all other letters are lower case. For example, ``ExampleProject''.
 
-\clearpage
-\thispagestyle{plain}
-\begin{landscape}
-    \begin{figure}[th!]
-        \caption{Example Research Project File Tree}
-        \label{ExampleTree}
-        \begin{center}
-        \input{Children/Chapter4/images4/ExampleFilePath.tex}
-        \end{center}
-    \end{figure}
-\end{landscape}
+\begin{figure}[th!]
+    \caption{Example Research Project File Tree}
+    \label{ExampleTree}
+    \begin{center}
+    \input{Children/Chapter4/images4/ExampleFilePath.tex}
+    \end{center}
+\end{figure}
+
+\section{Organizing Your Research Project}
+
+Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's parent directory is called {\emph{ExampleProject}}. Inside this directory are the primary knittable documents (\emph{Paper.Rnw} \emph{Slideshow.Rnw}, and \emph{Website.Rnw}). In addition there is an \emph{Analysis} sub-directory with the R files to run the statistical analyses. Then there is a further \emph{Data} child directory.
+
+The nested file structure allows you to use relative file paths. The knittable documents can call \emph{Analysis1.R} with the relative path \emph{Analysis/Analysis1.R}, which in turn could call a file in the \emph{Data/} subdirectory. If all of the directories were at the same level of the file tree than you would need to use absolute file paths.\index{file path!absolute}\index{file path!relative}
+
+In addition to the main files and subdirectories in {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \emph{README}, its contents will automatically be displayed on the repository's main page. If the \emph{README} file is written using Markdown (e.g. \emph{README.md}, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
 \begin{wrapfigure}{r}{0.4\textwidth}
     \caption{An Example RStudio Project Menu}
@@ -78,12 +82,6 @@ It is generally good practice to avoid putting spaces in your file and directory
         \includegraphics[width=0.3\textwidth]{Children/Chapter4/images4/ProjectMenu.png}
     \end{center}
 \end{wrapfigure}
-
-\section{Organizing Your Research Project}
-
-Figure \ref{ExampleTree} gives an example of how the files in a simple reproducible research project could be organized. The project's parent directory is called {\emph{ExampleProject}}. Inside this directory are three subdirectories: a data gathering directory, an analysis directory, and a presentation directory. Each of these directories contains further subdirectories and files. The {\emph{Presentation}} directory for example contains subdirectories for files that present the findings in article, slideshow, and website formats.
-
-In addition to the main subdirectories of {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \emph{README}, its contents will automatically be displayed on the repository's main page. If the \emph{README} file is written using Markdown (e.g. \emph{README.md}, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
 It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown. Simply include the \texttt{sessionInfo()}\index{R function!sessionInfo} command in a \emph{knitr} code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
