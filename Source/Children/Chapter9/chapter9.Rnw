@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 17 December 2014
+% Updated: 18 December 2014
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -317,15 +317,11 @@ You can also change the markup language that the table is created in using the \
 
 \index{kable|)}
 
-\subsection{\emph{xtable} for LaTeX and HTML}\index{xtable}
+\subsection{\emph{xtable} for LaTeX and HTML}\index{xtable|(}
 
+While \texttt{kable} allows you to quickly create simple tables, it can only  do so from matrices and data frames. It also has a limited customizability. The \emph{xtable} package can create more customizable tables from a wider variety of R objects, including statistical model objects.
 
-
-\subsection{\emph{texreg} for LaTeX}\index{texreg}
-
-\texttt{kable} and \emph{xtable} are limited in when it comes to creating tables from statistical model objects. \texttt{kable} only works with matrices and data frames. \emph{xtable} is easiest when working with only one model object at a time. Furthermore, by default these tools do not create output tables that present estimates from multiple statistical models in the style used by many prominent academic journals. The \emph{texreg} package is very useful for creating these types of tables.
-
-Different R statistical model estimation commands can produce model summaries of different classes. For example, the \texttt{lm} (linear model) command creates model summaries of the \texttt{lm} class. For example, let's create a simple linear regression using the \emph{swiss} data frame and \texttt{lm}\index{R function!lm}\index{simple linear regression} command. This data frame is included with R by default. The simple linear regression model we are going to make has the \emph{swiss} variable \textbf{Examination} as the dependent variable and \textbf{Education} as the only independent variable.\footnote{For a description of these variables type \texttt{?swiss} into the console}
+Different R statistical model estimation commands can produce model objects\index{model object} of different classes. For example, the \texttt{lm} (linear model) command creates model summaries of the \texttt{lm} class. For example, let's create a simple linear regression using the \emph{swiss} data frame and \texttt{lm}\index{R function!lm}\index{simple linear regression} command. This data frame is included with R by default. The simple linear regression model we are going to make has the \emph{swiss} variable \textbf{Examination} as the dependent variable and \textbf{Education} as the only independent variable.\footnote{For a description of these variables type \texttt{?swiss} into the console}
 
 <<Ch9SimpleSwissRegression>>=
 # Fit simple linear regression model
@@ -342,7 +338,79 @@ class(M1)
 summary(M1)
 @
 
-Imagine we want to show the estimates from a number of nested regression models in a table like Table \ref{Basic_texregTable}. For example, to estimate nested regression models from the remaining variables in the \emph{swiss} data set we would type:
+\noindent To find a full list of object classes that \emph{xtable} supports type \texttt{methods(xtable)}\index{R function!methods} into the R Console after you have loaded the package.
+
+\paragraph{\emph{xtable} for LaTeX}
+
+Let's look at how to create LaTeX tables with \emph{xtable} by creating a table summarizing the estimates from the \emph{M1} model object.
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textless{\textless}results='asis', echo=FALSE\textgreater{\textgreater}=
+\hlcom{# Load xtable}
+\hlstd{library}(xtable)
+
+\hlcom{# Create LaTeX table from M1 and show the output markup}
+\hlstd{xtable}(M1, \hlkwc{caption} = \hlstr{"Linear Regression,}
+    \hlstr{Dependent Variable: Exam Score"},
+    \hlkwc{label} = \hlstr{"BasicXtableSummary"},
+    \hlkwc{digits} = 1)
+@
+        \end{alltt}
+    \end{kframe}
+\end{knitrout}
+
+\noindent When included in an R Sweave-style LaTeX document this code will create a table exactly like Table \ref{BasicXtableSummary}.
+
+Let's go through this code, working from the outside in. First you'll notice that we've set two \emph{knitr} code chunk options. As we discussed earlier, \verb|results='asis'| allows us to include the LaTeX formatted table created by \emph{xtable}. The next option \verb|echo=FALSE| hides the code from being shown in our final document. The \emph{xtable} command creates the summary table of our \emph{M1} model object. Not only does it produce both complete \texttt{tabular} and \texttt{table} environments, but also through the \texttt{caption} and \texttt{label} arguments it automatically adds in the table's title and cross-reference label, respectively. Finally, notice that I added the \texttt{digits = 1} argument to. This specifies that I want numbers in the table to be rounded to one decimal digit.
+
+% Actually show M1Table in the text
+<<Ch9xtableSummaryPrint, results='asis', echo=FALSE>>=
+# Load xtable
+library(xtable)
+
+# Create LaTeX table from M1 and show the output markup
+xtable(M1, caption = "Linear Regression, Dependent
+Variable: Exam Score",
+label = "BasicXtableSummary",
+digits = 1)
+@
+
+\paragraph{\emph{xtable} for Markdown/HTML}
+
+We can use \emph{xtable} and the \texttt{print.xtable}\index{print.xtable} command\footnote{Note: you can abbreviate \texttt{print.xtable} simply as \texttt{print}.} to also create tables for Markdown and HTML documents. The \emph{xtable} command produces, unsurprisingly, \texttt{xtable} class objects. We can run these through the \texttt{print} command and add arguments to customize how the table is formatted. By default \texttt{print.xtable}'s \texttt{type} argument is set to \verb|"latex"|. To create an HTML table that can be inserted into Markdown and HTML documents set the \texttt{type} argument from \verb|"latex"| to  \verb|"html"|. For example, to create an HTML version of the table summarizing \emph{M1} and include it in an R Markdown document we type:
+
+<<Ch9PrintXTableHTML, eval=FALSE>>=
+```{r, results='asis', echo=FALSE}
+# Load xtable
+library(xtable)
+
+# Create an xtable object from M1
+M1Table <- xtable(M1, caption = "Linear Regression, Dependent
+Variable: Exam Score",
+label = "BasicXtableSummary",
+digits = 1)
+
+# Create HTML summary table of M1Table
+print.xtable(M1Table, type = "html", caption.placement = "top")
+```
+@
+
+\noindent If you intend to include multiple tables in your R Markdown document you will want all of the tables to be printed in HTML. You can place \verb|options("xtable.type" = "html")|\index{R function!options} in a code chunk near the beginning of your document.\footnote{Of course you will probably want to use the \texttt{include=FALSE} \emph{knitr}  option with this code chunk.} This simply makes it so that you don't need to include \verb|type = "html"| every time you use \texttt{print}.
+
+Notice in the previous code example that we also added the \texttt{caption.placement = "top"} argument. This will move the caption from the bottom of the table, as it is in Table \ref{BasicXtableSummary}, to the top. See the \emph{xtable} package documentation\footnote{\url{http://cran.r-project.org/web/packages/xtable/xtable.pdf}} for the full list of \texttt{print.xtable} options.
+
+\index{xtable|(}
+
+\subsection{\emph{texreg} for LaTeX and HTML}\index{texreg|(}
+
+\texttt{kable} and \emph{xtable} are limited in when it comes to creating tables from statistical model objects. \texttt{kable} only works with matrices and data frames. \emph{xtable} is easiest when working with only one model object at a time. Furthermore, by default these tools do not create output tables that present estimates from multiple statistical models in the style used by many prominent academic journals. The \emph{texreg} package is very useful for creating these types of tables. It also supports more model object types than \emph{xtable}.
+
+\paragraph{\emph{texreg} for LaTeX}
+
+Imagine we want to show the estimates from a number of nested regression models in LaTeX a table like Table \ref{Basic_texregTable}. For example, to estimate nested regression models from the remaining variables in the \emph{swiss} data set we would type:
 
 <<Ch9EstimateNested, tidy=FALSE>>=
 # Estimated nested regression models
@@ -358,10 +426,12 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
             Infant.Mortality + Fertility, data = swiss)
 @
 
-\noindent We can now include these model objects in one table with \emph{texreg}.
+\paragraph{\emph{xtable} for LaTeX}
+
+\noindent We can now include these model objects in one LaTeX table with \emph{texreg}.
 
 <<Ch9BasictexregTable1,eval=FALSE>>=
-# Load apsrtable package
+# Load texreg package
 library(texreg)
 
 # Create nested regression model table
@@ -371,12 +441,12 @@ texreg(list(M1, M2, M3, M4, M5),
     label = 'Basic_texregTable')
 @
 
-\noindent Notice that we placed the model objects in a list when we called \texttt{texreg}. \texttt{texreg} automatically created a the \texttt{table} environment and by default centers the table.\footnote{Use the \texttt{center = FALSE} argument to override this.} We added a caption and reference label with the \texttt{caption} and \texttt{label} arguments respectively. By default the caption is placed below the table, so we used \texttt{caption.above = TRUE} to place it on top.
+\noindent Notice that we placed the model objects in a list when we called \texttt{texreg}. \texttt{texreg} automatically created the \texttt{table} and \texttt{tabular} environments and by default centers the table.\footnote{Use the \texttt{center = FALSE} argument to override centering. If you would like to only create the \texttt{tabular} environment use the argument \texttt{table = FALSE}. Creating your own \texttt{table} environment can be useful in situations where you want more customizability.} We added a caption and reference label with the \texttt{caption} and \texttt{label} arguments respectively. By default the caption is placed below the table, so we used \texttt{caption.above = TRUE} to place it on top.
 
 In the LaTeX caption you'll notice \verb|\\emph{texreg}|. In LateX the \texttt{emph}\index{LaTeX!emph} command italicizes text (we'll see this again in Chapter \ref{LatexChapter}). We added an additional escape character \verb|\| so that R would not try to interpret the \texttt{e} and instead feed it to LaTeX. By default \texttt{texreg}: \verb|stars = c(0.001, 0.01, 0.05)| to determine at what p-values to display statistical significance stars. This is the same as the \texttt{lm} model summary default showing three sets of statistical significance stars.\index{significance stars} You can define the significance levels by assigning a different numeric vector to the \texttt{stars} argument.
 
 <<Ch9BasictexregTable2, echo=FALSE, results='asis'>>=
-# Load apsrtable package
+# Load texreg package
 library(texreg)
 
 # Create nested regression model table
@@ -388,11 +458,27 @@ texreg(list(M1, M2, M3, M4, M5),
 
 There are many other changes you can make to tables created with \emph{texreg}. You can change the column and coefficient names, determine what type of standard errors to show, and so on. For the full list of arguments see the help file by typing \texttt{?texreg} into your R Console.
 
+\paragraph{\emph{texreg} for HTML}
+
+You can also use the \emph{texreg} package to create tables in HTML documents. Simply use the \texttt{htmlreg} function\index{R function!htmlreg} rather than \texttt{texreg}. The syntax is largely similar, though arguments relating to LaTeX are not available while others relating the HTML are.
+
+\index{texreg|)}
+
+\subsection{Fitting Large Tables in LaTeX}
+
+Sometimes you may have large tables that are difficult to fit onto a page in LaTeX. There are a number of ways to adjust tables so that they fit on the page.
+
 \paragraph{LaTeX landscape tables}\index{LaTeX!landscape}
 
 If your LaTeX table is very long, e.g. because it shows results from many estimation models, you can use LaTeX's \texttt{lscape} package\index{lscape} to create \texttt{landscape} formatting environments. Rather than orienting the text of a page so that it is in profile (a long page), a \texttt{landscape} environment\index{LaTeX environment!landscape} turns it 90 degrees so that it has a landscape orientation (a wide page).
 
 To use the \emph{lscape} package first place \verb|\usepackage{lscape}| in your LaTeX document's preamble. Then begin a \texttt{landscape} environment with \verb|\begin{landscape}| where you would like it located in the text. Then place the \texttt{table} environment information and \emph{knitr} code for creating the table. Finally close the \texttt{landscape} environment with \verb|\end{landscape}|.
+
+\parapgraph{LaTeX scalebox for tables}\index{LaTeX!scalebox}
+
+If your table is very wide then the \texttt{scalebox} function from the \emph{graphics} package\index{LaTeX!graphics package} could be useful. This expands or shrinks the text in the table. \texttt{texreg} actually has a \texttt{scalebox} argument. If you use \texttt{scalebox = 0.5} it will halve the size of the table; \texttt{scalebox = 2} doubles it.
+
+More generally, to rescale a table use \verb|\scalebox{HORIZONTAL_SCALE}[VERTICAL_SCALE]{TABLE}|. \texttt{HORIZONTAL_SCALE} is how much to scale the table horizontally. \texttt{VERTICAL_SCALE} is how much to scale vertically and \texttt{TABLE} is the table or R code chunk to create the table.
 
 \subsection{\emph{xtable} with non-supported class objects}\label{NonSupportedClasses}
 
@@ -464,9 +550,9 @@ NBSumDataFrame
 library(dplyr)
 
 # Change quantile variable names
-NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "2.5%" = X2.5.)
-NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "50%" = X50.)
-NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "97.5%" = X97.5.)
+NBSumDataFrame <- rename(NBSumDataFrame, "2.5%" = X2.5.)
+NBSumDataFrame <- rename(NBSumDataFrame, "50%" = X50.)
+NBSumDataFrame <- rename(NBSumDataFrame, "97.5%" = X97.5.)
 
 
 # Reorder variables and remove the standard deviation
@@ -544,9 +630,9 @@ library(dplyr)
 library(xtable)
 
 # Change quantile variable names
-NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "2.5%" = X2.5.)
-NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "50%" = X50.)
-NBSumDataFrame <- dplyr::rename(NBSumDataFrame, "97.5%" = X97.5.)
+NBSumDataFrame <- rename(NBSumDataFrame, "2.5%" = X2.5.)
+NBSumDataFrame <- rename(NBSumDataFrame, "50%" = X50.)
+NBSumDataFrame <- rename(NBSumDataFrame, "97.5%" = X97.5.)
 
 
 # Reorder variables and remove the standard deviation variable
