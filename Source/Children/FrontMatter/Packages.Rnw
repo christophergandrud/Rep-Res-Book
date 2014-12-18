@@ -8,17 +8,18 @@ set_parent('Rep-Res-Parent.Rnw')
 
 In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately. \textbf{Note:} in general you should aim to minimize the number of packages that your research depends on. Doing so will lessen the possibility that your code will ``break'' when a package is updated. This book depends on relatively many packages because it is a special purpose of illustrating a variety of tools that you can use for reproducible research.
 
-To install most of the user-written packages used in this book, copy the following code and paste it into your R console:
+To install key user-written packages used in this book, copy the following code and paste it into your R console:
 
 <<FrontInstallPackages, eval=FALSE, tidy=FALSE>>=
 install.packages(c("brew", "countrycode",
-                "devtools", "dplyr", "digest",
-                "ggplot2", "googleVis", "httr",
+                "devtools", "dplyr",
+                "ggplot2", "googleVis",
                 "knitcitations", "knitr",
-                "quantmod", "repmis", "reshape2",
-                "RCurl", "rjson", "RJSONIO", "rmarkdown",
-                "stargazer", "texreg", "tools", "WDI",
-                "XML", "Zelig"))
+                "quantmod", "repmis",
+                "reshape2", "RCurl",
+                "rmarkdown", "texreg",
+                "WDI", "xtable", "Zelig")
+)
 @
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror''\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
@@ -29,7 +30,7 @@ In Chapter \ref{TablesChapter} we use the \emph{Zelig} package \citep{R-Zelig}\i
 install.packages("ZeligBayesian",
                  repos = "http://r.iq.harvard.edu/",
                  type  = "source"
-                 )
+)
 @
 
 \paragraph{Special issues for Windows and Linux Users}
@@ -42,9 +43,9 @@ On Linux you will need to install the \emph{RCurl} \citep{R-RCurl}\index{RCurl} 
 sudo apt-get update
 
 sudo apt-get install libcurl4-gnutls-dev
-
-sudo apt-get install r-cran-xml
 sudo apt-get install libxml2-dev
+sudo apt-get install r-cran-xml
+sudo apt-get install r-cran-rjava
 @
 
 
@@ -57,37 +58,37 @@ sudo apt-get install libxml2-dev
 
 doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
 toInstall <- c("animation",
-               "brew",
-               "countrycode",
-               "data.table",
-               "devtools",
-               "digest",
-               "dplyr",
-               "extrafont",
-               "formatR",
-               "ggplot2",
-               "googleVis",
-               "httr",
-               "knitcitations",
-               "knitr",
-               "magrittr",
-               "markdown",
-               "quantmod",
-               "RCurl",
-               "repmis",
-               "reshape2",
-               "rjson",
-               "rmarkdown",
-               "RJSONIO",
-               "rvest",
-               "stargazer",
-               "survival",
-               "texreg",
-               "twitteR",
-               "WDI",
-               "XML",
-               "xtable",
-               "Zelig",
+                "brew",
+                "countrycode",
+                "data.table",
+                "devtools",
+                "digest",
+                "dplyr",
+                "extrafont",
+                "formatR",
+                "ggplot2",
+                "googleVis",
+                "httr",
+                "knitcitations",
+                "knitr",
+                "magrittr",
+                "markdown",
+                "quantmod",
+                "RCurl",
+                "repmis",
+                "reshape2",
+                "rjson",
+                "rmarkdown",
+                "RJSONIO",
+                "rvest",
+                "stargazer",
+                "survival",
+                "texreg",
+                "twitteR",
+                "WDI",
+                "XML",
+                "xtable",
+                "Zelig",
                 "ZeligBayesian"
                )
 
