@@ -408,7 +408,7 @@ Notice in the previous code example that we also added the \texttt{caption.place
 
 \texttt{kable} and \emph{xtable} are limited in when it comes to creating tables from statistical model objects. \texttt{kable} only works with matrices and data frames. \emph{xtable} is easiest when working with only one model object at a time. Furthermore, by default these tools do not create output tables that present estimates from multiple statistical models in the style used by many prominent academic journals. The \emph{texreg} package is very useful for creating these types of tables. It also supports more model object types than \emph{xtable}.
 
-\paragraph{\emph{texreg} for LaTeX}
+\paragraph{\emph{texreg} for LaTeX}\index{R function!texreg|(}
 
 Imagine we want to show the estimates from a number of nested regression models in LaTeX a table like Table \ref{Basic_texregTable}. For example, to estimate nested regression models from the remaining variables in the \emph{swiss} data set we would type:
 
@@ -458,9 +458,21 @@ texreg(list(M1, M2, M3, M4, M5),
 
 There are many other changes you can make to tables created with \emph{texreg}. You can change the column and coefficient names, determine what type of standard errors to show, and so on. For the full list of arguments see the help file by typing \texttt{?texreg} into your R Console.
 
+\index{R function!texreg|)}
+
 \paragraph{\emph{texreg} for HTML}
 
-You can also use the \emph{texreg} package to create tables in HTML documents. Simply use the \texttt{htmlreg} function\index{R function!htmlreg} rather than \texttt{texreg}. The syntax is largely similar, though arguments relating to LaTeX are not available while others relating the HTML are.
+You can also use the \emph{texreg} package to create tables in HTML documents. Instead of the \texttt{texreg} function use \texttt{htmlreg}\index{R function!htmlreg}. The syntax is largely similar, though arguments relating to LaTeX are not available while others relating the HTML are. Here is a simple example creating creating Table \ref{Basic_texregTable} in an HTML document:
+
+<<Ch9htmlreg, eval=FALSE>>=
+htmlreg(list(M1, M2, M3, M4, M5),
+caption = 'Nested Estimates Table in HTML Document',
+caption.above = TRUE)
+@
+
+\noindent Notice that we did not include the \texttt{label} argument as this is not available in HTML. The resulting table looks like this:\\[0.5cm]
+
+\includegraphics[scale=0.6]{Children/Chapter9/images9/htmlregExample.png}
 
 \index{texreg|)}
 
@@ -474,11 +486,22 @@ If your LaTeX table is very long, e.g. because it shows results from many estima
 
 To use the \emph{lscape} package first place \verb|\usepackage{lscape}| in your LaTeX document's preamble. Then begin a \texttt{landscape} environment with \verb|\begin{landscape}| where you would like it located in the text. Then place the \texttt{table} environment information and \emph{knitr} code for creating the table. Finally close the \texttt{landscape} environment with \verb|\end{landscape}|.
 
-\parapgraph{LaTeX scalebox for tables}\index{LaTeX!scalebox}
+\paragraph{LaTeX scalebox for tables}\index{LaTeX!scalebox}
 
-If your table is very wide then the \texttt{scalebox} function from the \emph{graphics} package\index{LaTeX!graphics package} could be useful. This expands or shrinks the text in the table. \texttt{texreg} actually has a \texttt{scalebox} argument. If you use \texttt{scalebox = 0.5} it will halve the size of the table; \texttt{scalebox = 2} doubles it.
+If your table is very wide then the \texttt{scalebox} function from the \emph{graphics} package\index{LaTeX!graphics package} could be useful. This expands or shrinks the text in the table. \texttt{texreg}\index{R function!texreg} actually has a \texttt{scalebox} argument. If you use \texttt{scalebox = 0.5} it will halve the size of the table; \texttt{scalebox = 2} doubles it.
 
-More generally, to rescale a table use \verb|\scalebox{HORIZONTAL_SCALE}[VERTICAL_SCALE]{TABLE}|. \texttt{HORIZONTAL_SCALE} is how much to scale the table horizontally. \texttt{VERTICAL_SCALE} is how much to scale vertically and \texttt{TABLE} is the table or R code chunk to create the table.
+More generally, to rescale a table use
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textbackslash{}scalebox\{HORIZONTAL\_SCALE\}{[}VERTICAL\_SCALE{]}\{TABLE\}
+        \end{alltt}
+    \end{kframe}
+\end{knitrout}
+
+\noindent \texttt{HORIZONTAL\_SCALE} is how much to scale the table horizontally. \texttt{VERTICAL\_SCALE} is how much to scale vertically and \texttt{TABLE} is the table or R code chunk to create the table.
 
 \subsection{\emph{xtable} with non-supported class objects}\label{NonSupportedClasses}
 
