@@ -552,9 +552,9 @@ To explicitly assign chunk labels in R Markdown documents place the label name i
 
 \noindent The same general format applies to the two types of LaTeX chunks. In Sweave-style chunks we type: \texttt{\textless\textless ChunkLabel\textgreater\textgreater=}. In Rtex-style we use: \texttt{\%\% begin.rcode ChunkLabel}. Try not to use spaces or periods in your label names. Also remember that chunk labels {\emph{must}} be unique.
 
-\paragraph{Code chunk options}
+\paragraph{Code chunk options}\index{knitr!code chunk option|(}
 
-There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Maybe we want the figure to be formatted on a page in a certain way. To make these changes and many others we can specify code chunk options\index{knitr!code chunk options}.
+There are many times when we want to change how our code chunks are knitted and presented. Maybe we only want to show the code and not the results or perhaps we don't want to show the code at all but just a figure that it produces. Maybe we want the figure to be formatted on a page in a certain way. To make these changes and many others we can specify code chunk options.
 
 Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document, we can use the option \texttt{echo=FALSE}.\index{knitr option!echo}
 
@@ -609,9 +609,11 @@ Throughout this book we will look at a number of different code chunk options. A
   {\scriptsize{These commands are discussed in more detail in Chapter \ref{StatsModel}.}}
 \end{table}
 
-\subsection{Global chunk options}
+\index{knitr!code chunk option|)}
 
-So far we have only looked at how to set local options\index{knitr!local chunk options} in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options\index{knitr!global chunk options}. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the \verb|fig.align='center'| option in each code chunk that creates a figure, I set the option globally.
+\subsection{Global chunk options}\index{knitr!global chunk options|(}\label{GlobalChunkOptions}
+
+So far we have only looked at how to set local options in {\emph{knitr}} code chunks, i.e. options for only one specific chunk. If we want an option to apply to all of the chunks in our document we can set global chunk options. Options are `global' in the sense that they apply to the entire document. Setting global chunk options helps us create documents that are formatted consistently without having to repetitively specify the same option every time we create a new code chunk. For example, in this book I center almost all of the the figures. Instead of using the \verb|fig.align='center'| option in each code chunk that creates a figure, I set the option globally.
 
 To set a global option first create a new code chunk at the beginning of your document.\footnote{In Markdown, you can put global chunk options at the very top of the document. In LaTeX they should be placed after the \texttt{\textbackslash{}begin\{document\}} command (see Chapter \ref{LatexChapter} for more information on how LaTeX documents are structured).} You will probably want to set the option {\tt{include=FALSE}} so that {\emph{knitr}} doesn't include the code in your presentation document. Inside the code chunk use {\tt{opts\_chunk\$set}}. You can set any chunk option as an argument to {\tt{opts\_chunk\$set}}. The option will be applied across your document, unless you set a different local option.
 
@@ -630,9 +632,11 @@ opts_chunk$\hlkwd{set}(fig.align='center')
     \end{kframe}
 \end{knitrout}
 
-\subsection{\emph{knitr} package options}
+\index{knitr!global chunk options|)}
 
-{\emph{Knitr}} package options\index{knitr!package options} affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+\subsection{\emph{knitr} package options}\index{knitr!package options|(}
+
+{\emph{Knitr}} package options affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
 You set package options in a similar way as global chunk options with {\tt{opts\_knit\$set}}. For example, include this code at the beginning of a document to turn off the progress bar when it is knitted:
 
@@ -649,6 +653,7 @@ opts_knit$\hlkwd{set}(progress=FALSE)
         \end{kframe}
 \end{knitrout}
 
+}\index{knitr!package options|)}
 
 \subsection{Hooks}
 

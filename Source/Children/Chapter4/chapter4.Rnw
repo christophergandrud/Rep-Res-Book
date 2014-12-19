@@ -62,9 +62,9 @@ It is generally good practice to avoid putting spaces in your file and directory
 \begin{figure}[th!]
     \caption{Example Research Project File Tree}
     \label{ExampleTree}
-    \begin{center}
-    \input{Children/Chapter4/images4/ExampleFilePath.tex}
-    \end{center}
+        \begin{center}
+            \input{Children/Chapter4/images4/ExampleFilePath.tex}
+        \end{center}
 \end{figure}
 
 \section{Organizing Your Research Project}
@@ -142,6 +142,20 @@ setwd("/ExampleProject/Data/GatherSource")
 @
 
 \noindent Now R will automatically look in the {\emph{GatherSource}} folder for files and will save new files into this folder, unless we explicitly tell it to do otherwise.
+
+When working with a knittable document, setting the working directory once in a code chunk changes the working directory for all subsequent code chunks.
+
+\paragraph{{\tt{root.dir}}}\index{knitr option!root.dir}
+
+By default the root (or working) directory for all of the code chunks in a  knittable document is the directory where this document is located. You can reset the directory by feeding a new file path to the \texttt{root.dir} option.\index{knitr option!root.dir} We can set this globally\footnote{See the discussion of global chunk options in Chapter \ref{GettingStartedRKnitr}, page \pageref{GlobalChunkOptions}.} for all of the chunks in the document by including the following code in the document's first chunk.
+
+<<Ch4GlobalRoot, eval=FALSE, echo=TRUE>>=
+opts_knit$set(root.dir = '/ExampleProject/Analysis')
+@
+
+\noindent Here we set the \emph{/ExampleProject/Analysis} sub-directory as the root directory for all of the chunks in our presentation document.
+
+\textbf{Note:} In general it is preferable to use a nested file structure, as we saw before rather, than specify \texttt{root.dir}. A nested file structure creates one less step for those trying to reproduce your work on a different computer. They do not need to change the \texttt{root.dir} file path.
 
 \paragraph{{\tt{dir.create}}}\index{R function!dir.create}
 

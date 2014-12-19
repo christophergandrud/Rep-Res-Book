@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 December 2014
+% Updated: 19 December 2014
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -23,7 +23,7 @@ For a relatively short piece of code that you don't need to run in multiple pres
 
 \subsection{Full code chunks}\index{knitr!code chunk option|(}
 
-By default {\emph{knitr}}\index{knitr!code chunk options} code chunks are run by R, and the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the points where the code chunk was written in the knittable markup. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
+By default {\emph{knitr}} code chunks are run by R, and the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the points where the code chunk was written in the knittable markup. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
 
 \paragraph{{\tt{include}}}\index{knitr option!include}
 
@@ -49,7 +49,21 @@ If you don't want to include the warnings, messages, and error messages that R o
 
 If you want run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
 
-Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached. Packages that are loaded in cached chunks cannot be accessed by other chunks.
+\paragraph{{\tt{dependson}}}\index{knitr option!dependson}
+
+Cached chunks are only rerun when their code changes. Sometimes one chunk will depend on the results from a prior chunk. In these cases it is good to rerun the chunk if the prior one is also rerun. The \texttt{dependson} option allows you to do this. You can specify either a vector of the labels for the chunks depended on or their numbers in order from the start of the document. For example, \texttt{dependson=c(2, 3)} specifies that if the second or third chunks are rerun than the current chunk will also be rerun.
+
+\paragraph{{\tt{cache.extra}}}\index{knitr option!cache.extra}
+
+Sometimes to ensure reproducibility it may be useful to rerun a chunk when some other condition changes, such as when a new version of R is installed or a dependent file changes. You can feed a list of conditions to \texttt{cache.extra} to do this. For instance:
+
+<<Ch8CacheExtra, eval=FALSE, echo=TRUE>>=
+\texttt{cache.extra=list(file.info(Data.csv)$mtime, R.version}
+@
+
+\noindent Here we set two conditions under which the chunk will be rerun. The first specifies that the chunk should be rerun whenever the \emph{Data.csv} file is modified. The \texttt{file.info} function extracts information about the file and \texttt{mtime} gives the last time that the file was modified. If this differs from when the chunk was last run, then it will be run again. This is very useful for keeping your cached chunks and the files they rely on in sync.
+
+The second condition enabled by \texttt{R.version}\index{R function!R.version} reruns the chunk whenever the R version or even operating system changes. If you only want to rerun the chunk when the version of R is different then use \texttt{R.version.string}.\index{R function!R.version.string}
 
 \paragraph{{\tt{size}}}\index{knitr option!size}
 
