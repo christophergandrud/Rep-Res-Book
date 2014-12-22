@@ -1,7 +1,7 @@
 % Chapter Chapter 4 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 18 December 2014
+% Updated: 22 December 2014
 
 <<set-parent4, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -73,8 +73,6 @@ Figure \ref{ExampleTree} gives an example of how the files in a simple reproduci
 
 The nested file structure allows you to use relative file paths. The knittable documents can call \emph{Analysis1.R} with the relative path \emph{Analysis/Analysis1.R}, which in turn could call a file in the \emph{Data/} subdirectory. If all of the directories were at the same level of the file tree than you would need to use absolute file paths.\index{file path!absolute}\index{file path!relative}
 
-In addition to the main files and subdirectories in {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \emph{README}, its contents will automatically be displayed on the repository's main page. If the \emph{README} file is written using Markdown (e.g. \emph{README.md}, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
-
 \begin{wrapfigure}{r}{0.4\textwidth}
     \caption{An Example RStudio Project Menu}
     \label{ProjectMenu}
@@ -82,6 +80,8 @@ In addition to the main files and subdirectories in {\emph{ExampleProject}} you 
         \includegraphics[width=0.3\textwidth]{Children/Chapter4/images4/ProjectMenu.png}
     \end{center}
 \end{wrapfigure}
+
+In addition to the main files and subdirectories in {\emph{ExampleProject}} you will probably notice a file called {\emph{README.md}}. The {\emph{README.md}} file\index{README file} gives an overview of all the files in the project. It should briefly describe the project including things like its title, author(s), topic, any copyright information, and so on. It should also indicate how the folders in the project are organized and give instructions for how to reproduce the project. The README file should be in the main project folder--in our example this is called {\emph{ExampleProject}}--so that it is easy to find. If you are storing your project as a GitHub\index{GitHub} repository (see Chapter \ref{Storing}) and the file is called \emph{README}, its contents will automatically be displayed on the repository's main page. If the \emph{README} file is written using Markdown (e.g. \emph{README.md}, it will also be properly formatted. Figure \ref{BookRepository} shows an example of this.
 
 It is good practice to dynamically include the system information for the R session you used to create the project. To do this you can write your README file with R Markdown. Simply include the \texttt{sessionInfo()}\index{R function!sessionInfo} command in a \emph{knitr} code chunk in the R Markdown document. If you knit this file immediately after knitting your presentation document it will record the information for that session.
 
@@ -104,6 +104,7 @@ Making your research project directories RStudio Projects is useful for a number
     \item When you close the project your R workspace and history are saved in the project directory if you want.
     \item It helps you version control your files.
     \item You can build your Project--run the files in a specific way--with makefiles.
+    \item Gives you an easy to use interface for managing the R packages that your project depends on.
 \end{itemize}
 
 \noindent We will look at many of these points in more detail in the next few chapters.
