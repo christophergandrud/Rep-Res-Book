@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 19 December 2014
+% Updated: 23 December 2014
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -246,17 +246,6 @@ One final note on including makefiles in your \emph{knitr} presentation document
 \subsection{Source from a non-secure URL (\texttt{http})}\index{http}
 
 Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest method is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{R function!source} command the same way as we did before with the \texttt{read.table}\index{R function!read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included included with this book.}
-
-Let's look at a quick example of sourcing an R function\index{R functions} that has been made available at a non-secure URL. Paul Johnson created a function called \emph{outreg}\index{outreg} for creating LaTeX tables from R objects. He has made the function available on his website at: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}. You can directly load this function into your workspace with \texttt{source}.
-
-{\small{
-<<Ch8OutregSource, eval=FALSE>>=
-# Load Paul Johnson' outreg function
-source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
-@
-}}
-
-\noindent Now you can use \texttt{outreg} like any other function you have loaded.
 
 \subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}\index{https}
 

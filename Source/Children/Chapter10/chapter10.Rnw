@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 16 March 2014
+% Updated: 23 December 2014
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -448,9 +448,9 @@ Markus Gesmann and Diego de Castillo's \emph{googleVis}\index{googleVis} package
 
 \paragraph{Basic googleVis figures}
 
-Let's briefly look at how to make one type of figure with \emph{googleVis}: a Geo Map. This is created with the \texttt{gvisGeoMap} command.\index{gvisGeoMap}\index{R function!gvisGeoMap} We will use this example to illustrate how to incorporate \emph{googleVis} figures into R Markdown. For demonstrations of the the full range of plotting functions available visit the \emph{googleVis} website: \url{http://code.google.com/p/google-motion-charts-with-r/wiki/GadgetExamples#googleVis_Examples}.
+Let's briefly look at how to make one type of figure with \emph{googleVis}: a choropleth map. This is created with the \texttt{gvisGeoChart} function.\index{gvisGeoChart}\index{R function!gvisGeoChart} We will use this example to illustrate how to incorporate \emph{googleVis} figures into R Markdown. For demonstrations of the the full range of plotting functions available visit the \emph{googleVis} website: \url{http://code.google.com/p/google-motion-charts-with-r/wiki/GadgetExamples#googleVis_Examples}.
 
-Imagine that we want to map global fertilizer\index{fertilizer} consumption in 2003 using the World Bank\index{World Bank} data we gathered in Chapter \ref{DataGather}. Remember that the data was highly right skewed, so we will actually map the natural logarithm\index{logarithm}\index{R function!log} of the \textbf{FertilizerConsumption} variable.\footnote{You'll notice in the code below that we remove all values of \textbf{FertilizerConsumption} less than 0.1. This is that we can calculate integer values with the natural logarithm. See Section \ref{Infinity} for more details.} Assuming that we have already loaded the \emph{MainData.csv} data set, here is the code:
+Imagine that we want to map global fertilizer\index{fertilizer} consumption in 2003 using the World Bank\index{World Bank} data we gathered in Chapter \ref{DataGather}. Remember that the data was highly right skewed, so we will actually map the natural logarithm\index{logarithm}\index{R function!log} of the \textbf{FertilizerConsumption} variable.\footnote{You'll notice in the code below that we remove all values of \textbf{FertilizerConsumption} less than 0.1. This is so that we can calculate integer values with the natural logarithm. See Section \ref{Infinity} for more details.} Assuming that we have already loaded the \emph{MainData.csv} data set, here is the code:
 
 <<Ch10GeoMap, eval=FALSE, tidy=FALSE>>=
 # Load googleVis
@@ -468,16 +468,16 @@ SubData$LogConsumption <- round(log(SubData$FertilizerConsumption),
                                 digits = 1)
 
 # Make a map of Fertilizer Consumption
-FCMap <- gvisGeoMap(data = SubData,
+FCMap <- gvisGeoChart(data = SubData,
                     locationvar = "iso2c",
-                    numvar = "LogConsumption",
+                    colorvar = "LogConsumption",
                     options = list(
-                      colors = "[0xECE7F2, 0xA6BDDB, 0x2B8CBE]",
-                      width = "780px",
-                      height = "500px"))
+                        colors = "['#ECE7F2', '#A6BDDB', '#2B8CBE']",
+                        width = "780px",
+                        height = "500px"))
 @
 
-\noindent The \texttt{locationvar} argument specifies the variable with information on each observation's location. Google Chart Tools can use ISO\index{ISO} two country codes to determine each country's location. \texttt{numvar} specifies the continuous variable with the values to map for each country. We can determine other options by creating a list\index{R!list} type object with things such as the map's width, height, and colors. The colors here are written using hexadecimal values.\index{hexadecimal} This is a commonly used format for specifying colors on websites.\footnote{You can also use hexadecimal values in \emph{ggplot2}. The only difference is that instead of prefixing the values with \texttt{0x}, use a hash (\texttt{\#}). The Color Brewer 2\index{Color Brewer} website (\url{http://colorbrewer2.org/}) is very helpful for picking hexadecimal color palettes,\index{color palettes} among others.}
+\noindent The \texttt{locationvar} argument specifies the variable with information on each observation's location. Google Chart Tools can use ISO\index{ISO} two country codes to determine each country's location. \texttt{colorvar} specifies the variable with the values to map for each country. We can determine other options by creating a list\index{R!list} type object with things such as the map's width, height, and colors. The colors here are written using hexadecimal values.\index{hexadecimal} This is a commonly used format for specifying colors on websites.\footnote{You can also use hexadecimal values in \emph{ggplot2}. The Color Brewer 2\index{Color Brewer} website (\url{http://colorbrewer2.org/}) is very helpful for picking hexadecimal color palettes,\index{color palettes} among others.}
 
 To view the figure on your computer simply use \emph{googleVis}'s \texttt{plot} command. For example to view our map we type:
 
@@ -485,13 +485,13 @@ To view the figure on your computer simply use \emph{googleVis}'s \texttt{plot} 
 plot(FCMap)
 @
 
-\noindent This will open your default web browser and show you an image like that in Figure \ref{GeoMapImage}. If you are using RStudio version 0.98.441 or later the plot will be displayed in a \emph{Viewer} pane within RStudio that is similar to the \emph{Plots} pane. Note that you need to be connected to the internet to view figures created by \emph{googleVis}, otherwise your image will not be able to access the required JavaScript\index{JavaScript} files from the Google Visualization API.\index{API}
+\noindent Note that you need to be connected to the internet to view figures created by \emph{googleVis}, otherwise your image will not be able to access the required JavaScript\index{JavaScript} files from the Google Visualization API.\index{API}
 
 \begin{figure}
-    \caption{Screenshot of a \emph{googleVis} Geo Map}
+    \caption{Screenshot of a \emph{googleVis} Geo Chart}
     \label{GeoMapImage}
         \begin{center}
-            \includegraphics[width=\textwidth]{Children/Chapter10/images10/GeoMapScreenShot.png}
+            \includegraphics[width=\textwidth]{Children/Chapter10/images10/GeoChartScreenShot.png}
         \end{center}
 \end{figure}
 
@@ -506,13 +506,15 @@ devtools::source_url("http://bit.ly/VNnZxS")
 ```
 @
 
-If you are using RStudio you will likely notice that \emph{googleVis} charts do not show up in the \textbf{Preview HTML}\index{RStudio!Preview HTML} window. To see the full HTML document with charts in your web browser just click the \texttt{View the page with the system web browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}).
-
-\paragraph{Important Note for Motion Charts}
+\paragraph{Note for Motion Charts}
 
 You may notice that Google motion charts\footnote{You can use the \texttt{gvisMotionChart}\index{R function!gvisMotionChart} command to make these.}\index{motion chart} do not show up in the RStudio \textbf{Preview HTML}\index{RStudio!Preview HTML} window or even in your web browser when you open the knitted HTML version of the file. You just see a big blank space where you had hoped the chart would be. It will show up, however, if you use the \verb|plot| command on a \verb|gvis| motion chart object in the console. Motion charts can only be displayed when they are hosted on a web server or located in a directory `trusted' by Flash Player.\footnote{This is because motion charts and annotated time line charts rely on Flash,\index{Flash} unlike the other Google visualizations. For more information see Markus Gesmann's blog post at: \url{http://lamages.blogspot.com/2012/05/interactive-reports-in-r-with-knitr-and.html}.}\index{Flash Player}
 
 The \verb|plot| command opens a local server, but simply opening the HTML file and the RStudio \textbf{Preview HTML} window do not. An easy way to solve this problem is to save the HTML file in your Dropbox\index{Dropbox} \emph{Public} folder\index{Dropbox!Public folder} and access it through the associated public URL link (see Chapter \ref{Storing}). Publishing a motion chart on GitHub Pages\index{GitHub!Pages} also works well (see Chapter \ref{MarkdownChapter}). For information on how to set a directory as `trusted' by Flash Player\index{Flash Player} see: \url{http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html}.
+
+\subsection{JavaScript Graphs with \emph{htmlwidgets}-based Pacakges}
+
+The number of tools for creating JavaScript graphs from R that can be knitted into HTML files is growing rapidly. The \emph{htmlwidgets}\index{htmlwidgets} \citep{R-htmlwidgets} framework is especially making the development of these tools easier. As of this writing there are tools built on \emph{htmlwidgets} for creating maps, network graphs, time series graphs, and interactive tables, among others. Though the syntax of each of these tools differs, they can all easily be included into R Markdown documents. Often you simply run their core functions in a code chunk, without needing to use an additional call to \texttt{print} or \texttt{plot}.
 
 \subsection*{Chapter Summary}
 

@@ -718,9 +718,11 @@ You can see in the final image in Figure \ref{SourcePanes} that many of the \emp
 
 By default RStudio may be set up to use \emph{Sweave}\index{Sweave} for compiling LaTeX documents. To use {\emph{knitr}} instead of \emph{Sweave} to knit \texttt{.Rnw} files you should click on \texttt{Tools} in the RStudio menu bar then click on \texttt{Global Options...}.\index{RStudio!Options window} Once the {\bf{Options}} window opens, click on the \texttt{Sweave} button. Select \texttt{knitr} from the drop down menu for ``Weave Rnw files using:''. Finally, click \texttt{Apply}.\footnote{In the Mac version of RStudio, you can also access the \texttt{Options} window via \texttt{RStudio} \textrightarrow\: \texttt{Preferences} in the menu bar.}
 
+In the \texttt{Sweave} options menu you can also set which LaTeX typsetting engine to use. By default it is set to the more established engine pdfLaTeX.\index{pdfLaTeX} Another option is XeLaTeX.\index{XeLaTeX} XeLaTeX has the ability to use any font and advanced typographic features enabled on your computer. This can be especially useful if you are using many characters that are not found in standard English.
+
 \subsection{\emph{knitr} \& R}
 
-As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} command.\index{R function!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first use the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
+As {\emph{knitr}} is a regular R package, you can of course knit documents in R (or using the console in RStudio). All of the {\emph{knitr}} syntax in your markup document is the same as before, but instead of clicking a {\tt{Compile PDF}} or {\tt{knit HTML}} button use the {\tt{knit}} function.\index{R function!knit} To knit a hypothetical Markdown file {\emph{Example.Rmd}} you first use the \texttt{setwd} command to set the working directory (for more details see Chapter \ref{DirectoriesChapter}) to the the folder where the {\emph{Example.Rmd}} file is located. In this example it is located on the desktop.\footnote{Using the directory name {\tt{$\sim$/Documents/}} is for Mac computers. Please use alternative syntax discussed in Chapter \ref{DirectoriesChapter} on other types of systems.}
 
 <<Ch3RawKnitSetwd, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 setwd("~/Documents/")
@@ -746,7 +748,7 @@ mardownToHTML(file = "Example.md", output = "Example.html")
 knit2html(file = "Example.Rmd", output = "Example.html")
 @
 
-\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}}\index{R function!texi2pdf} command in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX\index{BibTeX} for bibliographies). Here is a {\tt{texi2pdf}} example:
+\noindent If we want to compile a {\tt{.tex}} file in R we run it through the {\tt{texi2pdf}}\index{R function!texi2pdf} function in the {\emph{tools}} package. This package will run both LaTeX and BibTeX to create a PDF with a bibliography (see Chapter \ref{LatexChapter} for more details on using BibTeX\index{BibTeX} for bibliographies). Here is a {\tt{texi2pdf}} example:
 
 <<CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE>>=
 # Load tools package
@@ -758,9 +760,55 @@ texi2pdf(file = "Example.tex")
 
 \noindent Just like with \texttt{knit2html}, you can simplify this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
 
+\subsection{\emph{rmarkdown} and R}\index{rmarkdown}
+
+Just as \emph{knitr} is an R package that you can run from the console, you can also run \emph{rmarkdown} from the console. Instead of the \texttt{knit} function use \emph{render}. Imagine that \emph{Example.Rmd} now has an \emph{rmarkdown} header:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
+    \color{fgcolor}\begin{kframe}
+    \begin{alltt}
+---
+title: "A Basic PDF Presentation Document"
+author: "Christopher Gandrud"
+date: "30 November 2015"
+output:
+    pdf_document:
+        toc: true
+    html_document:
+        toc: false
+---
+    \end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\noindent This header specifies how the file can be compiled to either PDF or HTML. When compiled to PDF it will include a table of contents. When compiled to HTML it won't. Now we use \texttt{render}:
+
+<<Ch3RenderBasic, eval=FALSE, echo=TRUE>>=
+render("Example.Rmd")
+@
+
+\noindent This call will compile the document to a PDF in the working directory, as PDF is listed as the first output format specified in the header. The document will be called \emph{Example.Rmd}. To compile it to HTML use:
+
+<<Ch3RenderHTML, eval=FALSE, echo=TRUE>>=
+render("Example.Rmd", "html_document")
+@
+
+\noindent We could compile to both formats using:
+
+<<Ch3RenderBasicAll, eval=FALSE, echo=TRUE>>=
+render("Example.Rmd", "all")
+@
+
+\noindent or
+
+<<Ch3RenderBasicAltAll, eval=FALSE, echo=TRUE>>=
+render("Example.Rmd", c("pdf_document", "html_document"))
+@
+
 \subsection*{Chapter Summary}
 
-We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr} syntax for multiple markup languages. These tools, especially R and \emph{knitr}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to organize files created with these types of tools into reproducible research projects.
+We've covered a lot of ground in this chapter, including R basics, how to use RStudio, and \emph{knitr}/\emph{rmarkdown} syntax for multiple markup languages. These tools, especially R and \emph{knitr}/\emph{rmarkdown}, are fundamental to the reproducible research process we will learn in this book. They enable us to create dynamic text-based files that record our research steps in detail. In the next chapter we will look at how to organize files created with these types of tools into reproducible research projects.
 
 \section*{Appendix: knitr and Lyx}\label{LyxAppendix}
 
