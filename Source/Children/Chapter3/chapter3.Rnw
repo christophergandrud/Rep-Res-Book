@@ -472,7 +472,7 @@ output: pdf_document:
 
 RStudio can automatically create a basic header for the type of output document that you want when you open a new \emph{rmarkdown} file. Simply select \texttt{File} \textrightarrow \texttt\:{New File} \textrightarrow\: \texttt{R Markdown\ldots}. A window will appear that looks like Figure \ref{rmarkdownWindow}. Simply select the type of output document you want to create and click \texttt{Ok}.
 
-Remember that apart from the header, \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. You can also include Pandoc syntax if you like. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}.
+In addition to the header, in \emph{rmarkdown} you can include Pandoc syntax. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}. Nonetheless, \textbf{remember} that apart from the header and ability to include Pandoc syntax, at the simplest level \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. Importantly, they have the same code chunk syntax (see \pageref{RMarkdownChunkBasic}).
 
 \begin{figure}
     \caption{The New R Markdown Options Window}
@@ -484,13 +484,13 @@ Remember that apart from the header, \emph{rmarkdown} documents are \emph{knitr}
 
 \subsection{File extensions}
 
-When you save a knittable file use a file extension that indicates (a) that it is knittable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}.\footnote{Perhaps confusingly, R Markdown files that you compile with \emph{knitr} or \emph{rmarkdown} have the \texttt{.Rmd} file extension.} LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}} \cite[]{Leisch2002}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
+When you save a knittable file use a file extension that indicates (a) that it is knittable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}.\footnote{R Markdown files that you compile with \emph{knitr} or \emph{rmarkdown} have the same \texttt{.Rmd} file extension.} LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}} \cite[]{Leisch2002}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
 
 \subsection{Code chunks}
 
 When you want to include R code into your markup presentation documents, place them in a code chunk\index{code chunk}\index{knitr!code chunk}. Code chunk syntax differs depending on the markup language we are using to write our documents. Let's see the syntax for R Markdown and R LaTeX files. If you are unfamiliar with basic LaTeX or Markdown syntax you might want to skim chapters \ref{LatexChapter} and \ref{MarkdownChapter} to familiarize yourself with it before reading this section.
 
-\paragraph{R Markdown}
+\paragraph{R Markdown}\label{RMarkdownChunkBasic}
 
 In R Markdown\index{R Markdown} files we begin a code chunk by writing the head:\index{knitr!code chunk head} \verb|```{r}|. A code chunk is closed--ended--simply with: \verb|```|. For example:
 
@@ -500,6 +500,8 @@ In R Markdown\index{R Markdown} files we begin a code chunk by writing the head:
 StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
 @
+
+\noindent The R Markdown code chunk syntax is exactly the same for files you compile with \emph{knitr} and \emph{rmarkdown}.
 
 \paragraph{R LaTeX}
 
@@ -578,7 +580,7 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
         \end{kframe}
 \end{knitrout}
 
-Throughout this book we will look at a number of different code chunk options. All of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+Throughout this book we will look at a number of different code chunk options. Many of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
 
 
 \begin{table}
@@ -659,16 +661,16 @@ opts_knit$\hlkwd{set}(progress=FALSE)
 
 You can also set hooks\index{knitr!hook}. Hooks come in two types: chunk hooks and output hooks. Chunk hooks\index{knitr!chunk hooks} run a function before or after a code chunk. Output hooks\index{knitr!output hooks} change how the raw output is formatted. I don't cover hooks in much detail in this book. For more information on hooks, please see Yihui Xie's webpage: \url{http://yihui.name/knitr/hooks}.
 
-%%%%%%%%%% Knitr & RStudio
-\subsection{\emph{knitr} \& RStudio}
+%%%%%%%%%% Knitr, rmarkdown, & RStudio
+\subsection{\emph{knitr}, \emph{rmarkdown}, \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}} and the markup languages \emph{knitr} works with. Because of this integration it is easier to create and compile {\emph{knitr}} documents in RStudio than plain R. Most of the RStudio/{\emph{knitr}} features are accessed in the \emph{Source} pane\index{RStudio!Source pane}. The \emph{Source} pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the \emph{Source} pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the \emph{Source} pane.} We have already seen some of the features the \emph{Source} pane has for R source code files. Let's now look at how to use {\emph{knitr}} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
+RStudio is highly integrated with {\emph{knitr}}/\emph{rmarkdown} and the markup languages that they work with. Because of this integration it is easier to create and compile {\emph{knitr}} documents in RStudio than plain R. Most of the RStudio/{\emph{knitr}} features are accessed in the \emph{Source} pane\index{RStudio!Source pane}. The \emph{Source} pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the \emph{Source} pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the \emph{Source} pane.} We have already seen some of the features the \emph{Source} pane has for R source code files. Let's now look at how to use {\emph{knitr}} and \emph{rmarkdown} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
 
 \paragraph{Compiling R source code Notebooks}
 
-If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook''\index{RStudio!Notebook} capabilities. RStudio uses {\emph{knitr}} to create a standalone HTML file that can be opened in a web browser. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}.
+If you want a quick well formatted account of the code that you ran and the results that you got you can use RStudio's ``Compile Notebook''\index{RStudio!Notebook} capabilities. RStudio uses \emph{rmarkdown} to create a standalone file presenting your source code and results. It will include all of the code from an R source file as well as the output. This can be useful for recording the steps you took to do an analysis. You can see an example RStudio Notebook in Figure \ref{NotebookExample}.
 
-If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emph{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then in the window that pops up select the output type you would like (HTML, PDF or MS Word) and click the \texttt{Compile} button. For this example I selected HTML. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish''. Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}} Markdown document you compile in RStudio.\label{PublishRPubs}
+If you want to create a Notebook from an open R source code file simply click the \texttt{Compile Notebook} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/CompileNotebook.png}) in the \emph{Source} pane's top bar.\footnote{Alternatively, \texttt{File} \textrightarrow \; \texttt{Compile Notebook\ldots}} Then in the window that pops up select the output type you would like (HTML, PDF or MS Word) and click the \texttt{Compile} button. For this example I selected HTML. In Figure \ref{NotebookExample} you can see near the top center right a small globe icon next to the word ``Publish''. Clicking this allows you to publish your Notebook to RPubs (\url{http://www.rpubs.com/}).\index{RPubs} RPubs is a site for sharing your Notebooks over the internet. You can publish not only Notebooks, but also any {\emph{knitr}}/emph{rmarkdown} Markdown document you compile in RStudio.\label{PublishRPubs}
 
 \begin{figure}
     \caption{RStudio Notebook Example}
@@ -679,9 +681,9 @@ If you want to create a Notebook from an open R source code file simply click th
     \end{center}
 \end{figure}
 
-\paragraph{R Markdown} The second image in Figure \ref{SourcePanes} is what the \emph{Source} pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunksIcon.png}). In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the \emph{Source} pane (e.g. \includegraphics[scale=0.5]{Children/Chapter3/images3/ChunkNav.png}). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the \emph{Source} pane's top bar. This will create a knitted HTML file as well as a regular Markdown file with highlighted code, output, and figures in your R Markdown's directory. Other useful buttons in the R Markdown \emph{Source} pane's top bar include the \texttt{ABC} spell check icon and question mark icon, which gives you a Markdown syntax reference file in the Help pane.
+\paragraph{R Markdown} The second image in Figure \ref{SourcePanes} is what the \emph{Source} pane's top bar looks like when you have an R Markdown file open. You'll notice the familiar \texttt{Run} button for running R code. At the far right you can see a new \texttt{Chunks} drop down menu (\includegraphics[scale=0.5]{Children/Chapter3/images3/ChunksIcon.png}). In this menu you can select \texttt{Insert Chunk} to insert the basic syntax required for a code chunk. There is also an option to \texttt{Run Current Chunk}--i.e. the chunk where your cursor is located--\texttt{Run Next Chunk}, and \texttt{Run All} chunks. You can navigate to a specific chunk using a drop down menu on the bottom left-hand side of the \emph{Source} pane (e.g. \includegraphics[scale=0.5]{Children/Chapter3/images3/ChunkNav.png}). This can be very useful if you are working with a long document. To knit your file click the \texttt{Knit HTML} icon on the left side of the \emph{Source} pane's top bar. This will clearly knit it to an HTML file. If you click on the downward arrow on the right of this icon you will be given the opportunity to also knit the document to a PDF or MS Word\index{MS Word} using \emph{rmarkdown}. Other useful buttons in the R Markdown \emph{Source} pane's top bar include the \texttt{ABC} spell check icon and question mark icon, which gives you a Markdown syntax reference file in the Help pane.
 
-Another useful RStudio {\emph{knitr}} integration feature is that RStudio can properly highlight both the markup language syntax and the R code in the \emph{Source} pane. This makes your source code much easier to read and navigate. RStudio can also fold code chunks.\index{code folding} This makes navigating through long documents, with long code chunks, much easier. In the first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If you click this arrow the code chunk will collapse to look like the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
+Another useful RStudio {\emph{knitr}}/\emph{rmarkdown} integration feature is that RStudio can properly highlight both the markup language syntax and the R code in the \emph{Source} pane. This makes your source code much easier to read and navigate. RStudio can also fold code chunks.\index{code folding} This makes navigating through long documents, with long code chunks, much easier. In the first image in Figure \ref{CodeFold} you can see a small downward facing arrow at line 25. If you click this arrow the code chunk will collapse to look like the second image in Figure \ref{CodeFold}. To unfold the chunk, just click on the arrow again.
 
 You may also notice that there are code folding arrows on lines 27 and 34 in the first image. These allow us to fold parts of the code chunk. To enable this option create a comment line with at least one hash before the comment text and at least four after it like this:
 
