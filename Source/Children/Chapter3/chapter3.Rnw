@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 30 November 2014
+% Updated: 23 December 2014
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -449,9 +449,9 @@ Let's take a quick, abstract look at what the \emph{knitr} package does. As I've
 
 \subsection{What \emph{rmarkdown} does}
 
-The \emph{rmarkdown}\index{rmarkdown} package implements a variation on this process that utilizes Pandoc to create presentation documents in multiple formats. You simply begin with a knittable document written in Markdown. The key difference is that you include a header specifying how you want to process the document with Pandoc.
+The \emph{rmarkdown}\index{rmarkdown} package implements a variation on this process that utilizes a program called Pandoc to create presentation documents in multiple formats from an a knittable document written in Markdown. The main difference between pure \emph{knitr} markdown and \emph{rmarkdown} documents is the inclusion of a header specifying how you want to process the document with Pandoc.\footnote{Note: you can also create an \emph{rmarkdown} document without a header.}
 
-Note that the header is written in YAML\index{YAML}.\footnote{YAML is a recursive acronym that means ``YAML Ain't Markup Language''.} The YAML header can include information other than what type of output document you want to create including document's title, author, and a link to a BibTeX bibliography file among other options. YAML is a straightforward data format that organizes information in a simple hierarchy. The header begins and ends with three dashes (\texttt{---}). ``Keys''--like ``title'' and ``author''--are separated from their associated ``values'' by a colon (\texttt{:}). Subvalues of a hierarchy are denoted by being placed on a new line and indented.\footnote{It doesn't matter how many spaces you use to indent, as long as all indentations have the same number or spaces.} For example, this is a basic \emph{rmarkdown} header that indicates the document's title, author, date, and that it will be turned into a PDF document (via Pandoc and LaTeX).
+The header is written in YAML\index{YAML}.\footnote{YAML is a recursive acronym that means ``YAML Ain't Markup Language''.} The YAML header can include information such as the document's title, author, whether or not to include a table of contents, and a link to a BibTeX bibliography file. YAML is a straightforward data format that organizes information in a simple hierarchy. The header begins and ends with three dashes (\texttt{---}). Information keys--like ``title'' and ``author''--are separated from their associated ``values'' by a colon (\texttt{:}). Sub-values of a hierarchy are denoted by being placed on a new line and indented.\footnote{It doesn't matter how many spaces you use to indent, as long as all indentations have the same number or spaces.} Here is a basic \emph{rmarkdown} header that indicates the document's title, author, date, and that it will be turned into a PDF document (via LaTeX).
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -470,7 +470,7 @@ output: pdf_document:
 
 \noindent The title, author, and date, will be placed at the beginning of the output document. The final line (\texttt{toc: true}) creates a table of contents near the beginning of the PDF document when we knit it. We will discuss more header options in chapters \ref{LatexChapter} and \ref{MarkdownChapter}.
 
-RStudio can automatically create a basic header for the type of output document that you want. Simply select \texttt{File} \textrightarrow \texttt{New File} \textrightarrow \texttt{R Markdown\ldots}. A window will appear that looks like Figure \ref{rmarkdownWindow}. Simply select the type of output document you want to create and click \texttt{Ok}.
+RStudio can automatically create a basic header for the type of output document that you want when you open a new \emph{rmarkdown} file. Simply select \texttt{File} \textrightarrow \texttt\:{New File} \textrightarrow\: \texttt{R Markdown\ldots}. A window will appear that looks like Figure \ref{rmarkdownWindow}. Simply select the type of output document you want to create and click \texttt{Ok}.
 
 Remember that apart from the header, \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. You can also include Pandoc syntax if you like. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}.
 
@@ -484,7 +484,7 @@ Remember that apart from the header, \emph{rmarkdown} documents are \emph{knitr}
 
 \subsection{File extensions}
 
-When you save a knittable file use a file extension that indicates (a) that it is knittable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}. LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}} \cite[]{Leisch2002}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
+When you save a knittable file use a file extension that indicates (a) that it is knittable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}.\footnote{Perhaps confusingly, R Markdown files that you compile with \emph{knitr} or \emph{rmarkdown} have the \texttt{.Rmd} file extension.} LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}} \cite[]{Leisch2002}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
 
 \subsection{Code chunks}
 
