@@ -15,9 +15,11 @@ In this chapter we will learn about Markdown editors and the basic Markdown synt
 
 \section{The Basics}
 
+\index{Markdown|(}
+
 Markdown was created specifically to make it easy to write HTML (or XHTML\index{XHTML}\footnote{Extensible HyperText Markup Language}) using a syntax that is human readable and possibly publishable without compiling. For example, compare the Markdown table syntax in Chapter \ref{TablesChapter} to the HTML syntax for virtually the same table.\footnote{For more information see John Gruber's website: \url{http://daringfireball.net/projects/markdown/}.} That being said, to make Markdown simple it does not have as many capabilities as HTML. To get around this problem you can still use HTML in Markdown, though note that Markdown syntax cannot be used between HTML element tags.
 
-\textbf{Warning:} if you are using \emph{rmarkdown} to compile a document to PDF or Word, using raw HTML syntax will often not work as intended, if at all. As a rule, syntax specific to LaTeX or HTML that is included in an R Markdown document can only be properly compiled to a PDF or HTML document, respectively.
+\textbf{Warning:} if you are using \emph{rmarkdown} to compile a document to PDF or Word, using raw HTML syntax will often not work as intended, if at all. As a rule, syntax specific to LaTeX or HTML that is included in an R Markdown document can only be properly compiled to a PDF or HTML document, respectively. Similarly, you will only be able to include graphics that are of types supported by the output format. You will not be able to include a JavaScript\index{JavaScript} plot directly into a PDF.
 
 \subsection{Getting started with Markdown editors}\index{Markdown!editors}
 
@@ -175,9 +177,13 @@ To create itemized lists in Markdown simply place the items after one dash:
 
 Markdown, like LaTeX and R, uses a backslash (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document (rather than start to italicize your text, e.g. \verb|*some italicized text*|), type: \verb|\*|. Two characters--ampersand (\verb|&|)\index{Markdown!ampersand} and the less than sign (\verb|<|)--\index{Markdown!less than sign}have special meanings in HTML.\footnote{Ampersands declare the beginning of a special HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|.
 
+\index{Markdown|)}
+
 \subsection{Math with MathJax}
 
-Markdown by itself can't format mathematical equations. We can create LaTeX style equations by adding on the MathJax JavaScript\index{JavaScript} engine.\index{MathJax} MathJax syntax is the same as LaTeX syntax (see Section \ref{MathLaTeX}), especially when used from RStudio or when rendered with \emph{rmarkdown}. Markdown documents rendered in RStudio automatically link to the MathJax engine online.\footnote{You will not be able to render equations when you are not online.} If you want to use another program to render Markdown documents with MathJax equations you may need to take extra steps to link to MathJax. For more details see: \url{http://docs.mathjax.org/en/latest/start.html#mathjax-cdn}.
+\index{MathJax|(}
+
+Markdown by itself can't format mathematical equations. We can create LaTeX style equations by adding on the MathJax JavaScript\index{JavaScript} engine. MathJax syntax is the same as LaTeX syntax (see Section \ref{MathLaTeX}), especially when used from RStudio or when rendered with \emph{rmarkdown}. Markdown documents rendered in RStudio automatically link to the MathJax engine online.\footnote{You will not be able to render equations when you are not online.} If you want to use another program to render Markdown documents with MathJax equations you may need to take extra steps to link to MathJax. For more details see: \url{http://docs.mathjax.org/en/latest/start.html#mathjax-cdn}.
 
 Because backslashes are Markdown escape characters, in many Markdown editors you will have to use two backslashes to create math environments with MathJax. For example, in LaTeX and RStudio's\index{RStudio!Markdown math} Markdown you can create a display equation like this:
 
@@ -203,60 +209,121 @@ s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 
 To make inline equations simply use parentheses instead of square brackets as in LaTeX, e.g. \verb|\( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \)|.
 
-\section{Markdown with Pandoc and Custom CSS via \emph{rmarkdown}}
+\index{MathJax|)}
 
+\section{Further Customizability with \emph{rmarkdown}}\index{rmarkdown|(}
 
+Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies, and custom formatting. In this section we will learn how to overcome these limitations with Pandoc and CSS via \emph{rmarkdown}. Space constraints limit me from giving a comprehensive discussion of both of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files to render Markdown into HTML, PDF, and MS Word documents.
 
+\subsection{More on \emph{rmarkdown} Headers}
 
+In Chapter \ref{GettingStartedRKnitr} (page \pageref{rmardownHeader}) we first saw an \emph{rmarkdown} header written in YAML\index{YAML}. Just as a refersher, here was the basic header we looked at:
 
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
+    \color{fgcolor}\begin{kframe}
+    \begin{alltt}
+---
+title: "A Basic PDF Presentation Document"
+author: "Christopher Gandrud"
+date: "30 November 2015"
+output: pdf_document:
+    toc: true
+---
+    \end{alltt}
+\end{kframe}
+\end{knitrout}
 
-Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files to render Markdown documents into HTML. We will look at two ways to run Pandoc from R. The first is via the \texttt{system} command. The second is via \emph{knitr}'s \texttt{pandoc} wrapper command.\index{wrapper}
+This header provides instructions for what to do when the document is rendered. Gives instructions to render the document as a PDF (via LaTeX), as well as inserts a title, author, date, and table of contents at the beginning.
 
-\subsection{Pandoc}\index{Pandoc}
+We also have the option to include other formatting options, many of which we would include in a \emph{knitr} LaTeX document's preamble.\index{LaTeX!preamble} You include these at the top-level, i.e. without being tabbed. \emph{rmarkdown} refers to these options as ``metadata''.\index{rmarkdown!metadata} For example, to change the font size to 11 point we could use:
 
-With a little customization\label{PandocDiscussion} you can include footnotes and BibTeX bibliographies\index{BibTeX} in R Markdown documents. When you click on the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button in RStudio\index{RStudio} it runs two commands: \texttt{knit} to convert your \texttt{.Rmd} file to \texttt{.md} and then \texttt{markdownToHTML}\index{R function!markdownToHTML} from the \emph{markdown} package \citep{R-markdown} to convert the Markdown file to HTML.\index{HTML} What we need to do is create a new function to run Pandoc instead of \texttt{markdownToHTML} or reset \texttt{markdownToHTML}.
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
+    \color{fgcolor}\begin{kframe}
+    \begin{alltt}
+---
+title: "A Basic PDF Presentation Document"
+author: "Christopher Gandrud"
+date: "30 November 2015"
+output: pdf_document:
+    toc: true
+fontsize: 11pt
+---
+    \end{alltt}
+\end{kframe}
+\end{knitrout}
 
-The simplest way to do this is to create a new R function\index{R function!function} that runs Markdown files created by \emph{knitr} through Pandoc to create an HTML file:\footnote{The function here is modified from one on the RStudio website. See below for more details.}
+\noindent We could double space the PDF document with a similar top-level entry: \texttt{linestretch: 2}.\footnote{1 would be for single space and 1.5 would be for one and a half spacing.} To find more options for PDF documents type \texttt{?pdf\_document} into your R console. Note that these options will only affect your PDF document, not an rendered HTML file.
 
-<<Ch13PandocFunction, eval=FALSE, tidy=FALSE>>=
-# Function to render .md file with Pandoc
-pandocToHTML <-  function(inputFile, outputFile)
-{
-    system(paste("pandoc", shQuote(inputFile), "-o",
-                 shQuote(outputFile)))
-}
+Remember from Chapter \ref{GettingStartedRKnitr} (page \pageref{rmarkdownRender}) that we can specify rendering instructions for multiple output formats in the same header. Here is a longer header, building on what we just saw. We'll go through it in detail:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
+    \color{fgcolor}\begin{kframe}
+    \begin{alltt}
+---
+title: "An Example knitr LaTeX Article"
+author: "Christopher Gandrud"
+date: "15 January 2015"
+output:
+    pdf_document:
+        latex_engine: xelatex
+        number_sections: yes
+        toc: yes
+    html_document:
+        toc: no
+        style: flatly
+linestretch: 2
+fontsize: 11pt
+bibliography:
+    - Main.bib
+    - Packages.bib
+---
+    \end{alltt}
+\end{kframe}
+\end{knitrout}
+
+\noindent Ok, let's go through this in detail. We have already seen the \texttt{title}, \texttt{author}, \texttt{date}, \texttt{linestretch}, and \texttt{fontsize} options. Notice that we used \texttt{latex\_engine} to set the LaTeX engine to XeLaTeX which is useful for when our documents include non-basic characters. We also specifed with \texttt{number\_sections} that the PDF document should have numbered section headings.
+
+For the HTML version of the document we do not want a table of contents as we set \texttt{toc: no}. We specified a CSS\index{CSS} style called Flatly for our HTML document using \texttt{style: flatly}. As of this writing, \emph{rmarkdown} has a built-in ability to use a range of CSS files for formating from Bootswatch (\url{http://bootswatch.com/}). Alternatively, you can link to a custom CSS file with the \texttt{css} option. Use \texttt{html\_document} to see other options.  Notice that we can use \texttt{no} and \texttt{yes} instead of \texttt{false} and \texttt{true}, respectively.
+
+Finally, we linked to two BibTeX files with the \texttt{bibliography} option. Using Pandoc syntax, the references will apply to both the PDF and HTML documents.
+
+\index{rmarkdown|)}
+
+\index{Pandoc!bibliographies}\index{Markdown!bibliographies}
+
+\begin{table}
+    \caption{A Selection of Pandoc In-text Citations}
+    \begin{center}
+        \label{PandocCitations}
+        \begin{tabular}{l c}
+            \hline
+            Markup & Result \\[0.25cm] \hline\hline
+            \texttt{[@Donoho2009]} & (Donoho 2009) \\[0.25cm]
+            \texttt{[see @Donoho2009]} & (see Donoho 2009) \\[0.25cm]
+            \texttt{[see @Donoho2009, 10-11]} & (see Donoho 2009, 10-11) \\[0.25cm]
+            \texttt{[@Donoho2009; @Box1973]} & (Donoho 2009; Box 1973) \\[0.25cm]
+            \texttt{@Donoho2009 [10-11]} & Donoho (2009, 10-11) \\[0.25cm]
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+
+\paragraph{Bibliographies with Pandoc}
+
+\emph{rmarkdown} via Pandoc allows us to insert citations from normal BibTeX files. The main difference is that Pandoc has a different syntax from LaTeX for making in-text citations. Pandoc citations has the pattern \verb|@| followed by the BibTeX citation key. Here is an example:
+
+<<Ch13BibTeXCite, eval=FALSE, tidy=FALSE, engine='sh'>>=
+This is a citation [@Donoho2009].
 @
 
-\noindent The \texttt{system}\index{R function!system} sends the following code to your computer's command line shell where it runs Pandoc. \texttt{shQuote} allows us to use quotes as strings that can be parsed by the shell.\index{shell}\index{command line} In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. For example, we saw in the previous chapter how to use Pandoc to output a Markdown file to markup languages other than HTML. See Section \ref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}.
-
-Imagine that we have a file called \emph{Example.Rmd} in our working directory. This is how we \texttt{knit} it and render it with Pandoc:
-
-<<Ch13knitrPandoc, eval=FALSE>>=
-# knit file to Example.md
-knitr::knit("Example.Rmd", "Example.md")
-
-# Render with Pandoc as Example.html
-pandocToHTML("Example.md", "Example.html")
-@
-
-\noindent In RStudio\index{RStudio} you can use this type of function rather than \texttt{markdownToHTML} when you click \emph{Knit HTML}. To do this you need to set a new \texttt{option} in an invisible file called \emph{.Rprofile}.\footnote{You can either create a new \emph{.Rprofie} document in your working directory or change the master file always used by R. The location of this file varies by operating system.}\index{R!.Rprofile} Changing this file allows you to alter how R works. Note: using Pandoc rather than \emph{markdownToHTML} from the \emph{markdown} package allows us to use footnotes and bibliographies. However, we also lose functions, like automatic MathJax support. It would take some work (not covered here) to get the best of both worlds. You will have to decide whether Pandoc or the default RStudio renderer is the best way to render your document based on what you want to do.
-
-Here is the code to add to the \emph{.Rprofile} so that you can use Pandoc when you click \texttt{Knit HTML}.\footnote{This code is from the RStudio website: \url{http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering}.}
-
-<<Ch13Options, eval=FALSE, tidy=FALSE>>=
-options(rstudio.markdownToHTML =
-  function(inputFile, outputFile) {
-    system(paste("pandoc", shQuote(inputFile), "-o",
-                 shQuote(outputFile)))
-  }
-)
-@
+\noindent Pandoc uses \emph{natbib}\index{LaTeX package!natbib}\index{bibliography}\index{in-text citation} by default so the citation \verb|[@Donoho2009]| will appear as (Donoho et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donoho2009, 10]|. This will create an in-text citation that looks like this: (see Donoho et al. 2009, 10). If you do not want the parentheses around the entire citation (just the year) then omit the square brackets. To include only the year and not the authors' surnames, add a minus sign, e.g. \verb|[-@Donoho2009]|. See Table \ref{PandocCitations} for more options.
 
 \paragraph{Footnotes with Pandoc}\index{Pandoc!footnotes}\index{Markdown!footnotes}
 
-Ok, once we have R and RStudio set up so that they can use Pandoc we can create documents that take advantage of Pandoc's Markdown extensions.\index{Pandoc!Markdown Extensions} Pandoc Markdown extensions add functions to regular Markdown syntax. I am only going to discuss two of the most important extensions for reproducible Markdown research documents: footnotes and BibTeX bibliographies. For the full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
-
-To create what Pandoc calls an ``inline note'' type footnote use the \verb|^[NOTE]| syntax.\index{Pandoc!inline note} For example:
+You can also include footnotes in documents rendered with \emph{rmarkdown} by using Pandoc's footnote syntax. To create what Pandoc calls an ``inline note'' type footnote use the \verb|^[NOTE]| syntax.\index{Pandoc!inline note} For example:
 
 <<Ch13PandocInlineNotes, eval=FALSE, tidy=FALSE, engine='sh'>>=
 This is some text.^[This is an inline footnote.]
@@ -264,37 +331,9 @@ This is some text.^[This is an inline footnote.]
 
 \noindent When rendered, a hyper-link number will appear after ``text.''. It will link to the note (``This is an inline footnote.'') at the bottom of the page.
 
-\paragraph{Bibliographies with Pandoc}\index{Pandoc!bibliographies}\index{Markdown!bibliographies}
-
-We can add BibTeX citations after a small addition to the Pandoc call we use to render the Markdown file. Imagine we have a bibliography file called \emph{Example.bib} in the same directory as our \emph{Example.Rmd} file. We need to add the \verb|--bibliography| option\index{Pandoc option!bibliography} to Pandoc like this:
-
-<<Ch13PandocFunctionBib, eval=FALSE, tidy=FALSE>>=
-# Function to render .md file with Pandoc
-pandocToHTML <-
-    function(inputFile, outputFile) {
-    system(paste("pandoc", shQuote(inputFile), "-o",
-                 shQuote(outputFile),
-                 "--bibliography Example.bib"))
-    }
-@
-
-Now in the text of our document we can add the citation:
-
-<<Ch13BibTeXCite, eval=FALSE, tidy=FALSE, engine='sh'>>=
-This is a citation [@Donoho2009].
-@
-
-\noindent Pandoc uses \emph{natbib}\index{LaTeX package!natbib}\index{bibliography}\index{in-text citation} by default so the citation \verb|[@Donoho2009]| will appear as (Donoho et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donoho2009, 10]|. This will create an in-text citation that looks like this: (see Donoho et al. 2009, 10), To include only the year and not the authors' surnames, add a minus sign, e.g. \verb|[-@Donoho2009]|. See the Pandoc README website for more options.
-
-Here is a complete example of an R Markdown document that includes footnotes and bibliographies.
+To sum up, here is an example of an R Markdown document that includes footnotes and bibliographies.
 
 <<Ch13PandocDoc, eval=FALSE, tidy=FALSE>>=
-# Example Pandoc + knitr Markdown Document
-## Christopher Gandrud
-### 14 January 2013
-
------
-
 This is some text.^[This is an inline footnote.]
 
 This is a *knitr* code chunk:
@@ -306,9 +345,9 @@ plot(cars$speed, cars$dist)
 This is a citation [see @Donoho2009, 10].
 @
 
-\noindent Note you can find this file, the bibliography, plus commands to render the document at: \url{http://bit.ly/X7BXu9}.\footnote{The full URL is: \url{https://github.com/christophergandrud/Rep-Res-Examples/tree/master/RMarkdownExamples/ExamplePandocKnitrMarkdown}.}
+We have only covered a small proportion of Pandoc's capabilities that you can take advantage of with \emph{rmarkdown}. For full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
 
-\subsection{CSS style files and Markdown}\index{CSS}
+\subsection{CSS style files and Markdown}\index{CSS|(}
 
 You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this is Google Chrome's Developer Tools.\index{Google Chrome!Developer Tools} The Developer Tools allows you to edit your webpages, including their CSS and see a live preview. It is a really nice way to experiment with CSS (and HTML and JavaScript).\index{HTML}\index{JavaScript}\footnote{For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}.} There are also numerous pre-made style sheets available online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error when you run \texttt{markdownToHTML}} In this example I will use a stylesheet called \emph{Markdown.css} created by Simon Laroche and available at: \url{https://github.com/simonlc/Markdown-CSS}.
 
@@ -341,62 +380,8 @@ options(rstudio.markdownToHTML =
 
 \noindent Simply change the style sheet's name and file path as needed.
 
-\paragraph{Custom CSS files with Pandoc}\index{Pandoc!CSS}
+\index{CSS|(}
 
-You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \verb|--css| option to your \texttt{pandocToHTML} call.\index{Pandoc option!css} This will tell Pandoc what CSS file you want to use. For example:
-
-<<Ch13PandocCustomCSS, eval=FALSE, tidy=FALSE>>=
-pandocToHTML <-
-  function(inputFile, outputFile) {
-    system(paste("pandoc", shQuote(inputFile), "-o",
-    shQuote(outputFile), "--bibliography PandocBib.bib",
-    "--css Markdown.css"))
-  }
-@
-
-\begin{figure}
-    \caption{Example Rendered R Markdown Document with Custom CSS}
-    \label{CustomCSSExample}
-        \begin{center}
-            \includegraphics[width=0.8\textwidth]{Children/Chapter13/images13/CustomCSSExample.png}
-        \end{center}
-\end{figure}
-
-\subsection{\emph{knitr}'s \texttt{pandoc} command}\label{KnitrPandoc}
-
-An alternative way to convert Markdown documents to other formats is \emph{knitr}'s \texttt{pandoc} command.\index{knitr!pandoc}\index{R function!pandoc} The syntax is pretty straightforward. Imagine we want to convert a very simple Markdown document called \emph{SimpleExample.Rmd} to HTML. Imagine also that the document has no bibliography or other custom options, so we can simply use:
-
-<<Ch13KnitPandoc1, eval=FALSE, tidy=FALSE>>=
-knitr::pandoc("SimpleExample.Rmd", format = "html")
-@
-
-We can add Pandoc options, like bibliographies and CSS files, by embedding them at the beginning of the document. For example:
-
-<<Ch13PandocKnitr, eval=FALSE, tidy=FALSE>>=
-<!--Pandoc
-format: html
-css: Markdown.css
-bibliography: PandocBib.bib
--->
-
-# Example Pandoc + knitr Markdown Document
-## Christopher Gandrud
-### 1 May 2013
-
------
-
-This is some text.^[This is an inline footnote.]
-
-This is a *knitr* code chunk:
-
-```{r}
-plot(cars$speed, cars$dist)
-```
-
-This is a citation [see @Donoho2009, 10].
-@
-
-\noindent The document is the same as our example from earlier, except at the very beginning we added an HTML comment: \verb|<!--Pandoc . . . -->|. Inside of this comment we added our CSS and bibliography options using Debian Control File syntax.\index{Debian Control File} Basically this just means that we write the Pandoc option name (e.g. \texttt{css}), a colon, then the value (e.g. \texttt{Markdown.css}). Note that each option is on its own line.\footnote{See Yihui Xie's help page for more information: \url{http://yihui.name/knitr/demo/pandoc/}.} Now whenever we use the \texttt{pandoc} command these options will be applied.\footnote{You can also place the options in a separate text file and tell \texttt{pandoc} where it is with the \texttt{config} option.}
 
 %%%%%%%%%%%%% Presentations %%%%%%%%%%%%%%%%%%
 \section{Slideshows with Markdown, \emph{knitr}, and HTML}

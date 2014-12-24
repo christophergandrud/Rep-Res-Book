@@ -447,9 +447,11 @@ Let's take a quick, abstract look at what the \emph{knitr} package does. As I've
         \end{center}
 \end{figure}
 
-\subsection{What \emph{rmarkdown} does}
+\subsection{What \emph{rmarkdown} does}\label{rmardownHeader}
 
 The \emph{rmarkdown}\index{rmarkdown} package implements a variation on this process that utilizes a program called Pandoc to create presentation documents in multiple formats from an a knittable document written in Markdown. The main difference between pure \emph{knitr} markdown and \emph{rmarkdown} documents is the inclusion of a header specifying how you want to process the document with Pandoc.\footnote{Note: you can also create an \emph{rmarkdown} document without a header.}
+
+\index{rmarkdown!header |(}
 
 The header is written in YAML\index{YAML}.\footnote{YAML is a recursive acronym that means ``YAML Ain't Markup Language''.} The YAML header can include information such as the document's title, author, whether or not to include a table of contents, and a link to a BibTeX bibliography file. YAML is a straightforward data format that organizes information in a simple hierarchy. The header begins and ends with three dashes (\texttt{---}). Information keys--like ``title'' and ``author''--are separated from their associated ``values'' by a colon (\texttt{:}). Sub-values of a hierarchy are denoted by being placed on a new line and indented.\footnote{It doesn't matter how many spaces you use to indent, as long as all indentations have the same number or spaces.} Here is a basic \emph{rmarkdown} header that indicates the document's title, author, date, and that it will be turned into a PDF document (via LaTeX).
 
@@ -471,6 +473,8 @@ output: pdf_document:
 \noindent The title, author, and date, will be placed at the beginning of the output document. The final line (\texttt{toc: true}) creates a table of contents near the beginning of the PDF document when we knit it. We will discuss more header options in chapters \ref{LatexChapter} and \ref{MarkdownChapter}.
 
 RStudio can automatically create a basic header for the type of output document that you want when you open a new \emph{rmarkdown} file. Simply select \texttt{File} \textrightarrow \texttt\:{New File} \textrightarrow\: \texttt{R Markdown\ldots}. A window will appear that looks like Figure \ref{rmarkdownWindow}. Simply select the type of output document you want to create and click \texttt{Ok}.
+
+\index{rmarkdown!header |)}
 
 In addition to the header, in \emph{rmarkdown} you can include Pandoc syntax. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}. Nonetheless, \textbf{remember} that apart from the header and ability to include Pandoc syntax, at the simplest level \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. Importantly, they have the same code chunk syntax (see \pageref{RMarkdownChunkBasic}).
 
@@ -634,6 +638,8 @@ opts_chunk$\hlkwd{set}(fig.align='center')
     \end{kframe}
 \end{knitrout}
 
+\noindent \texttt{Note:} if you want to use \texttt{opts_chunk} in a document rendered with \emph{rmarkdown} you will need to load \emph{knitr} in a code chunk preceding the call.
+
 \index{knitr!global chunk options|)}
 
 \subsection{\emph{knitr} package options}\index{knitr!package options|(}
@@ -760,7 +766,7 @@ texi2pdf(file = "Example.tex")
 
 \noindent Just like with \texttt{knit2html}, you can simplify this process by using the \texttt{knit2pdf} command to compile a PDF file from a \texttt{.Rnw} or \texttt{.Rtex} document.
 
-\subsection{\emph{rmarkdown} and R}\index{rmarkdown}
+\subsection{\emph{rmarkdown} and R}\index{rmarkdown}\index{rmarkdown!header |(}\label{rmarkdownRender}
 
 Just as \emph{knitr} is an R package that you can run from the console, you can also run \emph{rmarkdown} from the console. Instead of the \texttt{knit} function use \emph{render}. Imagine that \emph{Example.Rmd} now has an \emph{rmarkdown} header:
 
@@ -781,6 +787,8 @@ output:
     \end{alltt}
 \end{kframe}
 \end{knitrout}
+
+\index{rmarkdown!header |)}
 
 \noindent This header specifies how the file can be compiled to either PDF or HTML. When compiled to PDF it will include a table of contents. When compiled to HTML it won't. Now we use \texttt{render}:
 

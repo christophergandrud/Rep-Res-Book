@@ -60,7 +60,7 @@ You will need to install the the R packages RCurl and XML seperately. See
 ### Session Info
 
 The current version of the book manuscript was compiled with
-[RStudio](http://www.rstudio.com/) (v. 0.98.880 developer build) with the
+[RStudio](http://www.rstudio.com/) (v. 0.99.124 developer build) with the
 following R session:
 
 
@@ -76,34 +76,38 @@ following R session:
 ## [8] base     
 ## 
 ## other attached packages:
-##  [1] ZeligBayesian_0.1   MCMCpack_1.3-3      coda_0.16-1        
-##  [4] lattice_0.20-29     Zelig_4.2-1         sandwich_2.3-2     
-##  [7] MASS_7.3-35         boot_1.3-13         xtable_1.7-4       
-## [10] WDI_2.4             ROAuth_0.9.5        texreg_1.34        
-## [13] survival_2.37-7     stargazer_5.1       rvest_0.1.0.9000   
-## [16] RJSONIO_1.3-0       rmarkdown_0.4.2     reshape2_1.4.1     
+##  [1] rmarkdown_0.4.2     ZeligBayesian_0.1   MCMCpack_1.3-3     
+##  [4] coda_0.16-1         lattice_0.20-29     Zelig_4.2-1        
+##  [7] sandwich_2.3-2      MASS_7.3-35         boot_1.3-13        
+## [10] xtable_1.7-4        WDI_2.4             ROAuth_0.9.5       
+## [13] texreg_1.34         survival_2.37-7     stargazer_5.1      
+## [16] rvest_0.1.0.9000    RJSONIO_1.3-0       reshape2_1.4.1     
 ## [19] repmis_0.3.3        RCurl_1.95-4.5      bitops_1.0-6       
 ## [22] quantmod_0.4-3      TTR_0.22-0          xts_0.9-7          
-## [25] zoo_1.7-11          packrat_0.4.2-1     markdown_0.7.4     
-## [28] magrittr_1.5        knitcitations_1.0.5 httr_0.6.0         
-## [31] googleVis_0.5.7     ggplot2_1.0.0       formatR_1.0        
-## [34] extrafont_0.17      dplyr_0.3.0.2       digest_0.6.7       
-## [37] devtools_1.6.1      data.table_1.9.4    countrycode_0.17   
-## [40] brew_1.0-6          animation_2.3       knitr_1.8.4        
+## [25] zoo_1.7-11          packrat_0.4.2-1     openair_1.0        
+## [28] markdown_0.7.4      magrittr_1.5        knitcitations_1.0.5
+## [31] httr_0.6.0          htmlwidgets_0.3.2   highlight_0.4.4    
+## [34] googleVis_0.5.7     ggplot2_1.0.0       formatR_1.0        
+## [37] extrafont_0.17      dplyr_0.3.0.2       digest_0.6.7       
+## [40] devtools_1.6.1      data.table_1.9.4    countrycode_0.17   
+## [43] brew_1.0-6          animation_2.3       knitr_1.8.4        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] assertthat_0.1    bibtex_0.3-6      chron_2.3-45     
-##  [4] colorspace_1.2-4  DBI_0.3.1         evaluate_0.5.5   
-##  [7] extrafontdb_1.0   grid_3.1.2        gtable_0.1.2     
-## [10] highr_0.4         htmltools_0.2.7   labeling_0.3     
-## [13] lazyeval_0.1.9    lubridate_1.3.3   memoise_0.2.1    
-## [16] munsell_0.4.2     parallel_3.1.2    plyr_1.8.1       
-## [19] proto_0.3-10      R.cache_0.10.0    R.methodsS3_1.6.1
-## [22] R.oo_1.18.0       R.utils_1.34.0    Rcpp_0.11.3      
-## [25] RefManageR_0.8.40 rJava_0.9-6       rjson_0.2.15     
-## [28] Rttf2pt1_1.3.2    scales_0.2.4      stringr_0.6.2    
-## [31] tools_3.1.2       twitteR_1.1.7     xlsx_0.5.7       
-## [34] xlsxjars_0.6.1    XML_3.98-1.1
+##  [1] assertthat_0.1      bibtex_0.3-6        chron_2.3-45       
+##  [4] cluster_1.15.3      codetools_0.2-9     colorspace_1.2-4   
+##  [7] DBI_0.3.1           evaluate_0.5.5      extrafontdb_1.0    
+## [10] grid_3.1.2          gtable_0.1.2        highr_0.4          
+## [13] htmltools_0.2.7     labeling_0.3        latticeExtra_0.6-26
+## [16] lazyeval_0.1.9      lubridate_1.3.3     Matrix_1.1-4       
+## [19] memoise_0.2.1       mgcv_1.8-4          munsell_0.4.2      
+## [22] nlme_3.1-118        parallel_3.1.2      plyr_1.8.1         
+## [25] proto_0.3-10        R.cache_0.10.0      R.methodsS3_1.6.1  
+## [28] R.oo_1.18.0         R.utils_1.34.0      RColorBrewer_1.1-2 
+## [31] Rcpp_0.11.3         RefManageR_0.8.40   rJava_0.9-6        
+## [34] rjson_0.2.15        Rttf2pt1_1.3.2      scales_0.2.4       
+## [37] stringr_0.6.2       tools_3.1.2         twitteR_1.1.7      
+## [40] xlsx_0.5.7          xlsxjars_0.6.1      XML_3.98-1.1       
+## [43] yaml_2.1.13
 ```
 
 ---
