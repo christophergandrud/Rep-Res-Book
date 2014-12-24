@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 December 2014
+% Updated: 24 December 2014
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -193,7 +193,7 @@ make clean
 
 \noindent If we run the following code:\label{MakeAllCommand}
 
-<<Ch6MakeAll, eval=FALSE, engine='sh'>>=
+<<Ch6MakeAll, eval=FALSE, engine='sh', echo=TRUE>>=
 # Remove MergeData.Rout and make all R source files
 make cleanMerge all
 @
@@ -227,7 +227,7 @@ Now that we've covered the big picture, let's learn the different tools you will
 
 Data stored in plain-text files on your computer can be loaded into R using the \texttt{read.table}\index{R function!read.table} command. For example, imagine we have a CSV file called \emph{TestData.csv} stored in the current working directory. To load the data set into R simply type:
 
-<<Ch6LocalReadTable, eval=FALSE, tidy=FALSE>>=
+<<Ch6LocalReadTable, eval=FALSE, tidy=FALSE, echo=TRUE>>=
 TestData <- read.table("TestData.csv", sep = ",", header = TRUE)
 @
 
@@ -237,7 +237,7 @@ If you are using RStudio you can do the same thing with drop down menus. To open
 
 If the data is not stored in plain-text format, but is instead saved in a format created by another statistical program such as SPSS,\index{SPSS} SAS,\index{SAS} or Stata,\index{Stata} we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
-<<Ch6Stata, eval=FALSE, tidy=FALSE>>=
+<<Ch6Stata, eval=FALSE, tidy=FALSE, echo=TRUE>>=
 # Load foreign package
 library(foreign)
 
@@ -247,7 +247,7 @@ StataData <- read.dta(file = "Data1.dta")
 
 \noindent As you can see, commands in the \emph{foreign} package have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports use the following command:
 
-<<Ch6ForeignHelp, eval=FALSE>>=
+<<Ch6ForeignHelp, eval=FALSE, echo=TRUE>>=
 library(help = "foreign")
 @
 
@@ -282,20 +282,16 @@ One problem for reproducible research with sourcing data located on the internet
 
 For example, let's find the SHA-1 hash for the disproportionality data set we downloaded in the last chapter (Section \ref{GitDownload}):\footnote{Remember we placed the file's raw GitHub URL address inside of the object \emph{UrlAddress}.}
 
-{\small{
-<<Ch6sourceDataGitHub, tidy=FALSE>>=
+<<Ch6sourceDataGitHub, tidy=FALSE, size='small'>>=
 DispropData <- repmis::source_data(UrlAddress)
 @
-}}
 
 \noindent You can see that the file's SHA-1 hash begins \emph{\texttt{195637339e8483d}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
 
-{\footnotesize{
-<<Ch6SHA1compare, tidy=FALSE>>=
+<<Ch6SHA1compare, tidy=FALSE, size='footnotesize'>>=
 DispropData <- repmis::source_data(OldUrlAddress,
         sha1 = "195637339e8483dd634fae38e16ad8f24a403aef")
 @
-}}
 
 \noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
 
@@ -327,8 +323,7 @@ A more laborious way to download data from a secure URL that does not rely on \e
 
 Let's try an example. To download the data file we used in Section \ref{GitDownload} it into R we could use this code:
 
-{\small
-<<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE>>=
+<<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE, size='small'>>=
 # Put URL address into the object UrlAddress
 UrlAddress <- paste0("https://raw.githubusercontent.com/",
                     "christophergandrud/Disproportionality_Data/",
@@ -345,7 +340,6 @@ DispropData <- read.table(textConnection(DataUrl),
 # Show variables in data
 names(DispropData)
 @
-}
 
 \noindent If running \texttt{getURL(UrlAddress)} gives you an error about an \texttt{SSL certificate problem} simply add the argument \texttt{ssl.verifypeer = FALSE}. This allows you to skip certification verification and access the data.\footnote{For more details see the \emph{RCurl} help page at \url{http://www.omegahat.org/RCurl/FAQ.html}.}
 
@@ -362,11 +356,11 @@ Sometimes data files are large, making them difficult to store and download with
 
 \noindent The reason that we have to go through so many extra steps is that compressed files are more than just a single file and contain a number of files as well as metadata.\index{metadata}
 
-Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It's in a compressed file called {\emph{uds\_summary.csv.gz}}. The file's URL address is {\url{http://www.unified-democracy-scores.org/files/uds_summary.csv.gz}}, that I shortened\footnote{I used bitly (\url{bitly.com}) to shorten the URL.} to \url{http://bit.ly/1jXJgDh} because of space constraints.
+Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It's in a compressed file called {\emph{uds\_summary.csv.gz}}. At the time of writing, the file's URL address is {\url{http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz}}. I shortened the URL\footnote{I used bitly (\url{bitly.com}) to shorten the URL.} to \url{http://bit.ly/1jXJgDh} because of space constraints.
 
-{\footnotesize
-<<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE>>=
-# For simplicity, store the URL in an object called 'URL'.
+
+<<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE, size='footnotesize'>>=
+# For simplicity, store the URL in an object called 'URL'
 URL <- "http://bit.ly/1jXJgDh"
 
 # Create a temporary file called 'temp' to put the zip file into.
@@ -375,7 +369,7 @@ temp <- tempfile()
 # Download the compressed file into the temporary file.
 download.file(URL, temp)
 
-# Decompress the file and convert it into a dataframe
+# Decompress the file and convert it into a data frame
 UDSData <- read.csv(gzfile(temp, "uds_summary.csv"))
 
 # Delete the temporary file.
@@ -384,7 +378,6 @@ unlink(temp)
 # Show variables in data
 names(UDSData)
 @
-}
 
 \subsection{Data APIs \& feeds}
 

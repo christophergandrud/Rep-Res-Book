@@ -14,12 +14,12 @@ To install key user-written packages used in this book, copy the following code 
 install.packages(c("brew", "countrycode",
                 "devtools", "dplyr",
                 "ggplot2", "googleVis",
+                "highlight",
                 "knitcitations", "knitr",
-                "quantmod", "repmis",
-                "reshape2", "RCurl",
-                "rmarkdown", "texreg",
-                "WDI", "xtable", "Zelig")
-)
+                "repmis", "reshape2",
+                "RCurl", "rmarkdown",
+                "texreg", "WDI",
+                "xtable", "Zelig"))
 @
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror''\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
@@ -29,8 +29,7 @@ In Chapter \ref{TablesChapter} we use the \emph{Zelig} package \citep{R-Zelig}\i
 <<ZeligBayesian, eval=FALSE, tidy=FALSE>>=
 install.packages("ZeligBayesian",
                  repos = "http://r.iq.harvard.edu/",
-                 type  = "source"
-)
+                 type  = "source")
 @
 
 \paragraph{Special issues for Windows and Linux Users}
@@ -51,6 +50,7 @@ sudo apt-get install r-cran-rjava
 
 <<FrontPackageCitations, include=FALSE>>=
 # Install & load required packages as well as all cited packages
+# Note: many of these packages are loaded to access their citation information.
 ## Based on https://gist.github.com/3710171
 ## See also http://bit.ly/PbabKd
 
@@ -66,12 +66,14 @@ toInstall <- c("animation",
                 "formatR",
                 "ggplot2",
                 "googleVis",
+                "highlight",
                 'htmlwidgets',
                 "httr",
                 "knitcitations",
                 "knitr",
                 "magrittr",
                 "markdown",
+                "openair",
                 "packrat",
                 "quantmod",
                 "RCurl",
