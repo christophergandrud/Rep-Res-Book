@@ -1,7 +1,7 @@
 % Chapter Chapter 13 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 9 June 2014
+% Updated: 24 December 2014
 
 <<set-parent13, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -9,31 +9,43 @@ set_parent('Rep-Res-Parent.Rnw')
 
 \chapter{Presenting on the Web with Markdown}\label{MarkdownChapter}
 
-LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML.\index{HTML} HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research HTML presentation documents.
+LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML.\index{HTML} HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research HTML presentation documents. In addition, the \emph{rmarkdown} package allows us to compose our documents in Markdown and compile them to PDF and MS Word.
 
-In this chapter we will learn about Markdown editors and the basic Markdown syntax for creating simple reproducible HTML documents, including many of the things we covered for LaTeX documents such as headings and text formatting. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. In this chapter will also briefly look at some more advanced features for including math with MathJax, footnotes and bibliographies with Pandoc and customizing styles with CSS. Then we will learn how to create HTML slideshows with Markdown and RStudio as well as the \emph{slidify} R package \citep{R-slidify}. We'll finish up the chapter by looking at options for publishing Markdown created documents, including locally on your computer, Dropbox, and GitHub Pages. 
+In this chapter we will learn about Markdown editors and the basic Markdown syntax for creating simple reproducible HTML documents, including many of the things we covered for LaTeX documents such as headings and text formatting. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. In this chapter will also briefly look at some more advanced features for including math with MathJax, footnotes and bibliographies with Pandoc and customizing styles with CSS. Then we will learn how to create HTML slideshows. We'll finish up the chapter by looking at options for publishing Markdown created HTML documents, including locally on your computer, Dropbox, and GitHub Pages.
 
 \section{The Basics}
 
-Markdown was created specifically to make it easy to write HTML (or XHTML\index{XHTML}\footnote{Extensible HyperText Markup Language}) using a syntax that is human readable and possibly publishable without compiling. For example, compare the Markdown table syntax in Chapter \ref{TablesChapter} to the HTML syntax for virtually the same table.\footnote{For more information see John Gruber's website: \url{http://daringfireball.net/projects/markdown/}.} That being said, to make Markdown simple it does not have as many capabilities as HTML. To get around this problem you can still use HTML in Markdown, though note that Markdown syntax cannot be used between HTML element tags. 
+Markdown was created specifically to make it easy to write HTML (or XHTML\index{XHTML}\footnote{Extensible HyperText Markup Language}) using a syntax that is human readable and possibly publishable without compiling. For example, compare the Markdown table syntax in Chapter \ref{TablesChapter} to the HTML syntax for virtually the same table.\footnote{For more information see John Gruber's website: \url{http://daringfireball.net/projects/markdown/}.} That being said, to make Markdown simple it does not have as many capabilities as HTML. To get around this problem you can still use HTML in Markdown, though note that Markdown syntax cannot be used between HTML element tags.
+
+\textbf{Warning:} if you are using \emph{rmarkdown} to compile a document to PDF or Word, using raw HTML syntax will often not work as intended, if at all. As a rule, syntax specific to LaTeX or HTML that is included in an R Markdown document can only be properly compiled to a PDF or HTML document, respectively.
 
 \subsection{Getting started with Markdown editors}\index{Markdown!editors}
 
-Like for R LaTeX, RStudio\index{RStudio} functions as a very good editor for R Markdown documents and regular non-knittable documents as well. To create a new R Markdown document in RStudio click \texttt{File} in the menu bar then \texttt{New} \textrightarrow{} \texttt{R Markdown}. RStudio has full syntax highlighting for code chunks and can \textbf{knit} \texttt{.Rmd} files into \texttt{.md} then render them in \emph{.html} with one click of the \texttt{Knit HTML} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/KnitHTML.png}). As we saw in Chapter \ref{GettingStartedRKnitr} (Figure \ref{NotebookExample}), when you knit a Markdown document in RStudio, it will preview the HTML document for you. You can always view HTML documents by opening them with your web browser. You can do this directly from RStudio's \textbf{Preview HTML}\index{RStudio!Preview HTML} window by clicking the \texttt{View the page with the system browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). You can also click the question mark button (\includegraphics[scale=0.5]{Children/Chapter13/images13/MDButton.png}) for a quick guide to the Markdown syntax used in RStudio.\footnote{RStudio uses Sundown,\index{Markdown!Sundown} which is a variant of Markdown developed by GitHub.\index{GitHub} See: \url{https://github.com/vmg/sundown}.}
+\begin{wrapfigure}{r}{0.3\textwidth}
+    \caption{R Markdown Compile Dropdown Menu}
+    \label{DropdowMarkdown}
+    \begin{center}
+        \includegraphics[scale=0.5]{Children/Chapter13/images13/rmarkdownOutputOptions.png}
+    \end{center}
+\end{wrapfigure}
 
-Being plain-text, you can also use any other text editor to modify Markdown documents, though they lack the level of integration with \emph{knitr} that RStudio has. There are also Markdown specific programs that include useful features like live previews\index{Markdown!live preview} (i.e. continuously updating) of how the Markdown document will look when compiled. Again these will not run \emph{knitr} code. However, they do include some features RStudio lacks beyond live updating, like word counts,\index{word count} the ability to save in PDF formats, and multiple CSS style files to format your documents with. On my Mac computer I often use Mou\footnote{\url{http://mouapp.com/}}\index{Mou} and Marked\footnote{See: \url{http://markedapp.com/}.\index{Marked} Marked can be integrated fairly well with RStudio as it only previews Markdown documents, rather than allowing you to edit them. It has more functionality than RStudio's \textbf{Preview HTML} window.}. One Markdown editor option on Windows is MarkdownPad.\footnote{\url{http://markdownpad.com/}}\index{MarkdownPad} 
+Like for R LaTeX, RStudio\index{RStudio} functions as a very good editor for R Markdown documents and regular non-knittable Markdown documents as well. To create a new R Markdown document in RStudio click \texttt{File} in the menu bar then \texttt{New} \textrightarrow{} \texttt{R Markdown}. RStudio has full syntax highlighting for code chunks and can compile \texttt{.Rmd} files into \texttt{.md} then render them in \emph{.html} with one click of the \texttt{Knit HTML} button (\includegraphics[scale=0.5]{Children/Chapter13/images13/KnitHTML.png}). As we saw in Chapter \ref{GettingStartedRKnitr} (Figure \ref{NotebookExample}), when you knit a Markdown document in RStudio, it will preview the HTML document for you. You can always view HTML documents by opening them with your web browser. You can do this directly from RStudio's \textbf{Preview HTML}\index{RStudio!Preview HTML} window by clicking the \texttt{Open in Browser} button (\includegraphics[scale=0.45]{Children/Chapter10/images10/ShowInBrowser.png}). If you click on the downward arrow next to \texttt{Knit HTML} you will see the dropdown menu in Figure \ref{DropdowMarkdown}. This allows you to also compile the document to PDF or MS Word.
+
+In Figure \ref{DropdowMarkdown} you'll also notice the the question mark button. Click this for a quick guide to the Markdown syntax used in RStudio.
+
+Being plain-text, you can also use any other text editor to modify Markdown documents, though they will lack the level of integration with \emph{knitr} that RStudio has.
 
 \subsection{Preamble and document structure}
 
-That was kind of a trick subsection title. Unlike LaTeX documents, Markdown documents do not have a preamble. There is also no need to start a body environment or anything like that. HTML head elements\index{HTML element!head} (HTMLs preamble equivalent) are added automatically when you render Markdown documents into HTML. So with Markdown, you can just start typing.
+That was kind of a trick subsection title. Unlike LaTeX documents, plain Markdown documents do not have a preamble. \emph{rmarkdown} documents can have a header, but we will get to that later. There is also no need to start a body environment or anything like that. HTML head elements\index{HTML element!head} (HTMLs preamble equivalent) are added automatically when you render Markdown documents into HTML. So with Markdown, you can just start typing.
 
-Here is an example of an R Markdown document that creates the map we saw in Chapter \ref{FiguresChapter}:\footnote{This code is available on GitHub at: \url{https://github.com/christophergandrud/Rep-Res-Examples/blob/master/RMarkdownExamples/ExampleKnitrMarkdown.Rmd}.} We'll go through all of the code below.
+Here is an example of an R Markdown document that creates the map we saw in Chapter \ref{FiguresChapter}:\footnote{This code is available on GitHub at: \url{https://github.com/christophergandrud/Rep-Res-Examples/blob/master/RMarkdownExamples/ExampleKnitrDocument/ExampleKnitrMarkdown.Rmd}.} We'll go through all of the code below.
 
-<<Ch13FullExample, eval=FALSE>>=
+<<Ch13FullExample, eval=FALSE, size='small'>>=
 # Example R Markdown File
-## from ''Reproducible Research with R and RStudio''
+## from "Reproducible Research with R and RStudio"
 ### Christopher Gandrud
-### 14 January 2013
+### 15 January 2015
 
 -----------
 
@@ -42,25 +54,25 @@ Here is an example of an R Markdown document that creates the map we saw in Chap
 library(devtools)
 ```
 
-We can use use R's [googleVis](http://code.google.com/p/google-
-motion-charts-with-r/#Examples) package to create interactive 
-JavaScript tables, charts, and maps. Here is an example of 
-how to create a map with *googleVis*'s `gvisGeoMap` command. 
+We can use the
+[googleVis](http://code.google.com/p/google-motion-charts-with-r/)
+package to create interactive JavaScript tables, charts, and maps.
+Here is an example of how to create a map with *googleVis*'s
+`gvisGeoChart` function.
 
-Let's first download some data from [GitHub](https://github.com/). 
-See chapters 6 and 7 for details about this data as well as the 
+Let's first download some data from [GitHub](https://github.com/).
+See chapters 6 and 7 for details about this data as well as the
 [variable description page](https://github.com/christophergandrud/
-Rep-Res-Examples/blob/master/DataGather_Merge/MainData_
-VariableDescriptions.md).
+Rep-Res-Examples/blob/master/DataGather_Merge/
+MainData_VariableDescriptions.md).
 
 -----------
 
-## Fertilizer Consumption (kilograms per hectare of arable land) 
-in 2003
-### Data from the [World Bank](http://data.worldbank.org/
-indicator/AG.CON.FERT.ZS)
+## Fertilizer Consumption (kilograms per hectare of arable land) in 2003
 
-```{r CreategvisGeoMap, echo=FALSE, message=FALSE, results='asis'}
+### Data from [World Bank](http://data.worldbank.org/indicator/AG.CON.FERT.ZS)
+
+```{r CreategvisGeoChart, echo=FALSE, message=FALSE, results='asis'}
 # Create geo map of global fertilizer consumption for 2003
 # The data is loaded from GitHub (http://bit.ly/V0ldsf)
 ## The data gathering process used to create this data set
@@ -70,6 +82,8 @@ source_url("http://bit.ly/VNnZxS")
 ```
 
 -----------
+
+
 @
 
 \noindent When knitted in RStudio and viewed in the Google Chrome web browser\index{Google Chrome} the final presentation document looks like Figure \ref{MarkdownExampleFig}.
@@ -159,11 +173,11 @@ To create itemized lists in Markdown simply place the items after one dash:
 
 \subsection{Escape characters}\index{Markdown!escape character}
 
-Markdown, like LaTeX and R, uses a backslash (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document (rather than start to italicize your text, e.g. \verb|*some italicized text*|), type: \verb|\*|. Two characters--ampersand (\verb|&|)\index{Markdown!ampersand} and the less than sign (\verb|<|)--\index{Markdown!less than sign}have special meanings in HTML.\footnote{Ampersands declare the beginning of a special HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|. 
+Markdown, like LaTeX and R, uses a backslash (\verb|\|) as an escape character. For example if you want to have an asterisk in the text of your document (rather than start to italicize your text, e.g. \verb|*some italicized text*|), type: \verb|\*|. Two characters--ampersand (\verb|&|)\index{Markdown!ampersand} and the less than sign (\verb|<|)--\index{Markdown!less than sign}have special meanings in HTML.\footnote{Ampersands declare the beginning of a special HTML character. Less than signs begin HTML tags.} So, to have them printed literally in your text you have to use the HTML code for the characters. Ampersands are created with \verb|&amp|. Less than signs are created with \verb|&lt|.
 
 \subsection{Math with MathJax}
 
-Markdown by itself can't format mathematical equations. We can create LaTeX style equations by adding on the MathJax JavaScript\index{JavaScript} engine.\index{MathJax} MathJax syntax is the same as LaTeX syntax (see Section \ref{MathLaTeX}), especially when used from RStudio. Markdown documents rendered in RStudio automatically link to the MathJax engine online.\footnote{You will not be able to render equations when you are not online.} If you want to use another program to render Markdown documents with MathJax equations you may need to take extra steps to link to MathJax. For more details see: \url{http://docs.mathjax.org/en/latest/start.html#mathjax-cdn}.
+Markdown by itself can't format mathematical equations. We can create LaTeX style equations by adding on the MathJax JavaScript\index{JavaScript} engine.\index{MathJax} MathJax syntax is the same as LaTeX syntax (see Section \ref{MathLaTeX}), especially when used from RStudio or when rendered with \emph{rmarkdown}. Markdown documents rendered in RStudio automatically link to the MathJax engine online.\footnote{You will not be able to render equations when you are not online.} If you want to use another program to render Markdown documents with MathJax equations you may need to take extra steps to link to MathJax. For more details see: \url{http://docs.mathjax.org/en/latest/start.html#mathjax-cdn}.
 
 Because backslashes are Markdown escape characters, in many Markdown editors you will have to use two backslashes to create math environments with MathJax. For example, in LaTeX and RStudio's\index{RStudio!Markdown math} Markdown you can create a display equation like this:
 
@@ -189,9 +203,14 @@ s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 
 To make inline equations simply use parentheses instead of square brackets as in LaTeX, e.g. \verb|\( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \)|.
 
-\section{Markdown with Pandoc and Custom CSS}
+\section{Markdown with Pandoc and Custom CSS via \emph{rmarkdown}}
 
-Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files to render Markdown documents into HTML. We will look at two ways to run Pandoc from R. The first is via the \texttt{system} command. The second is via \emph{knitr}'s \texttt{pandoc} wrapper command.\index{wrapper} 
+
+
+
+
+
+Markdown is simple and easy to use. But being simple means that it lacks important functionality for presenting research results, such as footnotes and bibliographies. Also, customizing the look of a Markdown document is difficult. In this section we will learn how to overcome these limitations with Pandoc and CSS. Space constraints limit me from giving a full introduction to either of these tools, so we are mostly going to focus on how to set up R so that we can use Pandoc and custom CSS style files to render Markdown documents into HTML. We will look at two ways to run Pandoc from R. The first is via the \texttt{system} command. The second is via \emph{knitr}'s \texttt{pandoc} wrapper command.\index{wrapper}
 
 \subsection{Pandoc}\index{Pandoc}
 
@@ -201,14 +220,14 @@ The simplest way to do this is to create a new R function\index{R function!funct
 
 <<Ch13PandocFunction, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
-pandocToHTML <-  function(inputFile, outputFile) 
-{      
-    system(paste("pandoc", shQuote(inputFile), "-o", 
+pandocToHTML <-  function(inputFile, outputFile)
+{
+    system(paste("pandoc", shQuote(inputFile), "-o",
                  shQuote(outputFile)))
 }
 @
 
-\noindent The \texttt{system}\index{R function!system} sends the following code to your computer's command line shell where it runs Pandoc. \texttt{shQuote} allows us to use quotes as strings that can be parsed by the shell.\index{shell}\index{command line} In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. For example, we saw in the previous chapter how to use Pandoc to output a Markdown file to markup languages other than HTML. See Section \ref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}. 
+\noindent The \texttt{system}\index{R function!system} sends the following code to your computer's command line shell where it runs Pandoc. \texttt{shQuote} allows us to use quotes as strings that can be parsed by the shell.\index{shell}\index{command line} In this function the strings are the input and output file names. You can of course customize this code to change how Pandoc renders your documents. For example, we saw in the previous chapter how to use Pandoc to output a Markdown file to markup languages other than HTML. See Section \ref{PandoctoLaTeXExample} for an example and the Pandoc website for more details: \url{http://johnmacfarlane.net/pandoc/}.
 
 Imagine that we have a file called \emph{Example.Rmd} in our working directory. This is how we \texttt{knit} it and render it with Pandoc:
 
@@ -220,17 +239,17 @@ knitr::knit("Example.Rmd", "Example.md")
 pandocToHTML("Example.md", "Example.html")
 @
 
-\noindent In RStudio\index{RStudio} you can use this type of function rather than \texttt{markdownToHTML} when you click \emph{Knit HTML}. To do this you need to set a new \texttt{option} in an invisible file called \emph{.Rprofile}.\footnote{You can either create a new \emph{.Rprofie} document in your working directory or change the master file always used by R. The location of this file varies by operating system.}\index{R!.Rprofile} Changing this file allows you to alter how R works. Note: using Pandoc rather than \emph{markdownToHTML} from the \emph{markdown} package allows us to use footnotes and bibliographies. However, we also lose functions, like automatic MathJax support. It would take some work (not covered here) to get the best of both worlds. You will have to decide whether Pandoc or the default RStudio renderer is the best way to render your document based on what you want to do. 
+\noindent In RStudio\index{RStudio} you can use this type of function rather than \texttt{markdownToHTML} when you click \emph{Knit HTML}. To do this you need to set a new \texttt{option} in an invisible file called \emph{.Rprofile}.\footnote{You can either create a new \emph{.Rprofie} document in your working directory or change the master file always used by R. The location of this file varies by operating system.}\index{R!.Rprofile} Changing this file allows you to alter how R works. Note: using Pandoc rather than \emph{markdownToHTML} from the \emph{markdown} package allows us to use footnotes and bibliographies. However, we also lose functions, like automatic MathJax support. It would take some work (not covered here) to get the best of both worlds. You will have to decide whether Pandoc or the default RStudio renderer is the best way to render your document based on what you want to do.
 
 Here is the code to add to the \emph{.Rprofile} so that you can use Pandoc when you click \texttt{Knit HTML}.\footnote{This code is from the RStudio website: \url{http://www.rstudio.com/ide/docs/authoring/markdown_custom_rendering}.}
 
 <<Ch13Options, eval=FALSE, tidy=FALSE>>=
-options(rstudio.markdownToHTML = 
-  function(inputFile, outputFile) {      
-    system(paste("pandoc", shQuote(inputFile), "-o", 
+options(rstudio.markdownToHTML =
+  function(inputFile, outputFile) {
+    system(paste("pandoc", shQuote(inputFile), "-o",
                  shQuote(outputFile)))
   }
-)  
+)
 @
 
 \paragraph{Footnotes with Pandoc}\index{Pandoc!footnotes}\index{Markdown!footnotes}
@@ -251,9 +270,9 @@ We can add BibTeX citations after a small addition to the Pandoc call we use to 
 
 <<Ch13PandocFunctionBib, eval=FALSE, tidy=FALSE>>=
 # Function to render .md file with Pandoc
-pandocToHTML <-  
-    function(inputFile, outputFile) {      
-    system(paste("pandoc", shQuote(inputFile), "-o", 
+pandocToHTML <-
+    function(inputFile, outputFile) {
+    system(paste("pandoc", shQuote(inputFile), "-o",
                  shQuote(outputFile),
                  "--bibliography Example.bib"))
     }
@@ -291,7 +310,7 @@ This is a citation [see @Donoho2009, 10].
 
 \subsection{CSS style files and Markdown}\index{CSS}
 
-You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this is Google Chrome's Developer Tools.\index{Google Chrome!Developer Tools} The Developer Tools allows you to edit your webpages, including their CSS and see a live preview. It is a really nice way to experiment with CSS (and HTML and JavaScript).\index{HTML}\index{JavaScript}\footnote{For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}.} There are also numerous pre-made style sheets available online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error when you run \texttt{markdownToHTML}} In this example I will use a stylesheet called \emph{Markdown.css} created by Simon Laroche and available at: \url{https://github.com/simonlc/Markdown-CSS}. 
+You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this is Google Chrome's Developer Tools.\index{Google Chrome!Developer Tools} The Developer Tools allows you to edit your webpages, including their CSS and see a live preview. It is a really nice way to experiment with CSS (and HTML and JavaScript).\index{HTML}\index{JavaScript}\footnote{For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}.} There are also numerous pre-made style sheets available online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error when you run \texttt{markdownToHTML}} In this example I will use a stylesheet called \emph{Markdown.css} created by Simon Laroche and available at: \url{https://github.com/simonlc/Markdown-CSS}.
 
 \paragraph{Rendering Markdown files using custom CSS}\index{Markdown!custom CSS}
 
@@ -302,7 +321,7 @@ It is simple to use a custom CSS file with the \texttt{markdownToHTML}\index{R f
 knitr::knit("Example.Rmd", "Example.md")
 
 # Render with using custom Markdown.css style sheet
-markdownToHTML("Example.md", "Example.html", 
+markdownToHTML("Example.md", "Example.html",
                stylesheet = "Markdown.css")
 @
 
@@ -311,13 +330,13 @@ markdownToHTML("Example.md", "Example.html",
 You can of course also modify your \emph{.Rprofile}\index{R!.Rprofile} so that you always use the same CSS style file. RStudio\index{RStudio} suggests adding the following code to your \emph{.Rprofile}:
 
 <<Ch13CustomCSS2, eval=FALSE, tidy=FALSE>>=
-options(rstudio.markdownToHTML = 
-  function(inputFile, outputFile) {      
+options(rstudio.markdownToHTML =
+  function(inputFile, outputFile) {
     require(markdown)
-    markdownToHTML(inputFile, outputFile, 
-                   stylesheet = "Markdown.css")   
+    markdownToHTML(inputFile, outputFile,
+                   stylesheet = "Markdown.css")
   }
-) 
+)
 @
 
 \noindent Simply change the style sheet's name and file path as needed.
@@ -327,10 +346,10 @@ options(rstudio.markdownToHTML =
 You can add custom CSS files to Pandoc rendered Markdown files as well. To do this add the \verb|--css| option to your \texttt{pandocToHTML} call.\index{Pandoc option!css} This will tell Pandoc what CSS file you want to use. For example:
 
 <<Ch13PandocCustomCSS, eval=FALSE, tidy=FALSE>>=
-pandocToHTML <-  
-  function(inputFile, outputFile) {      
-    system(paste("pandoc", shQuote(inputFile), "-o", 
-    shQuote(outputFile), "--bibliography PandocBib.bib", 
+pandocToHTML <-
+  function(inputFile, outputFile) {
+    system(paste("pandoc", shQuote(inputFile), "-o",
+    shQuote(outputFile), "--bibliography PandocBib.bib",
     "--css Markdown.css"))
   }
 @
@@ -349,7 +368,7 @@ An alternative way to convert Markdown documents to other formats is \emph{knitr
 
 <<Ch13KnitPandoc1, eval=FALSE, tidy=FALSE>>=
 knitr::pandoc("SimpleExample.Rmd", format = "html")
-@ 
+@
 
 We can add Pandoc options, like bibliographies and CSS files, by embedding them at the beginning of the document. For example:
 
@@ -388,7 +407,7 @@ Because Markdown and \emph{knitr} Markdown documents can be compiled into HTML f
     \item You can use the relatively simple Markdown syntax.
     \item HTML presentations are a nice native way to show content on the web.
     \item HTML presentations can incorporate virtually any content that can be included in a webpage. This includes interactive content, like motion charts created by \emph{googleVis}\index{googleVis} (see Chapter \ref{FiguresChapter}).
-\end{itemize} 
+\end{itemize}
 
 
 \noindent Let's look at how to create HTML slideshows from Markdown documents using (a) RStudio's built in slideshow files, called R Presentations, and the \emph{slidify} R package. R Presentations are generally easier to make than \emph{slidify} slideshows, but they are less customizable.
@@ -407,17 +426,17 @@ The easiest, but less customizable way to create HTML slideshows is with RStudio
 
 \paragraph{Editing and compiling the presentation}
 
-You change the presentation's content by editing the \emph{.Rpres} file using the normal \emph{knitr} Markdown syntax we've covered. The only difference is how you create new slides. Luckily the syntax for this is very simple. Just type the slides title then at least three equal signs (\verb|===|). For example, 
+You change the presentation's content by editing the \emph{.Rpres} file using the normal \emph{knitr} Markdown syntax we've covered. The only difference is how you create new slides. Luckily the syntax for this is very simple. Just type the slides title then at least three equal signs (\verb|===|). For example,
 
 <<Ch13RPresTitle, eval=FALSE, tidy=FALSE, engine='sh'>>=
 This is an Example .Rpres Slide Title
 ===
-@ 
+@
 
 \noindent The very first slide is automatically the title slide and will be formatted differently from the rest.\footnote{As of this writing it is a blue slide with white letters.} Here is an example of a complete \emph{.Rpres} file:
 
 <<Ch13RPresFullExample, eval=FALSE, tidy=FALSE>>=
-Example R Presentation 
+Example R Presentation
 ===
 
 ## Christopher Gandrud
@@ -432,7 +451,7 @@ The code to create the following figure is available online.
 To access it we type:
 
 ```{r, eval=FALSE}
-# Access and run the code to create a caterpillar plot 
+# Access and run the code to create a caterpillar plot
 
 devtools::source_url("http://bit.ly/VRKphr")
 ```
@@ -441,7 +460,7 @@ Caterpillar Plot
 ===
 
 ```{r, echo=FALSE, message=FALSE}
-# Access and run the code to create a caterpillar plot 
+# Access and run the code to create a caterpillar plot
 
 devtools::source_url("http://bit.ly/VRKphr")
 ```
@@ -449,7 +468,7 @@ devtools::source_url("http://bit.ly/VRKphr")
 Fertilizer Consumption Map (2003)
 ===
 
-```{r CreategvisGeoMap, echo=FALSE, message=FALSE, results='asis'} 
+```{r CreategvisGeoMap, echo=FALSE, message=FALSE, results='asis'}
 # Create geo map of global fertilizer consumption for 2003
 devtools::source_url("http://bit.ly/VNnZxS")
 ```
@@ -461,7 +480,7 @@ To compile the slideshow either click the \texttt{Preview} button (\includegraph
 
 \paragraph{Publishing R Presentation slideshows}
 
-You can use RStudio to show your presentation. However, this is probably not the best way for others to see it. \emph{googleVis} images won't show up and other people need to have RStudio to open it on their computer. So, you will probably want to either publish the presentation to a standalone HTML file and host it, for example, on a Dropbox\index{Dropbox} \emph{Public}\index{Dropbox!Public folder} folder or publish it directly to RPubs.\index{RPubs} To create a standalone HTML file simply click the \texttt{More} button in the \emph{Presentation} pane, then \texttt{Save as Webpage...}. Under the \texttt{More} button you can also chose the option \texttt{Publish to RPubs...}. We'll look at these options some more later in this chapter. 
+You can use RStudio to show your presentation. However, this is probably not the best way for others to see it. \emph{googleVis} images won't show up and other people need to have RStudio to open it on their computer. So, you will probably want to either publish the presentation to a standalone HTML file and host it, for example, on a Dropbox\index{Dropbox} \emph{Public}\index{Dropbox!Public folder} folder or publish it directly to RPubs.\index{RPubs} To create a standalone HTML file simply click the \texttt{More} button in the \emph{Presentation} pane, then \texttt{Save as Webpage...}. Under the \texttt{More} button you can also chose the option \texttt{Publish to RPubs...}. We'll look at these options some more later in this chapter.
 
 \begin{figure}
 	\caption{RStudio R Presentation Pane}
@@ -469,21 +488,21 @@ You can use RStudio to show your presentation. However, this is probably not the
 	\begin{center}
 		\includegraphics[width=\textwidth]{Children/Chapter13/images13/PresentationPane.png}
 	\end{center}
-\end{figure} 
+\end{figure}
 
 
 
 %%%%%%%%%%%%%% Slidify %%%%%%%%%%%%%%%%
 \subsection{Slideshows with Markdown, \emph{knitr}, and \texttt{slidify}}
 
-It is also possible to create reproducible HTML5 slideshows\index{slideshow} with R Markdown using Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify}.\footnote{For more information about \emph{slidify} please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows. 
+It is also possible to create reproducible HTML5 slideshows\index{slideshow} with R Markdown using Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify}.\footnote{For more information about \emph{slidify} please visit its excellent website at \url{http://ramnathv.github.com/slidify/}. For example, this site includes information on how to customize slideshow layouts.} This package converts R Markdown files into HTML slideshows.
 
 \noindent There are a number of steps to create an HTML5 slideshow with \emph{slidify}:
 
 \begin{enumerate}
     \item Initialize a slideshow with the \verb|author|\index{R function!author} command.
     \item Edit the slideshow's main R Markdown file, called \emph{index.Rmd} by default. This includes both the slideshow's header and body.
-    \item Use the \verb|slidify|\index{R function!slidify} command to run \emph{knitr} and compile the slideshow. 
+    \item Use the \verb|slidify|\index{R function!slidify} command to run \emph{knitr} and compile the slideshow.
     \item Publish the slideshow online with the \verb|publish| command.\index{R function!publish}
 \end{enumerate}
 
@@ -491,7 +510,7 @@ It is also possible to create reproducible HTML5 slideshows\index{slideshow} wit
 
 \paragraph{HTML5 frameworks}
 
-Before getting into the details of how to use \emph{slidify}, let's briefly look more into what an HTML5\index{HTML5} slideshow is and the frameworks that make them possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, including CSS,\index{CSS} and JavaScript\index{JavaScript} to create a website that behaves like a LaTeX beamer\index{beamer} or Powerpoint\index{Powerpoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components are often located remotely. Most browsers have a \texttt{Full Screen} mode you can use to view presentations. 
+Before getting into the details of how to use \emph{slidify}, let's briefly look more into what an HTML5\index{HTML5} slideshow is and the frameworks that make them possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, including CSS,\index{CSS} and JavaScript\index{JavaScript} to create a website that behaves like a LaTeX beamer\index{beamer} or Powerpoint\index{Powerpoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components are often located remotely. Most browsers have a \texttt{Full Screen} mode you can use to view presentations.
 
 There are a number of different HTML5 slideshow frameworks that let you create and style your slideshows. Table \ref{SlideshowFrameworks} lists some of the major frameworks supported by \emph{slidify}. In all of the frameworks you view the slideshow in your web browser and advance through slides with the forward arrow key on your keyboard. You can go back with the back arrow. Despite these similarities, the frameworks have different looks and capabilities. Check out their respective websites listed in Table \ref{SlideshowFrameworks} for more information.
 
@@ -541,7 +560,7 @@ library(slidify)
 author("MySlideShow")
 @
 
-\noindent This will create a new folder with an R Markdown file called \emph{index.Rmd}. It will also initialize a Git\index{Git} repository and create a folder called \emph{assets}. The \emph{assets} folder is where CSS,\index{CSS} JavaScript,\index{JavaScript} and other ancillary files needed to create the slideshow are stored. Luckily, \emph{slidify} takes care of all these things for us. If you want to, you can certainly customize these files.\footnote{See \url{http://ramnathv.github.com/slidify/customize.html} for more details on the best way to modify these files.} Edit the \emph{index.Rmd} file to add content to your slideshow. 
+\noindent This will create a new folder with an R Markdown file called \emph{index.Rmd}. It will also initialize a Git\index{Git} repository and create a folder called \emph{assets}. The \emph{assets} folder is where CSS,\index{CSS} JavaScript,\index{JavaScript} and other ancillary files needed to create the slideshow are stored. Luckily, \emph{slidify} takes care of all these things for us. If you want to, you can certainly customize these files.\footnote{See \url{http://ramnathv.github.com/slidify/customize.html} for more details on the best way to modify these files.} Edit the \emph{index.Rmd} file to add content to your slideshow.
 
 \paragraph{The \emph{slidify} header}
 
@@ -550,13 +569,13 @@ When you \verb|author| a slideshow, \emph{slidify} automatically opens the \emph
 {\small
 <<Ch13slidifyHeader, eval=FALSE, tidy=FALSE>>=
 ---
-title       : 
-subtitle    : 
-author      : 
-job         : 
+title       :
+subtitle    :
+author      :
+job         :
 framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
 highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      # 
+hitheme     : tomorrow      #
 widgets     : []            # {mathjax, quiz, bootstrap}
 mode        : selfcontained # {standalone, draft}
 ---
@@ -573,28 +592,28 @@ Finally there is the \texttt{mode} option. The mode option determines how to loa
 
 \paragraph{Slide frames and slide titles}\index{Markdown!slide frames}
 
-\emph{slidify} R Markdown documents use very similar syntax to ordinary R Markdown documents. \emph{knitr} code chunks are written in the same way as regular R Markdown. An important difference is that three dashes (\verb|---|) delimit individual slide frames, not a horizontal line. Importantly, you need to have an empty line before and after the three dashes or else a new slide will not be created. Two hash marks (\verb|##|) are used to indicate a slide's title.\footnote{One hash mark creates a slide title formatted in the same way as the text.} 
+\emph{slidify} R Markdown documents use very similar syntax to ordinary R Markdown documents. \emph{knitr} code chunks are written in the same way as regular R Markdown. An important difference is that three dashes (\verb|---|) delimit individual slide frames, not a horizontal line. Importantly, you need to have an empty line before and after the three dashes or else a new slide will not be created. Two hash marks (\verb|##|) are used to indicate a slide's title.\footnote{One hash mark creates a slide title formatted in the same way as the text.}
 
 Here is code to include in a \emph{index.html} file that will create a very simple, but full \emph{knitr} HTML5 slideshow with \emph{slidify} using the syntax we just discussed:
 
 <<Ch13SlidifyExample, eval=FALSE, tidy=FALSE>>=
 ---
 title       : Example slidify and knitr Slideshow
-subtitle    : 
+subtitle    :
 author      : Christopher Gandrud
-job         : 
-framework   : io2012        
-highlighter : highlight.js  
-hitheme     : tomorrow       
-widgets     : []            
-mode        : selfcontained 
---- 
+job         :
+framework   : io2012
+highlighter : highlight.js
+hitheme     : tomorrow
+widgets     : []
+mode        : selfcontained
+---
 
 ## Access the Code
 
 The code to create the following figure is available online.
 
-To access it we type: 
+To access it we type:
 
 ```{r, eval=FALSE}
 # Access and run the code to create a caterpillar plot
@@ -623,7 +642,7 @@ setwd("/ExampleProject/Presentation/MySlideShow")
 slidify("index.Rmd")
 @
 
-\noindent In RStudio\index{RStudio} you can click the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button and it will \texttt{slidify} the R Markdown file. Note that the resulting slideshow may not work in the RStudio \textbf{Preview HTML} window,\index{RStudio!Preview HTML} but opening the \emph{index.html} file in your web browser should work fine. 
+\noindent In RStudio\index{RStudio} you can click the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button and it will \texttt{slidify} the R Markdown file. Note that the resulting slideshow may not work in the RStudio \textbf{Preview HTML} window,\index{RStudio!Preview HTML} but opening the \emph{index.html} file in your web browser should work fine.
 
 \paragraph{Publishing slidify slideshows}
 
@@ -657,13 +676,13 @@ Of course you can simply open the HTML file rendered from any R Markdown documen
 
 \subsection{Hosting webpages with Dropbox}\index{Dropbox!Public folder}
 
-Probably one of the easiest ways to host an HTML file created with R Markdown is on your Dropbox \emph{Public} folder.\footnote{See Section \ref{EnablePublicFolder} for instructions on how to enable this folder if you created your Dropbox account after 4 October 2012.} Just like we saw with \emph{slidify} slideshows in the \emph{Public} folder any, HTML file will be rendered and widely accessible simply be entering the public link into a web browser. 
+Probably one of the easiest ways to host an HTML file created with R Markdown is on your Dropbox \emph{Public} folder.\footnote{See Section \ref{EnablePublicFolder} for instructions on how to enable this folder if you created your Dropbox account after 4 October 2012.} Just like we saw with \emph{slidify} slideshows in the \emph{Public} folder any, HTML file will be rendered and widely accessible simply be entering the public link into a web browser.
 
 \subsection{GitHub Pages}\index{GitHub!Pages}\index{GitHub}
 
-GitHub also offers a free hosting service for webpages. These can be much more complex than a single HTML file. The simplest way to create one of these pages is to create a repository with a file called \emph{README.Rmd}. You can \texttt{knit} this file and then create your GitHub Page with it. To do this go to the \texttt{Settings} \textrightarrow{} \texttt{GitHub Pages} on your repository's main GitHub website. Then click \texttt{Automatic Page Generator}. This places the contents of your \emph{README.md} file in the page and provides you with formatting options. Click \texttt{Publish} and you will have a new website. 
+GitHub also offers a free hosting service for webpages. These can be much more complex than a single HTML file. The simplest way to create one of these pages is to create a repository with a file called \emph{README.Rmd}. You can \texttt{knit} this file and then create your GitHub Page with it. To do this go to the \texttt{Settings} \textrightarrow{} \texttt{GitHub Pages} on your repository's main GitHub website. Then click \texttt{Automatic Page Generator}. This places the contents of your \emph{README.md} file in the page and provides you with formatting options. Click \texttt{Publish} and you will have a new website.
 
-Clicking \texttt{Publish} creates a new orphan branch\footnote{An orphan branch is a branch with a different root from other repository branches. Another way of think about this is that they have their own history.}\index{Git!orphan branch} called \emph{gh-pages}.\index{GitHub!gh-pages branch} When these branches are pushed to GitHub it will create a website based around a file called \emph{index.html} that you include in the branch. This will be the website's main page. 
+Clicking \texttt{Publish} creates a new orphan branch\footnote{An orphan branch is a branch with a different root from other repository branches. Another way of think about this is that they have their own history.}\index{Git!orphan branch} called \emph{gh-pages}.\index{GitHub!gh-pages branch} When these branches are pushed to GitHub it will create a website based around a file called \emph{index.html} that you include in the branch. This will be the website's main page.
 
 If you want to create more customized and larger websites with GitHub pages you can manually create a GitHub Pages orphan branch and push it to GitHub. This is essentially what \emph{slidify} did for us with its \texttt{publish}\index{R function!publish} command. Imagine we have our working directory set as a repository containing an R Markdown file that we have rendered into an HTML file called \emph{index.html}.\index{HTML} Let's create a new orphan branch:
 

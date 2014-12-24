@@ -1,7 +1,7 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 21 November 2014
+% Updated: 24 December 2014
 
 <<set-parent12, include=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -13,7 +13,7 @@ In the previous chapter we learned the basics of how to make LaTeX documents to 
 
 Many of these tools can also be used to create batch reports\index{batch reports}: documents that present results for a selected part of a data set. For example, a researcher may want to create individual reports of answers to survey questions from interviewees with a specific age. In the latter part of this chapter we will rely on {\emph{knitr}} and the \emph{brew} package \citep{R-brew} to create batch reports.
 
-In this chapter we will first briefly discuss how to plan a large document's file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{input}\index{LaTeX command!input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} \citep{Pandoc2012} to convert child documents written in non-LaTeX markup languages and include them into a LaTeX parent. After this we will look at how to create batch reports.
+In this chapter we will first briefly discuss how to plan a large document's file structure. We will then look at three methods for including child documents into parent documents. The first is very simple and uses the LaTeX command \texttt{input}\index{LaTeX command!input}. The second uses \emph{knitr} to include knittable child documents. The final method is a special case of the \emph{knitr} method that uses the command line program Pandoc \index{Pandoc} to convert child documents written in non-LaTeX markup languages and include them into a LaTeX parent. After this we will look at how to create batch reports.
 
 \section{Planning Large Documents}
 
@@ -27,11 +27,9 @@ To make your many child and parent documents manageable, it is a good idea to st
 
 Imagine that we are writing a book with three chapters. No part of the document includes \emph{knitr} code chunks. We can split the book into three child documents and place them in a subdirectory of the parent document's folder called \emph{Children}. The child documents should not contain a preamble, \verb|\begin{document}|, or \verb|\end{document}|. Because they are chapters we will begin the documents simply with the \texttt{chapter} heading.\index{LaTeX command!chapter} For example, the chapter in this book has:
 
-{\scriptsize
-<<Ch12ChapterName, eval=FALSE, tidy=FALSE>>=
+<<Ch12ChapterName, eval=FALSE, tidy=FALSE, size='scriptsize'>>=
 \chapter{Large LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
 @
-}
 
 \noindent As we saw earlier, the \texttt{label}\index{LaTeX command!label} command is used for cross-referencing.
 
