@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 21 April 2014
+% Updated: 24 December 2014
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -9,9 +9,11 @@ set_parent('Rep-Res-Parent.Rnw')
 
 \chapter{Presenting with LaTeX}\label{LatexChapter}
 
-We have already begun to see how LaTeX works for presenting research results. This chapter gives you a more detailed and comprehensive introduction to basic LaTeX document structures and commands. It is not a complete introduction to all that LaTeX is capable of, but we will cover enough that you will be able to create an entire well formatted article and slideshow with LaTeX that you can use to dynamically present your results. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex LaTeX documents. 
+We have already begun to see how LaTeX works for presenting research results. This chapter gives you a more detailed and comprehensive introduction to basic LaTeX document structures and commands. It is not a complete introduction to all that LaTeX is capable of, but we will cover enough that you will be able to create an entire well formatted article and slideshow with LaTeX that you can use to dynamically present your results. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex LaTeX documents.
 
-In this chapter we will learn about basic LaTeX document structures and syntax as well as how to dynamically create LaTeX bibliographies with BibTeX, R, and \emph{knitr}. Finally, we will look at how to create PDF beamer slideshows with LaTeX and \emph{knitr}. 
+For basic LaTeX documents, such as short articles or simple presentations, it may often be quicker and simpler to write the markup using an R Markown document and compile it to PDF with the \emph{rmarkdown} package.\index{rmarkown} As we will see in Chapter \ref{MarkdownChapter}, Markdown syntax is much simpler than normal LaTeX. However, there are at least two reasons why it is useful to become familiar with LaTeX syntax. First, understanding LaTeX syntax will help you debug issues you might encounter when using \emph{rmarkdown} that would otherwise be mysterious if you were only familiar with Markdown. Second, R Markdown has limited capabilities for creating more complex documents such as books or documents with highly customizable formatting. Using \emph{kntr} and LaTeX can be useful in these situations.
+
+In this chapter we will learn about basic LaTeX document structures and syntax as well as how to dynamically create LaTeX bibliographies with BibTeX, R, and \emph{knitr}. Finally, we will look at how to create PDF beamer slideshows with LaTeX and \emph{knitr}.
 
 \section{The Basics}
 
@@ -19,17 +21,17 @@ In this section we will look at how to create a LaTeX article including what edi
 
 \subsection{Getting started with LaTeX editors}
 
-As I mentioned earlier, RStudio\index{RStudio!LaTeX editor} is a fully functional LaTeX editor in addition to being an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \textrightarrow{} {\tt{R Sweave}}. 
-
-Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can use RStudio to knit and compile a document with the click of one button: \textbf{Compile PDF}\index{RStudio!Compile PDF button} (\includegraphics[scale=0.5]{Children/Chapter11/images11/CompilePDF.png}). You can use this button to compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}. You can also insert many of the items we will cover in this section into your documents with RStudio's LaTeX \texttt{TeX Format} button.\index{RStudio!TeX format button} See Figure \ref{TeXFormat}.
+As I mentioned earlier, RStudio\index{RStudio!LaTeX editor} is a fully functional LaTeX editor in addition to being an integrated development environment for R. If you want to create a new LaTeX document you can click {\tt{File}} in the menu bar then {\tt{New}} \textrightarrow{} {\tt{R Sweave}}.
 
 \begin{wrapfigure}{r}{0.3\textwidth}
     \caption{RStudio TeX Format Options}
     \label{TeXFormat}
-        \begin{center}
-            \includegraphics[scale=0.6]{Children/Chapter11/images11/TeXFormat.png}
-        \end{center}
+    \begin{center}
+        \includegraphics[scale=0.6]{Children/Chapter11/images11/TeXFormat.png}
+    \end{center}
 \end{wrapfigure}
+
+Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can use RStudio to knit and compile a document with the click of one button: \textbf{Compile PDF}\index{RStudio!Compile PDF button} (\includegraphics[scale=0.5]{Children/Chapter11/images11/CompilePDF.png}). You can use this button to compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}. You can also insert many of the items we will cover in this section into your documents with RStudio's LaTeX \texttt{TeX Format} button.\index{RStudio!TeX format button} See Figure \ref{TeXFormat}.
 
 There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated a table that comprehensively compares many of these editors.} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
 
@@ -49,7 +51,7 @@ As you probably noticed in Part III's examples, LaTeX commands start with a back
         \end{kframe}
 \end{knitrout}
 
-\noindent Probably one of the biggest sources of errors that occur when compiling a LaTeX document to PDF\index{PDF}\index{LaTeX!error} are caused by curly brackets that aren't closed, i.e. an open bracket (\verb|{|) is not matched with a subsequent closed bracket (\verb|}|). Watch out for this and use an editor (like RStudio) that highlights brackets' matching pairs. As we will see, unlike in R with parentheses if your LaTeX command does not have an argument you do not need to include the curly brackets at all. 
+\noindent Probably one of the biggest sources of errors that occur when compiling a LaTeX document to PDF\index{PDF}\index{LaTeX!error} are caused by curly brackets that aren't closed, i.e. an open bracket (\verb|{|) is not matched with a subsequent closed bracket (\verb|}|). Watch out for this and use an editor (like RStudio) that highlights brackets' matching pairs. As we will see, unlike in R with parentheses if your LaTeX command does not have an argument you do not need to include the curly brackets at all.
 
 There are a number of places to find comprehensive lists of LaTeX commands. The Netherlands TeX users group\index{Netherlands TeX users} has compiled one: \url{http://www.ntg.nl/doc/biemesderfer/ltxcrib.pdf}.
 
@@ -92,7 +94,7 @@ Here is a full LaTeX article class document with all of these changes added:
     \begin{kframe}
         \begin{alltt}
 %%%%%%%%%%%%%%  Article Preamble %%%%%%%%%%%%%%
-\textbackslash{}documentclass\{article\} 
+\textbackslash{}documentclass\{article\}
 
 %% Load LaTeX packages
 \textbackslash{}usepackage\{hyperref\}
@@ -111,8 +113,8 @@ PackagesUsed <- c(\hlstr{"knitr", "ggplot2", "repmis"})
 \hlcom{# Note must have repmis package installed.}
 repmis::LoadandCite(PackagesUsed, file = \hlstr{"Packages.bib"}, install = FALSE)
 
-\hlcomment{#### Gather Democracy data from Pemstein et al. (2010) ####}
-\hlcomment{# For simplicity, store the URL in an object called 'url'.}
+\hlcom{#### Gather Democracy data from Pemstein et al. (2010) ####}
+\hlcom{# For simplicity, store the URL in an object called 'url'.}
 url <- \hlstring{"http://bit.ly/1jXJgDh"}
 
 \hlcom{# Create a temporary file called 'temp' to put the zip file into.}
@@ -121,7 +123,7 @@ temp <- \hlkwd{tempfile}()
 \hlcom{# Download the compressed file into the temporary file.}
 \hlkwd{download.file}(url, temp)
 
-\hlcom{# Decompress the file and convert it into a dataframe}
+\hlcom{# Decompress the file and convert it into a data frame}
 \hlcom{# class object called 'data'.}
 UDSData <- \hlkwd{read.csv}(\hlkwd{gzfile}(temp, \hlstr{"uds_summary.csv"}))
 
@@ -147,10 +149,10 @@ Hertie School of Governance\textbackslash{}thanks\{Email: \textbackslash{}href\{
 \textbackslash{}end\{abstract\}
 
 %%%%%%%%%%% Article Main Text %%%%%%%%%%%%%
-\textbackslash{}section\{The Graph\} 
+\textbackslash{}section\{The Graph\}
 
-I gathered data from \textbackslash{}cite\{Pemstein2010\} on countries' democracy level. They call their 
-democracy measure the Unified Democracy Score (UDS). Figure \textbackslash{}ref\{DemPlot\} shows the mean 
+I gathered data from \textbackslash{}cite\{Pemstein2010\} on countries' democracy level. They call their
+democracy measure the Unified Democracy Score (UDS). Figure \textbackslash{}ref\{DemPlot\} shows the mean
 UDS scores over time for all of the countries in their sample.
 
 \textbackslash{}begin\{figure\}
@@ -158,23 +160,24 @@ UDS scores over time for all of the countries in their sample.
     \textbackslash{}label\{DemPlot\}
 \textless{}\textless{}echo=FALSE, message=FALSE, warining=FALSE, out.width='7cm', out.height='7cm'\textgreater{}\textgreater{}=
 \hlcom{# Graph UDS scores}
-ggplot(UDSData, aes(x = year, y = mean)) +
-ggplot(UDSData, aes(x = year, y = mean)) +
-        geom_point(alpha = I(0.1)) +
-        stat_smooth(size = 2) +
-        ylab(\hlstr{"Democracy Score"}) + xlab(\hlstr{""}) +
-        theme\_bw()
+\hlkwd{ggplot}(UDSData, \hlkwf{aes}(x = year, y = mean)) +
+    \hlkwd{geom_point}(alpha = I(0.1)) +
+    \hlkwd{stat_smooth}(size = 2) +
+    \hlkwd{ylab}(\hlstr{"Democracy Score"}) + \hlkwd{xlab}(\hlstr{""}) +
+    \hlkwd{theme\_bw}()
 @
 \textbackslash{}end\{figure\}
 
 %%%%%%%%%%% Reproducing the Document %%%%%
 \textbackslash{}section\*\{Appendix: Reproducing the Document\}
 
-This document was created using R version 3.0.0 and the R package \textbackslash{}emph\{knitr\} 
-\textbackslash{}citep\{R-knitr\}. It also relied on the R packages 
-\textbackslash{}emph\{ggplot2\} \textbackslash{}citep\{R-ggplot2\} and \textbackslash{}emph\{repmis\} \textbackslash{}citep\{R-repmis\}. 
-The document can be completely reproduced from 
-source files available on GitHub at: 
+This document was created using R version
+\textbackslash{}Sexpr\{\hlkwd{paste0}(version$major, ".", version$minor)\}
+and the R package \textbackslash{}emph\{knitr\}
+\textbackslash{}citep\{R-knitr\}. It also relied on the R packages
+\textbackslash{}emph\{ggplot2\} \textbackslash{}citep\{R-ggplot2\} and \textbackslash{}emph\{repmis\} \textbackslash{}citep\{R-repmis\}.
+The document can be completely reproduced from
+source files available on GitHub at:
 \textbackslash{}url\{https://github.com/christophergandrud/Rep-Res-Examples\}.
 
 %%%%%%%%% Bibliography %%%%%%%%%%%%%%%%%%%%
@@ -183,13 +186,25 @@ source files available on GitHub at:
 
 \textbackslash{}end\{document\}
         \end{alltt}
-\end{kframe}
+    \end{kframe}
 \end{knitrout}
 }
 
 \noindent The \emph{knitr} code chunk\index{knitr!code chunk} syntax should be familiar to you from previous chapters, so let's unpack the LaTeX syntax from just after the first code chunk, including the ``Create Title'' and ``Abstract'' parts. New syntax shown in later parts of this example is discussed in the remainder of this section and the next section on bibliographies.
 
-First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (Section \ref{LaTeXTables}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author's name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank-yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked. 
+First, remember that the percent sign (\%) is LaTeX's comment character. Using it to comment your markup can make it easier to read. Second, as we saw in Chapter \ref{TablesChapter} (Section \ref{LaTeXTables}) double backslashes (\verb|\\|),\index{LaTeX!\textbackslash{}\textbackslash{}} like those after the author's name, force a new line in LaTeX. We will discuss the \texttt{emph} command in a moment. Third, using the \texttt{thanks}\index{LaTeX command!thanks} command allows us to create a footnote for author contact information\footnote{Frequently it also includes thank-yous to people who have helped the research.} that is not numbered like the other footnotes (see below). Finally, you'll notice \verb|\href{mailto: . . . .org}}|.\index{LaTeX command!href}\index{LaTeX command!mailto} This creates an email address in the final document that will open the reader's default email program\index{LaTeX!email program} when clicked.
+
+Finally, you may have noticed the following line:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
+    \begin{kframe}
+        \begin{alltt}
+\textbackslash{}Sexpr\{paste0(version$major, ".", version$minor)\}
+        \end{alltt}
+    \end{kframe}
+\end{knitrout}
+\noindent This code finds the current version of R being used and prints the version number into the presentation document.
 
 \subsection{Headings}\index{LaTeX!headings}
 
@@ -213,7 +228,7 @@ Use the \texttt{hrulefill} command to create horizontal lines in the text of you
 
 \hrulefill
 
-\noindent Inside of a \verb|tabular| environment,\index{LaTeX environment!tabular} use the \verb|hline| command rather than \verb|hrulefill|. 
+\noindent Inside of a \verb|tabular| environment,\index{LaTeX environment!tabular} use the \verb|hline| command rather than \verb|hrulefill|.
 
 \subsection{Text formatting}
 
@@ -247,7 +262,7 @@ You can change the size of code chunks that \emph{knitr} places in presentation 
             {\small \texttt{small}} \\
             {\footnotesize \texttt{footnotesize}} \\
             {\scriptsize \texttt{scriptsize}} \\
-            {\tiny \texttt{tiny}} 
+            {\tiny \texttt{tiny}}
         \vspace{0.2cm}
         \end{tabular}
     \end{center}
@@ -259,19 +274,19 @@ You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX 
 
 \paragraph{Quotation marks}\index{LaTeX!quotation marks}
 
-To specify double left quotation marks (``) use two back ticks (\verb|``|). For double right quotes ('') use two apostrophes (\verb|''|). Single quotes follow the same format (\verb|`'|). 
+To specify double left quotation marks (``) use two back ticks (\verb|``|). For double right quotes ('') use two apostrophes (\verb|''|). Single quotes follow the same format (\verb|`'|).
 
 \subsection{Math}\index{LaTeX!math}\label{MathLaTeX}
 
-LaTeX is particularly popular among quantitative researchers and mathematicians because it is very good at rendering mathematics. A complete listing of every math command would take up quite a bit of space.\footnote{See the Netherlands TeX user group list mentioned earlier for an extensive compilation of math commands.} I am briefly going to discuss how to include math in a LaTeX document. This discussion includes a few math syntax examples. 
+LaTeX is particularly popular among quantitative researchers and mathematicians because it is very good at rendering mathematics. A complete listing of every math command would take up quite a bit of space.\footnote{See the Netherlands TeX user group list mentioned earlier for an extensive compilation of math commands.} I am briefly going to discuss how to include math in a LaTeX document. This discussion includes a few math syntax examples.
 
-To include math inline with your text place the math syntax in between backslashes and parentheses, i.e. \verb|\( . . . \)|. For example, \verb|\( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \)| produces \( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \) in our final document.\footnote{Instead of backslashes and parentheses you can also use a pair of dollar signs (\texttt{\$\ldots \$})\index{LaTeX!\$}.} We can display math separately from the text by placing the math commands inside of backslashes and square brackets: \verb|\[ . . . \]|.\footnote{Equivalently, use two pairs of dollar signs (\texttt{\$\$\ldots \$\$}) or the \texttt{display} environment.\index{LaTeX environment!display} Though it will still work in most cases, the double dollar sign math syntax may cause errors. You can also number display equations using the \texttt{equation} environment.\index{LaTeX environment!equation}} For example, 
+To include math inline with your text place the math syntax in between backslashes and parentheses, i.e. \verb|\( . . . \)|. For example, \verb|\( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \)| produces \( s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1} \) in our final document.\footnote{Instead of backslashes and parentheses you can also use a pair of dollar signs (\texttt{\$\ldots \$})\index{LaTeX!\$}.} We can display math separately from the text by placing the math commands inside of backslashes and square brackets: \verb|\[ . . . \]|.\footnote{Equivalently, use two pairs of dollar signs (\texttt{\$\$\ldots \$\$}) or the \texttt{display} environment.\index{LaTeX environment!display} Though it will still work in most cases, the double dollar sign math syntax may cause errors. You can also number display equations using the \texttt{equation} environment.\index{LaTeX environment!equation}} For example,
 
 <<Ch11Math, eval=FALSE, engine='sh'>>=
 \[
 s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}
 \]
-@ 
+@
 
 \noindent gives us:
 
@@ -299,7 +314,7 @@ To create bullet lists\index{LaTeX!bullet lists} in LaTeX use the \texttt{itemiz
     \item The third item.
 \end{itemize}
 
-\noindent To create a numbered list use the \texttt{enumerate}\index{LaTeX environment!enumerate} environment instead of \texttt{itemize}. You can create sublists\index{LaTeX!sublists} simply by nesting lists inside of lists like this: 
+\noindent To create a numbered list use the \texttt{enumerate}\index{LaTeX environment!enumerate} environment instead of \texttt{itemize}. You can create sublists\index{LaTeX!sublists} simply by nesting lists inside of lists like this:
 
 <<Ch11Lists2, eval=FALSE, tidy=FALSE>>=
 \begin{itemize}
@@ -329,7 +344,7 @@ Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \te
 
 \subsection{Cross-references}\index{LaTeX!cross-references}
 
-LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labelling R objects (see Section \ref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be. 
+LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labelling R objects (see Section \ref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be.
 
 If you place the \texttt{label} on the same line as a heading command \texttt{ref} will place the heading number. If \texttt{label} is in a \texttt{table} or \texttt{figure} environment you will get the table or figure number. You can also use \texttt{pageref} instead of \texttt{ref} to include the page number. Finally, loading the \emph{hyperref}\index{LaTeX package!hyperref} package makes cross-references (or footnote) clickable. Clicking on them will take you to the item the reference is referring to.
 
@@ -349,7 +364,7 @@ BibTeX bibliographies are stored in plain-text files with the extension \texttt{
     title = \{TITLE\},
     author = \{AUTHOR\},
     . . . = \{. . .\}
-\} 
+\}
         \end{alltt}
 \end{kframe}
 \end{knitrout}
@@ -365,9 +380,9 @@ Here is a complete BibTeX entry for \cite{Donoho2009}:
     \begin{kframe}
         \begin{alltt}
 @article\{Donoho2009,
-  author = \{David L Donoho and Arian Maleki and Morteza 
+  author = \{David L Donoho and Arian Maleki and Morteza
   Shahram and Inam Ur Rahman and Victoria Stodden\},
-  title = \{Reproducible research in computational harmonic 
+  title = \{Reproducible research in computational harmonic
     analysis\},
   journal = \{Computing in Science \& Engineering\},
   year = \{2009\},
@@ -379,7 +394,7 @@ Here is a complete BibTeX entry for \cite{Donoho2009}:
 \end{kframe}
 \end{knitrout}
 
-\noindent Each item of the entry must end in a comma, except the last one.\footnote{This is very similar to how we create vectors in R, though in BibTeX you can actually have a comma after the last attribute.} 
+\noindent Each item of the entry must end in a comma, except the last one.\footnote{This is very similar to how we create vectors in R, though in BibTeX you can actually have a comma after the last attribute.}
 
 \subsection{Including citations in LaTeX documents}
 
@@ -443,17 +458,17 @@ knitr::write_bib("xtable",
 \bibliography{Main.bib,Packages.bib}
 @
 
-We can use these techniques to automatically create a BibTeX file with citation information for all of the packages used in a research project. Simply make a character vector of the names of packages that you would like to include in your bibliography. Then run this through \verb|write_bib|. 
+We can use these techniques to automatically create a BibTeX file with citation information for all of the packages used in a research project. Simply make a character vector of the names of packages that you would like to include in your bibliography. Then run this through \verb|write_bib|.
 
 You can make sure you are citing all of the key packages used in a knitted document by (a) creating a vector of all of the packages and then (b) using this in the following code to both load the packages and write the bibliography:
 
 <<Ch11LoadCite, eval=FALSE>>=
 # Package list
-PackagesUsed <- c("ggplot2", "knitr", 
+PackagesUsed <- c("ggplot2", "knitr",
                   "xtable", "Zelig")
 
 # Load packages
-lapply(PackagesUsed, library, 
+lapply(PackagesUsed, library,
         character.only = TRUE)
 
 # Create package BibTeX file
@@ -461,9 +476,9 @@ knitr::write_bib(PackagesUsed,
                  file = "Packages.bib")
 @
 
-\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R function!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R function!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages. 
+\noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R function!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R function!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages.
 
-The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R function!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}. You can have it install specific package versions by entering the version numbers with the \texttt{versions} argument. This is very useful for enabling the replication of analyses that rely on specific package versions.} 
+The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R function!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}. You can have it install specific package versions by entering the version numbers with the \texttt{versions} argument. This is very useful for enabling the replication of analyses that rely on specific package versions.}
 
 \section{Presentations with LaTeX Beamer}
 
@@ -484,11 +499,11 @@ In this section we will take a brief look at the basics of creating slideshows w
 
 \subsection{Beamer basics}
 
-{\emph{knitr}} largely works the same way in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for. 
+{\emph{knitr}} largely works the same way in LaTeX slideshows as it does in article or book class documents. There are a few differences to look out for.
 
 \paragraph{The Beamer preamble}
 
-You use \texttt{documentclass}\index{LaTeX command!documentclass} to set a LaTeX document as a \texttt{beamer} slideshow. You can also include global style information in the preamble by using the commands \texttt{usetheme},\index{LaTeX command!usetheme}\index{LaTeX command!usecolortheme}\index{LaTeX command!useinnertheme}\index{LaTeX command!useoutertheme} \texttt{usecolortheme}, \texttt{useinnertheme}, \texttt{useoutertheme}. For a fairly comprehensive compilation of beamer themes see the Hartwork's Beamer theme matrix: \url{http://www.hartwork.org/beamer-theme-matrix/}. 
+You use \texttt{documentclass}\index{LaTeX command!documentclass} to set a LaTeX document as a \texttt{beamer} slideshow. You can also include global style information in the preamble by using the commands \texttt{usetheme},\index{LaTeX command!usetheme}\index{LaTeX command!usecolortheme}\index{LaTeX command!useinnertheme}\index{LaTeX command!useoutertheme} \texttt{usecolortheme}, \texttt{useinnertheme}, \texttt{useoutertheme}. For a fairly comprehensive compilation of beamer themes see the Hartwork's Beamer theme matrix: \url{http://www.hartwork.org/beamer-theme-matrix/}.
 
 \paragraph{Slide frames}\index{LaTeX!beamer slides}
 
@@ -512,7 +527,7 @@ After the preamble you start your document as usual by beginning the \texttt{doc
 
 \paragraph{Title frames}\index{LaTeX!beamer title frames}
 
-One important difference from a regular LaTeX article is that instead of using \texttt{maketitle} to place your title information, in beamer you place the \texttt{titlepage}\index{LaTeX command!titlepage} inside of a frame by itself. 
+One important difference from a regular LaTeX article is that instead of using \texttt{maketitle} to place your title information, in beamer you place the \texttt{titlepage}\index{LaTeX command!titlepage} inside of a frame by itself.
 
 \paragraph{Sections \& outlines}
 
@@ -539,7 +554,7 @@ We can use section\index{LaTeX command!section} commands in much the same way as
 
 \paragraph{Make list items appear}\index{LaTeX!list appear}
 
-Lists work the same way in beamer as they do in other LaTeX document classes. They do have an added feature in that you can have each item appear as you progress through the slide show. After \verb|\item| place the number of the order in which the item should appear. Enclose the number in \verb|< ->|. For example, 
+Lists work the same way in beamer as they do in other LaTeX document classes. They do have an added feature in that you can have each item appear as you progress through the slide show. After \verb|\item| place the number of the order in which the item should appear. Enclose the number in \verb|< ->|. For example,
 
 <<Ch11ItemFadeIn, eval=FALSE>>=
 \begin{itemize}
@@ -599,7 +614,7 @@ Lists work the same way in beamer as they do in other LaTeX document classes. Th
 \textbackslash{}begin\{frame\}[fragile]
     \textbackslash{}frametitle\{Access the code\}
         The code to create the following figure is available online.
-    
+
         To access it we can type:
 \textless{}\textless{}eval=FALSE\textgreater{}\textgreater{}=
 \hlcom{# Access and run the code to create a caterpillar plot}
@@ -614,7 +629,7 @@ devtools::source\_url(\hlstr{"http://bit.ly/VRKphr"})
 \textless{}\textless{}echo=FALSE, message=FALSE, out.width='\textbackslash{}\textbackslash{}textwidth', out.height='0.8\textbackslash{}\textbackslash{}textheight'\textgreater{}\textgreater{}=
 \hlcom{# Access and run the figure code}
 devtools::source\_url(\hlstr{"http://bit.ly/VRKphr"})
-@ 
+@
 \textbackslash{}end\{frame\}
 
 \textbackslash{}end\{document\}
@@ -627,4 +642,3 @@ devtools::source\_url(\hlstr{"http://bit.ly/VRKphr"})
 \subsection*{Chapter Summary}
 
 In this chapter we have learned the knitty-gritty of how to create simple LaTeX documents--articles and slideshows--that we can embed our reproducible research in using \emph{knitr}. In the next chapter we look at how to create more complex LaTeX documents, including theses, books, and batch reports.
-
