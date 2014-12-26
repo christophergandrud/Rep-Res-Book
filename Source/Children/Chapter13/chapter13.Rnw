@@ -1,23 +1,23 @@
 % Chapter Chapter 13 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 December 2014
+% Updated: 26 December 2014
 
 <<set-parent13, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
 @
 
-\chapter{Presenting on the Web with Markdown}\label{MarkdownChapter}
+\chapter{Presenting on the Web and Other Formats with R Markdown}\label{MarkdownChapter}
 
 LaTeX is the standard markup language for creating academic quality articles and books. If we want to present research findings via the internet our best option is HTML.\index{HTML} HTML syntax can be tedious to write, as we saw in Chapter \ref{TablesChapter}. Luckily the Markdown language was created as a simplified way of writing HTML documents. As we have seen, Markdown can be fully integrated with \emph{knitr} for creating reproducible research HTML presentation documents. In addition, the \emph{rmarkdown} package allows us to compose our documents in Markdown and compile them to PDF and MS Word.
 
-In this chapter we will learn about Markdown editors and the basic Markdown syntax for creating simple reproducible HTML documents, including many of the things we covered for LaTeX documents such as headings and text formatting. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. In this chapter will also briefly look at some more advanced features for including math with MathJax, footnotes and bibliographies with Pandoc and customizing styles with CSS. Then we will learn how to create HTML slideshows. We'll finish up the chapter by looking at options for publishing Markdown created HTML documents, including locally on your computer, Dropbox, and GitHub Pages.
+In this chapter we will learn about Markdown editors and the basic Markdown syntax for creating simple reproducible documents, including many of the things we covered for \emph{knitr}/LaTeX documents such as headings and text formatting. Please refer back to previous chapters for syntax used to display code and code chunks (Chapter \ref{StatsModel}), tables (Chapter \ref{TablesChapter}) and figures (Chapter \ref{FiguresChapter}) with R Markdown documents. In this chapter will also briefly look at some more advanced features for including math with MathJax, footnotes and bibliographies with Pandoc and customizing styles with CSS. Then we will learn how to create HTML slideshows. We'll finish up the chapter by looking at options for publishing Markdown created HTML documents, including locally on your computer, Dropbox, and GitHub Pages.
 
 \section{The Basics}
 
 \index{Markdown|(}
 
-Markdown was created specifically to make it easy to write HTML (or XHTML\index{XHTML}\footnote{Extensible HyperText Markup Language}) using a syntax that is human readable and possibly publishable without compiling. For example, compare the Markdown table syntax in Chapter \ref{TablesChapter} to the HTML syntax for virtually the same table.\footnote{For more information see John Gruber's website: \url{http://daringfireball.net/projects/markdown/}.} That being said, to make Markdown simple it does not have as many capabilities as HTML. To get around this problem you can still use HTML in Markdown, though note that Markdown syntax cannot be used between HTML element tags.
+Markdown was created specifically to make it easy to write HTML (or XHTML\index{XHTML}\footnote{Extensible HyperText Markup Language}) using a syntax that is human readable and possibly publishable without compiling. For example, compare the Markdown table syntax in Chapter \ref{TablesChapter} to the HTML syntax for virtually the same table.\footnote{For more information see John Gruber's website: \url{http://daringfireball.net/projects/markdown/}.} That being said, to make Markdown simple it does not have as many capabilities as HTML. To get around this problem you can still use HTML in Markdown, though note that Markdown syntax cannot be used between HTML element tags. Pandoc and \emph{rmakrdown} have extended Markdown so that it can be used to create reproducible PDF and MS Word documents.
 
 \textbf{Warning:} if you are using \emph{rmarkdown} to compile a document to PDF or Word, using raw HTML syntax will often not work as intended, if at all. As a rule, syntax specific to LaTeX or HTML that is included in an R Markdown document can only be properly compiled to a PDF or HTML document, respectively. Similarly, you will only be able to include graphics that are of types supported by the output format. You will not be able to include a JavaScript\index{JavaScript} plot directly into a PDF.
 
@@ -99,9 +99,9 @@ source_url("http://bit.ly/VNnZxS")
 \end{figure}
 
 
-\subsection{Headers}\index{Markdown!headers}
+\subsection{Headings}\index{Markdown!headings |(}
 
-Headers\label{MarkdownHeader} in Markdown are extremely simple. To create a line in the topmost header style--maybe a title--just place one hash mark (\verb|#|) at the beginning of the line. The second tier header gets two hashes (\verb|##|) and so on. You can also put the hash mark(s) at the end of the header, but this is not necessary. Here is an example of the three header:
+Headings\label{MarkdownHeader} in Markdown are extremely simple. Note that Markdown headings and R Markdown headers are not the same thing.  To create a line in the topmost header style--maybe a title--just place one hash mark (\verb|#|) at the beginning of the line. The second tier header gets two hashes (\verb|##|) and so on. You can also put the hash mark(s) at the end of the header, but this is not necessary. Here is an example of the three headings:
 
 <<Ch13header, eval=FALSE, tidy=FALSE, engine='sh'>>=
 # A level one header
@@ -109,7 +109,7 @@ Headers\label{MarkdownHeader} in Markdown are extremely simple. To create a line
 ### A level three header
 @
 
-\noindent There are six header levels in Markdown. You can also create level one headers by following a line of text with equal signs. Level two headers can be created by following a line of text with dashes:
+\noindent There are six header levels in Markdown. You can also create level one heading by following a line of text with equal signs. Level two headings can be created by following a line of text with dashes:
 
 <<Ch13headerLines, eval=FALSE, tidy=FALSE, engine='sh'>>=
 A level one header
@@ -118,6 +118,8 @@ A level one header
 A level two header
 -------------------
 @
+
+\index{Markdown!headings |)}
 
 \subsection{Horizontal lines}\index{Markdown!lines}
 
@@ -263,7 +265,7 @@ Remember from Chapter \ref{GettingStartedRKnitr} (page \pageref{rmarkdownRender}
     \color{fgcolor}\begin{kframe}
     \begin{alltt}
 ---
-title: "An Example knitr LaTeX Article"
+title: "An Example rmarkdown Article"
 author: "Christopher Gandrud"
 date: "15 January 2015"
 output:
@@ -284,13 +286,11 @@ bibliography:
 \end{kframe}
 \end{knitrout}
 
-\noindent Ok, let's go through this in detail. We have already seen the \texttt{title}, \texttt{author}, \texttt{date}, \texttt{linestretch}, and \texttt{fontsize} options. Notice that we used \texttt{latex\_engine} to set the LaTeX engine to XeLaTeX which is useful for when our documents include non-basic characters. We also specifed with \texttt{number\_sections} that the PDF document should have numbered section headings.
+\noindent Ok, let's go through this in detail. We have already seen the \texttt{title}, \texttt{author}, \texttt{date}, \texttt{linestretch}, and \texttt{fontsize} options. Notice that we used \texttt{latex\_engine} to set the LaTeX engine to XeLaTeX which is useful for documents that include non-standard English characters. We also specified with \texttt{number\_sections} that the PDF document should have numbered section headings.
 
-For the HTML version of the document we do not want a table of contents as we set \texttt{toc: no}. We specified a CSS\index{CSS} style called Flatly for our HTML document using \texttt{style: flatly}. As of this writing, \emph{rmarkdown} has a built-in ability to use a range of CSS files for formating from Bootswatch (\url{http://bootswatch.com/}). Alternatively, you can link to a custom CSS file with the \texttt{css} option. Use \texttt{html\_document} to see other options.  Notice that we can use \texttt{no} and \texttt{yes} instead of \texttt{false} and \texttt{true}, respectively.
+For the HTML version of the document we do not want a table of contents as we set \texttt{toc: no}. We specified a CSS\index{CSS} style called Flatly for our HTML document using \texttt{style: flatly}. As of this writing, \emph{rmarkdown} has a built-in ability to use a range of CSS files for formatting from Bootswatch (\url{http://bootswatch.com/}). Alternatively, you can link to a custom CSS file with the \texttt{css} option. Use \texttt{html\_document} to see other options. Notice that we can use \texttt{no} and \texttt{yes} instead of \texttt{false} and \texttt{true}, respectively.
 
 Finally, we linked to two BibTeX files with the \texttt{bibliography} option. Using Pandoc syntax, the references will apply to both the PDF and HTML documents.
-
-\index{rmarkdown|)}
 
 \index{Pandoc!bibliographies}\index{Markdown!bibliographies}
 
@@ -302,6 +302,7 @@ Finally, we linked to two BibTeX files with the \texttt{bibliography} option. Us
             \hline
             Markup & Result \\[0.25cm] \hline\hline
             \texttt{[@Donoho2009]} & (Donoho 2009) \\[0.25cm]
+            \texttt{[-@Donoho2009]} & (2009) \\[0.25cm]
             \texttt{[see @Donoho2009]} & (see Donoho 2009) \\[0.25cm]
             \texttt{[see @Donoho2009, 10-11]} & (see Donoho 2009, 10-11) \\[0.25cm]
             \texttt{[@Donoho2009; @Box1973]} & (Donoho 2009; Box 1973) \\[0.25cm]
@@ -319,22 +320,28 @@ Finally, we linked to two BibTeX files with the \texttt{bibliography} option. Us
 This is a citation [@Donoho2009].
 @
 
-\noindent Pandoc uses \emph{natbib}\index{LaTeX package!natbib}\index{bibliography}\index{in-text citation} by default so the citation \verb|[@Donoho2009]| will appear as (Donoho et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donoho2009, 10]|. This will create an in-text citation that looks like this: (see Donoho et al. 2009, 10). If you do not want the parentheses around the entire citation (just the year) then omit the square brackets. To include only the year and not the authors' surnames, add a minus sign, e.g. \verb|[-@Donoho2009]|. See Table \ref{PandocCitations} for more options.
+\noindent Pandoc uses \emph{natbib}\index{LaTeX package!natbib}\index{bibliography}\index{in-text citation} by default so the citation \verb|[@Donoho2009]| will appear as (Donoho et al, 2009). To add text before and after the citation inside of the parentheses use something like this: \verb|[see @Donoho2009, 10]|; which creates: (see Donoho et al. 2009, 10). If you do not want the parentheses around the entire citation (only the year) then omit the square brackets. To include only the year and not the authors' surnames, add a minus sign, e.g. \verb|[-@Donoho2009]|. See Table \ref{PandocCitations} for more options.
+
+Full bibliographic information for each item that is cited in the text will be produced at the end of the output document. I suggest placing a heading like \verb|# References| at the very end of your document so that the bibliography will be differentiated from the document's text.
 
 \paragraph{Footnotes with Pandoc}\index{Pandoc!footnotes}\index{Markdown!footnotes}
 
-You can also include footnotes in documents rendered with \emph{rmarkdown} by using Pandoc's footnote syntax. To create what Pandoc calls an ``inline note'' type footnote use the \verb|^[NOTE]| syntax.\index{Pandoc!inline note} For example:
+You can also include footnotes in documents rendered with \emph{rmarkdown} by using Pandoc's footnote syntax. In the text where you would like a footnote to be located use: \verb|[^NOTE_KEY]|. Then at the end of your document place \verb|[^NOTE_KEY]: The footnote text|.\footnote{You can actually put this almost anywhere and it will be place and numbered correctly in the output document, but I find it easier to organize the footnotes when they are placed at the end.} \texttt{NOTE\_KEY}s generally follow the same rules as BibTeX citation keys, so no spaces. When rendered a the notes will be numbered sequentially.
 
-<<Ch13PandocInlineNotes, eval=FALSE, tidy=FALSE, engine='sh'>>=
-This is some text.^[This is an inline footnote.]
-@
-
-\noindent When rendered, a hyper-link number will appear after ``text.''. It will link to the note (``This is an inline footnote.'') at the bottom of the page.
-
-To sum up, here is an example of an R Markdown document that includes footnotes and bibliographies.
+To sum up, here is an example of document that can be rendered in HTML or PDF using \emph{rmarkdown}. It includes footnotes and bibliographies.
 
 <<Ch13PandocDoc, eval=FALSE, tidy=FALSE>>=
-This is some text.^[This is an inline footnote.]
+---
+title: "Minimal rmarkdown Example"
+output:
+    pdf_document:
+        toc: true
+    html_document:
+        toc: false
+bibliography: Main.bib
+---
+
+This is some text.[^FirstNote]
 
 This is a *knitr* code chunk:
 
@@ -343,50 +350,43 @@ plot(cars$speed, cars$dist)
 ```
 
 This is a citation [see @Donoho2009, 10].
+
+[^FirstNote]: This is a footnote.
+
+# References
 @
 
 We have only covered a small proportion of Pandoc's capabilities that you can take advantage of with \emph{rmarkdown}. For full range of Pandoc's abilities see: \url{http://johnmacfarlane.net/pandoc/README.html}.
 
 \subsection{CSS style files and Markdown}\index{CSS|(}
 
-You can customize the appearance of your Markdown files with custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy RStudio's default CSS style sheet into a new file and play around with it to see how things change. One really good tool for this is Google Chrome's Developer Tools.\index{Google Chrome!Developer Tools} The Developer Tools allows you to edit your webpages, including their CSS and see a live preview. It is a really nice way to experiment with CSS (and HTML and JavaScript).\index{HTML}\index{JavaScript}\footnote{For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}.} There are also numerous pre-made style sheets available online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise R will give you an ``incomplete final line'' error when you run \texttt{markdownToHTML}} In this example I will use a stylesheet called \emph{Markdown.css} created by Simon Laroche and available at: \url{https://github.com/simonlc/Markdown-CSS}.
+You can customize the formatting of HTML documents created with Markdown files using custom CSS style sheets. CSS files allow you to specify the way a rendered Markdown file looks in a web browser including fonts, margins, background color, and so on. We don't have space to cover CSS syntax here. There are numerous online resources for learning CSS. One of the best ways may be to just copy default \emph{rmarkdown} CSS style sheet into a new file and play around with it to see how things change. A really good tool for this is Google Chrome's Developer Tools.\index{Google Chrome!Developer Tools} The Developer Tools allows you to edit your webpages, including their CSS and see a live preview. It is a really nice way to experiment with CSS (and HTML and JavaScript).\index{HTML}\index{JavaScript}\footnote{For more information on how to access and use Developer Tools in Chrome see: \url{https://developers.google.com/chrome-developer-tools/}.} There are also numerous pre-made style sheets available online.\footnote{One small note: when you create a new style sheet or copy an old one make sure the final line is blank. Otherwise you may get an ``incomplete final line'' error when you render the document.}
 
-\paragraph{Rendering Markdown files using custom CSS}\index{Markdown!custom CSS}
+\index{Markdown!custom CSS|(}
 
-It is simple to use a custom CSS file with the \texttt{markdownToHTML}\index{R function!markdownToHTML} command. Just save your custom \emph{.css} file in the working directory and use the \texttt{stylesheet} argument with \texttt{markdownToHTML}. Imagine we want to \texttt{knit} our \emph{Example.Rmd} file using a custom style sheet called \emph{Markdown.css}. Both files are in the working directory.
+\paragraph{Rendering R Markdown files to HTML using custom CSS}
 
- <<Ch13CustomCSS1, eval=FALSE, tidy=FALSE>>=
-# knit file to Example.md
-knitr::knit("Example.Rmd", "Example.md")
+The simplest way to use a custom CSS stylesheets is to include the file path to the CSS file in an \emph{rmarkdown} header. As mentioned earlier, \emph{rmarkdown} has a number of built in CSS file options that you can access with \texttt{style}. If you want to use another custom CSS file simply use the \texttt{css} option. If our custom CSS files is called \emph{Markdown.css} in the same directory as the R Markdown document then a simple header would be:
 
-# Render with using custom Markdown.css style sheet
-markdownToHTML("Example.md", "Example.html",
-               stylesheet = "Markdown.css")
+<<Ch13CSSheader, eval=FALSE>>=
+---
+output:
+    html_document:
+        css: Markdown.css
+---
 @
 
-\noindent When we use this style sheet with the R Markdown file in Figure \ref{MarkdownExampleFig} we get a document that looks like Figure \ref{CustomCSSExample}.
+If you are using the \emph{knitr} package to render an R Markdown document to HTML you can also include a custom CSS file. First use \texttt{knit} to knit the document to a plain Markdown file. Then use the \texttt{markdownToHTML}\index{R function!markdownToHTML} function from the \emph{markdown} package \citep{R-markdown} to render the plain Markdown document in HTML, including the \texttt{stylesheet} argument with the path to the CSS file.
 
-You can of course also modify your \emph{.Rprofile}\index{R!.Rprofile} so that you always use the same CSS style file. RStudio\index{RStudio} suggests adding the following code to your \emph{.Rprofile}:
-
-<<Ch13CustomCSS2, eval=FALSE, tidy=FALSE>>=
-options(rstudio.markdownToHTML =
-  function(inputFile, outputFile) {
-    require(markdown)
-    markdownToHTML(inputFile, outputFile,
-                   stylesheet = "Markdown.css")
-  }
-)
-@
-
-\noindent Simply change the style sheet's name and file path as needed.
+\index{Markdown!custom CSS|(}
 
 \index{CSS|(}
 
 
 %%%%%%%%%%%%% Presentations %%%%%%%%%%%%%%%%%%
-\section{Slideshows with Markdown, \emph{knitr}, and HTML}
+\section{Slideshows with Markdown, \emph{rmarkdown}, and HTML}
 
-Because Markdown and \emph{knitr} Markdown documents can be compiled into HTML files it is possible to use them to create HTML5\index{HTML5} slideshows.\footnote{The slideshows created by the tools in this section use features introduced in the 5th version of HTML, i.e. HTML5. In this section I often refer to HTML5 as just HTML for simplicity.} There are a number of advantages to creating HTML presentations with Markdown:
+Because R Markdown documents can be compiled into HTML files it is possible to use them to create HTML5\index{HTML5} slideshows.\footnote{The slideshows created by the tools in this section use features introduced in the 5th version of HTML, i.e. HTML5. In this section I often refer to HTML5 as just HTML for simplicity.} There are a number of advantages to creating HTML presentations with Markdown:
 
 \begin{itemize}
     \item You can use the relatively simple Markdown syntax.
@@ -395,18 +395,92 @@ Because Markdown and \emph{knitr} Markdown documents can be compiled into HTML f
 \end{itemize}
 
 
-\noindent Let's look at how to create HTML slideshows from Markdown documents using (a) RStudio's built in slideshow files, called R Presentations, and the \emph{slidify} R package. R Presentations are generally easier to make than \emph{slidify} slideshows, but they are less customizable.
+\noindent Let's look at how to create HTML slideshows from Markdown documents using (a) the \emph{rmarkdown} package and (b) RStudio's built in slideshow files, called R Presentations. You can also use \emph{rmarkdown} to create beamer\index{beamer} presentations.
+
+%%%%%%%%%%%%%% rmarkdown Presentations Presentations %%%%%%%%
+
+\subsection{HTML Slideshows with \emph{rmarkdown}}
+
+It is very easy to create an HTML presentation using \emph{rmarkdown} and the IO Slides HTML5 framework.\index{IO Slides}\footnote{https://code.google.com/p/io-2012-slides/} The syntax for IO Slides \emph{rmarkdown} presentations is almost exactly the same as what we have seen so far. The two main differences are that \verb|ioslides_presentation| is the output type to set in the header and two hashes (\verb|##|) set a frame's header.\footnote{You can create sections with one hash.} For example,
+
+<<Ch13ioslidesSimple, eval=FALSE>>=
+---
+title: "Simple rmarkdown Presentation Example"
+author: "Christopher Gandrud"
+date: "26 December 2015"
+output:
+    ioslides_presentation:
+        incremental: true
+---
+
+## Access the code
+
+The code to create the following figure is available online.
+@
+
+\noindent This code crates a slide show that begins with the slide in Figure \ref{BasicIO} Bullet points will be brought in incrementally because we used \verb|incremental: true| under \verb|output: ioslides_presentation|. Bullets are created using Markdown list syntax.
+
+\begin{figure}
+    \caption{\emph{rmarkdown}/IO Slides Example Title Slide}
+    \label{BasicIO}
+    \begin{center}
+        \includegraphics[scale=0.5]{Children/Chapter13/images13/rmarkdownIo_slidesExample.png}
+    \end{center}
+\end{figure}
+
+\noindent Use three dashes (\verb|---|) to delineate a new slide without a header. You can style the presentation further using the \texttt{css} option in the header to link to a custom CSS file.\index{CSS}
+
+You can create a new IO Slides/\emph{rmarkdown} presentation in RStudio by selecting \texttt{File} \textrightarrow\: \texttt{R Markdown...} then \texttt{Presentation} in in the menu on the left of the window (shown in Figure \ref{rmarkdownPresRStudio}). Finally, click \texttt{HTML (ioslides)}.
 
 
-%%%%%%%%%%%%%% R Presentations %%%%%%%%
-\subsection{Slideshows with Markdown, \emph{knitr}, and RStudio's R Presentations}
+\begin{figure}
+    \caption{Create new \emph{rmarkdown} Presentation in RStudio}
+    \label{rmarkdownPresRStudio}
+    \begin{center}
+        \includegraphics[scale=0.5]{Children/Chapter13/images13/rmarkdownPresRStudio.png}
+    \end{center}
+\end{figure}
+
+\subsection{LaTeX Beamer Slideshows with \emph{rmarkdown}}\lable{rmarkdownBeamer}
+
+\index{beamer|(}\index{LaTeX class!beamer|(}
+
+As we saw in Chapter \ref{LatexChapter} (page \pageref{latexBeamer}) creating a presentation with LaTeX beamer involves rather convoluted syntax. Luckily, we can use \emph{rmarkdown} to create beamer presentations using much cleaner Markdown syntax.
+
+An \emph{rmarkdown} beamer presentation uses the same syntax that we just saw with HTML presentations. The main difference is in the header where we use \verb|output: beamer_presentation|. You create a new R Markdown beamer document in RStudio in a similar way as IO Slides. The only difference is that we select \texttt{PDF (Beamer)} in the window shown in Figure \ref{rmarkdownPresRStudio}. As before frame titles are delineated with two hashes (\verb|##|). You can mark sections in much the same way with one hash. You can switch the beamer theme, font theme, and color theme with \texttt{theme}, \texttt{colortheme}, and \texttt{fonttheme}, respectively. For example to create the slide show that begins with the slide in Figure \ref{rmarkdownBeamerExample}:\index{LaTeX command!usetheme}\index{LaTeX command!usecolortheme}\index{LaTeX command!usefonttheme}
+
+<<Ch13BeamerHeader, eval=FALSE>>=
+output:
+    beamer_presentation:
+        incremental: true
+        theme: "Bergen"
+        colortheme: "crane"
+        fonttheme: "structurebold"
+@
+
+\noindent Note that the themes are placed in quotation marks. You can include a custom template with the \texttt{template} option followed by the path to the custom template file.
+
+\index{beamer|)}\index{LaTeX class!beamer|)}
+
+\index{rmarkdown|)}
+
+\begin{figure}
+    \caption{\emph{rmarkdownBeamerExample}/Beamer Example Title Slide}
+    \label{rmarkdownBeamerExample}
+    \begin{center}
+        \includegraphics[scale=0.5]{Children/Chapter13/images13/rmarkdownBeamerExample.png}
+    \end{center}
+\end{figure}
+
+%%%%%%%%%%%%%% RStudio Presentations Presentations %%%%%%%%
+\subsection{Slideshows with Markdown and RStudio's R Presentations}
 
 The easiest, but less customizable way to create HTML slideshows is with RStudio's new R Presentation\index{R Presentation}\index{RStudio!R Presentation} documents.\footnote{This feature is only available from RStudio version 0.98.} To get started open RStudio and click \texttt{File} \textrightarrow \: \texttt{New} \textrightarrow \: \texttt{R Presentation}. RStudio will then ask you to give the presentation a name and save it in a particular file. The reason RStudio does this is because an R Presentation is not just one file. Instead it includes:
 
 \begin{itemize}
-	\item A \emph{.Rpres}\index{Rpres} file, which is very similar to a \emph{knitr} Markdown \emph{.Rmd} file.
-	\item A \emph{.md} Markdown file created from the \emph{.Rpres} file.
-	\item \emph{knitr} cache and figure folders, also created from the \emph{.Rpres} file.
+    \item A \emph{.Rpres}\index{Rpres} file, which is very similar to a \emph{knitr} Markdown \emph{.Rmd} file.
+    \item A \emph{.md} Markdown file created from the \emph{.Rpres} file.
+    \item \emph{knitr} cache and figure folders, also created from the \emph{.Rpres} file.
 \end{itemize}
 
 \paragraph{Editing and compiling the presentation}
@@ -468,14 +542,12 @@ To compile the slideshow either click the \texttt{Preview} button (\includegraph
 You can use RStudio to show your presentation. However, this is probably not the best way for others to see it. \emph{googleVis} images won't show up and other people need to have RStudio to open it on their computer. So, you will probably want to either publish the presentation to a standalone HTML file and host it, for example, on a Dropbox\index{Dropbox} \emph{Public}\index{Dropbox!Public folder} folder or publish it directly to RPubs.\index{RPubs} To create a standalone HTML file simply click the \texttt{More} button in the \emph{Presentation} pane, then \texttt{Save as Webpage...}. Under the \texttt{More} button you can also chose the option \texttt{Publish to RPubs...}. We'll look at these options some more later in this chapter.
 
 \begin{figure}
-	\caption{RStudio R Presentation Pane}
-	\label{PresentPane}
-	\begin{center}
-		\includegraphics[width=\textwidth]{Children/Chapter13/images13/PresentationPane.png}
-	\end{center}
+    \caption{RStudio R Presentation Pane}
+    \label{PresentPane}
+    \begin{center}
+        \includegraphics[width=\textwidth]{Children/Chapter13/images13/PresentationPane.png}
+    \end{center}
 \end{figure}
-
-
 
 %%%%%%%%%%%%%% Slidify %%%%%%%%%%%%%%%%
 \subsection{Slideshows with Markdown, \emph{knitr}, and \texttt{slidify}}
@@ -517,139 +589,6 @@ There are a number of different HTML5 slideshow frameworks that let you create a
     \end{center}
 \end{table}
 
-\paragraph{Installing slidify}
-
-To get started with \emph{slidify} load the \emph{devtools}\index{devtools} package and install \emph{slidify} from GitHub\index{GitHub}.\footnote{As of when I wrote this (April 2013) \emph{slidify} was not available on CRAN\index{CRAN}.}
-
-<<Ch13Downloadslidify, eval=FALSE>>=
-# Load devtools
-library(devtools)
-
-# Install slidify and ancillary libraries
-install_github("slidify", "ramnathv")
-install_github("slidifyLibraries", "ramnathv")
-@
-
-\paragraph{Initializing a new slideshow}
-
-Use the \verb|author|\index{R function!author} command to create a new slideshow. Imagine we want to create a new slideshow in the \emph{Presentation} folder of our \emph{ExampleProject} called \emph{MySlideShow}. To do this type:\index{R function!library}
-
-<<Ch13slidifyAuthor, eval=FALSE>>=
-# Set working directory
-setwd("/ExampleProject/Presentation")
-
-# Load slidify
-library(slidify)
-
-# Create slide show
-author("MySlideShow")
-@
-
-\noindent This will create a new folder with an R Markdown file called \emph{index.Rmd}. It will also initialize a Git\index{Git} repository and create a folder called \emph{assets}. The \emph{assets} folder is where CSS,\index{CSS} JavaScript,\index{JavaScript} and other ancillary files needed to create the slideshow are stored. Luckily, \emph{slidify} takes care of all these things for us. If you want to, you can certainly customize these files.\footnote{See \url{http://ramnathv.github.com/slidify/customize.html} for more details on the best way to modify these files.} Edit the \emph{index.Rmd} file to add content to your slideshow.
-
-\paragraph{The \emph{slidify} header}
-
-When you \verb|author| a slideshow, \emph{slidify} automatically opens the \emph{index.Rmd} file.\footnote{If you are using RStudio\index{RStudio} the file will open in a new source tab. In the R application, it will open the file in your default text editor. Finally in command line R on Mac or Unix-like computers it will open in VIM\index{VIM}.} The first thing you will see in this file is the \emph{slidify} header:
-
-{\small
-<<Ch13slidifyHeader, eval=FALSE, tidy=FALSE>>=
----
-title       :
-subtitle    :
-author      :
-job         :
-framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
-highlighter : highlight.js  # {highlight.js, prettify, highlight}
-hitheme     : tomorrow      #
-widgets     : []            # {mathjax, quiz, bootstrap}
-mode        : selfcontained # {standalone, draft}
----
-@
-}
-
-\noindent The first four lines relate to what will appear on the slideshow's title slide, i.e. the \texttt{title}, \texttt{subtitle}, \texttt{author}, and \texttt{job}.\footnote{This is intended as a place to put your job title and affiliation.}  The next five lines affect the slideshow's formatting. The \texttt{framework} line allows you to change the slideshow's overall type. It is currently set by default to Google's\index{Google} \emph{io2012} framework. You can see a number of other supported formats on the right side of the line. These include \emph{html5slides}, Opera's\index{Opera} \emph{shower} format, and \emph{dzslides}. You can use one of these other formats by deleting \texttt{io2012} after the colon and replacing it with the name of your desired framework.
-
-The following two lines (\texttt{highlighter} and \texttt{hitheme}) relate to which syntax highlighting\index{syntax highlighting} theme you would like code chunks to be formatted with. The default highlighter is \emph{highlighter.js}\index{highlighter.js}\footnote{See: \url{http://softwaremaniacs.org/soft/highlight/en/}.} with the \emph{tomorrow} theme.\index{tomorrow theme}\footnote{See: \url{https://github.com/chriskempson/tomorrow-theme}.}
-
-The next line allows you to automatically include a number of different ``widgets''. As we saw earlier in this chapter, MathJax lets us have well formatted math in Markdown produced documents. The \emph{bootstrap} widget lets you take advantage of, among other things, the wide range of JavaScript plug-ins\index{JavaScript plug-ins} available from Twitter Bootstrap\index{Twitter Bootstrap}.\footnote{See: \url{http://twitter.github.com/bootstrap/javascript.html}. For an example of how you can combine Twitter Bootstrap's \emph{Carousel} plug-in with \emph{googleVis} to create interactive timeline maps in slide shows see: \url{http://ramnathv.github.com/carouselDemo/#1}.} To add widgets, type their name in square brackets (\verb|[]|) separated by commas.
-
-Finally there is the \texttt{mode} option. The mode option determines how to load auxiliary files and features such as CSS. In general you will want to use the default \texttt{selfcontained} mode.
-
-\paragraph{Slide frames and slide titles}\index{Markdown!slide frames}
-
-\emph{slidify} R Markdown documents use very similar syntax to ordinary R Markdown documents. \emph{knitr} code chunks are written in the same way as regular R Markdown. An important difference is that three dashes (\verb|---|) delimit individual slide frames, not a horizontal line. Importantly, you need to have an empty line before and after the three dashes or else a new slide will not be created. Two hash marks (\verb|##|) are used to indicate a slide's title.\footnote{One hash mark creates a slide title formatted in the same way as the text.}
-
-Here is code to include in a \emph{index.html} file that will create a very simple, but full \emph{knitr} HTML5 slideshow with \emph{slidify} using the syntax we just discussed:
-
-<<Ch13SlidifyExample, eval=FALSE, tidy=FALSE>>=
----
-title       : Example slidify and knitr Slideshow
-subtitle    :
-author      : Christopher Gandrud
-job         :
-framework   : io2012
-highlighter : highlight.js
-hitheme     : tomorrow
-widgets     : []
-mode        : selfcontained
----
-
-## Access the Code
-
-The code to create the following figure is available online.
-
-To access it we type:
-
-```{r, eval=FALSE}
-# Access and run the code to create a caterpillar plot
-devtools::source_url("http://bit.ly/VRKphr")
-```
-
----
-
-## The Figure
-
-```{r, echo=FALSE, message=FALSE}
-# Access and run the code to create a caterpillar plot
-devtools::source_url("http://bit.ly/VRKphr")
-```
-@
-
-\paragraph{Compiling a slideshow}
-
-Use the \verb|slidify|\index{R function!slidify} command to compile the \emph{index.Rmd} file into a slideshow. This code runs \emph{knitr} and renders our R Markdown file into an HTML slideshow:
-
-<<Ch13slidifyFile, eval=FALSE>>=
-# Change to slideshow's working directory
-setwd("/ExampleProject/Presentation/MySlideShow")
-
-# Compile the slideshow
-slidify("index.Rmd")
-@
-
-\noindent In RStudio\index{RStudio} you can click the \texttt{Knit HTML}\index{RStudio!Knit HTML button} button and it will \texttt{slidify} the R Markdown file. Note that the resulting slideshow may not work in the RStudio \textbf{Preview HTML} window,\index{RStudio!Preview HTML} but opening the \emph{index.html} file in your web browser should work fine.
-
-\paragraph{Publishing slidify slideshows}
-
-You can of course show slideshows on your own computer by opening the \emph{index.html} file in a web browser. If you want to make your slideshow available to anyone with an internet connection use slidify's \verb|publish| command.\index{R function!publish} This will allow you to publish your presentation via GitHub\index{GitHub}, Dropbox\index{Dropbox}, or RPubs\index{RPubs}. Let's look at how to publish to GitHub and Dropbox.
-
-To publish our example \emph{MySlideShow} on GitHub first create a new GitHub repository\index{GitHub!repository} called `MySlideShow' (see Section \ref{NewGitHubRepo} for instructions on how to create a new repository). Make sure the repository is empty, i.e. has no files in it. Then type in R:
-
-<<Ch13GitPublish, eval=FALSE>>=
-publish(user = "USER", repo = "MySlideShow", host = "github")
-@
-
-\noindent \texttt{USER} is your GitHub user name. This will create a new GitHub Pages\index{GitHub!Pages} website where your slideshow will be accessible to anyone on the internet.
-
-To use the webpage hosting abilities of Dropbox's public folders type:
-
-<<Ch13DrobpoxPublish, eval=FALSE>>=
-publish("MySlideShow", host = "dropbox")
-@
-
-\noindent This will create a new directory in your Dropbox \emph{Public} folder.\index{Dropbox!Public folder} To get the URL address for the slideshow navigate to the folder and copy the public link for the \emph{index.html} file (see Section \ref{PublicLink} for more details).
-
-Note: before you use the \verb|publish| command you will need to have set up accounts for the respective services. In the GitHub and Dropbox cases you also need to have set up the services on your computer. Please refer back to Chapter \ref{Storing} for more details on how to set up these services.
 
 \section{Publishing Markdown Documents}
 
