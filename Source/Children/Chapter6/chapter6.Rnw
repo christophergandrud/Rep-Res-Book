@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 24 December 2014
+% Updated: 28 December 2014
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -121,7 +121,7 @@ cleanMerge:
     \end{kframe}
 \end{knitrout}
 
-\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros''\index{Make!macros} in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{ROUT} with a period (\texttt{.}) as its value. In Make and Unix-like shells, periods indicate the current directory. The next line allows us to specify a variable for the outfile created by running the \emph{MergeData.R} file. This will be useful later when we create a target for removing this file to ensure that the \emph{MergeData.R} file is always run.
+\noindent Ok, let's break down the code. The first part of the file defines variables that will be used later on. For example, in the first line of executable code (\texttt{RDIR = .}) we create a simple variable\footnote{Simple string variables are often referred to as ``macros''\index{Make!macros} in GNU Make. A common convention in Make and Unix-like shells generally is to use all caps for variable names.} called \texttt{RDIR} with a period (\texttt{.}) as its value. In Make and Unix-like shells, periods indicate the current directory. The next line allows us to specify a variable for the outfile created by running the \emph{MergeData.R} file. This will be useful later when we create a target for removing this file to ensure that the \emph{MergeData.R} file is always run.
 
 The third executed line (\verb|RSOURCE:= $(wildcard $(RDIR)/*.R)|) creates a variable containing a list of all of the names of files with the extension \texttt{.R}, i.e. our data gathering and merge source code files. This line has some new syntax, so let's work through it. In Make (and Unix-like shells generally) a dollar sign (\verb|$|)\index{Make!\$} followed by a variable name substitutes the value of the variable in place of the name.\footnote{This is a kind of parameter expansion\index{parameter expansion}. For more information about parameter expansion see \cite{Frazier2008}.} For example, \verb|$(RDIR)| inserts the period \texttt{.} that we defined as the value of \texttt{RDIR} previously. The parentheses are included to clearly demarcate where the variable name begins and ends.\footnote{Braces (\texttt{\{\}}) are also sometimes used for this.}
 
