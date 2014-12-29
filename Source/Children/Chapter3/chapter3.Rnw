@@ -9,7 +9,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 \chapter{Getting Started with R, RStudio, and {\normalfont{knitr}}/\normalfont{rmarkdown}}\label{GettingStartedRKnitr}
 
-If you have rarely or never used R before, the first section of this chapter gives you enough information to be able to get started and understand the R code I use throughout the book. For more detailed introductions on how to use R please refer to the resources I mentioned in Chapter \ref{Intro} (Section \ref{OtherBooks}). Experienced R users might want to skip the first section. In the second section I'll give a brief overview of RStudio. I highlight the key features of the main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}} package, how to use it in R, and how it is integrated into RStudio.
+If you have rarely or never used R before, the first section of this chapter gives you enough information to be able to get started and understand the R code I use throughout the book. For more detailed introductions on how to use R please refer to the resources I mentioned in Chapter \ref{Intro} (Section \ref{OtherBooks}). Experienced R users might want to skip the first section. In the second section I'll give a brief overview of RStudio. I highlight the key features of the main RStudio panel (what appears when you open RStudio) and some of its key features for reproducible research. Finally, I discuss the basics of the {\emph{knitr}}/\emph{rmarkdown} packages, how to use them in R, and how they are integrated into RStudio.
 
 %%%%%%%%%%%%% Using R
 \section{Using R: the Basics}
@@ -25,7 +25,7 @@ To get you started with reproducible research, we'll cover some very basic R\ind
     \item packages.
 \end{itemize}
 
-Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.8 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You will know you are in a new R session because the same type of startup information as in Figure \ref{RBlankMain} will be printed in your Terminal.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started.
+Before discussing each of these in detail let's open R and look around.\footnote{Please see Chapter \ref{Intro} for instructions on how to install R.} When you open the R GUI program by clicking on the R icon you should get a window that looks something like Figure \ref{RBlankMain}.\footnote{This figure and almost all screenshots in this book were taken on a computer using the Mac OS 10.10 operating system.} This window is the {\bf{R console}}\index{R!Console}. Below the startup information--information about what version of R you are using, license details, and so on--you should see a \verb|>| (greater than sign). This prompt is where you enter R code.\footnote{If you are using a Unix-like\index{Unix-like} system such as Linux\index{Linux} Ubuntu\index{Ubuntu} or Mac OS 10\index{Mac}, you can also access R via an application called the Terminal\index{Terminal}. If you have installed R on your computer you can type {\tt{R}} into the Terminal and then the {\tt{Enter}} or {\tt{Return}} key. This will begin a new R session. You will know you are in a new R session because the same type of startup information as in Figure \ref{RBlankMain} will be printed in your Terminal.} To run R code that you have typed after the prompt hit the {\tt{Enter}} or {\tt{Return}} key. Now that we have a new R session\index{R!session} open we can get started.
 
 \begin{figure}[th!]
     \caption{R Startup Console}
@@ -37,7 +37,7 @@ Before discussing each of these in detail let's open R and look around.\footnote
 
 \subsection{Objects}\label{Objects}
 
-If you've read a description of R before, you will probably have seen it referred to as an `object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, like a vector of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is `object-oriented' means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section.\footnote{Somewhat confusingly, commands and functions are themselves objects. In this chapter I treat them as distinct from other object types to avoid confusion.} Now let's create a few objects.
+If you've read a description of R before, you will probably have seen it referred to as an `object-oriented\index{object-oriented} language'.  What are objects? Objects are like the R language's nouns. They are things, like a vector of numbers, a data set, a word, a table of results from some analysis, and so on. Saying that R is object-oriented means that R is focused on doing actions to objects. We will talk about the actions--commands and functions--later in this section.\footnote{Somewhat confusingly, commands and functions are themselves objects. In this chapter I treat them as distinct from other object types to avoid confusion.} Now let's create a few objects.
 
 \paragraph{Numeric \& string objects}
 
@@ -293,11 +293,11 @@ You can stack arguments inside of other arguments. To have R find the mean of {\
 round(mean(NumericVect), digits = 1)
 @
 
-\noindent Stacking functions inside of each other can create code that is difficult to read. Another option that potentially makes more easily understandable code is piping\index{pipe} using the pipe function (\texttt{\%>\%}) that you can access from the \emph{dplyr} \citep{R-dplyr}\index{dplyr}\index{R function!\%>\%} package.\footnote{The \texttt{\%>\%} was introduced in the \emph{magrittr} package \citep{R-magrittr}.\index{magrittr} You can access the pipe function by loading this package as well.} The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of \emph{NumericVect} and then round it to one decimal place use:
+\noindent Stacking functions inside of each other can create code that is difficult to read. Another option that potentially makes more easily understandable code is piping\index{pipe} using the pipe function (\texttt{\%>\%}) that you can access from the \emph{magrittr} package \citep{R-magrittr}.\index{magrittr}\index{R function!\%>\%} The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of \textbf{NumericVect} and then round it to one decimal place use:
 
 <<Ch3Pipe, echo=TRUE>>=
-# Load dplyr package
-library(dplyr)
+# Load magrittr package
+library(magrittr)
 
 # Find mean of NumericVect and round to 1 decimal place
 mean(NumericVect) %>% round(digits = 1)
@@ -305,7 +305,9 @@ mean(NumericVect) %>% round(digits = 1)
 
 \subsection{The workspace \& history}
 
-All of the objects you create become part of your workspace\index{workspace}. Use the \texttt{ls}\index{R function!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
+\index{R!workspace|(}\index{R!environment|(}
+
+All of the objects you create become part of your workspace, alternatively known as the current working environment. Use the \texttt{ls}\index{R function!ls} command to list all of the objects in your current workspace.\footnote{Note: your workspace will probably include different objects than this example. These are objects created to knit the book.}
 
 {\small
 <<Ch3LS, echo=TRUE>>=
@@ -339,6 +341,8 @@ One of the few times when saving your workspace is very useful is when it includ
 save(Comp, file = "Comp.RData")
 @
 
+\index{R!workspace|)}\index{R!environment|)}
+
 \paragraph{R history}
 
 When you enter a command into R it becomes part of your history.\index{R!history} To see the most recent commands in your history use the \texttt{history}\index{R function!history} command. You can also use the up and down arrows on your keyboard when your cursor is in the R console to scroll through your history.
@@ -351,9 +355,9 @@ In R you can set global options with the \texttt{options} command.\index{R funct
 options(digits = 1)
 @
 
-\subsection{Installing new packages and loading commands}\label{Packages}
+\subsection{Installing new packages and loading functions}\label{Packages}
 
-Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R function!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}.
+Commands are stored in R packages\index{R!packages}. The commands we have used so far were loaded automatically by default. One of the great things about R is the many user-created packages\footnote{For the latest list see: \url{http://cran.r-project.org/web/packages/available_packages_by_name.html}.} that greatly expand the number of commands we can use. To install commands that do not come with the basic R installation you need to install the add-on packages\label{packages} that contain them. To do this use the {\tt{install.packages}}\index{R function!install.packages} command. By default this command downloads and installs the packages from the Comprehensive R Archive Network (CRAN)\index{CRAN}.
 
 For the code you need to install all of the packages used in this book, see page \pageref{ReqPackages}. When you install a package, you will likely be given a list of mirrors\index{mirrors, CRAN} from which you can download the package. Simply select the mirror closest to you.
 
@@ -365,7 +369,7 @@ library(ggplot2)
 
 \noindent Please note that for the examples in this book I only specify what package a command is from if it is not loaded by default when you start an R session.
 
-Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R function!double-colon operator}\index{R function!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} command from the \emph{ggplot2} package we type:
+Finally, if you want to make sure R uses a command from a specific package you can use the double-colon operator (\verb|::|).\index{R function!double-colon operator}\index{R function!::} For example, to make sure that we use the \texttt{qplot}\index{ggplot2!qplot} function from the \emph{ggplot2} package we type:
 
 <<Ch3ColonOperator, echo=TRUE, eval=FALSE>>=
 ggplot2::qplot(. . .)
@@ -380,7 +384,7 @@ As I mentioned in Chapter \ref{Intro}, RStudio is an integrated development envi
 
 \paragraph{The default window}
 
-When you first open RStudio\index{RStudio} you should see a default window that looks like Figure \ref{BlankMain}. In this figure you see three window panes\index{RStudio!Pane}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. Other panes include the {\emph{Environment/History}} panes, in the upper right-hand corner. The \emph{Environment} pane\index{RStudio!Environment pane} shows you all of the objects in your current workspace and some of their characteristics, like how many observations a data frame has. You can click on an object in this pane to see its contents. This is especially useful for quickly looking at a data set in much the same way that you can visually scan a Microsoft Excel spreadsheet. The \emph{History} pane\index{RStudio!History pane} records all of the commands you have run. It also allows you to rerun code and insert it into a source code file.
+When you first open RStudio\index{RStudio} you should see a default window that looks like Figure \ref{BlankMain}. In this figure you see three window panes\index{RStudio!Pane}. The large one on the left is the {\emph{Console}}. This pane functions exactly the same as the console in regular R. Other panes include the {\emph{Environment/History}} panes, in the upper right-hand corner. The \emph{Environment} pane\index{RStudio!Environment pane} shows you all of the objects in your workspace and some of their characteristics, like how many observations a data frame has. You can click on an object in this pane to see its contents. This is especially useful for quickly looking at a data set in much the same way that you can visually scan a Microsoft Excel spreadsheet. The \emph{History} pane\index{RStudio!History pane} records all of the commands you have run. It also allows you to rerun code and insert it into a source code file.
 
 \begin{figure}[ht]
     \caption{RStudio Startup Panel}
@@ -390,13 +394,13 @@ When you first open RStudio\index{RStudio} you should see a default window that 
     \end{center}
 \end{figure}
 
-In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help}} pane. We will discuss the \emph{Files}\index{RStudio!Files pane} pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The \emph{Plots} pane\index{RStudio!Plots pane} is where figures you create in R appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The \emph{Packages} pane\index{RStudio!Packages pane} shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their help files (just click on the package name), update the packages, and even install new packages. The \emph{Help} pane\index{RStudio!Help pane} shows you help files. You can search for help files and search within help files using this pane. Finally, the \emph{Viewer} pane\index{RStudio!Viewer pane} allows you to view local web content like JavaScript\index{JavaScript} graphics and Shiny\index{Shiny} web apps.
+In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help/Viewer}} panes. We will discuss the \emph{Files}\index{RStudio!Files pane} pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The \emph{Plots} pane\index{RStudio!Plots pane} is where figures you create in R appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The \emph{Packages} pane\index{RStudio!Packages pane} shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their help files (just click on the package name), update the packages, and even install new packages. The \emph{Help} pane\index{RStudio!Help pane} shows you help files. You can search for help files and search within help files using this pane. Finally, the \emph{Viewer} pane\index{RStudio!Viewer pane} allows you to view local web content like JavaScript\index{JavaScript} graphics and Shiny\index{Shiny} web apps.
 
 \paragraph{The {\normalfont{Source}} pane}
 
 There is an important pane that does not show up when you open RStudio for the first time. This is the {\emph{Source}} pane.\index{RStudio!Source pane} The \emph{Source} pane is where you create, edit, and run your source code files. It also functions as an editor for your markup files. It is the center of reproducible research in RStudio.
 
-Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}} and R Markdown and R LaTeX in more detail in the next section.
+Let's first look at how to use the \emph{Source} pane with regular R files. We will then cover how it works with {\emph{knitr}}/\emph{rmarkdown} in more detail in the next section.
 
 R source code files have the file extension \texttt{.R}. When you create a new source code document RStudio will open a new \emph{Source} pane. Do this by going to the menu bar and clicking on \texttt{File} \textrightarrow \: \texttt{New}. In the \texttt{New} drop down menu you have the option to create a variety of different source code documents. Select the \texttt{R Script} option. You should now see a new pane with a bar across the top that looks like the first image in Figure \ref{SourcePanes}. To run the R code you have in your source code file simply highlight it\footnote{If you are only running one line of code, you don't need to highlight the code; you can simply put your cursor on that line.} and click the \texttt{Run} icon (\includegraphics[scale=0.5]{Children/Chapter3/images3/RunIcon.png}) on the top bar. This sends the code to the console where it is run. The icon to the right of \texttt{Run} simply runs the code above where you have highlighted. The \texttt{Source} icon next to this runs all of the code in the file using R's \texttt{source} command\index{R function!source}.
 
@@ -433,7 +437,7 @@ R source code files have the file extension \texttt{.R}. When you create a new s
 %%%%%%%%%%%%% Using knitr
 \section{Using \emph{knitr} and \emph{rmarkdown}: the Basics}
 
-To get started with {\emph{knitr}}\index{knitr} and \emph{rmarkdown} in R or RStudio we need to learn some of the basic concepts and syntax. The concepts are the same regardless of the markup language we are knitting R code with, but much of the syntax varies by markup language. \emph{rmarkdown}\index{rmarkdown} relies on \emph{knitr} and a utility called \emph{Pandoc} to create many different types of presentation documents (HTML, PDF, or MS Word) from one document written largely using \emph{knitr}'s R Markdown syntax. .
+To get started with {\emph{knitr}}\index{knitr} and \emph{rmarkdown} in R or RStudio we need to learn some of the basic concepts and syntax. The concepts are the same regardless of the markup language we are knitting R code with, but much of the syntax varies by markup language. \emph{rmarkdown}\index{rmarkdown} relies on \emph{knitr} and a utility called \emph{Pandoc} to create many different types of presentation documents (HTML, PDF, or MS Word) from one document written largely using \emph{knitr}'s R Markdown syntax.
 
 \subsection{What \emph{knitr} does}
 
@@ -449,7 +453,7 @@ Let's take a quick, abstract look at what the \emph{knitr} package does. As I've
 
 \subsection{What \emph{rmarkdown} does}\label{rmardownHeader}
 
-The \emph{rmarkdown}\index{rmarkdown} package implements a variation on this process that utilizes a program called Pandoc to create presentation documents in multiple formats from an a knittable document written in Markdown. The main difference between pure \emph{knitr} markdown and \emph{rmarkdown} documents is the inclusion of a header specifying how you want to process the document with Pandoc.\footnote{Note: you can also create an \emph{rmarkdown} document without a header.}
+The \emph{rmarkdown}\index{rmarkdown} package implements a variation on this process that utilizes a program called Pandoc to create presentation documents in multiple formats from an a knittable document written in Markdown. The main difference between pure \emph{knitr} markdown and \emph{rmarkdown} documents is the inclusion of a header specifying how you want to render the document with Pandoc.\footnote{Note: you can also create an \emph{rmarkdown} document without a header.}
 
 \index{rmarkdown!header |(}
 
@@ -470,13 +474,13 @@ output: pdf_document:
     \end{kframe}
 \end{knitrout}
 
-\noindent The title, author, and date, will be placed at the beginning of the output document. The final line (\texttt{toc: true}) creates a table of contents near the beginning of the PDF document when we knit it. We will discuss more header options in chapters \ref{LatexChapter} and \ref{MarkdownChapter}.
+\noindent The title, author, and date, will be placed at the beginning of the output document. The final line (\texttt{toc: true}) creates a table of contents near the beginning of the PDF document when we knit it. We will discuss more header options in chapters \ref{MarkdownChapter}.
 
 RStudio can automatically create a basic header for the type of output document that you want when you open a new \emph{rmarkdown} file. Simply select \texttt{File} \textrightarrow \texttt\:{New File} \textrightarrow\: \texttt{R Markdown\ldots}. A window will appear that looks like Figure \ref{rmarkdownWindow}. Simply select the type of output document you want to create and click \texttt{Ok}.
 
 \index{rmarkdown!header |)}
 
-In addition to the header, in \emph{rmarkdown} you can include Pandoc syntax. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}. Nonetheless, \textbf{remember} that apart from the header and ability to include Pandoc syntax, at the simplest level \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. Importantly, they have the same code chunk syntax (see \pageref{RMarkdownChunkBasic}).
+In addition to the header, \emph{rmarkdown} differs from \emph{knitr} in that you can include Pandoc syntax. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}. Nonetheless, \textbf{remember} that apart from the header and ability to include Pandoc syntax, at the simplest level \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. Importantly, they have the same code chunk syntax we will see shortly.
 
 \begin{figure}
     \caption{The New R Markdown Options Window}
@@ -488,7 +492,7 @@ In addition to the header, in \emph{rmarkdown} you can include Pandoc syntax. Th
 
 \subsection{File extensions}
 
-When you save a knittable file use a file extension that indicates (a) that it is knittable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}.\footnote{R Markdown files that you compile with \emph{knitr} or \emph{rmarkdown} have the same \texttt{.Rmd} file extension.} LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}} \cite[]{Leisch2002}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
+When you save a knittable file use a file extension that indicates (a) that it is knittable and (b) what markup language it is using. You can use a number of file extensions for R Markdown files including: \texttt{.Rmd} and \texttt{.Rmarkdown}.\footnote{R Markdown files that you compile with \emph{knitr} or \emph{rmarkdown} have the same \texttt{.Rmd} file extension.} LaTeX documents that include {\emph{knitr}} code chunks are generally called R Sweave\index{R Sweave}\index{Sweave} files and have the file extension {\tt{.Rnw}}. This terminology is a little confusing. It is a holdover from {\emph{knitr}}'s main literate programming predecessor {\emph{Sweave}}. You can also use the less confusing file extension \texttt{.Rtex}, as regular LaTeX files have the extension \texttt{.tex}. However, the syntax for \texttt{.Rtex} files is different from that used with \texttt{.Rnw} files. We'll look at this issue in more detail below.
 
 \subsection{Code chunks}
 
@@ -505,11 +509,11 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
 @
 
-\noindent The R Markdown code chunk syntax is exactly the same for files you compile with \emph{knitr} and \emph{rmarkdown}.
+\noindent The R Markdown code chunk syntax is exactly the same for files you compile with \emph{knitr} or \emph{rmarkdown}.
 
 \paragraph{R LaTeX}
 
-There are two different ways to delimit code chunks in R LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax.\footnote{The syntax has its genesis in a literate programming tool called noweb \cite[]{Leisch2002,RamseyNoweb}.} {\emph{Knitr}} also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in LaTeX documents. Throughout the book I use the older and more established Sweave-style syntax. \\[0.25cm]
+There are two different ways to delimit code chunks in R LaTeX documents. One way largely emulates the established {\emph{Sweave}} syntax.\footnote{The syntax has its genesis in a literate programming tool called noweb \cite[]{Leisch2002,RamseyNoweb}.} {\emph{knitr}} also supports files with the {\tt{.Rtex}} extension, though the code chunk syntax is different. I will cover both types of syntax for code chunks in LaTeX documents. Throughout the book I use the older and more established Sweave-style syntax. \\[0.25cm]
 
 \noindent {\bf{Sweave-style}} \\[0.25cm]
 
@@ -564,7 +568,7 @@ There are many times when we want to change how our code chunks are knitted and 
 
 Like chunk labels, you specify options in the chunk head. Place them after the chunk label, separated by a comma. Chunk options are written following pretty much the same rules as regular R command arguments. They have a similar \verb|OPTION_LABEL=VALUE| structure as arguments. The option values must be written in the same way that argument values are. Character strings need to be inside of quotation marks. The logical \texttt{TRUE} and \texttt{FALSE} operators cannot be written \verb|''true''| and \verb|''false''|. For example, imagine we have a Markdown code chunk called \texttt{ChunkLabel}. If we want to run the {\emph{knitr}} code chunk, but not show the code in the final presentation document, we can use the option \texttt{echo=FALSE}.\index{knitr option!echo}
 
-<<MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE, eval=FALSE>>=
+<<Ch3MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE, eval=FALSE>>=
 ```{r ChunkLabel, echo=FALSE}
 StringNumObject <- cbind(CharacterVect, NumericVect)
 ```
@@ -584,7 +588,7 @@ StringNumObject <- cbind(CharacterVect, NumericVect)
         \end{kframe}
 \end{knitrout}
 
-Throughout this book we will look at a number of different code chunk options. Many of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options#package_options}.
+Throughout this book we will look at a number of different code chunk options. Many of the chunk options we will use in this book are listed in Table \ref{ChunkOptionsTable}. For the full list of {\emph{knitr}} options see the {\emph{knitr}} chunk options page maintained by {\emph{knitr}}'s creator Yihui Xie: \url{http://yihui.name/knitr/options}.
 
 
 \begin{table}
@@ -638,13 +642,13 @@ opts_chunk$\hlkwd{set}(fig.align='center')
     \end{kframe}
 \end{knitrout}
 
-\noindent \texttt{Note:} if you want to use \texttt{opts_chunk} in a document rendered with \emph{rmarkdown} you will need to load \emph{knitr} in a code chunk preceding the call.
+\noindent \texttt{Note:} if you want to use \texttt{opts\_chunk} in a document rendered with \emph{rmarkdown} you will need to load \emph{knitr} in a code chunk preceding the call.
 
 \index{knitr!global chunk options|)}
 
 \subsection{\emph{knitr} package options}\index{knitr!package options|(}
 
-{\emph{Knitr}} package options affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
+{\emph{knitr}} package options affect how the package itself runs. For example, the {\tt{progress}} option can be set as either {\tt{TRUE}} or {\tt{FALSE}}\footnote{It's set as {\tt{TRUE}} by default.} depending on whether or not you want a progress bar\index{progress bar} to be displayed when you knit a code chunk. You can use {\tt{base.dir}} to set the directory where you want all of your figures to be saved to (see Chapter \ref{DirectoriesChapter}) or the {\tt{child.path}} option to specify where child documents are located (see Chapter \ref{LargeDocs}).
 
 You set package options in a similar way as global chunk options with {\tt{opts\_knit\$set}}. For example, include this code at the beginning of a document to turn off the progress bar when it is knitted:
 
@@ -670,7 +674,7 @@ You can also set hooks\index{knitr!hook}. Hooks come in two types: chunk hooks a
 %%%%%%%%%% Knitr, rmarkdown, & RStudio
 \subsection{\emph{knitr}, \emph{rmarkdown}, \& RStudio}
 
-RStudio is highly integrated with {\emph{knitr}}/\emph{rmarkdown} and the markup languages that they work with. Because of this integration it is easier to create and compile {\emph{knitr}} documents in RStudio than plain R. Most of the RStudio/{\emph{knitr}} features are accessed in the \emph{Source} pane\index{RStudio!Source pane}. The \emph{Source} pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} to determine what type of file you have open.\footnote{You can manually set how you want the \emph{Source} pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the \emph{Source} pane.} We have already seen some of the features the \emph{Source} pane has for R source code files. Let's now look at how to use {\emph{knitr}} and \emph{rmarkdown} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
+RStudio is highly integrated with {\emph{knitr}}/\emph{rmarkdown} and the markup languages that they work with. Because of this integration it is easier to create and compile {\emph{knitr}}/\emph{rmarkdown} documents in RStudio than plain R. Most of the RStudio/{\emph{knitr}}/\emph{rmarkdown} features are accessed in the \emph{Source} pane\index{RStudio!Source pane}. The \emph{Source} pane's appearance and capabilities change depending on the type of file you have open in it. RStudio uses a file's extension\index{file extension} and, if it is an \emph{rmarkdown} document its header to determine what type of file you have open.\footnote{You can manually set how you want the \emph{Source} pane to act by selecting the file type using the drop down menu in the lower right-hand corner of the \emph{Source} pane.} We have already seen some of the features the \emph{Source} pane has for R source code files. Let's now look at how to use {\emph{knitr}} and \emph{rmarkdown} with R source code files as well as the markup formats we cover in this book: R Markdown\index{R Markdown}, and R LaTeX\index{R LaTeX}. \\[0.25cm]
 
 \paragraph{Compiling R source code Notebooks}
 
@@ -742,9 +746,9 @@ knit(input = "Example.Rmd", output = "Example.md")
 
 \noindent You use the same steps for all other knittable document types. Note that if you do not specify the output file, {\emph{knitr}} will determine what the file name and extension should be. In this example it would come up with the same name and location as we gave it.
 
-In this example, using the \textbf{knit} command only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R function!markdownToHTML} command from the {\emph{markdown}} package, i.e.
+In this example, using the \texttt{knit} function only creates a Markdown file and not an HTML file, as clicking the RStudio {\tt{knit HTML}} did. Likewise, if you use {\tt{knit}} on a {\tt{.Rnw}} file you will only end up with a basic LaTeX {\tt{.tex}} file and not a compiled PDF. To convert the Markdown file into HTML you need to further run the {\tt{.md}} file through the {\tt{markdownToHTML}}\index{R function!markdownToHTML} command from the {\emph{markdown}} package, i.e.
 
-<<Ch3MDtoHTML, eval=FALSE, tidy=FALSE>>=
+<<Ch3MDtoHTML, eval=FALSE, tidy=FALSE, echo=TRUE>>=
 mardownToHTML(file = "Example.md", output = "Example.html")
 @
 
@@ -768,7 +772,7 @@ texi2pdf(file = "Example.tex")
 
 \subsection{\emph{rmarkdown} and R}\index{rmarkdown}\index{rmarkdown!header |(}\label{rmarkdownRender}
 
-Just as \emph{knitr} is an R package that you can run from the console, you can also run \emph{rmarkdown} from the console. Instead of the \texttt{knit} function use \emph{render}. Imagine that \emph{Example.Rmd} now has an \emph{rmarkdown} header:
+Just as \emph{knitr} is an R package that you can run from the console, you can also run \emph{rmarkdown} from the console. Instead of the \texttt{knit} function use \texttt{render}. Imagine that \emph{Example.Rmd} now has an \emph{rmarkdown} header:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -813,6 +817,23 @@ render("Example.Rmd", "all")
 <<Ch3RenderBasicAltAll, eval=FALSE, echo=TRUE>>=
 render("Example.Rmd", c("pdf_document", "html_document"))
 @
+
+In all of these cases, \texttt{render} will not keep the intermediate \emph{.md} or \emph{.tex} document. You can have these documents saved by adding \texttt{keep\_md} or \texttt{keep\_tex} to the header. For example:
+
+\begin{knitrout}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
+    \color{fgcolor}\begin{kframe}
+    \begin{alltt}
+---
+output:
+    pdf_document:
+        keep_tex: true
+    html_document:
+        keep_md: true
+---
+    \end{alltt}
+\end{kframe}
+\end{knitrout}
 
 \subsection*{Chapter Summary}
 
