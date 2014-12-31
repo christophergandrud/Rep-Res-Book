@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 26 December 2014
+% Updated: 31 December 2014
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -11,9 +11,11 @@ set_parent('Rep-Res-Parent.Rnw')
 
 We have already begun to see how LaTeX works for presenting research results. This chapter gives you a more detailed and comprehensive introduction to basic LaTeX document structures and commands. It is not a complete introduction to all that LaTeX is capable of, but we will cover enough that you will be able to create an entire well formatted article and slideshow with LaTeX that you can use to dynamically present your results. In the next chapter (Chapter \ref{LargeDocs}) we will build on these skills by learning how to use {\emph{knitr}} to create more complex LaTeX documents.
 
-For basic LaTeX documents, such as short articles or simple presentations, it may often be quicker and simpler to write the markup using an R Markdown document and compile it to PDF with the \emph{rmarkdown} package.\index{rmarkdown} As we will see in Chapter \ref{MarkdownChapter}, Markdown syntax is much simpler than normal LaTeX. However, there are at least two reasons why it is useful to become familiar with LaTeX syntax. First, understanding LaTeX syntax will help you debug issues you might encounter when using \emph{rmarkdown} that would otherwise be mysterious if you were only familiar with Markdown. Second, R Markdown has limited capabilities for creating more complex documents such as books or documents with highly customizable formatting. Using \emph{kntr} and LaTeX can be useful in these situations.
+For basic LaTeX documents, such as short articles or simple presentations, it may often be quicker and simpler to write the markup using an R Markdown document and compile it to PDF with the \emph{rmarkdown} package.\index{rmarkdown} As we will see in Chapter \ref{MarkdownChapter}, Markdown syntax is much simpler than normal LaTeX. However, there are at least two reasons why it is useful to become familiar with LaTeX syntax. First, understanding LaTeX syntax will help you debug issues you might encounter when using \emph{rmarkdown} with LaTeX that would otherwise be mysterious if you were only familiar with Markdown. Second, R Markdown has limited capabilities for creating more complex documents such as books and documents with highly customizable formatting needs. Using \emph{kntr} and LaTeX can be useful in these situations.
 
 In this chapter we will learn about basic LaTeX document structures and syntax as well as how to dynamically create LaTeX bibliographies with BibTeX, R, and \emph{knitr}. Finally, we will look at how to create PDF beamer slideshows with LaTeX and \emph{knitr}.
+
+This and the following chapter are unusual for this book in that they are not referring to both \emph{knitr} and \emph{rmarkdown}. Instead they focus on capabilities largely exclusive to \emph{knitr}.
 
 \section{The Basics}
 
@@ -33,7 +35,7 @@ As I mentioned earlier, RStudio\index{RStudio!LaTeX editor} is a fully functiona
 
 Remember from Chapter \ref{GettingStartedRKnitr} that R Sweave\index{R Sweave} files are basically LaTeX files that can include {\emph{knitr}} code chunks. You can use RStudio to knit and compile a document with the click of one button: \textbf{Compile PDF}\index{RStudio!Compile PDF button} (\includegraphics[scale=0.5]{Children/Chapter11/images11/CompilePDF.png}). You can use this button to compile R Sweave files like regular LaTeX files in RStudio even if they do not have code chunks. If you use another program to compile them you might need to change the file extension from {\tt{.Rnw}} to {\tt{.tex}}. You can also insert many of the items we will cover in this section into your documents with RStudio's LaTeX \texttt{TeX Format} button.\index{RStudio!TeX format button} See Figure \ref{TeXFormat}.
 
-There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated a table that comprehensively compares many of these editors.} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
+There are many other LaTeX editors\index{LaTeX!editors}\footnote{Wikipedia has collated a table that comprehensively compares many of these editors: \url{http://en.wikipedia.org/wiki/List_of_text_editors}.} and many text editors that can be modified to compile LaTeX documents. For example, alongside writing this book in RStudio, I typed much of the LaTeX markup in the Sublime Text\footnote{http://www.sublimetext.com/} text editor.\index{Sublime Text} None of these options have RStudio's high level integration with \emph{knitr}, however.\footnote{Andrew Wheiss has created a Sublime Text plugin called \emph{KnitrSublime}. It enables some R LaTeX integration. For more details see: \url{https://github.com/andrewheiss/KnitrSublime}.}
 
 If you are new to LaTeX you may be more comfortably using Lyx.\index{Lyx} Lyx has a Microsoft Word-type interface, but creates actual LaTeX documents. It also has \emph{knitr} integration. See Chapter \ref{GettingStartedRKnitr}'s Appendix for how to set up and use \emph{knitr} and Lyx.
 
@@ -100,11 +102,11 @@ Here is a full LaTeX article class document with all of these changes added:
 %%%%%%%%%%%%%%  Article Preamble %%%%%%%%%%%%%%
 \textbackslash{}documentclass\{article\}
 
-%% Load LaTeX packages
+%%%% Load LaTeX packages
 \textbackslash{}usepackage\{hyperref\}
 \textbackslash{}usepackage[authoryear]\{natbib\}
 
-%% Set knitr global options and gather data
+%%%% Set knitr global options and gather data
 \textless{}\textless{}Global, include=FALSE\textgreater{}\textgreater{}=
 \hlcom{#### Set chunk options ####}
 opts_chunk$\hlkwd{set}(fig.align=\hlstr{'center'})
@@ -136,7 +138,7 @@ UDSData <- \hlkwd{read.csv}(\hlkwd{gzfile}(temp, \hlstr{"uds_summary.csv"}))
 
 @
 
-%% Start document body
+%%%% Start document body
 \textbackslash{}begin\{document\}
 
 %%%%%%%%%%%%% Create title %%%%%%%%%%%%%%%%%
@@ -248,7 +250,7 @@ You can specify the base font size of an entire document with a \texttt{document
 
 There are a number of commands to set the size of specific pieces of text relative to the base size. See Table \ref{LaTeXFontSize} for the full list. Usually a slightly different syntax is used for these commands that goes like this: \verb|{\SIZE_COMMAND . . . }|. For example, to use the {\tiny{tiny size}} in your text use: \verb|{\tiny{tiny size}}|.
 
-You can change the size of code chunks that \emph{knitr} places in presentation documents using these commands. Just place the code chunk inside of \verb|{\SIZE_COMMAND . . . }|.
+You can change the size of code chunks that \emph{knitr} places in presentation documents using these commands. Just place the code chunk inside of \verb|{\SIZE_COMMAND . . . }|. This is similar to using the \verb|size| code chunk option.\index{knitr option!size}
 
 
 \begin{table}
@@ -274,7 +276,7 @@ You can change the size of code chunks that \emph{knitr} places in presentation 
 
 \paragraph{Diacritics}\index{LaTeX!diacritics}
 
-You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX directly. For example to create a letter c with a cedilla (\c{c}) you need to type \verb|\c{c}|. To create an `a' with an acute accent (\'{a}) type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them within LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.\index{LaTeX!internationalization}\index{LaTeX!non-English characters}
+You cannot directly enter letters with diacritics--e.g. accent mark--into LaTeX. For example, to create a letter c with a cedilla (\c{c}) you need to type \verb|\c{c}|. To create an `a' with an acute accent (\'{a}) type: \verb|\'{a}|. There are obviously many types of diacritics and commands to include them within LaTeX produced documents. For a comprehensive discussion of the issue and a list of commands see the LaTeX Wikibook page on the topic: \url{http://en.wikibooks.org/wiki/LaTeX/Special_Characters}. If you regularly use non-English alphabets you might also be interested in reading the LaTeX Wikibook page on on internationalization: \url{http://en.wikibooks.org/wiki/LaTeX/Internationalization}.\index{LaTeX!internationalization}\index{LaTeX!non-English characters}
 
 \paragraph{Quotation marks}\index{LaTeX!quotation marks}
 
@@ -350,9 +352,9 @@ Plain, non-bibliographic footnotes are easy to create in LaTeX. Simply place \te
 
 LaTeX will also automatically format cross-references. We were already partially introduced to cross-references in chapters \ref{TablesChapter} and \ref{FiguresChapter}. At the place where you would like to reference add a \texttt{label} such as \verb|\label{ACrossRefLabel}|.\index{LaTeX command!label} It doesn't really matter what label you choose, though make sure they are not duplicated in the document. Also, it can be a good idea to use the same conventions that we learned for labelling R objects (see Section \ref{ObjectNames}). Then place a \texttt{ref}\index{LaTeX command!ref} command (e.g. \verb|\ref{ACrossRefLabel|) at the place in the text where you want the cross-reference to be.
 
-If you place the \texttt{label} on the same line as a heading command \texttt{ref} will place the heading number. If \texttt{label} is in a \texttt{table} or \texttt{figure} environment you will get the table or figure number. You can also use \texttt{pageref} instead of \texttt{ref} to include the page number. Finally, loading the \emph{hyperref}\index{LaTeX package!hyperref} package makes cross-references (or footnote) clickable. Clicking on them will take you to the item the reference is referring to.
+If you place the \texttt{label} on the same line as a heading command, \texttt{ref} will place the heading number. If \texttt{label} is in a \texttt{table} or \texttt{figure} environment you will get the table or figure number. You can also use \texttt{pageref} instead of \texttt{ref} to include the page number. Finally, loading the \emph{hyperref}\index{LaTeX package!hyperref} package makes cross-references (or footnote) clickable. Clicking on them will take you to the item the reference is referring to.
 
-\section{Bibliographies with BibTeX}\label{BibTeXBib}\index{BibTeX}\index{LaTeX!bibliographies}
+\section{Bibliographies with BibTeX}\label{BibTeXBib}\index{BibTeX|(}\index{LaTeX!bibliographies|(}
 
 LaTeX can take advantage of very comprehensive bibliography making capabilities. All major TeX distributions come with BibTeX. BibTeX is basically a tool for creating databases of citation information. In this section, we are going to see how to incorporate a BibTeX bibliography into your LaTeX documents. Then we will learn how use R to automatically generate a bibliography of packages used to create a knitted document. For more information on BibTeX syntax see the LaTeX Wikibook page on Bibliography management: \url{http://en.wikibooks.org/wiki/LaTeX/Bibliography_Management}.
 
@@ -406,7 +408,7 @@ When you want to include citations from a BibTeX file in your LaTeX document you
 
 You can also specify how you would like the references to be formatted using the \texttt{bibliographystyle}\index{LaTeX command!bibliographystyle} command. For example, this book uses the American Psychological Association (APA)\index{APA} style for references. To set this I included \verb|\bibliographystyle{apa}| directly before \texttt{bibliography}. The default style\footnote{It is referred to in LaTeX as the plain style.} is to number citations (e.g. [1]) rather than include author-year information\footnote{This is sometimes referred to as the ``Harvard'' style.} used by the APA. You will need to include the LaTeX package \emph{natbib}\index{LaTeX package!Natbib} in your preamble to be able to use author-year citation styles. This book includes \verb|\usepackage[authoryear]{natbib}| in its preamble.\index{author-year citations}\index{Harvard style citations}
 
-Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donoho2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example if we wanted to cite the tenth page of \cite{Donoho2009} we type: \verb|\cite[10]{Donoho2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donoho2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donoho2009}| gives us \cite[see][10]{Donoho2009}.
+Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donoho2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example if we wanted to cite the tenth page of \cite{Donoho2009} we type: \verb|\cite[10]{Donoho2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donoho2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donoho2009}| gives us: \cite[see][10]{Donoho2009}.
 
 If you are using an author-year style you can use a variety of \emph{natbib} commands to change what information is included in the parentheses. For a selection of these commands and examples see Table \ref{NatbibTable}.
 
@@ -483,6 +485,8 @@ knitr::write_bib(PackagesUsed,
 \noindent In the first executable line we just create our list of packages to load and cite. The next command is \texttt{lapply}\index{R function!lapply} (list apply). This applies the function \texttt{library} to all of the items in \emph{PackagesUsed}. \texttt{character.only = TRUE} is a \texttt{library}\index{R function!library} argument that allows us to use character string versions of the package names as R sees them in the \emph{PackagesUsed} vector, rather than as objects (how we have used \texttt{library} up until now). If you include these commands in a code chunk at the beginning of your knitted document then you can be sure that you will have a BibTeX file with all of your packages.
 
 The full LaTeX document example I showed you earlier uses the \texttt{LoadandCite} command\index{R function!LoadandCite} from the \emph{repmis} package. This simplifies the process of loading and citing R packages.\index{repmis}\footnote{It can also install the packages if the option \texttt{install = TRUE}. You can have it install specific package versions by entering the version numbers with the \texttt{versions} argument. This is very useful for enabling the replication of analyses that rely on specific package versions.}
+
+\index{BibTeX|)}\index{LaTeX!bibliographies|)}
 
 \section{Presentations with LaTeX Beamer}\label{latexBeamer}
 
@@ -645,7 +649,7 @@ devtools::source\_url(\hlstr{"http://bit.ly/VRKphr"})
 \end{knitrout}
 }
 
-In Chapter \ref{MarkdownChapter} (page \pageref{rmarkdownBeamer}) we will see how to use the \emph{rmarkdown} package to create beamer presentations with the much simpler Markdown syntax.
+In Chapter \ref{MarkdownChapter} we will see how to use the \emph{rmarkdown} package to create beamer presentations with the much simpler Markdown syntax.
 
 \index{beamer|)}\index{LaTeX class!beamer|)}
 
