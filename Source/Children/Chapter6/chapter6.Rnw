@@ -11,7 +11,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 How you gather your data directly impacts how reproducible your research will be. You should try your best to document every step of your data gathering process. Reproduction will be easier if your documentation--especially, variable descriptions and source code--makes it easy for you and others to understand what you have done. If all of your data gathering steps are tied together by your source code, then independent researchers (and you) can more easily regather the data. Regathering data will be easiest if running your code allows you to get all the way back to the raw data files--the rawer the better. Of course this may not always be possible. You may need to conduct interviews or compile information from paper based archives, for example. The best you can sometimes do is describe your data gathering process in detail. Nonetheless, R's automated data gathering capabilities for internet-based information is extensive. Learning how to take full advantage of these capabilities greatly increases reproducibility and can save you considerable time and effort over the long run.
 
-In this chapter we'll learn how to gather quantitative data in a reproducible and, in some cases, fully replicable way. We'll start by learning how to use data gathering makefiles to organize your whole data gathering process so that it can be completely reproduced. Then we will learn the details of how to actually load data into R from various sources, both locally on your computer and remotely via the internet. In the next chapter (Chapter \ref{DataClean}) we'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
+In this chapter we'll learn how to gather quantitative data in a fully reproducible way. We'll start by learning how to use data gathering makefiles to organize your whole data gathering process so that it can be completely reproduced. Then we will learn the details of how to actually load data into R from various sources, both locally on your computer and remotely via the internet. In the next chapter (Chapter \ref{DataClean}) we'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
 
 %%%%%%%%%%%%% Organizing data gathering
 \section{Organize Your Data Gathering: Makefiles}
@@ -34,19 +34,19 @@ When you create make-like files in R to organize and run your data gathering you
 ################
 # Example R make-like file
 # Christopher Gandrud
-# Updated 21 August 2013
+# Updated 15 January 2015
 ################
 
 # Set working directory
-setwd("/ExampleProject/Data/")
+setwd("/ExampleProject/Analysis/Data/")
 
 # Gather and clean up raw data files.
-source("GatherSource/Gather1.R")
-source("GatherSource/Gather2.R")
-source("GatherSource/Gather3.R")
+source("Gather1.R")
+source("Gather2.R")
+source("Gather3.R")
 
 # Merge cleaned data frames into data frame object CleanedData
-source("GatherSource/MergeData.R")
+source("MergeData.R")
 @
 
 This code first sets the working directory. Then it runs three source code files to gather data from three different sources. These files gather the data and clean it so that it can be merged together. The cleaned data frames are available in the current workspace. Next the code runs the \emph{MergeData.R} file that merges the data frames and saves the output data frame as a CSV\index{CSV} formatted file. The CSV file could be the main file we use for statistical analysis. \emph{MergeData.R} also creates a Markdown file with a table describing the variables and their sources. We'll come back to how to create tables in Chapter \ref{TablesChapter}.
@@ -78,7 +78,7 @@ The basic idea of reproducible data gathering with Make is similar to what we sa
 
 \subsubsection{Example makefile}
 
-The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files we already have. The makefile we are going to create runs prerequisite files by the alphanumeric order of their file names. So we need to make sure that the files are named in the order that we want to run them. Now let's look at the actual makefile:
+The first thing we need to do is create a new file called \emph{Makefile}\footnote{Alternatively you can call the file \emph{GNUmakefile} or \emph{makefile}.} and place it in the same directory as the data gathering files we already have. The makefile we are going to create runs prerequisite files by the alphanumeric order of their file names. So we need to ensure that the files are named in the order that we want to run them. Now let's look at the actual makefile:
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -233,7 +233,7 @@ TestData <- read.table("TestData.csv", sep = ",", header = TRUE)
 
 \noindent See Section \ref{SepHeadExplain} for a discussion of the arguments in this command.
 
-If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Workspace} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the column separator, whether or not you want the first line to be treated as variable labels, and other options. This is initially easier than using \texttt{read.table}. But it is much less reproducible.
+If you are using RStudio you can do the same thing with drop down menus. To open a plain-text data file click on \texttt{Environment} \textrightarrow\: \texttt{Import Dataset\ldots} \textrightarrow\: \texttt{From Text File\ldots}. In the box that pops up, specify the column separator, whether or not you want the first line to be treated as variable labels, and other options. This is initially easier than using \texttt{read.table}. But it is much less reproducible.
 
 If the data is not stored in plain-text format, but is instead saved in a format created by another statistical program such as SPSS,\index{SPSS} SAS,\index{SAS} or Stata,\index{Stata} we can import it using commands in the \emph{foreign} package\index{foreign}. For example, imagine we have a data file called \emph{Data1.dta} stored in our working directory. This file was created by the Stata\index{Stata} statistical program. To load the data into an R data frame object called \emph{StataData} simply type:
 
@@ -272,7 +272,7 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
-\noindent Storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but recently switched to secure URLs.} You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We have to use different commands to download data from secure URLs. Let's look at three methods for downloading data into R: \verb|source_data|, \verb|source_DropboxData|, and the \emph{RCurl} package.
+\noindent Storing data at non-secure URLs is becoming less common. Services like Dropbox and GitHub now store their data at secure URLs.\footnote{Dropbox used to host files in the Public folder at non-secure URLs, but switched to secure URLs.} You can tell if the data is stored at a secure web address if it begins with \texttt{https}\index{https} rather than \texttt{http}. We have to use different commands to download data from secure URLs. Let's look at three methods for downloading data into R: \verb|source_data|, \verb|source_DropboxData|, and the \emph{RCurl} package.
 
 \paragraph{Loading data from secure URLs with {\tt{source\_data}}}\label{SecureData6}
 
@@ -282,32 +282,26 @@ One problem for reproducible research with sourcing data located on the internet
 
 For example, let's find the SHA-1 hash for the disproportionality data set we downloaded in the last chapter (Section \ref{GitDownload}):\footnote{Remember we placed the file's raw GitHub URL address inside of the object \emph{UrlAddress}.}
 
-<<Ch6sourceDataGitHub, tidy=FALSE, size='small'>>=
+<<Ch6sourceDataGitHub, tidy=FALSE, size='small', message=TRUE>>=
 DispropData <- repmis::source_data(UrlAddress)
 @
 
-\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{195637339e8483d}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
+\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{dc8110d6dff32f}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
 
 <<Ch6SHA1compare, tidy=FALSE, size='footnotesize'>>=
 DispropData <- repmis::source_data(OldUrlAddress,
-        sha1 = "195637339e8483dd634fae38e16ad8f24a403aef")
+        sha1 = "dc8110d6dff32f682bd2f2fdbacb89e37b94f95d")
 @
 
 \noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
 
 \paragraph{Loading data from Dropbox non-Public folders with {\tt{source\_DropboxData}}}\label{DropboxNonPublic}
 
-Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) you will be taken to a new webpage. Notice that you get more than the raw file. The plain-text file is embedded in a larger HTML webpage. It is difficult to extract the data from this webpage. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R function!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) its Dropbox key.\index{Dropbox!key}
+Files stored on Dropbox\index{Dropbox}\index{Dropbox!non-Public folders} non-\emph{Public} folders are a little trickier to download. If you go to the Dropbox website and click the \texttt{Share Link} button next to a file (\includegraphics[scale=0.35]{Children/Chapter5/images5/DropboxLink.png}) you will be given an information box. This is not the raw data file. Luckily, \emph{repmis}\index{repmis} includes a \verb|source_DropboxData|\index{R function!source\_DropboxData} command for downloading data stored in a non-Public Dropbox folder into R. It works in much the same way as \verb|source_data|, the only difference is that instead of using the URL we need (a) the file's name and (b) its Dropbox key.\index{Dropbox!key}
 
-To find the file's key simply click on the \texttt{Share Link} button next to the file (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) on the Dropbox website. Look at the URL for the webpage that appears. Here's an example:
+To find the file's key simply click on the \texttt{Share Link} button next to the file on the Dropbox website. Look at the URL for the webpage that appears. Here's an example: \url{https://dl.dropboxusercontent.com/s/exh4iobbm2p5p1v/fin_research_note.csv}
 
-\vspace{0.25cm}
-
-\includegraphics[scale=0.5]{Children/Chapter6/images6/DropboxURL.png}
-
-\vspace{0.25cm}
-
-\noindent You can see that the last part of the URL (\texttt{fin\_research\_note.csv}) is the data file's name. The key is the string of letters and numbers just after \texttt{https://www.dropbox.com/s/}, i.e. \texttt{exh4iobbm2p5p1v}. Now that we have the file name and key we can download the data into R using \verb|source_DropboxData|. For example:
+You can see that the last part of the URL (\texttt{fin\_research\_note.csv}) is the data file's name. The key is the string of letters and numbers just after \texttt{https://www.dropbox.com/s/}, i.e. \texttt{exh4iobbm2p5p1v}. Now that we have the file name and key we can download the data into R using \verb|source_DropboxData|. For example:
 
 <<Ch6sourceDropboxData, tidy=FALSE>>=
 # Download data from a Dropbox non-Public folder
@@ -356,7 +350,7 @@ Sometimes data files are large, making them difficult to store and download with
 
 \noindent The reason that we have to go through so many extra steps is that compressed files are more than just a single file and contain a number of files as well as metadata.\index{metadata}
 
-Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It's in a compressed file called {\emph{uds\_summary.csv.gz}}. At the time of writing, the file's URL address is {\url{http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz}}. I shortened the URL\footnote{I used bitly (\url{bitly.com}) to shorten the URL.} to \url{http://bit.ly/1jXJgDh} because of space constraints.
+Let's download a compressed file called {\emph{uds\_summary.csv}} from \cite{Pemstein2010}. It's in a compressed file called {\emph{uds\_summary.csv.gz}}. At the time of writing, the file's URL address is {\url{http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz}}. Again, I shortened the URL to \url{http://bit.ly/1jXJgDh} because of space constraints.
 
 
 <<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE, size='footnotesize'>>=
@@ -381,7 +375,7 @@ names(UDSData)
 
 \subsection{Data APIs \& feeds}
 
-There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Most of these packages use the sources' application programming interfaces (API).\index{API} APIs allow programs to interact with a website. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward and makes it easy to update data sets when new information becomes available. Some examples of these packages include:
+There are a growing number of packages that can gather data directly from a variety of internet sources and import them into R. Most of these packages use the sources' web application programming interfaces (API).\index{API} Web APIs allow programs to interact with a website. Needless to say, this is great for reproducible research. It not only makes the data gathering process easier as you don't have to download many Excel files and fiddle around with them before even getting the data into R, but it also makes replicating the data gathering process much more straightforward and makes it easy to update data sets when new information becomes available. Some examples of these packages include:
 
 \begin{itemize}
     \item The \emph{openair} package \citep{R-openair},\index{openair} which beyond providing a number of tools for analyzing air quality data also has the ability to directly gather data directly from sources such as Kings College London's London Air (\url{http://www.londonair.org.uk/}) database.\index{air quality}
@@ -428,7 +422,9 @@ head(FertConsumpData)
 
 \section{Advanced Automatic Data Gathering: Web Scraping}
 
-If a package does not already exist to access data from a particular website there are other ways to automatically ``scrape'' data from the website with R.\index{web scraping} This section briefly discusses some of R's web scraping tools and techniques to get you headed in the right direction to do more advanced data gathering.
+\index{web scraping|(}
+
+If a package does not already exist to access data from a particular website there are other ways to automatically ``scrape'' data with R. This section briefly discusses some of R's web scraping tools and techniques to get you headed in the right direction to do more advanced data gathering.
 
 \paragraph{The general process}
 
@@ -451,6 +447,8 @@ Beyond learning about the various R packages that are useful for R web scraping,
     \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{dplyr} \citep{R-dplyr}\index{dplyr} for data frame manipulation is also particularly useful.
 
 \end{itemize}
+
+\index{web scraping|)}
 
 \subsection*{Chapter Summary}
 
