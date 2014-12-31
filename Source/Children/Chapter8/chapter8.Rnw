@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 29 December 2014
+% Updated: 31 December 2014
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -11,7 +11,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 When you have your data cleaned and organized you will begin to examine it with statistical analyses. In this book we don't look at how to do statistical analysis in R (a subject that would and does take up many books). Instead we focus on how to make your analyses really reproducible. To do this you dynamically connect your data gathering and analysis source code to your presentation documents. When you dynamically connect your data gathering makefiles and analysis source code to your markup document you will be able to completely rerun your data gathering and analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analyses source code files.
 
-You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr} syntax. In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
+You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}/\emph{rmarkdown}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr}/\emph{rmarkdown} syntax. For the rest of the chapter I'll simply refer to it as \emph{knitr} syntax, but it applies to \emph{rmarkdown} as well.  In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
 
 The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
@@ -19,7 +19,7 @@ The goal of this and the next two chapters--which cover dynamically presenting r
 
 \section{Incorporating Analyses into the Markup}
 
-For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your \emph{knitr} markup document. In this section we will learn how to set \emph{knitr} options for handling these code chunks. For a list of the chunk options covered here see Table \ref{ChunkOptionsTable}.
+For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your \emph{knitr} markup document. In this section we will learn how to set \emph{knitr} options for handling these code chunks. For a list of many of the chunk options covered here see Table \ref{ChunkOptionsTable}.
 
 \subsection{Full code chunks}\index{knitr!code chunk option|(}
 
@@ -31,11 +31,11 @@ Use \texttt{include=FALSE} if you don't want to include anything in the text of 
 
 \paragraph{{\tt{eval}}}\index{knitr option!eval}
 
-The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run. You can alternatively use a numerical vector with \texttt{echo}. The numbers in the vector tell \emph{knitr} which expressions in the chunk to evaluate. For example, if you only want to evaluate the first two expressions simply set \texttt{eval=1:2}.
+The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run. You can alternatively use a numerical vector with \texttt{eval}. The numbers in the vector tell \emph{knitr} which expressions in the chunk to evaluate. For example, if you only want to evaluate the first two expressions simply set \texttt{eval=1:2}.
 
 \paragraph{{\tt{echo}}}\index{knitr option!echo}
 
-If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} then source code will be included in the presentation document. As with \texttt{eval} you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
+If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} then source code will be included in the presentation document. As with \texttt{eval}, you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
 
 \paragraph{{\tt{results}}}\index{knitr option!results}
 
@@ -47,7 +47,7 @@ If you don't want to include the warnings, messages, and error messages that R o
 
 \paragraph{{\tt{cache}}}\index{knitr option!cache}
 
-If you want run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
+If you want to run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
 
 \paragraph{{\tt{dependson}}}\index{knitr option!dependson}
 
@@ -95,7 +95,7 @@ Probably the better option is to use the \verb|\verb| command\index{LaTeX comman
         \end{kframe}
 \end{knitrout}
 
-\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar following \verb|\verb|. All of the text in between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012). Also, for help troubleshooting see the UK List of Frequently Asked Questions: \url{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=verbwithin} (access 4 January 2012).}
+\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar following \verb|\verb|. All of the text in-between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012). Also, for help troubleshooting see the UK List of Frequently Asked Questions: \url{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=verbwithin} (access 4 January 2012).}
 
 \paragraph{Inline dynamic code}
 
@@ -154,7 +154,7 @@ You are not limited to dynamically including just R code in your presentation do
     \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
     \begin{kframe}
         \begin{verbatim}
-```{r engine='ruby'}
+```{r engine='python'}
 print "Reproducible Research"
 ```
         \end{verbatim}
@@ -224,8 +224,8 @@ In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{make
     \begin{kframe}
         \begin{alltt}
 \textless{\textless}engine='bash', include=FALSE\textgreater{\textgreater}=
-# Change working directory to /ExampleProject/Data/GatherSource
-cd /ExampleProject/Data/GatherSource/
+# Change working directory to /ExampleProject/Analysis/Data
+cd /ExampleProject/Analysis/Data/
 
 # Run makefile
 make cleanMerge all
@@ -249,14 +249,14 @@ Sourcing from your computer is fine if you are working alone and do not want oth
 
 \subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}\index{https}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R function!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R function!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/1D5p1w6}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly. You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
 
 <<Ch8SourceURLExample, message=TRUE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
 library(devtools)
 
 # Run the source code to create the scatter plot
-source_url("http://bit.ly/UOtH4L")
+source_url("http://bit.ly/1D5p1w6")
 @
 
 \noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R function!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
@@ -297,7 +297,7 @@ summary(Draw2)
 
 Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make writing the document frustrating because it will take a long time to knit it each time you make changes. There are at least two solutions to this problem: the \texttt{cache} chunk option and makefiles.\index{makefile} We discussed makefiles in Chapter \ref{DataGather}, so let's look at how to work with the \texttt{cache} option.\index{knitr option!cache}
 
-When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis, the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see Section \ref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}
+When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis, the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed. Use the \texttt{dependson} option in cases where it is important to rerun a chunk when a prior chunk changes.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see Section \ref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}
 
 Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R function!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
 
@@ -335,7 +335,7 @@ Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
-\noindent \label{CacheVars} If the code chunk you want to cache creates many objects, but you only want to save a few of them you can use \emph{knitr}'s' \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save.
+\noindent \label{CacheVars} If the code chunk you want to cache creates many objects, but you only want to save a few of them you can use \emph{knitr}'s \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save.
 
 \subsection*{Chapter Summary}
 
