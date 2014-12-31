@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 22 December 2014
+% Updated: 31 December 2014
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -63,11 +63,11 @@ When you sign up for Dropbox and install the program\footnote{See \url{https://w
 
 \label{EnablePublicFolder}All files stored on Dropbox have a URL address through which they can be accessed from a computer connected to the internet. Files in either the Dropbox \emph{Public}\index{Dropbox!Public folder}\footnote{Note: if you created your Dropbox account after 4 October 2012 you will not automatically have a \emph{Public} folder. To enable the folder on your account see this website: \url{https://www.dropbox.com/help/16/en}. You will need a Pro or Dropbox for Business account to enable a new Public folder. \index{Dropbox!enable Public folder}} folder or in other, non-\emph{Public} folders can be downloaded into R. Downloading files from these two different sources requires two different methods. Let's quickly look at how to download files from the Public folder. In the next chapter (see Section \ref{DropboxNonPublic}) we'll look at how to download data from non-\emph{Public} Dropbox folders into R.
 
-If the file is stored in the \emph{Public} folder, right-click on the file icon in your Dropbox folder on your computer. Then click \emph{Copy Public Link}.\label{PublicLink} This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). If you are logged into the Dropbox website, right-click on files in your \emph{Public} folder and then select \texttt{Copy Public Link}.
+If the file is stored in the \emph{Public} folder, right-click on the file icon in your Dropbox folder on your computer. Then click \texttt{Copy Public Link}.\label{PublicLink} This copies the URL into your clipboard from where you can paste it into your R source code (or wherever). If you are logged into the Dropbox website, right-click on files in your \emph{Public} folder and then select \texttt{Copy public link\ldots}.
 
-Once you have the URL you can load the file directly into R using the \verb|source_data| command in the \emph{repmis} package\index{repmis} \citep{R-repmis} for plain-text formatted data or the \texttt{source}\index{R function!source} command in base R for source code files (see Chapter \ref{StatsModel}).
+Once you have the URL you can load the file directly into R using the \verb|source_data| command in the \emph{repmis} package\index{repmis} \citep{R-repmis} for plain-text formatted data or use the \texttt{source\_url}\index{R function!source\_url} command in the \emph{devtools} package \citep{R-devtools} for source code files (see Chapter \ref{StatsModel}).
 
-Let's download data directly into R from my Dropbox Public folder. The data set's URL is: \url{https://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.\footnote{This data is from \cite{Gandrud2012}. I've shortened the URL using bit.ly (\url{https://bitly.com/}) so that it will fit on the page.}
+Let's download data directly into R from my Dropbox Public folder. The data set's URL is: \url{https://dl.dropbox.com/u/12581470/code/Replicability_code/Fin_Trans_Replication_Journal/Data/public.fin.msm.model.csv}.\footnote{This data is from \cite{Gandrud2012}. I've shortened the URL using Bitly\index{Bitly} (\url{https://bitly.com/}) so that it will fit on the page.}
 
 <<Ch5PublicFolderDownload, message=TRUE>>=
 # Download data on Financial Regulators
@@ -88,17 +88,17 @@ FinRegulatorData <- source_data(FinURL,
 names(FinRegulatorData)
 @
 
-\noindent Let's go through this code. The command \texttt{paste0}\index{R function!paste0} simply pastes the multiple strings I've used to write the URL into one long string.\label{SepHeadExplain} It does not place a space between the strings when they are combined.\footnote{The more general \texttt{paste} command does add spaces by default. Though these can be removed with the option \texttt{sep = ""}.} You do not have to do this. You could just use one long continuous string. I only split it up and pasted it back together so that the URL would fit on the printed page. We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's values are separated by commas. Finally, the \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files.
+\noindent Let's go through this code.\label{SepHeadExplain} We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's values are separated by commas. The \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files. I've only done so for illustration.
 
-You're probably also wondering about the line that begins \emph{\texttt{\#\# SHA-1 hash of}} \ldots. The long string of numbers and letters at the end of this line is basically a unique ID that \verb|source_data| assigns to the file. It is called an SHA-1 hash. We'll see SHA-1\index{SHA-1 hash} hashes more in the next section on GitHub (Section \ref{GitHubMain}) and in Chapter \ref{DataGather} (Section \ref{SecureData6}). To give you a preview: it allows us to see if the file that we downloaded is the file we thought we downloaded.
+You're probably also wondering about the line that begins \emph{\texttt{\#\# SHA-1 hash of}} \ldots in the output. The long string of numbers and letters at the end of this line is basically a unique ID that \verb|source_data| assigns to the file. It is called an SHA-1 hash. We'll see SHA-1\index{SHA-1 hash} hashes more in the next section on GitHub (Section \ref{GitHubMain}) and in Chapter \ref{DataGather} (Section \ref{SecureData6}). To give you a preview: it allows us to see if the file that we downloaded is the file we thought we downloaded.
 
-To get a file's URL from your local Dropbox folder when the file is not in your \emph{Public} folder you also go to \texttt{Dropbox} after right-clicking on the file. Then choose \texttt{Get Link}. This will open a webpage in your default web browser from where you can download the file. You can copy and paste the page's URL from your browser's address bar and share it with others. You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. When you hover your cursor over a file or folder not in the \emph{Public} Folder you will see a chain-link icon (\includegraphics[scale=0.5]{Children/Chapter5/images5/DropboxLink.png}) appear on the far right. Clicking on this icon will get you the link.
+To get a file's URL from your local Dropbox folder when the file is \emph{not} in your \emph{Public} folder you also right-click on the file. Then choose \texttt{Share Dropbox Link}. This will will copy the link URL into your clipboard. You can also get these URL links through the online version of your Dropbox. First log into the Dropbox website. You can again right-click on the file name and then \texttt{Share}. This will bring up a box displaying the link for you to copy. Alternatively, when you hover your cursor over a file or folder you will see a \texttt{Share} icon (\includegraphics[scale=0.3]{Children/Chapter5/images5/DropboxLink.png}) appear on the far right. Clicking on this icon will also get you the link.
 
-In either case you cannot use the \verb|source_data| command to download data from non-\emph{Public} folders into R. In the next chapter we'll see how to import this type of data into R (see Section \ref{DropboxNonPublic}). To give you a preview: we'll use the \verb|source_DropboxData|\index{R function!source\_DropboxData} command from the \emph{repmis}\index{repmis} package.
+In either case you cannot use the \verb|source_data| command to download data from non-\emph{Public} folders into R. In the next chapter we'll see how to import this type of data into R (see Section \ref{DropboxNonPublic}). To give you a preview: we'll use the \verb|source_DropboxData|\index{R function!source\_DropboxData} function from the \emph{repmis}\index{repmis} package.
 
 \subsection{Collaboration}
 
-Though others can easily access your data and files with Dropbox URL links, you cannot save files through the link. You must save files in the Dropbox folder on your computer or upload them through the website. If you would like collaborators to be able to modify the research files you will need to `share' the Dropbox folder with them. You cannot fully share your \emph{Public} folder, i.e. give others write permission, so you will need to keep the files you want collaborators to be able to modify in a non-public folder. Once you create this non-\emph{Public} folder you can share it with your collaborators by right-clicking on the folder and selecting \texttt{Invite to folder} on the Dropbox website or \texttt{Dropbox} \textrightarrow\: \texttt{Share This Folder\ldots} on the locally stored folder. Enter your collaborator's email address when prompted. They will be sent an email that will allow them to accept the share request and, if they don't already have an account, sign up for Dropbox.
+Though others can easily access your data and files with Dropbox URL links, you cannot save files through the link. You must save files in the Dropbox folder on your computer or upload them through the website. If you would like collaborators to be able to modify the research files you will need to `share' the Dropbox folder with them. You cannot fully share your \emph{Public} folder, i.e. give others write permission, so you will need to keep the files you want collaborators to be able to modify in a non-public folder. Once you create this non-\emph{Public} folder you can share it with your collaborators by going to the Dropbox website and right-clicking on the folder's name. Then select \texttt{Invite people to collaborate\ldots}. Enter your collaborator's email address when prompted. They will be sent an email that will allow them to accept the share request and, if they don't already have an account, sign up for Dropbox.
 
 \subsection{Version control}
 
@@ -122,11 +122,12 @@ GitHub's extensive features and heart in the computer programming community mean
     \item GitHub can create and host a website for your research project that you could use to present the results, not just the replication files.
 \end{itemize}
 
-\noindent{\bf{Collaboration}} \\[0.2cm]
+\vspace{0.2cm}
 
-Dropbox allows multiple people to share files and change them. GitHub does this and more:
+\noindent{\bf{Collaboration}}
 
 \begin{itemize}
+        \item Dropbox allows multiple people to share files and change them. GitHub does this and more.
         \item GitHub keeps meticulous records of who contributed what to a project.
         \item Each GitHub repository has an ``Issues'' area where you can note issues and discuss them with your collaborators. Basically this is an interactive to-do list for your research project. It also stores the issues so you have a full record.
         \item Each repository can also host a wiki\index{wiki} that, for example, could explain in detail how certain aspects of a research project were done.
@@ -168,7 +169,7 @@ Git is primarily a version control system, so we will start our discussion of ho
 You can setup a Git repo on your computer with the command line.\footnote{Much of the discussion of the command line in this section is inspired by Nick Farina's blog post on Git (see \url{http://nfarina.com/post/9868516270/git-is-simpler}, posted 7 September 2012).} I keep my repositories\index{Git!repository} in a folder called {\emph{git\_repositories}},\footnote{To follow along with this code you will first need to create a folder called {\emph{git\_repositories}} in your root directory. Note also that throughout this section I use Unix file path conventions.} though you can use Git with almost any directory you like. The \emph{git\_repositories} directory has the root folder as its parent. Imagine that we want to set up a repository in this directory for a project called {\emph{ExampleProject}}. Initially it will have one README file called {\emph{README.md}}. To do this we would first type into the Terminal for Mac and Linux computers:
 
 <<Ch5CLGitRep, eval=FALSE, engine='sh'>>=
-# Make new directory 'ExampleProject
+# Make new directory 'ExampleProject'
 mkdir /git_repositories/ExampleProject
 
 # Change to directory 'ExampleProject'
@@ -178,9 +179,9 @@ cd /git_repositories/ExampleProject
 echo "# An Example Repository" > README.md
 @
 
-\noindent So far we have only made the new directory and set it as our working directory (see Chapter \ref{DirectoriesChapter}). All of the examples in this section assume your current working directory is set to the repo. Then with the \texttt{echo} shell command we created a new file named {\emph{README.md}}\index{README file} that includes the text \verb|# An Example Repository|. Note that the code is basically the same in Windows PowerShell. Also, you don't have to do these steps in the command line. You could just create the new folders and files the same way that you normally do with your mouse in your GUI operating system.
+\noindent So far we have only made the new directory and set it as our working directory (see Chapter \ref{DirectoriesChapter}). All of the examples in this section assume your current working directory is set to the repo. Then with the \texttt{echo} shell command we created a new file named {\emph{README.md}}\index{README file} that includes the text \verb|# An Example Repository|. Note that the code is basically the same in Windows PowerShell\index{PowerShell} or Git Bash\index{Git Bash}. Also, you don't have to do these steps in the command line. You could just create the new folders and files the same way that you normally do with your mouse in your GUI operating system.
 
-Now that we have a directory with a file we can tell Git that we want to treat the directory {\emph{ExamplProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize)\index{Git command!init} command to set the directory as a repository. See Table \ref{GitCommandsTable} for the list of Git commands covered in this chapter.\footnote{For a comprehensive guide to Git commands see \url{http://git-scm.com/}.} Use Git's \texttt{add} command to add a file to the Git repository.\index{Git command!add} For example,
+Now that we have a directory with a file we can tell Git that we want to treat the directory {\emph{ExampleProject}} as a repository and that we want to track changes made to the file {\emph{README.md}}. Use Git's \texttt{init} (initialize)\index{Git command!init} command to set the directory as a repository. See Table \ref{GitCommandsTable} for the list of Git commands covered in this chapter.\footnote{For a comprehensive guide to Git commands see \url{http://git-scm.com/}.} Use Git's \texttt{add} command to add a file to the Git repository.\index{Git command!add} For example,
 
 <<Ch5GitAdd, eval=FALSE, engine='sh'>>=
 # Initialize the Git repository
@@ -271,7 +272,7 @@ git checkout -- .
 
 \paragraph{Tags}
 
-SHA-1 hashes are a bit cumbersome to use as a reference number. What was the hash number for that one commit? To solve this problem you can add bookmarks, known as ``tags'',\index{Git!tag}\index{Git command!tag} to particularly important commits. Imagine we just committed our first full draft of a project. We want to tag it as version 0.1, i.e. ``v0.1''. To do this use Git's tag command:
+SHA-1 hashes are a bit cumbersome to use as references. What was the hash number for that one commit? To solve this problem you can add bookmarks, known as ``tags'',\index{Git!tag}\index{Git command!tag} to particularly important commits. Imagine we just committed our first full draft of a project. We want to tag it as version 0.1, i.e. ``v0.1''. To do this use Git's tag command:
 
 <<Ch5TagMake, eval=FALSE, engine='sh'>>=
 # Tag most recent commit v0.1
@@ -296,7 +297,7 @@ git checkout v0.1 -b v0.1Branch
 
 \paragraph{Branches}
 
-Sometimes you may want to work on an alternative version of your project and then merge changes made to this alternative version back into the main one. For example the main version could be the most stable current copy of your research, while the alternative version could be a place where you test out new ideas. Git allows you to create a new \emph{branch}\index{Git!branch}\index{Git command!branch} (alternative version of the repo) which can be merged back into the \emph{master} (main) branch. To see what branch you are using type:
+Sometimes you may want to work on an alternative version of your project and then merge changes made to this version back into the main one. For example the main version could be the most stable current copy of your research, while the alternative version could be a place where you test out new ideas. Git allows you to create a new \emph{branch}\index{Git!branch}\index{Git command!branch} (alternative version of the repo) which can be merged back into the \emph{master} (main) branch. To see what branch you are using type:
 
 <<Ch5CheckBranch, engine='sh'>>=
 # Show git branch
@@ -310,7 +311,7 @@ To create a new branch use, simply enough, the \texttt{branch} command. For exam
 git branch Test
 @
 
-\noindent You can now use \texttt{checkout} to switch to this branch.\footnote{To delete the \emph{Test} branch use the \texttt{-d} argument, i.e. \texttt{git branch -d Test}.} Here is a short cut for creating and checking out the branch:
+\noindent You can now use \texttt{checkout} to switch to this branch.\footnote{To delete the \emph{Test} branch use the \texttt{-d} argument, i.e. \texttt{git branch -d Test}.} Here is a shortcut for creating and checking out the branch:
 
 <<Ch5NewBranchShortCut, eval=FALSE, engine='sh'>>=
 # Create and checkout Test branch
@@ -355,9 +356,9 @@ figure/*
 *.tex
 @
 
-\noindent The asterisk (\verb|*|) is a ``wildcard''\index{wildcard} and stands for any character. In other words, it tells Git to look for files with any name that end with a specified file extension. This is faster than writing out the full name of every file you want to ignore individually. It also makes it easy to copy the rules into new repos. You'll notice the \texttt{cache/*} and \texttt{figure/*} rules. These tell Git to ignore all of the files in the \emph{cache} and \emph{figure} directories. These files are the product of caching code chunks and creating figures with \emph{knitr}, respectively.
+\noindent The asterisk (\verb|*|) is a ``wildcard''\index{wildcard} and stands for any character. In other words, it tells Git to look for files with any name that end with a specified file extension. This is faster than writing out the full name of every file you want to ignore individually. It also makes it easy to copy the rules into new repos. You'll notice the \texttt{cache/*} and \texttt{figure/*} rules. These tell Git to ignore all of the files in the \emph{cache} and \emph{figure} subdirectories. These files are the product of caching code chunks and creating figures with \emph{knitr}, respectively.
 
-Git will not ignore files that have already been committed to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{Git command!rm} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking so that it could be ignored type:
+Git will not ignore files that have already been committed to a repository. To ignore these files you will first need to remove them from Git with Git's \texttt{rm} (remove) command.\index{Git command!rm} If you wanted to remove a file called \emph{ExampleProject.tex} from version tracking type:
 
 <<Ch5Gitrm, eval=FALSE, engine='sh'>>=
 # Remove ExampleProject.tex from Git version tracking
@@ -372,12 +373,12 @@ For more information on \emph{.gitignore} files see GitHub's reference page on t
 \subsection{Remote storage on GitHub}
 So far we've been using repos stored locally. Let's now look at how to also store a repository remotely on GitHub. You can either create a new repository on GitHub and download (\texttt{clone}) it to your computer or upload (\texttt{push}) an existing repository to a new GitHub remote repo. In both cases you need to create a new repository on GitHub.
 
-To create a new repository on GitHub go to your main GitHub account webpage and click the \texttt{New repository} button. On the next page that appears give the repository a name, brief description, and choose whether to make it public or private. If you want to store an existing repository on GitHub give it the same name as the one that already exists on your computer. If you already have files in your local repository do not check the boxes for creating \emph{README.md} and \emph{.gitignore} files. When you then click \texttt{Create Repository} you will be directed to the repository's GitHub webpage.\footnote{Before the repo has any files in it, the webpage will include instructions for how to set it up on your computer.}\label{NewGitHubRepo}
+To create a new repository on GitHub go to your main GitHub account webpage and click the \texttt{New repository} button. On the next page that appears give the repository a name, brief description, and choose whether to make it public or private. If you want to store an existing repository on GitHub give it the same name as the one that already exists on your computer. If you already have files in your local repository do not check the boxes for creating \emph{README.md}, \emph{LICENSE}, and \emph{.gitignore} files. When you then click \texttt{Create Repository} you will be directed to the repository's GitHub webpage.\footnote{Before the repo has any files in it, the webpage will include instructions for how to set it up on your computer.}\label{NewGitHubRepo}
 
 
 \paragraph{Clone a new remote repository}
 
-If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{Git!clone} The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Mac}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Imagine that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage you can copy its URL by clicking on the \texttt{copy to clipboard} icon next to the URL on the same line as the \texttt{Clone in \ldots} button.}\label{GitClone}
+If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{Git!clone} The repo's GitHub page contains a button called \texttt{Clone in} \ldots.\footnote{The button will indicate the operating system you are using. For example in Figure \ref{BookRepository} it says \texttt{Clone in Desktop}.} Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Imagine that the URL for a repo called \emph{Example Project} is \texttt{https://github.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage the URL to copy is under \texttt{HTTPS clone URL}.}\label{GitClone}
 
 <<Ch5Clone, eval=FALSE, engine='sh'>>=
 # Change working directory
@@ -433,27 +434,22 @@ git push --tags
 
 \paragraph{Downloading into R}\label{GitDownload}
 
-In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R function!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{Again, it has been shortened with bit.ly.} Let's put the address into an object called \emph{UrlAddress} with \verb|paste0|, as we did in Section \ref{EnablePublicFolder}.
+In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R function!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{Again, it has been shortened with Bitly\index{Bitly} in the example.}
 
 <<Ch5URLAddress, message=TRUE, tidy=FALSE>>=
+# Place shortened url into URLAddress
 UrlAddress <- "http://bit.ly/14aSjxB"
-@
 
-\noindent Now we can simply stick this object into \verb|source_data|:
-
-{\small{
-<<Ch5sourceDataGitHub, message=TRUE, tidy=FALSE>>=
 # Download data
 DispropData <- repmis::source_data(UrlAddress)
 
 # Show variable names
 names(DispropData)
 @
-}}
 
 \noindent \verb|source_data| downloaded the most recent version of the file from the master branch. As we saw in Section \ref{SepHeadExplain}, running \verb|source_data| gives us a line beginning \emph{\texttt{\#\# SHA-1 hash of}} \ldots. \textbf{Note:} this SHA-1 hash\index{SHA-1 hash} is different from the file's Git commit's SHA-1 hash we discussed earlier. The \verb|source_data| SHA-1 hash is specific to the \emph{file}, and has nothing to do with Git. We will look at this hash more in Chapter \ref{DataGather} (Section \ref{SecureData6}).
 
-We can actually use \verb|source_data| to download a particular version of a file--from a particular Git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use a file's raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, copy this page's URL address and use it with \verb|source_data|.
+We can actually use \verb|source_data| to download a particular version of a file--from a particular Git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use a file's raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter5/images5/BrowseCodeIcon.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, copy this page's URL address and use it with \verb|source_data|.
 
 For example, I have an old version of the disproportionality data where the variable names begin with a capital letter. To download it I find this particular version of the file's URL and use it in \verb|source_data|:
 
@@ -475,17 +471,17 @@ names(DispropOld)
 @
 }}
 
-\noindent You can see in this example that the file's URL is similar to the one we saw in the previous example. However, instead of \verb|master| after \verb|Disproportionality_Data| we have this strange series of number and letters: \verb|1a59d360b36ea| \ldots. This is the \emph{commit's} SHA-1 hash.\index{SHA-1 hash}
+\noindent In this example I did not shorten the URL, but instead used the \texttt{paste0}\index{R function!paste0} function to paste it together.\footnote{\texttt{paste0} is the same as \texttt{paste}\index{R function!paste}, but has the argument \texttt{sep = ""} so that white space is not placed between the pasted elements.} You do not have to do this. I did it here so that the URL would fit on the printed page. Notice that the URL is the same as before with one exception: instead of \verb|master| after \verb|Disproportionality_Data| we have this strange series of number and letters: \verb|1a59d360b36ea| \ldots. This is the \emph{commit's} SHA-1 hash.\index{SHA-1 hash}
 
 As we will see in Chapter \ref{StatsModel} (Section \ref{sourceurl}) we can use a very similar process to easily run source code files in R directly downloaded from GitHub with the \verb|source_url| command.
 
 \paragraph{Viewing files}
 
-The GitHub web user interface also allows you, your collaborators (see below) or, if the repo is public, anyone to look at text files with a web browser. Collaborators can actually also create, modify, and commit changes in the web user interface. This can be useful for making small changes, especially from a mobile device without a full installation of Git. Anyone with a GitHub account can suggest changes to files in a public repository on the repo's website. Simply click the \texttt{Edit} button above the file and make edits. If the person making the edits is not a designated collaborator, their edits will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull}\index{Git command!pull} in Git terminology. See the next section for more details.} This can be a useful way for independent researchers to fix errors.
+The GitHub web user interface also allows you, your collaborators (see below) or, if the repo is public, anyone to look at text files from a web browser. Collaborators can actually also create, modify, and commit changes in the web user interface. This can be useful for making small changes, especially from a mobile device without a Git installation. Anyone with a GitHub account can suggest changes to files in a public repository on the repo's website. Simply click the \texttt{Edit} button (\includegraphics[scale=0.5]{Children/Chapter5/images5/EditIcon.png}) above the file and make edits. If the person making the edits is not a designated collaborator, their edits will be sent to the repository's owner for approval.\footnote{This is called a \texttt{pull} request\index{Git command!pull} in Git terminology. See the next section for more details.} This can be a useful way for independent researchers to fix errors.
 
 \subsubsection{Collaboration with GitHub}
 
-Repositories can have official collaborators that can make changes to files in the repo. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. To add a collaborator to a repository you created click on the \texttt{Settings} button on the repository's website (see Figure \ref{BookRepository}). Then click the \texttt{Collaborators} button on the left-hand side of the page. You will be given a box to \texttt{Add a friend}. You type your collaborator's GitHub user name here. If your collaborator doesn't have one, they will have to create a new account. Once you add someone as a collaborator they can clone the repository onto their computer as you did earlier and push changes.
+Repositories can have official collaborators that can make changes to files in the repo. Public repositories can have unlimited collaborators. Anyone with a GitHub account can be a collaborator. To add a collaborator to a repository you created click on the \texttt{Settings} button on the repository's website (see Figure \ref{BookRepository}). Then click the \texttt{Collaborators} button on the left-hand side of the page. You will be given a box to enter your collaborator's GitHub user name. If your collaborator doesn't have a GitHub account, they will have to create a new one. Once you add someone as a collaborator they can clone the repository onto their computer as you did earlier and push changes.
 
 \paragraph{Syncing a repository}
 
@@ -535,7 +531,7 @@ You can Git initialize new RStudio Projects, Git initialize existing projects, a
 
 \paragraph{Git with a new project}\label{NewProjectGit}
 
-To create a new project with Git version control go to \texttt{File} in the RStudio menu bar. Then click \texttt{New Project\ldots}. In the box that appears (see Figure \ref{NewRStudioProject}) select \texttt{New Project}. Enter the Project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository for this project} (see Figure \ref{NewProjectNewDirectory}).
+To create a new project with Git version control go to \texttt{File} in the RStudio menu bar. Then click \texttt{New Project\ldots}. In the box that appears (see Figure \ref{NewRStudioProject}) select \texttt{New Directory} \textrightarrow \texttt{Empty Project}. Enter the Project's name and desired directory. Make sure to check the dialog box for \texttt{Create a git repository} (see Figure \ref{NewProjectNewDirectory}).
 
 \paragraph{Git initialize existing projects}
 
@@ -573,7 +569,7 @@ You can push an existing Project repository stored on your computer to a new rem
 
 The RStudio \emph{Git} tab\index{RStudio!Git tab} allows you to do many of the same things with Git that we covered in the previous section. In the top panel of Figure \ref{GitTab} you will see the \emph{Git} tab for a new RStudio Project called \emph{ExampleProject}. It has two files that have not been added or committed to Git. To add and commit the files to the repository click on the dialog boxes next to the file names. In the bottom panel of Figure \ref{GitTab} you can see that I've created a new R file called \emph{ExampleScript.R} and clicked the dialog box next to it, along with the other files. The yellow question marks in the top panel have now become green A's for ``add''. Clicking \texttt{Commit} opens a new window called \textbf{Review Changes}\index{RStudio!Review Changes window}\index{Git commit!add}\index{Git command!commit} where you can commit the changes. Simply write a commit message in the box called \emph{Commit Message} in the \textbf{Review Changes} window and click \texttt{Commit}. If you add file names to the \emph{.gitignore} files, they will not show up in RStudio's \emph{Git} tab.
 
-If you are using a GitHub repo that is associated with a remote repository on GitHub,\index{GitHub} you can push and pull it with the \texttt{Pull Branches}\index{Git command!pull} and \texttt{Push Branch}\index{Git command!push} buttons in Git menu bar (the blue and green arrows respectively). You can also use the same buttons in the \textbf{Review Changes} window. The \emph{Git} tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow{} Shell \ldots} option to open a new shell with the Project set as the working directory to complete any other Git task you might want to do.
+If you are using a GitHub repo that is associated with a remote repository on GitHub,\index{GitHub} you can push and pull it with the \texttt{Pull Branches}\index{Git command!pull} and \texttt{Push Branch}\index{Git command!push} buttons in Git menu bar (the blue and green arrows respectively). You can use the same buttons in the \textbf{Review Changes} window. The \emph{Git} tab also allows you to change branches, revert to previous commits, add files to \verb|.gitignore| and view your commit history. You can always use the \texttt{More \textrightarrow{} Shell \ldots} option to open a new shell with the Project set as the working directory to complete any other Git task you might want to do.
 
 \index{GitHub|)}\index{Git|)}
 
