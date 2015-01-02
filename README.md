@@ -76,25 +76,25 @@ following R session:
 ## [8] base     
 ## 
 ## other attached packages:
-##  [1] shiny_0.10.2.2      ZeligBayesian_0.1   MCMCpack_1.3-3     
-##  [4] coda_0.16-1         lattice_0.20-29     Zelig_4.2-1        
-##  [7] sandwich_2.3-2      MASS_7.3-35         boot_1.3-13        
-## [10] xtable_1.7-4        WDI_2.4             ROAuth_0.9.5       
+##  [1] ZeligBayesian_0.1   MCMCpack_1.3-3      coda_0.16-1        
+##  [4] lattice_0.20-29     Zelig_4.2-1         sandwich_2.3-2     
+##  [7] MASS_7.3-35         boot_1.3-13         xtable_1.7-4       
+## [10] WDI_2.4             ROAuth_0.9.5        tidyr_0.2.0        
 ## [13] texreg_1.34         survival_2.37-7     stargazer_5.1      
-## [16] rvest_0.1.0.9000    RJSONIO_1.3-0       rmarkdown_0.4.2    
-## [19] reshape2_1.4.1      repmis_0.3.3        RCurl_1.95-4.5     
-## [22] bitops_1.0-6        quantmod_0.4-3      TTR_0.22-0         
-## [25] xts_0.9-7           zoo_1.7-11          packrat_0.4.2-1    
-## [28] openair_1.0         markdown_0.7.4      magrittr_1.5       
-## [31] knitcitations_1.0.5 httr_0.6.0          htmlwidgets_0.3.2  
-## [34] highlight_0.4.4     googleVis_0.5.7     ggplot2_1.0.0      
-## [37] formatR_1.0         extrafont_0.17      dplyr_0.3.0.2      
-## [40] digest_0.6.7        devtools_1.6.1      data.table_1.9.4   
-## [43] countrycode_0.17    brew_1.0-6          animation_2.3      
-## [46] knitr_1.8.4        
+## [16] shiny_0.10.2.2      rvest_0.2.0         RJSONIO_1.3-0      
+## [19] rmarkdown_0.4.2     reshape2_1.4.1      repmis_0.3.3       
+## [22] RCurl_1.95-4.5      bitops_1.0-6        quantmod_0.4-3     
+## [25] TTR_0.22-0          xts_0.9-7           zoo_1.7-11         
+## [28] packrat_0.4.2-1     openair_1.0         markdown_0.7.4     
+## [31] magrittr_1.5        knitcitations_1.0.5 httr_0.6.1         
+## [34] htmlwidgets_0.3.2   highlight_0.4.4     googleVis_0.5.7    
+## [37] ggplot2_1.0.0       formatR_1.0         extrafont_0.17     
+## [40] dplyr_0.3.0.9000    digest_0.6.8        devtools_1.6.1     
+## [43] data.table_1.9.4    countrycode_0.18    brew_1.0-6         
+## [46] animation_2.3       knitr_1.8.4        
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] assertthat_0.1      bibtex_0.3-6        chron_2.3-45       
+##  [1] assertthat_0.1      bibtex_0.4.0        chron_2.3-45       
 ##  [4] cluster_1.15.3      colorspace_1.2-4    DBI_0.3.1          
 ##  [7] evaluate_0.5.5      extrafontdb_1.0     grid_3.1.2         
 ## [10] gtable_0.1.2        highr_0.4           htmltools_0.2.7    
@@ -108,7 +108,7 @@ following R session:
 ## [34] RefManageR_0.8.40   rJava_0.9-6         rjson_0.2.15       
 ## [37] Rttf2pt1_1.3.2      scales_0.2.4        stringr_0.6.2      
 ## [40] tools_3.1.2         twitteR_1.1.7       xlsx_0.5.7         
-## [43] xlsxjars_0.6.1      XML_3.98-1.1        yaml_2.1.13
+## [43] xlsxjars_0.6.1      XML_3.98-1.1
 ```
 
 ---
