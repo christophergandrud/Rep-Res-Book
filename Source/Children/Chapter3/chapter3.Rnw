@@ -1,7 +1,7 @@
 % Chapter Chapter 3 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 December 2014
+% Updated: 3 January 2015
 
 <<set-parent3, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -375,7 +375,7 @@ Finally, if you want to make sure R uses a command from a specific package you c
 ggplot2::qplot(. . .)
 @
 
-\noindent We can use the double-colon to simplify our code as we don't need to include \verb|library(. . .)|. Using the double-colon in this way ensures that R will use the command from the particular package you want and makes it clear to a source code reader what package a command comes from.
+\noindent We can use the double-colon to simplify our code as we don't need to include \verb|library(. . .)|. Using the double-colon in this way ensures that R will use the command from the particular package you want and makes it clear to a source code reader what package a command comes from. Note that it does not load all of the functions in the package, just the one you ask for.
 
 %%%%%%%%%%%%%%% Using RStudio
 \section{Using RStudio}
@@ -394,7 +394,7 @@ When you first open RStudio\index{RStudio} you should see a default window that 
     \end{center}
 \end{figure}
 
-In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/Help/Viewer}} panes. We will discuss the \emph{Files}\index{RStudio!Files pane} pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The \emph{Plots} pane\index{RStudio!Plots pane} is where figures you create in R appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The \emph{Packages} pane\index{RStudio!Packages pane} shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their help files (just click on the package name), update the packages, and even install new packages. The \emph{Help} pane\index{RStudio!Help pane} shows you help files. You can search for help files and search within help files using this pane. Finally, the \emph{Viewer} pane\index{RStudio!Viewer pane} allows you to view local web content like JavaScript\index{JavaScript} graphics and Shiny\index{Shiny} web apps.
+In the lower right-hand corner you will see the {\emph{Files/Plots/Packages/ Help/Viewer}} panes. We will discuss the \emph{Files}\index{RStudio!Files pane} pane in more detail in Chapter \ref{DirectoriesChapter}. Basically, it allows you to see and organize your files. The \emph{Plots} pane\index{RStudio!Plots pane} is where figures you create in R appear. This pane allows you to see all of the figures you have created in a session using the right and left arrow icons. It also lets you save the figures in a variety of formats. The \emph{Packages} pane\index{RStudio!Packages pane} shows the packages you have installed, allows you to load individual packages by clicking on the dialog box next to them, access their help files (just click on the package name), update the packages, and even install new packages. The \emph{Help} pane\index{RStudio!Help pane} shows you help files. You can search for help files and search within help files using this pane. Finally, the \emph{Viewer} pane\index{RStudio!Viewer pane} allows you to view local web content like JavaScript\index{JavaScript} graphics and Shiny\index{Shiny} web apps.
 
 \paragraph{The {\normalfont{Source}} pane}
 
@@ -444,7 +444,7 @@ To get started with {\emph{knitr}}\index{knitr} and \emph{rmarkdown} in R or RSt
 Let's take a quick, abstract look at what the \emph{knitr} package does. As I've mentioned, \emph{knitr} ties together your presentation of results with the creation of those results. The \emph{knitr} process takes three steps (see Figure \ref{KnitProcess}). First we create a knittable markup document. This contains both the analysis code and the presentation document's markup--the text and rules for how to format the text. \emph{knitr} then \emph{knits}: i.e. it runs the analysis code and converts the output into the markup language you are using according to the rules that you tell it to. It inserts the marked-up results into a document that only contains markup for the presentation document. You \emph{compile}\index{compile markup} this markup document as you would if you hadn't used \emph{knitr} into your final PDF document or webpage presenting your results.
 
 \begin{figure}
-    \caption{The {\emph{knitr}} Process}
+    \caption{The {\emph{knitr}/\emph{rmarkdown}} Process}
     \label{KnitProcess}
         \begin{center}
             \input{Children/Chapter3/images3/KnitrProcess.tex}
@@ -459,7 +459,7 @@ The \emph{rmarkdown} package implements a variation on this process that utilize
 
 \index{rmarkdown!header |(}
 
-The header is written in YAML\index{YAML}.\footnote{YAML is a recursive acronym that means ``YAML Ain't Markup Language''.} The YAML header can include information such as the document's title, author, whether or not to include a table of contents, and a link to a BibTeX bibliography file. YAML is a straightforward data format that organizes information in a simple hierarchy. The header begins and ends with three dashes (\texttt{---}). Information keys--like ``title'' and ``author''--are separated from their associated ``values'' by a colon (\texttt{:}). Sub-values of a hierarchy are denoted by being placed on a new line and indented.\footnote{It doesn't matter how many spaces you use to indent, as long as all indentations have the same number or spaces.} Here is a basic \emph{rmarkdown} header that indicates the document's title, author, date, and that it will be turned into a PDF document (via LaTeX).
+The header is written in YAML\index{YAML}.\footnote{YAML is a recursive acronym that means ``YAML Ain't Markup Language''.} The YAML header can include information such as the document's title, author, whether or not to include a table of contents, and a link to a BibTeX bibliography file. YAML is a straightforward data format that organizes information in a simple hierarchy. The header begins and ends with three dashes (\verb|---|). Information keys--like ``title'' and ``author''--are separated from their associated ``values'' by a colon (\texttt{:}). Sub-values of a hierarchy are denoted by being placed on a new line and indented.\footnote{It doesn't matter how many spaces you use to indent, as long as all indentations have the same number or spaces.} Here is a basic \emph{rmarkdown} header that indicates the document's title, author, date, and that it will be turned into a PDF document (via LaTeX).
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -482,7 +482,7 @@ RStudio can automatically create a basic header for the type of output document 
 
 \index{rmarkdown!header |)}
 
-In addition to the header, \emph{rmarkdown} differs from \emph{knitr} in that you can include Pandoc syntax. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}. Nonetheless, \textbf{remember} that apart from the header and ability to include Pandoc syntax, at the simplest level \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. Importantly, they have the same code chunk syntax we will see shortly.
+In addition to the header, \emph{rmarkdown} differs from \emph{knitr} in that you can include Pandoc syntax in your R Markdown document. This can be useful for bibliographies as we will discuss in Chapter \ref{MarkdownChapter}. Nonetheless, \textbf{remember} that apart from the header and ability to include Pandoc syntax, at the simplest level \emph{rmarkdown} documents are \emph{knitr} documents written in R Markdown syntax. Importantly, they have the same code chunk syntax we will see shortly.
 
 \begin{figure}
     \caption{The New R Markdown Options Window}

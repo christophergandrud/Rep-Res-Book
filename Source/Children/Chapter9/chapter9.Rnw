@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 December 2014
+% Updated: 3 January 2015
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -445,7 +445,24 @@ M5 <- lm(Examination ~ Education + Agriculture + Catholic +
 
 \noindent We can now include these model objects in one LaTeX table with \emph{texreg}. Remember to include \texttt{results='asis'} in the code chunk head.
 
-<<Ch9BasictexregTable1, echo=TRUE, results='asis', background='#FFFFFF'>>=
+<<Ch9BasictexregTable1Display, echo=TRUE, eval=FALSE>>=
+# Load texreg package
+library(texreg)
+
+# Create custom coefficient names
+cust_coef <- c('(Intercept)', 'Education', 'Agriculture',
+                'Catholic', 'Infant Mortality',
+                'Fertility')
+
+# Create nested regression model table
+texreg(list(M1, M2, M3, M4, M5),
+    caption = 'Nested Estimates Table with \\emph{texreg}',
+    caption.above = TRUE,
+    label = 'Basic_texregTable',
+    custom.coef.names = cust_coef)
+@
+
+<<Ch9BasictexregTable1Create, echo=FALSE, results='asis'>>=
 # Load texreg package
 library(texreg)
 

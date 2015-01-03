@@ -1,7 +1,7 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 December 2014
+% Updated: 3 January 2015
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -11,7 +11,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 When you have your data cleaned and organized you will begin to examine it with statistical analyses. In this book we don't look at how to do statistical analysis in R (a subject that would and does take up many books). Instead we focus on how to make your analyses really reproducible. To do this you dynamically connect your data gathering and analysis source code to your presentation documents. When you dynamically connect your data gathering makefiles and analysis source code to your markup document you will be able to completely rerun your data gathering and analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analyses source code files.
 
-You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}/\emph{rmarkdown}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr}/\emph{rmarkdown} syntax. For the rest of the chapter I'll simply refer to it as \emph{knitr} syntax, but it applies to \emph{rmarkdown} as well.  In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
+You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}/\emph{rmarkdown}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr}/\emph{rmarkdown} syntax. For the rest of the chapter I'll simply refer to it as ``\emph{knitr} syntax'', but it applies to \emph{rmarkdown} as well.  In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
 
 The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
@@ -58,7 +58,7 @@ Cached chunks are only rerun when their code changes. Sometimes one chunk will d
 Sometimes to ensure reproducibility it may be useful to rerun a chunk when some other condition changes, such as when a new version of R is installed or a dependent file changes. You can feed a list of conditions to \texttt{cache.extra} to do this. For instance:
 
 <<Ch8CacheExtra, eval=FALSE, echo=TRUE>>=
-\texttt{cache.extra=list(file.info(Data.csv)$mtime, R.version}
+cache.extra=list(file.info(Data.csv)$mtime, R.version
 @
 
 \noindent Here we set two conditions under which the chunk will be rerun. The first specifies that the chunk should be rerun whenever the \emph{Data.csv} file is modified. The \texttt{file.info} function extracts information about the file and \texttt{mtime} gives the last time that the file was modified. If this differs from when the chunk was last run, then it will be run again. This is very useful for keeping your cached chunks and the files they rely on in sync.
