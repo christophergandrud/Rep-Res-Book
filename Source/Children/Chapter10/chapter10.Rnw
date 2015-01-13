@@ -1,7 +1,7 @@
 % Chapter Chapter 10 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 January 2015
+% Updated: 13 January 2015
 
 <<set-parent10, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -286,19 +286,18 @@ We want to create a plot with \textbf{Quarter} as the $x$ axis, inflation as the
 \end{tabular}
 \vspace{0.5cm}
 
-\noindent We can use the \texttt{melt} command from \emph{reshape2}\index{R function!melt}\index{reshape2} that we first saw in Chapter \ref{DataClean} (Section \ref{MeltReshape}) to reshape the data. The variable identifying the observations in this case is \texttt{Quarter}. The \textbf{ActualInflation} and \textbf{EstimatedInflation} variables are our ``measure'' variables in that they measure what we are interested in graphing: inflation. So let's melt the data:
+\noindent We can use the \texttt{gather} command from \emph{tidyr}\index{R function!gather}\index{tidyr} that we first saw in Chapter \ref{DataClean} (Section \ref{GatherReshape}) to reshape the data. The variable identifying the observations in this case is \texttt{Quarter}. The \textbf{ActualInflation} and \textbf{EstimatedInflation} variables (in columns two and threee) are the variables that we want to gather. So let's gather the data:
 
-<<Ch10MeltInflation, tidy=FALSE>>=
-# Load reshape2
-library(reshape2)
+<<Ch10GatherInflation, tidy=FALSE>>=
+# Load tidyr
+library(tidyr)
 
-# Melt InflationData
-MoltenInflation <- melt(InflationData, id.vars = "Quarter",
-                        measure.vars = c("ActualInflation",
-                                         "EstimatedInflation"))
+# Gather InflationData
+GatheredInflation <- gather(InflationData, variable,
+                            value, 2:3)
 
-# Show MoltenInflation variables
-names(MoltenInflation)
+# Show GatheredInflation variables
+head(GatheredInflation)
 @
 
 \noindent Now we have a data set we can use to create our line graph with \emph{ggplot2}.
@@ -311,7 +310,7 @@ Let's cover a few basic \emph{ggplot2}\index{ggplot2} ideas that will help us un
 library(ggplot2)
 
 # Create plot
-LinePlot <- ggplot(data = MoltenInflation, aes(x = Quarter,
+LinePlot <- ggplot(data = GatheredInflation, aes(x = Quarter,
                                                y = value,
                                                color = variable,
                                                linetype = variable)) +
@@ -401,7 +400,7 @@ NBSum2DF
 
 First we need to do a little tidying up.\label{RowNamesTidy}
 
-<<Ch10MeltBayes, tidy=FALSE>>=
+<<Ch10SubsetBayes, tidy=FALSE>>=
 # Convert row.names to normal variable
 NBSum2DF$Variable <- row.names(NBSum2DF)
 
