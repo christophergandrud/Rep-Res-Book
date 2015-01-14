@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 13 January 2015
+% Updated: 14 January 2015
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -9,7 +9,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 \chapter{Preparing Data for Analysis}\label{DataClean}
 
-Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean it up so that it can be merged it into a single data file. In this chapter we will learn how to create the data gather and merging files we saw in the last chapter. The chapter also includes information on recoding and transforming variables. This is important for merging data and will be useful information in later chapters as well. If you are very familiar with data transformations in R you may want to skip onto the next chapter.
+Once we have gathered the raw data that we want to include in our statistical analyses we generally need to clean it up so that it can be merged into a single data file. In this chapter we will learn how to create the data gather and merging files we saw in the last chapter. The chapter also includes information on recoding and transforming variables. This is important for merging data and will be useful information in later chapters as well. If you are very familiar with data transformations in R you may want to skip onto the next chapter.
 
 \section{Cleaning Data for Merging}
 
@@ -72,7 +72,7 @@ Obviously it is usually a good idea if your data sets are kept in data frame typ
     \end{tabular}
 \end{table}
 
-\noindent In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long-format. Long formatted TSCS data is simply a data frame where rows identify observations of a particular subject at particular points in time (see Table \ref{ExampleTSCSLong}). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
+\noindent In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long-format. Long formatted TSCS data is simply a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \ref{ExampleTSCSLong}). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
 
 
  \begin{table}[h!]
@@ -94,7 +94,7 @@ Obviously it is usually a good idea if your data sets are kept in data frame typ
     \end{tabular}
 \end{table}
 
-If one of our raw data sets is not in this format then we will need to reshape or, using Wickham's \citeyearpar{Wickham2014article}, ``tidy'' it.\index{reshape data}\index{tidy data} Some data sets are in ``wide'' format,\index{wide formatted data} where one of the columns in long formatted data is widened to cover multiple columns. This is confusing to visualize without an example. Table \ref{ExampleWide} shows how Table \ref{ExampleTSCSLong} looks when we widen the time variable.
+If one of our raw data sets is not in this format then we will need to reshape or, using Wickham's \citeyearpar{Wickham2014article} terminology, ``tidy'' it.\index{reshape data}\index{tidy data} Some data sets are in ``wide'' format,\index{wide formatted data} where one of the columns in what would be long formatted data is widened to cover multiple columns. This is confusing to visualize without an example. Table \ref{ExampleWide} shows how Table \ref{ExampleTSCSLong} looks when we widen the time variable.
 
 \begin{table}[h!]
     \caption{Wide Formatted Data Example}
@@ -111,9 +111,9 @@ If one of our raw data sets is not in this format then we will need to reshape o
     \end{tabular}
 \end{table}
 
-Tidying data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R function!reshape} command, both are loaded in R by default. \emph{tidyr} is a very helpful package for reshaping data \citep{R-tidyr}.\index{tidyr} This provides more general tools for reshaping data and is worth investing some time to learn well.\footnote{The \emph{tidyr}\index{tidyr} package \citep{R-tidyr} has many of the same capabilities as \emph{tidyr} though a different syntax.} In this section we will cover some of \emph{tidyr}'s basic commands and use them to reshape a TSCS data frame from wide to long format. We will also encounter this package again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
+Tidying data is often the cause of much confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose command (\textbf{t})\footnote{See this example by Rob Kabacoff: \url{http://www.statmethods.net/management/reshape.html}. Note also that because the matrix transpose function is denoted with \texttt{t}, you should not give any object the name \emph{t}.}\index{matrix transpose} and the \texttt{reshape}\index{R function!reshape} command, both are loaded in R by default. \emph{tidyr} \citep{R-tidyr} is a very helpful package for reshaping data.\index{tidyr} This provides more general tools for reshaping data and is worth investing some time to learn well. In this section we will look at \emph{tidyr}'s \texttt{gather} function and use it to reshape a TSCS data frame from wide to long format. We will also encounter this function again in Chapter \ref{FiguresChapter} when we want to transform data so that it can be graphed.
 
-Let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{SpreadFert}. It looks like this:\footnote{See the Chapter's Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data from long to wide format.}
+For illustration let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide rather than long format and is in a data frame objected called \emph{SpreadFert}. It looks like this:\footnote{See the Chapter's Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data from long to wide format.}
 
 <<Ch7LoadFertConsumpData, include=FALSE>>=
 
@@ -132,9 +132,9 @@ SpreadFert <- arrange(SpreadFert, country)
 head(SpreadFert[, 1:5])
 @
 
-\noindent We can use \emph{tidyr}'s \texttt{gather}\index{gather}\index{R function!gather}\label{GatherReshape} command to reshape this data from wide to long format. The term ``gather'' is intended to evoke an image of the columns being gathered from wide to long format.\footnote{The opposite \texttt{spread} function\index{R function!spread} is supposed to evoke an image of spreading out the data from long to wide format. See Section \ref{WideAppendix} for an example using the \texttt{spread} command.}
+\noindent We can use the \texttt{gather}\index{gather}\index{R function!gather}\label{GatherReshape} command to reshape this data from wide to long format. The term ``gather'' is intended to evoke an image of the many wide columns being gathered together.\footnote{The opposite \texttt{spread} function\index{R function!spread} is supposed to evoke an image of spreading out the data from long to wide format. See Chapter Appendix for an example using the \texttt{spread} command.}
 
-Let's think about how we want to tidy the data. We want to create two new columns from the many columns that are now labeled by year. Let's call the new columns \textbf{Year} and \textbf{Fert}. The year column will clearly contain the year of the observation and the second will contain the fertilizer consumption for that observation. \textbf{Year} will be what \texttt{gather} calls the ``key'' and \textbf{Fert} is the ``value''. In our \emph{SpreadFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be gathered. These variables identify the data set's subjects. So we can tell \texttt{gather} that we only want columns three through nine gathered. The third column is the first one we want to gather and the nineth--the final column in the data set--is the last.
+Let's think about how we want to tidy the data. We want to create two new columns from the many columns that are now labeled by year. Let's call the new columns \textbf{Year} and \textbf{Fert}. The \textbf{Year} column will clearly contain the year of each observation and \textbf{Fert} will contain the fertilizer consumption. \textbf{Year} will be what \texttt{gather} calls the ``key'' and \textbf{Fert} is the ``value''. In our \emph{SpreadFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be gathered. These variables identify the data set's subjects. So we can tell \texttt{gather} that we only want columns three through nine gathered. The third column is the first one we want to gather and the nineth--the final column in the data set--is the last.
 
 <<Ch7GatherFert, tidy=FALSE>>=
 # Gather SpreadFert
@@ -146,7 +146,7 @@ head(GatheredFert)
 
 \subsection{Renaming variables}\index{R!renaming variables}
 
-Frequently, in the data clean up process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{GatheredFert} data frame has two variables--\textbf{Year} and \textbf{Fert}. Imagine, for the sake of demonstration, that we want to rename them \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R function!rename}\index{rename variable} command in the \emph{dplyr} package \citep{R-dplyr}. To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
+Frequently, in the data cleaning process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{GatheredFert} data frame has two variables--\textbf{Year} and \textbf{Fert}. Imagine, for the sake of demonstration, that we want to rename them \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R function!rename}\index{rename variable} command in the \emph{dplyr} package \citep{R-dplyr}. To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} command type:
 
 <<Ch7Rename, tidy=FALSE>>=
 GatheredFert <- rename(GatheredFert,
@@ -475,7 +475,7 @@ After merging data frames it is always a good idea to look at the result and mak
 
 \paragraph{Big data}\index{big data}
 
-Before discussing post-merge clean up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation function covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use the \emph{data.table} package \citep{R-data.table}. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{dplyr} \citep{R-dplyr}\index{dplyr}.\footnote{See the \emph{dplyr} vignette on using the package with SQL databases at \url{http://cran.r-project.org/web/packages/dplyr/vignettes/databases.html}.}
+Before discussing post-merge clean up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation function covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use either the \emph{dplyr} or \emph{data.table} packages \citep{R-data.table}. They have many capabilities for working efficiently with large data sets. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{dplyr}\index{dplyr}.\footnote{See the \emph{dplyr} vignette on using the package with SQL databases at \url{http://cran.r-project.org/web/packages/dplyr/vignettes/databases.html}.}
 
 \subsection{Duplicate values}\index{R!duplicate values|(}
 
