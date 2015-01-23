@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 31 December 2014
+% Updated: 23 January 2015
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -36,10 +36,10 @@ Use the \texttt{write.table} command\index{R function!write.table} to save data 
 
 <<Ch5WriteTable, eval=FALSE, tidy=FALSE>>=
 write.table(Data, "/ExampleProject/Data/DataFiles/MainData.csv",
-                 sep = ",")
+                 sep = ",", row.names = FALSE)
 @
 
-\noindent The \texttt{sep = ","} argument specifies that we want to use commas to separate values into columns. For CSV files you can use a modified version of this command called \texttt{write.csv}\index{R function!write.csv}. This command simply makes it so that you don't have to write \texttt{sep = ","}.\footnote{\texttt{write.csv} is a `wrapper'\index{wrapper} for \emph{write.table}.}
+\noindent \texttt{row.names = FALSE}\index{R!row.names} prevents R from including the row names in the output file.\footnote{Frequently the row names are just the row numbers which may have no substantive meaning.} The \texttt{sep = ","} argument specifies that we want to use commas to separate values into columns. For CSV files you can use a modified version of this command called \texttt{write.csv}\index{R function!write.csv}. This command simply makes it so that you don't have to write \texttt{sep = ","}.\footnote{\texttt{write.csv} is a `wrapper'\index{wrapper} for \emph{write.table}.}
 
 If you want to save your data with values separated by tabs, rather than commas, simply set the argument \verb|sep = "\t"| and set the file extension to \texttt{.tsv}.\label{TSVEscape}
 
@@ -88,7 +88,7 @@ FinRegulatorData <- source_data(FinURL,
 names(FinRegulatorData)
 @
 
-\noindent Let's go through this code.\label{SepHeadExplain} We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's values are separated by commas. The \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that \verb|sep = ","| and \verb|header = TRUE| are \verb|source_data|'s default values. Because of this, we don't actually need to set them explicitly for CSV files. I've only done so for illustration.
+\noindent Let's go through this code.\label{SepHeadExplain} We already saw in our discussion of \texttt{write.table} how the \texttt{sep = ","} argument specifies that the data file's values are separated by commas. The \texttt{header = TRUE} argument tells R that the first row of the file contains the variable names. Note that from version 0.4 \emph{repmis} automatically guesses how the columns are separated and whether or not to use the first row as the header. Because of this, we usually don't need to set the \texttt{sep} and \texttt{header} arguments explicitly. I've only done so in this example for illustration.
 
 You're probably also wondering about the line that begins \emph{\texttt{\#\# SHA-1 hash of}} \ldots in the output. The long string of numbers and letters at the end of this line is basically a unique ID that \verb|source_data| assigns to the file. It is called an SHA-1 hash. We'll see SHA-1\index{SHA-1 hash} hashes more in the next section on GitHub (Section \ref{GitHubMain}) and in Chapter \ref{DataGather} (Section \ref{SecureData6}). To give you a preview: it allows us to see if the file that we downloaded is the file we thought we downloaded.
 
@@ -451,10 +451,10 @@ names(DispropData)
 
 We can actually use \verb|source_data| to download a particular version of a file--from a particular Git commit--directly into R. This makes reproducing a specific result much easier. To do this you just need to use a file's raw URL from a particular commit. To find a file's particular commit raw URL first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter5/images5/BrowseCodeIcon.png}) next to the version of the file that you want to use. Click on the \texttt{Raw} button to be taken to the text-only version of the file. Finally, copy this page's URL address and use it with \verb|source_data|.
 
-For example, I have an old version of the disproportionality data where the variable names begin with a capital letter. To download it I find this particular version of the file's URL and use it in \verb|source_data|:
+For example, I have an old version of the disproportionality data. To download it I find this particular version of the file's URL and use it in \verb|source_data|:
 
 {\small{
-<<Ch5sourceDataOld, tidy=FALSE>>=
+<<Ch5sourceDataOld, tidy=FALSE, eval=FALSE>>=
 # Create object containing the file's URL
 OldUrlAddress <- paste0("https://raw.githubusercontent.com/",
                     "christophergandrud/",
@@ -465,9 +465,6 @@ OldUrlAddress <- paste0("https://raw.githubusercontent.com/",
 
 # Download old disproportionality data
 DispropOld <- repmis::source_data(OldUrlAddress)
-
-# Show variable names
-names(DispropOld)
 @
 }}
 
@@ -551,7 +548,7 @@ You can push an existing Project repository stored on your computer to a new rem
     \begin{center}
 
     \begin{subfigure}
-        \caption{New {\emph{ExampleProject}} \emph{Git} Tab}
+        \caption{New \emph{ExampleProject} \emph{Git} Tab}
         \label{fig:NewGitTab}
             \includegraphics[scale=0.6]{Children/Chapter5/images5/GitTab.png}
     \end{subfigure}

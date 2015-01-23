@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 7 January 2015
+% Updated: 23 January 2015
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -286,11 +286,11 @@ For example, let's find the SHA-1 hash for the disproportionality data set we do
 DispropData <- repmis::source_data(UrlAddress)
 @
 
-\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{dc8110d6dff32f}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
+\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{6bd88d635efba1}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
 
 <<Ch6SHA1compare, tidy=FALSE, size='footnotesize'>>=
 DispropData <- repmis::source_data(OldUrlAddress,
-        sha1 = "dc8110d6dff32f682bd2f2fdbacb89e37b94f95d")
+        sha1 = "6bd88d635efba105559fb0a1acf03a1aee99e4af")
 @
 
 \noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
