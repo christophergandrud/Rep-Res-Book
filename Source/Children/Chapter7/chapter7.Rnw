@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 January 2015
+% Updated: 20 March 2015
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -451,7 +451,7 @@ MergedData1 <- merge(x = MergedData1,
 names(MergedData1)
 @
 
-\noindent Let's go through this code. The \texttt{x} and \texttt{y} arguments simply specify which data frames we want to merge. The \texttt{by} argument specifies what variable in the two frames identify the observations so that we can match them. In this example we are merging by countries' ISO country two letter codes.\footnote{Please see this chapter's Appendix for details on how I created ISO country two letter code variables in the \emph{DispropData} and \emph{FinRegulatorData} data frames.} We set the argument \texttt{all = TRUE} so that we keep all of the observations from both of the data frames. If the argument is set to \texttt{FALSE} only observations that are common to both data frames will be included in the merged data frame. The others will not be included.
+\noindent Let's go through this code. The \texttt{x} and \texttt{y} arguments simply specify which data frames we want to merge. The \texttt{by} argument specifies what variable in the two frames identify the observations so that we can match them. In this example we are merging by countries' ISO country two letter codes.\footnote{Please see this chapter's Appendix for details on how I created an ISO country two letter code variable in the \emph{FinRegulatorData} data frame.} We set the argument \texttt{all = TRUE} so that we keep all of the observations from both of the data frames. If the argument is set to \texttt{FALSE} only observations that are common to both data frames will be included in the merged data frame. The others will not be included.
 
 You might have noticed that this isn't actually the merge that we want to accomplish with these data frames. Remember that observations are not simply identified in this time-series cross-section data by one country name or other country code variable. Instead they are identified by both country and year variables. To merge data frames based on the overlap of two variables (e.g. match Afghanistan-2004 in one data frame with Afghanistan-2004 in the other) we need to add the \texttt{union}\index{R!command} command to \texttt{merge}'s \texttt{by} argument. Here is a full example:\footnote{You can download a modified version of this example as part of the makefile exercise from Chapter \ref{DataGather}: \url{http://bit.ly/YnMKBG}.}
 
@@ -565,11 +565,6 @@ library(countrycode)
 
 # FinRegulatorData
 FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country,
-                                    origin = "country.name",
-                                    destination = "iso2c")
-
-# DispropData
-DispropData$iso2c <- countrycode(DispropData$country,
                                     origin = "country.name",
                                     destination = "iso2c")
 @

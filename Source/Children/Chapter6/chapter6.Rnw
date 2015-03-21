@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 23 January 2015
+% Updated: 20 March 2015
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -286,11 +286,11 @@ For example, let's find the SHA-1 hash for the disproportionality data set we do
 DispropData <- repmis::source_data(UrlAddress)
 @
 
-\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{6bd88d635efba1}} \ldots. Let's see what happens when we try to download a slightly different version of the same file\footnote{The only difference is that the variable names begin with capital, rather than lowercase letters.} while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
+\noindent You can see that the file's SHA-1 hash begins \emph{\texttt{20a0b022bbcf}} \ldots. Let's see what happens when we try to download an older version of the same file while placing this SHA-1 hash in \verb|source_url|'s \verb|sha1| argument. The URL of the alternative version of the file is in the object \emph{OldUrlAddress}:\footnote{See Section \ref{GitDownload} for the full URL.}
 
 <<Ch6SHA1compare, tidy=FALSE, size='footnotesize'>>=
 DispropData <- repmis::source_data(OldUrlAddress,
-        sha1 = "6bd88d635efba105559fb0a1acf03a1aee99e4af")
+        sha1 = "20a0b022bbcf947917878680df85f7b4dcaaf44a")
 @
 
 \noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
@@ -307,8 +307,7 @@ You can see that the last part of the URL (\texttt{fin\_research\_note.csv}) is 
 # Download data from a Dropbox non-Public folder
 FinDataFull <- repmis::source_DropboxData("fin_research_note.csv",
                                   "exh4iobbm2p5p1v",
-                                  sep = ",",
-                                  header = TRUE)
+                                  sep = ",", header = TRUE)
 @
 
 \paragraph{Loading data using {\normalfont{RCurl}}}
@@ -328,10 +327,9 @@ DataUrl <- RCurl::getURL(UrlAddress)
 
 # Convert Data into a data frame
 DispropData <- read.table(textConnection(DataUrl),
-                                     sep = ",",
-                                     header = TRUE)
+                          sep = ",", header = TRUE)
 
-# Show variables in data
+# Show variables in the data
 names(DispropData)
 @
 

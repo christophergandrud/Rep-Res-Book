@@ -1,7 +1,7 @@
 % Chapter Chapter 5 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 27 January 2015
+% Updated: 20 March 2015
 
 <<set-parent5, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -434,7 +434,7 @@ git push --tags
 
 \paragraph{Downloading into R}\label{GitDownload}
 
-In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R function!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{Again, it has been shortened with Bitly\index{Bitly} in the example.}
+In general the process of downloading data directly into R is similar to what we saw earlier for loading data from Dropbox Public folders. We can simply use the \verb|source_data| command.\index{R function!source\_data} First we need to find our plain-text data file's \emph{raw} URL. To do this go to your repository's GitHub site, navigate to the file you want to load and click the \texttt{Raw} button on the right just above the file preview.\label{RawGitHub} I have data in comma-separated values format stored in a GitHub\index{GitHub} repository.\footnote{For full information about the disproportionality data set please see \url{http://christophergandrud.github.com/Disproportionality_Data/}.} The URL for the raw (plain-text) version of the data is \url{https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv}.\footnote{It has been shortened with Bitly\index{Bitly} in the example.}
 
 <<Ch5URLAddress, message=TRUE, tidy=FALSE>>=
 # Place shortened url into URLAddress
@@ -454,7 +454,7 @@ We can actually use \verb|source_data| to download a particular version of a fil
 For example, I have an old version of the disproportionality data. To download it I find this particular version of the file's URL and use it in \verb|source_data|:
 
 {\small{
-<<Ch5sourceDataOld, tidy=FALSE, eval=FALSE>>=
+<<Ch5sourceDataOld, tidy=FALSE>>=
 # Create object containing the file's URL
 OldUrlAddress <- paste0("https://raw.githubusercontent.com/",
                     "christophergandrud/",
