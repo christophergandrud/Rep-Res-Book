@@ -3,7 +3,7 @@
 # With LaTeX
 # Christopher Gandrud
 # Updated 30 July 2012
-# Helpful information found in "The Linux Command Line: A Complete Introduction" (Shotts 2012)
+# Helpful information found in "The Linux Command-line: A Complete Introduction" (Shotts 2012)
 ##########
 
 #!/bin/bash
