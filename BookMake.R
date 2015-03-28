@@ -29,7 +29,7 @@ knitr::knit2pdf(input = "Rep-Res-Parent.Rnw")
 
 # Embed fonts
 # This is largely for complete replication purposes only and is not necessary.
-## If using Windows please see extrafont set up instructions at https://github.com/wch/extrafont
+## If using Windows please see extrafont set up instructions at https://GitHub.com/wch/extrafont
 # extrafont::embed_fonts("Rep-Res-Parent.pdf")
 
 #### README ####

@@ -1,4 +1,4 @@
-# [Reproducible Research with R and RStudio (Second Edition)](http://christophergandrud.github.io/RepResR-RStudio/)
+# [Reproducible Research with R and RStudio (Second Edition)](http://christophergandrud.GitHub.io/RepResR-RStudio/)
 
 [<img src="http://3.bp.blogspot.com/-f8MFbNEoyGU/UYNGekqEkTI/AAAAAAAAGOM/Dq36pI06kTQ/s320/RepResCover.jpg" align="right" />](http://www.amazon.com/dp/1466572841)
 
@@ -56,7 +56,7 @@ up correctly. Otherwise your computer will not know where the tools are.
 #### Reproducing this Book in Linux
 
 You will need to install the the R packages RCurl and XML separately. See
-[this post](https://github.com/cboettig/treeBASE/issues/5) for more details.
+[this post](https://GitHub.com/cboettig/treeBASE/issues/5) for more details.
 
 ### Session Info
 
