@@ -21,8 +21,9 @@ the `Source/FrontMatter/` directory.
 
 The book can be reproduced by using the R package *knitr*. To do this:
 
-1. Make sure you have [R](http://www.r-project.org/), [LaTeX](http://www.latex-project.org/ftp.html),
-and the *knitr* R package installed on your computer. Also install Andre Simon's
+1. Make sure you have [R](http://www.r-project.org/),
+[LaTeX](http://www.latex-project.org/ftp.html), and the *knitr* R package
+installed on your computer. Also install Andre Simon's
 [highlighter utility](http://www.andre-simon.de/zip/download.html).
 
 2. Download this repository and point the directories in the *BookMake.R* make
@@ -42,8 +43,8 @@ in the code chunk labeled "FrontPackageCitations". Change the value `FALSE` to
 
 **Note:** the LaTeX file will compile with errors and warnings. These are
 related to stylistic choices and should largely be ignored. But because of this
-you will need to **compile the document a few times** to get the full text with
-bibliography and index.
+you will need to **compile the document a few times** to get the full text
+with bibliography and index.
 
 #### Reproducing the Book in Windows.
 
@@ -54,61 +55,63 @@ up correctly. Otherwise your computer will not know where the tools are.
 
 #### Reproducing this Book in Linux
 
-You will need to install the the R packages RCurl and XML seperately. See
+You will need to install the the R packages RCurl and XML separately. See
 [this post](https://github.com/cboettig/treeBASE/issues/5) for more details.
 
 ### Session Info
 
 The current version of the book manuscript was compiled with
-[RStudio](http://www.rstudio.com/) (v. 0.99.124 developer build) with the
+[RStudio](http://www.rstudio.com/) (v. 0.99.40 developer build) with the
 following R session:
 
 
 ```
-## R version 3.1.2 (2014-10-31)
-## Platform: x86_64-apple-darwin14.0.0 (64-bit)
+## R version 3.1.3 (2015-03-09)
+## Platform: x86_64-apple-darwin14.1.0 (64-bit)
+## Running under: OS X 10.10.2 (Yosemite)
 ## 
 ## locale:
 ## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
-## [1] splines   stats     graphics  grDevices utils     datasets  methods  
-## [8] base     
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] ZeligBayesian_0.1   MCMCpack_1.3-3      coda_0.16-1        
-##  [4] lattice_0.20-29     Zelig_4.2-1         sandwich_2.3-2     
-##  [7] MASS_7.3-35         boot_1.3-13         xtable_1.7-4       
-## [10] WDI_2.4             ROAuth_0.9.5        tidyr_0.2.0        
-## [13] texreg_1.34         survival_2.37-7     stargazer_5.1      
-## [16] shiny_0.10.2.2      rvest_0.2.0         RJSONIO_1.3-0      
-## [19] rmarkdown_0.4.2     reshape2_1.4.1      repmis_0.3.3       
-## [22] RCurl_1.95-4.5      bitops_1.0-6        quantmod_0.4-3     
-## [25] TTR_0.22-0          xts_0.9-7           zoo_1.7-11         
-## [28] packrat_0.4.2-1     openair_1.0         markdown_0.7.4     
-## [31] magrittr_1.5        knitcitations_1.0.5 httr_0.6.1         
-## [34] htmlwidgets_0.3.2   highlight_0.4.4     googleVis_0.5.7    
-## [37] ggplot2_1.0.0       formatR_1.0         extrafont_0.17     
-## [40] dplyr_0.3.0.9000    digest_0.6.8        devtools_1.6.1     
-## [43] data.table_1.9.4    countrycode_0.18    brew_1.0-6         
-## [46] animation_2.3       knitr_1.8.4        
+##  [1] ZeligBayesian_0.1   MCMCpack_1.3-3      coda_0.17-1        
+##  [4] Zelig_4.2-1         sandwich_2.3-3      MASS_7.3-40        
+##  [7] boot_1.3-15         xtable_1.7-4        WDI_2.4            
+## [10] tidyr_0.2.0         texreg_1.34         survival_2.38-1    
+## [13] stargazer_5.1       shiny_0.11.1        rvest_0.2.0        
+## [16] RJSONIO_1.3-0       rmarkdown_0.5.3.1   repmis_0.4.2       
+## [19] RCurl_1.95-4.5      bitops_1.0-6        quantmod_0.4-4     
+## [22] TTR_0.22-0          xts_0.9-7           zoo_1.7-12         
+## [25] packrat_0.4.3       openair_1.1-5       maps_2.3-9         
+## [28] lazyeval_0.1.10     markdown_0.7.4      magrittr_1.5       
+## [31] knitcitations_1.0.5 httr_0.6.1          htmlwidgets_0.3.2  
+## [34] highlight_0.4.4     googleVis_0.5.8     ggplot2_1.0.1      
+## [37] formatR_1.0         extrafont_0.17      dplyr_0.4.1        
+## [40] digest_0.6.8        devtools_1.7.0      data.table_1.9.4   
+## [43] countrycode_0.18    brew_1.0-6          animation_2.3      
+## [46] knitr_1.9          
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] assertthat_0.1      bibtex_0.4.0        chron_2.3-45       
-##  [4] cluster_1.15.3      colorspace_1.2-4    DBI_0.3.1          
-##  [7] evaluate_0.5.5      extrafontdb_1.0     grid_3.1.2         
-## [10] gtable_0.1.2        highr_0.4           htmltools_0.2.7    
-## [13] httpuv_1.3.2        labeling_0.3        latticeExtra_0.6-26
-## [16] lazyeval_0.1.9      lubridate_1.3.3     Matrix_1.1-4       
-## [19] memoise_0.2.1       mgcv_1.8-4          mime_0.2           
-## [22] munsell_0.4.2       nlme_3.1-118        parallel_3.1.2     
-## [25] plyr_1.8.1          proto_0.3-10        R.cache_0.10.0     
-## [28] R.methodsS3_1.6.1   R.oo_1.18.0         R.utils_1.34.0     
-## [31] R6_2.0.1            RColorBrewer_1.1-2  Rcpp_0.11.3        
-## [34] RefManageR_0.8.40   rJava_0.9-6         rjson_0.2.15       
-## [37] Rttf2pt1_1.3.2      scales_0.2.4        stringr_0.6.2      
-## [40] tools_3.1.2         twitteR_1.1.7       xlsx_0.5.7         
-## [43] xlsxjars_0.6.1      XML_3.98-1.1
+##  [1] assertthat_0.1      bibtex_0.4.0        bit_1.1-12         
+##  [4] bit64_0.9-4         chron_2.3-45        cluster_2.0.1      
+##  [7] colorspace_1.2-6    DBI_0.3.1           evaluate_0.5.5     
+## [10] extrafontdb_1.0     grid_3.1.3          gtable_0.1.2       
+## [13] hexbin_1.27.0       highr_0.4           htmltools_0.2.6    
+## [16] httpuv_1.3.2        labeling_0.3        lattice_0.20-30    
+## [19] latticeExtra_0.6-26 lubridate_1.3.3     mapdata_2.2-3      
+## [22] mapproj_1.2-2       Matrix_1.1-5        memoise_0.2.1      
+## [25] mgcv_1.8-5          mime_0.2            munsell_0.4.2      
+## [28] nlme_3.1-120        parallel_3.1.3      plyr_1.8.1         
+## [31] png_0.1-7           proto_0.3-10        R.cache_0.10.0     
+## [34] R.methodsS3_1.7.0   R.oo_1.19.0         R.utils_2.0.0      
+## [37] R6_2.0.1            RColorBrewer_1.1-2  Rcpp_0.11.5        
+## [40] RefManageR_0.8.45   reshape2_1.4.1      RgoogleMaps_1.2.0.7
+## [43] rjson_0.2.15        Rttf2pt1_1.3.3      scales_0.2.4       
+## [46] splines_3.1.3       stringr_0.6.2       tools_3.1.3        
+## [49] twitteR_1.1.8       XML_3.98-1.1
 ```
 
 ---
