@@ -1,7 +1,7 @@
 % Chapter Chapter 6 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 20 March 2015
+% Updated: 28 March 2015
 
 <<set-parent6, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -11,7 +11,7 @@ set_parent('Rep-Res-Parent.Rnw')
 
 How you gather your data directly impacts how reproducible your research will be. You should try your best to document every step of your data gathering process. Reproduction will be easier if your documentation--especially, variable descriptions and source code--makes it easy for you and others to understand what you have done. If all of your data gathering steps are tied together by your source code, then independent researchers (and you) can more easily regather the data. Regathering data will be easiest if running your code allows you to get all the way back to the raw data files--the rawer the better. Of course this may not always be possible. You may need to conduct interviews or compile information from paper based archives, for example. The best you can sometimes do is describe your data gathering process in detail. Nonetheless, R's automated data gathering capabilities for internet-based information is extensive. Learning how to take full advantage of these capabilities greatly increases reproducibility and can save you considerable time and effort over the long run.
 
-In this chapter we'll learn how to gather quantitative data in a fully reproducible way. We'll start by learning how to use data gathering makefiles to organize your whole data gathering process so that it can be completely reproduced. Then we will learn the details of how to actually load data into R from various sources, both locally on your computer and remotely via the internet. In the next chapter (Chapter \ref{DataClean}) we'll learn the details of how to clean up raw data so that it can be merged together into data frames that you can use for statistical analyses.
+In this chapter we'll learn how to gather quantitative data in a fully reproducible way. We'll start by learning how to use data gathering makefiles to organize your whole data gathering process so that it can be completely reproduced. Then we will learn the details of how to actually load data into R from various sources, both locally on your computer and remotely via the internet. In the next chapter (Chapter \ref{DataClean}) we'll learn the details of how to clean-up raw data so that it can be merged together into data frames that you can use for statistical analyses.
 
 %%%%%%%%%%%%% Organizing data gathering
 \section{Organize Your Data Gathering: Makefiles}
@@ -20,9 +20,9 @@ Before getting into the details of using R to gather data, let's start by creati
 
 A key part of reproducible data gathering with R, like reproducible research in general, is segmenting the process into modular\index{modular files} files that can all be run by a common ``makefile''\index{makefile}. In this chapter we'll learn how to create make-like files run exclusively from R as well as GNU Make makefiles\index{GNU Make}\index{GNU},\footnote{GNU stands for ``GNU's Not Unix'', indicating that it is Unix-like.}\index{GNU Make} which you run from a shell.\footnote{To standardize things, I use the terms ``R make-like file'' for files created and run in R and the standard ``makefile'' for files run by Make.} Learning how to create R make-like files is fairly easy. Using GNU Make does require learning some more new syntax. However, it has one very clear advantage: it only runs a source code file that has been updated since the last time you ran the makefile. This is very useful if part of your data gathering process is very computationally and time intensive.
 
-Segmenting your data gathering into modular files and tying them together with some sort of makefile allows you to more easily navigate research text and find errors in the source code. The makefile's output is the data set that you'll use in the statistical analyses. There are two types of source code files that the makefile runs: data gathering/clean up files and merging files. Data clean up files bring raw individual data sources into R and transform them so that they can be merged together with data from the other sources. Many of the R tools for data clean up and merging will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. Merging files are executed by the makefile after it runs the data gathering/clean up files.
+Segmenting your data gathering into modular files and tying them together with some sort of makefile allows you to more easily navigate research text and find errors in the source code. The makefile's output is the data set that you'll use in the statistical analyses. There are two types of source code files that the makefile runs: data gathering/clean-up files and merging files. Data clean-up files bring raw individual data sources into R and transform them so that they can be merged together with data from the other sources. Many of the R tools for data clean-up and merging will be covered in Chapter \ref{DataClean}. In this chapter we mostly cover the ways to bring raw data into R. Merging files are executed by the makefile after it runs the data gathering/clean-up files.
 
-It's a good idea to have the source code files use very raw data as input. Your source code should avoid directly changing these raw data files. Instead changes should be put into new objects and data files. Doing this makes it easier to reconstruct the steps you took to create your data set. Also, while cleaning and merging your data you may transform it in unintended ways, for example, accidentally deleting some observations that you had wanted to keep. Having the raw data makes it easy to go back and correct your mistakes.
+It's a good idea to have the source code files use very raw data as input. Your source code should avoid directly changing these raw data files. Instead changes should be put into new objects and data files. Doing this makes it easier to reconstruct the steps you took to create your data set. Also, while cleaning and merging your data you may transform it in unintended ways, for example, accidentally deleting some observations that you wanted to keep. Having the raw data makes it easy to go back and correct your mistakes.
 
 The files for the examples used in this section can be downloaded from GitHub at: \url{http://bit.ly/YnMKBG}.
 
@@ -40,7 +40,7 @@ When you create make-like files in R to organize and run your data gathering you
 # Set working directory
 setwd("/ExampleProject/Analysis/Data/")
 
-# Gather and clean up raw data files.
+# Gather and clean-up raw data files.
 source("Gather1.R")
 source("Gather2.R")
 source("Gather3.R")
@@ -55,7 +55,7 @@ You can run the commands in this file one by one or run the make-like file by pu
 
 \subsection{GNU Make}
 
-R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well established GNU Make\index{GNU Make} command-line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see Section \ref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than its output, Make will run it. If the source's time stamp is older than its output, Make will skip it.
+R make-like files are a simple way to tie together a segmented data gathering process. If one or more of the source files that our example before runs is computationally intensive it is a good idea to run them only when they are updated. However, this can become tedious, especially if there are many segments. The well-established GNU Make\index{GNU Make} command-line program\footnote{GNU Make was originally developed in 1977 by Stuart Feldman as a way to compile computer programs from a series of files, its primary use to this day. For an overview see: \url{http://en.wikipedia.org/wiki/Make_(software)}. For installation instructions please see Section \ref{InstallMake}.} deals with this problem by comparing the output files' time stamps\footnote{A file's time stamp records the time and date when it was last changed.}\index{time stamp} to time stamps of the source files that created them. If a source file has a time stamp that is newer than its output, Make will run it. If the source's time stamp is older than its output, Make will skip it.
 
 In Make terminology the output files are called ``targets''\index{Make!targets} and the files that create them are called ``prerequisites''\index{Make!prerequisites}. You specify a ``recipe''\index{Make!recipe} to create the targets from the prerequisites. The recipe is basically just the code you want to run to make the target file. The general form is:
 
@@ -129,21 +129,21 @@ You may remember the asterisk (\verb|*|) from the previous chapter. It is a ``wi
 
 Why did we also include the actual word \texttt{wildcard}?\index{Make function!wildcard}\index{Make!wildcard} The \texttt{wildcard} function is different from the asterisk wildcard character. The function creates a list of files that match a pattern. In this case the pattern is \verb|$(RDIR)/*.R|. The general form for writing the \texttt{wildcard} function is: \verb|$(wildcard PATTERN)|.
 
-The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \texttt{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R outfile contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your makefiles gives you an error like \texttt{make: *** [Gather.Rout] Error 1}.\index{Make!Error 1}} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but with the file extension \texttt{.Rout}.
+The third line (\verb|OUT_FILES = $(RSOURCE:.R=.Rout)|) creates a variable for the \texttt{.Rout} files that Make will use to tell how recently each R file was run.\footnote{The R out-file contains all of the output from the R session used while running the file. These can be a helpful place to look for errors if your makefiles give you an error like \texttt{make: *** [Gather.Rout] Error 1}.\index{Make!Error 1}} \verb|$(RSOURCE:.R=.Rout)| is a variable that uses the same file name as our RSOURCE files, but with the file extension \texttt{.Rout}.
 
 The second part of the makefile tells Make what we want to create and how to create it. In the line \verb|all: $(OUT_FILES|) we are specifying the makefile's default target.\index{Make!targets} Targets are the files that you instruct Make to make. \texttt{all:} sets the default target; it is what Make tries to create when you enter the command \texttt{make} in the shell with no arguments. We will see later how to instruct Make to compile different targets.
 
 The next two executable lines (\verb|$(RDIR)/%.Rout: $(RDIR)/%.R| and \verb|R CMD BATCH $<|) run the R source code files in the directory.  The first line specifies that the \texttt{.Rout} files are the targets of the \texttt{.R} files. The percent sign (\verb|%|) is another wildcard.\index{Make!\%} Unlike the asterisk, it replaces the selected file names throughout the command used to create the target.
 
-The dollar and less than signs (\verb|$<|) indicate the first prerequisite for the target, i.e. the \texttt{.R} files. \texttt{R CMD BATCH}\index{R CMD BATCH} is a way to call R from a Unix-like shell, run source files, and output the results to other files.\footnote{You will need to make sure that R is in your PATH. Setting this up is different on different systems. If on Mac and Linux you can load R from the Terminal by typing \texttt{R}, R is in your PATH. The usual R installation usually sets this up correctly. There are different methods for changing the file path on different versions of Windows.} The outfiles it creates have the extension \texttt{.Rout}.
+The dollar and less-than signs (\verb|$<|) indicate the first prerequisite for the target, i.e. the \texttt{.R} files. \texttt{R CMD BATCH}\index{R CMD BATCH} is a way to call R from a Unix-like shell, run source files, and output the results to other files.\footnote{You will need to make sure that R is in your PATH. Setting this up is different on different systems. If on Mac and Linux you can load R from the Terminal by typing \texttt{R}, R is in your PATH. The usual R installation usually sets this up correctly. There are different methods for changing the file path on different versions of Windows.} The out-files it creates have the extension \texttt{.Rout}.
 
 The next two lines specify another target: \texttt{clean}. When you type \texttt{make clean} into your shell Make will follow the recipe: \verb|rm -fv $(OUT_FILES)|.\index{shell command!rm} This removes (deletes) the \texttt{.Rout} files. The \texttt{f} argument (force) ignores  files that don't exist and the \texttt{v} argument (verbose) instructs Make to tell you what is happening when it runs. When you delete the \texttt{.Rout} files, Make will run all of the \texttt{.R} files the next time you call it.
 
 The last two lines help us solve a problem created by the fact that our simple makefile doesn't push changes downstream. For example, if we make a change to \emph{Gather2.R} and run \texttt{make}, only \emph{Gather2.R} will be rerun. The new data frame will not be added to the final merged data set. To overcome this problem the last two lines of code create a target called \texttt{cleanMerge}, this removes only the \emph{MergeData.Rout} file.
 
-\paragraph{Running the MakeFile}
+\paragraph{Running the Makefile}
 
-To run the makefile for the first time simply change the working directory to where the file is and type \texttt{make} into your shell. It will create the CSV final data file and four files with the extension \texttt{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.}
+To run the makefile for the first time, simply change the working directory to where the file is and type \texttt{make} into your shell. It will create the CSV final data file and four files with the extension \texttt{.Rout}, indicating when the segmented data gathering files were last run.\footnote{If you open these files you fill find the output from the R session used when the their source file was last run.}
 
 When you run \verb|make| in the shell for the first time you should get the output:
 
@@ -172,7 +172,7 @@ When you run \verb|make| in the shell for the first time you should get the outp
         \end{kframe}
 \end{knitrout}
 
-\noindent To remove all of the \texttt{.Rout} files set the make target to \texttt{clean}:\index{Make!clean}
+\noindent To remove all of the \texttt{.Rout} files, set the make target to \texttt{clean}:\index{Make!clean}
 
 \begin{knitrout}
     \definecolor{shadecolor}{rgb}{1, 1, 1}
@@ -245,15 +245,15 @@ library(foreign)
 StataData <- read.dta(file = "Data1.dta")
 @
 
-\noindent As you can see, commands in the \emph{foreign} package have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports use the following command:
+\noindent As you can see, commands in the \emph{foreign} package have similar syntax to \texttt{read.table}. To see the full range of commands and file formats that the \emph{foreign} package supports, use the following command:
 
 <<Ch6ForeignHelp, eval=FALSE, echo=TRUE>>=
 library(help = "foreign")
 @
 
-If you have data stored in a spreadsheet format such as Excel's\index{Microsoft Excel} \emph{.xlsx}, it may be best to first clean up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information such as notes, colors, and so on that will not be part of the data frame.
+If you have data stored in a spreadsheet format such as Excel's\index{Microsoft Excel} \emph{.xlsx}, it may be best to first clean-up the data in the spreadsheet program by hand and then save the file in plain-text format. When you clean-up the data make sure that the first row has the variable names and that observations are in the following rows. Also, remove any extraneous information such as notes, colors, and so on that will not be part of the data frame.
 
-To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before it was loaded into R. Ideally the documentation would be written in a text file saved in the same directory as the raw data file.
+To aid reproducibility, locally stored data should include careful documentation of where the data came from and how, if at all, it was transformed before it was loaded into R. Ideally, the documentation would be written in a text file saved in the same directory as the raw data file.
 
 \section{Importing Data Sets from the Internet}
 
@@ -268,7 +268,7 @@ Importing data into R that is located at a non-secure URL\index{URL}\footnote{UR
     \item the file is not embedded in a larger HTML\index{HTML} website.
 \end{itemize}
 
-\noindent We already discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL in your web browser. If you only see the raw plain-text data, you are probably good to go. To import the data simply include the URL as the file's name in your \texttt{read.table} command.
+\noindent We already discussed the first issue in detail. You can determine if the data file is embedded in a website by opening the URL in your web browser. If you only see the raw plain-text data, you are probably good to go. To import the data, simply include the URL as the file's name in your \texttt{read.table} command.
 
 \subsection{Data from secure ({\tt{https}}) URLs}\label{SecureDataDownload}
 
@@ -293,7 +293,7 @@ DispropData <- repmis::source_data(OldUrlAddress,
         sha1 = "20a0b022bbcf947917878680df85f7b4dcaaf44a")
 @
 
-\noindent If we set the \texttt{sha1} argument in our replication files others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
+\noindent If we set the \texttt{sha1} argument in our replication files, others can be sure that they are using the same data files that we used to generate a particular result. It may not be practical to do this while a piece of research is under active development, as the files may be regularly updated. However, it can be very useful for source code files that underlie published results.
 
 \paragraph{Loading data from Dropbox non-Public folders with {\tt{source\_DropboxData}}}\label{DropboxNonPublic}
 
@@ -314,7 +314,7 @@ FinDataFull <- repmis::source_DropboxData("fin_research_note.csv",
 
 A more laborious way to download data from a secure URL that does not rely on \emph{repmis} is to use the \texttt{getURL}\index{getURL}\index{R function!getURL} command in the {\emph{RCurl}} package \cite[]{R-RCurl} as well as \verb|read.table|\index{R function!read.table} and \texttt{textConnection}.\index{R function!textConnection} The latter commands are in base R. The two rules about data being stored in plain text-formats and not being embedded in a larger HTML website apply to this method as well.
 
-Let's try an example. To download the data file we used in Section \ref{GitDownload} it into R we could use this code:
+Let's try an example. To download the data file we used in Section \ref{GitDownload} into R we could use this code:
 
 <<Ch6httpsLoad, cache=TRUE, message=FALSE, tidy=FALSE, size='small'>>=
 # Put URL address into the object UrlAddress
@@ -416,13 +416,13 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 head(FertConsumpData)
 @
 
-\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{This is the countries' or regions' International Standards Organization's\index{ISO} two letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
+\noindent You can see that \texttt{WDI} has downloaded data for four variables: \textbf{iso2c},\footnote{These are the countries' or regions' International Standards Organization's\index{ISO} two-letter codes. For more details see: \url{http://www.iso.org/iso/country_codes.htm}.} \textbf{country}, \textbf{AG.CON.FERT.ZS} and \textbf{year}.
 
 \section{Advanced Automatic Data Gathering: Web Scraping}
 
 \index{web scraping|(}
 
-If a package does not already exist to access data from a particular website there are other ways to automatically ``scrape'' data with R. This section briefly discusses some of R's web scraping tools and techniques to get you headed in the right direction to do more advanced data gathering.
+If a package does not already exist to access data from a particular website, there are other ways to automatically ``scrape'' data with R. This section briefly discusses some of R's web scraping tools and techniques to get you headed in the right direction to do more advanced data gathering.
 
 \paragraph{The general process}
 
@@ -430,7 +430,7 @@ Simple web scraping involves downloading a file from the internet, parsing\index
 
 This was a relatively simple process, because the webpage was very simply formatted. It basically only contained the CSV formatted text. So, the process of parsing and extracting the data was very straightforward. You may not be so lucky with other data sources. Data may be stored in an HTML\index{HTML} formatted table within a more complicated HTML marked up webpage. The \emph{XML}\index{XML} package \citep{R-XML} has a number of useful commands such as \texttt{readHTMLTable}\index{R function!readHTMLTable} for parsing and extracting this kind of data. The \emph{XML} package also clearly has functions for handling XML formatted data.\footnote{XML stands for ``Extensible Markup Language''}\index{XML} In addition, the helpful \emph{rvest} \citep{R-rvest} package provides an easy to use set of functions with capabilities similar to and often more capable than \emph{XML}.\index{rvest} If the data is stored in JSON\footnote{JSON means ``JavaScript Object Notation''}\index{JSON} you can read it with the \emph{rjson} \citep{R-rjson}\index{rjson} or \emph{RJSONIO} \citep{R-RJSONIO}\index{RJSONIO} packages.
 
-There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier.
+There are more websites with APIs\index{API} than R packages designed specifically to access each one. If an API is available, the \emph{httr} package \citep{R-httr}\index{httr}  may be useful. It is a wrapper\index{wrapper} for \emph{RCurl} intended to make accessing APIs easier.
 
 \paragraph{More tools to learn for web scraping}
 
@@ -440,11 +440,11 @@ Beyond learning about the various R packages that are useful for R web scraping,
 
     \item HTML:\index{HTML} Obviously you will encounter a lot of HTML markup when web scraping. Having a good understanding of the HTML markup language will be very helpful. W3 Schools (\url{http://www.w3schools.com/}) is a free resource for learning HTML as well as JSON, JavaScript, XML, and other languages you will likely come across while web scraping.
 
-        \item Regular Expressions:\index{regular expressions} Web scraping often involves finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag\index{HTML tag} IDs that are particular to a given website and change across the site based on a particular pattern. You can use regular expressions to deal with these situations. R has a comprehensive if bare bones introduction to regular expressions. To access it type \verb|?regex|\index{R!regex} into your R console.
+        \item Regular Expressions:\index{regular expressions} Web scraping often involves finding character patterns. Some of this is done for you by the R packages above that parse text. There are times, however, when you are looking for particular patterns, like tag\index{HTML tag} IDs, that are particular to a given website and change across the site based on a particular pattern. You can use regular expressions to deal with these situations. R has a comprehensive if bare-bones introduction to regular expressions. To access it type \verb|?regex|\index{R!regex} into your R console.
 
     \item Looping:\index{loop} Web scraping often involves applying a function to multiple things, e.g. tables or HTML tags. To do this in an efficient way you will need to use loops and apply functions\index{R!apply functions}. \cite{Matloff2011} provides a comprehensive overview. The \emph{dplyr} \citep{R-dplyr}\index{dplyr} for data frame manipulation is also particularly useful.
 
-\noindent Finally, \cite{Munzert2015} provide a comprehensive overview to web scraping and text mining with R.
+\noindent Finally, \cite{Munzert2015} provide a comprehensive overview of web scraping and text mining with R.
 
 \end{itemize}
 

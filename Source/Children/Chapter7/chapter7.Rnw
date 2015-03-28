@@ -248,10 +248,10 @@ summary(GatheredFertSub$FertilizerConsumption)
         \hline\vspace{0.15cm}
         Operator & Meaning \\
         \hline\hline \\
-        \verb|<| & less than \\
+        \verb|<| & less-than \\
         \verb|>| & greater-than \\
         \verb|==| & equal to \\
-        \verb|<=| & less than or equal to \\
+        \verb|<=| & less-than or equal to \\
         \verb|>=| & greater-than or equal to \\
         \verb|!=| & not equal to \\
         \verb+a | b + & a or b \\
@@ -267,7 +267,7 @@ summary(GatheredFertSub$FertilizerConsumption)
     \end{center}
 \end{table}
 
-Let's step back one second. I've introduced a number of new logical operators\index{R!logical operators} and a new command in the four subsetting examples. The first example included a very simple one, the greater-than sign (\verb|>|). The second example included the less than or equal to operator: \verb|<=|. The third example included the not equal operator: \verb|!=|.\index{R!not equal} In R exclamation points (\verb|!|) generally denote `not'.\index{R!exclamation point} We used this again in the final example in combination with the \texttt{is.na} command.\index{R function!is.na} This command indicates if an element is missing, so \verb|!is.na| means ``not missing''. For the full list of R's logical operators see Table \ref{LogicalOp}. You can use these operators and commands when subsetting data and throughout R.
+Let's step back one second. I've introduced a number of new logical operators\index{R!logical operators} and a new command in the four subsetting examples. The first example included a very simple one, the greater-than sign (\verb|>|). The second example included the less-than or equal to operator: \verb|<=|. The third example included the not equal operator: \verb|!=|.\index{R!not equal} In R exclamation points (\verb|!|) generally denote `not'.\index{R!exclamation point} We used this again in the final example in combination with the \texttt{is.na} command.\index{R function!is.na} This command indicates if an element is missing, so \verb|!is.na| means ``not missing''. For the full list of R's logical operators see Table \ref{LogicalOp}. You can use these operators and commands when subsetting data and throughout R.
 
 \subsection{Recoding string/numeric variables}\index{R!recode}
 
@@ -283,7 +283,7 @@ GatheredFertSub$country[GatheredFertSub$country ==
 
 \subsection{Creating new variables from old}
 
-As part of your data clean up process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log}\index{R function!log}\index{log} function and assign a new variable that we'll call \textbf{logFertConsumption}.
+As part of your data clean-up process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log}\index{R function!log}\index{log} function and assign a new variable that we'll call \textbf{logFertConsumption}.
 
 {\small
 <<Ch7LogFertComsump, tidy=FALSE>>=
@@ -471,11 +471,11 @@ names(MergedData2)
 @
 
 
-After merging data frames it is always a good idea to look at the result and make sure it is what you expected. Some post merging clean up may be required to get the data frame ready for statistical analysis.
+After merging data frames it is always a good idea to look at the result and make sure it is what you expected. Some post merging clean-up may be required to get the data frame ready for statistical analysis.
 
 \paragraph{Big data}\index{big data}
 
-Before discussing post-merge clean up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation function covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use either the \emph{dplyr} or \emph{data.table} packages \citep{R-data.table}. They have many capabilities for working efficiently with large data sets. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{dplyr}\index{dplyr}.\footnote{See the \emph{dplyr} vignette on using the package with SQL databases at \url{http://cran.r-project.org/web/packages/dplyr/vignettes/databases.html}.}
+Before discussing post-merge clean-up it is important to highlight ways to handle large data sets. The \texttt{merge} command and many of the other data frame manipulation function covered so far in this chapter may not perform well with very large data sets. If you are using very large data sets it might be worth investing time learning how to use either the \emph{dplyr} or \emph{data.table} packages \citep{R-data.table}. They have many capabilities for working efficiently with large data sets. Another approach is to learn SQL\footnote{Structured Query Language}\index{SQL}\index{Structured Query Language} or another special purpose data handling language.\footnote{w3schools has an online SQL tutorial at: \url{http://www.w3schools.com/sql/default.asp}.} Once you know how these languages work, you can incorporate them into your R workflow with R packages like \emph{dplyr}\index{dplyr}.\footnote{See the \emph{dplyr} vignette on using the package with SQL databases at \url{http://cran.r-project.org/web/packages/dplyr/vignettes/databases.html}.}
 
 \subsection{Duplicate values}\index{R!duplicate values|(}
 
@@ -508,7 +508,7 @@ DataNotDuplicates <- MergedData2[!duplicated(
 
 \subsection{Duplicate columns}\index{R!duplicate variables|(}
 
-Another common post-merge clean up issue is duplicate columns, i.e. variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. For example, in our previous merged data examples there are three country name variables: \textbf{country.x}, \textbf{country.y}, and \textbf{country} to signify which data frame they are from.\footnote{The former two were created in the first merge between \emph{FinRegulatorData} and \emph{DispropData}. When the second merge was completed there were no variables named \textbf{country} in the MergeData2 data frame, so \textbf{country} did not need to be renamed in the new merged data set.}
+Another common post-merge clean-up issue is duplicate columns, i.e. variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. For example, in our previous merged data examples there are three country name variables: \textbf{country.x}, \textbf{country.y}, and \textbf{country} to signify which data frame they are from.\footnote{The former two were created in the first merge between \emph{FinRegulatorData} and \emph{DispropData}. When the second merge was completed there were no variables named \textbf{country} in the MergeData2 data frame, so \textbf{country} did not need to be renamed in the new merged data set.}
 
 You should of course decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables\index{drop variable} and rename\index{R function!rename} the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{dplyr}\index{dplyr} package \citep{R-dplyr} has a useful function called \texttt{select}\index{R function!select} that can also remove variables from data frames. To remove variables simply write a minus sign (\texttt{-}) and then the variable name without quotes. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove the \textbf{idn} variable:
 
@@ -530,7 +530,7 @@ names(FinalCleanedData)
 @
 }
 
-\noindent Alternatively, you can select specific variables to keep with the \texttt{select} function by writing the variables' names without a minus sign. \textbf{Note} if you are merging many data sets it can sometimes be good to clean up duplicate columns between each \texttt{merge} call.
+\noindent Alternatively, you can select specific variables to keep with the \texttt{select} function by writing the variables' names without a minus sign. \textbf{Note} if you are merging many data sets it can sometimes be good to clean-up duplicate columns between each \texttt{merge} call.
 
 \index{R!duplicate variables|)}
 
