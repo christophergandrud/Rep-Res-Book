@@ -1,7 +1,7 @@
 % Chapter Chapter 11 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 3 January 2015
+% Updated: 28 March 2015
 
 <<set-parent11, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -408,7 +408,7 @@ When you want to include citations from a BibTeX file in your LaTeX document you
 
 You can also specify how you would like the references to be formatted using the \texttt{bibliographystyle}\index{LaTeX command!bibliographystyle} command. For example, this book uses the American Psychological Association (APA)\index{APA} style for references. To set this I included \verb|\bibliographystyle{apa}| directly before \texttt{bibliography}. The default style\footnote{It is referred to in LaTeX as the plain style.} is to number citations (e.g. [1]) rather than include author-year information\footnote{This is sometimes referred to as the ``Harvard'' style.} used by the APA. You will need to include the LaTeX package \emph{natbib}\index{LaTeX package!Natbib} in your preamble to be able to use author-year citation styles. This book includes \verb|\usepackage[authoryear]{natbib}| in its preamble.\index{author-year citations}\index{Harvard style citations}
 
-Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donoho2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example if we wanted to cite the tenth page of \cite{Donoho2009} we type: \verb|\cite[10]{Donoho2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donoho2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donoho2009}| gives us: \cite[see][10]{Donoho2009}.
+Place the \texttt{cite}\index{LaTeX command!cite} command in your document's text where you want to place a reference. You include the \verb|CITE_KEY| for the reference in this command, e.g. \verb|\cite{Donoho2009}|. You can include multiple citations in \texttt{cite}, just separate the \verb|CITE_KEY|s with commas. You can add options such as the page numbers or other text to a citation using square brackets ([]). For example, if we wanted to cite the tenth page of \cite{Donoho2009} we type: \verb|\cite[10]{Donoho2009}|. The author-year style in-text citation this produces looks like this: \cite[10]{Donoho2009}. You can add text at the beginning of a citation with another set of square brackets. Typing \verb|\cite[see][10]{Donoho2009}| gives us: \cite[see][10]{Donoho2009}.
 
 If you are using an author-year style you can use a variety of \emph{natbib} commands to change what information is included in the parentheses. For a selection of these commands and examples see Table \ref{NatbibTable}.
 
@@ -434,7 +434,7 @@ If you are using an author-year style you can use a variety of \emph{natbib} com
 
 Researchers are pretty good about citing others' articles and data. However, citations of R packages used in analyses is very inconsistent. This is unfortunate not only because correct attribution is not being given to those who worked to create the packages, but also because it makes reproducibility harder. Not citing packages obscures important steps that were taken in the research process, primarily which package versions were used. Fortunately, there are R tools for quickly and dynamically generating package BibTeX files, including the versions of the packages you are using. They will automatically update the citations each time you compile your document to reflect any changes made to the packages.
 
-You can automatically create citations for R packages using the \texttt{citation}\index{R function!citation} command inside of a code chunk. For example if you want the citation information for the \texttt{xtable}\index{xtable} package you simply type:
+You can automatically create citations for R packages using the \texttt{citation}\index{R function!citation} command inside of a code chunk. For example, if you want the citation information for the \texttt{xtable}\index{xtable} package you simply type:
 
 {\small
 <<Ch11IntroCite>>=

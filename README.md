@@ -55,7 +55,7 @@ up correctly. Otherwise your computer will not know where the tools are.
 
 #### Reproducing this Book in Linux
 
-You will need to install the the R packages RCurl and XML separately. See
+You will need to install the R packages RCurl and XML separately. See
 [this post](https://GitHub.com/cboettig/treeBASE/issues/5) for more details.
 
 ### Session Info
