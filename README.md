@@ -61,7 +61,7 @@ You will need to install the R packages RCurl and XML separately. See
 ### Session Info
 
 The current version of the book manuscript was compiled with
-[RStudio](http://www.rstudio.com/) (v. 0.99.40 developer build) with the
+[RStudio](http://www.rstudio.com/) (v. 0.99.370 developer build) with the
 following R session:
 
 
@@ -89,7 +89,7 @@ following R session:
 ## [28] lazyeval_0.1.10     markdown_0.7.4      magrittr_1.5       
 ## [31] knitcitations_1.0.5 httr_0.6.1          htmlwidgets_0.3.2  
 ## [34] highlight_0.4.4     googleVis_0.5.8     ggplot2_1.0.1      
-## [37] formatR_1.0         extrafont_0.17      dplyr_0.4.1        
+## [37] formatR_1.1         extrafont_0.17      dplyr_0.4.1        
 ## [40] digest_0.6.8        devtools_1.7.0      data.table_1.9.4   
 ## [43] countrycode_0.18    brew_1.0-6          animation_2.3      
 ## [46] knitr_1.9          
@@ -99,11 +99,11 @@ following R session:
 ##  [4] bit64_0.9-4         chron_2.3-45        cluster_2.0.1      
 ##  [7] colorspace_1.2-6    DBI_0.3.1           evaluate_0.5.5     
 ## [10] extrafontdb_1.0     grid_3.1.3          gtable_0.1.2       
-## [13] hexbin_1.27.0       highr_0.4           htmltools_0.2.6    
+## [13] hexbin_1.27.0       highr_0.4.1         htmltools_0.2.6    
 ## [16] httpuv_1.3.2        labeling_0.3        lattice_0.20-30    
 ## [19] latticeExtra_0.6-26 lubridate_1.3.3     mapdata_2.2-3      
 ## [22] mapproj_1.2-2       Matrix_1.1-5        memoise_0.2.1      
-## [25] mgcv_1.8-5          mime_0.2            munsell_0.4.2      
+## [25] mgcv_1.8-5          mime_0.3            munsell_0.4.2      
 ## [28] nlme_3.1-120        parallel_3.1.3      plyr_1.8.1         
 ## [31] png_0.1-7           proto_0.3-10        R.cache_0.10.0     
 ## [34] R.methodsS3_1.7.0   R.oo_1.19.0         R.utils_2.0.0      
@@ -116,4 +116,4 @@ following R session:
 
 ---
 
-(c) Christopher Gandrud (2014)
+(c) Christopher Gandrud (2015)
