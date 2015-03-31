@@ -100,7 +100,7 @@ following R session:
 ##  [7] colorspace_1.2-6    DBI_0.3.1           evaluate_0.5.5     
 ## [10] extrafontdb_1.0     grid_3.1.3          gtable_0.1.2       
 ## [13] hexbin_1.27.0       highr_0.4.1         htmltools_0.2.6    
-## [16] httpuv_1.3.2        labeling_0.3        lattice_0.20-30    
+## [16] httpuv_1.3.2        labeling_0.3        lattice_0.20-31    
 ## [19] latticeExtra_0.6-26 lubridate_1.3.3     mapdata_2.2-3      
 ## [22] mapproj_1.2-2       Matrix_1.1-5        memoise_0.2.1      
 ## [25] mgcv_1.8-5          mime_0.3            munsell_0.4.2      
