@@ -1,7 +1,7 @@
 % Chapter Chapter 7 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 March 2015
+% Updated: 6 April 2015
 
 <<set-parent7, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -283,7 +283,7 @@ GatheredFertSub$country[GatheredFertSub$country ==
 
 \subsection{Creating new variables from old}
 
-As part of your data cleanup process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log}\index{R function!log}\index{log} function and assign a new variable that we'll call \textbf{logFertConsumption}.
+As part of your data cleanup process (or later during statistical analysis) you may want to create new variables based on existing variables. For example, we could create a new variable that is the natural logarithm of \textbf{FertilizerConsumption}. To do this we run the variable through the \texttt{log}\index{R function!log}\index{logarithmic transformation} function and assign a new variable that we'll call \textbf{logFertConsumption}.
 
 {\small
 <<Ch7LogFertComsump, tidy=FALSE>>=
@@ -317,7 +317,7 @@ summary(GatheredFertSub$logFertConsumption)
 @
 }
 
-\noindent Note that this example is largely to demonstrate R syntax rather than to prescribe a certain transformation of skewed data with zeros. The choice of which transformation to make should ultimately be made based on the data, model, and context. See \cite{Hyndman2010} for more information on various alternatives including Box-Cox \citep{box1964analysis} and inverse hyperbolic sine transformations \citep{Burbidge1988}.
+\noindent Note that this example is included to demonstrate R syntax rather than to prescribe a certain transformation of skewed data with zeros. The choice of which transformation to make should ultimately be made based on the data, model, and context. See \cite{Hyndman2010} for more information on various alternatives including Box-Cox \citep{box1964analysis}\index{Box-Cox transformation} and inverse hyperbolic sine transformations\index{inverse hyperbolic sine transformation} \citep{Burbidge1988}.
 
 
 \begin{table}
