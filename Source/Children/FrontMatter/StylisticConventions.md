@@ -23,7 +23,7 @@ text are in *italics*.
 
 - **Packages**: **R** packages are printed in *italics*.
 
-- **Windows an RStudio panes**: Open windows and RStudio panes are written in
+- **Windows and RStudio panes**: Open windows and RStudio panes are written in
 *italics*.
 
 - **Variable names**: Variable names are printed in **bold**. I use CamelBack

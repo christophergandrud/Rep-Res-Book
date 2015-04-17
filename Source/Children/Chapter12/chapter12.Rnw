@@ -1,13 +1,13 @@
 % Chapter Chapter 12 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 28 March 2015
+% Updated: 17 April 2015
 
 <<set-parent12, include=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
 @
 
-\chapter{Large \emph{knitr}/LaTeX Documents: Theses, Books, \& Batch Reports}\label{LargeDocs}
+\chapter{Large \emph{knitr}/LaTeX Documents: Theses, Books, \\ \& Batch Reports}\label{LargeDocs}
 
 In the previous chapter we learned the basics of how to make LaTeX documents to create and present research findings. So far we have only learned how to create short documents, like articles and slideshows. For longer and more complex documents, such as theses and books, a single LaTeX markup file can become very unwieldy very quickly, especially when it includes \emph{knitr} code chunks as well. Ideally we would segment the markup file into individual chapter files and then bring them all together when we compile the whole document. This would allow us to benefit from a modular file structure while producing one presentation document with continuous section and page numbering. To do this we can take advantage of LaTeX and \emph{knitr} to separate markup files into manageable pieces. Like directories, these pieces are called \textbf{child} files, which are combined using a \textbf{parent} document.
 
@@ -21,7 +21,7 @@ Before discussing the specifics of each of these methods, it's worth taking a mo
 
 Instead of one long markup file, you can break the document at natural division points, like chapters, into multiple child documents.\index{child files}\index{parent document} These can then be combined with a parent document. The parent document acts like the skeleton that organizes the children in a specific order. The parent document can be compiled and all of the children will be in the right place. In LaTeX, a parent document will include the preamble where the document class (\texttt{book} for example\index{LaTeX class!book}) is set and all of the necessary LaTeX packages are loaded. It also includes \emph{knitr} global options, the \texttt{maketitle}, \verb|\begin{document}| and \verb|\end{document}|, and the \texttt{bibliography.} When you compile the parent document you will compile the entire document. Notice that if the parent document contains the preamble and so on, that the children cannot contain this information as well. This can create some issues if you only want to compile one chapter rather than the whole document. We will see how to overcome this problem with \emph{knitr} later in the chapter.
 
-To make your many child and parent documents manageable, it is a good idea to store your child files in a subdirectory of the folder storing the parent file. This book was created using a knittable parent and child structure, so please see the markup files on GitHub for a complete example of how to use \emph{knitr} with large documents.\footnote{See: \url{https://github.com/christophergandrud/Rep-Res-Book/tree/master/Source}.} When segmenting your presentation documents into parents and children, the remainder of your research project structure can stay largely the same as we seen so far.
+To make your many child and parent documents manageable, it is a good idea to store your child files in a subdirectory of the folder storing the parent file. This book was created using a knittable parent and child structure, so please see the markup files on GitHub for a complete example of how to use \emph{knitr} with large documents.\footnote{See: \url{https://github.com/christophergandrud/Rep-Res-Book/tree/master/Source}.} When segmenting your presentation documents into parents and children, the remainder of your research project structure can stay largely the same as we have seen so far.
 
 \section{Large Documents with Traditional LaTeX}
 
