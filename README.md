@@ -1,10 +1,10 @@
 # [Reproducible Research with R and RStudio (Second Edition)](http://christophergandrud.GitHub.io/RepResR-RStudio/)
 
-[<img src="http://3.bp.blogspot.com/-f8MFbNEoyGU/UYNGekqEkTI/AAAAAAAAGOM/Dq36pI06kTQ/s320/RepResCover.jpg" align="right" />](http://www.amazon.com/dp/1466572841)
+[<img src="http://4.bp.blogspot.com/-p0c-0swxJ_8/VV7sxxgQ4UI/AAAAAAAAHTQ/hji_MT68PZ4/s1600/2ndEd_rep_res.jpg" align="right" />](http://amzn.com/1498715370)
 
 [Christopher Gandrud](http://christophergandrud.blogspot.com/p/biocontact.html)
 
-[CRC Press/Chapman & Hall](http://www.crcpress.com/product/isbn/9781466572843)
+[CRC Press/Chapman & Hall](http://www.tandf.net/books/details/9781498715379/)
 
 The files in this repository comprise the source code for creating
 **Reproducible Research with R and RStudio**.
@@ -61,7 +61,7 @@ You will need to install the R packages RCurl and XML separately. See
 ### Session Info
 
 The current version of the book manuscript was compiled with
-[RStudio](http://www.rstudio.com/) (v. 0.99.370 developer build) with the
+[RStudio](http://www.rstudio.com/) (v. 0.99.560 developer build) with the
 following R session:
 
 
@@ -81,37 +81,38 @@ following R session:
 ##  [4] Zelig_4.2-1         sandwich_2.3-3      MASS_7.3-40        
 ##  [7] boot_1.3-16         xtable_1.7-4        WDI_2.4            
 ## [10] tidyr_0.2.0         texreg_1.35         survival_2.38-1    
-## [13] stargazer_5.1       shiny_0.11.1        rvest_0.2.0        
-## [16] RJSONIO_1.3-0       rmarkdown_0.5.1     repmis_0.4.2       
+## [13] stargazer_5.1       shiny_0.12.0        rvest_0.2.0        
+## [16] RJSONIO_1.3-0       rmarkdown_0.6.1     repmis_0.4.2       
 ## [19] RCurl_1.95-4.6      bitops_1.0-6        quantmod_0.4-4     
 ## [22] TTR_0.22-0          xts_0.9-7           zoo_1.7-12         
 ## [25] packrat_0.4.3       openair_1.5         maps_2.3-9         
 ## [28] lazyeval_0.1.10     markdown_0.7.7      magrittr_1.5       
-## [31] knitcitations_1.0.5 httr_0.6.1          htmlwidgets_0.3.2  
+## [31] knitcitations_1.0.5 httr_0.6.1          htmlwidgets_0.4    
 ## [34] highlight_0.4.7     googleVis_0.5.8     ggplot2_1.0.1      
 ## [37] formatR_1.2         extrafont_0.17      dplyr_0.4.1        
-## [40] digest_0.6.8        devtools_1.7.0      data.table_1.9.4   
+## [40] digest_0.6.8        devtools_1.8.0      data.table_1.9.4   
 ## [43] countrycode_0.18    brew_1.0-6          animation_2.3      
-## [46] knitr_1.10         
+## [46] knitr_1.10.5       
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] bit64_0.9-4         splines_3.2.0       R.utils_2.0.2      
-##  [4] assertthat_0.1      highr_0.5           latticeExtra_0.6-26
-##  [7] twitteR_1.1.8       Rttf2pt1_1.3.3      lattice_0.20-31    
-## [10] extrafontdb_1.0     chron_2.3-45        RColorBrewer_1.1-2 
-## [13] RefManageR_0.8.45   colorspace_1.2-6    htmltools_0.2.6    
-## [16] httpuv_1.3.2        Matrix_1.2-0        R.oo_1.19.0        
-## [19] plyr_1.8.2          XML_3.98-1.1        bibtex_0.4.0       
-## [22] scales_0.2.4        mgcv_1.8-6          mapdata_2.2-3      
-## [25] hexbin_1.27.0       proto_0.3-10        mime_0.3           
-## [28] memoise_0.2.1       evaluate_0.7        R.methodsS3_1.7.0  
-## [31] R.cache_0.10.0      nlme_3.1-120        tools_3.2.0        
-## [34] RgoogleMaps_1.2.0.7 stringr_1.0.0       munsell_0.4.2      
-## [37] cluster_2.0.1       grid_3.2.0          rjson_0.2.15       
-## [40] labeling_0.3        gtable_0.1.2        DBI_0.3.1          
-## [43] reshape2_1.4.1      R6_2.0.1            lubridate_1.3.3    
-## [46] bit_1.1-12          stringi_0.4-1       parallel_3.2.0     
-## [49] Rcpp_0.11.6         mapproj_1.2-2       png_0.1-7
+##  [1] nlme_3.1-120        lubridate_1.3.3     bit64_0.9-4        
+##  [4] RColorBrewer_1.1-2  R.cache_0.10.0      tools_3.2.0        
+##  [7] R6_2.0.1            DBI_0.3.1           mgcv_1.8-6         
+## [10] colorspace_1.2-6    bit_1.1-12          git2r_0.10.1       
+## [13] chron_2.3-45        extrafontdb_1.0     labeling_0.3       
+## [16] scales_0.2.4        hexbin_1.27.0       stringr_1.0.0      
+## [19] R.utils_2.0.2       htmltools_0.2.6     bibtex_0.4.0       
+## [22] highr_0.5           R.oo_1.19.0         Matrix_1.2-0       
+## [25] Rcpp_0.11.6         munsell_0.4.2       proto_0.3-10       
+## [28] RefManageR_0.8.45   R.methodsS3_1.7.0   stringi_0.4-1      
+## [31] plyr_1.8.2          grid_3.2.0          parallel_3.2.0     
+## [34] lattice_0.20-31     splines_3.2.0       mapproj_1.2-2      
+## [37] rjson_0.2.15        reshape2_1.4.1      XML_3.98-1.1       
+## [40] evaluate_0.7        latticeExtra_0.6-26 mapdata_2.2-3      
+## [43] png_0.1-7           httpuv_1.3.2        RgoogleMaps_1.2.0.7
+## [46] Rttf2pt1_1.3.3      twitteR_1.1.8       gtable_0.1.2       
+## [49] assertthat_0.1      mime_0.3            memoise_0.2.1      
+## [52] rversions_1.0.0     cluster_2.0.1
 ```
 
 ---
