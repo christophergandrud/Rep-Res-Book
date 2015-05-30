@@ -1,29 +1,29 @@
 % Chapter Chapter 8 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 9 June 2014
+% Updated: 31 March 2015
 
 <<set-parent8, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
 @
 
-\chapter{Statistical Modelling and {\normalfont{knitr}}}\label{StatsModel}
+\chapter{Statistical Modeling and {\emph{knitr}}}\label{StatsModel}
 
 When you have your data cleaned and organized you will begin to examine it with statistical analyses. In this book we don't look at how to do statistical analysis in R (a subject that would and does take up many books). Instead we focus on how to make your analyses really reproducible. To do this you dynamically connect your data gathering and analysis source code to your presentation documents. When you dynamically connect your data gathering makefiles and analysis source code to your markup document you will be able to completely rerun your data gathering and analysis and present the results whenever you compile the presentation documents. Doing this makes it very clear how you found the results that you are advertising. It also automatically keeps the presentation of your results--including tables and figures--up-to-date with any changes you make to your data and analyses source code files.
 
-You can dynamically tie your data gathering, statistical analyses and presentation documents together with \emph{knitr}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr} syntax. In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
+You can dynamically tie your data gathering, statistical analyses, and presentation documents together with \emph{knitr}/\emph{rmarkdown}. In Chapter \ref{GettingStartedRKnitr} you learned basic \emph{knitr}/\emph{rmarkdown} syntax. For the rest of the chapter I'll simply refer to it as ``\emph{knitr} syntax'', but it applies to \emph{rmarkdown} as well.  In this chapter we will begin to learn \emph{knitr} syntax in more detail, particularly code chunk options for including dynamic code in your presentation documents. This includes code that is run in the background, i.e. not shown in the presentation document, as well as displaying the code and output in your presentation document both as separate blocks and inline with the text. We will also learn how to dynamically include code from languages other than R. We examine how to use \emph{knitr} with modular source code files. Finally, we will look at how to create reproducible `random' analyses and how to work with computationally intensive code chunks.
 
 The goal of this and the next two chapters--which cover dynamically presenting results in tables and figures--is to show you how to tie data gathering and analyses into your presentation documents so closely that every time the documents are compiled they actually reproduce your analysis and present the results. Please see the next part of this book, Part IV, for details on how to create the LaTeX and Markdown documents that can include \emph{knitr} code chunks.
 
-\textbf{Reminder:} Before discussing the details of how to incorporate your analysis into your source code, it's important to reiterate something we discussed in Chapter \ref{GettingStartedRR}. The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for file path names, syntax can change depending on what operating system you are using.  So it is important to have your R session info available (see Section \ref{SessionInfoHow} for details) to make your research more reproducible and future proof. If someone reproducing your research has this information they will be able to download your files and use the exact version of the software that you used. For example, CRAN\index{CRAN archive} maintains an archive of previous R package versions that can be downloaded.\footnote{See: \url{http://cran.r-project.org/src/contrib/Archive/}.} Previous versions of R itself can also be downloaded through CRAN.\footnote{See: \url{http://cran.r-project.org/src/base/}.}
+\textbf{Reminder:} Before discussing the details of how to incorporate your analysis into your source code, it's important to reiterate something we discussed in Chapter \ref{GettingStartedRR}. The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for file path names, syntax can change depending on what operating system you are using.  So it is important to have your R session info available (see Section \ref{SessionInfoHow} for details) to make your research more reproducible and future-proof. If someone reproducing your research has this information, they will be able to download your files and use the exact version of the software that you used. For example, CRAN\index{CRAN archive} maintains an archive of previous R package versions that can be downloaded.\footnote{See: \url{http://cran.r-project.org/src/contrib/Archive/}.} Previous versions of R itself can also be downloaded through CRAN.\footnote{See: \url{http://cran.r-project.org/src/base/}.}
 
 \section{Incorporating Analyses into the Markup}
 
-For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your \emph{knitr} markup document. In this section we will learn how to set \emph{knitr} options for handling these code chunks. For a list of the chunk options covered here see Table \ref{ChunkOptionsTable}.
+For a relatively short piece of code that you don't need to run in multiple presentation documents it may be simplest to type the code directly into chunks written in your \emph{knitr} markup document. In this section we will learn how to set \emph{knitr} options for handling these code chunks. For a list of many of the chunk options covered here see Table \ref{ChunkOptionsTable}.
 
-\subsection{Full code chunks}
+\subsection{Full code chunks}\index{knitr!code chunk option|(}
 
-By default {\emph{knitr}}\index{knitr!code chunk options} code chunks are run by R, and the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the points where the code chunk was written in the knittable markup. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
+By default, {\emph{knitr}} code chunks are run by R, and the code and any text output (including warnings and error messages) are inserted into the text of your presentation documents in blocks. The blocks are positioned in the final presentation document text at the points where the code chunk was written in the knittable markup. Figures are inserted as well. Let's look at the main options for determining how code chunks are handled by \emph{knitr}.
 
 \paragraph{{\tt{include}}}\index{knitr option!include}
 
@@ -31,25 +31,45 @@ Use \texttt{include=FALSE} if you don't want to include anything in the text of 
 
 \paragraph{{\tt{eval}}}\index{knitr option!eval}
 
-The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run. You can alternatively use a numerical vector with \texttt{echo}. The numbers in the vector tell \emph{knitr} which expressions in the chunk to evaluate. For example, if you only want to evaluate the first two expressions simply set \texttt{eval=1:2}.
+The \texttt{eval} option determines whether or not the code in a chunk will be run. Set the \texttt{eval} option to \texttt{FALSE} if you would like to include code in the presentation document text without actually running the code. By default it is set to \texttt{TRUE}, i.e. the code is run. You can alternatively use a numerical vector with \texttt{eval}. The numbers in the vector tell \emph{knitr} which expressions in the chunk to evaluate. For example, if you only want to evaluate the first two expressions, simply set \texttt{eval=1:2}.
 
 \paragraph{{\tt{echo}}}\index{knitr option!echo}
 
-If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly if \texttt{echo=TRUE} then source code will be included in the presentation document. As with \texttt{eval} you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
+If you would like to hide a chunk's code from the presentation document you can set \texttt{echo=FALSE}. Note that if you also have \texttt{eval=TRUE} then the chunk will still be evaluated and the output will be included in your presentation document. Clearly, if \texttt{echo=TRUE}, then source code will be included in the presentation document. As with \texttt{eval}, you can alternatively use a numerical vector in \texttt{echo}. The numbers in the vector indicate which expressions to echo in your final document.
 
 \paragraph{{\tt{results}}}\index{knitr option!results}
 
-We will look at the \texttt{results} option in more detail in the next two chapters (see especially Section \ref{ResultsOptions}). However let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{results='hide'} shows the code, but not the results. Warnings, errors, and messages will still be printed.
+We will look at the \texttt{results} option in more detail in the next two chapters (see especially Section \ref{ResultsOptions}). However, let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{results='hide'} shows the code, but not the results. Warnings, errors, and messages will still be printed.
 
 \paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{knitr option!warning}\index{knitr option!error}\index{knitr option!message}
 
-If you don't want to include the warnings, messages, and error messages that R outputs in the text of your presentation documents just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}. They are set to \texttt{TRUE} by default.
+If you don't want to include the warnings, messages, and error messages that R outputs in the text of your presentation documents, just set the \texttt{warning}, \texttt{message}, and \texttt{error} options to \texttt{FALSE}. They are set to \texttt{TRUE} by default.
 
 \paragraph{{\tt{cache}}}\index{knitr option!cache}
 
-If you want run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
+If you want to run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted, the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted, the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
 
-Unfortunately, the \texttt{cache} option has some limitations. For example, other code chunks can't access objects that have been cached. Packages that are loaded in cached chunks cannot be accessed by other chunks.
+\paragraph{{\tt{dependson}}}\index{knitr option!dependson}
+
+Cached chunks are only rerun when their code changes. Sometimes one chunk will depend on the results from a prior chunk. In these cases it is good to rerun the chunk if the prior one is also rerun. The \texttt{dependson} option allows you to do this. You can specify either a vector of the labels for the chunks depended on or their numbers in order from the start of the document. For example, \texttt{dependson=c(2, 3)} specifies that if the second or third chunks are rerun, then the current chunk will also be rerun.
+
+\paragraph{{\tt{cache.extra}}}\index{knitr option!cache.extra}
+
+Sometimes to ensure reproducibility it may be useful to rerun a chunk when some other condition changes, such as when a new version of R is installed or a dependent file changes. You can feed a list of conditions to \texttt{cache.extra} to do this. For instance:
+
+<<Ch8CacheExtra, eval=FALSE, echo=TRUE>>=
+cache.extra=list(file.info(Data.csv)$mtime, R.version
+@
+
+\noindent Here we set two conditions under which the chunk will be rerun. The first specifies that the chunk should be rerun whenever the \emph{Data.csv} file is modified. The \texttt{file.info} function extracts information about the file and \texttt{mtime} gives the last time that the file was modified. If this differs from when the chunk was last run, then it will be run again. This is very useful for keeping your cached chunks and the files they rely on in sync.
+
+The second condition enabled by \texttt{R.version}\index{R function!R.version} reruns the chunk whenever the R version or even the operating system changes. If you only want to rerun the chunk when the version of R is different, then use \texttt{R.version.string}.\index{R function!R.version.string}
+
+\paragraph{{\tt{size}}}\index{knitr option!size}
+
+If you do want to print part or all of your code chunk into your LaTeX document, you may also want to resize the text. To do this, use the \texttt{size} option. By default it is set to \verb|size='normalsize'|. You can use any of the LaTeX font sizes listed in Table \ref{LaTeXFontSize} from Chapter \ref{LatexChapter}.
+
+\index{knitr!code chunk option|)}
 
 \subsection{Showing code \& results inline}\index{inline}
 
@@ -59,14 +79,14 @@ Sometimes you may want to have R code or output show up inline with the rest of 
 
 \paragraph{Inline static code}
 
-There are a number of ways to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font\index{texttt} commonly used in LaTeX produced documents to indicate that some text is code (I use typewriter font for this purpose in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you \texttt{2 + 2} in your text. Note that in LaTeX curly brackets (\verb|{}|) work exactly like parentheses in R, i.e. they enclose a command's arguments.
+There are a number of ways to include a code snippet inline with your text in LaTeX. You can simply use the LaTeX command \verb|\texttt| to have text show up in the \texttt{typewriter} font\index{texttt} commonly used in LaTeX-produced documents to indicate that some text is code (I use typewriter font for this purpose in this book, as you have probably noticed). For example, using \verb|\texttt{2 + 2}| will give you \texttt{2 + 2} in your text. Note that in LaTeX curly brackets (\verb|{}|) work exactly like parentheses in R, i.e. they enclose a command's arguments.
 
-However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler\index{compiler} will still try to run the code inside of the command as if it were LaTeX markup. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}|. They have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). The backslash is an escape character in LaTeX. 
+However, the \verb|\texttt| command isn't always ideal, because your LaTeX compiler\index{compiler} will still try to run the code inside of the command as if it were LaTeX markup. This can be problematic if you include characters like the backslash \verb|\| or curly brackets \verb|{}|. They have special meanings for LaTeX. The hard way to solve this problem is to use escape characters\index{escape character} (see Chapter \ref{DirectoriesChapter}). The backslash is an escape character in LaTeX.
 
-Probably the better option is to use the \verb|\verb| command\index{LaTeX command!verb}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. To use the \verb|\verb| command pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually included `\verb|\texttt|' in the text. We would type:
+Probably the better option is to use the \verb|\verb| command\index{LaTeX command!verb}. It is equivalent to the \texttt{eval=FALSE} option for full {\emph{knitr}} code chunks. To use the \verb|\verb| command, pick some character you will not use in the inline code. For example, you could use the vertical bar (\texttt{|}). This will be the \verb|\verb| delimiter. Imagine that we want to actually include `\verb|\texttt|' in the text. We would type:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{verbatim}
@@ -75,13 +95,13 @@ Probably the better option is to use the \verb|\verb| command\index{LaTeX comman
         \end{kframe}
 \end{knitrout}
 
-\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar following \verb|\verb|. All of the text in between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012). Also, for help troubleshooting see the UK List of Frequently Asked Questions: \url{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=verbwithin} (access 4 January 2012).}
+\noindent The LaTeX compiler will ignore almost anything from the first vertical bar up until the second bar following \verb|\verb|. All of the text in-between the delimiter characters is put in typewriter font.\footnote{For more details see the LaTeX Wikibooks page: \url{http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text} (accessed 24 November 2012). Also, for help troubleshooting see the UK List of Frequently Asked Questions: \url{http://www.tex.ac.uk/cgi-bin/texfaq2html?label=verbwithin} (accessed 4 January 2012).}
 
 \paragraph{Inline dynamic code}
 
-If you want to dynamically show the results of some R code in your \emph{knitr} LaTeX produced text you can use \verb|\Sexpr|\index{Sexpr}.\index{knitr!Sexpr} This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from \emph{Sweave}.} Its structure is more like a LaTeX command's structure than {\emph{knitr}}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the \verb|<<>>= . . . @| syntax you use for block code chunks. 
+If you want to dynamically show the results of some R code in your \emph{knitr} LaTeX-produced text you can use \verb|\Sexpr|\index{Sexpr}.\index{knitr!Sexpr} This is a pseudo LaTeX command; it looks like LaTeX, but is actually {\emph{knitr}}.\footnote{The command directly descends from \emph{Sweave}.} Its structure is more like a LaTeX command's structure than {\emph{knitr}}'s in that you enclose your R code in curly brackets (\texttt{\{\}}) rather than the \verb|<<>>= . . . @| syntax you use for block code chunks.
 
-For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the lengths of 141 major rivers recorded in miles. You can simply use the \texttt{mean}\index{R command!mean} command to find the mean and the \texttt{round}\index{R command!round} command to round the result to the nearest whole number:
+For example, imagine that you wanted to include the mean of a vector of river lengths--\Sexpr{round(mean(rivers), digits = 0)}--in the text of your document. The {\emph{rivers}} numeric vector, loaded by default in R, has the lengths of 141 major rivers recorded in miles. You can simply use the \texttt{mean}\index{R function!mean} command to find the mean and the \texttt{round}\index{R function!round} command to round the result to the nearest whole number:
 
 <<Ch8MeanRivers>>=
 round(mean(rivers), digits = 0)
@@ -91,16 +111,16 @@ round(mean(rivers), digits = 0)
 
 <<Ch8SexprExample, eval=FALSE>>=
 The mean length of 141 major rivers in North America
-is \Sexpr{round(mean(rivers), digits = 0)} miles. 
+is \Sexpr{round(mean(rivers), digits = 0)} miles.
 @
 
 \noindent This produces the sentence:
 
 \begin{quote}
-    The mean length of 141 major rivers in North America is \Sexpr{round(mean(rivers), digits = 0)} miles. 
+    The mean length of 141 major rivers in North America is \Sexpr{round(mean(rivers), digits = 0)} miles.
 \end{quote}
 
-\noindent R code included inline with \texttt{Sexpr} is evaluated using current R options.\index{R!global options} So if you want all of the output from \texttt{Sepxr} to be rounded to the same number of digits, for example, it might be a good idea to set this in a code chunk with R's \texttt{options} command.\index{R command!options} See page \pageref{ROptions} for more details.
+\noindent R code included inline with \texttt{Sexpr} is evaluated using current R options.\index{R!global options} So if you want all of the output from \texttt{Sexpr} to be rounded to the same number of digits, for example, it might be a good idea to set this in a code chunk with R's \texttt{options} command.\index{R function!options} See page \pageref{ROptions} for more details.
 
 \subsubsection{Markdown}
 
@@ -128,24 +148,24 @@ Including dynamic code in the body of your R Markdown text is similar to includi
 
 \subsection{Dynamically including non-R code in code chunks}
 
-You are not limited to dynamically including just R code in your presentation documents. {\emph{knitr}} can run code from a variety of other languages including: Python\index{Python}, Ruby, Bash, Haskell, and Awk. All you have to do to dynamically include code from one of these languages is use the \texttt{engine}\index{knitr option!engine} code chunk option to tell \emph{knitr} which language you are using. For example, to dynamically include a simple line of Ruby code in an R Markdown document type:
+You are not limited to dynamically including just R code in your presentation documents. {\emph{knitr}} can run code from a variety of other languages including: Python\index{Python}, Ruby, Bash, Haskell, and Awk. All you have to do to dynamically include code from one of these languages is use the \texttt{engine}\index{knitr option!engine} code chunk option to tell \emph{knitr} which language you are using. For example, to dynamically include a simple line of Python code in an R Markdown document type:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}\color{fgcolor}
     \begin{kframe}
         \begin{verbatim}
-```{r engine='ruby'}
+```{r engine='python'}
 print "Reproducible Research"
 ```
         \end{verbatim}
     \end{kframe}
 \end{knitrout}
 
-\noindent In the final HTML\index{HTML} file you will get:\footnote{Again, this was created using RStudio's default CSS style file.} 
+\noindent In the final HTML\index{HTML} file you will get:\footnote{Again, this was created using RStudio's default CSS style file.}
 
-\includegraphics[scale = 0.6]{Children/Chapter8/images8/RubyRR.png}
+\includegraphics[scale = 0.6]{Children/Chapter8/images8/PythonRR.png}
 
-Many of the programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. To enable more complete syntax highlighing for non-R languages you will need to download Andre Simon's \emph{highlighter} utility.\index{highlighter} Installation instructions can be found on his website at: \url{http://www.andre-simon.de/zip/download.html}.
+Many of the programming language values \texttt{engine} can take are listed in Table \ref{EngineOptions}. To enable more complete syntax highlighting for non-R languages you will need to download Andre Simon's \emph{highlighter} utility.\index{highlighter} Installation instructions can be found on his website at: \url{http://www.andre-simon.de/zip/download.html}.
 
 \begin{table}[ht]
     \caption{A Selection of \emph{knitr} \texttt{engine} Values}
@@ -157,10 +177,10 @@ Many of the programming language values \texttt{engine} can take are listed in T
             \hline\hline
             \texttt{awk} & Awk\index{Awk} \\
             \texttt{bash} & Bash shell \index{Bash} \\
-            \texttt{coffeescript} & CoffeeScript\index{CoffeeScript} \\ 
+            \texttt{coffeescript} & CoffeeScript\index{CoffeeScript} \\
             \texttt{gawk} & Gawk\index{Gawk} \\
             \texttt{haskell} & Haskell\index{Haskell} \\
-            \texttt{highlight} & Highlight\index{knitr!highlight} \\ 
+            \texttt{highlight} & Highlight\index{knitr!highlight} \\
             \texttt{python} & Python\index{Python} \\
             \texttt{R} & R (default) \\[0.25cm]
             \texttt{ruby} & Ruby\index{Ruby} \\
@@ -175,15 +195,15 @@ Many of the programming language values \texttt{engine} can take are listed in T
 
 There are a number of reasons why you might want to have your R source code located in separate files from your markup documents even if you compile them together with \emph{knitr}.
 
-First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code folding and chunk management options. There are just too many things going on in one document. 
+First, it can be unwieldy to edit both your markup and long R source code chunks in the same document, even with RStudio's handy \emph{knitr} code folding and chunk management options. There are just too many things going on in one document.
 
-Second, you may want to use the same code in multiple documents--an article and slide show presentation, for example. It is nice to not have to copy and paste the same code into multiple places. Instead it is easier to have multiple documents link to the same source code file. When you make changes to this source code file, the changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
+Second, you may want to use the same code in multiple documents--an article and slide show presentation, for example. It is nice to not have to copy and paste the same code into multiple places. Instead, it is easier to have multiple documents link to the same source code file. When you make changes to this source code file, the changes will automatically be made across all of your presentation documents. You don't need to make the same changes multiple times.
 
 Third, other researchers trying to replicate your work might only be interested in specific parts of your analysis. If you have the analysis broken into separate and clearly labeled modular files that are explicitly tied together in the markup file with \emph{knitr}, it is easy for them to find the specific bits of code that they are interested in.
 
 \subsection{Source from a local file}
 
-Usually in the early stages of your research you may want to run code stored in analysis files located on your computer. Doing this is simple. The \emph{knitr} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk, you save it to its own file and use the \texttt{source}\index{R command!source} command to access it.\footnote{We used the \texttt{source} command in Chapter \ref{DataGather} in our make-like data gathering file.} For example, in an R Markdown file we could run the R code in a file called \emph{MainAnalysis.R} from our \emph{ExampleProject} like this:
+Usually, in the early stages of your research, you may want to run code stored in analysis files located on your computer. Doing this is simple. The \emph{knitr} syntax is the same as for block code chunks. The only change is that instead of writing all of your code in the chunk, you save it to its own file and use the \texttt{source}\index{R function!source} command to access it.\footnote{We used the \texttt{source} command in Chapter \ref{DataGather} in our make-like data gathering file.} For example, in an R Markdown file we could run the R code in a file called \emph{MainAnalysis.R} from our \emph{ExampleProject} like this:
 
 <<MarkdownLocalSource, eval=FALSE, tidy=FALSE>>=
 ```{r, include=FALSE}
@@ -192,20 +212,20 @@ source("/ExampleProject/Analysis/MainAnalysis.R"}
 ```
 @
 
-\noindent Notice that we set the option \texttt{include=FALSE}. This will run the analysis and produce objects created by the analysis code that can be used by other code chunks, but the output will not show up in the presentation document's text. 
+\noindent Notice that we set the option \texttt{include=FALSE}. This will run the analysis and produce objects created by the analysis code that can be used by other code chunks, but the output will not show up in the presentation document's text.
 
 \paragraph{Sourcing a makefile in a code chunk}
 
-In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures, and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R command!system} command (see Section \ref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
+In Chapter \ref{DataGather} we created a GNU Makefile\index{GNU Make}\index{makefile} to organize our data gathering. You can run makefiles every time you compile your presentation document. This can keep your data, analyses, figures, and tables up-to-date. One way to do this is to run the GNU makefile in an R code chunk with the \texttt{system}\index{R function!system} command (see Section \ref{systemRcommand}). Perhaps a better way to run makefiles from \emph{knitr} presentation documents is to include the commands in a code chunk using the Bash engine. For example, a Sweave-style code chunk for running the makefiles in our example project would look like this:
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
 \textless{\textless}engine='bash', include=FALSE\textgreater{\textgreater}=
-# Change working directory to /ExampleProject/Data/GatherSource
-cd /ExampleProject/Data/GatherSource/
+# Change working directory to /ExampleProject/Analysis/Data
+cd /ExampleProject/Analysis/Data/
 
 # Run makefile
 make cleanMerge all
@@ -215,70 +235,59 @@ cd /ExampleProject/Analysis/
 @
             \end{alltt}
         \end{kframe}
-\end{knitrout}  
+\end{knitrout}
 
 \noindent Please see page \pageref{MakeAllCommand} for details on the \texttt{make} command arguments used here.
 
-You can of course also use R's \texttt{source} command to run an R make-like data gathering file. Unlike GNU Make, this will rerun all of the data gathering files, even if they have not been updated. This may become very time consuming depending on the size of your data sets and how they are manipulated. 
+You can Of course, also use R's \texttt{source} command to run an R make-like data gathering file. Unlike GNU Make, this will rerun all of the data gathering files, even if they have not been updated. This may become very time consuming depending on the size of your data sets and how they are manipulated.
 
 One final note on including makefiles in your \emph{knitr} presentation document source code: it is important to place the code chunk with the makefile before code chunks containing statistical analyses that depend on the data file it creates. Placing the makefile first will keep the others up-to-date.
 
 \subsection{Source from a non-secure URL (\texttt{http})}\index{http}
 
-Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest method is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{R command!source} command the same way as we did before with the \texttt{read.table}\index{R command!read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included included with this book.}
-
-Let's look at a quick example of sourcing an R function\index{R functions} that has been made available at a non-secure URL. Paul Johnson created a function called \emph{outreg}\index{outreg} for creating LaTeX tables from R objects. He has made the function available on his website at: \url{http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R}. You can directly load this function into your workspace with \texttt{source}.
-
-{\small{
-<<Ch8OutregSource, eval=FALSE>>=
-# Load Paul Johnson' outreg function
-source("http://pj.freefaculty.org/R/WorkingExamples/outreg-worked.R")
-@
-}}
-
-\noindent Now you can use \texttt{outreg} like any other function you have loaded.
+Sourcing from your computer is fine if you are working alone and do not want others to access your code. Once you start collaborating and generally wanting people to be able to reproduce your analyses, you need to use another storage method. The simplest method is to host the replication code in your Dropbox public folder. You can find the file's public URL in the same way that you did in Chapter \ref{Storing}. Then use the \texttt{source}\index{R function!source} command the same way as we did before with the \texttt{read.table}\index{R function!read.table} command.\footnote{You can also make the replication code accessible for download and either instruct others to change the working directory to the replication file or have them change the directory information as necessary. You will need to do this with GNU makefiles like those included with this book.}
 
 \subsection{Source from a secure URL (\texttt{https})}\label{SourceSecureURL}\index{https}
 
-If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R command!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{DataGather} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/UOtH4L}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly (see \url{http://bitly.com}). You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
+If you are using GitHub\index{GitHub} or another service that uses secure URLs to host your analysis source code files you need to use the \verb|source_url|\index{R function!source\_url} command in the {\emph{devtools}}\index{devtools} package. For GitHub based source code we find the file's URL the same way we did in Chapter \ref{Storing} (Section \ref{RawGitHub}). Remember to use the URL for the {\emph{raw}}\index{raw} version of the file. I have a short script hosted on GitHub for creating a scatterplot from data in R's {\emph{cars}} data set. The script's shortened URL is \url{http://bit.ly/1D5p1w6}.\footnote{The original URL is at \url{https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/SimpleScatter.R}. This is very long, so I shortened it using bitly. You may notice that the shortened URL is not secure. However, it does link to the original secure {\tt{https}} URL.} To run this code and create the scatterplot\index{scatterplot} using \verb|source_url| you simply type:\label{SourceCarsGraph}
 
 <<Ch8SourceURLExample, message=TRUE, warning=FALSE, cache=TRUE, out.width='8cm', out.height='8cm'>>=
 # Load devtools package
 library(devtools)
 
 # Run the source code to create the scatter plot
-source_url("http://bit.ly/UOtH4L")
+source_url("http://bit.ly/1D5p1w6")
 @
 
-\noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R command!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.github.com/}.
+\noindent You can also use the {\emph{devtools}} command \verb|source_gist|\index{R function!source\_gist} in a similar way to source GitHub Gists\index{GitHub!Gist}. Gists are a handy way to share code over the internet. For more details see: \url{https://gist.GitHub.com/}.
 
-Similar to what we saw in Chapter \ref{Storing} (Section \ref{GitDownload}),\label{sourceurl} if you would like to use a particular version of a file stored on GitHub\index{GitHub} simply include that version's URL in the \verb|source_url| call. This can be useful for replicating particular results. Linking to a particular version of a source code file will enable replication even if you later make changes to the file. To access the URL for a particular version of a file first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter8/images8/BrowseCode.png}) next to the version of the file that you want to use. Finally, click on the \texttt{Raw} button to be taken to the text-only version of the file. Copy this page's URL and use it in \verb|source_url|.
+Similar to what we saw in Chapter \ref{Storing} (Section \ref{GitDownload}),\label{sourceurl} if you would like to use a particular version of a file stored on GitHub,\index{GitHub} simply include that version's URL in the \verb|source_url| call. This can be useful for replicating particular results. Linking to a particular version of a source code file will enable replication even if you later make changes to the file. To access the URL for a particular version of a file, first click on the file on GitHub's website. Then click the \texttt{History} button (\includegraphics[scale=0.3]{Children/Chapter8/images8/GitHistory.png}). This will take you to a page listing all of the file's versions. Click on the \texttt{Browse Code} button (\includegraphics[scale=0.5]{Children/Chapter5/images5/BrowseCodeIcon.png}) next to the version of the file that you want to use. Finally, click on the \texttt{Raw} button to be taken to the text-only version of the file. Copy this page's URL and use it in \verb|source_url|.
 
-Also, just like with \verb|source_data|\index{R command!source\_data}, we can set the \verb|sha1| argument to tell \verb|source_url| to make sure that the source code file it is downloading is the one we intended.\index{SHA-1 hash} This will work regardless of whether or not the file is stored on GitHub.
+Also, just like with \verb|source_data|\index{R function!source\_data}, we can set the \verb|sha1| argument to tell \verb|source_url| to make sure that the source code file it is downloading is the one we intended.\index{SHA-1 hash} This will work regardless of whether or not the file is stored on GitHub.
 
 \section{Reproducibly Random: {\tt{set.seed}}}
 
-If you are including simulations in your analysis it is often a good idea to specify the random number generator state you used.\index{random number generator} This will allow others to exactly replicate your `randomly'--really pseudo-randomly--generated simulation results. Use the \texttt{set.seed} command in your source code files or code chunks to do this.\index{R command!set.seed} For example use the following code to set the random number generator state\footnote{See the \texttt{Random} help file for detailed information on R's random number generation capabilities by typing \texttt{?Random} into your console.} and randomly draw 1,000 numbers from a standard normal distribution\index{normal distribution} with a mean of 0 and a standard deviation of 2\index{standard deviation}. 
+If you are including simulations in your analysis it is often a good idea to specify the random number generator state you used.\index{random number generator} This will allow others to exactly replicate your `randomly'--really pseudo-randomly--generated simulation results. Use the \texttt{set.seed} command in your source code files or code chunks to do this.\index{R function!set.seed} For example, use the following code to set the random number generator state\footnote{See the \texttt{Random} help file for detailed information on R's random number generation capabilities by typing \texttt{?Random} into your console.} and randomly draw 1,000 numbers from a standard normal distribution\index{normal distribution} with a mean of 0 and a standard deviation of 2\index{standard deviation}.
 
 <<Ch8SetSeed1>>=
 # Set seed as 125
 set.seed(125)
 
 # Draw 1000 numbers
-Draw1 <- rnorm(1000, mean = 0, sd = 2) 
+Draw1 <- rnorm(1000, mean = 0, sd = 2)
 
 # Summarize Draw1
 summary(Draw1)
 @
 
-\noindent The \texttt{rnorm} command\index{R command!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show you that we will draw the same numbers if we use the same seed, let's run the code again:
+\noindent The \texttt{rnorm} command\index{R function!rnorm} draws the 1,000 simulations. The \texttt{mean} argument allows us to set the normal distribution's mean and \texttt{sd} sets its standard deviation. Just to show you that we will draw the same numbers if we use the same seed, let's run the code again:
 
 <<Ch8SetSeed2>>=
 # Set seed as 125
 set.seed(125)
 
 # Draw 1000 numbers
-Draw2 <- rnorm(1000, mean = 0, sd = 2) 
+Draw2 <- rnorm(1000, mean = 0, sd = 2)
 
 # Summarize Draw1
 summary(Draw2)
@@ -286,14 +295,14 @@ summary(Draw2)
 
 \section{Computationally Intensive Analyses}
 
-Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make writing the document frustrating because it will take a long time to knit it each time you make changes. There are at least two solutions to this problem: the \texttt{cache} chunk option and makefiles.\index{makefile} We discussed makefiles in Chapter \ref{DataGather}, so let's look at how to work with the \texttt{cache} option.\index{knitr option!cache} 
+Sometimes you may want to include computationally intensive analyses that take a long time to run as part of a \emph{knitr} document. This can make writing the document frustrating because it will take a long time to knit it each time you make changes. There are at least two solutions to this problem: the \texttt{cache} chunk option and makefiles.\index{makefile} We discussed makefiles in Chapter \ref{DataGather}, so let's look at how to work with the \texttt{cache} option.\index{knitr option!cache}
 
-When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis, the code chunk will only be run when the chunks contents change\footnote{Note that the the chunk will not be run if only the contents of a file the chunk sources are changed.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see Section \ref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}  
+When you set \verb|cache=TRUE|\index{knitr option!cache} for the code chunk that contains the analysis, the code chunk will only be run when the chunk's contents change\footnote{Note that the chunk will not be run if only the contents of a file the chunk sources are changed. Use the \texttt{dependson} option in cases where it is important to rerun a chunk when a prior chunk changes.} or the chunk options change. This is a very easy solution to the problem. It does have a major drawback: other chunks can't access objects created by the chunk or use commands from packages loaded in it. Solve these problems by (a) having packages loaded in a separate chunk and (b) save objects created by the cached chunk to a separate RData file that can be loaded in later chunks (see Section \ref{RSave} for information on saving to RData files).\footnote{It's true that when \texttt{knitr} caches a code chunk it saves the chunk's objects to an \texttt{.RData} file. However, it is difficult to load this file directly because the file name changes every time the cached chunk is rerun.}
 
-Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R command!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
+Imagine that in a cached code chunk we create an object called \emph{Sample}. Then in a later code chunk we want to use the \texttt{hist}\index{R function!hist} command to create a histogram\index{histogram} of the sample. In the cached code chunk we save \emph{Sample} to a file called \emph{Sample.RData}.
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
@@ -308,10 +317,10 @@ Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
-\noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R command!rnorm} to take a random sample of size 1,000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
+\noindent The latter code chunk for creating the histogram would go something like this:\footnote{For reference, \emph{Sample} was created by using the \texttt{rnorm} command\index{R function!rnorm} to take a random sample of size 1,000 from a normal distribution\index{normal distribution} with a mean of five and standard deviation of two.}
 
 \begin{knitrout}
-    \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}
+    \definecolor{shadecolor}{rgb}{1, 1, 1}
     \color{fgcolor}
     \begin{kframe}
         \begin{alltt}
@@ -326,8 +335,8 @@ Sample <- \hlkwd{rnorm}(n = 1000, mean = 5, sd = 2)
         \end{kframe}
 \end{knitrout}
 
-\noindent \label{CacheVars} If the code chunk you want to cache creates many objects, but you only want to save a few of them you can use \emph{knitr}'s' \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save. 
+\noindent \label{CacheVars}If the code chunk you want to cache creates many objects, but you only want to save a few of them, you can use \emph{knitr}'s \texttt{cache.vars} chunk option.\index{knitr option!cache.vars} Simply give it a character vector of the objects' names that you want to save.
 
-\subsection*{Chapter Summary}
+\subsection*{Chapter summary}
 
-In this chapter we covered in more detail key \emph{knitr} syntax for including code chunks in our presentation documents. This and other tools we learned in this chapter are important for tying our statistical analyses directly to its advertising, i.e. our presentation documents. In the next two chapters we will learn how to take the output from our statistical analysis and, using \emph{knitr}, present the results with dynamically created tables and figures. 
+In this chapter we covered in more detail key \emph{knitr} syntax for including code chunks in our presentation documents. This and other tools we learned in this chapter are important for tying our statistical analyses directly to its advertising, i.e. our presentation documents. In the next two chapters we will learn how to take the output from our statistical analysis and, using \emph{knitr}, present the results with dynamically created tables and figures.

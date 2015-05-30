@@ -1,84 +1,61 @@
 %%%%%%%%%%%%%%
 % Example research project file path
 % Christopher Gandrud
-% Updated 28 January 2013
+% Updated 29 December 2014
 %%%%%%%%%%%%%%
 
 % Set node styles
-\tikzstyle{DirBox} = [draw=black, 
-                      rectangle, 
-                      minimum width=5em, 
-                      very thick, 
-                      font=\small]
-                      
-\tikzstyle{every node} = [draw=gray, 
-                          thin, 
-                          anchor=west, 
-                          font=\small]
-  
+\tikzstyle{DirBox} = [draw=black,
+rectangle,
+minimum width=5em,
+very thick,
+font=\small]
+
+\tikzstyle{every node} = [draw=gray,
+thin,
+anchor=west,
+font=\small]
+
 % Begin tikz picture
 \begin{tikzpicture}[%
-  grow via three points={one child at (0.5,-0.7) and
-  two children at (0.5,-0.7) and (0.5,-1.4)},
-  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
-  % Root Directory
-  \node (root) at (7.5, 10) [DirBox]{Root};
-  
-  % Project Directory
-  \node (project) at (7.25, 8.5) [DirBox]{ExampleProject};
-  
-  % Data Directory
-  \node (data) at (0, 7) [DirBox]{Data}
-      child {node {{\small{MainData.csv}}}}
-      child { node [DirBox]{GatherSource}
-        child {node {{\small{Makefile}}}} 
-        child {node {{\small{MergeData.R}}}} 
-        child {node {{\small{Gather1.R}}}}
-        child {node {{\small{Gather2.R}}}}
-        child {node {{\small{Gather3.R}}}}
-        };
-  
-  % Analysis subdirectores/files
-  \node (analysis) at (4.5, 7) [DirBox]{Analysis}
-          child {node {{\small{MainAnalysis.R}}}}
-          child { node [DirBox]{ResultsFigures}
-            child {node {{\small{Figure1.R}}}}
-            child {node {{\small{Figure2.R}}}}
-            child {node {{\small{Figure3.R}}}}
-            };
-  
-  % Presentation subdirectories/files
-  \node (presentation) at (11, 7) [DirBox]{Presentation};
-  \node (article) at (9.5, 6) [DirBox]{Article}
-          child {node {{\small{Paper.Rnw}}}}
-          child {node {{\small{Main.bib}}}}
-          child {node {{\small{Packages.bib}}}}
-          child {node [DirBox]{figure}
-            child {node {{\small{Figure1.pdf}}}}
-            child {node {{\small{Figure2.pdf}}}}
-            child {node {{\small{Figure3.pdf}}}}
-          };
-  
-  \node (other) at (13, 6) [DirBox]{Other}
-        child {node [DirBox]{Slideshow}
-          child {node {{\small{Slideshow.Rnw}}}}}
-        child [missing] {}
-        child {node [DirBox]{Website}
-          child {node {{\small{Website.Rmd}}}}
-          };
+    grow via three points={one child at (0.5,-0.7) and
+    two children at (0.5,-0.7) and (0.5,-1.4)},
+    edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+    % Root Directory
+    \node (root) at (4.5, 10) [DirBox]{Root};
 
-  % README file
-  \node (readme) at (15, 7) {README.md};
-  
-  % Connect boxes that are not explicit children
-  \draw (root) -- (project);
-  \draw (project) -| (data);
-  \draw (project) -| (analysis);
-  \draw (project) -| (presentation);
-  \draw (project) -| (readme);
-  
-  %% Presentation connect boxes
-  \draw (presentation) -| (article);
-  \draw (presentation) -| (other);
-  
+    % Project Directory
+    \node (project) at (4, 8.5) [DirBox]{ExampleProject}
+    child {node {{\small{Paper.Rnw}}}}
+    child {node {{\small{Slideshow.Rnw}}}}
+    child {node {{\small{Website.Rmd}}}}
+    child {node {{\small{Main.bib}}}}
+    child {node {{\small{Packages.bib}}}}
+    ;
+
+    % Data Directory
+    \node (data) at (0, 4.5) [DirBox]{Data}
+    child {node {{\small{Makefile}}}}
+    child {node {{\small{Gather1.R}}}}
+    child {node {{\small{Gather2.R}}}}
+    child {node {{\small{MergeData.R}}}}
+    child {node {{\small{MainDataVariableDescriptions.md}}}}
+    child {node {{\small{MainData.csv}}}}
+    ;
+
+    % Analysis subdirectores/files
+    \node (analysis) at (1.5, 7) [DirBox]{Analysis}
+    child {node {{\small{Analysis1.R}}}}
+    child {node {{\small{Analysis2.R}}}}
+    ;
+
+    % README file
+    \node (readme) at (9.5, 7) {README.md};
+
+    % Connect boxes that are not explicit children
+    \draw (root) -- (project);
+    \draw (project) -| (analysis);
+    \draw (analysis) -| (data);
+    \draw (project) -| (readme);
+
 \end{tikzpicture}

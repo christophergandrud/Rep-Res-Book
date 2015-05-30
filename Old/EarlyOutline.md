@@ -51,7 +51,7 @@
 > 2.3.1 **R**/**RStudio**  
   2.3.2 `knitr`  
   2.3.3 Cloud storage & versioning  
-  2.3.4 The command line  
+  2.3.4 The command-line  
   2.3.5 Markup languages: \\( LaTeX \\) & **Markdown**/HTML  
   
 ### 3 Getting Started with R/RStudio ###
@@ -216,7 +216,7 @@
   - In line output with `\Sexpr{}`   
   - Custom title pages in \\( LaTeX \\)  
   
-12.3 Batch reports with `knitr` and the command line
+12.3 Batch reports with `knitr` and the command-line
 > 12.3.1 The data  
   12.3.2 The markup  
   12.3.3 The makefile

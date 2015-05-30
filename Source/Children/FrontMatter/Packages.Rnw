@@ -6,110 +6,101 @@ set_parent('Rep-Res-Parent.Rnw')
 
 \addcontentsline{toc}{chapter}{Required R Packages}
 
-In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately. To install most of the user-written packages used in this book, copy the following code and paste it into your R console:
+In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately.
+
+\index{R!packages|(}
+
+\textbf{Note:} in general you should aim to minimize the number of packages that your research depends on. Doing so will lessen the possibility that your code will ``break'' when a package is updated. This book depends on relatively many packages because of its special and unusual purpose of illustrating a variety of tools that you can use for reproducible research.
+
+To install key user-written packages discussed in this book, copy the following code and paste it into your R console:
 
 <<FrontInstallPackages, eval=FALSE, tidy=FALSE>>=
-install.packages(c("apsrtable", "brew", "countrycode",
-                "devtools", "dplyr", "digest", "gdata",
-                "ggplot2", "googleVis", "httr", "knitcitations",
-                "knitr", "Rmarkdown", "plyr",
-                "quantmod", "repmis", "reshape2",
-                "RCurl", "rjson", "RJSONIO", "stargazer",
-                "texreg", "tools", "WDI", "XML", "xtable",
-                "Zelig"))
+install.packages(c("brew", "countrycode",
+                "devtools", "dplyr",
+                "ggplot2", "googleVis",
+                "knitr", "MCMCpack",
+                "repmis", "RCurl",
+                "rmarkdown", "texreg",
+                "tidyr", "WDI",
+                "xtable", "Zelig"))
 @
 
 \noindent Once you enter this code, you may be asked to select a CRAN ``mirror''\index{CRAN!mirror} to download the packages from.\footnote{CRAN stands for the Comprehensive R Archive Network.} Simply select the mirror closest to you.
 
-In Chapter \ref{TablesChapter} we use the \emph{Zelig} package \citep{R-Zelig}\index{Zelig} to create a simple Bayesian normal linear regression. For this to work properly you will need to install an additional package called \emph{ZeligBayesian} \citep{R-ZeligBayesian}. To do this type the following code into your R console: \label{ZeligBayes}\index{ZeligBayesian}
+In Chapter \ref{TablesChapter} we use the \emph{Zelig} package \citep{R-Zelig}\index{Zelig} to create a simple Bayesian normal linear regression. For this to work properly you will need to install an additional package called \emph{ZeligBayesian} \citep{R-ZeligBayesian}. To do this, type the following code into your R console: \label{ZeligBayes}\index{ZeligBayesian}
 
 <<ZeligBayesian, eval=FALSE, tidy=FALSE>>=
 install.packages("ZeligBayesian",
                  repos = "http://r.iq.harvard.edu/",
-                 type  = "source"
-                 )
+                 type  = "source")
 @
 
-Ramnath Vaidyanathan's \emph{slidify}\index{slidify} package \citeyearpar{R-slidify} for creating R Markdown/HTML slideshows (see Chapter \ref{MarkdownChapter}) is not currently on CRAN. It can be downloaded directly from GitHub\index{GitHub}. To do this first load the \emph{devtools} package \cite[]{R-devtools}.\index{devtools} Then download \emph{slidify}. Here is the complete code:
-
-<<FrontSlidifyInstall, eval=FALSE, tidy=FALSE>>=
-# Load devtools
-library(devtools)
-
-# Install slidify and ancillary libraries
-install_github("slidify", "ramnathv")
-install_github("slidifyLibraries", "ramnathv")
-@
-
-\noindent For more details see the \emph{slidify} website: \url{http://ramnathv.github.com/slidify/start.html#}.
+\index{R!packages|(}
 
 \paragraph{Special issues for Windows and Linux Users}
 
-If you are using Windows you will also need to install \emph{Rtools} \cite[]{Rtools}.\index{Rtools} You can download \emph{Rtools} from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload} Please use the recommended installation to ensure that your system PATH\index{PATH} is set up correctly. Otherwise your computer will not know where the tools are.
+If you are using Windows, you will also need to install \emph{Rtools} \cite[]{Rtools}.\index{Rtools} You can download \emph{Rtools} from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload} Please use the recommended installation to ensure that your system PATH\index{PATH} is set up correctly. Otherwise your computer will not know where the tools are.
 
-On Linux you will need to install the \emph{RCurl} \citep{R-RCurl}\index{RCurl} and \emph{XML}\index{XML} \citep{R-XML} packages seperately. Use your Terminal\index{Terminal} to install these packages with the following code:
+On Linux you will need to install the \emph{RCurl} \citep{R-RCurl}\index{RCurl} and \emph{XML}\index{XML} \citep{R-XML} packages separately. Use your Terminal\index{Terminal} to install these packages with the following code:
 
 <<PackagesRCurlLinux, echo=TRUE, eval=FALSE, engine='sh'>>=
 sudo apt-get update
 
 sudo apt-get install libcurl4-gnutls-dev
-
-sudo apt-get install r-cran-xml
 sudo apt-get install libxml2-dev
+sudo apt-get install r-cran-xml
+sudo apt-get install r-cran-rjava
 @
 
 
 <<FrontPackageCitations, include=FALSE>>=
 # Install & load required packages as well as all cited packages
-## Based on https://gist.github.com/3710171
+# Note: many of these packages are loaded to access their citation information.
+## Based on https://gist.GitHub.com/3710171
 ## See also http://bit.ly/PbabKd
-## Note: if you are installing doInstall is TRUE then remove the slidify package from this list and install it separately using the instructions above.
-## If doInstall is TRUE then you will need to remove the slidify package from the list. Install it using the directions above.
 
 doInstall <- FALSE  # Change to FALSE if you don't want packages installed.
 toInstall <- c("animation",
-               "apsrtable",
-               "brew",
-               "countrycode",
-               "data.table",
-               "devtools",
-               "digest",
-               "dplyr",
-               "estout",
-               "extrafont",
-               "formatR",
-               "gdata",
-               "ggplot2",
-               "googleVis",
-               "httr",
-               "Hmisc",
-               "knitcitations",
-               "knitr",
-               "markdown",
-               "memisc",
-               "plyr",
-               "quantmod",
-               "repmis",
-               "reshape2",
-               "RCurl",
-               "rjson",
-               "RJSONIO",
-               "stargazer",
-               "survival",
-               "slidify",
-               "sqldf",
-               "tables",
-               "texreg",
-               "tools",
-               "twitteR",
-               "WDI",
-               "XML",
-               "xtable",
-               "Zelig",
-               "ZeligBayesian"
+                "brew",
+                "countrycode",
+                "data.table",
+                "devtools",
+                "digest",
+                "dplyr",
+                "extrafont",
+                "formatR",
+                "ggplot2",
+                "googleVis",
+                "highlight",
+                'htmlwidgets',
+                "httr",
+                "knitcitations",
+                "knitr",
+                "magrittr",
+                "markdown",
+                "openair",
+                "packrat",
+                "quantmod",
+                "RCurl",
+                "repmis",
+                "rjson",
+                "rmarkdown",
+                "RJSONIO",
+                "rvest",
+                "shiny",
+                "stargazer",
+                "survival",
+                "texreg",
+                "tidyr",
+                "twitteR",
+                "WDI",
+                "XML",
+                "xtable",
+                "Zelig",
+                "ZeligBayesian"
                )
 
-if(doInstall){install.packages(toInstall, repos = "http://cran.us.r-project.org")}
+if(doInstall)install.packages(toInstall, repos = "http://cran.us.r-project.org")
 lapply(toInstall, library, character.only = TRUE)
 
 # Write citations to bibtex file

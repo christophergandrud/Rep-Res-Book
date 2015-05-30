@@ -3,7 +3,7 @@
 # With Markdown
 # Christopher Gandrud
 # Updated 28 June 2012
-# Helpful information found in "The Linux Command Line: A Complete Introduction" (Shotts 2012)
+# Helpful information found in "The Linux Command-line: A Complete Introduction" (Shotts 2012)
 ##########
 
 #!/bin/bash

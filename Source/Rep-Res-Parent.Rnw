@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%
 % Parent document for the book Reproducible Research with R and RStudio
 % Christopher Gandrud
-% 22 August 2013
+% 17 April 2015
 %%%%%%%%%%%%%%
 
 % Tell RStudio that weaving is to be done with the knitr package
@@ -21,8 +21,8 @@
 \usepackage{emptypage}
 %\usepackage{showidx}
 \usepackage{multicol}
-	\frenchspacing
-	\tolerance=5000
+    \frenchspacing
+    \tolerance=5000
 %\usepackage[usenames,dvipsnames,svgnames]{xcolor}
 \usepackage{dcolumn}
 \usepackage{booktabs}
@@ -33,17 +33,26 @@
 \usepackage{url}
 \usepackage{todonotes}
 \usepackage{tikz}
-	\usetikzlibrary{trees}
-	\usetikzlibrary{decorations.pathmorphing}
-	\usetikzlibrary{shapes,arrows}
+    \usetikzlibrary{trees}
+    \usetikzlibrary{decorations.pathmorphing}
+    \usetikzlibrary{shapes,arrows}
 \usepackage{wrapfig}
 \usepackage{alltt}
 
+\makeatletter
+\def\section{\@startsection{section}{1}{\z@}{-3.5ex \@plus -1ex \@minus -.2ex}{2.3ex \@plus .2ex}
+  {\normalfont\raggedright\Large\bfseries}}
+\def\subseciton{\@startsection{subsection}{2}{\z@}{-3.25ex\@plus -1ex \@minus -.2ex}{1.5ex \@plus .2ex}
+  {\normalfont\raggedright\large\bfseries}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-3.25ex\@plus -1ex \@minus -.2ex}{1.5ex \@plus .2ex}
+  {\normalfont\raggedright\normalsize\bfseries}}
+\makeatother
+
 \newcommand{\blankpage}{
-	\newpage
-	\thispagestyle{empty}
-	\mbox{}
-	\newpage
+    \newpage
+    \thispagestyle{empty}
+    \mbox{}
+    \newpage
 }
 
 
@@ -52,9 +61,10 @@
 
 % Set knitr global options
 <<ParentGlobalOpts, echo=FALSE>>=
-	opts_chunk$set(concordance=TRUE)
-	opts_chunk$set(fig.align='center')
-	opts_chunk$set(echo=TRUE)
+    opts_chunk$set(concordance=TRUE)
+    opts_chunk$set(fig.align='center')
+    opts_chunk$set(echo=TRUE)
+    opts_chunk$set(background='#FFFFFF')
 @
 
 \makeatletter
@@ -64,7 +74,7 @@
 \begin{document}
 
 % Title page
-\title{Reproducible Research with R and RStudio}
+\title{Reproducible Research with R and RStudio Second Edition}
 
 \author{Christopher Gandrud}
 
@@ -76,27 +86,26 @@
 % Front matter
 \frontmatter
 
-\blankpage
-\blankpage
-\blankpage
-\blankpage
-\blankpage
-\blankpage
+\newpage\null\newpage
+\newpage\null\newpage
+\newpage\null\newpage
+\newpage\null\newpage
+\newpage\null\newpage
 
+
+% Table of Contents
+\tableofcontents
 
 % Preface
 <<ChildFrontMatterAuthor, child=c('Children/FrontMatter/Preface.Rnw'), eval=TRUE, message=FALSE>>=
 @
-
-% Table of Contents
-\tableofcontents
 
 % Convert Stylistic Conventions child document from Markdown to LaTex and include
 \chapter*{Stylistic Conventions}\label{StylisticConventions}
 
 \addcontentsline{toc}{chapter}{Stylistic Conventions}
 
-<<ChildStylisticConventions, include=FALSE, engine="sh">>=
+<<ChildStylisticConventions, include=FALSE, engine="bash">>=
 pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
 @
 
@@ -107,12 +116,15 @@ pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
 @
 
 % Add lists of figures and tables
-\listoffigures
+\cleardoublepage
+\phantomsection \label{listoffig}
 \addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
 
-\listoftables
+\newpage
+\phantomsection \label{listoftables}
 \addcontentsline{toc}{chapter}{List of Tables}
-
+\listoftables
 
 \mainmatter
 
@@ -148,16 +160,15 @@ pandoc Children/FrontMatter/StylisticConventions.md -t latex -o StyleTemp.tex
 \addcontentsline{toc}{chapter}{\bibname}
 \bibliographystyle{apa}
 \markboth{\bibname}{\bibname}
-\bibliography{rep-res-book,rep-res-PackagesCited}
- 
- 
+\bibliography{rep-res-book,Children/FrontMatter/rep-res-PackagesCited}
+
+
 %Include index
 \let\myindtmp\indexspace %to tighten up the index
 \renewcommand{\indexspace}{\myindtmp\vspace*{-2pt}}
- 
+
 \cleardoublepage
 \markboth{\indexname}{\indexname}
 \printindex
 
 \end{document}
-
