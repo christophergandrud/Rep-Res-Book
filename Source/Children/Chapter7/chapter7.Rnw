@@ -39,7 +39,7 @@ summary(FertConsumpData)
 @
 }
 
-\noindent We can immediately see that the variables \textbf{iso2c} and \textbf{country} are character strings. Because \texttt{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year}, we know they are numeric. Have a look over the summary to see if there is anything unexpected like lots of missing values (\textbf{NA's}) or unusual maximum and minimum values. You can Of course, run \texttt{summary} on a particular variable by using the component selector (\verb|$|):
+\noindent We can immediately see that the variables \textbf{iso2c} and \textbf{country} are character strings. Because \texttt{summary} is able to calculate means, medians, and so on for \textbf{AG.CON.FERT.ZS} and \textbf{year}, we know they are numeric. Have a look over the summary to see if there is anything unexpected like lots of missing values (\textbf{NA's}) or unusual maximum and minimum values. You can of course, run \texttt{summary} on a particular variable by using the component selector (\verb|$|):
 
 <<Ch7SummarizeCompSelect>>=
 # Summarize fertilizer consumption variable from FertConsumpData
@@ -274,7 +274,7 @@ Let's step back one second. I've introduced a number of new logical operators\in
 You may want to recode your variables. In particular, when you merge data sets together you need to have \textbf{identical} identification values that R can use to match each observation on. If in one data set observations for the Republic of Korea\index{Republic of Korea} are referred to as ``Korea, Rep.'' and in another they are labeled ``South Korea'', R will not know to merge them. We need to recode values in the variables that we want to match our data sets on. For example, in \emph{GatheredFertSub} the southern Korean country is labeled ``Korea, Rep.''. To recode it to ``South Korea'' we type:
 
 <<Ch7RecodeString, tidy=FALSE>>=
-# Recode country == "Korea, Rep."" to "South Korea"
+# Recode country == "Korea, Rep." to "South Korea"
 GatheredFertSub$country[GatheredFertSub$country ==
                         "Korea, Rep."] <- "South Korea"
 @
@@ -339,7 +339,7 @@ summary(GatheredFertSub$logFertConsumption)
 
 \paragraph{Creating factor variables}\index{R!factors}
 
-We can create factor variables from numeric or string variables. For example, we may want to turn the continuous numeric \textbf{FertilizerConsumption} variable into an ordered categorical (i.e. factor) variable.\index{factor variable} Imagine that we want to create a factor variable called \textbf{FertConsGroup} with four levels called `low', `medium low', `medium high', `high'. To do this let's first create a new numeric variable based on the values listed in Table \ref{ExampleFactorRecode}. Now let's use a procedure that is similar to the variable recoding we did earlier:\footnote{In this code I attached the data frame \emph{GatheredFertSub}\index{R function!attach} so that it is easier to read.\index{R!attach}}
+We can create factor variables from numeric or string variables. For example, we may want to turn the continuous numeric \textbf{FertilizerConsumption} variable into an ordered categorical (i.e. factor) variable.\index{factor variable} Imagine that we want to create a factor variable called \textbf{FertConsGroup} with four levels called `low', `medium low', `medium high', and `high'. To do this let's first create a new numeric variable based on the values listed in Table \ref{ExampleFactorRecode}. Now let's use a procedure that is similar to the variable recoding we did earlier:\footnote{In this code I attached the data frame \emph{GatheredFertSub}\index{R function!attach} so that it is easier to read.\index{R!attach}}
 
 <<Ch7FactorNumeric, tidy=FALSE>>=
 #### Create numeric factor levels variable ####
@@ -507,7 +507,7 @@ DataNotDuplicates <- MergedData2[!duplicated(
 
 Another common post-merge cleanup issue is duplicate columns, i.e. variables. These are variables from the two data frames with the same name that were not included in \texttt{merge}'s \texttt{by} argument. For example, in our previous merged data examples there are three country name variables: \textbf{country.x}, \textbf{country.y}, and \textbf{country} to signify which data frame they are from.\footnote{The former two were created in the first merge between \emph{FinRegulatorData} and \emph{DispropData}. When the second merge was completed there were no variables named \textbf{country} in the MergeData2 data frame, so \textbf{country} did not need to be renamed in the new merged data set.}
 
-You should Of course, decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables\index{drop variable} and rename\index{R function!rename} the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{dplyr}\index{dplyr} package \citep{R-dplyr} has a useful function called \texttt{select}\index{R function!select} that can also remove variables from data frames. To remove variables simply write a minus sign (\texttt{-}) and then the variable name without quotes. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove the \textbf{idn} variable:
+You should of course, decide what to do with these variables on a case-by-case basis. But if you decide to drop one of the variables\index{drop variable} and rename\index{R function!rename} the other, you can use subscripts (as we saw in Chapter \ref{GettingStartedRKnitr}). The \emph{dplyr}\index{dplyr} package \citep{R-dplyr} has a useful function called \texttt{select}\index{R function!select} that can also remove variables from data frames. To remove variables simply write a minus sign (\texttt{-}) and then the variable name without quotes. For example, imagine that we want to keep \textbf{country.x} and drop the other variables.\footnote{This version of the country variable is the most complete.} Let's also remove the \textbf{idn} variable:
 
 <<Ch7RemoveVars, tidy=FALSE>>=
 # Remove country.y, country, X, and idn
