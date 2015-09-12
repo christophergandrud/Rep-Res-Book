@@ -39,7 +39,7 @@ If you would like to hide a chunk's code from the presentation document you can 
 
 \paragraph{{\tt{results}}}\index{knitr option!results}
 
-We will look at the \texttt{results} option in more detail in the next two chapters (see especially Section \ref{ResultsOptions}). However, let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \texttt{results='hide'} shows the code, but not the results. Warnings, errors, and messages will still be printed.
+We will look at the \texttt{results} option in more detail in the next two chapters (see especially Section \ref{ResultsOptions}). However, let's briefly discuss the option value \texttt{hide}. Setting \verb|results='hide'| is almost the opposite of \texttt{echo=FASLE}. Instead of showing the results of the code chunk and hiding the code, \verb|results='hide'| shows the code, but not the results. Warnings, errors, and messages will still be printed.
 
 \paragraph{{\tt{warning}}, {\tt{message}}, {\tt{error}}}\index{knitr option!warning}\index{knitr option!error}\index{knitr option!message}
 
@@ -47,7 +47,7 @@ If you don't want to include the warnings, messages, and error messages that R o
 
 \paragraph{{\tt{cache}}}\index{knitr option!cache}
 
-If you want to run a code chunk once and the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted, the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted, the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
+If you want to run a code chunk once and save the output for when you knit the document again, rather than running the code chunk every time, set the option \texttt{cache=TRUE}. When you do this the first time the document is knitted, the chunk will be run and the output stored in a subdirectory of the working directory called \emph{cache}. When the document is subsequently knitted, the chunk will only be run if the code in the chunk changes or its options change. This is very handy if you have a code chunk that is computationally intensive to run. The \texttt{cache} option is set to \texttt{FALSE} by default. Later in this chapter (Section \ref{CacheVars}) we will see how to use the \texttt{cache.vars} command to cache only certain variables created by a code chunk.
 
 \paragraph{{\tt{dependson}}}\index{knitr option!dependson}
 
@@ -58,7 +58,7 @@ Cached chunks are only rerun when their code changes. Sometimes one chunk will d
 Sometimes to ensure reproducibility it may be useful to rerun a chunk when some other condition changes, such as when a new version of R is installed or a dependent file changes. You can feed a list of conditions to \texttt{cache.extra} to do this. For instance:
 
 <<Ch8CacheExtra, eval=FALSE, echo=TRUE>>=
-cache.extra=list(file.info(Data.csv)$mtime, R.version
+cache.extra=list(file.info(Data.csv)$mtime, R.version)
 @
 
 \noindent Here we set two conditions under which the chunk will be rerun. The first specifies that the chunk should be rerun whenever the \emph{Data.csv} file is modified. The \texttt{file.info} function extracts information about the file and \texttt{mtime} gives the last time that the file was modified. If this differs from when the chunk was last run, then it will be run again. This is very useful for keeping your cached chunks and the files they rely on in sync.
@@ -239,7 +239,7 @@ cd /ExampleProject/Analysis/
 
 \noindent Please see page \pageref{MakeAllCommand} for details on the \texttt{make} command arguments used here.
 
-You can Of course, also use R's \texttt{source} command to run an R make-like data gathering file. Unlike GNU Make, this will rerun all of the data gathering files, even if they have not been updated. This may become very time consuming depending on the size of your data sets and how they are manipulated.
+You can of course, also use R's \texttt{source} command to run an R make-like data gathering file. Unlike GNU Make, this will rerun all of the data gathering files, even if they have not been updated. This may become very time consuming depending on the size of your data sets and how they are manipulated.
 
 One final note on including makefiles in your \emph{knitr} presentation document source code: it is important to place the code chunk with the makefile before code chunks containing statistical analyses that depend on the data file it creates. Placing the makefile first will keep the others up-to-date.
 
