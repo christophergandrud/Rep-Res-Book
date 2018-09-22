@@ -1,7 +1,7 @@
 % Chapter Chapter 9 For Reproducible Research in R and RStudio
 % Christopher Gandrud
 % Created: 16/07/2012 05:45:03 pm CEST
-% Updated: 6 April 2015
+% Updated: 9 September 2018
 
 <<set-parent9, echo=FALSE, results='hide', cache=FALSE>>=
 set_parent('Rep-Res-Parent.Rnw')
@@ -541,56 +541,56 @@ The \texttt{kable}, \emph{texreg}, and \emph{xtable} packages are very convenien
     \item use \emph{xtable} with this object to create the table.
 \end{enumerate}
 
-Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions estimated from a Bayesian normal linear regression using the \emph{Zelig}\index{Zelig} package \cite[]{Goodrich2007,R-Zelig}\footnote{Remember you will need to have installed the \emph{ZeligBayesian} package. Please see page \pageref{ZeligBayes}\index{ZeligBayesian} for more details.} and data from the \emph{swiss} data frame. Let's run the model:
+Imagine that you want to create a results table showing the covariate names, coefficient means, and quantiles for marginal posterior distributions estimated from an linear regression using the \emph{brms}\index{brms} package \cite[]{R-brms} and data from the \emph{swiss} data frame. Let's fit the model:
 
 <<Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE, echo=TRUE>>=
-# Load Zelig package
-library(Zelig)
+# Load brms package
+library(brms)
 
-# Estimate model
-NBModel <- zelig(Examination ~ Education, model = "normal.bayes",
-                    data = swiss, cite = FALSE)
+# Fit model
+linearBRMS <- brm(Examination ~ Education, data = swiss, 
+               family = gaussian(link = "identity"))
 
-# Find NBModel's class
-class(NBModel)
+# Find ordinal_fit's class
+class(linearBRMS)
 @
 
-Using the \texttt{class}\index{R function!class}\index{R function!zelig} command we see that the model output object in \emph{NBModel} is of both the \texttt{zelig} and \texttt{normal.bayes} classes.\index{normal Bayesian linear regression} These class are not supported by \emph{xtable}. If you try to create a table summarizing the estimates in \emph{NBTable} you will get the following error:
+Using the \texttt{class}\index{R function!class}\index{R function!brm} function we see that the model output object in \emph{linearBRMS} is of the \texttt{brmsfit} class.\index{linear regression}\index{Bayesian} This class is not supported by \emph{xtable}. If you try to create a table summarizing the estimates in \emph{linearBRMStable} you will get the following error:
 
 {\small
 <<Ch9BadTable>>=
 # Load xtable
 library(xtable)
 
-# Attempt to create a table with NBModel
-NBTable <- xtable(NBModel)
+# Attempt to create a table with ordinal_fit
+linearBRMStable <- xtable(linearBRMS)
 @
 }
 \noindent With unsupported class objects you have to create the summary yourself and extract the elements that you want from it manually. A good knowledge of vectors, matrices, and component selection is very handy for this (see Chapter \ref{GettingStartedRKnitr}).
 
-First, create a summary\index{R function!summary} of your output object {\emph{NBModel}}:
+First, create a summary\index{R function!summary} of your output object {\emph{ordinal\_fit}}:
 
 <<Ch9MCMCSummary, echo=TRUE>>=
-NBModelSum <- summary(NBModel)
+linearBRMSsummary <- summary(linearBRMS)
 @
 
-\noindent This creates a new object of the class \texttt{summary.MCMCZelig}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{NBModelSum} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names}\index{R function!names} command.
+\noindent This creates a new object of the class \texttt{brmssummary}. We're still not there yet as this object contains not just the covariate names and so on but also information we don't want to include in the results table, like the estimation formula. The second step is to extract a matrix from inside \emph{ordinal\_fit\_summary} called \emph{summary} with the component selector (\verb|$|). Remember that to find the components of an object use the \texttt{names}\index{R function!names} command.
 
 <<Ch9MCMCSummaryNames, echo=TRUE>>=
-names(NBModelSum)
+names(linearBRMSsummary)
 @
 
-\noindent The \emph{summary} matrix is where the things we want in our table are located. I find it easier to work with data frames, so let's also convert the matrix into a data frame.
+\noindent The \emph{fixed} matrix is where the things we want in our table are located. I find it easier to work with data frames, so let's also convert the matrix into a data frame.
 
 <<Ch9NBSum, echo=TRUE>>=
-NBSumDataFrame <- data.frame(NBModelSum$summary)
+linearBRMSsummaryDF <- data.frame(linearBRMSsummary$fixed)
 @
 
 \noindent Here is what the model summary data frame looks like:
 
 <<Ch9NBSumDisplay, echo=TRUE>>=
 # Show NBSumDataFrame
-NBSumDataFrame
+linearBRMSsummaryDF
 @
 
 \noindent Now we have a data frame object \emph{xtable} can handle. After a little cleaning up (see the chapter's Appendix for more details) you can use {\emph{NBSumdata frame}} with \emph{xtable} as before to create Table \ref{CoefEstTable}.
@@ -599,17 +599,17 @@ NBSumDataFrame
 # Load dplyr package
 library(dplyr)
 
-# Change quantile variable names
-NBSumDataFrame <- rename(NBSumDataFrame, "2.5%" = X2.5.)
-NBSumDataFrame <- rename(NBSumDataFrame, "50%" = X50.)
-NBSumDataFrame <- rename(NBSumDataFrame, "97.5%" = X97.5.)
+# Change posterior summary variable names
+linearBRMSsummaryDF <- rename(linearBRMSsummaryDF, "2.5%" = l.95..CI)
+linearBRMSsummaryDF <- rename(linearBRMSsummaryDF, "50%" = Estimate)
+linearBRMSsummaryDF <- rename(linearBRMSsummaryDF, "97.5%" = u.95..CI)
 
 
-# Reorder variables and remove the standard deviation
-NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]
+# Reorder variables and remove the Est. Error
+linearBRMSsummaryDF <- linearBRMSsummaryDF[, c("2.5%", "50%", "97.5%", "Rhat")]
 
 # Create table
-xtable(NBTable, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Normal Linear Regression", label = "CoefEstTable")
+xtable(linearBRMSsummaryDF, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Linear Regression", label = "CoefEstTable")
 @
 
 It may take some hunting to find what you want, but a similar process can be used to create tables from objects of virtually any class.\footnote{This process can also be useful for creating graphics as we will see in Chapter \ref{FiguresChapter}.} Hunting for what you want can be easier if you look inside of objects by clicking on them in RStudio's \index{Environment} tab.\index{RStudio!Environment tab}
@@ -670,27 +670,31 @@ In this chapter we have learned how to take the results from our statistical ana
 
 \section*{Appendix}
 
-Source code for cleaning \emph{NBSumDataFrame} and using it to create a LaTeX table:
+Source code for cleaning \emph{linearBRMSsummaryDF} and using it to create a LaTeX table:
 
 <<Ch9NBSumClean, eval=FALSE, tidy=FALSE>>=
 # Load packages
 library(dplyr)
 library(xtable)
 
-# Change quantile variable names
-NBSumDataFrame <- rename(NBSumDataFrame, "2.5%" = X2.5.)
-NBSumDataFrame <- rename(NBSumDataFrame, "50%" = X50.)
-NBSumDataFrame <- rename(NBSumDataFrame, "97.5%" = X97.5.)
+# Change posterior summary variable names
+linearBRMSsummaryDF <- rename(linearBRMSsummaryDF, "2.5%" = l.95..CI)
+linearBRMSsummaryDF <- rename(linearBRMSsummaryDF, "50%" = Estimate)
+linearBRMSsummaryDF <- rename(linearBRMSsummaryDF, "97.5%" = u.95..CI)
 
 
-# Reorder variables and remove the standard deviation variable
-NBTable <- NBSumDataFrame[, c("Mean", "2.5%", "50%", "97.5%")]
+# Reorder variables and remove the Est. Error
+linearBRMSsummaryDF <- linearBRMSsummaryDF[, c("2.5%", "50%", "97.5%", "Rhat")]
 
 # Create table
-xtable(NBTable, caption = "Coefficient Estimates Predicting
-                            Examination Scores in Swiss Cantons
-                            (1888) Found Using Bayesian Normal
-                            Linear Regression")
+xtable(linearBRMSsummaryDF, caption = "Coefficient Estimates Predicting Examination Scores in Swiss Cantons (1888) Found Using Bayesian Linear Regression", label = "CoefEstTable")
+
+# Create table
+xtable(linearBRMSsummaryDF, 
+        caption = "Coefficient Estimates Predicting
+                  Examination Scores in Swiss Cantons
+                  (1888) Found Using Bayesian Normal
+                  Linear Regression")
 @
 
 \noindent Note that the new variable names are in quotation marks, in contrast to the example from Chapter \ref{DataClean}. The quotation marks allow us to specify a name that begins with a number and has special characters like \texttt{\%}.
