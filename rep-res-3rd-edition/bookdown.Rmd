@@ -1,0 +1,291 @@
+---
+title: "Reproducible Research with R and RStudio (Third Edition)"
+author: "Christopher Gandrud"
+date: "`r Sys.Date()`"
+documentclass: krantz
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+colorlinks: yes
+lot: yes
+lof: yes
+site: bookdown::bookdown_site
+description: "Reproducible Research with R and RStudio, Third Edition brings together the skills and tools needed for doing and presenting computational research. Using straightforward examples, the book takyes you through an entire reproducible research workflow. This practical workflow enables you to gather and analyze data as well as dynamically present results in print and on the web."
+github-repo: christophergandrud/Rep-Res-Book
+graphics: yes
+#cover-image: images/cover.jpg
+---
+
+```{r setup, include=FALSE}
+options(
+  htmltools.dir.version = FALSE, formatR.indent = 2, width = 55, digits = 4
+)
+```
+
+# Preface {-}
+
+## My motivation {-}
+
+This book has its genesis in my PhD research at the London School of Economics. I started the degree with questions about the 2008/09 financial crisis and planned to spend most of my time researching capital adequacy requirements. But I quickly realized that I would actually spend a large proportion of my time learning the day-to-day tasks of data gathering, analysis, and results presentation. After plodding through for a while with Word, Excel, and Stata, my breaking point came while reentering results into a regression table after I had tweaked one of my statistical models, yet again. Surely there was a better way to *do* research that would allow me to spend more time answering my research questions. Making research reproducible for others also means making it better organized and efficient for yourself. My search for a better way led me straight to the tools for reproducible computational research.
+
+The reproducible research community is very active, knowledgeable, and helpful. Nonetheless, I often encountered holes in this collective knowledge, or at least had no resource organize it all together as a whole. That is my intention for this book: to bring together the skills I have picked up for actually doing and presenting computational research. Hopefully, the book, along with making reproducible research more widely used, will save researchers hours of googling, so they can spend more time addressing their research questions.
+
+## Changes to the Third Edition {-}
+
+**To WRITE**
+
+-   The book is created using *bookdown* [@R-bookdown], a format that builds on *rmarkdown* to compile books into many different formats.
+
+## Changes to the Second Edition {-}
+
+The tools of reproducible research have developed rapidly since the first edition of this book was published just two years ago. The second edition has been updated to incorporate the most important of these advancements, including discussions of:
+
+-   The *rmarkdown* package, which allows you to create reproducible research documents in PDF, HTML, and Microsoft Word formats using the simple and intuitive Markdown syntax.
+
+-   Improvements and changes to RStudio's interface and capabilities, such as its new tools for handling R Markdown documents.
+
+-   Expanded *knitr* R code chunk capabilities.
+
+-   The `kable()` function in the *knitr* package and the *texreg* package for dynamically creating tables to present your data and statistical results.
+
+-   An improved discussion of file organization allowing you to take full advantage of relative file paths so that your documents are more easily reproducible across computers and systems.
+
+-   The *dplyr*, *magrittr*, and *tidyr* packages for fast data manipulation.
+
+-   Numerous changes to R syntax in user-created packages.
+
+-   Changes to GitHub's and Dropbox's interfaces.
+
+## Acknowledgments {-}
+
+I would not have been able to write this book without many people's advice and support. Foremost is John Kimmel, acquisitions editor at Chapman and Hall. He approached me in Spring 2012 with the general idea and opportunity for this book. Other editors at Chapman and Hall and Taylor and Francis have greatly contributed to this project, including Marcus Fontaine. I would also like to thank all of the book's reviewers whose helpful comments have greatly improved it. The first edition's reviewers include:
+
+-   Jeromy Anglim, Deakin University
+-   Karl Broman, University of Wisconsin, Madison
+-   Jake Bowers, University of Illinois, Urbana-Champaign
+-   Corey Chivers, McGill University
+-   Mark M. Fredrickson, University of Illinois, Urbana-Champaign
+-   Benjamin Lauderdale, London School of Economics
+-   Ramnath Vaidyanathan, McGill University
+
+and there have been many other annonymous reviewers who have provided great feedback over the years.
+
+The developer and blogging community has also been incredibly important for making this book possible. Foremost among these people is Yihui Xie. He is the main developer behind the *knitr* package, co-developer of *rmarkdown*, and also an avid blog writer and commenter. Without him the ability to do reproducible research would be much harder and the blogging community that spreads knowledge about how to do these things would be poorer. Other great contributors to the reproducible research community include Carl Boettiger, Karl Broman, Markus Gesmann (who developed *googleVis*), Rob Hyndman, and Hadley Wickham (who has developed numerous very useful R packages). Thank you also to Victoria Stodden and Michael Malecki for helpful suggestions. And, of course, thank you to everyone at RStudio (especially JJ Allaire) for creating an increasingly useful program for reproducible research.
+
+The second edition has benefited immensely from first edition readers' comments and suggestions. For a list of their valuable contributions, please see the book's GitHub Issues page <https://GitHub.com/christophergandrud/Rep-Res-Book/issues> and the first edition's Errata page <http://christophergandrud.GitHub.io/RepResR-RStudio/errata.htm>.
+
+My students at Yonsei University were an important part of making the first edition. One of the reasons that I got interested in using many of the tools covered in this book, like using **knitr} in slideshows, was to improve a course I taught there: Introduction to Social Science Data Analysis. I tested many of the explanations and examples in this book on my students. Their feedback has been very helpful for making the book clearer and more useful. Their experience with using these tools on Microsoft Windows computers was also important for improving the book's Windows documentation. Similarly, my students at the Hertie School of Governance inspired and tested key sections of the second edition.
+
+The vibrant community at Stack Overflow <http://stackoverflow.com/> and Stack Exchange <http://stackexchange.com/> are always very helpful for finding answers to problems that plague any computational researcher. Importantly, the sites make it easy for others to find the answers to questions that have already been asked.
+
+My wife, Kristina Gandrud, has been immensely supportive and patient with me throughout the writing of this book (and pretty much my entire academic career). Certainly this is not the proper forum for musing about marital relations, but I'll do a musing anyways. Having a person who supports your interests, even if they don't completely share them, is immensely helpful for a researcher. It keeps you going.
+
+<!--chapter:end:index.Rmd-->
+
+# Additional Resources {-}
+
+Additional resources that supplement the examples in this book can be freely downloaded and experimented with. These resources include longer examples discussed in individual chapters and a complete short reproducible research project.
+
+## Chapter Examples {-}
+
+Longer examples discussed in individual chapters, including files to dynamically download data, code for creating figures, and markup files for creating presentation documents, can be accessed at: <https://GitHub.com/christophergandrud/Rep-Res-Examples}. Please see Chapter \@ref(Storing) for more information on downloading files from GitHub, where the examples are stored.\index{GitHub}
+
+## Short Example Project {-}
+
+To download a full (though very short) example of a reproducible research project created using the tools covered in this book go to: <https://GitHub.com/christophergandrud/Rep-Res-ExampleProject1>. Please follow the replication instructions in the main *README.md* file to fully replicate the project. It is probably a good idea to hold off looking at this complete example in detail until after you have become acquainted with the individual tools it uses. Become acquainted with the tools by reading through this book and working with the individual chapter examples.
+
+The following two figures give you a sense of how the example's files are organized. Figure \@ref(ExampProjeFiles) shows how the files are organized in the file system. Figure \@ref(ExampProjDiagram) illustrates how the main files are dynamically tied together. In the *Data* directory we have files to gather raw data from the \cite{WorldBank2013} on fertilizer consumption and from \cite{Pemstein2010} on countries' levels of democracy. They are tied to the data through the `WDI()`\index{WDI()} and `download.file()` functions.\index{R function!download.file()} A *Makefile*\index{Makefile} can run *Gather1.R* and *Gather2.R* to gather and clean the data. It runs *MergeData.R* to merge the data into one data file called *MainData.csv*. It also automatically generates a variable description file and a *README.md*\index{README file} recording the session info.\index{R!session info}
+
+The *Analysis* folder contains two files that create figures presenting this data. They are tied to *MainData.csv* with the `read.csv()* function.\index{R function!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with *knitr* and the `source()`` function.\index{R function!source}
+
+Though a simple example, hopefully these files will give you a complete sense of how a reproducible research project can be organized. Please feel free to experiment with different ways of organizing the files and tying them together to make your research really reproducible.
+
+\thispagestyle{plain}
+    \begin{figure}[th!]
+        \caption{Short Example Project File Tree}
+        \label{ExampProjeFiles}
+        \begin{center}
+            \input{images/additional_resources_images/file_tree.tex}
+        \end{center}
+    \end{figure}
+
+\clearpage
+\thispagestyle{plain}
+\begin{landscape}
+    \begin{figure}[th!]
+        \caption{Short Example Main File Ties}
+        \label{ExampProjDiagram}
+        \begin{center}
+            \input{images/additional_resources_images/example_diagram.tex}
+        \end{center}
+    \end{figure}
+\end{landscape}
+
+<!--chapter:end:00-additional_resources.Rmd-->
+
+# About the Author {-}
+
+Christopher Gandrud is Economics Lead at Zalando SE building and evaluating large scale decision-making systems. He was previously a research fellow at the Institute for Quantitative Social Science, Harvard University developing statistical software and applications for the social and physical sciences. He has also held posts at City, University of London, the Hertie School of Governance, Yonsei University, and the London School of Economics where in 2012 he completed a PhD in quantitative political science. 
+
+<!--chapter:end:00-author.Rmd-->
+
+# Setup {-}
+
+Some setup is required to reproduce this book. Here are key R packages you should consider installing and specific instructions for Windows and Linux users. 
+
+## R Packages {-}
+
+In this book I discuss how to use a number of user-written R packages for reproducible research. Many of these packages are not included in the default R installation. They need to be installed separately.
+
+\index{R!packages|(}
+
+**Note:** in general you should aim to minimize the number of packages that your research depends on. Doing so will lessen the possibility that your code will ``break'' when a package is updated. This book depends on relatively many packages because of its special and unusual purpose of illustrating a variety of tools that you can use for reproducible research.
+
+To install key user-written packages discussed in this book, copy the following code and paste it into your R console:
+
+```{r package_install, results='hide'}
+# Packages to install
+pkg_to_install <- c("brew", "bookdown", "xfun")
+
+
+# Check if the packages are installed, if not install
+lapply(pkg_to_install,
+    function(pkg) {
+  if (system.file(package = pkg) == '') install.packages(pkg)
+})
+```
+
+\index{R!packages|(}
+
+Once you enter this code, you may be asked to select a CRAN "mirror"\index{CRAN!mirror} to download the packages from.^[CRAN stands for the Comprehensive R Archive Network.] Simply select the mirror closest to you.
+
+## Special issues for Windows and Linux Users {-}
+
+\index{Windows|(}
+
+If you are using Windows, you will also need to install *Rtools* \cite[]{Rtools}.\index{Rtools} You can install *Rtools* from: \url{http://cran.r-project.org/bin/windows/Rtools/}.\label{RtoolsDownload} Please use the recommended installation to ensure that your system PATH\index{PATH} is set up correctly. Otherwise your computer will not know where the tools are. Alternatively, use the `install.Rtools()` function from the *installr* [@galili2018]\index{installr)} package to install it.
+
+\index{Windows|(}
+
+\index{Linux|(}
+
+On Linux you will need to install the \emph{RCurl} \citep{R-RCurl}\index{RCurl} and \emph{XML}\index{XML} \citep{R-XML} packages separately. Use your Terminal\index{Terminal} to install these packages with the following code:
+
+```{sh, eval=FALSE}
+sudo apt-get update
+
+sudo apt-get install libcurl4-gnutls-dev
+sudo apt-get install libxml2-dev
+sudo apt-get install r-cran-xml
+sudo apt-get install r-cran-rjava
+```
+
+\index{Linux|(}
+
+```{r sessioninfo}
+xfun::session_info()
+```
+
+<!--chapter:end:00-setup.Rmd-->
+
+# Stylistic Convensions {-}
+
+I use the following conventions throughout this book:
+
+-   **Abstract variables**: Abstract variables, i.e. variables that do not
+represent specific objects in an example, are in `ALL CAPS TYPEWRITER TEXT`.
+
+-   **Clickable buttons**: Clickable Buttons are in `typewriter text`.
+
+-   **Code**: All code is in `typewriter text`.
+
+-   **Filenames and directories**: Filenames and directories more generally are
+printed in *italics*. I use CamelBack for file and directory names.
+
+-   **File extensions**: Like filenames, file extensions are *italicized*.
+
+-   **Individual variable values**: Individual variable values mentioned in the
+text are in *italics*.
+
+-   **Objects**: Objects are printed in *italics*. I use CamelBack for object names.
+
+-   **Object columns**: Data frame object columns are printed in *italics*.
+
+-   Function names are followed by parentheses (e.g., `stats::lm()`)
+
+-   **Packages**: **R** packages are printed in *italics*.
+
+-   **Windows and RStudio panes**: Open windows and RStudio panes are written in
+*italics*.
+
+-   **Variable names**: Variable names are printed in **bold**. I use CamelBack
+for individual variable names.
+
+<!--chapter:end:00-stylistic_convensions.Rmd-->
+
+\mainmatter
+
+# Introduction
+
+Now unplug your Internet cable, and start doing some serious work.
+
+We have a nice figure in Figure \@ref(fig:hello), and also a table in Table \@ref(tab:iris).
+
+```{r hello, fig.cap='Hello World!', out.width='90%'}
+par(mar = c(4, 4, 1, .1))
+plot(cars, pch = 19)
+```
+
+```{r iris}
+knitr::kable(
+  head(iris), caption = 'The boring iris data.',
+  booktabs = TRUE
+)
+```
+
+More chapters to come in `02-foo.Rmd`, `03-bar`.Rmd, ...
+
+<!--chapter:end:01-introduction.Rmd-->
+
+# The FOO Method
+
+We talk about the _FOO_ method\index{FOO} in this chapter.
+
+
+<!--chapter:end:02-foo.Rmd-->
+
+\cleardoublepage 
+
+# (APPENDIX) Appendix {-}
+
+# More to Say
+
+Yeah! I have finished my book, but I have more to say about some topics. Let me explain them in this appendix.
+
+To know more about **bookdown**, see https://bookdown.org.
+
+<!--chapter:end:90-more.Rmd-->
+
+`r if (knitr:::is_html_output()) '# References {-}'`
+
+```{r include=FALSE}
+# Additional packages to cite
+pkg_additional <- c(
+  .packages(), "bookdown", "knitr", "rmarkdown"
+)
+
+# Check if the packages are installed, if not install
+lapply(pkg_additional,
+    function(pkg) {
+  if (system.file(package = pkg) == '') install.packages(pkg)
+})
+
+# pkg_to_install is created in 00-setup.Rmd
+pkg_to_cite <- c(pkg_to_install, pkg_additional)
+
+# generate a BibTeX database automatically for some R packages
+knitr::write_bib(pkg_to_cite, 'packages.bib')
+```
+
+<!--chapter:end:99-references.Rmd-->
+

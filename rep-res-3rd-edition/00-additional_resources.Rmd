@@ -1,0 +1,38 @@
+# Additional Resources {-}
+
+Additional resources that supplement the examples in this book can be freely downloaded and experimented with. These resources include longer examples discussed in individual chapters and a complete short reproducible research project.
+
+## Chapter Examples {-}
+
+Longer examples discussed in individual chapters, including files to dynamically download data, code for creating figures, and markup files for creating presentation documents, can be accessed at: <https://GitHub.com/christophergandrud/Rep-Res-Examples}. Please see Chapter \@ref(Storing) for more information on downloading files from GitHub, where the examples are stored.\index{GitHub}
+
+## Short Example Project {-}
+
+To download a full (though very short) example of a reproducible research project created using the tools covered in this book go to: <https://GitHub.com/christophergandrud/Rep-Res-ExampleProject1>. Please follow the replication instructions in the main *README.md* file to fully replicate the project. It is probably a good idea to hold off looking at this complete example in detail until after you have become acquainted with the individual tools it uses. Become acquainted with the tools by reading through this book and working with the individual chapter examples.
+
+The following two figures give you a sense of how the example's files are organized. Figure \@ref(ExampProjeFiles) shows how the files are organized in the file system. Figure \@ref(ExampProjDiagram) illustrates how the main files are dynamically tied together. In the *Data* directory we have files to gather raw data from the \cite{WorldBank2013} on fertilizer consumption and from \cite{Pemstein2010} on countries' levels of democracy. They are tied to the data through the `WDI()`\index{WDI()} and `download.file()` functions.\index{R function!download.file()} A *Makefile*\index{Makefile} can run *Gather1.R* and *Gather2.R* to gather and clean the data. It runs *MergeData.R* to merge the data into one data file called *MainData.csv*. It also automatically generates a variable description file and a *README.md*\index{README file} recording the session info.\index{R!session info}
+
+The *Analysis* folder contains two files that create figures presenting this data. They are tied to *MainData.csv* with the `read.csv()* function.\index{R function!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with *knitr* and the `source()`` function.\index{R function!source}
+
+Though a simple example, hopefully these files will give you a complete sense of how a reproducible research project can be organized. Please feel free to experiment with different ways of organizing the files and tying them together to make your research really reproducible.
+
+\thispagestyle{plain}
+    \begin{figure}[th!]
+        \caption{Short Example Project File Tree}
+        \label{ExampProjeFiles}
+        \begin{center}
+            \input{images/additional_resources_images/file_tree.tex}
+        \end{center}
+    \end{figure}
+
+\clearpage
+\thispagestyle{plain}
+\begin{landscape}
+    \begin{figure}[th!]
+        \caption{Short Example Main File Ties}
+        \label{ExampProjDiagram}
+        \begin{center}
+            \input{images/additional_resources_images/example_diagram.tex}
+        \end{center}
+    \end{figure}
+\end{landscape}
