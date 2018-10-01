@@ -10,29 +10,171 @@ Longer examples discussed in individual chapters, including files to dynamically
 
 To download a full (though very short) example of a reproducible research project created using the tools covered in this book go to: <https://GitHub.com/christophergandrud/Rep-Res-ExampleProject1>. Please follow the replication instructions in the main *README.md* file to fully replicate the project. It is probably a good idea to hold off looking at this complete example in detail until after you have become acquainted with the individual tools it uses. Become acquainted with the tools by reading through this book and working with the individual chapter examples.
 
-The following two figures give you a sense of how the example's files are organized. Figure \@ref(ExampProjeFiles) shows how the files are organized in the file system. Figure \@ref(ExampProjDiagram) illustrates how the main files are dynamically tied together. In the *Data* directory we have files to gather raw data from the \cite{WorldBank2013} on fertilizer consumption and from \cite{Pemstein2010} on countries' levels of democracy. They are tied to the data through the `WDI()`\index{WDI()} and `download.file()` functions.\index{R function!download.file()} A *Makefile*\index{Makefile} can run *Gather1.R* and *Gather2.R* to gather and clean the data. It runs *MergeData.R* to merge the data into one data file called *MainData.csv*. It also automatically generates a variable description file and a *README.md*\index{README file} recording the session info.\index{R!session info}
+The following two figures give you a sense of how the example's files are organized. Figure \@ref(fig:ExampProjeFiles) shows how the files are organized in the file system. Figure \@ref(fig:ExampProjDiagram) illustrates how the main files are dynamically tied together. In the *Data* directory we have files to gather raw data from the [@WorldBank2013] on fertilizer consumption and from [@Pemstein2010] on countries' levels of democracy. They are tied to the data through the `WDI()`\index{WDI()} and `download.file()` functions.\index{R function!download.file()} A *Makefile*\index{Makefile} can run *Gather1.R* and *Gather2.R* to gather and clean the data. It runs *MergeData.R* to merge the data into one data file called *MainData.csv*. It also automatically generates a variable description file and a *README.md*\index{README file} recording the session info.\index{R!session info}
 
-The *Analysis* folder contains two files that create figures presenting this data. They are tied to *MainData.csv* with the `read.csv()* function.\index{R function!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with *knitr* and the `source()`` function.\index{R function!source}
+The *Analysis* folder contains two files that create figures presenting this data. They are tied to *MainData.csv* with the `read.csv()` function.\index{R function!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with *knitr* and the `source()` function.\index{R function!source()}
 
 Though a simple example, hopefully these files will give you a complete sense of how a reproducible research project can be organized. Please feel free to experiment with different ways of organizing the files and tying them together to make your research really reproducible.
 
-\thispagestyle{plain}
-    \begin{figure}[th!]
-        \caption{Short Example Project File Tree}
-        \label{ExampProjeFiles}
-        \begin{center}
-            \input{images/additional_resources_images/file_tree.tex}
-        \end{center}
-    \end{figure}
+```{r ExampProjeFiles, engine = "tikz", fig.cap = "Short Example Project File Tree", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+\usetikzlibrary{trees}
 
-\clearpage
-\thispagestyle{plain}
-\begin{landscape}
-    \begin{figure}[th!]
-        \caption{Short Example Main File Ties}
-        \label{ExampProjDiagram}
-        \begin{center}
-            \input{images/additional_resources_images/example_diagram.tex}
-        \end{center}
-    \end{figure}
-\end{landscape}
+% Set node styles
+\tikzstyle{DirBox} = [draw=black,
+                      rectangle,
+                      minimum width=5em,
+                      very thick,
+                      font=\small]
+
+\tikzstyle{every node} = [draw=gray,
+                          thin,
+                          anchor=west,
+                          font=\small]
+
+% Begin tikz picture
+\begin{tikzpicture}[%
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  % Root Directory
+  \node (root) at (5, 10) [DirBox]{Root};
+
+  % Project Directory
+  \node (project) at (4, 8.5) [DirBox]{Rep-Res-ExampleProject1}
+        child {node {{\small{Paper.Rnw}}}}
+        child {node {{\small{Slideshow.Rnw}}}}
+        child {node {{\small{Website.Rnw}}}}
+        child {node {{\small{Main.bib}}}}
+            ;
+
+  % Data Directory
+  \node (data) at (0, 4.5) [DirBox]{Data}
+      child {node {{\small{MainData.csv}}}}
+      child {node {{\small{Makefile}}}}
+      child {node {{\small{MergeData.R}}}}
+      child {node {{\small{Gather1.R}}}}
+      child {node {{\small{Gather2.R}}}}
+      child {node {{\small{MainData\_VariableDescriptions.md}}}}
+      child {node {{\small{README.Rmd}}}}
+        ;
+
+  % Analysis subdirectores/files
+  \node (analysis) at (1.5, 7) [DirBox]{Analysis}
+      child {node {{\small{GoogleVisMap.R}}}}
+      child {node {{\small{ScatterUDSFert.R}}}}
+        ;
+
+  % README file
+  \node (readme) at (9.5, 7) {README.md};
+
+  % Connect boxes that are not explicit children
+  \draw (root) -- (project);
+  \draw (project) -| (analysis);
+  \draw (analysis) -| (data);
+  \draw (project) -| (readme);
+
+\end{tikzpicture}
+```
+
+```{r ExampProjDiagram, engine = "tikz", fig.cap = "Short Example Main File Ties", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+\usetikzlibrary{trees}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{shapes,arrows}
+
+\definecolor{Blue}{HTML}{7BCCC4}
+\definecolor{LiteBlue}{HTML}{A8DDB5}
+\definecolor{DarkBlue}{HTML}{08589E}
+
+\definecolor{GrayLine}{HTML}{BDBDBD}
+
+% Set node styles
+%% File nodes
+\tikzstyle{File} = [draw=Blue,
+                    rectangle,
+                    text width=6.3em,
+                    font=\scriptsize]
+
+% Raw Data nodes
+\tikzstyle{RawData} = [draw=LiteBlue,
+                       %fill=LiteBlue,
+                       decorate,
+                       decoration={random steps,
+                                   segment length=2pt,
+                                   amplitude=2pt},
+                       inner sep=0.25cm,
+                       font=\scriptsize]
+
+% Separator line style
+\tikzstyle{sepline} = [draw,
+                        very thick,
+                        color=GrayLine]
+
+% Link command nodes
+\tikzstyle{Links} = [draw=none,
+                          text width=6em,
+                          text=DarkBlue,
+                          font=\small]
+
+% Begin tikz picture
+\begin{tikzpicture}
+
+    % Nodes
+    \node (Data1) at (-3.5, 7) [RawData]{Raw WDI Data};
+    \node (Gather1) at (-3, 6) [File]{Gather1.R};
+
+    \node (Data2) at (-3.5, 5) [RawData]{Raw UDS Data};
+    \node (Gather2) at (-3, 4) [File]{Gather2.R};
+
+    \node (MergeData) at (0.5, 5) [File]{Makefile \\ MergeData.R};
+    \node (DataFile) at (0.5, 4) [File]{MainData.csv};
+
+    \node (Scatter) at (3.8, 4.5) [File]{ScatterUDSFert.R};
+    \node (GoogleVis) at (3.8, 3.5) [File]{GoogleVisMap.R};
+
+    \node (ArticleK) at (7, 5) [File]{Article.Rnw};
+    \node (SlideshowK) at (7, 4) [File]{Slideshow.Rnw};
+    \node (WebsiteK) at (7, 3) [File]{Website.Rmd};
+
+    \node (Article) at (10, 5) [File]{Article.pdf};
+    \node (Slideshow) at (10, 4) [File]{Slideshow.pdf};
+    \node (Website) at (10, 3) [File]{Website.html};
+
+    % Lines
+    \draw [->] (Data1) -- (Gather1);
+    \draw [->] (Data2) -- (Gather2);
+    \draw [->] (Gather1) -- (MergeData);
+    \draw [->] (Gather2) -- (MergeData);
+    \draw [->] (MergeData) -- (DataFile);
+
+    \draw [->] (DataFile) -- (Scatter);
+    \draw [->] (DataFile) -- (GoogleVis);
+
+    \draw [->] (Scatter) -- (ArticleK);
+    \draw [->] (Scatter) -- (SlideshowK);
+    \draw [->] (GoogleVis) -- (WebsiteK);
+
+    \draw [->] (ArticleK) -- (Article);
+    \draw [->] (SlideshowK) -- (Slideshow);
+    \draw [->] (WebsiteK) -- (Website);
+
+
+    \path [sepline] (-3.5, 0.75) -- (11, 0.75);
+
+    % Link command nodes
+
+    \node (importData) at (-1, -1) [Links]{\texttt{download.file()} \\ \texttt{Make} \\ \texttt{merge()}\\ \texttt{WDI()} };
+
+    \node (Figs) at (3, -1) [Links]{\texttt{read.csv()}};
+
+    \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \texttt{source()}};
+
+\end{tikzpicture}
+```
+
+## Updates {-}
+
+Many of the reproducible research tools discussed in this book are improving rapidly. Because of this, I will regularly post updates to the content covered in the book at: <https://github.com/christophergandrud/Rep-Res-Book>.
+
+## Corrections {-}
+
+If you notice any corrections that should be made to fix typos, broken URLs, and so on, you can report them at: <https://github.com/christophergandrud/Rep-Res-Book/issues>. I'll post notifications of changes to an Errata page at: <http://christophergandrud.GitHub.io/RepResR-RStudio/errata.htm>.
