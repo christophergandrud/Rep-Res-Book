@@ -43,7 +43,7 @@ Though there is some debate over what are the necessary and sufficient
 conditions for a replication [@Makel2014 2], research results are
 generally considered *replicable* if there is sufficient information
 available for independent researchers to make the same findings using
-the same procedures with new data.[^chapter1_1] For research that relies on
+the same procedures with new data.[^1] For research that relies on
 experiments, this can mean a researcher not involved in the original
 research being able to rerun the experiment, including sampling, and
 validate that the new results are comparable to the original ones. In
@@ -54,7 +54,7 @@ code. Of course, it is sometimes difficult to replicate the original
 data set because of issues such as limited resources to gather new data
 or because the original study already sampled the full universe of
 cases. So as a next-best standard we can aim for "*really reproducible
-research*" [@Peng2011 1226].[^chapter1_2] In computational sciences[^chapter1_3] this
+research*" [@Peng2011 1226].[^2] In computational sciences[^3] this
 means:
 
 > the data and code used to make a finding are available and they are
@@ -68,7 +68,7 @@ errors they find were in the original research or problems they
 introduced during the reproduction. In this book you will learn how to
 avoid these problems.
 
-In particular you will learn tools for dynamically "*knitting*"[^chapter1_4] the
+In particular you will learn tools for dynamically "*knitting*"[^4] the
 data and the source code together with your presentation documents.
 Combined with well-organized source files and clearly and completely
 commented code, independent researchers will be able to understand how
@@ -99,12 +99,12 @@ Society, "is the systematic enterprise of gathering knowledge
 theories". The "ultimate standard" for evaluating scientific claims is
 whether or not the claims can be replicated [@Peng2011; @Kelly2006].
 Research findings cannot even really be considered "genuine
-contributions to human knowledge" until they have been verified
+contribution\[s\] to human knowledge" until they have been verified
 through replication [@Stodden2009 38]. Replication "requires the
 complete and open exchange of data, procedures, and materials".
 Scientific conclusions that are not replicable should be abandoned or
 modified "when confronted with more complete or reliable
-...evidence".[^chapter1_5]
+...evidence".[^5]
 
 *Reproducibility enhances replicability*. If other researchers are able
 to clearly understand how a finding was originally made, then they will
@@ -152,7 +152,7 @@ code up to a higher level of quality than you might if you "thought 'no
 one was looking'" [@Donoho2010 386]. This forces you to root out
 errors--a ubiquitous part of computational research--earlier in the
 research process [@Donoho2010 385]. Clear documentation also makes it
-easier to find errors.[^chapter1_6]
+easier to find errors.[^6]
 
 Reproducible research needs to be stored so that other researchers can
 actually access the data and source code. By taking steps to make your
@@ -199,8 +199,8 @@ to present the results. Adding a new variable essentially forces you to
 reproduce large portions of your research. If when you started the
 project you used tools that make it easier for others to reproduce your
 research, you also made it easier to reproduce the work yourself. You
-will have taken steps to have a "better relationship with your
-future self" [@Bowers2011 2].
+will have taken steps to have a "better relationship with \[your\]
+future \[self\]" [@Bowers2011 2].
 
 ##### Higher research impact
 
@@ -309,7 +309,7 @@ Researchers in the private sector may or may not want to make their work
 easily reproducible outside of their organization. However, that does
 not mean that significant benefits cannot be gained from using the
 methods of reproducible research. First, even if public reproducibility
-is ruled out to guard proprietary information,[^chapter1_7] making your research
+is ruled out to guard proprietary information,[^7] making your research
 reproducible to members of your organization can spread valuable
 information about how analyses were done and data was collected. This
 will help build your organization's knowledge and avoid effort
@@ -319,7 +319,7 @@ private organization. Using the sort of dynamic automated processes run
 with clearly documented source code we will learn in this book can also
 help create robust data analysis methods that help your organization
 avoid errors that may come from cutting-and-pasting data across
-spreadsheets.[^chapter1_8]
+spreadsheets.[^8]
 
 Also, the tools of reproducible research covered in this book enable you
 to create professional standardized reports that can be easily updated
@@ -342,7 +342,7 @@ is easily linked to the reproducible research environment [@Mesirov2010
 
 In this book we will focus on learning how to use the widely available
 and highly flexible reproducible research environment--R/RStudio
-[@RLanguage; @RStudioCite].[^chapter1_9] R/RStudio can be linked to numerous
+[@RLanguage; @RStudioCite].[^9] R/RStudio can be linked to numerous
 reproducible research publishers such as LaTeX and Markdown with Yihui
 Xie's *knitr* package [-@R-knitr] or the related *rmarkdown* package
 [@R-rmarkdown]. The main tools covered in this book include:
@@ -368,7 +368,7 @@ Xie's *knitr* package [-@R-knitr] or the related *rmarkdown* package
     available.
 
 -   **Unix-like shell programs**: These tools are useful for working
-    with large research projects.[^chapter1_10] They also allow us to use
+    with large research projects.[^10] They also allow us to use
     command-line tools including GNU Make for compiling projects and
     Pandoc, a program useful for converting documents from one markup
     language to another.
@@ -392,7 +392,7 @@ The way you interact with R has benefits for reproducible research. In
 general you interact with R (or any other programming and markup
 language) by explicitly writing down your steps as source code. This
 promotes reproducibility more than your typical interactions with
-Graphical User Interface (GUI) programs like SPSS[^chapter1_11] and Microsoft
+Graphical User Interface (GUI) programs like SPSS[^11] and Microsoft
 Word. When you write R code and embed it in presentation documents
 created using markup languages, you are forced to explicitly state the
 steps you took to do your research. When you do research by clicking
@@ -408,10 +408,10 @@ reference="GettingStartedRR"}.
 ##### Why and ?
 
 Literate programming is a crucial part of reproducible quantitative
-research.[^chapter1_12] Being able to directly link your analyses, your results,
+research.[^12] Being able to directly link your analyses, your results,
 and the code you used to produce the results makes tracing your steps
 much easier. There are many different literate programming tools for a
-number of different programming languages.[^chapter1_13] Previously, one of the
+number of different programming languages.[^13] Previously, one of the
 most common tools for researchers using R and the LaTeX markup language
 was *Sweave* [@Leisch2002]. The packages I am going to focus on in this
 book are newer and have more capabilities. They are called *knitr* and
@@ -423,10 +423,10 @@ The simple answer is that they are more capable than *Sweave*. Both
 including Markdown and HTML. *rmarkdown* can even output Microsoft Word
 documents. They can work with programming languages other than R. They
 highlight R code in presentation documents making it easier for your
-readers to follow.[^chapter1_14] They give you better control over the inclusion
+readers to follow.[^14] They give you better control over the inclusion
 of graphics and can cache code chunks, i.e. save the output for later.
 *knitr* has the ability to understand *Sweave*-like syntax, so it will
-be easy to convert backwards to *Sweave* if you want to.[^chapter1_15] You also
+be easy to convert backwards to *Sweave* if you want to.[^15] You also
 have the choice to use much simpler and more straightforward syntax with
 *knitr* and *rmarkdown*.
 
@@ -440,7 +440,7 @@ desired output. For example, with *knitr*, LaTeX must be used to create
 PDF output documents and Markdown or HTML must be used to create
 webpages. *rmarkdown* builds directly on *knitr*, the key difference
 being that it uses the straightforward Markdown markup language to
-generate PDF, HTML, and MS Word documents.[^chapter1_16]
+generate PDF, HTML, and MS Word documents.[^16]
 
 Because you write with the simple Markdown syntax, *rmarkdown* is
 generally easier to use. It has the advantage of being able to take the
@@ -465,7 +465,7 @@ easily, it is also a very good standalone editor for writing documents
 with LaTeX and Markdown. For LaTeX documents it can, for example, insert
 frequently used commands like `\section{}` for numbered sections (see
 Chapter [\[LatexChapter\]](#LatexChapter){reference-type="ref"
-reference="LatexChapter"}).[^chapter1_17] There are many LaTeX editors available,
+reference="LatexChapter"}).[^17] There are many LaTeX editors available,
 both open source and paid. But RStudio is currently the best program for
 creating reproducible LaTeX and Markdown documents. It has full syntax
 highlighting. Its syntax highlighting can even distinguish between R
@@ -513,18 +513,18 @@ install all of these user-written packages, please see page .
 ##### Installing markup languages {#InstallMarkup}
 
 If you are planning to create LaTeX documents you need to install a TeX
-distribution.[^chapter1_18] They are available for Windows, Mac, and Linux
+distribution.[^18] They are available for Windows, Mac, and Linux
 systems. They can be found at: <http://www.latex-project.org/ftp.html>.
 Please refer to that site for more installation information.
 
 If you want to create Markdown documents you can separately install the
 *markdown* package in R. You can do this the same way that you install
-any package in R, with the command.[^chapter1_19]
+any package in R, with the command.[^19]
 
 ##### GNU Make
 
 If you are using a Linux computer you already have GNU
-Make[\[InstallMake\]]{#InstallMake label="InstallMake"} installed.[^chapter1_20]
+Make[\[InstallMake\]]{#InstallMake label="InstallMake"} installed.[^20]
 Mac users will need to install the command-line developer tools. There
 are two ways to do this. One is go to the App Store and download Xcode
 (it's free). Once Xcode is installed, install command-line tools, which
@@ -701,10 +701,10 @@ reference="MarkdownChapter"}) covers how to create reproducible
 presentation documents including LaTeX articles, books, slideshows, and
 batch reports as well as Markdown webpages and slideshows.
 
-[^chapter1_1]: This is close to what [@Lykken1968] calls "operational
+[^1]: This is close to what [@Lykken1968] calls "operational
     replication".
 
-[^chapter1_2]: The idea of really reproducible computational research was
+[^2]: The idea of really reproducible computational research was
     originally thought of and implemented by Jon Claerbout and the
     Stanford Exploration Project beginning in the 1980s and early 1990s
     [@Fomel2009; @Donoho2009]. Further seminal advances were made by
@@ -712,11 +712,11 @@ batch reports as well as Markdown webpages and slideshows.
     library of MATLAB routines for their research on wavelets in the
     mid-1990s [@Buckheit1995].
 
-[^chapter1_3]: Reproducibility is important for both quantitative and qualitative
+[^3]: Reproducibility is important for both quantitative and qualitative
     research [@King1994]. Nonetheless, we will focus mainly on on
     methods for reproducibility in quantitative computational research.
 
-[^chapter1_4]: Much of the reproducible computational research and literate
+[^4]: Much of the reproducible computational research and literate
     programming literatures have traditionally used the term "weave" to
     describe the process of combining source code and presentation
     documents [see @Knuth1992 101]. In the R community weave is usually
@@ -728,56 +728,56 @@ batch reports as well as Markdown webpages and slideshows.
     cover the *rmarkdown* package in this book. Because of this, I use
     the term knit rather than weave in this book.
 
-[^chapter1_5]: See the American Physical Society's website at
+[^5]: See the American Physical Society's website at
     <http://www.aps.org/policy/statements/99_6.cfm>. See also
     [@Fomel2009].
 
-[^chapter1_6]: Of course, it's important to keep in mind that reproducibility is
+[^6]: Of course, it's important to keep in mind that reproducibility is
     "neither necessary nor sufficient to prevent mistakes"
     [@Stodden2009b].
 
-[^chapter1_7]: There are ways to enable some public reproducibility without
+[^7]: There are ways to enable some public reproducibility without
     revealing confidential information. See [@Vandewalle2007] for a
     discussion of one approach.
 
-[^chapter1_8]: See this post by David Smith about how the J.P. Morgan "London
+[^8]: See this post by David Smith about how the J.P. Morgan "London
     Whale" problem may have been prevented with the type of processes
     covered in this book:
     <http://blog.revolutionanalytics.com/2013/02/did-an-excel-error-bring-down-the-london-whale.html>
     (posted 11 February 2013).
 
-[^chapter1_9]: The book was created with R version and developer builds of
+[^9]: The book was created with R version and developer builds of
     RStudio version 0.99.370.
 
-[^chapter1_10]: In this book I cover the Bash shell for Linux and Mac as well as
+[^10]: In this book I cover the Bash shell for Linux and Mac as well as
     Windows PowerShell.
 
-[^chapter1_11]: I know you can write scripts in statistical programs like SPSS,
+[^11]: I know you can write scripts in statistical programs like SPSS,
     but doing so is not encouraged by the program's interface and you
     often have to learn multiple languages for writing scripts that run
     analyses, create graphics, and deal with matrices.
 
-[^chapter1_12]: Donald Knuth coined the term literate programming in the 1970s to
+[^12]: Donald Knuth coined the term literate programming in the 1970s to
     refer to a source file that could be both run by a computer and
     "woven" with a formatted presentation document [@Knuth1992].
 
-[^chapter1_13]: A very interesting tool that is worth taking a look at for the
+[^13]: A very interesting tool that is worth taking a look at for the
     Python programming language is HTML Notebooks created with IPython.
     For more details see
     <http://ipython.org/ipython-doc/dev/notebook/index.html>.
 
-[^chapter1_14]: Syntax highlighting uses different colors and fonts to
+[^14]: Syntax highlighting uses different colors and fonts to
     distinguish different types of text.
 
-[^chapter1_15]: Note that the Sweave-style syntax is not identical to actual
+[^15]: Note that the Sweave-style syntax is not identical to actual
     *Sweave* syntax. See Yihui Xie's discussion of the differences
     between the two at: <http://yihui.name/knitr/demo/sweave/>. *knitr*
     has a function (`Sweave2knitr`) for converting *Sweave* to *knitr*
     syntax.
 
-[^chapter1_16]: It does this by relying on a tool called Pandoc [@Pandoc2014].
+[^16]: It does this by relying on a tool called Pandoc [@Pandoc2014].
 
-[^chapter1_17]: If you are more comfortable with a what-you-see-is-what-you-get
+[^17]: If you are more comfortable with a what-you-see-is-what-you-get
     (WYSIWYG) word processor like Microsoft Word, you might be
     interested in exploring Lyx. It is a WYSIWYG-like LaTeX editor that
     works with *knitr*. It doesn't work with the other markup languages
@@ -785,11 +785,11 @@ batch reports as well as Markdown webpages and slideshows.
     <http://www.lyx.org/>. I give some brief information on using Lyx
     with *knitr* in Chapter 3's Appendix.
 
-[^chapter1_18]: LaTeX is is really a set of macros for the TeX typesetting
+[^18]: LaTeX is is really a set of macros for the TeX typesetting
     system. It is included in all major TeX distributions.
 
-[^chapter1_19]: The exact command is: .
+[^19]: The exact command is: .
 
-[^chapter1_20]: To verify this, open the Terminal and type: `make –version` (I
+[^20]: To verify this, open the Terminal and type: `make –version` (I
     used version 3.81 for this book). This should output details about
     the current version of Make installed on your computer.
