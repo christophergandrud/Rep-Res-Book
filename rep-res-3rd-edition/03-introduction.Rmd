@@ -559,7 +559,7 @@ individual programs I will along the way point you to other resources
 that cover these programs in more detail.
 
 To that end, I can recommend a number of resources that cover more of
-the nitty-gritty:[\[OtherBooks\]]{#OtherBooks label="OtherBooks"}
+the nitty-gritty:\@label(OtherBooks)
 
 -   Michael J. Crawley's [-@Crawley2013] encyclopaedic R book,
     appropriately titled ***The R Book***, published by Wiley.
@@ -584,9 +584,7 @@ the nitty-gritty:[\[OtherBooks\]]{#OtherBooks label="OtherBooks"}
     see William E. Shotts Jr.'s [-@ShottsJr2012] book ***The Linux
     Command-line: A Complete Introduction*** also published by No Starch
     Press. It is also helpful for Windows users running PowerShell (see
-    Chapter
-    [\[DirectoriesChapter\]](#DirectoriesChapter){reference-type="ref"
-    reference="DirectoriesChapter"}).
+    Chapter \@ref(DirectoriesChapter)).
 
 -   The RStudio website (<http://www.rstudio.com/ide/docs/>) has a
     number of useful tutorials on how to use *knitr* with LaTeX and
@@ -601,8 +599,7 @@ encountered illustrative examples that included commands, variables, and
 other things that were not well explained in the texts that I was
 reading. This caused me to waste many hours trying to figure out, for
 example, what the `$` is used for (preview: it's the component selector,
-see Section [\[ComponentSelect\]](#ComponentSelect){reference-type="ref"
-reference="ComponentSelect"}). I hope to save you from this wasted time
+see Section \@ref(ComponentSelect). I hope to save you from this wasted time
 by either providing a brief explanation of possibly frustrating and
 mysterious things and/or pointing you in the direction of good
 explanations.
@@ -623,19 +620,16 @@ PDFs. Please feel free to skip these sections.
 
 If you are an experienced R user you may want to skip over the first
 section of Chapter
-[\[GettingStartedRKnitr\]](#GettingStartedRKnitr){reference-type="ref"
-reference="GettingStartedRKnitr"}: Getting Started with R, RStudio, and
+\@ref(GettingStartedRKnitr): Getting Started with R, RStudio, and
 *knitr*/*rmarkdown*. But don't skip over the whole chapter. The latter
 parts contain important information on the *knitr*/*rmarkdown* packages.
 If you are experienced with R data manipulation you may also want to
-skip all of Chapter [\[DataClean\]](#DataClean){reference-type="ref"
-reference="DataClean"}.
+skip all of Chapter \@ref(DataClean).
 
 #### More-experienced LaTeX users {-}
 
 If you are familiar with LaTeX you might want to skip the first part of
-Chapter [\[LatexChapter\]](#LatexChapter){reference-type="ref"
-reference="LatexChapter"}. The second part may be useful as it includes
+Chapter \@ref(LatexChapter). The second part may be useful as it includes
 information on how to dynamically create BibTeX bibliographies with
 *knitr* and how to include *knitr* output in a Beamer slideshow.
 
@@ -669,34 +663,19 @@ will be posted at:
 ### Contents overview
 
 The book is broken into four parts. The first part (chapters
-[\[GettingStartedRR\]](#GettingStartedRR){reference-type="ref"
-reference="GettingStartedRR"},
-[\[GettingStartedRKnitr\]](#GettingStartedRKnitr){reference-type="ref"
-reference="GettingStartedRKnitr"}, and
-[\[DirectoriesChapter\]](#DirectoriesChapter){reference-type="ref"
-reference="DirectoriesChapter"}) gives an overview of the reproducible
+\@ref(GettingStartedRR),
+\@ref(GettingStartedRKnitr), and \@ref(DirectoriesChapter)) gives an overview of the reproducible
 research workflow as well as the general computer skills that you'll
 need to use this workflow. Each of the next three parts of the book
 guides you through the specific skills you will need for each part of
 the reproducible research process. Part two (chapters
-[\[Storing\]](#Storing){reference-type="ref" reference="Storing"},
-[\[DataGather\]](#DataGather){reference-type="ref"
-reference="DataGather"}, and
-[\[DataClean\]](#DataClean){reference-type="ref" reference="DataClean"})
+\@ref(Storing), \@ref(DataGather), and \@ref(DataClean))
 covers the data gathering and file storage process. The third part
-(chapters [\[StatsModel\]](#StatsModel){reference-type="ref"
-reference="StatsModel"},
-[\[TablesChapter\]](#TablesChapter){reference-type="ref"
-reference="TablesChapter"}, and
-[\[FiguresChapter\]](#FiguresChapter){reference-type="ref"
-reference="FiguresChapter"}) teaches you how to dynamically incorporate
+(chapters \@ref(StatsModel), \@ref(TablesChapter), and \@ref(FiguresChapter)) 
+teaches you how to dynamically incorporate
 your statistical analysis, results figures, and tables into your
-presentation documents. The final part (chapters
-[\[LatexChapter\]](#LatexChapter){reference-type="ref"
-reference="LatexChapter"},
-[\[LargeDocs\]](#LargeDocs){reference-type="ref" reference="LargeDocs"},
-and [\[MarkdownChapter\]](#MarkdownChapter){reference-type="ref"
-reference="MarkdownChapter"}) covers how to create reproducible
+presentation documents. The final part (chapters \@ref(LatexChapter), \@ref(LargeDocs),
+and \@ref(MarkdownChapter)) covers how to create reproducible
 presentation documents including LaTeX articles, books, slideshows, and
 batch reports as well as Markdown webpages and slideshows.
 
@@ -722,14 +701,14 @@ pkg_to_install <- c("brew", "bookdown", "xfun")
 
 # Check if the packages are installed, if not install
 lapply(
-  pkg_to_install,
-  function(pkg) {
-    if (system.file(package = pkg) == "") {
-      install.packages(pkg,
-        repos = "http://cran.us.r-project.org"
-      )
+    pkg_to_install,
+    function(pkg) {
+        if (system.file(package = pkg) == "") {
+            install.packages(pkg,
+                repos = "http://cran.us.r-project.org"
+            )
+        }
     }
-  }
 )
 ```
 
