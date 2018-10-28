@@ -43,21 +43,22 @@ use to advertise your findings.
 
 Instead of starting to use the individual tools of reproducible research
 as soon as you learn them, I recommend briefly stepping back and
-considering how the stages of reproducible research *tie* together
-overall. This will make your workflow more coherent from the beginning
-and save you a lot of backtracking later on. Figure \@ref(WorkflowTies)
+considering how the stages of reproducible research *tie* together.
+This will make your workflow more coherent from the beginning
+and save you a lot of backtracking later on. Figure \@ref(fig:WorkflowTies)
 illustrates the workflow. Notice that most of the arrows connecting the
 workflow's parts point in both directions, indicating that you should
 always be thinking about how to make it easier to go backwards through
 your research, i.e. reproduce it, as well as forwards.
 
-Around the edges of the figure are some of the commands you will learn
+Around the edges of the figure are some of the functions you will learn
 to make it easier to go forwards and backwards through the process.
-These commands tie your research together. For example, you can use
+These functions tie your research together. For example, you can use
 API-based R packages to gather data from the internet. You can use R's
 `merge()` function to combine data gathered from different sources into one
 data set. The `getURL()` function from R's *RCurl* package [@R-RCurl] and
-the `read.table()` function can be used to bring this data set into
+the `read.table()` function in base **R** or the much more versatile `import()` 
+function from the *rio* package \citep{R-rio}\index{rio} can be used to bring this data set into
 your statistical analyses. The *knitr* or *rmarkdown* package then
 ties your analyses into your presentation documents. This includes the
 code you used, the figures you created, and, with the help of tools such
@@ -65,13 +66,89 @@ as the `kable()` function in the *knitr* package, tables of results. You
 can even tie multiple presentation documents together. For example, you
 can access the same figure for use in a LaTeX article and a
 Markdown-created website with the `includegraphics` and `![]()`
-commands, respectively. This helps you maintain a consistent
+functions, respectively. This helps you maintain a consistent
 presentation of results across multiple document types. We'll cover
-these commands in detail throughout the book. See Table
-\@ref(TableTieCommands) for a brief but more complete overview of the main
-*tie commands*.
+these functions in detail throughout the book. See Table
+\@ref(TableTieFunctions) for a brief but more complete overview of the main
+*tie functions*.
+
+```{r WorkflowTies, engine = "tikz", fig.cap = "Example Workflow and a Selection of Functions to Tie It Together", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+\usetikzlibrary{decorations.pathmorphing}
+
+\definecolor{Blue}{HTML}{7BCCC4}
+\definecolor{LiteBlue}{HTML}{A8DDB5}
+\definecolor{DarkBlue}{HTML}{08589E}
+
+\definecolor{GrayLine}{HTML}{BDBDBD}
+
+% Set node styles
+%% Workflow stage nodes
+\tikzstyle{Stage} = [draw=Blue,
+                     %fill=Blue,
+                     rectangle,
+                     text width=7em,
+                     inner sep=0.5cm,
+                     font=\small]
+
+% Raw Data nodes
+\tikzstyle{RawData} = [draw=LiteBlue,
+                       %fill=LiteBlue,
+                       decorate,
+                       decoration={random steps,
+                                   segment length=2pt,
+                                   amplitude=2pt},
+                       inner sep=0.25cm,
+                       font=\scriptsize]
+
+% Separator line style
+\tikzstyle{sepline} = [draw,
+                        very thick,
+                        color=GrayLine]
+
+% Link function nodes
+\tikzstyle{Links} = [draw=none,
+                          text width=6em,
+                          text=DarkBlue,
+                          font=\footnotesize]
+
+% Begin tikz picture
+\begin{tikzpicture}
+
+    % Raw Data Nodes
+    \node (Data1) at (-3, 7) [RawData]{Raw Data};
+    \node (Data2) at (-3, 5) [RawData]{Raw Data};
+    \node (Data3) at (-3, 3) [RawData]{Raw Data};
+
+    % Workflow stage nodes
+    \node (DataGather) at (0.5, 5) [Stage, text width= 6em]{Data Gather};
+    \node (Analysis) at (5.5, 5) [Stage, text width= 4em]{Analysis};
+    \node (Presentation1) at (9, 8) [Stage]{LaTeX Book, \\ Article, \& \\ Slideshow \\ Presentations};
+    \node (Presentation2) at (9, 2.5) [Stage]{Markdown/ \\ HTML Website \\ Presentations};
+
+    % Lines
+    \draw [->, very thick] (Data1) -- (DataGather);
+    \draw [->, very thick] (Data2) -- (DataGather);
+    \draw [->, very thick] (Data3) -- (DataGather);
+    \draw [<->, very thick] (DataGather) -- (Analysis);
+    \draw [<->, very thick] (Analysis) -- (Presentation1);
+    \draw [<->, very thick] (Analysis) -- (Presentation2);
+
+    \draw [<->, very thick] (Presentation1) -- (Presentation2);
+
+    \path [sepline] (-3.5, 0.75) -- (11, 0.75);
+    \path [sepline] (11.5, 9) -- (11.5, 1.5);
+
+    % Link function nodes
+
+    \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ Pandoc \\ \texttt{![]()}};
+    \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \emph{rmarkdown} \\ \texttt{source} \\ \texttt{source\_url} \\ \texttt{kable} \\ \texttt{print(xtable())} \\ \texttt{texreg} };
+    \node (readData) at (3, -1) [Links]{\texttt{import} \\ \texttt{read.table} \\ \texttt{getURL} };
+
+    \node (importData) at (-1, -1.3) [Links]{ \texttt{Make} \\ \texttt{download.file} \\ \texttt{read.table} \\ \texttt{import} \\ \texttt{merge}\\ \texttt{getURL} \\ API-based packages };
 
 
+\end{tikzpicture}
+```
 
 ### Reproducible theory
 
@@ -80,8 +157,8 @@ book is theoretical stage. Ideally, if you are using a deductive
 research design, the bulk of this work will precede and guide the data
 gathering and analysis stages. Just because I don't cover this stage of
 the research process doesn't mean that theory building can't and
-shouldn't be reproducible. It can in fact be “the easiest part to make
-reproducible” [@vandewalle2007 1254]. Quotes and paraphrases from
+shouldn't be reproducible. It can in fact be "the easiest part to make
+reproducible" [@vandewalle2007 1254]. Quotes and paraphrases from
 previous works in the literature obviously need to be fully cited so
 that others can verify that they accurately reflect the source material.
 For mathematically based theory, clear and complete descriptions of the
@@ -121,17 +198,17 @@ Documenting everything is the key to reproducible research and lies
 behind all of the other tips in this chapter and tools you will learn
 throughout the book.
 
-##### Document your R session info {#SessionInfoHow}
+#### Document your R session info {- #SessionInfoHow}
 
 Before discussing the other tips it's important to learn a key part of
-documenting with R. You should *record your session info*. Many things
-in R have stayed the same since it was introduced in the early 1990s.
+documenting with **R**. You should *record your session info*. Many things
+in **R** have stayed the same since it was introduced in the early 1990s.
 This makes it easy for future researchers to recreate what was done in
-the past. However, things can change from one version of R to another
-and especially from one version of an R package to another. Also, the
-way R functions and how R packages are handled can vary across different
+the past. However, things can change from one version of **R** to another
+and especially from one version of an **R** package to another. Also, the
+way **R** functions and how **R** packages are handled can vary across different
 operating systems, so it's important to note what system you used.
-Finally, you may have R set to load packages by default (see Section
+Finally, you may have **R** set to load packages by default (see Section
 \@ref(Packages) for information about packages). These packages might be
 necessary to run your code, but other people might not know what
 packages and what versions of the packages were loaded from just looking
@@ -139,9 +216,9 @@ at your source code. The `sessionInfo()` function in R prints a record of
 all of these things. The information from the session I used to create
 this book is:
 
-```{r Ch2SessionInfoPlain, size='footnotesize', echo=TRUE, tidy=TRUE}
-# Print R session info 
-sessionInfo() 
+```{r Ch2SessionInfoPlain, size='tiny', echo=TRUE, tidy=TRUE}
+# Print R session info
+sessionInfo()
 ```
 
 Chapter \@ref(DirectoriesChapter) gives specific details about how to
@@ -183,8 +260,7 @@ easy to version and changes can be tracked using programs such as Git
 
 #### Learn from the text file: keep it simple {-}
 
-Text files are simple and so, at least at the level of our research documentation
-source and markup increases the probability of baseline usefulness in the future. We can extend this logic to all of the tools we use: avoid adding dependencies you don't need to actually gather your data, anylize it, and present the results. Avoid, for example, seeking out additional fonts to use in your presentation slides. I personally have been burned when I wanted to make minor changes to slides a year after I first presented them (and a day before teaching an upcoming class) only to find that they are no longer available; breaking my slides and forcing me to spend considerable time reworking things. If I,.the creator of the slides, found this time consuming, imagine how an outside researcher would find it. 
+Text files are simple. Their simplicitly increases the probability of baseline usefulness in the future to researchers who will reproduce our work. We can extend the logic of the simple text file to all of the tools we use: keep it simple. Avoid adding dependencies you don't need to actually gather your data, analyze it, and present the results. For example, I have been tempted to make my presentation slides look nicer with new fonts. I was later burned when I wanted to make minor changes to slides a year after I first presented them (and a day before teaching an upcoming class) only to find that the custom fonts were no longer available. This broke my slides and forced me to spend considerable time reworking writing my source documents. If I, the creator of the slides, found this time consuming and annoying, imagine how an outside researcher would find it.
 
 ### All files should be human readable
 
@@ -204,7 +280,7 @@ the source code and the presentation text describing its design and
 purpose appear in the same document. Doing this will make it very clear
 to others how you accomplished a piece of research.
 
-##### Commenting
+#### Commenting {-}
 
 In R, everything on a line after a hash character––(also known as
 number, pound, or sharp) is ignored by R, but is readable to people who
@@ -212,9 +288,9 @@ open the file. The hash character is a comment declaration character.
 You can use the to place comments telling other people what you are
 doing. Here are some examples:
 
-```{r Ch2CommentHash} 
-# A complete comment line 
-2 + 2 # A comment after R code 
+```{r Ch2CommentHash}
+# A complete comment line
+2 + 2 # A comment after R code
 ```
 
 On the first line the (hash) is placed at the very beginning, so the
@@ -253,18 +329,18 @@ file header for an R source code file that creates the third figure in
 an article titled ‘My Article':
 
 ```{r Ch2CommentHeader, echo=TRUE, tidy=FALSE}
-############################ 
-# R Source code file used to create Figure 3 in My 'Article' 
-# Created by Christopher Gandrud 
+############################
+# R Source code file used to create Figure 3 in My 'Article'
+# Created by Christopher Gandrud
 # MIT License
-############################ 
+############################
 ```
 
 Feel free to use things like the long series of hash marks above and
 below the header, white space, and indentations to make your comments
 more readable.
 
-##### Style guides
+#### Style guides {-}
 
 In natural language writing you don't necessarily have to follow a style
 guide. People could probably figure out what you are trying to say, but
@@ -279,7 +355,7 @@ style guide.[^chapter2_4] You may want to use the *styler* [@R-styler]\index{sty
 package to automatically reformat your code so that it is easier to
 read.
 
-##### Literate programming
+#### Literate programming {-}
 
 For particularly important pieces of research code it may be useful to
 not only comment on the source file, but also display code in
@@ -303,10 +379,10 @@ to a particular statistical model and a particular data set without
 clear documentation. Therefore, it is important to make the links
 between your files explicit.
 
-Tie commands are the most dynamic way to explicitly link your files
-together. These commands instruct the computer program you are using to
-use information from another file. In Table \[TableTieCommands\] I have
-compiled a selection of key tie commands you will learn how to use in
+Tie functions are the most dynamic way to explicitly link your files
+together. These functions instruct the computer program you are using to
+use information from another file. In Table \@ref(TableTieFunctions) I have
+compiled a selection of key tie functions you will learn how to use in
 this book. We'll discuss many more, but these are some of the most
 important.
 
@@ -336,8 +412,39 @@ also make it easier for you and others to find errors [@nagler1995 490].
 
 Chapter \@ref(DirectoriesChapter) discusses file organization in much more
 detail. Chapter \@ref(Storing) teaches you a number of ways to make your
-files accessible through the cloud computing services Dropbox and
-GitHub.
+files accessible through the cloud computing services like GitHub.
+
+\begin{table}
+    \caption{A Selection of Functions/Packages/Programs for Tying Together Your Research Files}
+    \label{TableTieFunctions}
+    \vspace{0.3cm}
+    {\footnotesize{
+    \begin{tabular}{p{2.5cm} c p{5.25cm} p{2cm}}
+        \hline
+        Function/Package/ Program & Language & Description & Chapters Discussed \\[0.3cm]
+        \hline \hline
+        {\emph{knitr}} & R & R package with commands for tying analysis code into presentation documents including those written in LaTeX and Markdown. & \hfill Throughout \\[0.25cm]
+        \emph{rmarkdown} & R & R package that builds on \emph{knitr}. It allows you to use Markdown to output to HTML, PDFs compiled with LaTeX or Microsoft Word. & \hfill Throughout \\[0.25cm]
+        {\tt{download.file}} & R & Downloads a file from the internet. & \hfill\ref{DataGather} \\[0.25cm]
+        {\tt{read.table}} & R & Reads a table into R. You can use this to import a plain-text file formatted data into R. & \hfill\ref{DataGather} \\[0.25cm]
+        {\tt{read.csv}} & R & Same as \texttt{read.table} with default arguments set to import \texttt{.csv} formatted data files. & \hfill\ref{DataGather} \\[0.25cm]
+        {\tt{import}} & R & Reads a table stored locally or on the internet into R. You can use it to import a wide variety of plain-text data formats into R from secure (https) URLs. & \hfill\ref{DataGather} \\[0.25cm]
+        API-based packages & R & Various packages use APIs to gather data from the internet. & \hfill\ref{DataGather} \\[0.25cm]
+        {\tt{merge}} & R & Merges together data frames. & \hfill\ref{DataClean} \\[0.25cm]
+        {\tt{source}} & R & Runs an R source code file. & \hfill\ref{StatsModel} \\[0.25cm]
+        {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub. & \hfill\ref{StatsModel} \\[0.25cm]
+        {\tt{kable}} & R & Creates tables from data frames that can be rendered using Markdown or LaTeX. & \hfill\ref{TablesChapter} \\[0.25cm]
+        {\tt{toLaTeX}} & R & Converts R objects to LaTeX. & \hfill\ref{GettingStartedRR} \\[0.25cm]
+        {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files. & \hfill\ref{LargeDocs} \\[0.25cm]
+        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
+        {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
+        \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]
+        Pandoc & shell & A shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]
+        Make & shell & A shell program for automatically building many files at the same time. & \hfill\ref{DataGather} \\[0.25cm]
+        \hline
+    \end{tabular}
+    }}
+\end{table}
 
 [^chapter2_1]: Plain text files are usually given the file extension `.txt`.
     Depending on the size of your data set it may not be feasible to
