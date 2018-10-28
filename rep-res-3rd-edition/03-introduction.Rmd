@@ -701,7 +701,7 @@ To install key user-written packages discussed in this book, copy the following 
 pkg_to_install <- c("brew", "bookdown", "xfun")
 
 
-# Check if the packages are installed, if not install
+# Check if the packages are installed, if not install them 
 lapply(
     pkg_to_install,
     function(pkg) {
@@ -714,9 +714,11 @@ lapply(
 )
 ```
 
-\index{R!packages|(}
+Note that I specified a US based R Project CRAN "mirror"\index{CRAN!mirror} to download the packages from.^[CRAN stands for the Comprehensive R Archive Network.] There are many others to choose from. See: <https://cran.r-project.org/mirrors.html>.
 
-Once you enter this code, you may be asked to select a CRAN "mirror"\index{CRAN!mirror} to download the packages from.^[CRAN stands for the Comprehensive R Archive Network.] Simply select the mirror closest to you.
+The *xfun* package [@R-xfun]\index{xfun} contains a function called `pkg_attach2()`. When supplied with a vector of package names like those in `pkg_to_install` above, will install all non-installed packages. `p_load()` from the *pacman* package [@R-pacman] works in a similar way. These functions are much less verbose than the example above, but they do require the user to install the package separately before `pkg_attach2()` or `p_load()` can be used. The example above relies only on functions available in the basic **R** installation. 
+
+\index{R!packages|(}
 
 ### Special issues for Windows and Linux Users {-}
 
@@ -728,26 +730,24 @@ If you are using Windows, you will also need to install *Rtools*.\index{Rtools} 
 
 \index{Linux|(}
 
+[**CONSIDER REMOVING IF NOT NEEDED]
+
 On Linux you will need to install the *RCurl* \citep{R-RCurl}\index{RCurl} and *XML*\index{XML} \citep{R-XML} packages separately. Use your Terminal\index{Terminal} to install these packages with the following code:
 
 ```{sh, eval=FALSE}
-sudo apt-get update
+apt-get update
 
-sudo apt-get install libcurl4-gnutls-dev
-sudo apt-get install libxml2-dev
-sudo apt-get install r-cran-xml
-sudo apt-get install r-cran-rjava
+apt-get install libcurl4-gnutls-dev
+apt-get install libxml2-dev
+apt-get install r-cran-rcurl-
+apt-get install r-cran-xml
 ```
 
 \index{Linux|(}
 
-```{r sessioninfo}
-xfun::session_info()
-```
-
 [^chapter1_1_1]: @rokem2018 [3-4] note that some disciplines, e.g. computing 
     machinery and meteorology, give "replicable" and "reproducible" the exact 
-    opposite meaning from they way they are used in this book and many other
+    opposite meanings from they way they are used in this book and many other
     disciplines such as biology, economics, and epidemiology.
 
 [^chapter1_1]: This is close to what [@lykken1968] calls "operational
