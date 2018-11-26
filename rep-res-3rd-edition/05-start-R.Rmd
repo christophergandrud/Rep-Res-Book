@@ -840,7 +840,7 @@ not show the code in the final presentation document, we can use the
 option `echo=FALSE`.
 
 ```{r Ch3MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE,
-eval=FALSE} 
+eval=FALSE}
 "'r ChunkLabel, echo=FALSE
 string_num_object <- cbind(character_vector, numeric_vector) "'```
 
@@ -927,7 +927,59 @@ You set package options in a similar way as global chunk options with .
 For example, include this code at the beginning of a document to turn
 off the progress bar when it is knitted:
 
-\[FILL BACK IN\]
+```{r KnitProcess, fig.cap="*knitr*/*rmarkdown* Process", engine = "tikz", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+% Define colors for figure
+%% Color palette (GnBU) chosen using ColorBrewer 2.0
+%% See: http://colorbrewer2.org/
+%% Not used in the print version
+\definecolor{Blue}{HTML}{7BCCC4}
+\definecolor{LiteBlue}{HTML}{A8DDB5}
+\definecolor{DarkBlue}{HTML}{08589E}
+
+\definecolor{GrayLine}{HTML}{BDBDBD}
+
+% Set node styles
+%% Workflow stage nodes
+\tikzstyle{Docs} = [draw=Blue,
+                     rectangle,
+                     inner sep=0.3cm,
+                     font=\small]
+
+% Begin tikz picture
+\begin{tikzpicture}
+
+    \node(knit) at (2, 1.75) {{\emph{\textbf{Knit}}}};
+    \node(compile) at (6, 1.75) {{\emph{\textbf{Compile}}}};
+
+    % Document nodes
+    \node (knittable) at (0, 0) [Docs, text width= 6em]{Knittable Document \\ (Markup + Code Chunks)};
+    \node (Markup) at (4, 0) [Docs, text width= 6em]{Markup Only Document};
+    \node (Presentation) at (8, 0) [Docs, text width = 6em]{Presentation Document};
+
+    % LaTeX Example
+    \node(LaTeX) at (1, -2.5) {\textbf{\emph{knitr} LaTeX Example}};
+    \node (Rnw) at (0, -3.5) [Docs, text width= 6em]{\emph{Paper.Rnw}};
+    \node (tex) at (4, -3.5) [Docs, text width= 6em]{\emph{Paper.tex}};
+    \node (pdf) at (8, -3.5) [Docs, text width = 6em]{\emph{Paper.pdf}};
+
+    % Markdown Example
+    \node(Markdown) at (2, -5) {\textbf{\emph{knitr}/\emph{rmarkdown} Markdown Example}};
+    \node (Rmd) at (0, -6) [Docs, text width= 6em]{\emph{Website.Rmd}};
+    \node (md) at (4, -6) [Docs, text width= 6em]{\emph{Website.md}};
+    \node (html) at (8, -6) [Docs, text width = 6em]{\emph{Website.html}};
+
+    % Lines
+    \draw [->, very thick] (knittable) -- (Markup);
+    \draw [->, very thick] (Markup) -- (Presentation);
+
+    \draw [->, very thick] (Rnw) -- (tex);
+    \draw [->, very thick] (tex) -- (pdf);
+
+    \draw [->, very thick] (Rmd) -- (md);
+    \draw [->, very thick] (md) -- (html);
+
+\end{tikzpicture}
+```
 
 ### Hooks
 
@@ -1110,7 +1162,8 @@ for more details on using BibTeX for bibliographies). Here is a example:
 # Load tools package
 # library(tools)
 
-# Compile pdf texi2pdf(file = "example.tex")
+# Compile pdf
+texi2pdf(file = "example.tex")
 ```
 
 Just like with `knit2html`, you can simplify this process by using the
