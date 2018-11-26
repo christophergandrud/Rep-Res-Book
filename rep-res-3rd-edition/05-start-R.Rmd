@@ -70,14 +70,14 @@ confusing R about what object or component you are referring to.
 To put something into the object we use the assignment operator[^chapter3_6]
 (`<-`).\index{<-} Let's assign the number 10 to our *number* object.
 
-```{r Ch3NumericObject, echo=TRUE} 
-number <- 10 
+```{r Ch3NumericObject, echo=TRUE}
+number <- 10
 ```
 
 To see the contents of our object, type its name.
 
-```{r Ch3NumberSee, echo=TRUE} 
-number 
+```{r Ch3NumberSee, echo=TRUE}
+number
 ```
 
 Let's briefly breakdown this output. `10` is clearly the contents of
@@ -93,7 +93,7 @@ string (letters in a word for example) inside of single or double
 quotation marks (`''`, or `""`).[^chapter3_8] To create an object called *words*
 that contains the character string "Hello World":
 
-```{r Ch3CharacterObject, echo=TRUE} 
+```{r Ch3CharacterObject, echo=TRUE}
 words <- "Hello World"
 ```
 
@@ -101,8 +101,8 @@ An object's type is important to keep in mind as it determines what we
 can do to it. For example, you cannot take the mean of a character
 object like the *words* object:
 
-```{r Ch3ClassError, echo=TRUE} 
-mean(words) 
+```{r Ch3ClassError, echo=TRUE}
+mean(words)
 ```
 
 Trying to find the mean of our *words* object gives us a
@@ -110,8 +110,8 @@ warning message and returns the value `r mean(words)`: not applicable. You can a
 think of `NA` as meaning "missing". To find out an object's type, use the `class()`
 function.\index{R function!class} For example:
 
-```{r Ch3ClassCommand, echo=TRUE} 
-class(words) 
+```{r Ch3ClassCommand, echo=TRUE}
+class(words)
 ```
 
 #### Vector & data frame objects {-}
@@ -128,7 +128,7 @@ Knowing how to use vectors will be especially helpful when you cleanup
 raw data in Chapter \@ref(DataClean) and make tables in Chapter
 \@ref(TablesChapter).[^chapter3_10]
 
-##### Vectors {-}
+#### Vectors {-}
 
 Vectors are the "fundamental data type" in R [@matloff2011]. They are
 simply an ordered group of numbers, character strings, and so on.[^chapter3_11]
@@ -140,22 +140,22 @@ form columns.
 Let's create a simple numeric vector containing the numbers 2.8, 2, and
 14.8. To do this we will use the `c()` (combine)\index{R function!combine} function:
 
-```{r Ch3numeric_vectoror, echo=TRUE} 
+```{r Ch3numeric_vectoror, echo=TRUE}
 numeric_vector <- c(2.8, 2, 14.8)
 
-# Show numeric_vector's contents 
-numeric_vector 
+# Show numeric_vector's contents
+numeric_vector
 ```
 
 Vectors of character strings are created in a similar way. The only
 major difference is that each character string is enclosed in quotation
 marks like this:
 
-```{r Ch3CharcterVector, echo=TRUE} 
+```{r Ch3CharcterVector, echo=TRUE}
 character_vector <- c("Albania", "Botswana", "Cambodia")
 
-# Show character_vector's contents 
-character_vector 
+# Show character_vector's contents
+character_vector
 ```
 
 To give you a preview of what we are going to do when we start working
@@ -164,11 +164,11 @@ with real data sets, let's combine the two vectors
 object with the `cbind()` function. This function binds the two vectors
 together side-by-side as columns.[^chapter3_12]\index{R function!cbind}
 
-```{r Ch3cbind, echo=TRUE} 
+```{r Ch3cbind, echo=TRUE}
 string_num_object <- cbind(character_vector, numeric_vector)
 
-# Show string_num_object's contents 
-string_num_object 
+# Show string_num_object's contents
+string_num_object
 ```
 
 By binding these two objects together we've created a new matrix
@@ -176,18 +176,18 @@ object.[^chapter3_13] You can see that the numbers in the
 *numeric_vector* column are between quotation marks. Matrices,
 like vectors, can only have one data type.
 
-##### Data frames {-}
+#### Data frames {-}
 
 If we want to have an object with rows and columns and allow the columns
 to contain data with different types, we need to use data frames. Let's
 use the `data.frame` function to combine the *numeric_vector*
 and *character_vector* objects.\index{R function!data.frame}
 
-```{r Ch3dataframe, echo=TRUE, tidy=FALSE} 
+```{r Ch3dataframe, echo=TRUE, tidy=FALSE}
 string_num_object <- data.frame(character_vector, numeric_vector)
 
-# Display contents of string_num_object data frame 
-string_num_object 
+# Display contents of string_num_object data frame
+string_num_object
 ```
 
 There are a few important things to notice in this output. The first is
@@ -203,8 +203,8 @@ You can see the data frame's names attribute.[^chapter3_14] It is the column
 names. You can use the `names()` function\index{R function!names} to see any data frame's
 names:[^chapter3_15]
 
-```{r Ch10Names, echo=TRUE} 
-names(string_num_object) 
+```{r Ch10Names, echo=TRUE}
+names(string_num_object)
 ```
 
 You will also notice that the first column of the data set has no name
@@ -213,12 +213,12 @@ rows can be given any name as long as each row name is unique. We can
 use the `row.names()` function to set the row names from a vector. For
 example,
 
-```{r Ch3ReassignRowNames, echo=TRUE} 
+```{r Ch3ReassignRowNames, echo=TRUE}
 # Reassign row.names
 row.names(string_num_object) <- c("First", "Second", "Third")
 
-# Display new row.names 
-row.names(string_num_object) 
+# Display new row.names
+row.names(string_num_object)
 ```
 
 You can see in this example how `row.names()` can also be used
@@ -247,15 +247,15 @@ We can, of course, use the component selector to create new objects with parts o
 ```{r Ch3CompSelect, echo=TRUE}
 numeric_extract <- string_num_object$numeric_vector
 
-# Display contents of numeric_extract 
-numeric_extract 
+# Display contents of numeric_extract
+numeric_extract
 ```
 
 Knowing how to use the component selector will be especially useful when
 we discuss making tables for presentation documents in Chapter
 \@ref(TablesChapter).
 
-#### `attach`  and `with` {-} 
+#### `attach`  and `with` {-}
 
 Using the component selector can create long repetitive code if you want
 to select many components. You have to write the object name, a dollar
@@ -270,18 +270,18 @@ frame after you have attached it. For example, let's attach the *cars*
 data that comes with R. It has two variables, **speed** and
 **dist**.[^chapter3_18]
 
-```{r Ch3Attach, echo=TRUE} 
+```{r Ch3Attach, echo=TRUE}
 # Attach cars to search path
 attach(cars)
 
-# Display speed 
+# Display speed
 head(speed)
 
-# Display dist 
+# Display dist
 head(dist)
 
-# Detach cars 
-detach(cars) 
+# Detach cars
+detach(cars)
 ```
 
 We used the `head()`\index{R function!head} function to see just the first few values of each
@@ -293,11 +293,11 @@ database (see Section \@ref(FunctionsCommands) for more details about
 functions). For example, we can find the mean of *numeric_vector* `with()` the
 *string_num_object* data frame:
 
-```{r Ch3With, echo=TRUE, tidy=FALSE} 
-with(string_num_object, { 
-        mean(numeric_vector)  
-    }  
-) 
+```{r Ch3With, echo=TRUE, tidy=FALSE}
+with(string_num_object, {
+        mean(numeric_vector)
+    }
+)
 ```
 
 You can see that in the `with()` call the data frame object goes first
@@ -305,7 +305,7 @@ and then the `mean()` function[^chapter3_19] goes second in curly brackets (`{}`
 
 In this book I largely avoid using the `attach()` and `with()`
 functions. Instead I tend to use the component selector. Though it creates longer
-code, I find that code written with the component selector is less ambiguous 
+code, I find that code written with the component selector is less ambiguous
 It's always clear which object we are selecting a component
 from. Nonetheless, **attach()** and **with()** are can be useful for
 streamlining your R code.
@@ -326,8 +326,8 @@ To give you an idea of how this works let's use the *cars*
 data set that comes with R. Use `head()` to get a sense of
 what this data set looks like.
 
-```{r Ch3HeadSwiss, echo=TRUE} 
-head(cars) 
+```{r Ch3HeadSwiss, echo=TRUE}
+head(cars)
 ```
 
 We can see a data frame with information on various cars' speeds
@@ -335,26 +335,26 @@ We can see a data frame with information on various cars' speeds
 the third through seventh rows we can use the following subscript
 functions:
 
-```{r Ch3FirstSeventhRows, echo=TRUE} 
-cars[3:7, ] 
+```{r Ch3FirstSeventhRows, echo=TRUE}
+cars[3:7, ]
 ```
 
 The colon (`:`) creates a sequence of whole numbers from 3 to 7. To
 select the fourth row of the **dist** column we can type:
 
-```{r Ch3FourthSecond, echo=TRUE} 
-cars[4, 2] 
+```{r Ch3FourthSecond, echo=TRUE}
+cars[4, 2]
 ```
 
 An equivalent way to do this is:
 
-```{r Ch3FourthDist, echo=TRUE} 
-cars[4, "dist"] 
+```{r Ch3FourthDist, echo=TRUE}
+cars[4, "dist"]
 ```
 
 Finally, we can even include a vector of column names to select:
 
-```{r Ch3FourthBoth, echo=TRUE} 
+```{r Ch3FourthBoth, echo=TRUE}
 cars[4, c("speed", "dist")]
 ```
 
@@ -365,22 +365,22 @@ are the verbs. They do things to objects. Let's use the `mean` function
 as an example. This function takes the mean of a numeric vector object.
 Remember our *numeric_vector* object from before:
 
-```{r Shownumeric_vector, echo=TRUE} 
-# Show contents of numeric_vector 
-numeric_vector 
+```{r Shownumeric_vector, echo=TRUE}
+# Show contents of numeric_vector
+numeric_vector
 ```
 
 To find the mean of this object simply type:
 
-```{r numeric_vector_mean, echo=TRUE} 
-mean(x = numeric_vector) 
+```{r numeric_vector_mean, echo=TRUE}
+mean(x = numeric_vector)
 ```
 
 We use the assignment operator to place a function's output into an
 object. For example:
 
-```{r numeric_vector_meanAssign, echo=TRUE} 
-numeric_vector_mean <- mean(x = numeric_vector) 
+```{r numeric_vector_meanAssign, echo=TRUE}
+numeric_vector_mean <- mean(x = numeric_vector)
 ```
 
 Notice that we typed the function's name then enclosed the object name in
@@ -400,8 +400,8 @@ To find all of the arguments that a function can accept, look at the
 **Arguments** section of the functions's help
 file. To access the help file type: `?FUNCTION`.\index{R function!?} For example,
 
-```{r Ch3HelpMean, echo=TRUE, eval=FALSE, tidy=FALSE} 
-?mean 
+```{r Ch3HelpMean, echo=TRUE, eval=FALSE, tidy=FALSE}
+?mean
 ```
 
 The help file will also tell you the default values that the arguments
@@ -418,8 +418,8 @@ function rounds a vector of numbers. We can use the `digits` argument to
 specify how many decimal places we want the numbers rounded to. To round
 the object *numeric_vector_mean* to one decimal place type:
 
-```{r Ch3Round, echo=TRUE} 
-round(x = numeric_vector_mean, digits = 1) 
+```{r Ch3Round, echo=TRUE}
+round(x = numeric_vector_mean, digits = 1)
 ```
 
 Note that arguments are separated by commas.
@@ -427,9 +427,9 @@ Note that arguments are separated by commas.
 Some arguments do not need to be explicitly labeled. For example, we
 could have written:
 
-```{r Ch3ArgeNoLabel, echo=TRUE} 
+```{r Ch3ArgeNoLabel, echo=TRUE}
 # Find mean of numeric_vector
-mean(numeric_vector) 
+mean(numeric_vector)
 ```
 
 R will do its best to figure out what you want and will only give up
@@ -442,8 +442,8 @@ You can stack arguments inside of other arguments. To have R find the
 mean of *numeric_vector* and round it to one decimal place
 use:
 
-```{r Ch3StackedArgs, echo=TRUE} 
-round(mean(numeric_vector), digits = 1) 
+```{r Ch3StackedArgs, echo=TRUE}
+round(mean(numeric_vector), digits = 1)
 ```
 
 Stacking functions inside of each other can create code that is
@@ -454,12 +454,12 @@ behind the pipe function is that the output of one function is set as
 the first argument of the next. For example, to find the mean of
 **numeric_vector** and then round it to one decimal place use:
 
-```{r Ch3Pipe, echo=TRUE} 
+```{r Ch3Pipe, echo=TRUE}
 # Load magrittr package
 library(magrittr)
 
 # Find mean of numeric_vector and round to 1 decimal place
-mean(numeric_vector) %>% 
+mean(numeric_vector) %>%
     round(digits = 1)
 ```
 
@@ -469,19 +469,19 @@ All of the objects you create become part of your workspace,
 alternatively known as the current working environment. Use the `ls()`\index{R function!ls}
 function to list all of the objects in your current workspace.[^chapter3_23]
 
-```{r Ch3LS, echo=TRUE} 
-ls() 
-``` 
+```{r Ch3LS, echo=TRUE}
+ls()
+```
 
 You can remove specific objects from the workspace using the `rm()`\index{R function!rm}
 function. For example, to remove the `character_vector` and `words` objects
 type:
 
-```{r Ch3RM, echo=TRUE, eval=FALSE} 
-rm(character_vector, words) 
+```{r Ch3RM, echo=TRUE, eval=FALSE}
+rm(character_vector, words)
 ```
 
-To save the entire workspace into a binary–not plain-text–RData file use 
+To save the entire workspace into a binary–not plain-text–RData file use
 `save.image()`\@ref(SaveLoadWS).\index{R function!save.image} The main argument of
 `save.image()` is the location and name of the file in which you want to
 save the workspace. If you don't specify the file path it will be saved
@@ -490,14 +490,14 @@ for information on files paths and working directories). For example, to
 save the current workspace in a file called *workspace_2018-10-28.RData* in
 the current working directory type:
 
-```{r Ch3Workspace, echo=TRUE, eval=FALSE} 
-save.image(file = "workspace_2018-10-28.RData") 
+```{r Ch3Workspace, echo=TRUE, eval=FALSE}
+save.image(file = "workspace_2018-10-28.RData")
 ```
 
 Use `load()`\index{R function!load} to load a saved workspace back into R:
 
-```{r Ch3LoadWS, echo=TRUE, eval=FALSE} 
-load(file = "workspace_2018-10-28.RData") 
+```{r Ch3LoadWS, echo=TRUE, eval=FALSE}
+load(file = "workspace_2018-10-28.RData")
 ```
 
 You should generally avoid having R automatically save your workspace
@@ -512,16 +512,16 @@ are much less future-proof.
 One of the few times when saving your workspace is very useful is when
 it includes an object that was computationally difficult and took a long
 time to create. In this case you can save only the large object with
-`save()`.[^chapter3_25]\@ref(RSave)\index{R function!save} 
+`save()`.[^chapter3_25]\@ref(RSave)\index{R function!save}
 For example, if we have a very large
 object called *comprehensive* we can save it to a file called *comprehensive.RData* like
 this:
 
-```{r Ch3Comp, echo=TRUE, eval=FALSE} 
-save(comp, file = "comprehensive.RData") 
+```{r Ch3Comp, echo=TRUE, eval=FALSE}
+save(comp, file = "comprehensive.RData")
 ```
 
-##### R history {-}
+#### R history {-}
 
 When you enter a function into R it becomes part of your history. To see
 the most recent functions in your history use the `history()` function.\index{R function!history} You
@@ -535,8 +535,8 @@ you set how R runs and outputs functions through an entire R session. For
 example, to have output rounded to one decimal place, set the `digits`
 argument:
 
-```{r Ch3Options, echo=TRUE, eval=FALSE} 
-options(digits = 1) 
+```{r Ch3Options, echo=TRUE, eval=FALSE}
+options(digits = 1)
 ```
 
 ### Installing new packages and loading functions {#Packages}
@@ -556,13 +556,13 @@ of mirrors from which you can download the package. Simply select the
 mirror closest to you.
 
 Once you have installed a package you need to load it so that you can
-use its functions. Use the `library()` function\index{R function!library} 
+use its functions. Use the `library()` function\index{R function!library}
 to load a package.[^chapter3_27] Use
 the following code to load the *ggplot2* package that we
 use in Chapter \@ref(FiguresChapter) to create figures.
 
 ```{r Ch3Library, echo=TRUE, warning=FALSE, message=FALSE}
-library(ggplot2) 
+library(ggplot2)
 ```
 
 Please note that for the examples in this book I only specify what
@@ -575,7 +575,7 @@ make sure that we use the `qplot` function from the *ggplot2* package we
 type:
 
 ```{r Ch3ColonOperator, echo=TRUE, eval=FALSE}
-ggplot2::qplot(. . .) 
+ggplot2::qplot(. . .)
 ```
 
 We can use the double-colon to simplify our code as we don't need to
@@ -594,7 +594,7 @@ will see later in this chapter, it is especially well integrated with
 literate programming tools for reproducible research. Right now let's
 take a quick tour of the basic RStudio window.
 
-##### The default window
+#### The default window {-}
 
 When you first open RStudio you should see a default window that looks
 like Figure \@ref(BlankMain). In this figure you see three window panes.
@@ -625,7 +625,7 @@ shows you help files. You can search for help files and search within
 help files using this pane. Finally, the *Viewer* pane allows you to
 view local web content like JavaScript graphics and Shiny web apps.
 
-##### The Source pane
+#### The Source pane {-}
 
 There is an important pane that does not show up when you open RStudio
 for the first time. This is the *Source* pane. The *Source*
@@ -642,7 +642,7 @@ source code document, RStudio will open a new *Source* pane. Do this by
 going to the menu bar and clicking on `File` `New`. In the `New`
 drop-down menu you have the option to create a variety of different
 source code documents. Select the `R Script` option. You should now see
-a new pane with a bar across the top that looks like the first image in
+a new pane with a bar across the top that looks like
 Figure \@ref(fig:SourcePanes). To run the R code you have in your source code
 file simply highlight it[^chapter3_28] and click the `Run` icon
 (![image](images/chapter_3/RunIcon.png)) on the top bar. This
@@ -651,30 +651,9 @@ sends the code to the console where it is run. The icon to the right of
 `Source` icon next to this runs all of the code in the file using R's
 `source` function.
 
-\begin{figure}[ht]
-    \caption{RStudio Source Code Pane Top Bars}
-    \label{SourcePanes}
-    \begin{center}
-        \begin{subfigure}
-            \caption{R Source Code}
-            \label{fig:Rsource}
-            \includegraphics[width = \textwidth]{images/chapter_3/RSourceBar.png}
-        \end{subfigure}
-        \vspace{0.5cm}
-        \begin{subfigure}
-            \caption{R Markdown Files}
-            \label{fig:RMarkdown}
-            \includegraphics[width = \textwidth]{images/chapter_3/MarkdownSourceBar.png}
-        \end{subfigure}
-        \vspace{0.5cm}
-        \begin{subfigure}
-            \caption{R LaTeX Files}
-            \label{fig:RLaTeX}
-            \includegraphics[width = \textwidth]{images/chapter_3/LaTeXSourceBar.png}
-        \end{subfigure}
-    \end{center}
-\end{figure}
-\setcounter{figure}{3}
+```{r TopBarFigs, echo=FALSE, fig.cap="RStudio Source Code Pane Top Bar"}
+knitr::include_graphics("images/chapter_3/RSourceBar.png")
+```
 
 ## Using *knitr* and *rmarkdown*: The Basics
 
@@ -691,7 +670,7 @@ largely using *knitr*'s R Markdown syntax.
 Let's take a quick, abstract look at what the *knitr* package does. As
 I've mentioned, *knitr* ties together your presentation of results with
 the creation of those results. The *knitr* process takes three steps
-(see Figure \@(KnitProcess). First we create a knittable markup
+(see Figure \ref@(KnitProcess). First we create a knittable markup
 document. This contains both the analysis code and the presentation
 document's markup–the text and rules for how to format the text. *knitr*
 then *knits*: i.e. it runs the analysis code and converts the output
@@ -738,7 +717,7 @@ discuss more header options in Chapter \@ref(MarkdownChapter).
 
 RStudio can automatically create a basic header for the type of output
 document that you want when you open a new *rmarkdown* file. Simply
-select `File` `` `R Markdown…`. A window will appear that looks like
+select `File` then `R Markdown…`. A window will appear that looks like
 Figure \@ref(rmarkdownWindow). Simply select the type of output document
 you want to create and click `Ok`.
 
@@ -767,7 +746,7 @@ holdover from *knitr*'s main literate programming
 predecessor *Sweave*. You can also use the less confusing
 file extension `.Rtex`, as regular LaTeX files have the extension
 `.tex`. However, the syntax for `.Rtex` files is different from that
-used with `.Rnw` files. As use of `.Rtex` is currently very low, we won't 
+used with `.Rnw` files. Use of `.Rtex` is currently very low, so we won't
 discuss it in this book.
 
 ### Code chunks
@@ -780,7 +759,7 @@ basic LaTeX or Markdown syntax you might want to skim chapters
 \@ref(LatexChapter) and \@ref(MarkdownChapter) to familiarize yourself with it
 before reading this section.
 
-##### R Markdown {- #RMarkdownChunkBasic}
+#### R Markdown {- #RMarkdownChunkBasic}
 
 In R Markdown files we begin a code chunk by writing the head:
 ` ```{r} `. A code chunk is closed–ended–simply with:
@@ -788,8 +767,8 @@ In R Markdown files we begin a code chunk by writing the head:
 
 ````markdown
 `r ''````{r}
-# Example of an R Markdown code chunk 
-string_num_object <- cbind(character_vector, numeric_vector) 
+# Example of an R Markdown code chunk
+string_num_object <- cbind(character_vector, numeric_vector)
 ```
 ```
 ````
@@ -797,7 +776,7 @@ string_num_object <- cbind(character_vector, numeric_vector)
 The R Markdown code chunk syntax is exactly the same for files you
 compile with *knitr* or *rmarkdown*.
 
-##### R LaTeX {-}
+#### R LaTeX {-}
 
 There are two different ways to delimit code chunks in R LaTeX
 documents. One way largely emulates the established
@@ -810,13 +789,15 @@ syntax.
 Traditional Sweave-style code chunks begin with the following head:
 `<<>>=`. The code chunk is closed with an at sign (`@`).
 
-```{block}
+```{sh, eval=FALSE}
 << >>=
+
 string_num_object <- (character_vector, numeric_vector)
+
 @
 ```
 
-##### Code chunk labels {-}
+#### Code chunk labels {-}
 
 Each chunk has a label. When a code chunk creates a plot or the output
 is cached–stored for future use–*knitr* uses the chunk
@@ -828,16 +809,16 @@ label name inside of the braces after the `r`. If we wanted to use the
 label `chunk_label` we type:
 
 ```{r MarkdownChunkLabel, echo=TRUE, eval=FALSE, tidy=FALSE}
-"'r chunk_label 
-# Example chunk label "' 
+"'r chunk_label
+# Example chunk label "'
 ```
 
 The same general format applies to the two types of LaTeX chunks. In
-Sweave-style chunks we type: `<<chunk_lable>>=`. 
+Sweave-style chunks we type: `<<chunk_lable>>=`.
 Try not to use spaces or periods in your
 label names. Also remember that chunk labels *must* be unique.
 
-##### Code chunk options
+#### Code chunk options
 
 There are many times when we want to change how our code chunks are
 knitted and presented. Maybe we only want to show the code and not the
@@ -859,12 +840,13 @@ not show the code in the final presentation document, we can use the
 option `echo=FALSE`.
 
 ```{r Ch3MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE,
-eval=FALSE} "'r ChunkLabel, echo=FALSE
-string_num_object <- cbind(character_vector, numeric_vector) "' ```
+eval=FALSE} 
+"'r ChunkLabel, echo=FALSE
+string_num_object <- cbind(character_vector, numeric_vector) "'```
 
 Note that all labels and code chunk options must be on the same line.
 Options are separated by commas. The syntax for *knitr*
-options is the same regardless of the markup language. 
+options is the same regardless of the markup language.
 
 Throughout this book we will look at a number of different code chunk
 options. Many of the chunk options we will use in this book are listed
@@ -873,29 +855,33 @@ in Table \@ref(ChunkOptionsTable). For the full list of
 page maintained by *knitr*'s creator Yihui Xie:
 <http://yihui.name/knitr/options>.
 
-\[ChunkOptionsTable\]
-
-  ------------------------- ------------------ ---------------------------------------------------------------------------------------------------------------------------------
-  Chunk Option Label               Type        Description
-  \[0.25cm\] `cache`             Logical       Whether or not to save results from the code chunk in a cache database. Note: cached chunks are only run when they are changed.
-  \[0.25cm\] `cache.vars`    Character Vector  Specify the variable names to save in the cache database.
-  \[0.25cm\] `eval`              Logical       Whether or not to run the chunk.
-  \[0.25cm\] `echo`              Logical       Whether or not to include the code in the presentation document.
-  \[0.25cm\] `error`             Logical       Whether or not to include error messages.
-  \[0.25cm\] `engine`           Character      Set the programming language for *knitr* to evaluate the code chunk with.
-  \[0.25cm\] `fig.align`        Character      Align figures. (Note: does not work with R Markdown documents.)
-  \[0.25cm\] `fig.path`         Character      Set the directory where figures will be saved.
-  \[0.25cm\] `include`           Logical       When `include=FALSE` the chunk is evaluated, but the results are not included in the presentation document.
-  \[0.25cm\] `message`           Logical       Whether or not to include R messages.
-  \[0.25cm\] `out.height`        Numeric       Set figures' heights in the presentation document.
-  \[0.25cm\] `out.width`         Numeric       Set figures' widths in the presentation document.
-  \[0.25cm\] `results`          Character      How to include results in the presentation document.
-  \[0.25cm\] `tidy`              Logical       Whether or not to have *knitr* format printed code chunks.
-  \[0.25cm\] `warning`           Logical       Whether or not to include warnings.
-  \[0.25cm\]                                   
-  ------------------------- ------------------ ---------------------------------------------------------------------------------------------------------------------------------
-
-  : A Selection of *knitr* Code Chunk Options
+\begin{table}
+  \caption{A Selection of {\emph{knitr}} Code Chunk Options}
+  \begin{center}
+  \label{ChunkOptionsTable}
+  \begin{tabular}{l c p{6cm}}
+    \hline
+    Chunk Option Label & Type & Description \\[0.25cm] \hline\hline
+    \texttt{cache} & Logical & Whether or not to save results from the code chunk in a cache database. Note: cached chunks are only run when they are changed. \\[0.25cm]
+    \texttt{cache.vars} & Character Vector & Specify the variable names to save in the cache database. \\[0.25cm]
+    \texttt{eval} & Logical & Whether or not to run the chunk. \\[0.25cm]
+    \texttt{echo} & Logical & Whether or not to include the code in the presentation document. \\[0.25cm]
+    \texttt{error} & Logical & Whether or not to include error messages. \\[0.25cm]
+    \texttt{engine} & Character & Set the programming language for {\emph{knitr}} to evaluate the code chunk with. \\[0.25cm]
+    \texttt{fig.align} & Character & Align figures. (Note: does not work with R Markdown documents.) \\[0.25cm]
+    \texttt{fig.path} & Character & Set the directory where figures will be saved. \\[0.25cm]
+    \texttt{include} & Logical & When \texttt{include=FALSE} the chunk is evaluated, but the results are not included in the presentation document. \\[0.25cm]
+    \texttt{message} & Logical & Whether or not to include R messages. \\[0.25cm]
+    \texttt{out.height} & Numeric & Set figures' heights in the presentation document. \\[0.25cm]
+    \texttt{out.width} & Numeric & Set figures' widths in the presentation document. \\[0.25cm]
+    \texttt{results} & Character & How to include results in the presentation document. \\[0.25cm]
+    \texttt{tidy} & Logical & Whether or not to have \emph{knitr} format printed code chunks. \\[0.25cm]
+    \texttt{warning} & Logical & Whether or not to include warnings. \\[0.25cm]
+    \hline
+  \end{tabular}
+  \end{center}
+  {\scriptsize{These commands are discussed in more detail in Chapter \ref{StatsModel}.}}
+\end{table}
 
 ### Global chunk options {#GlobalChunkOptions}
 
@@ -967,7 +953,7 @@ Let's now look at how to use *knitr* and *rmarkdown* with R
 source code files as well as the markup formats we cover in this book: R
 Markdown and R LaTeX.\
 
-##### Compiling R source code Notebooks
+#### Compiling R source code Notebooks
 
 If you want a quick well-formatted account of the code that you ran and
 the results that you got you can use RStudio's "Compile Notebook"
@@ -993,7 +979,7 @@ document you compile in RStudio.\[PublishRPubs\]
 ![RStudio Notebook Example<span
 data-label="NotebookExample">](images/chapter_3/NotebookExample.png)
 
-##### R Markdown {#r-markdown}
+#### R Markdown {#r-markdown}
 
 The second image in Figure \@ref(fig:SourcePanes) is what the *Source* pane's
 top bar looks like when you have an R Markdown file open. You'll notice
@@ -1030,8 +1016,8 @@ You may also notice that there are code folding arrows on lines 27 and
 To enable this option, create a comment line with at least one hash
 before the comment text and at least four after it like this:
 
-```{r CommentFold, echo=TRUE} 
-#### An RStudio Foldable Comment #### 
+```{r CommentFold, echo=TRUE}
+#### An RStudio Foldable Comment ####
 ```
 
 You will be able to fold all of the text after this comment up until the
@@ -1039,7 +1025,7 @@ next similarly formatted comment (or the end of the chunk).
 
 \
 
-##### R LaTeX
+#### R LaTeX
 
 You can see in the final image in Figure \[SourcePanes\] that many of
 the *Source* pane options for R LaTeX files are the same as R Markdown
@@ -1051,7 +1037,7 @@ the question mark icon. This actually inserts LaTeX formatting functions
 into your document for things such as section headings and bullet lists.
 These functions can be very tedious to type out by hand otherwise.
 
-##### Change default .Rnw knitter
+#### Change default .Rnw knitter
 
 By default RStudio may be set up to use *Sweave* for compiling LaTeX
 documents. To use *knitr* instead of *Sweave* to knit
@@ -1082,13 +1068,13 @@ Chapter \[DirectoriesChapter\]) to the folder where the
 located in the Documents folder.[^chapter3_40]
 
 ```{r Ch3RawKnitSetwd, echo=TRUE, eval=FALSE, tidy=FALSE}
-setwd(" /Documents/") 
+setwd(" /Documents/")
 ```
 
 Then you knit the file:
 
 ```{r Ch3RawKnit, echo=TRUE, eval=FALSE, tidy=FALSE}
-knit(input = "example.Rmd", output = "example.md") 
+knit(input = "example.Rmd", output = "example.md")
 ```
 
 You use the same steps for all other knittable document types. Note that
@@ -1104,7 +1090,7 @@ run the file through the function from the *markdown*
 package, i.e.
 
 ```{r Ch3MDtoHTML, eval=FALSE, tidy=FALSE, echo=TRUE}
-mardownToHTML(file = "example.md", output = "example.html") 
+mardownToHTML(file = "example.md", output = "example.html")
 ```
 
 This is a bit tedious. Luckily, there is a function in the
@@ -1112,7 +1098,7 @@ This is a bit tedious. Luckily, there is a function in the
 It is called `knit2html`. You use it like this:
 
 ```{r Ch3RMDtoHTML, echo=TRUE, eval=FALSE, tidy=FALSE}
-knit2html(file = "example.Rmd", output = "example.html") 
+knit2html(file = "example.Rmd", output = "example.html")
 ```
 
 If we want to compile a file in R we run it through the function in the
@@ -1120,11 +1106,11 @@ If we want to compile a file in R we run it through the function in the
 BibTeX to create a PDF with a bibliography (see Chapter \@ref(LatexChapter)
 for more details on using BibTeX for bibliographies). Here is a example:
 
-```{r CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE} 
-# Load tools package 
+```{r CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE}
+# Load tools package
 # library(tools)
 
-# Compile pdf texi2pdf(file = "example.tex") 
+# Compile pdf texi2pdf(file = "example.tex")
 ```
 
 Just like with `knit2html`, you can simplify this process by using the
@@ -1156,7 +1142,7 @@ HTML. When compiled to PDF it will include a table of contents. When
 compiled to HTML it won't. Now we use `render()`:\index{R function!render}
 
 ```{r Ch3RenderBasic, eval=FALSE, echo=TRUE}
-render("example.Rmd") 
+render("example.Rmd")
 ```
 
 This call will compile the document to a PDF in the working directory,
@@ -1165,19 +1151,19 @@ document will be called *example.pdf*. Alternatively, to compile the R
 Markdown file to HTML use:
 
 ```{r Ch3RenderHTML, eval=FALSE, echo=TRUE}
-render("example.Rmd", "html_document") 
+render("example.Rmd", "html_document")
 ```
 
 We could compile to both formats using:
 
 ```{r Ch3RenderBasicAll, eval=FALSE, echo=TRUE}
-render("example.Rmd", "all") 
+render("example.Rmd", "all")
 ```
 
 or
 
 ```{r Ch3RenderBasicAltAll, eval=FALSE, echo=TRUE}
-render("example.Rmd", c("pdf_document", "html_document")) 
+render("example.Rmd", c("pdf_document", "html_document"))
 ```
 
 In all of these cases, `render` will not keep the intermediate *.md* or
@@ -1216,14 +1202,14 @@ You may be more comfortable using a what-you-see-is-what-you-get
 editor that can be used with *knitr*. I don't cover Lyx in detail in
 this book, but here is a little information to get you started.
 
-##### Set Up
+#### Set Up
 
 To set up Lyx so that it can compile `.Rnw` files, click `Document` in
 the menu bar then `Settings`. In the left-hand panel the second option
 is `Modules`. Click on `Modules` and select `Rnw (knitr)`. Click `Add`
 then `Ok`. Now, compile your LaTeX document in the normal Lyx way.
 
-##### Code Chunks
+#### Code Chunks
 
 Enter code chunks into TeX Code blocks within your Lyx documents. To
 create a new TeX Code block, select `Insert` from the menu bar then

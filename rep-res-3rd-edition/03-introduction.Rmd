@@ -56,7 +56,7 @@ code. Of course, it is sometimes difficult to replicate the original
 data set because of issues such as limited resources to gather new data
 or because the original study already sampled the full universe of
 cases. So as a next-best standard we can aim for "*really reproducible
-research*" [@peng2011 1226].[^chapter1_2] In computational sciences[^chapter1_3] 
+research*" [@peng2011 1226].[^chapter1_2] In computational sciences[^chapter1_3]
 this means:
 
 > the data and code used to make a finding are available and they are sufficient for an independent researcher to recreate the finding.
@@ -701,7 +701,7 @@ To install key user-written packages discussed in this book, copy the following 
 pkg_to_install <- c("brew", "bookdown", "rio", "xfun")
 
 
-# Check if the packages are installed, if not install them 
+# Check if the packages are installed, if not install them
 lapply(
     pkg_to_install,
     function(pkg) {
@@ -716,7 +716,7 @@ lapply(
 
 Note that I specified a US based R Project CRAN "mirror"\index{CRAN!mirror} to download the packages from.^[CRAN stands for the Comprehensive R Archive Network.] There are many others to choose from. See: <https://cran.r-project.org/mirrors.html>.
 
-The *xfun* package [@R-xfun]\index{xfun} contains a function called `pkg_attach2()`. When supplied with a vector of package names like those in `pkg_to_install` above, will install all non-installed packages. `p_load()` from the *pacman* package [@R-pacman] works in a similar way. These functions are much less verbose than the example above, but they do require the user to install the package separately before `pkg_attach2()` or `p_load()` can be used. The example above relies only on functions available in the basic **R** installation. 
+The *xfun* package [@R-xfun]\index{xfun} contains a function called `pkg_attach2()`. When supplied with a vector of package names like those in `pkg_to_install` above, will install all non-installed packages. `p_load()` from the *pacman* package [@R-pacman] works in a similar way. These functions are much less verbose than the example above, but they do require the user to install the package separately before `pkg_attach2()` or `p_load()` can be used. The example above relies only on functions available in the basic **R** installation.
 
 \index{R!packages|(}
 
@@ -730,25 +730,20 @@ If you are using Windows, you will also need to install *Rtools*.\index{Rtools} 
 
 \index{Linux|(}
 
-[**CONSIDER REMOVING IF NOT NEEDED]
-
-On Linux you will need to install the *RCurl* \citep{R-RCurl}\index{RCurl} and 
-*XML*\index{XML} \citep{R-XML} packages separately. Use your 
-Terminal\index{Terminal} to install these packages with the following code:
+On Linux you will need to install the *RCurl* [@R-RCurl]\index{RCurl} package separately. Use your 
+Terminal\index{Terminal} to install these packages with the following (or similar depending on your system) code:
 
 ```{sh, eval=FALSE}
 apt-get update
 
 apt-get install libcurl4-gnutls-dev
-apt-get install libxml2-dev
 apt-get install r-cran-rcurl-
-apt-get install r-cran-xml
 ```
 
 \index{Linux|(}
 
-[^chapter1_1_1]: @rokem2018 [3-4] note that some disciplines, e.g. computing 
-    machinery and meteorology, give "replicable" and "reproducible" the exact 
+[^chapter1_1_1]: @rokem2018 [3-4] note that some disciplines, e.g. computing
+    machinery and meteorology, give "replicable" and "reproducible" the exact
     opposite meanings from they way they are used in this book and many other
     disciplines such as biology, economics, and epidemiology.
 
