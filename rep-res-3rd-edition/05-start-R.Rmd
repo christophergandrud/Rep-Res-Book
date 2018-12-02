@@ -306,7 +306,7 @@ In this book I largely avoid using the `attach()` and `with()`
 functions. Instead I tend to use the component selector. Though it creates longer
 code, I find that code written with the component selector is less ambiguous
 It's always clear which object we are selecting a component
-from. Nonetheless, **attach()** and **with()** are can be useful for
+from. Nonetheless, `attach()` and `with()` can be useful for
 streamlining your R code.
 
 ### Subscripts
@@ -332,7 +332,7 @@ head(cars)
 We can see a data frame with information on various cars' speeds
 (**speed**) and stopping distances (**dist**). If we want to select only
 the third through seventh rows we can use the following subscript
-functions:
+function call:
 
 ```{r Ch3FirstSeventhRows, echo=TRUE}
 cars[3:7, ]
@@ -365,7 +365,6 @@ as an example. This function takes the mean of a numeric vector object.
 Remember our *numeric_vector* object from before:
 
 ```{r Shownumeric_vector, echo=TRUE}
-# Show contents of numeric_vector
 numeric_vector
 ```
 
@@ -384,7 +383,7 @@ numeric_vector_mean <- mean(x = numeric_vector)
 
 Notice that we typed the function's name then enclosed the object name in
 parentheses immediately afterwards. This is the basic syntax that all
-functions use, i.e. `FUNCTION(ARGUMENTS)`. If you don't want to explicitly
+functions use, i.e. `FUNCTION(ARGUMENTS)`. Even if you don't want to explicitly
 include an argument, *you still need to type the parentheses after the function*.
 
 ### Arguments
@@ -397,17 +396,17 @@ label.
 
 To find all of the arguments that a function can accept, look at the
 **Arguments** section of the functions's help
-file. To access the help file type: `?FUNCTION`.\index{R function!?} For example,
+file. To access the help file type: `?FUNCTION`.\index{R function!?} For example:
 
 ```{r Ch3HelpMean, echo=TRUE, eval=FALSE, tidy=FALSE}
 ?mean
 ```
 
 The help file will also tell you the default values that the arguments
-are set to. Clearly, you do not need to explicitly set an argument if
+are set to. You do not need to explicitly set an argument if
 you want to use its default value.
 
-You do have to be fairly precise with the syntax for your argument's
+You do need to be fairly precise with the syntax for your argument's
 values. Values for logical arguments must written as `TRUE` or
 `FALSE`.[^chapter3_22] Arguments that accept character strings require quotation
 marks.
@@ -421,7 +420,7 @@ the object *numeric_vector_mean* to one decimal place type:
 round(x = numeric_vector_mean, digits = 1)
 ```
 
-Note that arguments are separated by commas.
+*Arguments are always separated by commas*.
 
 Some arguments do not need to be explicitly labeled. For example, we
 could have written:
@@ -437,7 +436,7 @@ any misunderstandings between yourself and R it can be good practice to
 label most of your arguments. This will also make your code easier for
 other people to read, i.e. it will be more reproducible.
 
-You can stack arguments inside of other arguments. To have R find the
+You can stack functions inside of arguments. To have R find the
 mean of *numeric_vector* and round it to one decimal place
 use:
 
