@@ -3,9 +3,11 @@
 If you have rarely or never used R before, the first section of this
 chapter gives you enough information to be able to get started and
 understand the R code I use throughout the book. For more detailed
-introductions on how to use R please refer to the resources I mentioned
+introductions on how to use R please refer to the resources mentioned
 in Chapter \@ref(Intro) (Section \@ref(OtherBooks)). Experienced R users might
-want to skip the first section. In the second section I'll give a brief
+want to skip the first section. 
+
+In the second section I'll give a brief
 overview of RStudio. I highlight the key features of the main RStudio
 panel (what appears when you open RStudio) and some of its key features
 for reproducible research. Finally, I discuss the basics of the
@@ -37,8 +39,9 @@ you should get a window that looks something like Figure
 console**. Below the startup information–information about
 what version of R you are using, license details, and so on–you should
 see a `>` (greater-than sign). This prompt is where you enter R
-code.[^chapter3_3] To run R code that you have typed after the prompt, hit the or
-key. Now that we have a new R session open we can get started.
+code.[^chapter3_3] To run R code that you have typed after the prompt, press the
+`Return` or `Enter` key. 
+Now that we have a new R session open we can get started.
 
 ```{r RBlankMain, fig.cap="R Console at Startup", echo=FALSE}
 knitr::include_graphics("images/chapter_3/BlankRConsole.png")
@@ -46,7 +49,7 @@ knitr::include_graphics("images/chapter_3/BlankRConsole.png")
 
 ### Objects {#Objects}
 
-If you've read a description of R before, you will probably have seen it
+If you've read a description of the R language before, you will probably have seen it
 referred to as an 'object-oriented language'. What are objects? Objects
 are like the R language's nouns. They are things, like a vector of
 numbers, a data set, a word, a table of results from some analysis, and
@@ -59,14 +62,17 @@ Objects can have a number of different types. Let's make two simple
 objects. The first is a numeric-type object. The other is a character
 object. We can choose almost any name we want for our
 objects as long as it begins with an alphabetic character and does not
-contain spaces.[^chapter3_5] Let's call our numeric object *number*.
-It is a good idea to give each object a unique name to avoid conflicts
-and confusion. Also make sure that object names are different from the
-names of their components, e.g. individual variable names. This will
-avoid many complications like accidentally overwriting an object or
+contain spaces.[^chapter3_5] 
+
+Your code will be much easier to read if object 
+names are short and meaningful. It is also a good idea to give each object a 
+unique name to avoid confusion and conflicts. Make sure that object names are 
+different from the names of their components, e.g. individual variable names. 
+This will avoid many complications like accidentally overwriting an object or
 confusing R about what object or component you are referring to.
 
-To put something into the object we use the assignment operator[^chapter3_6]
+Let's call our numeric object *number*. To put something into the object we use 
+the assignment operator[^chapter3_6]
 (`<-`).\index{<-} Let's assign the number 10 to our *number* object.
 
 ```{r Ch3NumericObject, echo=TRUE}
@@ -1268,21 +1274,23 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_1]: Please see Chapter \@ref(Intro) for instructions on how to install R.
 
 [^chapter3_2]: This figure and almost all screenshots in this book were taken on
-    a computer using the Mac OS 10.10 operating system.
+    a computer using the Mac OS 10.14 operating system.
 
 [^chapter3_3]: If you are using a Unix-like system such as Linux Ubuntu or Mac OS
     10, you can also access R via an application called the Terminal. If
-    you have installed R on your computer you can type into the Terminal
-    and then the or key. This will begin a new R session. You will know
+    you have installed R on your computer you can type `R` into the Terminal
+    and then the `Return` or `Enter` key. This will begin a new R session. You will know
     you are in a new R session because the same type of startup
-    information as in Figure \@ref(RBlankMain) will be printed in your
+    information as in Figure \@ref(fig:RBlankMain) will be printed in your
     Terminal.
 
 [^chapter3_4]: Somewhat confusingly, functions are themselves
     objects. In this chapter I treat them as distinct from other object
     types to avoid confusion.
 
-[^chapter3_5]: It is common for people to use either periods (`.`) or capital
+[^chapter3_5]: @whickham2014book argues that underscores (`_`) should be used 
+    to separate words in object names. This appears to becoming the dominat convention in R. 
+    Other conventions are to use either periods (`.`) or capital
     letters (referred to as CamelBack) to separate words in object names
     instead of using spaces. For example: *new.data* or
     *NewData* rather than *new data*. For more
