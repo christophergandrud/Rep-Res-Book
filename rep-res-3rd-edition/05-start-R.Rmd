@@ -60,26 +60,28 @@ actions to objects. We will talk about the actions–functions–later in this s
 
 Objects can have a number of different types. Let's make two simple
 objects. The first is a numeric-type object. The other is a character
-object. We can choose almost any name we want for our
+object. 
+
+We can choose almost any name we want for our
 objects as long as it begins with an alphabetic character and does not
-contain spaces.[^chapter3_5] 
-
+contain spaces.[^chapter3_5] Just because there are relatively few hard 
+restrictions on object names, doesn't 
+mean that you should name your object anything. 
 Your code will be much easier to read if object 
-names are short and meaningful. It is also a good idea to give each object a 
-unique name to avoid confusion and conflicts. Make sure that object names are 
-different from the names of their components, e.g. individual variable names. 
-This will avoid many complications like accidentally overwriting an object or
-confusing R about what object or component you are referring to.
+names are short and meaningful. Give each object a 
+unique name to avoid confusion and conflicts. For example, if you reuse an object 
+names in an R session you could easily accidentally overwrite it.
 
-Let's call our numeric object *number*. To put something into the object we use 
-the assignment operator[^chapter3_6]
-(`<-`).\index{<-} Let's assign the number 10 to our *number* object.
+Let's begin working with numeric objects by creating a new object called 
+*number* with the number 10 in it. 
+To put something into the object we use the assignment operator[^chapter3_6]
+(`<-`).\index{<-}:
 
 ```{r Ch3NumericObject, echo=TRUE}
 number <- 10
 ```
 
-To see the contents of our object, type its name.
+To see the contents of our object, type its name into the R console.
 
 ```{r Ch3NumberSee, echo=TRUE}
 number
@@ -89,14 +91,14 @@ Let's briefly breakdown this output. `10` is clearly the contents of
 *number*. The double hash (`##`) is included here to tell
 you that this is output rather than R code.[^chapter3_7] If you run functions
 in your R console, you will not get the double hash in your output.
-Finally, `[1]` is the row number of the object that 10 is on. Our object only 
-has one row.
+Finally, `[1]` gives the position in the object that the number 10 is on. Our object only 
+has one position.
 
 Creating an object with words and other characters–a character object–is
 very similar. The only difference is that you enclose the character
 string (letters in a word for example) inside of single or double
-quotation marks (`''`, or `""`).[^chapter3_8] To create an object called *words*
-that contains the character string "Hello World":
+quotation marks (`''`, or `""`).[^chapter3_8] Let's create an object called *words*
+containing the character string "Hello World":
 
 ```{r Ch3CharacterObject, echo=TRUE}
 words <- "Hello World"
@@ -1289,19 +1291,19 @@ create a new TeX Code block, select `Insert` from the menu bar then
     types to avoid confusion.
 
 [^chapter3_5]: @whickham2014book argues that underscores (`_`) should be used 
-    to separate words in object names. This appears to becoming the dominat convention in R. 
-    Other conventions are to use either periods (`.`) or capital
-    letters (referred to as CamelBack) to separate words in object names
-    instead of using spaces. For example: *new.data* or
-    *NewData* rather than *new data*. For more
+    to separate words in object names to make the names easier to read. 
+    For example: `health_data` rather than `healthdata`. 
+    Underscores appear to now be the dominat naming convention in the R community. 
+    Other conventions include using periods (`.`) or capital
+    letters (referred to as CamelBack). For more
     information on R naming conventions see @baath2012.
 
 [^chapter3_6]: The assignment operator is sometimes also referred to as the 'gets
     arrow'.
 
 [^chapter3_7]: The double hash is generated automatically by
-    *knitr*. They make it easier to copy and paste code
-    into R from a document created by *knitr* because R
+    *knitr*. Prepending the output with hashes makes it easier to copy and paste code
+    into R from a document created by *knitr*/*rmarkdown* because R
     will ignore everything after a hash.
 
 [^chapter3_8]: Single and double quotation marks are interchangeable in R for
