@@ -17,7 +17,7 @@ they are integrated into RStudio.
 ## Using R: The Basics
 
 To get you started with reproducible research, we'll cover some very
-basic R syntax–the rules for talking to R. I cover key parts of the R
+basic R syntax-the rules for talking to R. I cover key parts of the R
 language including:
 
 -   objects & assignment,
@@ -36,8 +36,8 @@ Before discussing each of these in detail, let's open R and look
 around.[^chapter3_1] When you open the R GUI program by clicking on the R icon
 you should get a window that looks something like Figure
 \@ref(fig:RBlankMain).[^chapter3_2] This window is the **R
-console**. Below the startup information–information about
-what version of R you are using, license details, and so on–you should
+console**. Below the startup information-information about
+what version of R you are using, license details, and so on-you should
 see a `>` (greater-than sign). This prompt is where you enter R
 code.[^chapter3_3] To run R code that you have typed after the prompt, press the
 `Return` or `Enter` key. 
@@ -54,7 +54,8 @@ referred to as an 'object-oriented language'. What are objects? Objects
 are like the R language's nouns. They are things, like a vector of
 numbers, a data set, a word, a table of results from some analysis, and
 so on. Saying that R is object-oriented means that R is focused on doing
-actions to objects. We will talk about the actions–functions–later in this section.[^chapter3_4] Now let's create a few objects.
+actions to objects. We will talk about the actions-functions-later in this
+section.[^chapter3_4] Now let's create a few objects.
 
 #### Numeric & string objects {- #ObjectNames}
 
@@ -94,7 +95,7 @@ in your R console, you will not get the double hash in your output.
 Finally, `[1]` gives the position in the object that the number 10 is on. Our object only 
 has one position.
 
-Creating an object with words and other characters–a character object–is
+Creating an object with words and other characters-a character object-is
 very similar. The only difference is that you enclose the character
 string (letters in a word for example) inside of single or double
 quotation marks (`''`, or `""`).[^chapter3_8] Let's create an object called *words*
@@ -139,13 +140,14 @@ raw data in Chapter \@ref(DataClean) and make tables in Chapter
 
 Vectors are the "fundamental data type" in R [@matloff2011]. They are
 simply an ordered group of numbers, character strings, and so on.[^chapter3_11]
-It may be useful to think of basically all R objects as composed of
-vectors. For example, data frames\index{data.frame} are basically multiple vectors of the
-same length–i.e. they have the same number of rows–attached together to
-form columns.
+It may be useful to think of most data in R as composed of
+vectors. For example, data frames\index{data.frame} are basically collections
+of vectors of the same length-i.e. they have the same number of rows-attached
+together to form columns.
 
 Let's create a simple numeric vector containing the numbers 2.8, 2, and
-14.8. To do this we will use the `c()` (combine)\index{R function!combine} function:
+14.8. To do this we will use the `c()` (combine)\index{R function!combine}
+function and separate the numbers with commas (`,`):
 
 ```{r Ch3numeric_vectoror, echo=TRUE}
 numeric_vector <- c(2.8, 2, 14.8)
@@ -165,6 +167,8 @@ character_vector <- c("Albania", "Botswana", "Cambodia")
 character_vector
 ```
 
+#### Matrices {-}
+
 To give you a preview of what we are going to do when we start working
 with real data sets, let's combine the two vectors
 *numeric_vector* and *character_vector* into a new
@@ -172,16 +176,16 @@ object with the `cbind()` function. This function binds the two vectors
 together side-by-side as columns.[^chapter3_12]\index{R function!cbind}
 
 ```{r Ch3cbind, echo=TRUE}
-string_num_object <- cbind(character_vector, numeric_vector)
+string_num_matrix <- cbind(character_vector, numeric_vector)
 
-# Show string_num_object's contents
-string_num_object
+# Show string_num_matrix's contents
+string_num_matrix
 ```
 
 By binding these two objects together we've created a new matrix
 object.[^chapter3_13] You can see that the numbers in the
 *numeric_vector* column are between quotation marks. Matrices,
-like vectors, can only have one data type.
+like vectors, can only have one data type, so R has converted the numbers to strings.
 
 #### Data frames {-}
 
@@ -191,41 +195,30 @@ use the `data.frame` function to combine the *numeric_vector*
 and *character_vector* objects.\index{R function!data.frame}
 
 ```{r Ch3dataframe, echo=TRUE, tidy=FALSE}
-string_num_object <- data.frame(character_vector, numeric_vector)
+string_num_df <- data.frame(character_vector, numeric_vector)
 
-# Display contents of string_num_object data frame
-string_num_object
+# Display contents of string_num_df data frame
+string_num_df
 ```
 
-There are a few important things to notice in this output. The first is
-that because we used the same name for the data frame object as the
-previous matrix object, R deleted the matrix object and replaced it with
-the data frame. This is something to keep in mind when you are creating
-new objects. In general it is a better idea to assign elements to new
-objects rather than overwriting old ones. This will help avoid
-accidentally using an object you had not intended to use. It also allows you
-to more easily change previously run source code.
-
-You can see the data frame's names attribute.[^chapter3_14] It is the column
-names. You can use the `names()` function\index{R function!names} to see any data frame's
-names:[^chapter3_15]
+In this output, you can see the data frame's *names* attribute.[^chapter3_14] It is the column names. You can use the `names()` function\index{R function!names} to see any data frame's names:[^chapter3_15]
 
 ```{r Ch10Names, echo=TRUE}
-names(string_num_object)
+names(string_num_df)
 ```
 
 You will also notice that the first column of the data set has no name
-and is a series of numbers. This is the row.names attribute. Data frame
+and is a series of numbers. This is the *row.names* attribute. Data frame
 rows can be given any name as long as each row name is unique. We can
 use the `row.names()` function to set the row names from a vector. For
 example,
 
 ```{r Ch3ReassignRowNames, echo=TRUE}
 # Reassign row.names
-row.names(string_num_object) <- c("First", "Second", "Third")
+row.names(string_num_df) <- c("First", "Second", "Third")
 
 # Display new row.names
-row.names(string_num_object)
+row.names(string_num_df)
 ```
 
 You can see in this example how `row.names()` can also be used
@@ -233,26 +226,28 @@ to print the row names.[^chapter3_16] The *row.names* attribute does not behave
 like a regular data frame column. You cannot, for example, include it as
 a variable in a regression. You can use the `row.names()` function to
 assign the *row.names* values to a regular column (for an example see
-Section \@ref(RowNamesTidy).
+Section \@ref(RowNamesTidy)).
 
-You will notice in the output for *string_num_object* that the strings in
-the **character_vector** column are no longer in quotation marks. This does
+You will notice in the output for *string_num_df* that the strings in
+the **character_vector** column are not in quotation marks. This does
 not mean that they are now numeric data. To prove this, try to
 find the mean of **character_vector** by running it through the `mean()`
 function:
 
 ```{r Ch3CharcterVectorMean, echo=TRUE}
-mean(string_num_object$character_vector)
+mean(string_num_df$character_vector)
 ```
 
-#### Component selection} {- #ComponentSelect}
+#### Component selection {- #ComponentSelect}
 
-The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (`$`) between the name of our data frame object name and the `character_vector` variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector} It's also sometimes called the element name operator. Either way, it extracts a part--component--of an object. In the previous example it extracted the **character_vector** column from the *string_num_object* and fed it to the `mean()` function, which tried (in this case unsuccessfully) to find its mean.
+The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (`$`) between the name of our data frame object name and the `character_vector` variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector} It's also sometimes called the element name operator. Either way, it extracts a part--component--of an object. In the previous example it extracted the **character_vector** column from the *string_num_df* so that it could be fed to 
+the `mean()` function.
 
-We can, of course, use the component selector to create new objects with parts of other objects. Imagine that we have the *string_num_object* and want an object with only the information in the numbers column. Let's use the following code:
+We can use the component selector to create new objects with parts of other objects. Imagine that we have *string_num_df* and want an object with only the information in the numbers column. Let's use the following code:
 
 ```{r Ch3CompSelect, echo=TRUE}
-numeric_extract <- string_num_object$numeric_vector
+# Extract a numeric vector from string_num_df
+numeric_extract <- string_num_df$numeric_vector
 
 # Display contents of numeric_extract
 numeric_extract
@@ -262,7 +257,7 @@ Knowing how to use the component selector will be especially useful when
 we discuss making tables for presentation documents in Chapter
 \@ref(TablesChapter).
 
-#### `attach`  and `with` {-}
+#### `attach()`  and `with()` {-}
 
 Using the component selector can create long repetitive code if you want
 to select many components. You have to write the object name, a dollar
@@ -286,22 +281,22 @@ head(speed)
 
 # Display dist
 head(dist)
+```
 
+We used the `head()`\index{R function!head} function to see just the first few values of each
+variable. 
+
+Now that we are done working with the *cars* data set, we should `detach()`\index{R function!detach} it. Not doing so could confuse R later in our session.
+
+```{r Ch3Detach, echo=TRUE}
 # Detach cars
 detach(cars)
 ```
 
-We used the `head()`\index{R function!head} function to see just the first few values of each
-variable. It is a good idea to `detach()`\index{R function!detach} a data frame after you are done
-using it, to avoid confusing R.
-
-Similarly, you can use `with` when you run functions using a particular
-database (see Section \@ref(FunctionsCommands) for more details about
-functions). For example, we can find the mean of *numeric_vector* `with()` the
-*string_num_object* data frame:
+A safer alternative to `attach()` is `with()`. It more clearly delineates when to draw from inside a particular object. For example, we can find the mean of *numeric_vector* `with()` the *string_num_df* data frame:
 
 ```{r Ch3With, echo=TRUE, tidy=FALSE}
-with(string_num_object, {
+with(string_num_df, {
         mean(numeric_vector)
     }
 )
@@ -310,14 +305,13 @@ with(string_num_object, {
 You can see that in the `with()` call the data frame object goes first
 and then the `mean()` function[^chapter3_19] goes second in curly brackets (`{}`).
 
-In this book I largely avoid using the `attach()` and `with()`
-functions. Instead I tend to use the component selector. Though it creates longer
+In this book I avoid using the `attach()` and `with()`
+functions. Instead I use the component selector. Though it creates longer
 code, I find that code written with the component selector is less ambiguous
 It's always clear which object we are selecting a component
-from. Nonetheless, `attach()` and `with()` can be useful for
-streamlining your R code.
+from. 
 
-### Subscripts
+#### Subscripts {-}
 
 Another way to select parts of an object is to use subscripts. You have
 already seen subscripts in the output from our examples so far. They are
@@ -330,8 +324,7 @@ number/name, or both in square braces. The first part denotes the rows
 and separated by a comma (`,`) are the columns.
 
 To give you an idea of how this works let's use the *cars*
-data set that comes with R. Use `head()` to get a sense of
-what this data set looks like.
+data set again. Use `head()` to get a sense of what this data looks like.
 
 ```{r Ch3HeadSwiss, echo=TRUE}
 head(cars)
@@ -394,7 +387,7 @@ parentheses immediately afterwards. This is the basic syntax that all
 functions use, i.e. `FUNCTION(ARGUMENTS)`. Even if you don't want to explicitly
 include an argument, *you still need to type the parentheses after the function*.
 
-### Arguments
+#### Arguments {-}
 
 Arguments modify what functions do. In our most recent example we gave
 the `mean` function one argument (`x = numeric_vector`) telling it that we
@@ -428,10 +421,10 @@ the object *numeric_vector_mean* to one decimal place type:
 round(x = numeric_vector_mean, digits = 1)
 ```
 
-*Arguments are always separated by commas*.
+Note that *arguments are always separated by commas*.
 
 Some arguments do not need to be explicitly labeled. For example, we
-could have written:
+could write:
 
 ```{r Ch3ArgeNoLabel, echo=TRUE}
 # Find mean of numeric_vector
@@ -440,13 +433,12 @@ mean(numeric_vector)
 
 R will do its best to figure out what you want and will only give up
 when it can't. This will generate an error message. However, to avoid
-any misunderstandings between yourself and R it can be good practice to
-label most of your arguments. This will also make your code easier for
+any misunderstandings between yourself and R, it is good practice to
+label your argument values. This will also make your code easier for
 other people to read, i.e. it will be more reproducible.
 
-You can stack functions inside of arguments. To have R find the
-mean of *numeric_vector* and round it to one decimal place
-use:
+You can stack functions inside of arguments. For example, have R find the
+mean of *numeric_vector* and round it to one decimal place:
 
 ```{r Ch3StackedArgs, echo=TRUE}
 round(mean(numeric_vector), digits = 1)
@@ -454,11 +446,8 @@ round(mean(numeric_vector), digits = 1)
 
 Stacking functions inside of each other can create code that is
 difficult to read. Another option that potentially makes more easily
-understandable code is piping using the pipe function (`%>%`) that you
-can access from the *magrittr* package [@R-magrittr].\index{R package!magrittr} The basic idea
-behind the pipe function is that the output of one function is set as
-the first argument of the next. For example, to find the mean of
-**numeric_vector** and then round it to one decimal place use:
+understandable code is piping\index{pipe} using the pipe function (`%>%`) that you
+can access from the *magrittr* [@R-magrittr]\index{R package!magrittr} or *dplyr* [@R-dplyr]\index{R package!dplyr} packages. The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of **numeric_vector** and then round it to one decimal place use:
 
 ```{r Ch3Pipe, echo=TRUE}
 # Load magrittr package
@@ -487,13 +476,13 @@ type:
 rm(character_vector, words)
 ```
 
-To save the entire workspace into a binary–not plain-text–RData file use
-`save.image()`\@ref(SaveLoadWS).\index{R function!save.image} The main argument of
+To save the entire workspace into a binary-not plain-text-RData file use
+`save.image()`.\index{R function!save.image} The main argument of
 `save.image()` is the location and name of the file in which you want to
 save the workspace. If you don't specify the file path it will be saved
 into your current working directory (see Chapter \@ref(DirectoriesChapter)
-for information on files paths and working directories). For example, to
-save the current workspace in a file called *workspace_2018-10-28.RData* in
+for information on files paths and working directories). To
+save the current workspace in a file called *workspace_2018-12-22.RData* in
 the current working directory type:
 
 ```{r Ch3Workspace, echo=TRUE, eval=FALSE}
@@ -508,28 +497,28 @@ load(file = "workspace_2018-10-28.RData")
 
 You should generally avoid having R automatically save your workspace
 when you quit and reload it when you start R again. Instead, when you
-return to working on a project, rerun the source code files. This avoids
+return to a project, rerun the source code files. This avoids
 any complications caused when you use an object in your workspace that
 is left over from running an older version of the source code.[^chapter3_24] In
 general I also recommend against saving data in binary RData formatted
-files. Because they are not text files they are not human readable and
+files if feasible. They are not text files they are not human readable and
 are much less future-proof.
 
-One of the few times when saving your workspace is very useful is when
+One of the few times when saving your workspace is  useful is when
 it includes an object that was computationally difficult and took a long
 time to create. In this case you can save only the large object with
 `save()`.[^chapter3_25]\@ref(RSave)\index{R function!save}
 For example, if we have a very large
-object called *comprehensive* we can save it to a file called *comprehensive.RData* like
+object called *model_output* we can save it to a file called *model_output.RData* like
 this:
 
 ```{r Ch3Comp, echo=TRUE, eval=FALSE}
-save(comp, file = "comprehensive.RData")
+save(model_output, file = "model_output.RData")
 ```
 
-#### R history {-}
+### R history {#RHistory}
 
-When you enter a function into R it becomes part of your history. To see
+When you execute code in the R console it becomes part of your history. To see
 the most recent functions in your history use the `history()` function.\index{R function!history} You
 can also use the up and down arrows on your keyboard when your cursor is
 in the R console to scroll through your history.
@@ -547,25 +536,21 @@ options(digits = 1)
 
 ### Installing new packages and loading functions {#Packages}
 
-Commands are stored in R packages. The functions we have used so far were
+Functions are stored in R packages. The functions we have used so far were
 loaded automatically by default. One of the great things about R is the
-many user-created packages[^chapter3_26] that greatly expand the number of
+many user-created packages[^chapter3_26] that expand the number of
 functions we can use. To install functions that do not come with the basic
-R installation you need to install the add-on packages\@ref(packages) that
-contain them. To do this, use the function. By default this function
-downloads and installs the packages from the Comprehensive R Archive
-Network (CRAN).
+R installation you need to install the add-on packages that
+contain them. To do this, use the `install.packages()`\index{R function!install.packages} function. By default this function downloads and installs the packages from the Comprehensive R Archive Network (CRAN).\index{CRAN}
 
-For the code you need to install all of the packages used in this book,
-see page . When you install a package, you will likely be given a list
-of mirrors from which you can download the package. Simply select the
+When you install a package, you will likely be given a list
+of "mirrors" from which you can download the package. Select the
 mirror closest to you.
 
-Once you have installed a package you need to load it so that you can
+Once you have installed a package you need to load when you want to
 use its functions. Use the `library()` function\index{R function!library}
-to load a package.[^chapter3_27] Use
-the following code to load the *ggplot2* package that we
-use in Chapter \@ref(FiguresChapter) to create figures.
+to load a package.[^chapter3_27] For example,
+the following code loads the popular *ggplot2* plotting package:
 
 ```{r Ch3Library, echo=TRUE, warning=FALSE, message=FALSE}
 library(ggplot2)
@@ -584,12 +569,11 @@ type:
 ggplot2::qplot(. . .)
 ```
 
-We can use the double-colon to simplify our code as we don't need to
-include `library(. . .)`. Using the double-colon in this way ensures
+Using the double-colon ensures
 that R will use the function from the particular package you want and
 makes it clear to a source code reader what package a function comes
-from. Note that it does not load all of the functions in the package,
-just the one you ask for.
+from. If you use the double-colon, you don't need to
+include `library()` beforehand. Note that it does not load all of the functions in the package, just the one you ask for. 
 
 ## Using RStudio
 
@@ -678,7 +662,7 @@ I've mentioned, *knitr* ties together your presentation of results with
 the creation of those results. The *knitr* process takes three steps
 (see Figure \ref@(KnitProcess). First we create a knittable markup
 document. This contains both the analysis code and the presentation
-document's markup–the text and rules for how to format the text. *knitr*
+document's markup-the text and rules for how to format the text. *knitr*
 then *knits*: i.e. it runs the analysis code and converts the output
 into the markup language you are using according to the rules that you
 tell it to use. It inserts the marked-up results into a document that
@@ -700,7 +684,7 @@ information such as the document's title, author, whether or not to
 include a table of contents, and a link to a BibTeX bibliography file.
 YAML is a straightforward data format that organizes information in a
 simple hierarchy. The header begins and ends with three dashes (`---`).
-Information keys–like "title" and "author"–are separated from their
+Information keys-like "title" and "author"-are separated from their
 associated "values" by a colon (`:`). Sub-values of a hierarchy are
 denoted by being placed on a new line and indented.[^chapter3_31] Here is a basic
 *rmarkdown* header that indicates the document's title, author, date,
@@ -768,13 +752,13 @@ before reading this section.
 #### R Markdown {- #RMarkdownChunkBasic}
 
 In R Markdown files we begin a code chunk by writing the head:
-` ```{r} `. A code chunk is closed–ended–simply with:
+` ```{r} `. A code chunk is closed-ended-simply with:
 ` ``` `. For example:
 
-````markdown
+````{markdown}
 `r ''````{r}
 # Example of an R Markdown code chunk
-string_num_object <- cbind(character_vector, numeric_vector)
+string_num_matrix <- cbind(character_vector, numeric_vector)
 ```
 ````
 
@@ -795,9 +779,9 @@ Traditional Sweave-style code chunks begin with the following head:
 `<<>>=`. The code chunk is closed with an at sign (`@`).
 
 ```{sh, eval=FALSE}
-<< >>=
+<< >>=
 
-string_num_object <- (character_vector, numeric_vector)
+string_num_matrix <- cbind(character_vector, numeric_vector)
 
 @
 ```
@@ -805,7 +789,7 @@ string_num_object <- (character_vector, numeric_vector)
 #### Code chunk labels {-}
 
 Each chunk has a label. When a code chunk creates a plot or the output
-is cached–stored for future use–*knitr* uses the chunk
+is cached-stored for future use-*knitr* uses the chunk
 label for the new file's name. If you do not explicitly give the chunk a
 label it will be assigned one like: `unnamed-chunk-1`.
 
@@ -847,7 +831,7 @@ option `echo=FALSE`.
 ```{r Ch3MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE,
 eval=FALSE}
 "'r ChunkLabel, echo=FALSE
-string_num_object <- cbind(character_vector, numeric_vector) "'```
+string_num_matrix <- cbind(character_vector, numeric_vector) "'```
 
 Note that all labels and code chunk options must be on the same line.
 Options are separated by commas. The syntax for *knitr*
@@ -885,7 +869,7 @@ page maintained by *knitr*'s creator Yihui Xie:
     \hline
   \end{tabular}
   \end{center}
-  {\scriptsize{These commands are discussed in more detail in Chapter \ref{StatsModel}.}}
+  {\scriptsize{These Functions are discussed in more detail in Chapter \ref{StatsModel}.}}
 \end{table}
 
 ### Global chunk options {#GlobalChunkOptions}
@@ -1044,8 +1028,8 @@ the familiar `Run` button for running R code. At the far right you can
 see a new `Chunks` drop-down menu
 (![image](images/chapter_3/ChunksIcon.png)). In this menu you
 can select `Insert Chunk` to insert the basic syntax required for a code
-chunk. There is also an option to `Run Current Chunk`–i.e. the chunk
-where your cursor is located–`Run Next Chunk`, and `Run All` chunks. You
+chunk. There is also an option to `Run Current Chunk`-i.e. the chunk
+where your cursor is located-`Run Next Chunk`, and `Run All` chunks. You
 can navigate to a specific chunk using a drop-down menu on the bottom
 left-hand side of the *Source* pane (e.g.
 ![image](images/chapter_3/ChunkNav.png)). This can be very
@@ -1324,13 +1308,14 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_12]: If you want to combine objects as if they were rows of the same
     column(s), use the `rbind()` function.
 
-[^chapter3_13]: Matrices are vectors with columns as well as rows.
+[^chapter3_13]: Matrices are basically collections of vectors, each represented 
+    as a column.
 
 [^chapter3_14]: Matrices can also have a names attribute.
 
 [^chapter3_15]: You can also use `names()` to assign names for the entire data
     frame. For example,
-    `names(string_num_object) <- c(variable_1, variable_2)`
+    `names(string_num_df) <- c(variable_1, variable_2)`
 
 [^chapter3_16]: Note that this is really only useful for data frames with few
     rows.
@@ -1341,15 +1326,15 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_18]: For more information on this data set, type `?cars` into your R
     console.
 
-[^chapter3_19]: Using R terminology, the second "argument" value–the code after
-    the comma–of the **with** function is called an "expression", because
+[^chapter3_19]: Using R terminology, the second "argument" value-the code after
+    the comma-of the **with** function is called an "expression", because
     it can contain more than one R function or statement. See Section
     \@ref(arguments) for a more comprehensive discussion of R function
     arguments.
 
 [^chapter3_21]: Note: you do not have to put spaces between the argument label
     and the equals sign or the equals sign and the value. However,
-    having spaces can make your code easier for other people to read.
+    having spaces can make your code easier to read.
 
 [^chapter3_22]: They can be abbreviated `T` and `F`.
 
