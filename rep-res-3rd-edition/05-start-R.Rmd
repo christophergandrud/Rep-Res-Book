@@ -43,7 +43,7 @@ code.[^chapter3_3] To run R code that you have typed after the prompt, press the
 `Return` or `Enter` key. 
 Now that we have a new R session open we can get started.
 
-```{r RBlankMain, fig.cap="R Console at Startup", echo=FALSE}
+```{r RBlankMain, fig.cap="R Console at Startup", echo=FALSE, out.height="50%"}
 knitr::include_graphics("images/chapter_3/BlankRConsole.png")
 ```
 
@@ -385,7 +385,7 @@ numeric_vector_mean <- mean(x = numeric_vector)
 Notice that we typed the function's name then enclosed the object name in
 parentheses immediately afterwards. This is the basic syntax that all
 functions use, i.e. `FUNCTION(ARGUMENTS)`. Even if you don't want to explicitly
-include an argument, *you still need to type the parentheses after the function*.
+include an argument, *you still need to type the parentheses after the function*.[^chapter3_21a]
 
 #### Arguments {-}
 
@@ -587,10 +587,10 @@ take a quick tour of the basic RStudio window.
 #### The default window {-}
 
 When you first open RStudio you should see a default window that looks
-like Figure \@ref(BlankMain). In this figure you see three window panes.
+like Figure \@ref(fig:BlankMain). In this figure you see three window panes.
 The large one on the left is the *Console*. This pane
-functions exactly the same as the console in regular R. Other panes
-include the *Environment/History* panes, in the upper
+functions exactly the same as the console discussed so far in this chapter. Other panes
+include the *Environment/History/Connections* panes, in the upper
 right-hand corner. The *Environment* pane shows you all of the objects
 in your workspace and some of their characteristics, like how many
 observations a data frame has. You can click on an object in this pane
@@ -598,12 +598,17 @@ to see its contents. This is especially useful for quickly looking at a
 data set in much the same way that you can visually scan a Microsoft
 Excel spreadsheet. The *History* pane records all of the functions you
 have run. It also allows you to rerun code and insert it into a source
-code file.
+code file. The *Connections* pane allows you to manage connections to databases
+such as an SQL server.\index{SQL}
+
+```{r BlankMain, echo=FALSE, fig.cap="RStudio at Startup", out.width="100%"}
+knitr::include_graphics("images/chapter_3/RStudioStartup.png")
+```
 
 In the lower right-hand corner you will see the
 *Files/Plots/Packages/ Help/Viewer* panes. We will discuss
 the *Files* pane in more detail in Chapter \@ref(DirectoriesChapter).
-Basically, it allows you to see and organize your files. The *Plots*
+Basically, it allows you to navigate and organize your files. The *Plots*
 pane is where figures you create in R appear. This pane allows you to
 see all of the figures you have created in a session using the right and
 left arrow icons. It also lets you save the figures in a variety of
@@ -613,7 +618,7 @@ next to them, access their help files (just click on the package name),
 update the packages, and even install new packages. The *Help* pane
 shows you help files. You can search for help files and search within
 help files using this pane. Finally, the *Viewer* pane allows you to
-view local web content like JavaScript graphics and Shiny web apps.
+view local web content like JavaScript graphics and Shiny apps.
 
 #### The Source pane {-}
 
@@ -633,19 +638,19 @@ going to the menu bar and clicking on `File` `New`. In the `New`
 drop-down menu you have the option to create a variety of different
 source code documents. Select the `R Script` option. You should now see
 a new pane with a bar across the top that looks like
-Figure \@ref(fig:SourcePanes). To run the R code you have in your source code
-file simply highlight it[^chapter3_28] and click the `Run` icon
-(![image](images/chapter_3/RunIcon.png)) on the top bar. This
+Figure \@ref(fig:TopBarFigs). To run the R code you have in your source code
+file highlight it[^chapter3_28] and click the `Run` icon on the top bar. This
 sends the code to the console where it is run. The icon to the right of
-`Run` simply runs the code above where you have highlighted. The
+`Run` runs the code above where you have highlighted. The
 `Source` icon next to this runs all of the code in the file using R's
-`source` function.
+`source` function. Whe you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working 
+with longer documents, especially markup documents.
 
-```{r TopBarFigs, echo=FALSE, fig.cap="RStudio Source Code Pane Top Bar"}
+```{r TopBarFigs, echo=FALSE, fig.cap="RStudio Source Code Pane Top Bar", out.width="100%"}
 knitr::include_graphics("images/chapter_3/RSourceBar.png")
 ```
 
-## Using *knitr* and *rmarkdown*: The Basics
+## Using *knitr* and *rmarkdown*: The basics
 
 To get started with *knitr* and *rmarkdown* in R or RStudio
 we need to learn some of the basic concepts and syntax. The concepts are
@@ -660,9 +665,9 @@ largely using *knitr*'s R Markdown syntax.
 Let's take a quick, abstract look at what the *knitr* package does. As
 I've mentioned, *knitr* ties together your presentation of results with
 the creation of those results. The *knitr* process takes three steps
-(see Figure \ref@(KnitProcess). First we create a knittable markup
+(see Figure \@ref(fig:KnitProcess)). First we create a knittable markup
 document. This contains both the analysis code and the presentation
-document's markup-the text and rules for how to format the text. *knitr*
+document's markup--the text and rules for how to format the text. *knitr*
 then *knits*: i.e. it runs the analysis code and converts the output
 into the markup language you are using according to the rules that you
 tell it to use. It inserts the marked-up results into a document that
@@ -692,11 +697,11 @@ and that it will be turned into a PDF document (via LaTeX).
 
 ```{yaml, eval=FALSE}
 ---
-title: "A Basic PDF Presentation Document"
-author: "Christopher Gandrud"
-date: "2018-10-28"
-output: pdf_document:
-    toc: true
+title: "A Basic PDF Presentation Document"
+author: "Christopher Gandrud"
+date: "2018-10-28"
+output: pdf_document:
+    toc: true
 —--
 ```
 
@@ -708,19 +713,19 @@ discuss more header options in Chapter \@ref(MarkdownChapter).
 RStudio can automatically create a basic header for the type of output
 document that you want when you open a new *rmarkdown* file. Simply
 select `File` then `R Markdown…`. A window will appear that looks like
-Figure \@ref(rmarkdownWindow). Simply select the type of output document
+Figure \@ref(fig:rmarkdownWindow). In this windo select the type of output document
 you want to create and click `Ok`.
 
-In addition to the header, *rmarkdown* differs from *knitr* in that you
+In addition to the header, *rmarkdown* differs from basic *knitr* files in that you
 can include Pandoc syntax in your R Markdown document. This can be
 useful for bibliographies as we will discuss in Chapter
-\@ref(MarkdownChapter). Nonetheless, **remember** that apart from the
+\@ref(MarkdownChapter). Nonetheless, remember that apart from the
 header and ability to include Pandoc syntax, at the simplest level
 *rmarkdown* documents are *knitr* documents written in R Markdown
 syntax. Importantly, they have the same code chunk syntax we will see
 shortly.
 
-```{r rmarkdownWindow, fig.cap="The New R Markdown Options Window", echo=FALSE}
+```{r rmarkdownWindow, fig.cap="The New R Markdown Options Window", echo=FALSE, out.width="100%"}
 knitr::include_graphics("images/chapter_3/newRMarkdown.png")
 ```
 
@@ -731,18 +736,73 @@ that it is knittable and (b) what markup language it is using. You can
 use a number of file extensions for R Markdown files including: `.Rmd`
 and `.Rmarkdown`.[^chapter3_32] LaTeX documents that include *knitr*
 code chunks are generally called R Sweave files and have the file
-extension . This terminology is a little confusing.[^chapter3_33] It is a
+extension `.Rnw`. This terminology is a little confusing.[^chapter3_33] It is a
 holdover from *knitr*'s main literate programming
-predecessor *Sweave*. You can also use the less confusing
-file extension `.Rtex`, as regular LaTeX files have the extension
-`.tex`. However, the syntax for `.Rtex` files is different from that
-used with `.Rnw` files. Use of `.Rtex` is currently very low, so we won't
-discuss it in this book.
+predecessor *Sweave*. Note that *rmarkdown* documents can compile to 
+LaTeX PDF documents and support pretty much the full capabilities of LaTeX.
+Because markdown is generally easier to write than raw LaTeX, `.Rnw` markup 
+is much less commonly used. For example, for the third edition of this book 
+I converted it from `.Rnw` to `.Rmd`.
+
+```{r KnitProcess, fig.cap="*knitr*/*rmarkdown* Process", engine = "tikz", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+% Define colors for figure
+%% Color palette (GnBU) chosen using ColorBrewer 2.0
+%% See: http://colorbrewer2.org/
+%% Not used in the print version
+\definecolor{Blue}{HTML}{7BCCC4}
+\definecolor{LiteBlue}{HTML}{A8DDB5}
+\definecolor{DarkBlue}{HTML}{08589E}
+
+\definecolor{GrayLine}{HTML}{BDBDBD}
+
+% Set node styles
+%% Workflow stage nodes
+\tikzstyle{Docs} = [draw=Blue,
+                     rectangle,
+                     inner sep=0.3cm,
+                     font=\small]
+
+% Begin tikz picture
+\begin{tikzpicture}
+
+    \node(knit) at (2, 1.75) {{\emph{\textbf{Knit}}}};
+    \node(compile) at (6, 1.75) {{\emph{\textbf{Compile}}}};
+
+    % Document nodes
+    \node (knittable) at (0, 0) [Docs, text width= 6em]{Knittable Document \\ (Markup + Code Chunks)};
+    \node (Markup) at (4, 0) [Docs, text width= 6em]{Markup Only Document};
+    \node (Presentation) at (8, 0) [Docs, text width = 6em]{Presentation Document};
+
+    % .Rnw LaTeX Example
+    \node(LaTeX) at (1, -2.5) {\textbf{\emph{knitr} LaTeX Example}};
+    \node (Rnw) at (0, -3.5) [Docs, text width= 6em]{\emph{Paper.Rnw}};
+    \node (tex) at (4, -3.5) [Docs, text width= 6em]{\emph{Paper.tex}};
+    \node (pdf) at (8, -3.5) [Docs, text width = 6em]{\emph{Paper.pdf}};
+
+    % Markdown to HTML Example
+    \node(Markdown) at (2, -5) {\textbf{\emph{knitr}/\emph{rmarkdown} Markdown Example}};
+    \node (Rmd) at (0, -6) [Docs, text width= 6em]{\emph{Website.Rmd}};
+    \node (md) at (4, -6) [Docs, text width= 6em]{\emph{Website.md}};
+    \node (html) at (8, -6) [Docs, text width = 6em]{\emph{Website.html}};
+
+    % Lines
+    \draw [->, very thick] (knittable) -- (Markup);
+    \draw [->, very thick] (Markup) -- (Presentation);
+
+    \draw [->, very thick] (Rnw) -- (tex);
+    \draw [->, very thick] (tex) -- (pdf);
+
+    \draw [->, very thick] (Rmd) -- (md);
+    \draw [->, very thick] (md) -- (html);
+
+\end{tikzpicture}
+```
+
 
 ### Code chunks
 
-When you want to include R code into your markup presentation documents,
-place them in a code chunk. Code chunk syntax differs depending on the
+Use code chunks to include knittable R code into your markup presentation documents.
+Code chunk syntax differs depending on the
 markup language we are using to write our documents. Let's see the
 syntax for R Markdown and R LaTeX files. If you are unfamiliar with
 basic LaTeX or Markdown syntax you might want to skim chapters
@@ -755,7 +815,7 @@ In R Markdown files we begin a code chunk by writing the head:
 ` ```{r} `. A code chunk is closed-ended-simply with:
 ` ``` `. For example:
 
-````{markdown}
+````markdown
 `r ''````{r}
 # Example of an R Markdown code chunk
 string_num_matrix <- cbind(character_vector, numeric_vector)
@@ -765,24 +825,16 @@ string_num_matrix <- cbind(character_vector, numeric_vector)
 The R Markdown code chunk syntax is exactly the same for files you
 compile with *knitr* or *rmarkdown*.
 
-#### R LaTeX {-}
+#### R LaTeX (.`Rnw`) {-}
 
-There are two different ways to delimit code chunks in R LaTeX
-documents. One way largely emulates the established
-*Sweave* syntax.[^chapter3_34] *knitr* also supports
-files with the extension, though the code chunk syntax is different. I
-will cover both types of syntax for code chunks in LaTeX documents.
-Throughout the book I use the older and more established Sweave-style
-syntax.
-
-Traditional Sweave-style code chunks begin with the following head:
+Code chunks are delimited in non-*rmarkdown* R LaTeX
+documents in a way that emulates the long-established
+*Sweave* syntax.[^chapter3_34] Sweave-style code chunks begin with the following head:
 `<<>>=`. The code chunk is closed with an at sign (`@`).
 
 ```{sh, eval=FALSE}
 << >>=
-
 string_num_matrix <- cbind(character_vector, numeric_vector)
-
 @
 ```
 
@@ -794,16 +846,16 @@ label for the new file's name. If you do not explicitly give the chunk a
 label it will be assigned one like: `unnamed-chunk-1`.
 
 To explicitly assign chunk labels in R Markdown documents, place the
-label name inside of the braces after the `r`. If we wanted to use the
-label `chunk_label` we type:
+label name inside of the braces after the `r`. If we wanted to use the, admittedly not descriptive, label `ex_label` we type:
 
-```{r MarkdownChunkLabel, echo=TRUE, eval=FALSE, tidy=FALSE}
-"'r chunk_label
-# Example chunk label "'
+````markdown
+`r ''````{r ex_label}
+# Example chunk label
 ```
+````
 
 The same general format applies to the two types of LaTeX chunks. In
-Sweave-style chunks we type: `<<chunk_lable>>=`.
+Sweave-style chunks we type: `<<ex_label>>=`.
 Try not to use spaces or periods in your
 label names. Also remember that chunk labels *must* be unique.
 
@@ -822,16 +874,17 @@ following pretty much the same rules as regular R function arguments.
 They have a similar `OPTION_LABEL=VALUE` structure as arguments. The
 option values must be written in the same way that argument values are.
 Character strings need to be inside of quotation marks. The logical
-`TRUE` and `FALSE` operators cannot be written `''true''` and
-`''false''`. For example, imagine we have a Markdown code chunk called
-`ChunkLabel`. If we want to run the *knitr* code chunk, but
+`TRUE` and `FALSE` operators cannot be written `"true"` and
+`"false"`. For example, imagine we have a Markdown code chunk called
+`ex_label`. If we want to run thecode chunk, but
 not show the code in the final presentation document, we can use the
 option `echo=FALSE`.
 
-```{r Ch3MarkdownChunkOptionExample, echo=TRUE, tidy=FALSE,
-eval=FALSE}
-"'r ChunkLabel, echo=FALSE
-string_num_matrix <- cbind(character_vector, numeric_vector) "'```
+````markdown
+`r ''````{r ex_label, echo=FALSE}
+string_num_matrix <- cbind(character_vector, numeric_vector) 
+```
+````
 
 Note that all labels and code chunk options must be on the same line.
 Options are separated by commas. The syntax for *knitr*
@@ -881,94 +934,37 @@ document we can set global chunk options. Options are 'global' in the
 sense that they apply to the entire document. Setting global chunk
 options helps us create documents that are formatted consistently
 without having to repetitively specify the same option every time we
-create a new code chunk. For example, in this book I center almost all
-of the figures. Instead of using the `fig.align='center'` option in each
-code chunk that creates a figure, I set the option globally.
+create a new code chunk. For example, rather than using the `fig.align='center'` option in each code chunk that creates a figure we can center align all figures in a document by setting the option globally.
 
 To set a global option, first create a new code chunk at the beginning
-of your document.[^chapter3_35] You will probably want to set the option so that
-*knitr* doesn't include the code in your presentation
-document. Inside the code chunk use . You can set any chunk option as an
-argument to . The option will be applied across your document, unless
+of your document.[^chapter3_35] You will probably want to set the option `include=FALSE` so that *knitr* doesn't include the code in your presentation
+document. Inside the code chunk use `opts_chunk$set`. You can set any chunk option as an
+argument to `opts_chunk$set`. The option will be applied across your document, unless
 you set a different local option.
 
-Here is an example of how you can center align all of the figures in
-Sweave-style code chunks. Place the following code at the beginning of
-the document:
+Here is an example of how you can center align all of the figures in *rmarkdown* in a chunk placed near the beginning of the document:
 
-\[PLACE BACK IN\]
+````markdown
+`r ''````{r set_global, include=FALSE}
+# Center align all knitr generated figures
+knitr::opts_chunk$set(fig.align='center')
+```
+````
 
-Note: if you want to use 'opts\_chunk' in a document rendered with
-\*rmarkdown\* you will need to load \*knitr\* in a code chunk preceding
-the call.
+If you want to use 'opts_chunk' in a document rendered with
+*rmarkdown* you will need to either explicitly call it as in the example using the double colon or load the *knitr* package before calling `opts_chunk`.
 
 ### *knitr* package options
 
 *knitr* package options affect how the package itself runs.
-For example, the option can be set as either or [^chapter3_36] depending on
-whether or not you want a progress bar to be displayed when you knit a
-code chunk. You can use to set the directory where you want all of your
-figures to be saved (see Chapter \@ref(DirectoriesChapter)) or the option
-to specify where child documents are located (see Chapter
-\@ref(LargeDocs)).
+For example, the `progress` option can be set as either `TRUE` or `FALSE` [^chapter3_36] depending on whether or not you want a progress bar to be displayed when you knit a
+code chunk. You can use `base.dir` to set the directory where you want all of your
+figures to be saved (see Chapter \@ref(DirectoriesChapter)) or the `child.path` option
+to specify where child documents are located (see Chapter \@ref(LargeDocs)).
 
-You set package options in a similar way as global chunk options with .
+You set package options in a similar way as global chunk options with `opts_knitr$set`.
 For example, include this code at the beginning of a document to turn
 off the progress bar when it is knitted:
-
-```{r KnitProcess, fig.cap="*knitr*/*rmarkdown* Process", engine = "tikz", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
-% Define colors for figure
-%% Color palette (GnBU) chosen using ColorBrewer 2.0
-%% See: http://colorbrewer2.org/
-%% Not used in the print version
-\definecolor{Blue}{HTML}{7BCCC4}
-\definecolor{LiteBlue}{HTML}{A8DDB5}
-\definecolor{DarkBlue}{HTML}{08589E}
-
-\definecolor{GrayLine}{HTML}{BDBDBD}
-
-% Set node styles
-%% Workflow stage nodes
-\tikzstyle{Docs} = [draw=Blue,
-                     rectangle,
-                     inner sep=0.3cm,
-                     font=\small]
-
-% Begin tikz picture
-\begin{tikzpicture}
-
-    \node(knit) at (2, 1.75) {{\emph{\textbf{Knit}}}};
-    \node(compile) at (6, 1.75) {{\emph{\textbf{Compile}}}};
-
-    % Document nodes
-    \node (knittable) at (0, 0) [Docs, text width= 6em]{Knittable Document \\ (Markup + Code Chunks)};
-    \node (Markup) at (4, 0) [Docs, text width= 6em]{Markup Only Document};
-    \node (Presentation) at (8, 0) [Docs, text width = 6em]{Presentation Document};
-
-    % LaTeX Example
-    \node(LaTeX) at (1, -2.5) {\textbf{\emph{knitr} LaTeX Example}};
-    \node (Rnw) at (0, -3.5) [Docs, text width= 6em]{\emph{Paper.Rnw}};
-    \node (tex) at (4, -3.5) [Docs, text width= 6em]{\emph{Paper.tex}};
-    \node (pdf) at (8, -3.5) [Docs, text width = 6em]{\emph{Paper.pdf}};
-
-    % Markdown Example
-    \node(Markdown) at (2, -5) {\textbf{\emph{knitr}/\emph{rmarkdown} Markdown Example}};
-    \node (Rmd) at (0, -6) [Docs, text width= 6em]{\emph{Website.Rmd}};
-    \node (md) at (4, -6) [Docs, text width= 6em]{\emph{Website.md}};
-    \node (html) at (8, -6) [Docs, text width = 6em]{\emph{Website.html}};
-
-    % Lines
-    \draw [->, very thick] (knittable) -- (Markup);
-    \draw [->, very thick] (Markup) -- (Presentation);
-
-    \draw [->, very thick] (Rnw) -- (tex);
-    \draw [->, very thick] (tex) -- (pdf);
-
-    \draw [->, very thick] (Rmd) -- (md);
-    \draw [->, very thick] (md) -- (html);
-
-\end{tikzpicture}
-```
 
 ### Hooks
 
@@ -981,9 +977,8 @@ Yihui Xie's webpage: <http://yihui.name/knitr/hooks>.
 ### *knitr*, *rmarkdown*, & RStudio
 
 RStudio is highly integrated with *knitr*/*rmarkdown* and
-the markup languages that they work with. Because of this integration it
-is easier to create and compile *knitr*/*rmarkdown*
-documents in RStudio than plain R. Most of the
+the markup languages that they work with. RStudio is probably the easiest tool
+for creating and compiling *knitr*/*rmarkdown*. Most of the
 RStudio/*knitr*/*rmarkdown* features are accessed in the
 *Source* pane. The *Source* pane's appearance and capabilities change
 depending on the type of file you have open in it. RStudio uses a file's
@@ -992,17 +987,16 @@ determine what type of file you have open.[^chapter3_37] We have already seen
 some of the features the *Source* pane has for R source code files.
 Let's now look at how to use *knitr* and *rmarkdown* with R
 source code files as well as the markup formats we cover in this book: R
-Markdown and R LaTeX.\
+Markdown and R LaTeX.
 
-#### Compiling R source code Notebooks
+#### Compiling R source code Notebooks {- #PublishRPubs}
 
 If you want a quick well-formatted account of the code that you ran and
 the results that you got you can use RStudio's "Compile Notebook"
 capabilities. RStudio uses *rmarkdown* to create a standalone file
 presenting your source code and results. It will include all of the code
-from an R source file as well as the output. This can be useful for
-recording the steps you took to do an analysis. You can see an example
-RStudio Notebook in Figure \@(NotebookExample).
+from an R source file as well as the output. This can be useful for quickly presenting the steps you took to do an analysis. You can see an example
+RStudio Notebook in Figure \@ref(fig:NotebookExample).
 
 If you want to create a Notebook from an open R source code file simply
 click the `Compile Notebook` icon
@@ -1010,50 +1004,47 @@ click the `Compile Notebook` icon
 *Source* pane's top bar.[^chapter3_38] Then in the window that pops up select the
 output type you would like (HTML, PDF or MS Word) and click the
 `Compile` button. For this example I selected HTML. In Figure
-\@ref(NotebookExample) you can see near the top center right a small globe
+\@ref(fig:NotebookExample) you can see near the top center right a small globe
 icon next to the word "Publish". Clicking this allows you to publish
 your Notebook to RPubs (<http://www.rpubs.com/>). RPubs is a site for
 sharing your Notebooks over the internet. You can publish not only
-Notebooks, but also any *knitr* *rmarkdown* Markdown
-document you compile in RStudio.\[PublishRPubs\]
+Notebooks, but also any *rmarkdown* Markdown
+document you compile in RStudio.
 
-![RStudio Notebook Example<span
-data-label="NotebookExample">](images/chapter_3/NotebookExample.png)
+```{r NotebookExample, fig.cap="RStudio Notebook Example", echo=FALSE, out.width="100%"}
+#### Include notebook example image ####
+knitr::include_graphics("images/chapter_3/NotebookExample.png")
+```
 
-#### R Markdown {#r-markdown}
+In this chapter's appendix we discuss interactive Jupyter notebooks.\index{Jupyter} They are popular in the data science and tech industries and use a somewhat different logic from *rmarkdown* notebooks. 
 
-The second image in Figure \@ref(fig:SourcePanes) is what the *Source* pane's
-top bar looks like when you have an R Markdown file open. You'll notice
-the familiar `Run` button for running R code. At the far right you can
-see a new `Chunks` drop-down menu
-(![image](images/chapter_3/ChunksIcon.png)). In this menu you
-can select `Insert Chunk` to insert the basic syntax required for a code
-chunk. There is also an option to `Run Current Chunk`-i.e. the chunk
-where your cursor is located-`Run Next Chunk`, and `Run All` chunks. You
-can navigate to a specific chunk using a drop-down menu on the bottom
-left-hand side of the *Source* pane (e.g.
-![image](images/chapter_3/ChunkNav.png)). This can be very
+```{r SourcePaneRmarkdown, echo=FALSE, fig.cap="RStudio Source Pane for an RMarkdown File", out.width="100%"}
+knitr::include_graphics("images/chapter_3/SourcePaneRmarkdown.png")
+```
+
+#### R Markdown {- #r-markdown}
+
+Figure \@ref(fig:SourcePaneRmarkdown) is what the *Source* pane looks like when you have an R Markdown file open. You'll notice
+the familiar `Run` button for running R code. It now includes a drop-down menu for running code chunks. It includes options like `Run Current Chunk`--i.e. run the chunk
+where your cursor is located--`Run Next Chunk`, and `Run All` chunks. In this menu you can select `Insert Chunk` to insert the basic syntax required for a code chunk. You can navigate to a specific chunk using a drop-down menu on the bottom
+left-hand side of the *Source* pane. This can be very
 useful if you are working with a long document. To knit your file, click
-the `Knit HTML` icon on the left side of the *Source* pane's top bar.
-This will clearly knit it to an HTML file. If you click on the downward
-arrow on the right of this icon you will be given the opportunity to
-also knit the document to a PDF or an MS Word file using *rmarkdown*.
-Other useful buttons in the R Markdown *Source* pane's top bar include
-the `ABC` spell check icon and question mark icon, which gives you a
-Markdown syntax reference file in the Help pane.
+the `Knit` icon on the left side of the *Source* pane's top bar.
+If you click on the downward
+arrow on the right of this icon you will be given the opportunity to knit the document to HTML, PDF, or, MS Word using *rmarkdown*.
+Helpfully the R Markdown *Source* pane's top bar also includes the `ABC` spell check icon.
 
-Another useful RStudio *knitr*/*rmarkdown* integration
-feature is that RStudio can properly highlight both the markup language
+RStudio can properly highlight both the markup language
 syntax and the R code in the *Source* pane. This makes your source code
 much easier to read and navigate. RStudio can also fold code chunks.
 This makes navigating through long documents, with long code chunks,
-much easier. In the first image in Figure \@(fig:CodeFold) you can see a
-small downward facing arrow at line 25. If you click this arrow the code
-chunk will collapse to look like the second image in Figure
-\[CodeFold\]. To unfold the chunk, just click on the arrow again.
+much easier. At line 1014 in Figure \@ref(fig:SourcePaneRmarkdown) you can see a
+small downward facing arrow, If you were to click this arrow, the code
+chunk would collapse to look like line 1021 in Figure
+\@ref(fig:SourcePaneRmarkdown). To unfold the chunk, just click on the arrow again.
 
-You may also notice that there are code folding arrows on lines 27 and
-34 in the first image. These allow us to fold parts of the code chunk.
+You may also notice that there is a code folding arrow on line 1015 in Figure
+\@ref(fig:SourcePaneRmarkdown). This allows us to fold parts of the code chunk.
 To enable this option, create a comment line with at least one hash
 before the comment text and at least four after it like this:
 
@@ -1064,21 +1055,15 @@ before the comment text and at least four after it like this:
 You will be able to fold all of the text after this comment up until the
 next similarly formatted comment (or the end of the chunk).
 
-\
+#### R (Sweave) LaTeX {-}
 
-#### R LaTeX
-
-You can see in the final image in Figure \[SourcePanes\] that many of
-the *Source* pane options for R LaTeX files are the same as R Markdown
-files, the key differences being that there is a `Compile PDF` icon
-(![image](images/chapter_3/CompilePDF.png)) instead of
-`Knit HTML`. Clicking this icon knits the file and creates a PDF file in
+Many of the *Source* pane options for R (`.Rnw) LaTeX files are the same as R Markdown
+files, the key differences being that there is a `Compile PDF` icon instead of
+`Knit`. Clicking this icon knits the file and creates a PDF file in
 your R LaTeX file's directory. There is also a `Format` icon instead of
 the question mark icon. This actually inserts LaTeX formatting functions
 into your document for things such as section headings and bullet lists.
 These functions can be very tedious to type out by hand otherwise.
-
-#### Change default .Rnw knitter
 
 By default RStudio may be set up to use *Sweave* for compiling LaTeX
 documents. To use *knitr* instead of *Sweave* to knit
@@ -1090,9 +1075,7 @@ files using:". Finally, click `Apply`.[^chapter3_39]
 
 In the `Sweave` options menu you can also set which LaTeX typesetting
 engine to use. By default it is set to the more established engine
-pdfLaTeX. Another option is XeLaTeX. XeLaTeX has the ability to use many
-more characters than pdfLaTeX as it works with UTF-8 encoded input. It
-can also use any font on your computer. XeLaTeX is especially useful
+pdfLaTeX.\index{pdfLaTeX} Another option is XeLaTeX.\index{XeLaTeX} XeLaTeX has the ability to use many more characters than pdfLaTeX as it works with UTF-8 encoded input.\index{UTF-8} It can also use any font on your computer. XeLaTeX is especially useful
 compared to pdfLaTeX if you are using characters that are not found in
 standard English.
 
@@ -1102,14 +1085,14 @@ As *knitr* is a regular R package, you can of course, knit
 documents in R (or using the console in RStudio). All of the
 *knitr* syntax in your markup document is the same as
 before, but instead of clicking a or button use the function. To knit a
-hypothetical Markdown file *Example.Rmd* you first use the
+hypothetical Markdown file *example.Rmd* you first use the
 `setwd` function to set the working directory (for more details see
-Chapter \[DirectoriesChapter\]) to the folder where the
-*Example.Rmd* file is located. In this example it is
+Chapter \@ref(DirectoriesChapter)) to the folder where the
+*example.Rmd* file is located. In this example it is
 located in the Documents folder.[^chapter3_40]
 
 ```{r Ch3RawKnitSetwd, echo=TRUE, eval=FALSE, tidy=FALSE}
-setwd(" /Documents/")
+setwd("/Documents/")
 ```
 
 Then you knit the file:
@@ -1124,7 +1107,7 @@ determine what the file name and extension should be. In this example it
 would come up with the same name and location as we gave it.
 
 In this example, using the `knit` function only creates a Markdown file
-and not an HTML file, as clicking the RStudio did. Likewise, if you use
+and not an HTML file, as clicking `Knit` in RStudio did. Likewise, if you use
 on a file you will only end up with a basic LaTeX file and not a
 compiled PDF. To convert the Markdown file into HTML you need to further
 run the file through the function from the *markdown*
@@ -1149,15 +1132,14 @@ for more details on using BibTeX for bibliographies). Here is a example:
 
 ```{r CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE}
 # Load tools package
-# library(tools)
+library(tools)
 
 # Compile pdf
 texi2pdf(file = "example.tex")
 ```
 
 Just like with `knit2html`, you can simplify this process by using the
-`knit2pdf` function to compile a PDF file from a `.Rnw` or `.Rtex`
-document.
+`knit2pdf` function to compile a PDF file from a `.Rnw` document.
 
 ### *rmarkdown* and R {#rmarkdownRender}
 
@@ -1168,14 +1150,14 @@ header:
 
 ````yaml
 ---
-title: "A Basic PDF Presentation Document"
-author: "Christopher Gandrud"
-date: "2018-10-28"
+title: "A Basic PDF Presentation Document"
+author: "Christopher Gandrud"
+date: "2018-10-28"
 output:
-    pdf_document:
-        toc: true
-    html_document:
-    toc: false
+    pdf_document:
+        toc: true
+    html_document:
+    toc: false
 —--
 ````
 
@@ -1208,18 +1190,18 @@ or
 render("example.Rmd", c("pdf_document", "html_document"))
 ```
 
-In all of these cases, `render` will not keep the intermediate *.md* or
+In all of these cases, `render` will create, but not keep the intermediate *.md* or
 *.tex* document. You can have these documents saved by adding `keep_md`
 or `keep_tex` to the header. For example:
 
 ````yaml
 output:
-    pdf_document:
-        toc: true
-        keep_tex: true
-    html_document:
-      keep_md: true
-    toc: false
+    pdf_document:
+        toc: true
+        keep_tex: true
+    html_document:
+      keep_md: true
+    toc: false
 —--
 ````
 
@@ -1237,6 +1219,8 @@ research steps in detail. In the next chapter we will look at how to
 organize files created with these types of tools into reproducible
 research projects.
 
+## Appendix: Jupyter interactive notebooks {- #jupyter}
+
 ## Appendix: knitr and Lyx {- #LyxAppendix}
 
 You may be more comfortable using a what-you-see-is-what-you-get
@@ -1244,14 +1228,14 @@ You may be more comfortable using a what-you-see-is-what-you-get
 editor that can be used with *knitr*. I don't cover Lyx in detail in
 this book, but here is a little information to get you started.
 
-#### Set Up
+#### Set Up {-}
 
 To set up Lyx so that it can compile `.Rnw` files, click `Document` in
 the menu bar then `Settings`. In the left-hand panel the second option
 is `Modules`. Click on `Modules` and select `Rnw (knitr)`. Click `Add`
 then `Ok`. Now, compile your LaTeX document in the normal Lyx way.
 
-#### Code Chunks
+#### Code Chunks {-}
 
 Enter code chunks into TeX Code blocks within your Lyx documents. To
 create a new TeX Code block, select `Insert` from the menu bar then
@@ -1264,8 +1248,8 @@ create a new TeX Code block, select `Insert` from the menu bar then
 
 [^chapter3_3]: If you are using a Unix-like system such as Linux Ubuntu or Mac OS
     10, you can also access R via an application called the Terminal. If
-    you have installed R on your computer you can type `R` into the Terminal
-    and then the `Return` or `Enter` key. This will begin a new R session. You will know
+    you have installed R on your computer you can type `R` into the Terminal. 
+    This will begin a new R session. You will know
     you are in a new R session because the same type of startup
     information as in Figure \@ref(fig:RBlankMain) will be printed in your
     Terminal.
@@ -1331,6 +1315,11 @@ create a new TeX Code block, select `Insert` from the menu bar then
     it can contain more than one R function or statement. See Section
     \@ref(arguments) for a more comprehensive discussion of R function
     arguments.
+    
+[^chapter3_21a]: If you don't include the parentheses after the function name
+    R will return the source code for the function just like when you enter an 
+    object name into your console returns the contents. This is because in 
+    R functions are actually also objects!
 
 [^chapter3_21]: Note: you do not have to put spaces between the argument label
     and the equals sign or the equals sign and the value. However,
@@ -1353,16 +1342,13 @@ create a new TeX Code block, select `Insert` from the menu bar then
     <http://cran.r-project.org/web/packages/available_packages_by_name.html>.
 
 [^chapter3_27]: You will probably see R packages referred to as "libraries",
-    though this is a misnomer. See this blog post by Carlisle Rainey for
-    a discussion:
-    <http://www.carlislerainey.com/2013/01/02/packages-v-libraries-in-r/?utm_source=rss&utm_medium=rss&utm_campaign=packages-v-libraries-in-r>
-    (posted 2 January 2013).
+    though this is a misnomer.
 
 [^chapter3_28]: If you are only running one line of code, you don't need to
     highlight the code; you can simply put your cursor on that line.
 
-[^chapter3_29]: Note: you can also create an *rmarkdown* document without a
-    header.
+[^chapter3_29]: Note that you can also create an *rmarkdown* document without a
+    header. *tmarkdown* will just use the default settings when knitting.  
 
 [^chapter3_30]: YAML is a recursive acronym that means "YAML Ain't Markup
     Language".
@@ -1380,11 +1366,11 @@ create a new TeX Code block, select `Insert` from the menu bar then
     noweb @leisch2002 [@ramseynoweb].
 
 [^chapter3_35]: In Markdown, you can put global chunk options at the very top of
-    the document. In LaTeX they should be placed after the
+    the document. In `.Rnw` documents they should be placed after the
     `\begin{document}` function (see Chapter \@ref(LatexChapter) for more
     information on how LaTeX documents are structured).
 
-[^chapter3_36]: It's set as by default.
+[^chapter3_36]: It's set as `TRUE` by default.
 
 [^chapter3_37]: You can manually set how you want the *Source* pane to act by
     selecting the file type using the drop-down menu in the lower
