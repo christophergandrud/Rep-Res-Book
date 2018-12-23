@@ -36,7 +36,7 @@ Before discussing each of these in detail, let's open R and look
 around.[^chapter3_1] When you open the R GUI program by clicking on the R icon
 you should get a window that looks something like Figure
 \@ref(fig:RBlankMain).[^chapter3_2] This window is the **R
-console**. Below the startup information-information about
+console**. Below the start up information-information about
 what version of R you are using, license details, and so on-you should
 see a `>` (greater-than sign). This prompt is where you enter R
 code.[^chapter3_3] To run R code that you have typed after the prompt, press the
@@ -396,7 +396,7 @@ wanted to find the mean of *numeric_vector*. Arguments use the
 label.
 
 To find all of the arguments that a function can accept, look at the
-**Arguments** section of the functions's help
+**Arguments** section of the function's help
 file. To access the help file type: `?FUNCTION`.\index{R function!?} For example:
 
 ```{r Ch3HelpMean, echo=TRUE, eval=FALSE, tidy=FALSE}
@@ -643,7 +643,7 @@ file highlight it[^chapter3_28] and click the `Run` icon on the top bar. This
 sends the code to the console where it is run. The icon to the right of
 `Run` runs the code above where you have highlighted. The
 `Source` icon next to this runs all of the code in the file using R's
-`source` function. Whe you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working 
+`source` function. When you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working 
 with longer documents, especially markup documents.
 
 ```{r TopBarFigs, echo=FALSE, fig.cap="RStudio Source Code Pane Top Bar", out.width="100%"}
@@ -713,7 +713,7 @@ discuss more header options in Chapter \@ref(MarkdownChapter).
 RStudio can automatically create a basic header for the type of output
 document that you want when you open a new *rmarkdown* file. Simply
 select `File` then `R Markdown…`. A window will appear that looks like
-Figure \@ref(fig:rmarkdownWindow). In this windo select the type of output document
+Figure \@ref(fig:rmarkdownWindow). In this window select the type of output document
 you want to create and click `Ok`.
 
 In addition to the header, *rmarkdown* differs from basic *knitr* files in that you
@@ -876,7 +876,7 @@ option values must be written in the same way that argument values are.
 Character strings need to be inside of quotation marks. The logical
 `TRUE` and `FALSE` operators cannot be written `"true"` and
 `"false"`. For example, imagine we have a Markdown code chunk called
-`ex_label`. If we want to run thecode chunk, but
+`ex_label`. If we want to run the code chunk, but
 not show the code in the final presentation document, we can use the
 option `echo=FALSE`.
 
@@ -1221,6 +1221,32 @@ research projects.
 
 ## Appendix: Jupyter interactive notebooks {- #jupyter}
 
+Jupyter notebooks are a commonly used alternative to R Markdown notebooks and *knitr* generally for displaying and discussing computational analyses. They are especially prevalent in the data science industry.  For example, I never used Jupyter notebooks during my academic life in the quantitative social sciences, but after moving to the tech industry I regularly write and read them. A reason for this is that they  are particularly useful for fast prototyping analyses. They are interactive. You run the code directly in the notebook and see the results printed in the notebook immediately. 
+
+Jupyter is often associated with Python, but the name 'Jupyter' actually refers to three languages used in data science **Ju**lia,\index{Julia language} **Py**thon,\index{Python} and **R** and can be used with other languages as well. 
+
+This book is clearly focused on R Markdown, but if you would like to explore launching Jupyter from R see the *IRkernel* package [@R-IRkernel]. Though personally I have been using launching Jupyter from Python or Julia, as the installation is more straightforward. In fact for the Python installation is a prerequisite for *IRkernel*. For more details see:
+
+- Python installation instructions: <http://jupyter.org/install.html>,
+
+- Julia installation instructions: <https://github.com/JuliaLang/IJulia.jl>.
+
+#### Controversy
+
+In mid-2019 there was a major controversy (well at least a topic heavily discussed on data science Twitter)\index{Twitter} about Jupyter notebooks. Joel Grus started the controversy by giving a talk at the main Jupyter conference--JupyterCon--called 'I Don't Like Notebooks'.[^jupyter_dont_like]
+
+His critique was multi-pronged, but one that resonated with my strong interest in reproducibility (and personal experience using these notebooks) is that you can execute code in Jupyter notebooks in an arbitrary order. Using R Markdown terminology: you could execute the third code chunk before the second and then make changes to and rerun the second chunk without rerunning the third. This is troubling for reproducibility as it is difficult for a third person (or yourself a few minutes later) to know what order the code was executed in to get the displayed results. Jupyter notebooks do record the order in which code was executed within the same session, but this adds an additional layer of complexity to figuring out results. The order also becomes inconsistent when a notebook is relaunched.
+
+#### R Markdown vs. Jupyter
+
+A big reason that I personally prefer R Markdown over Jupyter is that it provides the 'best of both worlds'. RStudio allows you to interact with R Markdown documents in a very similar way to Jupyter notebooks (see Figure \@ref(fig:RMarkdownInteractive)). It allows you to interactively run code chunks in any order and immediately see the results in line with the markup. It also channels you towards running the code in order when you knit the document before you share it with others.
+
+```{r RMarkdownInteractive, fig.cap="R Markdown Interactive Behavior Example in RStudio", echo=FALSE, out.width="100%"}
+#### Include notebook example image ####
+knitr::include_graphics("images/chapter_3/RmarkdownInteractive.png")
+```
+RmarkdownInteractive.png
+
 ## Appendix: knitr and Lyx {- #LyxAppendix}
 
 You may be more comfortable using a what-you-see-is-what-you-get
@@ -1250,7 +1276,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
     10, you can also access R via an application called the Terminal. If
     you have installed R on your computer you can type `R` into the Terminal. 
     This will begin a new R session. You will know
-    you are in a new R session because the same type of startup
+    you are in a new R session because the same type of start up
     information as in Figure \@ref(fig:RBlankMain) will be printed in your
     Terminal.
 
@@ -1261,7 +1287,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_5]: @whickham2014book argues that underscores (`_`) should be used 
     to separate words in object names to make the names easier to read. 
     For example: `health_data` rather than `healthdata`. 
-    Underscores appear to now be the dominat naming convention in the R community. 
+    Underscores appear to now be the dominate naming convention in the R community. 
     Other conventions include using periods (`.`) or capital
     letters (referred to as CamelBack). For more
     information on R naming conventions see @baath2012.
@@ -1348,7 +1374,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
     highlight the code; you can simply put your cursor on that line.
 
 [^chapter3_29]: Note that you can also create an *rmarkdown* document without a
-    header. *tmarkdown* will just use the default settings when knitting.  
+    header. *rmarkdown* will just use the default settings when knitting.  
 
 [^chapter3_30]: YAML is a recursive acronym that means "YAML Ain't Markup
     Language".
@@ -1384,3 +1410,5 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_40]: Using the directory name is for Mac computers. Please use
     alternative syntax discussed in Chapter \@ref(DirectoriesChapter) on
     other types of systems.
+    
+[^jupyter_dont_like]: The presentation is available here: <https://docs.google.com/presentation/d/1n2RlMdmv1p25Xy5thJUhkKGvjtV-dkAIsUXP-AL4ffI/preview?slide=id.g362da58057_0_1>. For a comprehensive discussion by Yihui Xie see: <https://yihui.name/en/2018/09/notebook-war/>.
