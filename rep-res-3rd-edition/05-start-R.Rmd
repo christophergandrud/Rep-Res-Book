@@ -5,7 +5,7 @@ chapter gives you enough information to be able to get started and
 understand the R code I use throughout the book. For more detailed
 introductions on how to use R please refer to the resources mentioned
 in Chapter \@ref(Intro) (Section \@ref(OtherBooks)). Experienced R users might
-want to skip the first section. 
+want to skip the first section.
 
 In the second section I'll give a brief
 overview of RStudio. I highlight the key features of the main RStudio
@@ -40,7 +40,7 @@ console**. Below the start up information-information about
 what version of R you are using, license details, and so on-you should
 see a `>` (greater-than sign). This prompt is where you enter R
 code.[^chapter3_3] To run R code that you have typed after the prompt, press the
-`Return` or `Enter` key. 
+`Return` or `Enter` key.
 Now that we have a new R session open we can get started.
 
 ```{r RBlankMain, fig.cap="R Console at Startup", echo=FALSE, out.height="50%"}
@@ -61,20 +61,20 @@ section.[^chapter3_4] Now let's create a few objects.
 
 Objects can have a number of different types. Let's make two simple
 objects. The first is a numeric-type object. The other is a character
-object. 
+object.
 
 We can choose almost any name we want for our
 objects as long as it begins with an alphabetic character and does not
-contain spaces.[^chapter3_5] Just because there are relatively few hard 
-restrictions on object names, doesn't 
-mean that you should name your object anything. 
-Your code will be much easier to read if object 
-names are short and meaningful. Give each object a 
-unique name to avoid confusion and conflicts. For example, if you reuse an object 
+contain spaces.[^chapter3_5] Just because there are relatively few hard
+restrictions on object names, doesn't
+mean that you should name your object anything.
+Your code will be much easier to read if object
+names are short and meaningful. Give each object a
+unique name to avoid confusion and conflicts. For example, if you reuse an object
 names in an R session you could easily accidentally overwrite it.
 
-Let's begin working with numeric objects by creating a new object called 
-*number* with the number 10 in it. 
+Let's begin working with numeric objects by creating a new object called
+*number* with the number 10 in it.
 To put something into the object we use the assignment operator[^chapter3_6]
 (`<-`).\index{<-}:
 
@@ -92,7 +92,7 @@ Let's briefly breakdown this output. `10` is clearly the contents of
 *number*. The double hash (`##`) is included here to tell
 you that this is output rather than R code.[^chapter3_7] If you run functions
 in your R console, you will not get the double hash in your output.
-Finally, `[1]` gives the position in the object that the number 10 is on. Our object only 
+Finally, `[1]` gives the position in the object that the number 10 is on. Our object only
 has one position.
 
 Creating an object with words and other characters-a character object-is
@@ -240,7 +240,7 @@ mean(string_num_df$character_vector)
 
 #### Component selection {- #ComponentSelect}
 
-The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (`$`) between the name of our data frame object name and the `character_vector` variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector} It's also sometimes called the element name operator. Either way, it extracts a part--component--of an object. In the previous example it extracted the **character_vector** column from the *string_num_df* so that it could be fed to 
+The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (`$`) between the name of our data frame object name and the `character_vector` variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector} It's also sometimes called the element name operator. Either way, it extracts a part--component--of an object. In the previous example it extracted the **character_vector** column from the *string_num_df* so that it could be fed to
 the `mean()` function.
 
 We can use the component selector to create new objects with parts of other objects. Imagine that we have *string_num_df* and want an object with only the information in the numbers column. Let's use the following code:
@@ -284,7 +284,7 @@ head(dist)
 ```
 
 We used the `head()`\index{R function!head} function to see just the first few values of each
-variable. 
+variable.
 
 Now that we are done working with the *cars* data set, we should `detach()`\index{R function!detach} it. Not doing so could confuse R later in our session.
 
@@ -309,7 +309,7 @@ In this book I avoid using the `attach()` and `with()`
 functions. Instead I use the component selector. Though it creates longer
 code, I find that code written with the component selector is less ambiguous
 It's always clear which object we are selecting a component
-from. 
+from.
 
 #### Subscripts {-}
 
@@ -446,7 +446,7 @@ round(mean(numeric_vector), digits = 1)
 
 Stacking functions inside of each other can create code that is
 difficult to read. Another option that potentially makes more easily
-understandable code is piping\index{pipe} using the pipe function (`%>%`) that you
+understandable code is piping\index{pipe} using the pipe function (`%>%`)\index{R function!\%>\%} that you
 can access from the *magrittr* [@R-magrittr]\index{R package!magrittr} or *dplyr* [@R-dplyr]\index{R package!dplyr} packages. The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of **numeric_vector** and then round it to one decimal place use:
 
 ```{r Ch3Pipe, echo=TRUE}
@@ -573,7 +573,7 @@ Using the double-colon ensures
 that R will use the function from the particular package you want and
 makes it clear to a source code reader what package a function comes
 from. If you use the double-colon, you don't need to
-include `library()` beforehand. Note that it does not load all of the functions in the package, just the one you ask for. 
+include `library()` beforehand. Note that it does not load all of the functions in the package, just the one you ask for.
 
 ## Using RStudio
 
@@ -643,7 +643,7 @@ file highlight it[^chapter3_28] and click the `Run` icon on the top bar. This
 sends the code to the console where it is run. The icon to the right of
 `Run` runs the code above where you have highlighted. The
 `Source` icon next to this runs all of the code in the file using R's
-`source` function. When you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working 
+`source` function. When you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working
 with longer documents, especially markup documents.
 
 ```{r TopBarFigs, echo=FALSE, fig.cap="RStudio Source Code Pane Top Bar", out.width="100%"}
@@ -738,10 +738,10 @@ and `.Rmarkdown`.[^chapter3_32] LaTeX documents that include *knitr*
 code chunks are generally called R Sweave files and have the file
 extension `.Rnw`. This terminology is a little confusing.[^chapter3_33] It is a
 holdover from *knitr*'s main literate programming
-predecessor *Sweave*. Note that *rmarkdown* documents can compile to 
+predecessor *Sweave*. Note that *rmarkdown* documents can compile to
 LaTeX PDF documents and support pretty much the full capabilities of LaTeX.
-Because markdown is generally easier to write than raw LaTeX, `.Rnw` markup 
-is much less commonly used. For example, for the third edition of this book 
+Because markdown is generally easier to write than raw LaTeX, `.Rnw` markup
+is much less commonly used. For example, for the third edition of this book
 I converted it from `.Rnw` to `.Rmd`.
 
 ```{r KnitProcess, fig.cap="*knitr*/*rmarkdown* Process", engine = "tikz", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
@@ -882,7 +882,7 @@ option `echo=FALSE`.
 
 ````markdown
 `r ''````{r ex_label, echo=FALSE}
-string_num_matrix <- cbind(character_vector, numeric_vector) 
+string_num_matrix <- cbind(character_vector, numeric_vector)
 ```
 ````
 
@@ -1016,7 +1016,7 @@ document you compile in RStudio.
 knitr::include_graphics("images/chapter_3/NotebookExample.png")
 ```
 
-In this chapter's appendix we discuss interactive Jupyter notebooks.\index{Jupyter} They are popular in the data science and tech industries and use a somewhat different logic from *rmarkdown* notebooks. 
+In this chapter's appendix we discuss interactive Jupyter notebooks.\index{Jupyter} They are popular in the data science and tech industries and use a somewhat different logic from *rmarkdown* notebooks.
 
 ```{r SourcePaneRmarkdown, echo=FALSE, fig.cap="RStudio Source Pane for an RMarkdown File", out.width="100%"}
 knitr::include_graphics("images/chapter_3/SourcePaneRmarkdown.png")
@@ -1221,9 +1221,9 @@ research projects.
 
 ## Appendix: Jupyter interactive notebooks {- #jupyter}
 
-Jupyter notebooks are a commonly used alternative to R Markdown notebooks and *knitr* generally for displaying and discussing computational analyses. They are especially prevalent in the data science industry.  For example, I never used Jupyter notebooks during my academic life in the quantitative social sciences, but after moving to the tech industry I regularly write and read them. A reason for this is that they  are particularly useful for fast prototyping analyses. They are interactive. You run the code directly in the notebook and see the results printed in the notebook immediately. 
+Jupyter notebooks are a commonly used alternative to R Markdown notebooks and *knitr* generally for displaying and discussing computational analyses. They are especially prevalent in the data science industry.  For example, I never used Jupyter notebooks during my academic life in the quantitative social sciences, but after moving to the tech industry I regularly write and read them. A reason for this is that they  are particularly useful for fast prototyping analyses. They are interactive. You run the code directly in the notebook and see the results printed in the notebook immediately.
 
-Jupyter is often associated with Python, but the name 'Jupyter' actually refers to three languages used in data science **Ju**lia,\index{Julia language} **Py**thon,\index{Python} and **R** and can be used with other languages as well. 
+Jupyter is often associated with Python, but the name 'Jupyter' actually refers to three languages used in data science **Ju**lia,\index{Julia language} **Py**thon,\index{Python} and **R** and can be used with other languages as well.
 
 This book is clearly focused on R Markdown, but if you would like to explore launching Jupyter from R see the *IRkernel* package [@R-IRkernel]. Though personally I have been using launching Jupyter from Python or Julia, as the installation is more straightforward. In fact for the Python installation is a prerequisite for *IRkernel*. For more details see:
 
@@ -1274,7 +1274,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
 
 [^chapter3_3]: If you are using a Unix-like system such as Linux Ubuntu or Mac OS
     10, you can also access R via an application called the Terminal. If
-    you have installed R on your computer you can type `R` into the Terminal. 
+    you have installed R on your computer you can type `R` into the Terminal.
     This will begin a new R session. You will know
     you are in a new R session because the same type of start up
     information as in Figure \@ref(fig:RBlankMain) will be printed in your
@@ -1284,10 +1284,10 @@ create a new TeX Code block, select `Insert` from the menu bar then
     objects. In this chapter I treat them as distinct from other object
     types to avoid confusion.
 
-[^chapter3_5]: @whickham2014book argues that underscores (`_`) should be used 
-    to separate words in object names to make the names easier to read. 
-    For example: `health_data` rather than `healthdata`. 
-    Underscores appear to now be the dominate naming convention in the R community. 
+[^chapter3_5]: @whickham2014book argues that underscores (`_`) should be used
+    to separate words in object names to make the names easier to read.
+    For example: `health_data` rather than `healthdata`.
+    Underscores appear to now be the dominate naming convention in the R community.
     Other conventions include using periods (`.`) or capital
     letters (referred to as CamelBack). For more
     information on R naming conventions see @baath2012.
@@ -1318,7 +1318,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_12]: If you want to combine objects as if they were rows of the same
     column(s), use the `rbind()` function.
 
-[^chapter3_13]: Matrices are basically collections of vectors, each represented 
+[^chapter3_13]: Matrices are basically collections of vectors, each represented
     as a column.
 
 [^chapter3_14]: Matrices can also have a names attribute.
@@ -1341,10 +1341,10 @@ create a new TeX Code block, select `Insert` from the menu bar then
     it can contain more than one R function or statement. See Section
     \@ref(arguments) for a more comprehensive discussion of R function
     arguments.
-    
+
 [^chapter3_21a]: If you don't include the parentheses after the function name
-    R will return the source code for the function just like when you enter an 
-    object name into your console returns the contents. This is because in 
+    R will return the source code for the function just like when you enter an
+    object name into your console returns the contents. This is because in
     R functions are actually also objects!
 
 [^chapter3_21]: Note: you do not have to put spaces between the argument label
@@ -1374,7 +1374,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
     highlight the code; you can simply put your cursor on that line.
 
 [^chapter3_29]: Note that you can also create an *rmarkdown* document without a
-    header. *rmarkdown* will just use the default settings when knitting.  
+    header. *rmarkdown* will just use the default settings when knitting.
 
 [^chapter3_30]: YAML is a recursive acronym that means "YAML Ain't Markup
     Language".
@@ -1410,5 +1410,5 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_40]: Using the directory name is for Mac computers. Please use
     alternative syntax discussed in Chapter \@ref(DirectoriesChapter) on
     other types of systems.
-    
+
 [^jupyter_dont_like]: The presentation is available here: <https://docs.google.com/presentation/d/1n2RlMdmv1p25Xy5thJUhkKGvjtV-dkAIsUXP-AL4ffI/preview?slide=id.g362da58057_0_1>. For a comprehensive discussion by Yihui Xie see: <https://yihui.name/en/2018/09/notebook-war/>.

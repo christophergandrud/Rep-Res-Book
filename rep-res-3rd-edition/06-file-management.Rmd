@@ -111,7 +111,7 @@ this book, it is important to keep in mind what your current working
 directory is. The working directory is the directory where the program
 automatically looks for files and other directories, unless you tell it
 to look elsewhere. It is also where it will save files. Later in this
-chapter we will cover commands for finding and changing the working
+chapter we will cover functions for finding and changing the working
 directory.
 
 ### Absolute vs. relative paths
@@ -150,66 +150,71 @@ trying to read the file path. The program may believe that the space
 indicates that the path name has ended. To make multi-word names easily
 readable without using spaces, adopt a convention such as CamelBack. In
 CamelBack new words are indicated with capital letters, while all other
-letters are lower case. For example, "example-project".
+letters are lower case. For example, "ExampleProject".
 
 ```{r ExampleTree, engine = "tikz", fig.cap = "Example Research Project File Tree", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+\usetikzlibrary{trees}
+
+% Set node styles
 \tikzstyle{DirBox} = [draw=black,
-rectangle,
-minimum width=5em,
-very thick,
-font=\small]
+                      rectangle,
+                      minimum width=5em,
+                      very thick,
+                      font=\small]
 
 \tikzstyle{every node} = [draw=gray,
-thin,
-anchor=west,
-font=\small]
+                          thin,
+                          anchor=west,
+                          font=\small]
 
 % Begin tikz picture
 \begin{tikzpicture}[%
-    grow via three points={one child at (0.5,-0.7) and
-    two children at (0.5,-0.7) and (0.5,-1.4)},
-    edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
-    % Root Directory
-    \node (root) at (4.5, 10) [DirBox]{Root};
+  grow via three points={one child at (0.5,-0.7) and
+  two children at (0.5,-0.7) and (0.5,-1.4)},
+  edge from parent path={(\tikzparentnode.south) |- (\tikzchildnode.west)}]
+  % Root Directory
+  \node (root) at (5, 10) [DirBox]{Root};
 
-    % Project Directory
-    \node (project) at (4, 8.5) [DirBox]{example-project}
-    child {node {{\small{paper.Rmd}}}}
-    child {node {{\small{slideshow.Rmd}}}}
-    child {node {{\small{website.Rmd}}}}
-    child {node {{\small{main.bib}}}}
-    child {node {{\small{packages.bib}}}}
-    ;
+  % Project Directory
+  \node (project) at (4, 8.5) [DirBox]{example-project}
+        child {node {{\small{paper.Rmd}}}}
+        child {node {{\small{slideshow.Rmd}}}}
+        child {node {{\small{website.Rmd}}}}
+        child {node {{\small{main.bib}}}}
+            ;
 
-    % Data Directory
-    \node (data) at (0, 4.5) [DirBox]{Data}
-    child {node {{\small{makefile}}}}
-    child {node {{\small{gather1.R}}}}
-    child {node {{\small{gather2.R}}}}
-    child {node {{\small{merge-data.R}}}}
-    child {node {{\small{main-data-variable-descriptions.md}}}}
-    child {node {{\small{main-data.csv}}}}
-    ;
+  % Data Directory
+  \node (data) at (0, 4.5) [DirBox]{Data}
+      child {node {{\small{main-data.csv}}}}
+      child {node {{\small{Makefile}}}}
+      child {node {{\small{merge-data.R}}}}
+      child {node {{\small{gather-1.R}}}}
+      child {node {{\small{gather-2.R}}}}
+      child {node {{\small{main-data-variable-descriptions.md}}}}
+      child {node {{\small{README.Rmd}}}}
+        ;
 
-    % Analysis subdirectores/files
-    \node (analysis) at (1.5, 7) [DirBox]{Analysis}
-    child {node {{\small{analysis1.R}}}}
-    child {node {{\small{analysis2.R}}}}
-    ;
+  % Analysis subdirectores/files
+  \node (analysis) at (1.5, 7) [DirBox]{Analysis}
+      child {node {{\small{analysis-1.R}}}}
+      child {node {{\small{analysis-2.R}}}}
+        ;
 
-    % README file
-    \node (readme) at (9.5, 7) {README.md};
+  % README and .Rproj files
+  \node (readme) at (9, 7) {README.md};
+  \node (rproj) at (10, 6) {example-project.Rproj};
 
-    % Connect boxes that are not explicit children
-    \draw (root) - (project);
-    \draw (project) -| (analysis);
-    \draw (analysis) -| (data);
-    \draw (project) -| (readme);
+  % Connect boxes that are not explicit children
+  \draw (root) -- (project);
+  \draw (project) -| (analysis);
+  \draw (analysis) -| (data);
+  \draw (project) -| (readme);
+  \draw (project) -| (rproj);
 
 \end{tikzpicture}
 ```
 
-## Organizing Your Research Project
+## Organizing Your Research Project
 
 Figure \@ref(fig:ExampleTree) gives an example of how the files in a simple
 reproducible research project could be organized. The project's parent
@@ -246,13 +251,13 @@ be properly formatted. Figure \@ref(fig:BookRepository) shows an example of this
 It is good practice to dynamically include the system information for
 the R session you used to create the project. To do this you can write
 your README file with R Markdown. Simply include the `sessionInfo()`
-command in a *knitr* code chunk in the R Markdown document. If you knit
+function in a *knitr* code chunk in the R Markdown document. If you knit
 this file immediately after knitting your presentation document, it will
 record the information for that session.
 
 You can also dynamically include session info in a LaTeX document. To do
-this, use the command in a code chunk. The code chunk should have the
-option `results='asis'`. The code is:
+this, use the function in a code chunk. The code chunk should have the
+option `results='asis'`. The code is:\index{R function!toLatex}\index{R function!sessionInfo}
 
 ```{r Ch4SessionInfoLatex, eval=FALSE, echo=TRUE}
 toLatex(sessionInfo())
@@ -305,9 +310,9 @@ R has a range of functions for handling and navigating through files.
 Including these functions in your source code files allows you to more
 easily replicate your actions.
 
-##### `getwd` {-}
+#### `getwd()` {-}
 
-To find your current working directory use the `getwd()` function:
+To find your current working directory use the `getwd()` function:\index{R function!getwd}
 
 ```{r Ch4Getwd, echo=TRUE}
 getwd()
@@ -316,15 +321,19 @@ getwd()
 The example here shows you the current working directory that was used
 while knitting this chapter.
 
-##### `list.files` {-}
+#### `list.files()` {-}
 
 Use the `list.files()` function to see all of the files and subdirectories
 in the current working directory. You can list the files in other
 directories too by adding the directory path as an argument to the
-command.
+function.\index{R function!list.files}
+
+Because my current working directory has a lot of files in it, I will shorten the output for illustration by piping\index{pipe}\index{R function!\%>\%} it through `head()`.\index{R function!head}
 
 ```{r Ch4ListFiles, echo=TRUE}
-list.files()
+library(magrittr)
+list.files() %>%
+    head()
 ```
 
 You can see that the *Chapter4* folder has the file *chapter4.Rnw* (the
@@ -332,14 +341,16 @@ markup file used to create this chapter) and a child directory called
 *images4* where I stored the original versions of the figures included
 in this chapter.
 
-##### `setwd` {-}
+#### `setwd()` {-}
+
+\index{R function!setwd}
 
 The `setwd()` function sets the current working directory. For example, if we are
 on a Mac or other Unix-like computer we can set the working directory to
 the *Analysis* directory in our Example Project (see Figure \@ref(fig:ExampleTree) like this:
 
 ````r
-setwd("/example-projecgt/analysis/")
+setwd("/example-project/analysis/")
 ````
 
 Now R will automatically look in the *Analysis* folder for files and
@@ -350,7 +361,9 @@ When working with a knittable document, setting the working directory
 once in a code chunk changes the working directory for all subsequent
 code chunks.
 
-##### `root.dir` {-}
+#### `root.dir` {-}
+
+\index{root.dir}
 
 By default the root (or working) directory for all of the code chunks in
 a knittable document is the directory where this document is located.
@@ -370,7 +383,9 @@ we saw before, rather than specify `root.dir()`. A nested file structure
 creates one less step for those trying to reproduce your work on a
 different computer. They do not need to change the `root.dir()` file path.
 
-##### `dir.create` {-}
+#### `dir.create()` {-}
+
+\index{R function!dir.create}
 
 Sometimes you may want to create a new directory. You can use the `dir.create` function to do this.[^chapter4_5] For example, to create a *example-project* file
 in the root *C* directory on a Windows computer type:
@@ -379,7 +394,9 @@ in the root *C* directory on a Windows computer type:
 dir.create("C:\\example-project")
 ````
 
-##### `file.create` {-}
+#### `file.create()` {-}
+
+\index{R function!file.create}
 
 Similarly, you can create a new blank file with the `file.create()`
 function. To add a blank R source code file called *SourceCode.R* to the
@@ -389,7 +406,9 @@ function. To add a blank R source code file called *SourceCode.R* to the
 file.create("C:\\example-project\\source-code.R")
 ````
 
-##### `cat` {- #catR}
+#### `cat()` {- #catR}
+
+\index{R function!cat}
 
 If you want to create a new file and put text into it use the `cat()`
 (concatenate and print) function. For example, to create a new file in
@@ -397,7 +416,8 @@ the current working directory called *ExampleEcho.md* that includes the
 text "Reproducible Research with R and RStudio" type:
 
 ````r
-cat("Reproducible Research with R and RStudio", file = "example-cat.md")
+cat("Reproducible Research with R and RStudio",
+    file = "example-cat.md")
 ````
 
 In this example we created a Markdown formatted file by using the `.md`
@@ -414,7 +434,9 @@ the new contents. To add the text to existing files use the
 cat("More Text", file = "example-cat.md", append = TRUE)
 ````
 
-##### `unlink` {-}
+#### `unlink()` {-}
+
+\index{R function!unlink}
 
 You can use the command to delete files and directories.
 
@@ -425,7 +447,9 @@ unlink("C:\\example-project\\source-code.R")
 **Warning:** the `unlink()` function permanently deletes files, so be very
 careful using this command.
 
-##### `file.rename` {-}
+#### `file.rename()` {-}
+
+\index{R function!file.rename}
 
 You can use the `file.rename()` to, obviously, rename a file. It can also
 be used to move a file from one directory to another. For example,
@@ -438,7 +462,9 @@ file.rename(from = "C:\\example-project\\example-cat.md",
             to = "C:\\markdown-files\\example-cat.md")
 ````
 
-##### `file.copy` {-}
+#### `file.copy()` {-}
+
+\index{R function!file.copy}
 
 `file.rename()` fully moves a file from one directory to another. To
 copy the file to another directory use the `file.copy()` function. It has
@@ -461,7 +487,7 @@ makefiles for collecting data in Chapter \@ref(DataGather), as well as the comma
 introduce shell programs or even all of the commands for manipulating
 files. We are just going to cover some of the basic and most useful
 commands for file management. For good introductions for Unix and Mac OS
-10 computers see William E. Shotts Jr.'s [-@ShottsJr2012] book on the
+10 computers see William E. Shotts Jr.'s [-@shottsjr2012] book on the
 Linux command-line. For Windows users, Microsoft maintains a tutorial on
 Windows PowerShell at
 <http://technet.microsoft.com/en-us/library/hh848793>. The commands
@@ -475,19 +501,21 @@ working directory to my Mac Desktop in a shell using the `cd` command I
 simply type:[^chapter4_9]
 
 ````bash
-cd /Users/Me/Desktop
+cd /Users/cgandrud/Desktop
 ````
 
-In this example `Me` is my user name.
+In this example `cgandrud` is my user name.
 
-##### `cd` {-}
+#### `cd` {-}
+
+\index{shell command!cd}
 
 As we just saw, to change the working directory in the shell just use
 the (change directory) command. Here is an example of changing the
-directory in Windows PowerShell:
+directory in Windows PowerShell to `C:/`:
 
 ````bash
-cd /Users/Me/Desktop
+cd C:/
 ````
 
 If you are in a child directory and want to change the working directory
@@ -502,33 +530,37 @@ we typed `cd` followed by a minus sign (`cd -`) then the working
 directory would change to */User/Me*. Note this will not work in
 PowerShell.
 
-##### `pwd` {-}
+#### `pwd` {-}
+
+\index{shell command!pwd}
 
 To find your current working directory, use the `pwd` command (present
 working directory). This is essentially the same as R's `getwd` command.
 
-````shell
+```{r Ch4pwdcmd, engine='sh', cache=TRUE}
 pwd
+```
 
-## /Users/Me/Desktop
-````
+#### `ls` {-}
 
-##### `ls` {-}
+\index{shell command!ls}
 
 The `ls` (list) command works very similarly to R's `list.files()`
 function. It shows you what is in the current working directory.
 
-````shell
-ls
+Again, I have a lot of files in my working directory, so I will shorten the output by piping it through the command line's `head` command.\index{shell command!head} The command line pipe is not `%>%` as in R, but instead `|`.\index{shellcommand!|}
 
-## chapter_4.Rmd images4
-````
+```{r Ch4lscmd, engine='sh', cache=TRUE}
+ls | head
+```
 
 As we saw earlier, R also has an `ls` command. R's `ls()` function lists
 items in the R workspace. The shell's `ls` command lists files and
 directories in the working directory.
 
-##### `mkdir` {-}
+#### `mkdir` {-}
+
+\index{shell command!mkdir}
 
 Use `mkdir` to create a new directory. For example, if I wanted to
 create a directory in my Linux root directory called *NewDirectory* I
@@ -538,13 +570,15 @@ would type:
 mkdir /new-directory
 ````
 
-##### `echo` {-}
+#### `echo` {-}
+
+\index{shell command!echo}
 
 There are a number of ways to create new files in Unix-like shells. One
 of the simplest ways is with the `echo` command. This command simply
 prints its arguments. For example:
 
-```{r Ch4Echo1, engine='sh', echo=TRUE}
+```{r Ch4Echo1, engine='sh', echo=TRUE, cache=TRUE}
 echo Reproducible Research with R and RStudio
 ```
 
@@ -553,7 +587,7 @@ print and then a file name, `echo` will create the file (if it doesn't
 already exist) in the current working directory and then print the text
 into the file.
 
-```{r Ch4Echo2, eval=FALSE, engine='sh', echo=TRUE}
+```{r Ch4Echo2, eval=FALSE, engine='sh', echo=TRUE, cache=TRUE}
 echo Reproducible Research with R and RStudio > example-echo.md
 ```
 
@@ -562,54 +596,61 @@ Using only one greater-than sign will completely erase the
 `Reproducible Research with R and RStudio`. To add the text at the end
 of an existing file, use two greater-than signs (`>>`).
 
-```{r Ch4Echo3, eval=FALSE, engine='sh', echo=TRUE}
+```{r Ch4Echo3, eval=FALSE, engine='sh', echo=TRUE, cache=TRUE}
 echo More text. >> example-echo.md
 ```
 
 There is also a `cat` shell command. It works slightly differently than
 the R version of the command and I don't cover it here.
 
-##### `rm` {-}
+#### `rm` {-}
+
+\index{shell command!rm}
 
 The command is similar to R's command. It removes (deletes) files or
 directories. Again, be careful when using this command, because it
 permanently deletes the files or directories.
 
-```{r Ch4rm, eval=FALSE, engine='sh', echo=TRUE}
+````bash
 rm example-echo.md
-```
+````
 
 As we saw in Chapter \@ref(GettingStartedRKnitr), R also has an `rm()` function. It is
 different because it removes objects from your R workspace rather than
 files from your working directory.
 
-##### `mv` {-}
+#### `mv` {-}
+
+\index{shell command!mv}
 
 To move a file from one directory to another with the shell, use the
 `mv` (move) command. For example, to move the file *example-echo.md* from
 *example-project* to *markdown-files* use the following code and imagine
 both directories are in the root directory:[^chapter4_10]
 
-```{r Ch4mv, eval=FALSE, engine='sh', echo=TRUE}
-mv
-/example-project/ExampleEcho.md /markdown-files
-```
+````bash
+mv /example-project/ExampleEcho.md /markdown-files
+````
 
 Note that the *markdown-files* directory must already exist, otherwise it
 will simply rename the file. So this command is similar to the R function
 `file.rename()`.
 
-##### `cp` {-}
+#### `cp` {-}
+
+\index{shell command!cp}
 
 The `mv` command completely moves a file from one directory to another.
 To copy a version of the file to a new directory use the `cp` command.
 The syntax is similar to `mv`:
 
-```{r Ch4cp, eval=FALSE, engine='sh', echo=TRUE}
+````bash
 cp /example-project/ExampleEcho.md /markdown-files
-```
+````
 
-##### `system()` (R funtion) {- #systemRcommand}
+#### `system()` (R funtion) {- #systemRcommand}
+
+\index{R function!system}
 
 You can run shell commands from within R using R's `system()` function. For
 example, to run the `echo` command from within R type:
@@ -655,16 +696,15 @@ files and create data files in reproducible ways.
 [^chapter4_3]: As we will see in Part IV, it is also a LaTeX and Markdown escape
     character.
 
-[^chapter4_4]: See the discussion of global chunk options in Chapter
-    [\[GettingStartedRKnitr\]](#GettingStartedRKnitr){reference-type="ref"
-    reference="GettingStartedRKnitr"}, page .
+[^chapter4_4]: See the discussion of global chunk options in Chapter \@ref(GettingStartedRKnitr),
+    Section \@ref(GlobalChunkOptions).
 
 [^chapter4_5]: Note: you will need the correct system permissions to be able to
     do this.
 
-[^chapter4_6]: The `file.rename` command won't create new directories. To move a
+[^chapter4_6]: The `file.rename()` function won't create new directories. To move a
     file to a new directory you will need to create the directory first
-    with `dir.create`.
+    with `dir.create()`.
 
 [^chapter4_7]: You can access Bash via the Terminal program on Mac OS 10 and
     Linux computers. It is the default shell on Mac and Linux, so it
