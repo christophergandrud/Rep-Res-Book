@@ -26,18 +26,18 @@ Unix-like shell programs allow you to control files-creating, deleting,
 relocating-in powerful and really reproducible ways. By typing these
 commands you are documenting every step you take. This is a major
 advantage over graphical user interface-type systems where you organize
-files by clicking and dragging them with the cursor. However, text
+files by clicking and dragging them with the cursor. However, typed
 commands require you to know your files' specific addresses-their file
 paths.
 
 In this chapter we discuss how a reproducible research project may be
 organized and cover the basics of file path naming conventions in
-Unix-like operating systems, such as Mac OS X and Linux, as well as
+Unix-like operating systems, such as Mac OS X and Linux, and
 Windows. We then learn how to organize them with RStudio Projects.
-Finally, we'll cover some basic R and Unix-like shell commands for
+We'll cover some basic R and Unix-like shell commands for
 manipulating files as well as how to navigate through files in RStudio
 in the *Files* pane. The skills you will learn in this chapter will be
-heavily used in the next chapter (Chapter \@ref(Storing) and
+heavily used in the next chapter (Chapter \@ref(Storing)) and
 throughout the book.
 
 In this chapter we work with locally stored files, i.e. files stored on
@@ -50,13 +50,13 @@ All of the operating systems covered in this book organize files in
 hierarchical directories, also known as file trees. To a large extent,
 directories can be thought of as the folders you usually see on your
 Windows or Mac desktop.[^chapter4_1] They are called hierarchical because
-directories are located inside of other directories, as in Figure \@ref(fig:ExampleTree).
+directories are located inside of other directories, as in Figure \@ref(fig:ExampleTree).[^chapter_4_tree_cmd]
 
 ### Root directories
 
 A root directory is the first level in a disk, such as a hard drive. It
 is the root out of which the file tree 'grows'. All other directories
-are subdirectories of the root directory.
+are subdirectories of the root directory.\index{root directory}
 
 On Windows computers you can have multiple root directories, one for
 each storage device or partition of a storage device. The root directory
@@ -69,20 +69,19 @@ by a forward slash (`/`) with nothing before it.
 ### Subdirectories & parent directories
 
 You will probably not store all of your files in the root directory.
-This would get very messy. Instead you will likely store your files in
+This would get very messy. Instead you will store your files in
 subdirectories of the root directory. Inside of these subdirectories may
-be further subdirectories and so on. Directories inside of other
-directories are also referred to as child directories of a parent
-directory.
+be further subdirectories and so on. A directory inside of another
+directory is referred to as a child directory of a parent
+directory.\index{child directory}\index{parent directory}
 
 On Windows computers separate subdirectories are indicated with a back
 slash (`\`). For example, if we have a folder called *Data* inside of a
 folder called *example-project* which is located in the C root directory
-it has the address `C:\example-project\Data`.[^chapter4_2] When you type Windows
+it has the address `C:\example-project\data`.[^chapter4_2] When you type Windows
 file paths into R you need to use two backslashes rather than one: e.g.
-`C:\\example-project\\Data`. This is because the `\` is an escape
-character in R.[^chapter4_3] Escape characters tell R to interpret the next
-character or sequence of characters differently. For example, in Section \@ref(TSVEscape)
+`C:\\example-project\\data`. This is because the `\` is an escape
+character in R.[^chapter4_3]\index{escape character} Escape characters tell R to interpret the next character or sequence of characters differently. For example, in Section \@ref(TSVEscape)
 you'll see how `\t` can be interpreted by R as a tab rather than the
 letter "t". Add another escape character to neutralize the escape
 character so that R interprets it as a backslash. In other words, use an
@@ -91,17 +90,17 @@ writing Windows file names in R is to use one forward slash (`/`).
 
 On Unix-like systems, including Mac computers, directories are indicated
 with a forward slash (`/`). The file path of the *Data* file on a
-Unix-like system would be: `/example-project/Data`. Remember that a
+Unix-like system would be: `/example-project/data`. Remember that a
 forward slash with nothing before it indicates the root directory. So
-`/example-project/Data` has a different meaning than
-`example-project/Data`. In the former, *example-project* is a subdirectory
+`/example-project/data` has a different meaning than
+`example-project/data`. In the former, *example-project* is a subdirectory
 of the root. In the latter, *example-project* is a subdirectory of the
 current working directory (see below for details about working
 directories). This is also true in Windows.
 
 In this chapter I switch between the two file system naming conventions
-to expose you to both. For the remainder of the book I use Unix-like
-file paths. When you use relative paths, these will work across
+to expose you to both. In subsequent chapters I use Unix-like
+file paths. When you use relative paths (see below), these will work across
 operating systems in R. We'll get to relative paths in a moment.
 
 ### Working directories
@@ -112,26 +111,28 @@ directory is. The working directory is the directory where the program
 automatically looks for files and other directories, unless you tell it
 to look elsewhere. It is also where it will save files. Later in this
 chapter we will cover functions for finding and changing the working
-directory.
+directory.\index{working directory}
 
 ### Absolute vs. relative paths
+
+\index{absolute file path}\index{relative file path}
 
 For reproducible research, collaborative research, and even if you ever
 change the computer you work on, it is a good idea to use relative
 rather than absolute file paths. Absolute file paths give the entire
 path of a given file or directory on a specific system. For example,
-`/example-project/Data` is an absolute path as it specifies the path of
+`/example-project/data` is an absolute path as it specifies the path of
 the *Data* child directory all the way back to the root directory.
 However, if our current working directory is *example-project* and we
-want to link to the *Data* child directory or a file in it, we don't
-need the absolute path. We could simply use `Data/`, i.e. the path
+want to link to the *data* child directory or a file in it, we don't
+need the absolute path. We could simply use `data/`, i.e. the path
 relative to the working directory.
 
 It is good practice to use relative paths when possible and organize
 your files such that using relative paths is easy. This makes your code
 less dependent on the particular file structure of a particular
-computer. For example, imagine you use `C:\\example-project\\Data` in
-your source code to link to the *Data* directory. Someone-a
+computer. For example, imagine you use `C:\\example-project\\data` in
+your source code to link to the *data* directory. Someone-a
 collaborator, a researcher reproducing your work, or even you-then
 tries to run the code on a different computer. The code will break if
 they are, for instance, using a Unix-like system or have placed
@@ -140,17 +141,19 @@ be fixed relatively straightforwardly by changing the file path in the
 source. However, this is tedious (often not well documented) and
 unnecessary if you use relative file paths.
 
+Below we'll see how to RStudio Projects and the *here* [@R-here] package to build on your relative file paths to further enhance easy reproducibility.
+
 ### Spaces in directory & file names
 
-It is generally good practice to avoid putting spaces in your file and
+It is good practice to avoid putting spaces in your file and
 directory names. For example, I called the example project parent
 directory "example-project" rather than "Example Project". Spaces in file
 and directory names can sometimes create problems for computer programs
 trying to read the file path. The program may believe that the space
 indicates that the path name has ended. To make multi-word names easily
-readable without using spaces, adopt a convention such as CamelBack. In
-CamelBack new words are indicated with capital letters, while all other
-letters are lower case. For example, "ExampleProject".
+readable without using spaces, adopt a consistent naming convention. 
+
+One approach is to use a convention that contrasts with the R object naming convention you are using to distinguish between object and file names. For example, if we adopt the underscore method used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use em dashes (`-`) to separate words in file names. For example, `example-source.R`.
 
 ```{r ExampleTree, engine = "tikz", fig.cap = "Example Research Project File Tree", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
 \usetikzlibrary{trees}
@@ -176,7 +179,7 @@ letters are lower case. For example, "ExampleProject".
   \node (root) at (5, 10) [DirBox]{Root};
 
   % Project Directory
-  \node (project) at (4, 8.5) [DirBox]{example-project}
+  \node (project) at (4.5, 8.5) [DirBox]{example-project}
         child {node {{\small{paper.Rmd}}}}
         child {node {{\small{slideshow.Rmd}}}}
         child {node {{\small{website.Rmd}}}}
@@ -263,7 +266,7 @@ option `results='asis'`. The code is:\index{R function!toLatex}\index{R function
 toLatex(sessionInfo())
 ```
 
-## Setting Directories as RStudio Projects {#CreateRStudioProject}
+## Organising Research with RStudio Projects {#CreateRStudioProject}
 
 If you are using RStudio, you may want to organize your files as
 Projects. You can turn a normal directory into an
@@ -303,6 +306,8 @@ a number of reasons:
 
 We will look at many of these points in more detail in the next few
 chapters.
+
+### Set working directories with *here*
 
 ## R File Manipulation Functions
 
@@ -360,6 +365,8 @@ otherwise.
 When working with a knittable document, setting the working directory
 once in a code chunk changes the working directory for all subsequent
 code chunks.
+
+#### `here::set_here` {- #sethere}
 
 #### `root.dir` {-}
 
@@ -685,6 +692,9 @@ it allows us to place code in text-based files to manipulate our project
 files in highly reproducible ways. In the next few chapters we will
 begin to put these skills in practice when we learn how to store our
 files and create data files in reproducible ways.
+
+[^chapter_4_tree_cmd]: The command line utility *tree* is very useful for 
+    visualizing your file trees. For more information see: <https://en.wikipedia.org/wiki/Tree_(command)>.\index{shell command!tree}
 
 [^chapter4_1]: To simplify things, I use the terms 'directory' and 'folder'
     interchangeably in this book.
