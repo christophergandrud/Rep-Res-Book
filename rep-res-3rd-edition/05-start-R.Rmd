@@ -1231,21 +1231,21 @@ This book is clearly focused on R Markdown, but if you would like to explore lau
 
 - Julia installation instructions: <https://github.com/JuliaLang/IJulia.jl>.
 
-#### Controversy
+#### Controversy {-}
 
 In mid-2019 there was a major controversy (well at least a topic heavily discussed on data science Twitter)\index{Twitter} about Jupyter notebooks. Joel Grus started the controversy by giving a talk at the main Jupyter conference--JupyterCon--called 'I Don't Like Notebooks'.[^jupyter_dont_like]
 
 His critique was multi-pronged, but one that resonated with my strong interest in reproducibility (and personal experience using these notebooks) is that you can execute code in Jupyter notebooks in an arbitrary order. Using R Markdown terminology: you could execute the third code chunk before the second and then make changes to and rerun the second chunk without rerunning the third. This is troubling for reproducibility as it is difficult for a third person (or yourself a few minutes later) to know what order the code was executed in to get the displayed results. Jupyter notebooks do record the order in which code was executed within the same session, but this adds an additional layer of complexity to figuring out results. The order also becomes inconsistent when a notebook is relaunched.
 
-#### R Markdown vs. Jupyter
+#### R Markdown vs. Jupyter {-}
 
-A big reason that I personally prefer R Markdown over Jupyter is that it provides the 'best of both worlds'. RStudio allows you to interact with R Markdown documents in a very similar way to Jupyter notebooks (see Figure \@ref(fig:RMarkdownInteractive)). It allows you to interactively run code chunks in any order and immediately see the results in line with the markup. It also channels you towards running the code in order when you knit the document before you share it with others.
+A big reason that I personally prefer R Markdown over Jupyter is that it provides the 'best of both worlds'. RStudio allows you to interact with R Markdown documents in a very similar way to Jupyter notebooks (see Figure \@ref(fig:RMarkdownInteractive)). To enable fast prototyping, you can interactively run code chunks in any order and immediately see the results in line with the markup. It also channels you towards running the code in order when you knit the document before you share it with others.[^chapter_3_jupyter_r]
 
 ```{r RMarkdownInteractive, fig.cap="R Markdown Interactive Behavior Example in RStudio", echo=FALSE, out.width="100%"}
 #### Include notebook example image ####
 knitr::include_graphics("images/chapter_3/RmarkdownInteractive.png")
 ```
-RmarkdownInteractive.png
+
 
 ## Appendix: knitr and Lyx {- #LyxAppendix}
 
@@ -1411,4 +1411,6 @@ create a new TeX Code block, select `Insert` from the menu bar then
     alternative syntax discussed in Chapter \@ref(DirectoriesChapter) on
     other types of systems.
 
-[^jupyter_dont_like]: The presentation is available here: <https://docs.google.com/presentation/d/1n2RlMdmv1p25Xy5thJUhkKGvjtV-dkAIsUXP-AL4ffI/preview?slide=id.g362da58057_0_1>. For a comprehensive discussion by Yihui Xie see: <https://yihui.name/en/2018/09/notebook-war/>.
+[^jupyter_dont_like]: The presentation is available here: <https://docs.google.com/presentation/d/1n2RlMdmv1p25Xy5thJUhkKGvjtV-dkAIsUXP-AL4ffI/preview?slide=id.g362da58057_0_1>. For a comprehensive discussion of the 'first notebook war' by Yihui Xie see: <https://yihui.name/en/2018/09/notebook-war/>.
+
+[^chapter_3_jupyter_r]: See Nathan Stephens' 2017 blog post further making the case for R Notebooks: <https://rviews.rstudio.com/2017/03/15/why-i-love-r-notebooks/>.
