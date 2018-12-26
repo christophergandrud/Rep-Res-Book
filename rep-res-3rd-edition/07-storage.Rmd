@@ -464,7 +464,7 @@ them with `git` so the shell knows what program they are from.
 knitr::include_graphics("images/chapter_5/GitHubReadme.png")
 ```
 
-##### Checkout
+##### Checkout {-}
 
 It is useful to step back for a second and try to understand what Git is
 doing when you commit your changes. In the hidden *.git*, folder Git is
@@ -473,12 +473,12 @@ commits into a sub-folder called *objects*. Commit objects[^chapter_5_25] are
 everything from a particular commit. I mean everything. If you delete
 all of the files in your repository (except for the *.git* folder) you
 can completely recover all of the files from your most recent commit
-with the `checkout` command:
+with the `checkout` command:\index{shell command!git checkout}
 
-```{r Ch5CheckoutBasic, eval=FALSE, engine='sh'}
-\# Checkout latest
+````bash
+# Checkout latest
 commit git checkout -- .
-```
+````
 
 Note that there is a space between the two dashed lines and the period.
 You can also change to any other commit or any committed version of a
@@ -487,14 +487,12 @@ reference. Note that the period at the end is still very important to
 include after the commit reference. The commit reference is easy to find
 and copy from a repository's GitHub webpage (see below for more
 information on how to create a GitHub webpage).[^chapter_5_26] For an example of a
-GitHub repo webpage, see Figure
-[1.2](#BookRepository){reference-type="ref" reference="BookRepository"}.
+GitHub repo webpage, see Figure \@ref(fig:BookRepository).
 Click on the link that lists the number of repo commits on the left-hand
 side of the repo's webpage. This will show you all of the commits. A
-portion of this book's commit history is shown in Figure
-[1.3](#BookHistory){reference-type="ref" reference="BookHistory"}. By
+portion of this book's commit history is shown in Figure \@ref(fig:BookHistory). By
 clicking on the icon
-(![image](Children/Chapter5/images5/BrowseCodeIcon.png)) you can see
+(![image](images/chapter_5/BrowseCodeIcon.png)) you can see
 what the files at any commit looked like. Next to this button is another
 with a series of numbers and letters. This is the commit's SHA-1
 hash.[^chapter_5_27] For our purposes, it is the commit's reference number. Click
@@ -507,7 +505,10 @@ version of a particular file.
 Page[]{label="BookHistory"}](Children/Chapter5/images5/CommitHistory.png){#BookHistory
 width="90%"}
 
-##### Tags
+##### Tags {-}
+
+\index{git tags}
+\index{shell command|git tag}
 
 SHA-1 hashes are a bit cumbersome to use as references. What was the
 hash number for that one commit? To solve this problem you can add
@@ -515,33 +516,35 @@ bookmarks, known as "tags", to particularly important commits. Imagine
 we just committed our first full draft of a project. We want to tag it
 as version 0.1, i.e. "v0.1". To do this use Git's tag command:
 
-```{r Ch5TagMake, eval=FALSE, engine='sh'}
-\# Tag most recent commit
-v0.1 git tag -a v0.1 -m \"First draft\"
-```
+````bash
+# Tag most recent commit v0.1 
+git tag -a v0.1 -m "First draft"
+````
 
 The `-a` option adds the tag `v0.1` and `-m` lets us add a message. Now
-we can checkout this particular commit by using its tag, i.e.:
+we can checkout this particular commit by using its tag, i.e.:\index{shell command|git checkout}
 
-```{r Ch5CheckoutTag, eval=FALSE, engine='sh'}
-\# Checkout v0.1 git
-checkout v0.1
-```
+````bash
+# Checkout v0.1 
+git checkout v0.1
+````
 
 This will create a new "branch" with a generic name *(detached from
 v0.1)* where you can make changes and commit them. If you plan to
 checkout a previous tagged version and make changes to it, it is a good
 idea to specifically name the branch using the `-b` argument.[^chapter_5_28] For
-example, to give it the name *v0.1Branch* type:
+example, to give it the name *v0.1_branch* type:
 
-```{r Ch5CheckoutTagNamed, eval=FALSE, engine='sh'}
-\# Checkout v0.1
-as v0.1Brance git checkout v0.1 -b v0.1Branch
-```
+````bash
+# Checkout v0.1 as v0.1_branch 
+git checkout v0.1 -b v0.1_branch
+````
 
 What is a branch?
 
-##### Branches
+##### Branches {-}
+
+\index{shell command|git branch}
 
 Sometimes you may want to work on an alternative version of your project
 and then merge changes made to this version back into the main one. For
@@ -552,7 +555,8 @@ version of the repo) which can be merged back into the *master* (main)
 branch. To see what branch you are using type:
 
 ```{r Ch5CheckBranch, engine='sh'}
-\# Show git branch git branch
+# Show git branch 
+git branch
 ```
 
 To create a new branch use, simply enough, the `branch` command. For
