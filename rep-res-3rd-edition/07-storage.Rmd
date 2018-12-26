@@ -73,12 +73,10 @@ research. Version control systems that track changes to text--like
 Git--are also very effective version control systems for these types of
 files.
 
-Use the `write.table()` function\index{R function!write.table} to save data in plain-text formats from R.
-For example, to save a data frame called *data* as a CSV file called
-*main-data.csv* in our example *data* directory (see Figure \@ref(fig:ExampleTree)):
+The `write.table()` function\index{R function!write.table} is one way to save data in plain-text formats from R. For example, to save a data frame called *data* as a CSV file called *main-data.csv* in our example *data* directory (see Figure \@ref(fig:ExampleTree)):
 
 ```{r Ch5WriteTable, eval=FALSE, tidy=FALSE}
-write.table(Data, "/example-project/Data/DataFiles/MainData.csv",
+write.table(Data, "/example-project/data/main-data.csv",
             sep = ",",
             row.names = FALSE)
 ```
@@ -94,8 +92,7 @@ commas, simply set the argument `sep = "\t"` and set the file extension
 to `.tsv`.\index{tab separated file format}
 
 R is able to save data in a wide variety of other file formats, mostly
-through the *foreign* or *rio* [@R-rio] packages (see Chapter \@ref(DataGather)). These formats may be less future-proof than
-simple text-formatted data files.
+through the *foreign* or *rio* [@R-rio] packages (see Chapter \@ref(DataGather)). These formats may be less future-proof than simple text-formatted data files.
 
 One advantage of many other statistical programs' file formats is that
 they include not only the underlying data but also other information
@@ -152,28 +149,28 @@ icon in your Dropbox folder on your computer. Then click
 You need to make one small change to the link so that it can be programmatically downloaded. By default, the link will point to the Dropbox website page for the file/directory. To be able to programmatically download it, you need to change the last `0` in the URL to a `1`. For example, change:
 
 ````
-https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.csv?dl=0
+https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.
+csv?dl=0
 ````
 
 to
 
 ```
-https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.csv?dl=1
+https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.
+csv?dl=1
 ```
 
-We changed the download (`dl`) option from false (`dl=0`) to true (`dl=1`). Now you can use the link to download data in your R source code (or wherever).
+We changed the download (`dl`) option from false (`dl=0`) to true (`dl=1`). Now you can use the link to download data in your R source code.
 
 Once you have the URL you can load the file directly into R using the
-`import()`\index{R function!import} function in the *rio* package for
-many different data formats or use the `source_url()` \index{R function!source_url} function in the
-*devtools* package [@R-devtools] for source code files (see Chapter \@ref(StatsModel)).
+`import()`\index{R function!import} function from the *rio* package. `import()` works for
+many different data formats. Use the `source_url()` \index{R function!source\_url} function in the *devtools* package [@R-devtools] to download and run R source code files (see Chapter \@ref(StatsModel)).
 
 Let's download data directly into R from Dropbox. The data set's URL is:
 <https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.csv?dl=1>.[^chapter_5_15]
 
 ```{r Ch5PublicFolderDownload, message=TRUE}
-# Download data on Financial Regulators
-# stored on Dropbox
+# Download data on financial regulators stored on Dropbox
 
 # Load rio
 library(rio)
@@ -188,7 +185,7 @@ fin_regulator <- import(fin_url, format = "csv")
 names(fin_regulator)
 ```
 
-The argument `format = "csv"` tells `import()` what format the file is in. This isn't necessary if the file path is an informative file extension.
+The argument `format = "csv"` tells `import()` what format the file is in. This isn't necessary if the file path has an informative file extension, e.g. it ends with `.csv`.
 
 ### Collaboration
 
@@ -210,7 +207,7 @@ for Dropbox.
 Dropbox has a simple version control system. Every time you save a
 document a new version is created on Dropbox. To view a previous
 version, navigate to the file on the Dropbox website. Then click
-on the file. In upper-right there is a menu where you can select `Version history`. This
+on the file. In the upper-right there is a menu where you can select `Version history`. This
 will take you to a page listing previous versions of the file, who
 created the version, and when it was created. A new version of a file is
 created every time you save a file and it is synced to the Dropbox cloud
@@ -236,7 +233,7 @@ of which we look at below. GitHub was not explicitly designed to host
 research projects or even data. It was designed to host "socially coded"
 computer programs--in what Git calls "repositories"--repos for short--by
 making it easy for a number of collaborators to work together to build
-computer programs. This seems very far from reproducible research.
+computer programs. This seems very far from reproducible research.\index{git!repo}\index{git!repository}
 
 Remember that as reproducible researchers, we are building projects out
 of interconnected text files. In important ways, this is exactly the
@@ -350,7 +347,10 @@ Git is primarily a version control system, so we will start our
 discussion of how to use it by looking at how to version your
 repositories.
 
-##### Setting up Git repositories locally
+#### Setting up Git repositories locally {-}
+
+\index{git!repositories}
+\index{git!repos}
 
 You can setup a Git repo on your computer with the command-line.[^chapter_5_22] I
 keep my repositories in a folder called *git_repositories*,[^chapter_5_23] though
@@ -366,7 +366,7 @@ and Linux computers:\index{shell command!mkdir}\index{shell command!cd}\index{sh
 mkdir /git_repositories/example-project
 
 # Change to directory 'example-project'
-cd /git_epositories/example-project
+cd /git_repositories/example-project
 
 # Create new file README.md
 echo "# An Example Repository" > README.md
@@ -436,26 +436,34 @@ use the `-s` (short) option, so that the output is more readable.\index{shell co
 git status -s
 ````
 
-  Command        Description
-  -------------- ------------------------------------------------------------------------------------------------------------------
-  `add`          Add a file to a Git repository.
-  `branch`       Create and delete branches.
-  `checkout`     Checkout a branch.
-  `clone`        Clone a repository (for example, the remote GitHub version) into the current working directory.
-  `commit`       Commit changes to a Git repository.
-  `fetch`        Download objects from the remote (or another) repository.
-  `.gitignore`   Not a Git command, but a file you can add to your repository to specify what files/file types Git should ignore.
-  `init`         Initialize a Git repository.
-  `log`          Show a repo's commit history.
-  `merge`        Merge two or more commits/branches together.
-  `pull`         `fetch` data from a remote repository and try to `merge` it with your commits.
-  `push`         Add committed changes to a remote Git repository, i.e. GitHub.
-  `remote add`   Add a new remote repository to an existing project.
-  `rm`           Remove files from Git version tracking.
-  `status`       Show the status of a Git repository including uncommitted changes made to files.
-  `tag`          Bookmark particularly significant commits.
-
-  : A Selection of Git Commands[]{label="GitCommandsTable"}
+\begin{table}
+  \caption{A Selection of Git Commands}
+  \label{GitCommandsTable}
+      \begin{center}
+      \begin{tabular}{l p{7cm}}
+            \hline
+            Command & Description \\[0.25cm] \hline\hline
+            \texttt{add} & Add a file to a Git repository. \\[0.25cm]
+            \texttt{branch} & Create and delete branches. \\[0.25cm]
+            \texttt{checkout} & Checkout a branch. \\[0.25cm]
+            \texttt{clone} & Clone a repository (for example, the remote GitHub version) into the current working directory. \\[0.25cm]
+            \texttt{commit} & Commit changes to a Git repository. \\[0.25cm]
+            \texttt{fetch} & Download objects from the remote (or another) repository. \\[0.25cm]
+            \texttt{.gitignore} & Not a Git command, but a file you can add to your repository to specify what files/file types Git should ignore. \\[0.25cm]
+            \texttt{init} & Initialize a Git repository. \\[0.25cm]
+            \texttt{log} & Show a repo's commit history. \\[0.25cm]
+            \texttt{merge} & Merge two or more commits/branches together. \\[0.25cm]
+            \texttt{pull} & \texttt{fetch} data from a remote repository and try to \texttt{merge} it with your commits. \\[0.25cm]
+            \texttt{push} & Add committed changes to a remote Git repository, i.e. GitHub. \\[0.25cm]
+            \texttt{remote add} & Add a new remote repository to an existing project. \\[0.25cm]
+            \texttt{rm} & Remove files from Git version tracking. \\[0.25cm]
+            \texttt{status} & Show the status of a Git repository including uncommitted changes made to files. \\[0.25cm]
+            \texttt{tag} & Bookmark particularly significant commits. \\[0.25cm]
+            \hline
+      \end{tabular}
+    \end{center}
+  {\scriptsize{Note: when you use these commands in the shell, you will need to precede them with \texttt{git} so the shell knows what program they are from.}}
+\end{table}
 
 Note: when you use these commands in the shell, you will need to precede
 them with `git` so the shell knows what program they are from.
@@ -464,7 +472,9 @@ them with `git` so the shell knows what program they are from.
 knitr::include_graphics("images/chapter_5/GitHubReadme.png")
 ```
 
-##### Checkout {-}
+#### Checkout {-}
+
+\index{git!checkout}
 
 It is useful to step back for a second and try to understand what Git is
 doing when you commit your changes. In the hidden *.git*, folder Git is
@@ -501,14 +511,14 @@ as an argument to your command. This will revert you to that particular
 commit. Also include the file name if you want to revert to a particular
 version of a particular file.
 
-![Part of this Book's GitHub Repository Commit History
-Page[]{label="BookHistory"}](Children/Chapter5/images5/CommitHistory.png){#BookHistory
-width="90%"}
+```{r BookHistory, fig.cap="Part of this Book's GitHub Repository Commit History", echo=FALSE, fig.align='center', out.width="90%"}
+knitr::include_graphics("images/chapter_5/CommitHistory.png")
+```
 
-##### Tags {-}
+#### Tags {-}
 
-\index{git tags}
-\index{shell command|git tag}
+\index{git!tags}
+\index{shell command!git tag}
 
 SHA-1 hashes are a bit cumbersome to use as references. What was the
 hash number for that one commit? To solve this problem you can add
@@ -522,7 +532,7 @@ git tag -a v0.1 -m "First draft"
 ````
 
 The `-a` option adds the tag `v0.1` and `-m` lets us add a message. Now
-we can checkout this particular commit by using its tag, i.e.:\index{shell command|git checkout}
+we can checkout this particular commit by using its tag, i.e.:\index{shell command!git checkout}
 
 ````bash
 # Checkout v0.1 
@@ -542,9 +552,10 @@ git checkout v0.1 -b v0.1_branch
 
 What is a branch?
 
-##### Branches {-}
+#### Branches {-}
 
-\index{shell command|git branch}
+\index{shell command!git branch}
+\index{git!branches}
 
 Sometimes you may want to work on an alternative version of your project
 and then merge changes made to this version back into the main one. For
@@ -560,94 +571,121 @@ git branch
 ```
 
 To create a new branch use, simply enough, the `branch` command. For
-example, to create a new branch called *Test*:
+example, to create a new branch called *test*:
 
-```{r Ch5NewBranch, eval=FALSE, engine='sh'}
-\# Create Test branch git
-branch Test
-```
+````bash
+# Create test branch 
+git branch test
+````
 
 You can now use `checkout` to switch to this branch.[^chapter_5_29] Here is a
 shortcut for creating and checking out the branch:
 
-```{r Ch5NewBranchShortCut, eval=FALSE, engine='sh'}
-\# Create and
-checkout Test branch git checkout -b Test
-```
+````bash
+# Create and checkout test branch 
+git checkout -b test
+````
 
-The `-b` (branch) option for `checkout` creates the new *Test* branch
+The `-b` (branch) option for `checkout` creates the new *test* branch
 before switching to it.
 
-To merge changes you commit in the *Test* branch to the *master*, `add`
+To merge changes you commit in the *test* branch to the *master*, `add`
 and `commit` your changes, `checkout` the *master* branch, then use the
-`merge` command.[^chapter_5_30]
+`merge` command.[^chapter_5_30]\index{shell command!git add}\index{shell command!git merge}
 
-```{r ChMergeBrances, eval=FALSE, engine='sh'}
-\# Add files git add .
+````bash
+# Add files 
+git add .
 
-\# Commit changes to Test branch git commit -a -m \"Commit changes to
-Test\"
+# Commit changes to test branch 
+git commit -a -m "commit changes to test"
 
-\# Checkout master branch git checkout master
+# Checkout master branch 
+git checkout master
 
-\# Merge master and Test branches git merge Test
-```
+# Merge master and test branches 
+git merge test
+````
 
 Note, when you merge a branch you may encounter conflicts in the files
 that make it impossible to smoothly merge the files together. Git will
 tell you what and where these are; you then need to decide what to keep
 and what to delete.
 
-##### Having Git ignore files
+#### Having Git ignore files {-}
+
+\index{git!ignore}
+\index{git!.gitignore}
 
 There may be files in your repository that you do not want to keep under
 version control. Maybe this is because they are very large files or
 cached files from *knitr* or other files that are byproducts of
-compiling an R LaTeX document (see Chapter
-[\[StatsModel\]](#StatsModel){reference-type="ref"
-reference="StatsModel"}). To have Git ignore particular files, simply
-create a file called *.gitignore*.[^chapter_5_31] You can either put this file in
-the repository's parent directory to create a *.gitignore* file for the
+compiling an R LaTeX document (see Chapter \@ref(StatsModel)). To have Git ignore particular files, simply create a file called *.gitignore*.[^chapter_5_31] You can either put this file in the repository's parent directory to create a *.gitignore* file for the
 whole repository or in a subdirectory to ignore files in that
 subdirectory. In the *.gitignore* file, add ignore rules by simply
 including the names of the files that you want to have Git ignore. For
-example, a *.gitignore* file that is useful for ignoring files that are
-the byproduct of compiling an R LaTeX file would look something like
-this:
+example, GitHub has a *.gitignore* file that is useful for ignoring files[^chapter_5_github_r_ignore] that we often don't want to commit to our git history when using R and R Markdown:
 
-```{r Ch5gitignore, eval=FALSE, engine='sh'}
-\# Ignore LaTeX compile
-byproduct files \#
-\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#
-\*.aux \*.bbl \*.blg cache/\* figure/\* \*.log \*.pdf \*.gz \*.tex
-```
+````
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+
+# Example code in package build process
+*-Ex.R
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+
+# knitr and R markdown default cache directories
+/*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+````
 
 The asterisk (`*`) is a "wildcard" and stands for any character. In
 other words, it tells Git to look for files with any name that end with
 a specified file extension. This is faster than writing out the full
 name of every file you want to ignore individually. It also makes it
-easy to copy the rules into new repos. You'll notice the `cache/*` and
-`figure/*` rules. These tell Git to ignore all of the files in the
-*cache* and *figure* subdirectories. These files are the product of
-caching code chunks and creating figures with *knitr*, respectively.
+easy to copy the rules into new repos. For example, you'll notice the `*-Ex.R` and
+`/*_cache/` rules. These tell Git to ignore all of the files with a name ending in *-Ex.R* and all files in subdirectories with a name ending in *_cache*. 
 
 Git will not ignore files that have already been committed to a
 repository. To ignore these files you will first need to remove them
 from Git with Git's `rm` (remove) command. If you wanted to remove a
-file called *example-project.tex* from version tracking type:
+file called *example-project.tex* from version tracking type:\index{shell command!git rm}
 
-```{r Ch5Gitrm, eval=FALSE, engine='sh'}
-\# Remove example-project.tex
-from Git version tracking git rm --cached example-project.tex
-```
+````bash
+# Remove example-project.tex from Git version tracking 
+git rm --cached example-project.tex
+````
 
 Using the `–cached` argument tells Git not to track the file, but not
 delete it.
 
 For more information on *.gitignore* files, see GitHub's reference page
-on the topic at: <https://help.GitHub.com/articles/ignoring-files>.
+on the topic at: <https://help.github.com/articles/ignoring-files/>.
 
-### Remote storage on GitHub
+### Remote storage on GitHub {#NewGitHubRepo}
 
 So far we've been using repos stored locally. Let's now look at how to
 also store a repository remotely on GitHub. You can either create a new
@@ -664,9 +702,12 @@ exists on your computer. If you already have files in your local
 repository do not check the boxes for creating *README.md*, *LICENSE*,
 and *.gitignore* files. When you then click `Create Repository` you will
 be directed to the repository's GitHub
-webpage.[^chapter_5_32][\[NewGitHubRepo\]]{#NewGitHubRepo label="NewGitHubRepo"}
+webpage.[^chapter_5_32]
 
-##### Clone a new remote repository
+#### Clone a new remote repository {- #GitClone}
+
+\index{shell command!git clone}
+\index{git!clone}
 
 If you are working with a new repository and do not have an existing
 version on your computer you need to "clone" the GitHub repo to your
@@ -675,46 +716,51 @@ computer. The repo's GitHub page contains a button called
 installed) and prompt you to specify what directory on your computer you
 would like to clone the repository into. You can also use the `clone`
 command in the shell. Imagine that the URL for a repo called *Example
-Project* is `https://GitHub.com/USERNAME/example-project.git`. To clone
+Project* is `https://GitHub.com/USER/example-project.git`. To clone
 it into the */git_epositories* directory
-type:[^chapter_5_33][\[GitClone\]]{#GitClone label="GitClone"}
+type:[^chapter_5_33]
 
-```{r Ch5Clone, eval=FALSE, engine='sh'}
-\# Change working directory
+````bash
+# Change working directory
 cd /git_epositories/
 
-\# Clone example-project git clone
-https://GitHub.com/USERNAME/example-project.git
-```
+# Clone example-project 
+git clone https://GitHub.com/USER/example-project.git
+````
 
-##### Push an existing repository to a new GitHub repo {#RemoteAdd}
+#### Push an existing repository to a new GitHub repo {#RemoteAdd}
+
+\index{git!remote repository}
+\index{shell command!git remote}
 
 If you already have a repository with files in it on your computer and
 you want to store them remotely in a new GitHub repo, you need to add
 the remote repository and `push` your files to it. Type Git's
 `remote add` command. For example, if your repository's GitHub URL is
-`https://GitHub.com/USERNAME/example-project.git`, then type:
+`https://github.com/USER/example-project.git`, then type:
 
-```{r Ch5GitRemoteAdd, eval=FALSE, engine='sh'}
-\# Change working
-directory to existing local repo cd /git_epositories/example-project
+````bash
+# Change working directory to existing local repo 
+cd /git_repositories/example-project
 
-\# Add a remote (GitHub) repository to an existing repo git remote add
-origin https://GitHub.com/USERNAME/example-project.git
-```
+# Add a remote (GitHub) repository to an existing repo 
+git remote add origin https://github.com/USER/example-project.git
+````
 
 This will tell your local repository where the remote one is. Finally,
-push the repository to GitHub:
+push the repository to GitHub:\index{shell command!git push}
 
-```{r Ch5GitPushRemote, eval=FALSE, engine='sh'}
-\# Push local
-repository to GitHub for the first time git push -u origin master
-```
+````bash
+# Push local repository to GitHub for the first time 
+git push -u origin master
+````
 
 The `-u` (upstream tracking) option adds a tracking reference for the
 upstream (GitHub) repository branches.
 
-##### Pushing commits to a GitHub repo
+#### Pushing commits to a GitHub repo {-}
+
+\index{shell command!git push}
 
 Once you have your local repository connected to GitHub you can add new
 commits with the `push` command. For example, if your current working
@@ -722,10 +768,10 @@ directory is the Git repo you want to push and you have already
 added/committed the changes you want to include in the remote repo,
 type:
 
-```{r Ch5Push, eval=FALSE, engine='sh'}
-\# Add changes to the GitHub
-remote master branch git push origin master
-```
+````bash
+# Add changes to the GitHub remote master branch 
+git push origin master
+````
 
 The `origin` is simply the remotely stored repository on GitHub and
 `master` is the master branch. You can change this to another branch if
@@ -735,9 +781,9 @@ prompted to give your GitHub user name and password.
 You can also push your tags to GitHub. To push all of the tags to GitHub
 type:
 
-```{r Ch5PushTags, eval=FALSE, engine='sh'}
+````bash
 git push --tags
-```
+````
 
 Now on the repo's GitHub page there will be a `Tags` section that will
 allow you to view and download the files in each tagged version of the
@@ -745,84 +791,68 @@ repository.
 
 ### Accessing on GitHub
 
-##### Downloading into R {#GitDownload}
+#### Downloading into R {#GitDownload #RawGitHub} 
 
 In general, the process of downloading data directly into R is similar
 to what we saw earlier for loading data from Dropbox Public folders. We
-can simply use the `source\_data` command. First we need to find our
+can simply use the `import()` function.\index{R function!import} First we need to find our
 plain-text data file's *raw* URL. To do this, go to your repository's
 GitHub site, navigate to the file you want to load, and click the `Raw`
-button on the right just above the file
-preview.[\[RawGitHub\]]{#RawGitHub label="RawGitHub"} I have data in
+button on the right just above the file preview. I have data in
 comma-separated values format stored in a GitHub repository.[^chapter_5_35] The
 URL for the raw (plain-text) version of the data is
 <https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv>.[^chapter_5_36]
 
 ```{r Ch5URLAddress, message=TRUE, tidy=FALSE}
-\# Place shortened url
-into URLAddress UrlAddress \<- \"http://bit.ly/14aSjxB\"
+# Place shortened url into url 
+url <- "http://bit.ly/14aSjxB"
 
-\# Download data DispropData \<- repmis::source\_data(UrlAddress)
+# Download data 
+disprop_data <- rio::import(url, format = "csv")
 
-\# Show variable names names(DispropData)
+# Show variable names 
+names(disprop_data)
 ```
 
-`source\_data` downloaded the most recent version of the file from the
-master branch. As we saw in Section
-[\[SepHeadExplain\]](#SepHeadExplain){reference-type="ref"
-reference="SepHeadExplain"}, running `source\_data` gives us a line
-beginning *`## SHA-1 hash of`* .... **Note:** this SHA-1 hash is
-different from the file's Git commit's SHA-1 hash we discussed earlier.
-The `source\_data` SHA-1 hash is specific to the *file*, and has nothing
-to do with Git. We will look at this hash more in Chapter
-[\[DataGather\]](#DataGather){reference-type="ref"
-reference="DataGather"} (Section
-[\[SecureData6\]](#SecureData6){reference-type="ref"
-reference="SecureData6"}).
+`import()` downloaded the most recent version of the file from the
+master branch. 
 
-We can actually use `source\_data` to download a particular version of a
+We can actually use `import()` to download a particular version of a
 file--from a particular Git commit--directly into R. This makes
 reproducing a specific result much easier. To do this you just need to
 use a file's raw URL from a particular commit. To find a file's
 particular commit raw URL first click on the file on GitHub's website.
-Then click the `History` button
-(![image](Children/Chapter8/images8/GitHistory.png)). This will take you
-to a page listing all of the file's versions. Click on the `Browse Code`
-button (![image](Children/Chapter5/images5/BrowseCodeIcon.png)) next to
-the version of the file that you want to use. Click on the `Raw` button
-to be taken to the text-only version of the file. Finally, copy this
-page's URL address and use it with `source\_data`.
+Then click the `History` button. This will take you
+to a page listing all of the file's versions. Click on the git commit hash button next to
+the version of the file that you want to use. Then click `View file` and finally the `Raw` button to be taken to the text-only version of the file. Copy this
+page's URL address and use it with `import()`.
 
 For example, I have an old version of the disproportionality data. To
 download it I find this particular version of the file's URL and use it
-in `source\_data`:
+in `import()`:
 
-```{r Ch5sourceDataOld, tidy=FALSE}
-\# Create object containing the
-file's URL OldUrlAddress \<-
-paste0(\"https://raw.githubusercontent.com/\", \"christophergandrud/\",
-\"Disproportionality\_Data/\", \"1a59d360b36eade3b183d6336a\",
-\"2262df4f9555d1/\", \"Disproportionality.csv\")
+```{r Ch5sourceDataOld, tidy=FALSE, message=FALSE, warning=FALSE}
+# Create object containing the file's URL 
+old_url <- paste0("https://raw.githubusercontent.com/", 
+                  "christophergandrud/",
+                  "Disproportionality_Data/", 
+                  "1a59d360b36eade3b183d6336a",
+                  "2262df4f9555d1/", 
+                  "Disproportionality.csv")
 
-\# Download old disproportionality data DispropOld \<-
-repmis::source\_data(OldUrlAddress)
+# Download old disproportionality data 
+disprop_old <- rio::import(old_url, format = "csv")
 ```
 
-In this example I did not shorten the URL, but instead used the `paste0`
+In this example I did not shorten the URL, but instead used the `paste0()`\index{R function!paste0}
 function to paste it together.[^chapter_5_37] You do not have to do this. I did it
-here so that the URL would fit on the printed page. Notice that the URL
-is the same as before with one exception: instead of `master` after
-`Disproportionality\_Data` we have this strange series of number and
-letters: `1a59d360b36ea` .... This is the *commit's* SHA-1 hash.
+here so that the URL would fit on the printed page. 
 
-As we will see in Chapter
-[\[StatsModel\]](#StatsModel){reference-type="ref"
-reference="StatsModel"} (Section
-[\[sourceurl\]](#sourceurl){reference-type="ref" reference="sourceurl"})
+As we will see in Chapter \@ref([StatsModel) (Section \@ref(sourceurl))
 we can use a very similar process to easily run source code files in R
 directly downloaded from GitHub with the `source_url` command.
 
-##### Viewing files
+#### Viewing files {-}
 
 The GitHub web user interface also allows you, your collaborators (see
 below) or, if the repo is public, anyone to look at text files from a
@@ -830,40 +860,38 @@ web browser. Collaborators can actually also create, modify, and commit
 changes in the web user interface. This can be useful for making small
 changes, especially from a mobile device without a Git installation.
 Anyone with a GitHub account can suggest changes to files in a public
-repository on the repo's website. Simply click the `Edit` button
-(![image](Children/Chapter5/images5/EditIcon.png)) above the file and
-make edits. If the person making the edits is not a designated
+repository on the repo's website. Simply click the `Edit` button (it looks like a pencil) above the file and make edits. If the person making the edits is not a designated
 collaborator, their edits will be sent to the repository's owner for
 approval.[^chapter_5_38] This can be a useful way for independent researchers to
 fix errors.
 
-#### Collaboration with GitHub
+#### Collaboration with GitHub {-}
 
 Repositories can have official collaborators that can make changes to
 files in the repo. Public repositories can have unlimited collaborators.
 Anyone with a GitHub account can be a collaborator. To add a
 collaborator to a repository you created, click on the `Settings` button
-on the repository's website (see Figure
-[1.2](#BookRepository){reference-type="ref"
-reference="BookRepository"}). Then click the `Collaborators` button on
-the left-hand side of the page. You will be given a box to enter your
-collaborator's GitHub user name. If your collaborator doesn't have a
+on the repository's website (see Figure \@ref(fig:BookRepository)). Then click the `Collaborators` button on the left-hand side of the page. You will be given a box to enter your collaborator's GitHub user name. If your collaborator doesn't have a
 GitHub account, they will have to create a new one. Once you add someone
 as a collaborator they can clone the repository onto their computer as
 you did earlier and push changes.
 
-##### Syncing a repository
+#### Syncing a repository {-}
+
+\index{shell command!git pull}
+\index{git!pull}
 
 If you and your collaborators are both making changes to the files in a
 repo you might create conflicting changes, i.e. different changes to the
 same part of a file. To avoid too many conflicts, it is a good idea to
 sync your local repository with the remote repository **before** you
-push your commits to GitHub. Use the `pull command` to sync your local
+push your commits to GitHub. Use the `pull` command to sync your local
 and remote repository. First add and commit your changes, then type:
 
-```{r Ch5Pull, eval=FALSE, engine='sh'}
-\# Sync repository git pull
-```
+````bash
+# Sync repository 
+git pull
+````
 
 If the files you are pulling conflict with your local files you will
 probably want to resolve these in the individual files and commit the
@@ -887,20 +915,18 @@ GitHub workflow you will probably follow once your repo is set up.
 
 4.  `push` your changes to GitHub.
 
-![Creating RStudio
-Projects[]{label="NewRStudioProject"}](Children/Chapter5/images5/GitNewProject.png){#NewRStudioProject}
+```{r NewRStudioProject, fig.cap="Creating RStudio Projects", echo=FALSE, fig.align='center', out.width='50%'}
+knitr::include_graphics("images/chapter_5/GitNewProject.png")
+```
 
-![Creating RStudio Projects in New
-Directories[]{label="NewProjectNewDirectory"}](Children/Chapter5/images5/NewProject_NewDirectory.png){#NewProjectNewDirectory}
+```{r NewProjectNewDirectory, fig.cap="Creating RStudio Projects in New Directories", echo=FALSE, fig.align='center', out.width='50%'}
+knitr::include_graphics("images/chapter_5/NewProject_NewDirectory.png")
+```
 
-RStudio & GitHub
-----------------
+## RStudio & GitHub
 
 When you open a Project with a Git repository in RStudio you will see a
-new *Git* tab next to *Environment* and *History* (see Figure
-[\[GitTab\]](#GitTab){reference-type="ref" reference="GitTab"}). From
-here you can do many of the things we covered in the previous section.
-Let's look at how to set up and use Git in RStudio Projects.
+new *Git* tab next to *Environment*, *History*, and *Connections* (see Figure \@ref(fig:GitTab)). From here you can do many of the things we covered in the previous section. Let's look at how to set up and use Git in RStudio Projects.
 
 ### Setting up Git/GitHub with Projects
 
@@ -909,25 +935,22 @@ projects, and create RStudio Projects from cloned repos. When you do any
 of these things RStudio automatically adds a *.gitignore* file telling
 Git to ignore *.Rproj.user*, *.Rhistory*, and *.RData* files.
 
-##### Git with a new project {#NewProjectGit}
+#### Git with a new project {- #NewProjectGit}
 
 To create a new project with Git version control, go to `File` in the
 RStudio menu bar. Then click `New Project…`. In the box that appears
-(see Figure [1.4](#NewRStudioProject){reference-type="ref"
-reference="NewRStudioProject"}) select `New Directory` `Empty Project`.
+(see Figure \@ref(fig:NewRStudioProject)) select `New Directory` `Empty Project`.
 Enter the Project's name and desired directory. Make sure to check the
-dialog box for `Create a git repository` (see Figure
-[1.5](#NewProjectNewDirectory){reference-type="ref"
-reference="NewProjectNewDirectory"}).
+dialog box for `Create a git repository` (see Figure \@ref(fig:NewProjectNewDirectory)).
 
-##### Git initialize existing projects
+#### Git initialize existing projects {-}
 
 If you have an existing RStudio Project and want to add Git version
 control to it, first go to `Tools` in the RStudio menu bar. Then select
 `Project Options …`. Select the `Git/SVN` icon. Finally, select `Git`
 from the drop-down menu for `Version Control System:`.
 
-##### Clone repository into a new project
+#### Clone repository into a new project {-}
 
 Again go to `File` in the RStudio menu bar to create a new project from
 a cloned GitHub repository. Then click `New Project…`. Select the
@@ -935,38 +958,30 @@ a cloned GitHub repository. Then click `New Project…`. Select the
 URL in the field called `Repository URL:`, enter the directory you would
 like to locate the cloned repo in, and click `Create Project`.
 
-##### Add existing Project repository to GitHub
+#### Add existing Project repository to GitHub {-}
 
 You can push an existing Project repository stored on your computer to a
 new remote repository on GitHub. To do this, first create a new repo on
-GitHub with the same name as your RStudio Project (see Section
-[\[NewGitHubRepo\]](#NewGitHubRepo){reference-type="ref"
-reference="NewGitHubRepo"}). Then copy the remote repository's URL like
-we saw before when we cloned a repository from GitHub (see Section
-[\[GitClone\]](#GitClone){reference-type="ref" reference="GitClone"}).
-Open a new shell from within RStudio. To do this, click the `Shell`
-button in the *Git* tab's `More` drop-down menu. Now follow the same
-steps that we used in Section
-[1.3.3.0.2](#RemoteAdd){reference-type="ref" reference="RemoteAdd"} to
+GitHub with the same name as your RStudio Project (see Section \@ref(NewGitHubRepo)). Then copy the remote repository's URL like we saw before when we cloned a repository from GitHub (see Section \@ref(GitClone)). Open a new shell from within RStudio. To do this, click the `Shell` button in the *Git* tab's `More` drop-down menu (it looks like a gear). Now follow the same steps that we used in Section \@ref(RemoteAdd) to
 connect a locally stored repository to GitHub for the first time.
 
-![Adding Changes to the
-Repository[]{label="fig:AddingChangesToRepo"}](Children/Chapter5/images5/GitTab.png){#fig:AddingChangesToRepo}
+```{r GitTab, fig.cap="The Git Repository Tab in RStudio", echo=FALSE, fig.align='center', out.width="50%"}
+knitr::include_graphics("images/chapter_5/GitTab.png")
+```
 
-![Adding Changes to the
-Repository[]{label="fig:AddingChangesToRepo"}](Children/Chapter5/images5/GitAdd.png){#fig:AddingChangesToRepo}
+```{r GitRstudioAdd, fig.cap="Adding Changes to the Repository", echo=FALSE, fig.align='center', out.width="50%"}
+knitr::include_graphics("images/chapter_5/GitAdd.png")
+```
 
 ### Using Git in RStudio Projects
 
 The RStudio *Git* tab allows you to do many of the same things with Git
-that we covered in the previous section. In the top panel of Figure
-[\[GitTab\]](#GitTab){reference-type="ref" reference="GitTab"} you will
+that we covered in the previous section. In Figure \@ref(fig:GitTab) you will
 see the *Git* tab for a new RStudio Project called *example-project*. It
 has two files that have not been added or committed to Git. To add and
 commit the files to the repository, click on the dialog boxes next to
-the file names. In the bottom panel of Figure
-[\[GitTab\]](#GitTab){reference-type="ref" reference="GitTab"} you can
-see that I've created a new R file called *ExampleScript.R* and clicked
+the file names. In Figure \@ref(fig:GitRstudioAdd) you can
+see that I've created a new R file called *example-script.R* and clicked
 the dialog box next to it, along with the other files. The yellow
 question marks in the top panel have now become green A's for "add".
 Clicking `Commit` opens a new window called **Review Changes** where you
@@ -981,11 +996,11 @@ and `Push Branch` buttons in Git menu bar (the blue and green arrows,
 respectively). You can use the same buttons in the **Review Changes**
 window. The *Git* tab also allows you to change branches, revert to
 previous commits, add files to `.gitignore`, and view your commit
-history. You can always use the `More Shell …` option to open a new
+history. You can always use the `More -> Shell…` option to open a new
 shell with the Project set as the working directory to complete any
 other Git task you might want to do.
 
-### Chapter summary {#chapter-summary .unnumbered}
+### Chapter summary {-}
 
 In this chapter we have primarily learned how to store text-based
 reproducible research files in ways that allow us and others to access
@@ -1019,7 +1034,7 @@ statistical analyses.
 
 [^chapter_5_7]: <https://zenodo.org/>
 
-[^chapter_5_8]: <http://thedata.org/>
+[^chapter_5_8]: <https://dataverse.org/>
 
 [^chapter_5_9]: <http://figshare.com/>
 
@@ -1032,13 +1047,7 @@ statistical analyses.
 [^chapter_5_13]: See <https://www.dropbox.com/downloading> for downloading and
     installation instructions.
 
-[^chapter_5_14]: Note: if you created your Dropbox account after 4 October 2012
-    you will not automatically have a *Public* folder. To enable the
-    folder on your account see this website:
-    <https://www.dropbox.com/help/16/en>. You will need a Pro or Dropbox
-    for Business account to enable a new Public folder.
-
-[^chapter_5_15]: This data is from [@Gandrud2012]. I've shortened the URL using
+[^chapter_5_15]: This data is from [@gandrud2012]. I've shortened the URL using
     Bitly (<https://bitly.com/>) so that it will fit on the page.
 
 [^chapter_5_16]: For more details see: <https://www.dropbox.com/en/help/11>.
@@ -1116,3 +1125,5 @@ statistical analyses.
 
 [^chapter_5_38]: This is called a `pull` request in Git terminology. See the next
     section for more details.
+    
+[^chapter_5_github_r_ignore]: From: <https://github.com/github/gitignore/blob/master/R.gitignore> as of 26 December 2018.
