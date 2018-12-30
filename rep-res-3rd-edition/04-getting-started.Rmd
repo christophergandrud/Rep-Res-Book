@@ -55,21 +55,20 @@ Around the edges of the figure are some of the functions you will learn
 to make it easier to go forwards and backwards through the process.
 These functions tie your research together. For example, you can use
 API-based R packages to gather data from the internet. You can use R's
-`merge()` function to combine data gathered from different sources into one
-data set. The `getURL()` function from R's *RCurl* package [@R-RCurl] and
-the `read.table()` function in base R or the much more versatile `import()` 
-function from the *rio* package [@R-rio]\index{rio} can be used to bring this data set into
-your statistical analyses. The *knitr* or *rmarkdown* package then
+`merge()`\index{R function!merge} function to combine data gathered from different sources into one
+data set. The `getURL()`\index{R function!getURL} function from R's *RCurl* package [@R-RCurl] and
+the `read.table()`\index{R function!read.table} function in base R or the much more versatile `import()` 
+function from the *rio* package [@R-rio]\index{rio}\index{R function!import} can be used to bring this data set into your statistical analyses. The *knitr* or *rmarkdown* package then
 ties your analyses into your presentation documents. This includes the
 code you used, the figures you created, and, with the help of tools such
 as the `kable()` function in the *knitr* package, tables of results. You
 can even tie multiple presentation documents together. For example, you
 can access the same figure for use in a LaTeX article and a
-Markdown-created website with the `includegraphics` and `![]()`
+Markdown-created website with the `includegraphics`\index{LaTeX command!include\_graphics} and *knitr*'s `include_graphics()`\index{R function!include\_graphics}
 functions, respectively. This helps you maintain a consistent
 presentation of results across multiple document types. We'll cover
 these functions in detail throughout the book. See Table
-\@ref(TableTieFunctions) for a brief but more complete overview of the main
+\@ref(TableTieFunctions) for an additional overview of some of the
 *tie functions*.
 
 ```{r WorkflowTies, engine = "tikz", fig.cap = "Example Workflow and a Selection of Functions to Tie It Together", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
@@ -140,7 +139,7 @@ these functions in detail throughout the book. See Table
 
     % Link function nodes
 
-    \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ Pandoc \\ \texttt{![]()}};
+    \node (pres) at (13, 5) [Links]{{\emph{knitr}} \\ \texttt{input} \\ \texttt{include} \\ \texttt{includegraphics} \\ \texttt{include\_graphics} \\ Pandoc \\ \texttt{![]()}};
     \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \emph{rmarkdown} \\ \texttt{source} \\ \texttt{source\_url} \\ \texttt{kable} \\ \texttt{print(xtable())} \\ \texttt{texreg} };
     \node (readData) at (3, -1) [Links]{\texttt{import} \\ \texttt{read.table} \\ \texttt{getURL} };
 
@@ -161,8 +160,8 @@ shouldn't be reproducible. It can in fact be "the easiest part to make
 reproducible" [@vandewalle2007 1254]. Quotes and paraphrases from
 previous works in the literature obviously need to be fully cited so
 that others can verify that they accurately reflect the source material.
-For mathematically based theory, clear and complete descriptions of the
-proofs should be given.
+For mathematically based theory, you should give clear and complete descriptions of the
+proofs.
 
 Though I don't actively cover theory replication in depth in this book,
 I do touch on some of the ways to incorporate proofs and citations into
@@ -216,9 +215,19 @@ at your source code. The `sessionInfo()` function in R prints a record of
 all of these things. The information from the session I used to create
 this book is:
 
-```{r Ch2SessionInfoPlain, size='tiny', echo=TRUE, tidy=TRUE}
+```{r Ch2SessionInfoPlain, echo=TRUE, eval=FALSE}
 # Print R session info
 sessionInfo()
+```
+
+```{r RemoveLongExtra, echo=FALSE}
+si <- sessionInfo()
+
+# Remove non-relevant information that doesn't fit on the page
+si$BLAS <- NULL
+si$LAPACK <- NULL
+
+si
 ```
 
 Chapter \@ref(DirectoriesChapter) gives specific details about how to
@@ -235,7 +244,7 @@ simplest file format possible to store this information. Usually the
 simplest file format is the humble, but versatile, text file.[^chapter2_1]
 
 Text files are extremely nimble. They can hold your data in, for
-example, comma-separated values () format. They can contain your
+example, comma-separated values (CSV) format. They can contain your
 analysis code in files. And they can be the basis for your presentations
 as markup documents like or , for LaTeX and Markdown files,
 respectively. All of these files can be opened by any program that can
@@ -260,7 +269,7 @@ easy to version and changes can be tracked using programs such as Git
 
 #### Learn from the text file: keep it simple {-}
 
-Text files are simple. Their simplicitly increases the probability of baseline usefulness in the future to researchers who will reproduce our work. We can extend the logic of the simple text file to all of the tools we use: keep it simple. Avoid adding dependencies you don't need to actually gather your data, analyze it, and present the results. For example, I have been tempted to make my presentation slides look nicer with new fonts. I was later burned when I wanted to make minor changes to slides a year after I first presented them (and a day before teaching an upcoming class) only to find that the custom fonts were no longer available. This broke my slides and forced me to spend considerable time reworking writing my source documents. If I, the creator of the slides, found this time consuming and annoying, imagine how an outside researcher would find it.
+Text files are simple. Their simplicitly increases the probability of baseline usefulness in the future to researchers who will reproduce the work. We can extend the logic of the simple text file to all of the tools we use: keep it simple. Avoid adding dependencies you don't need to actually gather your data, analyze it, and present the results. For example, I have been tempted to make my presentation slides look nicer with custom fonts. I was later burned when I wanted to make minor changes to slides a year after I first presented them (and a day before teaching an upcoming class) only to find that the custom fonts were no longer available. This broke my slides and forced me to spend considerable time reworking writing my source documents. If I, the creator of the slides, found this time consuming and annoying, an independent researcher would likely find it even more difficult.
 
 ### All files should be human readable
 
@@ -277,13 +286,12 @@ it is a good idea to *comment frequently* [@bowers2011 3] and
 *format your code using a style guide* [@nagler1995]. For especially
 important pieces of code you should use *literate programming*–where
 the source code and the presentation text describing its design and
-purpose appear in the same document. Doing this will make it very clear
-to others how you accomplished a piece of research.
+purpose appear in the same document.\index{literate programming} Doing this will make it very clear to others how you accomplished a piece of research.
 
 #### Commenting {-}
 
 In R, everything on a line after a hash character––(also known as
-number, pound, or sharp) is ignored by R, but is readable to people who
+'number', 'pound', or 'sharp') is ignored by R, but is readable to people who
 open the file. The hash character is a comment declaration character.
 You can use the to place comments telling other people what you are
 doing. Here are some examples:
@@ -293,15 +301,15 @@ doing. Here are some examples:
 2 + 2 # A comment after R code
 ```
 
-On the first line the (hash) is placed at the very beginning, so the
+On the first line the hash is placed at the very beginning, so the
 entire line is treated as a comment. On the second line the is placed
-after the simple equation `2 + 2`. R runs the equation and finds the
-answer , but it ignores all of the words after the hash.
+after the simple equation `2 + 2`. R runs the function and finds the
+answer `4`, but it ignores all of the words after the hash.
 
 Different languages have different comment declaration characters. In
 LaTeX everything after the percent sign is treated as a comment, and in
-Markdown/HTML comments are placed inside of . The hash character is used
-for comment declaration in command-line shell scripts.
+Markdown/HTML comments are placed inside of `<!- ->`. The hash character is used
+for comment declaration in command-line shell scripts as well as many other programming languages such as Python and Julia.\index{Python}\index{Julia}
 
 Nagler [-@nagler1995 491] gives some advice on when and how to use
 comments:
@@ -313,7 +321,7 @@ comments:
 
 In this book I follow these guidelines when displaying code. Nagler also
 suggests that all of your source code files should begin with a comment
-header. *At the least* the header should include:
+header. At the least*the header should include:
 
 -   a description of what the file does,
 
@@ -328,13 +336,13 @@ the code, and how the code is licensed. Here is an example of a minimal
 file header for an R source code file that creates the third figure in
 an article titled ‘My Article':
 
-```{r Ch2CommentHeader, echo=TRUE, tidy=FALSE}
+````R
 ############################
-# R Source code file used to create Figure 3 in My 'Article'
+# R Source code file used to create Figure 3 in 'My Article'
 # Created by Christopher Gandrud
 # MIT License
 ############################
-```
+````
 
 Feel free to use things like the long series of hash marks above and
 below the header, white space, and indentations to make your comments
@@ -362,7 +370,7 @@ not only comment on the source file, but also display code in
 presentation text. For example, you may want to include key parts of the
 code you used for your main statistical models and an explanation of
 this code in an appendix following your article. This is commonly
-referred to as literate programming [@knuth1992].
+referred to as literate programming [@knuth1992].\index{literate programming}
 
 ### Explicitly tie your files together
 
@@ -438,6 +446,7 @@ files accessible through the cloud computing services like GitHub.
         {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files. & \hfill\ref{LargeDocs} \\[0.25cm]
         {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
         {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
+        {\tt{include\_graphics}} & R/R Markdown & Inserts a figure into an R Markdown document. & \hfill\ref{FiguresChapter} \\[0.25cm]
         \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]
         Pandoc & shell & A shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]
         Make & shell & A shell program for automatically building many files at the same time. & \hfill\ref{DataGather} \\[0.25cm]
