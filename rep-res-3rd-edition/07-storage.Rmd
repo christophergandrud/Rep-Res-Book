@@ -22,7 +22,7 @@ cloud.
 Second, we may work on a project with different computers and mobile
 devices. For example, we may use a computer at work to run
 computationally intensive analysis, while editing our presentation
-document on a tablet computer while riding the train to the office. So,
+document on a tablet while riding the train to the office. So,
 we need to be able to **access** our files from multiple devices in
 different locations. We often need a way for our **collaborators** to
 access and edit research files as well.
@@ -61,8 +61,8 @@ analysis, but be able to understand and use the data now and in the
 future. Some file formats make this easier than others.
 
 In general, for small to moderately-sized data sets[^chapter_5_2] plain-text
-formats like comma-separated values (`.csv`) or tab-separated values[^chapter_5_3]
-(`.tsv`) are good ways to store your data. These formats simply store a
+formats like comma-separated values (`.csv`)\index{CSV} or tab-separated values[^chapter_5_3]
+(`.tsv`)\index{TSV} are good ways to store your data. These formats simply store a
 data set as a text file. A row in the data set is a line in the text
 file. Data is separated into columns with commas or tabs, respectively.
 These formats are not dependent on a specific program. Any program that
@@ -84,8 +84,7 @@ write.table(Data, "/example-project/data/main-data.csv",
 `row.names = FALSE` prevents R from including the row names in the
 output file.[^chapter_5_4] The `sep = ","` argument specifies that we want to use
 commas to separate values into columns. For CSV files you can use a
-modified version of this command called `write.csv()`.\index{R function!write.csv} This function
-makes it so that you don't have to write `sep = ","`.[^chapter_5_5]\index{comma separated file format}
+modified version of this command called `write.csv()`.\index{R function!write.csv} This function makes it so that you don't have to write `sep = ","`.[^chapter_5_5]\index{comma separated file format}\index{CSV}
 
 If you want to save your data with values separated by tabs, rather than
 commas, simply set the argument `sep = "\t"` and set the file extension
@@ -99,7 +98,8 @@ they include not only the underlying data but also other information
 like variable descriptions. If you are using plain-text files to store
 your data you will need to include a separate file, preferably in the
 same directory as the data file describing the variables and their
-sources. In Chapter \@ref(TablesChapter) (Section \@ref(VarDescriptTables)) we will look at how to automate the creation of variable description files.
+sources. In Chapter \@ref(TablesChapter) (Section \@ref(VarDescriptTables)) we 
+will look at how to automate the creation of variable description files.
 
 ## Storing Your Files in the Cloud: Dropbox
 
@@ -111,13 +111,11 @@ require different levels of effort to set up and maintain.
 
 These two services are certainly not the only way to make your research
 files available. Research-oriented services include the Zenodo,[^chapter_5_7]
-the Dataverse Project,[^chapter_5_8] figshare,[^chapter_5_9] and RunMyCode.[^chapter_5_10] These
-services include good built-in citation systems, unlike Dropbox and
-GitHub. They may be a very good place to store research files once the
-research is completed or close to completion. Many journals now require key reproducibility files be uploaded to these sites. However, these sites' ability to store, access, collaborate on,
-and version control files *during* the main part of the research process
-is mixed. Services like Dropbox and GitHub are very capable of being
-part of the research workflow from the beginning.
+the Dataverse Project,[^chapter_5_8] figshare,[^chapter_5_9] and RunMyCode.[^chapter_5_10] These services include good built-in citation systems, unlike Dropbox and
+GitHub. They also aim to provide persistent URLs for your files. This helps avoid the 'link rot' that threatens reproducibility,\index{link rot} i.e. a hosting service changes their URL structure breaking existing links. These services may be a very good place to store research files once the research is completed or close to completion. Many journals now require key reproducibility files be uploaded to these sites. However, these sites' ability to store, access, collaborate on, and version control files *during* the main part of the research process is mixed. Services like Dropbox and GitHub are very capable of being
+part of the research workflow from the beginning. 
+
+Zenodo and GitHub have excellent integration, allowing you to actively develop a research project on GitHub then persist it on Zenodo.\index{Zenodo} For details see: <https://guides.github.com/activities/citable-code/>.
 
 The easiest types of cloud storage for your research are services like
 Dropbox[^chapter_5_11] and Google Drive.[^chapter_5_12]\index{Google Drive}\index{Dropbox} These services not only store your
@@ -142,7 +140,7 @@ research projects.
 ### Accessing data {#EnablePublicFolder}
 
 All files stored on Dropbox have a URL address through which they can be
-accessed from a computer connected to the internet. To access a DropBox file or directory's URL so that it can be downloaded, right-click on the file
+accessed from a computer connected to the internet. To access a Dropbox file or directory's URL so that it can be downloaded, right-click on the file
 icon in your Dropbox folder on your computer. Then click
 `Copy Drobbox Link`. This copies the URL into your clipboard.
 
@@ -160,11 +158,11 @@ https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.
 csv?dl=1
 ```
 
-We changed the download (`dl`) option from false (`dl=0`) to true (`dl=1`). Now you can use the link to download data in your R source code.
+We changed the download (`dl`) option from false (`dl=0`) to true (`dl=1`). Now you can use the link to download data in your R source code, for example.
 
 Once you have the URL you can load the file directly into R using the
 `import()`\index{R function!import} function from the *rio* package. `import()` works for
-many different data formats. Use the `source_url()` \index{R function!source\_url} function in the *devtools* package [@R-devtools] to download and run R source code files (see Chapter \@ref(StatsModel)).
+many different data formats and is generally more robust than `read.table(). Use the `source_url()` \index{R function!source\_url} function in the *devtools* package [@R-devtools] to download and run R source code files (see Chapter \@ref(StatsModel)).
 
 Let's download data directly into R from Dropbox. The data set's URL is:
 <https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.csv?dl=1>.[^chapter_5_15]
@@ -264,6 +262,8 @@ hopefully convince you to get started using it:[^chapter_5_18]
 -   GitHub can create and host a website for your research project that
     you could use to present the results, not just the replication
     files.
+    
+-   It's close integration with Zenodo allows you to easily make your full replication material persistently accessible and citable.
 
 #### Collaboration {-}
 
@@ -465,9 +465,6 @@ git status -s
   {\scriptsize{Note: when you use these commands in the shell, you will need to precede them with \texttt{git} so the shell knows what program they are from.}}
 \end{table}
 
-Note: when you use these commands in the shell, you will need to precede
-them with `git` so the shell knows what program they are from.
-
 ```{r BookRepository, fig.cap="Part of this Book's GitHub Repository Webpage", echo=FALSE, fig.align='center', out.width="90%"}
 knitr::include_graphics("images/chapter_5/GitHubReadme.png")
 ```
@@ -620,8 +617,9 @@ and what to delete.
 There may be files in your repository that you do not want to keep under
 version control. Maybe this is because they are very large files or
 cached files from *knitr* or other files that are byproducts of
-compiling an R LaTeX document (see Chapter \@ref(StatsModel)). To have Git ignore particular files, simply create a file called *.gitignore*.[^chapter_5_31] You can either put this file in the repository's parent directory to create a *.gitignore* file for the
-whole repository or in a subdirectory to ignore files in that
+compiling an R LaTeX document (see Chapter \@ref(StatsModel)). You also want to ignore files that contain private information. Make sure to **never include private information** (e.g. passwords or confidential data) in your Git history. Once they are committed it will be very difficult to definitively remove them. Once they are on GitHub, they will be publicly accessible. 
+
+To have Git ignore particular files, simply create a file called *.gitignore*.[^chapter_5_31] You can either put this file in the repository's parent directory to create a *.gitignore* file for the whole repository or in a subdirectory to ignore files in that
 subdirectory. In the *.gitignore* file, add ignore rules by simply
 including the names of the files that you want to have Git ignore. For
 example, GitHub has a *.gitignore* file that is useful for ignoring files[^chapter_5_github_r_ignore] that we often don't want to commit to our git history when using R and R Markdown:
@@ -717,18 +715,18 @@ installed) and prompt you to specify what directory on your computer you
 would like to clone the repository into. You can also use the `clone`
 command in the shell. Imagine that the URL for a repo called *Example
 Project* is `https://GitHub.com/USER/example-project.git`. To clone
-it into the */git_epositories* directory
+it into the */git_repositories* directory
 type:[^chapter_5_33]
 
 ````bash
 # Change working directory
-cd /git_epositories/
+cd /git_repositories/
 
 # Clone example-project 
 git clone https://GitHub.com/USER/example-project.git
 ````
 
-#### Push an existing repository to a new GitHub repo {#RemoteAdd}
+#### Push an existing repository to a new GitHub repo {- #RemoteAdd}
 
 \index{git!remote repository}
 \index{shell command!git remote}
@@ -791,7 +789,7 @@ repository.
 
 ### Accessing on GitHub
 
-#### Downloading into R {#GitDownload #RawGitHub} 
+#### Downloading into R {- #GitDownload #RawGitHub} 
 
 In general, the process of downloading data directly into R is similar
 to what we saw earlier for loading data from Dropbox Public folders. We
@@ -804,7 +802,7 @@ URL for the raw (plain-text) version of the data is
 <https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv>.[^chapter_5_36]
 
 ```{r Ch5URLAddress, message=TRUE, tidy=FALSE}
-# Place shortened url into url 
+# Place shortened URLinto url object 
 url <- "http://bit.ly/14aSjxB"
 
 # Download data 
@@ -847,10 +845,6 @@ disprop_old <- rio::import(old_url, format = "csv")
 In this example I did not shorten the URL, but instead used the `paste0()`\index{R function!paste0}
 function to paste it together.[^chapter_5_37] You do not have to do this. I did it
 here so that the URL would fit on the printed page. 
-
-As we will see in Chapter \@ref([StatsModel) (Section \@ref(sourceurl))
-we can use a very similar process to easily run source code files in R
-directly downloaded from GitHub with the `source_url` command.
 
 #### Viewing files {-}
 
@@ -1017,15 +1011,14 @@ statistical analyses.
     is this blog post from RDataMining:
     <http://rdatamining.wordpress.com/2012/05/06/online-resources-for-handling-big-data-and-parallel-computing-in-r/>
     (posted 6 May 2012). One popular service for large file storage is
-    Amazon S3 (<http://aws.amazon.com/s3/>). I haven't used this service
-    and can't suggest ways to integrate it with R.
+    Amazon S3 (<http://aws.amazon.com/s3/>).
 
 [^chapter_5_3]: Sometimes this format is called tab-delimited values.
 
 [^chapter_5_4]: Frequently the row names are just the row numbers which may have
     no substantive meaning.
 
-[^chapter_5_5]: `write.csv` is a 'wrapper' for *write.table*.
+[^chapter_5_5]: `write.csv()` is a 'wrapper' for `write.table()`.
 
 [^chapter_5_6]: Dropbox provides a minimum amount of storage for free, above which
     they charge a fee. GitHub lets you create publicly accessible
@@ -1052,7 +1045,7 @@ statistical analyses.
 
 [^chapter_5_16]: For more details see: <https://www.dropbox.com/en/help/11>.
 
-[^chapter_5_17]: I used Git version 1.7.9.6 for this book.
+[^chapter_5_17]: I used Git version 2.20.1 for this book.
 
 [^chapter_5_18]: Because many of these features apply to any service that relies
     on Git, much of this list of advantages also applies to alternative
@@ -1074,7 +1067,7 @@ statistical analyses.
     September 2012).
 
 [^chapter_5_23]: To follow along with this code you will first need to create a
-    folder called *git_epositories* in your root directory. Note also
+    folder called *git_repositories* in your root directory. Note also
     that throughout this section I use Unix file path conventions.
 
 [^chapter_5_24]: For a comprehensive guide to Git commands, see
@@ -1092,7 +1085,7 @@ statistical analyses.
     use, so I highly recommend the GUI version of GitHub or the repo's
     GitHub website.
 
-[^chapter_5_27]: Secure Hash Algorithm
+[^chapter_5_27]: Secure Hash Algorithm. This is a unique identifier for each commit. 
 
 [^chapter_5_28]: If you don't, then the new branch will have a "detached head"
     which will create problems using the branch in the future.
@@ -1111,7 +1104,7 @@ statistical analyses.
 [^chapter_5_33]: If you are on the repo's webpage the URL to copy is under
     `HTTPS clone URL`.
 
-[^chapter_5_34]: See <https://help.GitHub.com/articles/set-up-git> for more
+[^chapter_5_34]: See <https://help.github.com/articles/set-up-git/> for more
     details.
 
 [^chapter_5_35]: For full information about the disproportionality data set,
