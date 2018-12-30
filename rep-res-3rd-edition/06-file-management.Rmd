@@ -27,7 +27,7 @@ relocating-in powerful and really reproducible ways. By typing these
 commands you are documenting every step you take. This is a major
 advantage over graphical user interface-type systems where you organize
 files by clicking and dragging them with the cursor. However, typed
-commands require you to know your files' specific addresses-their file
+commands require you to know your files' specific addresses--their file
 paths.
 
 In this chapter we discuss how a reproducible research project may be
@@ -215,7 +215,7 @@ trying to read the file path. The program may believe that the space
 indicates that the path name has ended. To make multi-word names easily
 readable without using spaces, adopt a consistent naming convention. 
 
-One approach is to use a convention that contrasts with the R object naming convention you are using. For example, if we adopt the underscore method for R object names used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use em dashes (`-`) to separate words in file names. For example, `example-source.R`.
+One approach is to use a convention that contrasts with the R object naming convention you are using. For example, if we adopt the underscore method for R object names used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use em dashes (`-`) to separate words in file names. For example: `example-source.R`.
 
 ## Organizing Your Research Project
 
@@ -228,9 +228,8 @@ the R files to run the statistical analyses followed by a further *data*
 child directory.
 
 The nested file structure allows you to use relative file paths. The
-knittable documents can call *analysis1.R* with the relative path
-*analysis/analysis1.R*, which in turn could call a file in the nested *data/*
-sub-directory. 
+knittable documents can call *analysis-1.R* with the relative path
+*analysis/analysis-1.R*. 
 
 ```{r ProjectMenu, fig.cap="An Example RStudio Project Menu", echo=FALSE, fig.align='center', out.height="30%"}
 knitr::include_graphics("images/chapter_4/ProjectMenu.png")
@@ -243,7 +242,7 @@ describe the project including things like its title, author(s), topic,
 any copyright information, and so on. It should also indicate how the
 folders in the project are organized and give instructions for how to
 reproduce the project. The README file should be in the main project
-folder-in our example this is called *example-project*-so that it is
+folder--in our example this is called *example-project*--so that it is
 easy to find. If you are storing your project as a GitHub repository
 (see Chapter \@ref(Storing) and the file is called *README*, its contents will
 automatically be displayed on the repository's main page. If the
@@ -276,7 +275,7 @@ RStudio Project by clicking on the `Browse` button. Finally, select
 `Create Project`. You will also notice in the Create Project pop-up
 window that you can build new project directories and create a project
 from a directory already under version control (we'll do this at the end
-of Chapter \@ref(Storing). When you create a new project you will see that
+of Chapter \@ref(Storing)). When you create a new project you will see that
 RStudio has put a file with the extension `.Rproj` into the directory, like *example-project.Rproj* in Figure \@ref(fig:ExampleTree).
 
 Making your research project directories RStudio Projects is useful for
@@ -302,9 +301,6 @@ a number of reasons:
 
 -   Gives you an easy-to-use interface for managing the R packages that
     your project depends on.
-
-We will look at many of these points in more detail in the next few
-chapters.
 
 ## R File Manipulation Functions
 
@@ -342,7 +338,7 @@ list.files() %>% head()
 \index{R function!setwd}
 
 The `setwd()` function is the base R way to set the current working directory. For example, if we are on a Mac or other Unix-like computer we can set the working directory to
-the *Analysis* directory in our Example Project (see Figure \@ref(fig:ExampleTree) like this:
+the *analysis* directory in our Example Project (see Figure \@ref(fig:ExampleTree)) like this:
 
 ````r
 setwd("/example-project/analysis/")
@@ -358,13 +354,13 @@ code chunks.
 
 However . . .
 
-#### `here::set_here` {- #sethere}
+#### `here::set_here()` {- #sethere}
 
 \index{R function!here}
 
-It is not good practice for reproducibility (and just general convenience when using a source code file across multiple computers) to use `setwd()`. You will need to tediously set specific file paths for each system. Instead, use RStudio Projects, which automatically set the working directory to the one with the *.Rproj* file. If you are not using RStudio Projects, include `set_here()` from the *here* package at the top of your source code. This will create a file called *.here* in the current working directory. It functions similarly to *.Rproj* to automatically flag for *here* what should be the current working directory. Remember when you share your source code to also share the *.Rproj*/*.here* file.
+It is *not* good practice for reproducibility (and just general convenience when using a source code file across multiple computers) to use `setwd()`. You will need to tediously set specific file paths for each system. Instead, use RStudio Projects, which automatically set the working directory to the one with the *.Rproj* file. If you are not using RStudio Projects, include `set_here()` from the *here* package at the top of your source code. This will create a file called *.here* in the current working directory. It functions similarly to *.Rproj* to automatically flag for *here* what should be the current working directory. Remember when you share your source code to also share the *.Rproj*/*.here* file.
 
-#### `root.dir` in Knittable documents {-}
+#### `root.dir` in knittable documents {-}
 
 \index{root.dir}
 
@@ -381,13 +377,13 @@ opts_knit$set(root.dir = "/example-project/analysis")
 We set the */example-project/analysis* sub-directory as the root
 directory for all of the chunks in our presentation document.
 
-**Note:** In general it is preferable to use the default directory and file paths relative to this rather than manually specifying `root.dir()`. Setting an alternate root directory will make reproducibility more difficult.
+**Note:** In general it is preferable to use the knittable file's default directory and file paths relative to it rather than manually specifying `root.dir()`. Setting an alternate root directory will make reproducibility more difficult.
 
 #### `dir.create()` {-}
 
 \index{R function!dir.create}
 
-Sometimes you may want to create a new directory. You can use the `dir.create` function to do this.[^chapter4_5] For example, to create a *example-project* file
+Sometimes you may want to create a new directory. You can use the `dir.create()` function to do this.[^chapter4_5] For example, to create a *example-project* file
 in the root *C* directory on a Windows computer type:
 
 ````r
@@ -420,13 +416,13 @@ cat("Reproducible Research with R and RStudio",
     file = "example-cat.md")
 ````
 
-In this example we created a Markdown formatted file by using the `.md`
+In this example we created a markdown formatted file by using the `.md`
 file extension. We could, of course, change the file extension to `.R`
 to set it as an R source code file, `.Rnw` to create a *knitr* LaTeX
 file, and so on.
 
 You can use `cat()` to print the contents of one or more objects to a
-file. **Warning:** The `cat()` function will overwrite existing files with
+file. **Warning:** the `cat()` function will overwrite existing files with
 the new contents. To add the text to existing files use the
 `append = TRUE` argument.
 
@@ -451,7 +447,7 @@ careful using it.
 
 \index{R function!file.rename}
 
-You can use the `file.rename()` to, obviously, rename a file. It can also
+You can use `file.rename()` to, obviously, rename a file. It can also
 be used to move a file from one directory to another. For example,
 imagine that we want to move the *example-cat.md* file from the directory
 *example-project* to one called *markdown-files* that we already
@@ -472,7 +468,7 @@ the same syntax as `file.rename()`:
 
 ````r
 file.copy(from = "C:\\example-project\\example-cat.md",
-            to = "C:\\markdown-files\\example-cat.md")
+          to = "C:\\markdown-files\\example-cat.md")
 ````
 
 ## Unix-like Shell Commands for File Management
@@ -483,8 +479,7 @@ large projects. Unix-like shell programs including Bash on Mac and Linux
 and Windows PowerShell give you type-able commands to interact with your
 computer's operating system.[^chapter4_7] We will especially return to shell
 commands in the next chapter when we discuss Git version control and
-makefiles for collecting data in Chapter \@ref(DataGather), as well as the command-line program[^chapter4_8] Pandoc \@ref(LargeDocs) and \@ref(MarkdownChapter)). We don't have enough space to fully
-introduce shell programs or even all of the commands for manipulating
+makefiles for collecting data in Chapter \@ref(DataGather), as well as the command-line program[^chapter4_8] Pandoc in chapters \@ref(LargeDocs) and \@ref(MarkdownChapter)). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating
 files. We are just going to cover some of the basic and most useful
 commands for file management. For good introductions for Unix and Mac OS
 10 computers see William E. Shotts Jr.'s [-@shottsjr2012] book on the
@@ -548,7 +543,7 @@ pwd
 The `ls` (list) command works very similarly to R's `list.files()`
 function. It shows you what is in the current working directory.
 
-Again, I have a lot of files in my working directory, so I will shorten the output for this example by piping it through the command line's `head` command.\index{shell command!head} The command line pipe is not `%>%` as in R, but instead `|`.\index{shell command!|}
+Again, I have a lot of files in my working directory, so I will shorten the output for this example by piping it through the command line's `head` command.\index{shell command!head} The command line pipe is not `%>%`\index{R fuction!%>%}, as in R, but instead `|`.\index{shell command!|}
 
 ```{r Ch4lscmd, engine='sh', cache=TRUE}
 ls | head
@@ -636,11 +631,11 @@ To move a file from one directory to another from a shell, use the
 both directories are in the root directory:[^chapter4_10]
 
 ````bash
-mv /example-project/example-echo.md /markdown-files
+mv /example-project/example-echo.md/markdown-files
 ````
 
 Note that the *markdown-files* directory must already exist, otherwise it
-will simply rename the file. So this command is similar to the R function
+will simply rename the file. This command is similar to the R function
 `file.rename()`.
 
 #### `cp` {-}
