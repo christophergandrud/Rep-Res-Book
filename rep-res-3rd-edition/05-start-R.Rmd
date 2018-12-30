@@ -41,6 +41,7 @@ what version of R you are using, license details, and so on-you should
 see a `>` (greater-than sign). This prompt is where you enter R
 code.[^chapter3_3] To run R code that you have typed after the prompt, press the
 `Return` or `Enter` key.
+
 Now that we have a new R session open we can get started.
 
 ```{r RBlankMain, fig.cap="R Console at Startup", echo=FALSE, out.height="50%"}
@@ -54,7 +55,7 @@ referred to as an 'object-oriented language'. What are objects? Objects
 are like the R language's nouns. They are things, like a vector of
 numbers, a data set, a word, a table of results from some analysis, and
 so on. Saying that R is object-oriented means that R is focused on doing
-actions to objects. We will talk about the actions-functions-later in this
+actions to objects. We will talk about the actions--functions--later in this
 section.[^chapter3_4] Now let's create a few objects.
 
 #### Numeric & string objects {- #ObjectNames}
@@ -99,7 +100,7 @@ Creating an object with words and other characters-a character object-is
 very similar. The only difference is that you enclose the character
 string (letters in a word for example) inside of single or double
 quotation marks (`''`, or `""`).[^chapter3_8] Let's create an object called *words*
-containing the character string "Hello World":
+containing the character string `Hello World`:
 
 ```{r Ch3CharacterObject, echo=TRUE}
 words <- "Hello World"
@@ -116,7 +117,7 @@ mean(words)
 Trying to find the mean of our *words* object gives us a
 warning message and returns the value `r mean(words)`: not applicable. You can also
 think of `NA` as meaning "missing". To find out an object's type, use the `class()`
-function.\index{R function!class} For example:
+function.[^chapter_3_types]\index{R function!class} For example:
 
 ```{r Ch3ClassCommand, echo=TRUE}
 class(words)
@@ -142,7 +143,7 @@ Vectors are the "fundamental data type" in R [@matloff2011]. They are
 simply an ordered group of numbers, character strings, and so on.[^chapter3_11]
 It may be useful to think of most data in R as composed of
 vectors. For example, data frames\index{data.frame} are basically collections
-of vectors of the same length-i.e. they have the same number of rows-attached
+of vectors of the same length--i.e. they have the same number of rows--attached
 together to form columns.
 
 Let's create a simple numeric vector containing the numbers 2.8, 2, and
@@ -156,9 +157,7 @@ numeric_vector <- c(2.8, 2, 14.8)
 numeric_vector
 ```
 
-Vectors of character strings are created in a similar way. The only
-major difference is that each character string is enclosed in quotation
-marks like this:
+Vectors of character strings are created in a similar way. The only difference is that each character string is enclosed in quotation marks like this:
 
 ```{r Ch3CharcterVector, echo=TRUE}
 character_vector <- c("Albania", "Botswana", "Cambodia")
@@ -178,13 +177,12 @@ together side-by-side as columns.[^chapter3_12]\index{R function!cbind}
 ```{r Ch3cbind, echo=TRUE}
 string_num_matrix <- cbind(character_vector, numeric_vector)
 
-# Show string_num_matrix's contents
 string_num_matrix
 ```
 
 By binding these two objects together we've created a new matrix
 object.[^chapter3_13] You can see that the numbers in the
-*numeric_vector* column are between quotation marks. Matrices,
+**numeric_vector** column are between quotation marks. Matrices,
 like vectors, can only have one data type, so R has converted the numbers to strings.
 
 #### Data frames {-}
@@ -197,7 +195,6 @@ and *character_vector* objects.\index{R function!data.frame}
 ```{r Ch3dataframe, echo=TRUE, tidy=FALSE}
 string_num_df <- data.frame(character_vector, numeric_vector)
 
-# Display contents of string_num_df data frame
 string_num_df
 ```
 
@@ -249,7 +246,6 @@ We can use the component selector to create new objects with parts of other obje
 # Extract a numeric vector from string_num_df
 numeric_extract <- string_num_df$numeric_vector
 
-# Display contents of numeric_extract
 numeric_extract
 ```
 
@@ -289,11 +285,10 @@ variable.
 Now that we are done working with the *cars* data set, we should `detach()`\index{R function!detach} it. Not doing so could confuse R later in our session.
 
 ```{r Ch3Detach, echo=TRUE}
-# Detach cars
 detach(cars)
 ```
 
-A safer alternative to `attach()` is `with()`. It more clearly delineates when to draw from inside a particular object. For example, we can find the mean of *numeric_vector* `with()` the *string_num_df* data frame:
+A safer alternative to `attach()` is `with()`. It more clearly delineates when to draw from inside a particular object. For example, we can find the mean of **numeric_vector** `with()` the *string_num_df* data frame:
 
 ```{r Ch3With, echo=TRUE, tidy=FALSE}
 with(string_num_df, {
@@ -302,7 +297,7 @@ with(string_num_df, {
 )
 ```
 
-You can see that in the `with()` call the data frame object goes first
+In the `with()` call the data frame object goes first
 and then the `mean()` function[^chapter3_19] goes second in curly brackets (`{}`).
 
 In this book I avoid using the `attach()` and `with()`
@@ -447,7 +442,7 @@ round(mean(numeric_vector), digits = 1)
 Stacking functions inside of each other can create code that is
 difficult to read. Another option that potentially makes more easily
 understandable code is piping\index{pipe} using the pipe function (`%>%`)\index{R function!\%>\%} that you
-can access from the *magrittr* [@R-magrittr]\index{R package!magrittr} or *dplyr* [@R-dplyr]\index{R package!dplyr} packages. The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of **numeric_vector** and then round it to one decimal place use:
+can access from the *magrittr* [@R-magrittr]\index{R package!magrittr} or *dplyr* [@R-dplyr]\index{R package!dplyr} packages. The basic idea behind the pipe function is that the output of one function is set as the first argument of the next. For example, to find the mean of *numeric_vector* and then round it to one decimal place use:
 
 ```{r Ch3Pipe, echo=TRUE}
 # Load magrittr package
@@ -458,7 +453,7 @@ mean(numeric_vector) %>%
     round(digits = 1)
 ```
 
-### The workspace & history
+### The workspace & history {#RSave}
 
 All of the objects you create become part of your workspace,
 alternatively known as the current working environment. Use the `ls()`\index{R function!ls}
@@ -482,17 +477,17 @@ To save the entire workspace into a binary-not plain-text-RData file use
 save the workspace. If you don't specify the file path it will be saved
 into your current working directory (see Chapter \@ref(DirectoriesChapter)
 for information on files paths and working directories). To
-save the current workspace in a file called *workspace_2018-12-22.RData* in
+save the current workspace in a file called *workspace-2018-12-22.RData* in
 the current working directory type:
 
 ```{r Ch3Workspace, echo=TRUE, eval=FALSE}
-save.image(file = "workspace_2018-10-28.RData")
+save.image(file = "workspace-2018-12-22.RData")
 ```
 
 Use `load()`\index{R function!load} to load a saved workspace back into R:
 
 ```{r Ch3LoadWS, echo=TRUE, eval=FALSE}
-load(file = "workspace_2018-10-28.RData")
+load(file = "workspace-2018-10-22.RData")
 ```
 
 You should generally avoid having R automatically save your workspace
@@ -507,13 +502,13 @@ are much less future-proof.
 One of the few times when saving your workspace is  useful is when
 it includes an object that was computationally difficult and took a long
 time to create. In this case you can save only the large object with
-`save()`.[^chapter3_25]\@ref(RSave)\index{R function!save}
+`save()`.[^chapter3_25]\index{R function!save}
 For example, if we have a very large
-object called *model_output* we can save it to a file called *model_output.RData* like
+object called *model-output* we can save it to a file called *model-output.RData* like
 this:
 
 ```{r Ch3Comp, echo=TRUE, eval=FALSE}
-save(model_output, file = "model_output.RData")
+save(model-output, file = "model-output.RData")
 ```
 
 ### R history {#RHistory}
@@ -588,13 +583,13 @@ take a quick tour of the basic RStudio window.
 
 When you first open RStudio you should see a default window that looks
 like Figure \@ref(fig:BlankMain). In this figure you see three window panes.
-The large one on the left is the *Console/Terminal/Jobs* pane. The *Console* pane is an R console and functions exactly the same as the console discussed so far in this chapter. *Terminal* is a command-line terminal that you can use to use to run command-line tools like those we discuss in Chapter \@ref(DirectoriesChapter). The *Jobs* pane allows you to run R scripts in the background. This is very useful if you have computationally time consuming jobs that you would like to run while also doing other work in RStudio. 
+The large one on the left is the *Console/Terminal/Jobs* pane. The *Console* pane is an R console and functions exactly the same as the console discussed so far in this chapter. *Terminal* is a command-line terminal where you can run command-line tools like those we discuss in Chapter \@ref(DirectoriesChapter). The *Jobs* pane allows you to run R scripts in the background. This is very useful if you have computationally time consuming jobs that you would like to run while also doing other work in RStudio. 
 
-Other panes include the *Environment/History/Connections* panes, in the upper
+The *Environment/History/Connections* panes are in the upper
 right-hand corner. The *Environment* pane shows you all of the objects
 in your workspace and some of their characteristics, like how many
 observations a data frame has. You can click on an object in this pane
-to see its contents. This is especially useful for quickly looking at a
+to see a preview of its contents. This is especially useful for quickly looking at a
 data set in much the same way that you can visually scan a Microsoft
 Excel spreadsheet. The *History* pane records all of the functions you
 have run. It also allows you to rerun code and insert it into a source
@@ -611,14 +606,14 @@ the *Files* pane in more detail in Chapter \@ref(DirectoriesChapter).
 Basically, it allows you to navigate and organize your files. The *Plots*
 pane is where figures you create in R appear. This pane allows you to
 see all of the figures you have created in a session using the right and
-left arrow icons. It also lets you save the figures in a variety of
+left arrow icons. It also lets you copy and save the figures in a variety of
 formats. The *Packages* pane shows the packages you have installed,
 allows you to load individual packages by clicking on the dialog box
 next to them, access their help files (just click on the package name),
 update the packages, and even install new packages. The *Help* pane
 shows you help files. You can search for help files and search within
 help files using this pane. Finally, the *Viewer* pane allows you to
-view local web content like JavaScript graphics and Shiny apps.
+view local web content like JavaScript graphics and Shiny apps.\index{Shiny}
 
 #### The Source pane {-}
 
@@ -643,22 +638,22 @@ file highlight it[^chapter3_28] and click the `Run` icon on the top bar. This
 sends the code to the console where it is run. The icon to the right of
 `Run` runs the code above where you have highlighted. The
 `Source` icon next to this runs all of the code in the file using R's
-`source` function. When you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working
+`source()`\index{R function!source} function. When you click on the last icon on the right (it has a series of stacked lines) you will get a navigable table of contents for your file; very useful for working
 with longer documents, especially markup documents.
 
 ```{r TopBarFigs, echo=FALSE, fig.cap="RStudio Source Code Pane Top Bar", out.width="100%"}
 knitr::include_graphics("images/chapter_3/RSourceBar.png")
 ```
 
-## Using *knitr* and *rmarkdown*: The basics
+## Using knitr and R Markdown: The basics
 
-To get started with *knitr* and *rmarkdown* in R or RStudio
+To get started with knitr and R Markdown in R or RStudio
 we need to learn some of the basic concepts and syntax. The concepts are
 the same regardless of the markup language we are knitting R code with,
 but much of the syntax varies by markup language. *rmarkdown* relies on
 *knitr* and a utility called *Pandoc* to create many different types of
 presentation documents (HTML, PDF, or MS Word) from one document written
-largely using *knitr*'s R Markdown syntax.
+largely using knitr's R Markdown syntax.
 
 ### What *knitr* does
 
@@ -675,76 +670,7 @@ only contains markup for the presentation document. You *compile* this
 markup document as you would if you hadn't used *knitr* into your final
 PDF document or webpage presenting your results.
 
-### What *rmarkdown* does {#rmardownHeader}
-
-The *rmarkdown* package implements a variation on this process that
-utilizes a program called Pandoc to create presentation documents in
-multiple formats from an a knittable document written in Markdown. The
-main difference between pure *knitr* markdown and *rmarkdown* documents
-is the inclusion of a header specifying how you want to render the
-document with Pandoc.[^chapter3_29]
-
-The header is written in YAML.[^chapter3_30] The YAML header can include
-information such as the document's title, author, whether or not to
-include a table of contents, and a link to a BibTeX bibliography file.
-YAML is a straightforward data format that organizes information in a
-simple hierarchy. The header begins and ends with three dashes (`---`).
-Information keys-like "title" and "author"-are separated from their
-associated "values" by a colon (`:`). Sub-values of a hierarchy are
-denoted by being placed on a new line and indented.[^chapter3_31] Here is a basic
-*rmarkdown* header that indicates the document's title, author, date,
-and that it will be turned into a PDF document (via LaTeX).
-
-```{yaml, eval=FALSE}
----
-title: "A Basic PDF Presentation Document"
-author: "Christopher Gandrud"
-date: "2018-10-28"
-output: pdf_document:
-    toc: true
-—--
-```
-
-The title, author, and date, will be placed at the beginning of the
-output document. The final line (`toc: true`) creates a table of
-contents near the beginning of the PDF document when we knit it. We will
-discuss more header options in Chapter \@ref(MarkdownChapter).
-
-RStudio can automatically create a basic header for the type of output
-document that you want when you open a new *rmarkdown* file. Simply
-select `File` then `R Markdown…`. A window will appear that looks like
-Figure \@ref(fig:rmarkdownWindow). In this window select the type of output document
-you want to create and click `Ok`.
-
-In addition to the header, *rmarkdown* differs from basic *knitr* files in that you
-can include Pandoc syntax in your R Markdown document. This can be
-useful for bibliographies as we will discuss in Chapter
-\@ref(MarkdownChapter). Nonetheless, remember that apart from the
-header and ability to include Pandoc syntax, at the simplest level
-*rmarkdown* documents are *knitr* documents written in R Markdown
-syntax. Importantly, they have the same code chunk syntax we will see
-shortly.
-
-```{r rmarkdownWindow, fig.cap="The New R Markdown Options Window", echo=FALSE, out.width="100%"}
-knitr::include_graphics("images/chapter_3/newRMarkdown.png")
-```
-
-### File extensions
-
-When you save a knittable file, use a file extension that indicates (a)
-that it is knittable and (b) what markup language it is using. You can
-use a number of file extensions for R Markdown files including: `.Rmd`
-and `.Rmarkdown`.[^chapter3_32] LaTeX documents that include *knitr*
-code chunks are generally called R Sweave files and have the file
-extension `.Rnw`. This terminology is a little confusing.[^chapter3_33] It is a
-holdover from *knitr*'s main literate programming
-predecessor *Sweave*. Note that *rmarkdown* documents can compile to
-LaTeX PDF documents and support pretty much the full capabilities of LaTeX.
-Because markdown is generally easier to write than raw LaTeX, `.Rnw` markup
-is much less commonly used. For example, for the third edition of this book
-I converted it from `.Rnw` to `.Rmd`.
-
-```{r KnitProcess, fig.cap="*knitr*/*rmarkdown* Process", engine = "tikz", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
+```{r KnitProcess, fig.cap="Knitr/R Markdown Process", engine = "tikz", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
 % Define colors for figure
 %% Color palette (GnBU) chosen using ColorBrewer 2.0
 %% See: http://colorbrewer2.org/
@@ -774,13 +700,13 @@ I converted it from `.Rnw` to `.Rmd`.
     \node (Presentation) at (8, 0) [Docs, text width = 6em]{Presentation Document};
 
     % .Rnw LaTeX Example
-    \node(LaTeX) at (1, -2.5) {\textbf{\emph{knitr} LaTeX Example}};
+    \node(LaTeX) at (1, -2.5) {\textbf{knitr LaTeX Example}};
     \node (Rnw) at (0, -3.5) [Docs, text width= 6em]{\emph{Paper.Rnw}};
     \node (tex) at (4, -3.5) [Docs, text width= 6em]{\emph{Paper.tex}};
     \node (pdf) at (8, -3.5) [Docs, text width = 6em]{\emph{Paper.pdf}};
 
     % Markdown to HTML Example
-    \node(Markdown) at (2, -5) {\textbf{\emph{knitr}/\emph{rmarkdown} Markdown Example}};
+    \node(Markdown) at (2, -5) {\textbf{knitr/R Markdown Markdown Example}};
     \node (Rmd) at (0, -6) [Docs, text width= 6em]{\emph{Website.Rmd}};
     \node (md) at (4, -6) [Docs, text width= 6em]{\emph{Website.md}};
     \node (html) at (8, -6) [Docs, text width = 6em]{\emph{Website.html}};
@@ -798,6 +724,73 @@ I converted it from `.Rnw` to `.Rmd`.
 \end{tikzpicture}
 ```
 
+### What *rmarkdown* does {#rmardownHeader}
+
+The *rmarkdown* package implements a variation on this process that
+utilizes a program called Pandoc to create presentation documents in
+multiple formats from an a knittable document written in Markdown. The
+main difference between pure *knitr* markdown and *rmarkdown* documents
+is the inclusion of a header specifying how you want to render the
+document with Pandoc.[^chapter3_29]
+
+The header is written in YAML.[^chapter3_30]\index{YAML} The YAML header can include
+information such as the document's title, author, whether or not to
+include a table of contents, and a link to a BibTeX bibliography file.
+YAML is a straightforward data format that organizes information in a
+simple hierarchy. The header begins and ends with three dashes (`---`).
+Information keys--like "title" and "author"--are separated from their
+associated "values" by a colon (`:`). Sub-values of a hierarchy are
+denoted by being placed on a new line and indented.[^chapter3_31] Here is a basic
+*rmarkdown* header that indicates the document's title, author, date,
+and that it will be turned into a PDF document (via LaTeX).
+
+````yaml
+---
+title: "A Basic PDF Presentation Document"
+author: "Christopher Gandrud"
+date: "2018-10-28"
+output: pdf_document:
+    toc: true
+—--
+````
+
+The title, author, and date, will be placed at the beginning of the
+output document. The final line (`toc: true`) creates a table of
+contents near the beginning of the PDF document when we knit it. We will
+discuss more header options in Chapter \@ref(MarkdownChapter).
+
+RStudio can automatically create a basic header for the type of output
+document that you want when you open a new R Markdown file. Simply
+select `File` then `R Markdown…`. A window will appear that looks like
+Figure \@ref(fig:rmarkdownWindow). In this window select the type of output document
+you want to create and click `Ok`.
+
+In addition to the header, *rmarkdown* differs from basic *knitr* files in that you
+can include Pandoc syntax in your R Markdown document. This can be
+useful for bibliographies as we will discuss in Chapter
+\@ref(MarkdownChapter). Nonetheless, remember that apart from the
+header and ability to include Pandoc syntax, at the simplest level
+R Markdown documents are knitr documents written in R Markdown
+syntax. They have the same code chunk syntax, as we will see shortly.
+
+```{r rmarkdownWindow, fig.cap="The New R Markdown Options Window", echo=FALSE, out.width="100%"}
+knitr::include_graphics("images/chapter_3/newRMarkdown.png")
+```
+
+### File extensions
+
+When you save a knittable file, use a file extension that indicates (a)
+that it is knittable and (b) what markup language it is using. You can
+use a number of file extensions for R Markdown files including: `.Rmd`
+and `.Rmarkdown`.[^chapter3_32] LaTeX documents that include *knitr*
+code chunks are generally called R Sweave files and have the file
+extension `.Rnw`. This terminology is a little confusing.[^chapter3_33] It is a
+holdover from *knitr*'s main literate programming
+predecessor *Sweave*. Note that *rmarkdown* documents can compile to
+LaTeX PDF documents and support pretty much the full capabilities of LaTeX.
+Because markdown is generally easier to write than raw LaTeX, `.Rnw` markup
+is much less commonly used. For example, I converted the third edition of this book
+from `.Rnw` to `.Rmd`.
 
 ### Code chunks
 
@@ -812,8 +805,7 @@ before reading this section.
 #### R Markdown {- #RMarkdownChunkBasic}
 
 In R Markdown files we begin a code chunk by writing the head:
-` ```{r} `. A code chunk is closed-ended-simply with:
-` ``` `. For example:
+` ```{r} `. A code chunk is closed--ended-with: ` ``` `. For example:
 
 ````markdown
 `r ''````{r}
@@ -822,14 +814,14 @@ string_num_matrix <- cbind(character_vector, numeric_vector)
 ```
 ````
 
-The R Markdown code chunk syntax is exactly the same for files you
+The R Markdown code chunk syntax is exactly the same for markdown files you
 compile with *knitr* or *rmarkdown*.
 
 #### R LaTeX (.`Rnw`) {-}
 
-Code chunks are delimited in non-*rmarkdown* R LaTeX
+Code chunks are delimited in non-R Markdown R LaTeX
 documents in a way that emulates the long-established
-*Sweave* syntax.[^chapter3_34] Sweave-style code chunks begin with the following head:
+*Sweave* syntax. Sweave-style code chunks begin with the following head:
 `<<>>=`. The code chunk is closed with an at sign (`@`).
 
 ```{sh, eval=FALSE}
@@ -846,16 +838,16 @@ label for the new file's name. If you do not explicitly give the chunk a
 label it will be assigned one like: `unnamed-chunk-1`.
 
 To explicitly assign chunk labels in R Markdown documents, place the
-label name inside of the braces after the `r`. If we wanted to use the, admittedly not descriptive, label `ex_label` we type:
+label name inside of the braces after the `r`. If we wanted to use the, admittedly not descriptive, label `ex-label` we type:
 
 ````markdown
-`r ''````{r ex_label}
+`r ''````{r ex-label}
 # Example chunk label
 ```
 ````
 
 The same general format applies to the two types of LaTeX chunks. In
-Sweave-style chunks we type: `<<ex_label>>=`.
+Sweave-style chunks we type: `<<ex-label>>=`.
 Try not to use spaces or periods in your
 label names. Also remember that chunk labels *must* be unique.
 
@@ -876,12 +868,12 @@ option values must be written in the same way that argument values are.
 Character strings need to be inside of quotation marks. The logical
 `TRUE` and `FALSE` operators cannot be written `"true"` and
 `"false"`. For example, imagine we have a Markdown code chunk called
-`ex_label`. If we want to run the code chunk, but
+`ex-label`. If we want to run the code chunk, but
 not show the code in the final presentation document, we can use the
 option `echo=FALSE`.
 
 ````markdown
-`r ''````{r ex_label, echo=FALSE}
+`r ''````{r ex-label, echo=FALSE}
 string_num_matrix <- cbind(character_vector, numeric_vector)
 ```
 ````
@@ -945,14 +937,14 @@ you set a different local option.
 Here is an example of how you can center align all of the figures in *rmarkdown* in a chunk placed near the beginning of the document:
 
 ````markdown
-`r ''````{r set_global, include=FALSE}
+`r ''````{r set-global, include=FALSE}
 # Center align all knitr generated figures
 knitr::opts_chunk$set(fig.align='center')
 ```
 ````
 
-If you want to use 'opts_chunk' in a document rendered with
-*rmarkdown* you will need to either explicitly call it as in the example using the double colon or load the *knitr* package before calling `opts_chunk`.
+If you want to use `opts_chunk` in a document rendered with
+*rmarkdown* you will need to either explicitly call it as in the example using the double colon or load the *knitr* package before calling it.
 
 ### *knitr* package options
 
@@ -974,12 +966,12 @@ hooks change how the raw output is formatted. I don't cover hooks in
 much detail in this book. For more information on hooks, please see
 Yihui Xie's webpage: <http://yihui.name/knitr/hooks>.
 
-### *knitr*, *rmarkdown*, & RStudio
+### knitr, R Markdown, & RStudio
 
-RStudio is highly integrated with *knitr*/*rmarkdown* and
+RStudio is highly integrated with knitr/R Markdown and
 the markup languages that they work with. RStudio is probably the easiest tool
-for creating and compiling *knitr*/*rmarkdown*. Most of the
-RStudio/*knitr*/*rmarkdown* features are accessed in the
+for creating and compiling knitr/R Markdown. Most of the
+RStudio/knitr/R Markdown features are accessed in the
 *Source* pane. The *Source* pane's appearance and capabilities change
 depending on the type of file you have open in it. RStudio uses a file's
 extension and, if it is an *rmarkdown* document, its header, to
@@ -1006,7 +998,7 @@ output type you would like (HTML, PDF or MS Word) and click the
 `Compile` button. For this example I selected HTML. In Figure
 \@ref(fig:NotebookExample) you can see near the top center right a small globe
 icon next to the word "Publish". Clicking this allows you to publish
-your Notebook to RPubs (<http://www.rpubs.com/>). RPubs is a site for
+your Notebook to RPubs (<http://www.rpubs.com/>).\index{RPubs} RPubs is a site for
 sharing your Notebooks over the internet. You can publish not only
 Notebooks, but also any *rmarkdown* Markdown
 document you compile in RStudio.
@@ -1057,7 +1049,7 @@ next similarly formatted comment (or the end of the chunk).
 
 #### R (Sweave) LaTeX {-}
 
-Many of the *Source* pane options for R (`.Rnw) LaTeX files are the same as R Markdown
+Many of the *Source* pane options for R (`.Rnw`) LaTeX files are the same as R Markdown
 files, the key differences being that there is a `Compile PDF` icon instead of
 `Knit`. Clicking this icon knits the file and creates a PDF file in
 your R LaTeX file's directory. There is also a `Format` icon instead of
@@ -1086,7 +1078,7 @@ documents in R (or using the console in RStudio). All of the
 *knitr* syntax in your markup document is the same as
 before, but instead of clicking a or button use the function. To knit a
 hypothetical Markdown file *example.Rmd* you first use the
-`setwd` function to set the working directory (for more details see
+`setwd()` function to set the working directory (for more details see
 Chapter \@ref(DirectoriesChapter)) to the folder where the
 *example.Rmd* file is located. In this example it is
 located in the Documents folder.[^chapter3_40]
@@ -1095,7 +1087,7 @@ located in the Documents folder.[^chapter3_40]
 setwd("/Documents/")
 ```
 
-Then you knit the file:
+Then you knit the file:\index{R function!knit}
 
 ```{r Ch3RawKnit, echo=TRUE, eval=FALSE, tidy=FALSE}
 knit(input = "example.Rmd", output = "example.md")
@@ -1106,20 +1098,20 @@ if you do not specify the output file, *knitr* will
 determine what the file name and extension should be. In this example it
 would come up with the same name and location as we gave it.
 
-In this example, using the `knit` function only creates a Markdown file
+In this example, using the `knit()` function only creates a Markdown file
 and not an HTML file, as clicking `Knit` in RStudio did. Likewise, if you use
 on a file you will only end up with a basic LaTeX file and not a
 compiled PDF. To convert the Markdown file into HTML you need to further
 run the file through the function from the *markdown*
-package, i.e.
+package, i.e.:\index{R function!markdownToHTML}
 
 ```{r Ch3MDtoHTML, eval=FALSE, tidy=FALSE, echo=TRUE}
-mardownToHTML(file = "example.md", output = "example.html")
+markdownToHTML(file = "example.md", output = "example.html")
 ```
 
 This is a bit tedious. Luckily, there is a function in the
-*knitr* package that combines `markdownToHTML` and `knit`.
-It is called `knit2html`. You use it like this:
+*knitr* package that combines `markdownToHTML()` and `knit()`.
+It is called `knit2html()`. You use it like this:\index{R function!knit2html}
 
 ```{r Ch3RMDtoHTML, echo=TRUE, eval=FALSE, tidy=FALSE}
 knit2html(file = "example.Rmd", output = "example.html")
@@ -1128,7 +1120,7 @@ knit2html(file = "example.Rmd", output = "example.html")
 If we want to compile a file in R we run it through the function in the
 *tools* package. This package will run both LaTeX and
 BibTeX to create a PDF with a bibliography (see Chapter \@ref(LatexChapter)
-for more details on using BibTeX for bibliographies). Here is a example:
+for more details on using BibTeX for bibliographies). Here is a example:\index{R function!texi2pdf}
 
 ```{r CH3tex2pdf, echo=TRUE, eval=FALSE, tidy=FALSE}
 # Load tools package
@@ -1138,14 +1130,14 @@ library(tools)
 texi2pdf(file = "example.tex")
 ```
 
-Just like with `knit2html`, you can simplify this process by using the
-`knit2pdf` function to compile a PDF file from a `.Rnw` document.
+Just like with `knit2html()`, you can simplify this process by using the
+`knit2pdf()` function to compile a PDF file from a `.Rnw` document.\index{R function!knit2html}\index{R function!knit2pdf}
 
 ### *rmarkdown* and R {#rmarkdownRender}
 
 Just as *knitr* is an R package that you can run from the console, you
 can also run *rmarkdown* from the console. Instead of the `knit`
-function use `render`. Imagine that *Example.Rmd* now has an *rmarkdown*
+function use `render`. Imagine that *example.Rmd* now has an *rmarkdown*
 header:
 
 ````yaml
@@ -1190,7 +1182,7 @@ or
 render("example.Rmd", c("pdf_document", "html_document"))
 ```
 
-In all of these cases, `render` will create, but not keep the intermediate *.md* or
+In all of these cases, `render()` will create, but not keep the intermediate *.md* or
 *.tex* document. You can have these documents saved by adding `keep_md`
 or `keep_tex` to the header. For example:
 
@@ -1221,11 +1213,11 @@ research projects.
 
 ## Appendix: Jupyter interactive notebooks {- #jupyter}
 
-Jupyter notebooks are a commonly used alternative to R Markdown notebooks and *knitr* generally for displaying and discussing computational analyses. They are especially prevalent in the data science industry.  For example, I never used Jupyter notebooks during my academic life in the quantitative social sciences, but after moving to the tech industry I regularly write and read them. A reason for this is that they  are particularly useful for fast prototyping analyses. They are interactive. You run the code directly in the notebook and see the results printed in the notebook immediately.
+Jupyter notebooks are a commonly used alternative to R Markdown notebooks and knitr generally for displaying and discussing computational analyses. They are especially prevalent in the data science industry.  For example, I never used Jupyter notebooks during my academic life in the quantitative social sciences, but after moving to the tech industry I regularly write and read them. A reason for this is that they  are useful for fast prototyping data analyses as they are interactive. You run the code directly in the notebook and see the results printed in the notebook immediately.
 
-Jupyter is often associated with Python, but the name 'Jupyter' actually refers to three languages used in data science **Ju**lia,\index{Julia language} **Py**thon,\index{Python} and **R** and can be used with other languages as well.
+Jupyter is often associated with Python, but the name 'Jupyter' actually refers to three languages used in data science **Ju**lia,\index{Julia} **Py**thon,\index{Python} and **R** and can be used with other languages as well.
 
-This book is clearly focused on R Markdown, but if you would like to explore launching Jupyter from R see the *IRkernel* package [@R-IRkernel]. Though personally I have been using launching Jupyter from Python or Julia, as the installation is more straightforward. In fact for the Python installation is a prerequisite for *IRkernel*. For more details see:
+This book is clearly focused on R Markdown, but if you would like to explore launching Jupyter from R see the *IRkernel* package [@R-IRkernel]. Though personally I have been using launching Jupyter from Python or Julia, as the installation is more straightforward. In fact, the Python installation is a prerequisite for *IRkernel*. For more details see:
 
 - Python installation instructions: <http://jupyter.org/install.html>,
 
@@ -1233,9 +1225,9 @@ This book is clearly focused on R Markdown, but if you would like to explore lau
 
 #### Controversy {-}
 
-In mid-2019 there was a major controversy (well at least a topic heavily discussed on data science Twitter)\index{Twitter} about Jupyter notebooks. Joel Grus started the controversy by giving a talk at the main Jupyter conference--JupyterCon--called 'I Don't Like Notebooks'.[^jupyter_dont_like]
+In mid-2019 there was a major controversy about Jupyter notebooks (well at least a topic heavily discussed on data science Twitter)\index{Twitter}. Joel Grus started the controversy by giving a talk at the main Jupyter conference--JupyterCon--called 'I Don't Like Notebooks'.[^jupyter_dont_like]
 
-His critique was multi-pronged, but one that resonated with my strong interest in reproducibility (and personal experience using these notebooks) is that you can execute code in Jupyter notebooks in an arbitrary order. Using R Markdown terminology: you could execute the third code chunk before the second and then make changes to and rerun the second chunk without rerunning the third. This is troubling for reproducibility as it is difficult for a third person (or yourself a few minutes later) to know what order the code was executed in to get the displayed results. Jupyter notebooks do record the order in which code was executed within the same session, but this adds an additional layer of complexity to figuring out results. The order also becomes inconsistent when a notebook is relaunched.
+His critique was multi-pronged, but one critique that resonated with my strong interest in reproducibility (and personal experience using these notebooks) is that you can execute code in Jupyter notebooks in an arbitrary order. Using R Markdown terminology: you could execute the third code chunk before the second and then make changes to and rerun the second chunk without rerunning the third. This is troubling for reproducibility as it is difficult for a third person (or yourself a few minutes later) to know what order the code was executed in to get the displayed results. Jupyter notebooks do record the order in which code was executed within the same session, but this adds an additional layer of complexity to figuring out results. The order also becomes inconsistent when a notebook is relaunched.
 
 #### R Markdown vs. Jupyter {-}
 
@@ -1287,9 +1279,9 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_5]: @whickham2014book argues that underscores (`_`) should be used
     to separate words in object names to make the names easier to read.
     For example: `health_data` rather than `healthdata`.
-    Underscores appear to now be the dominate naming convention in the R community.
-    Other conventions include using periods (`.`) or capital
-    letters (referred to as CamelBack). For more
+    The nderscore object naming convention appears to now be the dominant 
+    naming style in the R community. Other conventions include using 
+    periods (`.`) or capital letters (referred to as CamelBack). For more
     information on R naming conventions see @baath2012.
 
 [^chapter3_6]: The assignment operator is sometimes also referred to as the 'gets
@@ -1303,6 +1295,8 @@ create a new TeX Code block, select `Insert` from the menu bar then
 [^chapter3_8]: Single and double quotation marks are interchangeable in R for
     this purpose. In this book I always use double quotes, except for
     *knitr* code chunk options.
+
+[^chapter_3_types]: R object types are not fixed. They can be implicitly converted by assigning values of a different type to them. Other languages, such as Scala, prohibit implicit type conversions.\index{Scala} These languages are sometimes referred to as 'type safe'. They make it impossible to implicitly change an object's type, which can sometimes produce errors.\index{type safe} 
 
 [^chapter3_9]: These might be called scalar objects, though in R scalars are just
     vectors with a length of 1.
@@ -1331,13 +1325,13 @@ create a new TeX Code block, select `Insert` from the menu bar then
     rows.
 
 [^chapter3_17]: You can see what is in your current search path with the `search`
-    function. Just type `search()` into your R console.
+    function. Just type `search()` \index{R function!search}into your R console.
 
 [^chapter3_18]: For more information on this data set, type `?cars` into your R
     console.
 
-[^chapter3_19]: Using R terminology, the second "argument" value-the code after
-    the comma-of the **with** function is called an "expression", because
+[^chapter3_19]: Using R terminology, the second 'argument' value--the code after
+    the comma--of the `with()` function is called an 'expression', because
     it can contain more than one R function or statement. See Section
     \@ref(arguments) for a more comprehensive discussion of R function
     arguments.
@@ -1386,10 +1380,7 @@ create a new TeX Code block, select `Insert` from the menu bar then
     have the same `.Rmd` file extension.
 
 [^chapter3_33]: The "nw" refers to noweb simple literate programming tool that
-    Sweave builds on.
-
-[^chapter3_34]: The syntax has its genesis in a literate programming tool called
-    noweb @leisch2002 [@ramseynoweb].
+    Sweave builds on @leisch2002 [@ramseynoweb].
 
 [^chapter3_35]: In Markdown, you can put global chunk options at the very top of
     the document. In `.Rnw` documents they should be placed after the
