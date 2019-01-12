@@ -70,20 +70,16 @@ observations that you wanted to keep. Having the raw data makes it easy
 to go back and correct your mistakes.
 
 The files for the examples used in this section can be downloaded from
-GitHub at: <http://bit.ly/YnMKBG>.
+GitHub at: <https://github.com/christophergandrud/rep-res-book-v3-examples>.
 
 ### R Make-like files
 
 When you create make-like files in R to organize and run your data
 gathering you usually only need one or two commands, and . As we talked
-about in Chapter
-[\[DirectoriesChapter\]](#DirectoriesChapter){reference-type="ref"
-reference="DirectoriesChapter"}, simply tells R where to look for and
+about in Chapter \@ref(DirectoriesChapter), simply tells R where to look for and
 place files. tells R to run code in an R source code file.[^chapter_6_3] Let's see
 what an R data make file might look like for a project with a file
-structure similar to the example project in Figure
-[\[ExampleTree\]](#ExampleTree){reference-type="ref"
-reference="ExampleTree"}. The file paths in this example are for
+structure similar to the example project in Figure \@ref(ExampleTree). The file paths in this example are for
 Unix-like systems and the make-like file is called *Makefile.R*.
 
 ```{r Ch6ExampleRMake, eval=FALSE}
@@ -134,10 +130,12 @@ that create them are called "prerequisites". You specify a "recipe" to
 create the targets from the prerequisites. The recipe is basically just
 the code you want to run to make the target file. The general form is:
 
+````
     TARGET ... : PREREQUISITE ...
         RECIPE
         ...
         ...
+`````
 
 Note that, unlike in R, tabs are important in Make. They indicate what
 lines are the recipe. Make uses the recipe to ensure that targets are
@@ -149,7 +147,7 @@ what we saw before, with a few twists and some new syntax. Let's see an
 example that does what we did before: gather data from three sources,
 clean and merge the data, and save it in CSV format.
 
-#### Example makefile
+#### Example makefile {- #AsteriskWildcard}
 
 The first thing we need to do is create a new file called *Makefile*[^chapter_6_6]
 and place it in the same directory as the data gathering files we
@@ -158,38 +156,40 @@ files by the alphanumeric order of their file names. So we need to
 ensure that the files are named in the order that we want to run them.
 Now let's look at the actual makefile:
 
-    ################
-    # Example Makefile
-    # Christopher Gandrud
-    # Updated 1 July 2013
-    # Influenced by Rob Hyndman (31 October 2012)
-    # See: http://robjhyndman.com/researchtips/makefiles/
-    ################
+````bash
+  ################
+  # Example Makefile
+  # Christopher Gandrud
+  # Updated 1 July 2013
+  # Influenced by Rob Hyndman (31 October 2012)
+  # See: http://robjhyndman.com/researchtips/makefiles/
+  ################
 
-    # Key variables to define
-    RDIR = .
-    MERGE_OUT = merge-data.Rout
+  # Key variables to define
+  RDIR = .
+  MERGE_OUT = merge-data.Rout
 
-    # Create list of R source files
-    RSOURCE = $(wildcard $(RDIR)/*.R)
+  # Create list of R source files
+  RSOURCE = $(wildcard $(RDIR)/*.R)
 
-    # Files to indicate when the RSOURCE file was run
-    OUT_FILES = $(RSOURCE:.R=.Rout)
+  # Files to indicate when the RSOURCE file was run
+  OUT_FILES = $(RSOURCE:.R=.Rout)
 
-    # Default target
-    all: $(OUT_FILES)
+  # Default target
+  all: $(OUT_FILES)
 
-    # Run the RSOURCE files
-    $(RDIR)/%.Rout: $(RDIR)/%.R
-        R CMD BATCH $<
+  # Run the RSOURCE files
+  $(RDIR)/%.Rout: $(RDIR)/%.R
+      R CMD BATCH $<
 
-    # Remove Out Files
-    clean:
-        rm -fv $(OUT_FILES)
+  # Remove Out Files
+  clean:
+      rm -fv $(OUT_FILES)
 
-    # Remove merge-data.Rout
-    cleanMerge:
-        rm -fv $(MERGE_OUT)
+  # Remove merge-data.Rout
+  cleanMerge:
+      rm -fv $(MERGE_OUT)
+````
 
 Ok, let's break down the code. The first part of the file defines
 variables that will be used later on. For example, in the first line of
@@ -202,7 +202,7 @@ this file to ensure that the *merge-data.R* file is always run.
 
 The third executed line (`RSOURCE:= $(wildcard $(RDIR)/*.R)`) creates a
 variable containing a list of all of the names of files with the
-extension `.R`, i.e. our data gathering and merge source code files.
+extension `.R`, i.e. our data gathering and merge source code files.\index{wildcard}
 This line has some new syntax, so let's work through it. In Make (and
 Unix-like shells generally) a dollar sign (`$`) followed by a variable
 name substitutes the value of the variable in place of the name.[^chapter_6_8] For
@@ -211,8 +211,7 @@ of `RDIR` previously. The parentheses are included to clearly demarcate
 where the variable name begins and ends.[^chapter_6_9]
 
 You may remember the asterisk (`*`) from the previous chapter. It is a
-"wildcard",[\[AsteriskWildcard\]]{#AsteriskWildcard
-label="AsteriskWildcard"} a special character that allows you to select
+"wildcard",\index{wildcard} a special character that allows you to select
 file names that follow a particular pattern. Using `*.R` selects any
 file name that ends in `.R`.
 
@@ -271,34 +270,41 @@ create the CSV final data file and four files with the extension
 run.[^chapter_6_12]
 
 When you run `make` in the shell for the first time you should get the
-output:
+output:\index{shell command!make}
 
-    ## R CMD BATCH gather-1.R
-    ## R CMD BATCH gather-2.R
-    ## R CMD BATCH gather-3.R
-    ## R CMD BATCH merge-data.R
+````bash
+## R CMD BATCH gather-1.R
+## R CMD BATCH gather-2.R
+## R CMD BATCH gather-3.R
+## R CMD BATCH merge-data.R
+````
 
 If you run it a second time without changing the R source files you will
 get the following output:
 
-    ## make: Nothing to be done for 'all'.
+````
+## make: Nothing to be done for 'all'.
+````
 
 To remove all of the `.Rout` files, set the make target to `clean`:
 
-    make clean
+````bash
+make clean
 
-    ## rm -fv ./gather-1.Rout ./gather-2.Rout ./gather-3.Rout
-    ## ./merge-data.Rout
-    ## ./gather-1.Rout
-    ## ./gather-2.Rout
-    ## ./gather-3.Rout
-    ## ./merge-data.Rout
+## rm -fv ./gather-1.Rout ./gather-2.Rout ./gather-3.Rout
+## ./merge-data.Rout
+## ./gather-1.Rout
+## ./gather-2.Rout
+## ./gather-3.Rout
+## ./merge-data.Rout
+````
 
-If we run the following code:[\[MakeAllCommand\]]{#MakeAllCommand
-label="MakeAllCommand"}
+If we run the following code:
 
-\<\<Ch6MakeAll, eval=FALSE, engine='sh', echo=TRUE\>\>= \# Remove
-merge-data.Rout and make all R source files make cleanMerge all @
+````bash
+# Remove merge-data.Rout and make all R source files
+make cleanMerge all
+````
 
 then Make will first remove the *merge-data.Rout* file (if there is one)
 and then run all of the R source files as need be. *merge-data.R* will
@@ -313,19 +319,18 @@ within RStudio is that you don't have to toggle between RStudio and the
 shell. Everything is in one place. Imagine that the directory with our
 makefile is an RStudio Project. If a Project already contains a
 makefile, RStudio will automatically open a *Build* tab on the
-*Environment/History* pane, the same place where the *Git* tab appears
-(see Figure [1.1](#BuildTab){reference-type="ref"
-reference="BuildTab"}).[^chapter_6_13]
+*Environment/Historyr/Connections* pane, the same place where the *Git* tab appears
+(see Figure \@ref(fig:Ch6BuildTab)).[^chapter_6_13]
 
 The *Build* tab has buttons you can click to `Build All` (this is
 equivalent to `make all`), and, in the `More` drop-down menu,
 `Clean all` (i.e., `make clean`) and `Clean and Rebuild` (i.e.,
-`make clean all`). As you can see in Figure
-[1.1](#BuildTab){reference-type="ref" reference="BuildTab"}, the *Build*
+`make clean all`). As you can see in Figure \@ref(fig:Ch6BuildTab), the *Build*
 tab shows you the same output you get in the shell.
 
-![The RStudio Build
-Tab[]{label="BuildTab"}](Children/Chapter6/images6/BuildTab.png){#BuildTab}
+```{r Ch6BuildTab, fig.cap="The RStudio Build", echo=FALSE, out.width="50%"}
+knitr::include_graphics("images/chapter_6/BuildTab.png")
+```
 
 #### Other information about makefiles
 
@@ -335,14 +340,14 @@ a Mac. It should work on other Unix-like computers without modification.
 
 You can use Make to build almost any project from the shell, not just to
 run R source code files. It was an integral part of early reproducible
-computational research [@Fomel2009; @Buckheit1995]. Rob Hyndman more
+computational research [@Fomel2009;
+```Buckheit1995]. Rob Hyndman more
 recently posted a description of the makefile he uses to create a
 project with R and LaTeX.[^chapter_6_14] The complete source of information on GNU
 Make is the official online manual. It is available at:
 <http://www.gnu.org/software/make/manual/>.
 
-Importing Locally Stored Data Sets
-----------------------------------
+## Importing Locally Stored Data Sets
 
 Now that we've covered the big picture, let's learn the different tools
 you will need to know to gather data from different types of sources.
@@ -354,16 +359,16 @@ importing locally stored data files will also be important for most of
 the other methods further on.
 
 Data stored in plain-text files on your computer can be loaded into R
-using the `read.table` command. For example, imagine we have a CSV file
-called *TestData.csv* stored in the current working directory. To load
+using the `read.table()` function.\index{R function!read.table} For example, imagine we have a CSV file
+called *test-data.csv* stored in the current working directory. To load
 the data set into R simply type:
 
-\<\<Ch6LocalReadTable, eval=FALSE, tidy=FALSE, echo=TRUE\>\>= TestData
-\<- read.table(\"TestData.csv\", sep = \",\", header = TRUE) @
+```{r Ch6LocalReadTable, eval=FALSE}
+test_data <- read.table("test-data.csv", sep = ",", header = TRUE)
+```
 
-See Section [\[SepHeadExplain\]](#SepHeadExplain){reference-type="ref"
-reference="SepHeadExplain"} for a discussion of the arguments in this
-command.
+See Section \@ref(SepHeadExplain) for a discussion of the arguments in this
+function.
 
 If you are using RStudio you can do the same thing with drop-down menus.
 To open a plain-text data file click on `Environment` `Import Dataset…`
@@ -375,31 +380,40 @@ variable labels, and other options. This is initially easier than using
 If the data is not stored in plain-text format, but is instead saved in
 a format created by another statistical program such as SPSS, SAS, or
 Stata, we can import it using commands in the *foreign* package. For
-example, imagine we have a data file called *Data1.dta* stored in our
+example, imagine we have a data file called *data-1.dta* stored in our
 working directory. This file was created by the Stata statistical
 program. To load the data into an R data frame object called *StataData*
 simply type:
 
-\<\<Ch6Stata, eval=FALSE, tidy=FALSE, echo=TRUE\>\>= \# Load foreign
-package library(foreign)
+```{r Ch6Stata, eval=FALSE, tidy=FALSE, echo=TRUE}
+# Load foreign package
+library(foreign)
 
-\# Load Stata formatted data StataData \<- read.dta(file =
-\"Data1.dta\") @
+# Load Stata formatted data
+stata_data <- read.dta(file = "data-1.dta")
+```
 
-As you can see, commands in the *foreign* package have similar syntax to
-`read.table`. To see the full range of commands and file formats that
-the *foreign* package supports, use the following command:
+As you can see, function in the *foreign* package have similar syntax to
+`read.table()`. To see the full range of commands and file formats that
+the *foreign* package supports, use the following command:\index{R function!read.dta}
 
-\<\<Ch6ForeignHelp, eval=FALSE, echo=TRUE\>\>= library(help =
-\"foreign\") @
+```{r Ch6ForeignHelp, eval=FALSE, echo=TRUE}
+library(help = "foreign")
+```
 
-If you have data stored in a spreadsheet format such as Excel's *.xlsx*,
+Typically an even simpler solution is to use `import()`\index{R function!rio} from the *rio* package. It will automatically try to find the right way to parse whatever data format you give it. For example:
+
+````r
+stata_data <- rio::import("data-1.dta")
+````
+
+If you have data stored in a spreadsheet format such as Excel's *.xlsx*,\index{Excel}
 it may be best to first cleanup the data in the spreadsheet program by
 hand and then save the file in plain-text format. When you cleanup the
 data make sure that the first row has the variable names and that
 observations are in the following rows. Also, remove any extraneous
 information such as notes, colors, and so on that will not be part of
-the data frame.
+the data frame. `import()` can also attempt to import *.xlsx* files. This is much easier if they are cleaned up to resemble text files.
 
 To aid reproducibility, locally stored data should include careful
 documentation of where the data came from and how, if at all, it was
@@ -407,14 +421,15 @@ transformed before it was loaded into R. Ideally, the documentation
 would be written in a text file saved in the same directory as the raw
 data file.
 
-Importing Data Sets from the Internet
--------------------------------------
+## Importing Data Sets from the Internet
 
 There are many ways to import data that is stored on the internet
 directly into R. We have to use different methods depending on where and
 how the data is stored.
 
-### Data from non-secure () URLs
+### Data from non-secure (http) URLs
+
+[CONSIDER REMOVING SECTIONS OR MOVING CONTENT FROM CH5]
 
 Importing data into R that is located at a non-secure URL[^chapter_6_15]--ones
 that start with --is straightforward provided that:
@@ -427,53 +442,20 @@ We already discussed the first issue in detail. You can determine if the
 data file is embedded in a website by opening the URL in your web
 browser. If you only see the raw plain-text data, you are probably good
 to go. To import the data, simply include the URL as the file's name in
-your `read.table` command.
+your `read.table()` function.\index{R function!read.table).
 
-### Data from secure () URLs {#SecureDataDownload}
+### Data from secure (https) URLs {#SecureDataDownload}
 
 Storing data at non-secure URLs is becoming less common. Services like
 Dropbox and GitHub now store their data at secure URLs.[^chapter_6_16] You can
 tell if the data is stored at a secure web address if it begins with
-`https` rather than `http`. We have to use different commands to
-download data from secure URLs. Let's look at three methods for
-downloading data into R: `source_data`, `source_DropboxData`, and the
-*RCurl* package.
+`https` rather than `http`. We have to use different functions to
+download data from secure URLs. Let's look at two methods for
+downloading data into R: `import()` and the *RCurl* package.
 
-##### Loading data from secure URLs with  {#SecureData6}
+##### Loading data from secure URLs with  {- #SecureData6 #DropboxNonPublic}
 
-As we saw in Chapter [\[Storing\]](#Storing){reference-type="ref"
-reference="Storing"}, we can use the `source_data` command in the
-*repmis* package to simplify the process of downloading data from
-Dropbox *Public* folders (Section
-[\[EnablePublicFolder\]](#EnablePublicFolder){reference-type="ref"
-reference="EnablePublicFolder"}) and GitHub (Section
-[\[GitDownload\]](#GitDownload){reference-type="ref"
-reference="GitDownload"}). You can use `source_data` to download data in
-plain-text format from almost any URL, as long as the file is not
-embedded in a larger HTML website.
-
-One problem for reproducible research with sourcing data located on the
-internet is that data files may change without us knowing. This could
-change the results we get. Luckily, we can solve this problem with
-`source_data`. In Chapter [\[Storing\]](#Storing){reference-type="ref"
-reference="Storing"} we saw that when we run the `source_data` command
-we not only download a data file, but also find its SHA-1 hash. The
-SHA-1 hash is basically a unique number for the file. If the file
-changes, its SHA-1 hash will change. Once we know the file's SHA-1 hash
-we can use `source_data`'s `sha1` argument to make sure the file that we
-downloaded is the same as the one we intended to download.
-
-For example, let's find the SHA-1 hash for the disproportionality data
-set we downloaded in the last chapter (Section
-[\[GitDownload\]](#GitDownload){reference-type="ref"
-reference="GitDownload"}):[^chapter_6_17]
-
-\<\<Ch6sourceDataGitHub, tidy=FALSE, size='small', message=TRUE\>\>=
-DispropData \<- rio::import(UrlAddress) @
-
-##### Loading data from Dropbox non-Public folders with  {#DropboxNonPublic}
-
-Files stored on Dropbox non-*Public* folders are a little trickier to
+Files stored on Dropbox are a little trickier to
 download. If you go to the Dropbox website and click the `Share Link`
 button next to a file
 (![image](Children/Chapter5/images5/DropboxLink.png)) you will be given
@@ -494,39 +476,41 @@ after `https://www.dropbox.com/s/`, i.e. `exh4iobbm2p5p1v`. Now that we
 have the file name and key we can download the data into R using
 `source_DropboxData`. For example:
 
-\<\<Ch6sourceDropboxData, tidy=FALSE\>\>= \# Download data from a
-Dropbox non-Public folder FinDataFull \<-
-rio::import(\"fin\_research\_note.csv\", \"exh4iobbm2p5p1v\", format =
-\"csv\") @
+```{r Ch6sourceDropboxData, tidy=FALSE}
+# Download data from Dropbox
+FinDataFull <- rio::import("fin_research_note.csv", "exh4iobbm2p5p1v",
+                           format = "csv")
+```
 
-##### Loading data using
+##### Loading data using {-}
 
 A more laborious way to download data from a secure URL that does not
-rely on *repmis* is to use the `getURL` command in the *RCurl* package
-[@R-RCurl] as well as `read.table` and `textConnection`. The latter
+rely on *repmis* is to use the `getURL()` function\index{R function!getURL} in the *RCurl* package
+[@R-RCurl] as well as `read.table()`\index{R function!read.table} and `textConnection()`.\index{R function!textConnection} The latter
 commands are in base R. The two rules about data being stored in plain
 text-formats and not being embedded in a larger HTML website apply to
 this method as well.
 
 Let's try an example. To download the data file we used in Section
-[\[GitDownload\]](#GitDownload){reference-type="ref"
-reference="GitDownload"} into R we could use this code:
+\@ref(GitDownload into R we could use this code:
 
-\<\<Ch6httpsLoad, message=FALSE, tidy=FALSE, size='small'\>\>= \# Put
-URL address into the object UrlAddress UrlAddress \<-
-paste0(\"https://raw.githubusercontent.com/\",
-\"christophergandrud/Disproportionality\",
-\"\_Data/master/Disproportionality.csv\")
+```{r Ch6httpsLoad, message=FALSE, tidy=FALSE, size='small'}
+# Put URL address into the object url_address
+url_address <- paste0("https://raw.githubusercontent.com/",
+    "christophergandrud/Disproportionality",
+    "_Data/master/Disproportionality.csv")
 
-\# Download Electoral disproportionality data DataUrl \<-
-RCurl::getURL(UrlAddress)
+# Download Electoral disproportionality data
+data_url <- RCurl::getURL(url_address)
 
-\# Convert Data into a data frame DispropData \<-
-read.table(textConnection(DataUrl), sep = \",\", header = TRUE)
+# Convert Data into a data frame
+disprop_data <- read.table(textConnection(data_url), sep = ",", header = TRUE)
 
-\# Show variables in the data names(DispropData) @
+# Show variables in the data
+names(disprop_data)
+```
 
-If running `getURL(UrlAddress)` gives you an error about an
+If running `getURL(url_address)` gives you an error about an
 `SSL certificate problem` simply add the argument
 `ssl.verifypeer = FALSE`. This allows you to skip certification
 verification and access the data.[^chapter_6_18]
@@ -543,38 +527,40 @@ R. To do this you need to:[^chapter_6_21]
 -   create a temporary file with to store the zipped file, which you
     will later remove with the at the end,
 
--   download the file with ,
+-   download the file with `download.file()`,
 
 -   decompress the file with one of the commands in base R,[^chapter_6_22]
 
--   read the file with .
+-   read the file with `read.csv()`.
 
 The reason that we have to go through so many extra steps is that
 compressed files are more than just a single file and contain a number
 of files as well as metadata.
 
-Let's download a compressed file called *uds\_summary.csv* from
-[@Pemstein2010]. It's in a compressed file called *uds\_summary.csv.gz*.
+Let's download a compressed file called *uds_summary.csv* from
+[@Pemstein2010]. It's in a compressed file called *uds_summary.csv.gz*.
 At the time of writing, the file's URL address is
 <http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz>.
 
-\<\<Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE,
-size='footnotesize'\>\>= \# For simplicity, store the URL in an object
-called 'URL' URL \<-
-\"http://www.unified-democracy-scores.org/files/20140312/z/uds\_summary.csv.gz\"
+```{r Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE, size='footnotesize'}
+# For simplicity, store the URL in an object called 'URL'
+URL <- "http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz"
 
-\# Create a temporary file called 'temp' to put the zip file into. temp
-\<- tempfile()
+# Create a temporary file called 'temp' to put the zip file into.
+temp <- tempfile()
 
-\# Download the compressed file into the temporary file.
+# Download the compressed file into the temporary file
 download.file(URL, temp)
 
-\# Decompress the file and convert it into a data frame UDSData \<-
-read.csv(gzfile(temp, \"uds\_summary.csv\"))
+# Decompress the file and convert it into a data frame
+uds_data <- read.csv(gzfile(temp, "uds_summary.csv"))
 
-\# Delete the temporary file. unlink(temp)
+# Delete the temporary file
+unlink(temp)
 
-\# Show variables in data names(UDSData) @
+# Show variables in data
+names(uds_data)
+```
 
 ### Data APIs & feeds
 
@@ -629,33 +615,39 @@ these packages work. Imagine that we want to gather data on fertilizer
 consumption. We can use *WDI*'s `WDIsearch` command to find fertilizer
 consumption data available at the World Bank:
 
-\<\<Ch6WDIsearch\>\>= \# Load WDI package library(WDI)
+```{r Ch6WDIsearch}
+# Load WDI package
+library(WDI)
 
-\# Search World Bank for fertilizer consumption data
-WDIsearch(\"fertilizer consumption\") @
+# Search World Bank for fertilizer consumption data
+WDIsearch("fertilizer consumption")
+```
 
 This shows us a selection of indicator numbers and their names.[^chapter_6_31]
 Let's gather data on countries' fertilizer consumption in kilograms per
 hectare of arable land. The indicator number for this variable is:
-AG.CON.FERT.ZS. We can use the command `WDI` to gather the data and put
+`AG.CON.FERT.ZS`. We can use the function `WDI()` to gather the data and put
 it in an object called *FertConsumpData*.
 
-\<\<Ch6WDIFert, eval=TRUE\>\>= FertConsumpData \<- WDI(indicator =
-\"AG.CON.FERT.ZS\") @
+```{r Ch6WDIFert, eval=TRUE}
+FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
+```
 
 The data we downloaded looks like this:
 
-\<\<Ch6WDIFertSave, include=FALSE\>\>= \# This ensures that the PDF will
-still compile even if the data is unavailable via WDI \#load(file =
-\"Source/Children/Chapter6/FertData.RData\") @
+```{r Ch6WDIFertSave, include=FALSE}
+# This ensures that the PDF will still compile even if the data is unavailable via WDI
+load(file = "Source/Children/Chapter6/FertData.RData")
+```
 
-\<\<Ch6HeadFert\>\>= head(FertConsumpData) @
+```{r Ch6HeadFert}
+head(FertConsumpData)
+```
 
 You can see that `WDI` has downloaded data for four variables:
 **iso2c**,[^chapter_6_32] **country**, **AG.CON.FERT.ZS** and **year**.
 
-Advanced Automatic Data Gathering: Web Scraping
------------------------------------------------
+## Advanced Automatic Data Gathering: Web Scraping
 
 If a package does not already exist to access data from a particular
 website, there are other ways to automatically "scrape" data with R.
@@ -663,7 +655,7 @@ This section briefly discusses some of R's web scraping tools and
 techniques to get you headed in the right direction to do more advanced
 data gathering.
 
-##### The general process
+##### The general process {-}
 
 Simple web scraping involves downloading a file from the internet,
 parsing it (i.e. reading it), and extracting the data you are interested
@@ -722,7 +714,7 @@ number of other skills:
     Finally, [@Munzert2015] provide a comprehensive overview of web
     scraping and text mining with R.
 
-### Chapter summary {#chapter-summary .unnumbered}
+### Chapter summary {-}
 
 In this chapter we have learned how to reproducibly gather data from a
 number of sources. If the data we are using is available online we may
@@ -751,9 +743,7 @@ analyses.
     way to compile computer programs from a series of files, its primary
     use to this day. For an overview see:
     <http://en.wikipedia.org/wiki/Make_(software)>. For installation
-    instructions please see Section
-    [\[InstallMake\]](#InstallMake){reference-type="ref"
-    reference="InstallMake"}.
+    instructions please see Section \@ref(InstallMake).
 
 [^chapter_6_5]: A file's time stamp records the time and date when it was last
     changed.
@@ -802,7 +792,7 @@ analyses.
     URLs, but switched to secure URLs.
 
 [^chapter_6_17]: Remember we placed the file's raw GitHub URL address inside of
-    the object *UrlAddress*.
+    the object *url_address*.
 
 [^chapter_6_18]: For more details see the *RCurl* help page at
     <http://www.omegahat.org/RCurl/FAQ.html>.
