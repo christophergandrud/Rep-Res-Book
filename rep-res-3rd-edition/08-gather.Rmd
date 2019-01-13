@@ -340,7 +340,7 @@ a Mac. It should work on other Unix-like computers without modification.
 
 You can use Make to build almost any project from the shell, not just to
 run R source code files. It was an integral part of early reproducible
-computational research [@Fomel2009;
+computational research [@fomel2009;
 ```Buckheit1995]. Rob Hyndman more
 recently posted a description of the makefile he uses to create a
 project with R and LaTeX.[^chapter_6_14] The complete source of information on GNU
@@ -444,76 +444,23 @@ browser. If you only see the raw plain-text data, you are probably good
 to go. To import the data, simply include the URL as the file's name in
 your `read.table()` function.\index{R function!read.table).
 
-### Data from secure (https) URLs {#SecureDataDownload}
+### Data from secure (*https*) URLs {#SecureDataDownload}
 
-Storing data at non-secure URLs is becoming less common. Services like
-Dropbox and GitHub now store their data at secure URLs.[^chapter_6_16] You can
+Storing data at non-secure URLs is now very uncommon. Services like
+Dropbox, GitHub, and Dataverse store their data at secure URLs.[^chapter_6_16] You can
 tell if the data is stored at a secure web address if it begins with
-`https` rather than `http`. We have to use different functions to
-download data from secure URLs. Let's look at two methods for
-downloading data into R: `import()` and the *RCurl* package.
+`https` rather than `http`. We have to use a different function to
+download data from secure URLs.
 
-##### Loading data from secure URLs with  {- #SecureData6 #DropboxNonPublic}
+As we saw last chapter in Section \@ref(EnablePublicFolder), `import()` has no problem gathering data from secure URLs, e.g.:
 
-Files stored on Dropbox are a little trickier to
-download. If you go to the Dropbox website and click the `Share Link`
-button next to a file
-(![image](Children/Chapter5/images5/DropboxLink.png)) you will be given
-an information box. This is not the raw data file. Luckily, *repmis*
-includes a `source_DropboxData` command for downloading data stored in a
-non-Public Dropbox folder into R. It works in much the same way as
-`source_data`, the only difference is that instead of using the URL we
-need (a) the file's name and (b) its Dropbox key.
+```{r Ch6importhttps}
+# Place the URL into the object fin_url
+fin_url <- "https://bit.ly/2xlQ2j5"
 
-To find the file's key simply click on the `Share Link` button next to
-the file on the Dropbox website. Look at the URL for the webpage that
-appears. Here's an example:
-<https://dl.dropboxusercontent.com/s/exh4iobbm2p5p1v/fin_research_note.csv>
-
-You can see that the last part of the URL (`fin_research_note.csv`) is
-the data file's name. The key is the string of letters and numbers just
-after `https://www.dropbox.com/s/`, i.e. `exh4iobbm2p5p1v`. Now that we
-have the file name and key we can download the data into R using
-`source_DropboxData`. For example:
-
-```{r Ch6sourceDropboxData, tidy=FALSE}
-# Download data from Dropbox
-FinDataFull <- rio::import("fin_research_note.csv", "exh4iobbm2p5p1v",
-                           format = "csv")
+# Download data
+fin_regulator <- import(fin_url, format = "csv")
 ```
-
-##### Loading data using {-}
-
-A more laborious way to download data from a secure URL that does not
-rely on *repmis* is to use the `getURL()` function\index{R function!getURL} in the *RCurl* package
-[@R-RCurl] as well as `read.table()`\index{R function!read.table} and `textConnection()`.\index{R function!textConnection} The latter
-commands are in base R. The two rules about data being stored in plain
-text-formats and not being embedded in a larger HTML website apply to
-this method as well.
-
-Let's try an example. To download the data file we used in Section
-\@ref(GitDownload into R we could use this code:
-
-```{r Ch6httpsLoad, message=FALSE, tidy=FALSE, size='small'}
-# Put URL address into the object url_address
-url_address <- paste0("https://raw.githubusercontent.com/",
-    "christophergandrud/Disproportionality",
-    "_Data/master/Disproportionality.csv")
-
-# Download Electoral disproportionality data
-data_url <- RCurl::getURL(url_address)
-
-# Convert Data into a data frame
-disprop_data <- read.table(textConnection(data_url), sep = ",", header = TRUE)
-
-# Show variables in the data
-names(disprop_data)
-```
-
-If running `getURL(url_address)` gives you an error about an
-`SSL certificate problem` simply add the argument
-`ssl.verifypeer = FALSE`. This allows you to skip certification
-verification and access the data.[^chapter_6_18]
 
 ### Compressed data stored online
 
@@ -538,7 +485,7 @@ compressed files are more than just a single file and contain a number
 of files as well as metadata.
 
 Let's download a compressed file called *uds_summary.csv* from
-[@Pemstein2010]. It's in a compressed file called *uds_summary.csv.gz*.
+[@pemstein2010]. It's in a compressed file called *uds_summary.csv.gz*.
 At the time of writing, the file's URL address is
 <http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz>.
 
@@ -573,40 +520,9 @@ gathering process easier as you don't have to download many Excel files
 and fiddle around with them before even getting the data into R, but it
 also makes replicating the data gathering process much more
 straightforward and makes it easy to update data sets when new
-information becomes available. Some examples of these packages include:
+information becomes available.
 
--   The *openair* package [@R-openair], which beyond providing a number
-    of tools for analyzing air quality data also has the ability to
-    directly gather data directly from sources such as Kings College
-    London's London Air (<http://www.londonair.org.uk/>) database.
-
--   The *quantmod* package [@R-quantmod] allows you to access data from
-    Google Finance,[^chapter_6_23] Yahoo Finance,[^chapter_6_24] and the US Federal
-    Reserve's FRED[^chapter_6_25] economic database.
-
--   The *treebase* package by [@Boettiger2012] allows you to access
-    phylogenetic data from TreeBASE.[^chapter_6_26]
-
--   The *twitteR* package [@R-twitteR] accesses Twitter's[^chapter_6_27] API. This
-    allows you to download data from Twitter including tweets and
-    trending topics.
-
--   The *WDI* package [@R-WDI] allows you to directly download data from
-    the World Bank's Development Indicators database.[^chapter_6_28] This database
-    includes numerous country-level economic, health, and environment
-    variables.
-
--   The rOpenSci[^chapter_6_29] group has and is developing a number of packages
-    for accessing scientific data from web-based sources with R. They
-    have a comprehensive set of packages for accessing biological data
-    and academic journals. For a list of their packages see:
-    <http://ropensci.org/packages/index.html>.
-
--   Stack Exchange's Cross Validated website[^chapter_6_30] also has a fairly
-    comprehensive and regularly updated list of APIs accessible from R
-    packages.
-
-##### API Package Example: World Bank Development Indicators
+##### API Package Example: World Bank Development Indicators {-}
 
 Each of these packages has its own syntax and it isn't possible to go
 over all of them here. Nonetheless, let's look at an example of
@@ -635,7 +551,7 @@ FertConsumpData <- WDI(indicator = "AG.CON.FERT.ZS")
 
 The data we downloaded looks like this:
 
-```{r Ch6WDIFertSave, include=FALSE}
+```{r Ch6WDIFertSave, include=FALSE, eval=FALSE}
 # This ensures that the PDF will still compile even if the data is unavailable via WDI
 load(file = "Source/Children/Chapter6/FertData.RData")
 ```
@@ -671,18 +587,16 @@ So, the process of parsing and extracting the data was very
 straightforward. You may not be so lucky with other data sources. Data
 may be stored in an HTML formatted table within a more complicated HTML
 marked up webpage. The *XML* package [@R-XML] has a number of useful
-commands such as `readHTMLTable` for parsing and extracting this kind of
+commands such as `readHTMLTable()`\index{R function!readHTMLTable} for parsing and extracting this kind of
 data. The *XML* package also clearly has functions for handling XML
 formatted data.[^chapter_6_33] In addition, the helpful *rvest* [@R-rvest] package
 provides an easy to use set of functions with capabilities similar to
 and often more capable than *XML*. If the data is stored in JSON[^chapter_6_34]
-you can read it with the *rjson* [@R-rjson] or *RJSONIO* [@R-RJSONIO]
-packages.
+you can read it with a package like *jsonlite* [@R-jsonlite].
 
 There are more websites with APIs than R packages designed specifically
 to access each one. If an API is available, the *httr* package [@R-httr]
-may be useful. It is a wrapper for *RCurl* intended to make accessing
-APIs easier.
+may be useful.
 
 ##### More tools to learn for web scraping
 
@@ -707,7 +621,7 @@ number of other skills:
 
 -   Looping: Web scraping often involves applying a function to multiple
     things, e.g. tables or HTML tags. To do this in an efficient way you
-    will need to use loops and apply functions. [@Matloff2011] provides
+    will need to use loops and apply functions. [@matloff2011] provides
     a comprehensive overview. The *dplyr* [@R-dplyr] for data frame
     manipulation is also particularly useful.
 
@@ -788,14 +702,8 @@ analyses.
 
 [^chapter_6_15]: URL stands for "Uniform Resource Locator".
 
-[^chapter_6_16]: Dropbox used to host files in the Public folder at non-secure
-    URLs, but switched to secure URLs.
-
 [^chapter_6_17]: Remember we placed the file's raw GitHub URL address inside of
     the object *url_address*.
-
-[^chapter_6_18]: For more details see the *RCurl* help page at
-    <http://www.omegahat.org/RCurl/FAQ.html>.
 
 [^chapter_6_19]: Tar archives are sometimes referred to as 'tar balls'.
 
@@ -825,7 +733,7 @@ analyses.
 
 [^chapter_6_29]: <http://ropensci.org/>
 
-[^chapter_6_30]: [http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r](http://stats.stackexchange.com/questions/12670/data-apis- feeds-available-as-packages-in-r)
+[^chapter_6_30]: [http://stats.stackexchange.com/questions/12670/data-apis-feeds-available-as-packages-in-r](http://stats.stackexchange.com/questions/12670/data-apis-feeds-available-as-packages-in-r)
 
 [^chapter_6_31]: You can also search the World Bank Development Indicators
     website. The indicator numbers are at the end of each indicator's
