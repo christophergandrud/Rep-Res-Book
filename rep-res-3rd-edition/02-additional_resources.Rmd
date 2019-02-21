@@ -4,15 +4,15 @@ Additional resources that supplement the examples in this book can be freely dow
 
 ## Chapter Examples {-}
 
-Longer examples discussed in individual chapters, including files to dynamically download data, code for creating figures, and markup files for creating presentation documents, can be accessed at: <https://github.com/christophergandrud/Rep-Res-Examples>. Please see Chapter \@ref(Storing) for more information on downloading files from GitHub, where the examples are stored.\index{GitHub}
+Longer examples discussed in individual chapters, including files to dynamically download data, code for creating figures, and markup files for creating presentation documents, can be accessed at: <https://github.com/christophergandrud/rep-res-book-v3-examples/chapter-examples>. Please see Chapter \@ref(Storing) for more information on downloading files from GitHub, where the examples are stored.\index{GitHub}
 
 ## Short Example Project {-}
 
-To download a full (though very short) example of a reproducible research project created using the tools covered in this book go to: <https://github.com/christophergandrud/Rep-Res-ExampleProject1>. Please follow the replication instructions in the main *README.md* file to fully replicate the project. It is probably a good idea to hold off looking at this complete example in detail until after you have become acquainted with the individual tools it uses. Become acquainted with the tools by reading through this book and working with the individual chapter examples.
+To download a full (though very short) example of a reproducible research project created using the tools covered in this book go to: <https://github.com/christophergandrud/rep-res-book-v3-examples>. Please follow the replication instructions in the main *README.md* file to fully replicate the project. It is probably a good idea to hold off looking at this complete example in detail until after you have become acquainted with the individual tools it uses. Become acquainted with the tools by reading through this book and working with the individual chapter examples.
 
-The following two figures give you a sense of how the example's files are organized. Figure \@ref(fig:ExampProjeFiles) shows how the files are organized in the file system. Figure \@ref(fig:ExampProjDiagram) illustrates how the main files are dynamically tied together. In the *Data* directory we have files to gather raw data from the [@worldbank2013] on fertilizer consumption and from [@pemstein2010] on countries' levels of democracy. They are tied to the data through the `WDI()`\index{WDI()} and `download.file()` functions.\index{R function!download.file()} A *Makefile*\index{Makefile} can run *Gather1.R* and *Gather2.R* to gather and clean the data. It runs *MergeData.R* to merge the data into one data file called *MainData.csv*. It also automatically generates a variable description file and a *README.md*\index{README file} recording the session info.\index{R!session info}
+The following two figures give you a sense of how the example's files are organized. Figure \@ref(fig:ExampProjeFiles) shows how the files are organized in the file system. Figure \@ref(fig:ExampProjDiagram) illustrates how the main files are dynamically tied together. In the *Data* directory we have files to gather raw data from the [@worldbank2013] on fertilizer consumption and from [@pemstein2010] on countries' levels of democracy. They are tied to the data through the `WDI()`\index{WDI()} and `download.file()` functions.\index{R function!download.file()} A *Makefile*\index{Makefile} can run *gather-1* and *gather-2.R* to gather and clean the data. It runs *merge-data.R* to merge the data into one data file called *main-data.csv*. It also automatically generates a variable description file and a *README.md*\index{README file} recording the session info.\index{R!session info}
 
-The *Analysis* folder contains two files that create figures presenting this data. They are tied to *MainData.csv* with the `read.csv()` function.\index{R function!read.csv} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with *knitr* and the `source()` function.\index{R function!source()}
+The *analysis* folder contains two files that create figures presenting this data. They are tied to *main-data.csv* with the `import()` function.\index{R function!import} These files are run by the presentation documents when they are knitted. The presentation documents tie to the analysis documents with *knitr* and the `source()` function.\index{R function!source()}
 
 Though a simple example, hopefully these files will give you a complete sense of how a reproducible research project can be organized. Please feel free to experiment with different ways of organizing the files and tying them together to make your research really reproducible.
 
@@ -40,38 +40,40 @@ Though a simple example, hopefully these files will give you a complete sense of
   \node (root) at (5, 10) [DirBox]{Root};
 
   % Project Directory
-  \node (project) at (4, 8.5) [DirBox]{Rep-Res-ExampleProject1}
-        child {node {{\small{Paper.Rnw}}}}
-        child {node {{\small{Slideshow.Rnw}}}}
-        child {node {{\small{Website.Rnw}}}}
-        child {node {{\small{Main.bib}}}}
+  \node (project) at (4, 8.5) [DirBox]{rep-res-book-v3-examples}
+        child {node {{\small{paper.Rmd}}}}
+        child {node {{\small{slideshow.Rmd}}}}
+        child {node {{\small{website.Rmd}}}}
+        child {node {{\small{main.bib}}}}
             ;
 
   % Data Directory
-  \node (data) at (0, 4.5) [DirBox]{Data}
-      child {node {{\small{MainData.csv}}}}
+  \node (data) at (0, 4.5) [DirBox]{data}
+      child {node {{\small{main-data.csv}}}}
       child {node {{\small{Makefile}}}}
-      child {node {{\small{MergeData.R}}}}
-      child {node {{\small{Gather1.R}}}}
-      child {node {{\small{Gather2.R}}}}
-      child {node {{\small{MainData\_VariableDescriptions.md}}}}
+      child {node {{\small{merge-data.R}}}}
+      child {node {{\small{gather-1}}}}
+      child {node {{\small{gather-2.R}}}}
+      child {node {{\small{main-data-variable-descriptions.md}}}}
       child {node {{\small{README.Rmd}}}}
         ;
 
-  % Analysis subdirectores/files
-  \node (analysis) at (1.5, 7) [DirBox]{Analysis}
-      child {node {{\small{GoogleVisMap.R}}}}
-      child {node {{\small{ScatterUDSFert.R}}}}
+  % analysis subdirectores/files
+  \node (analysis) at (1.5, 7) [DirBox]{analysis}
+      child {node {{\small{googlevis-map.R}}}}
+      child {node {{\small{scatter-uds-fert.R}}}}
         ;
 
   % README file
   \node (readme) at (9.5, 7) {README.md};
+  \node (rproj) at (10, 6) {rep-res-book-v3-examples.Rproj};
 
   % Connect boxes that are not explicit children
   \draw (root) -- (project);
   \draw (project) -| (analysis);
-  \draw (analysis) -| (data);
+  \draw (project) -| (data);
   \draw (project) -| (readme);
+  \draw (project) -| (rproj);
 
 \end{tikzpicture}
 ```
@@ -120,31 +122,31 @@ Though a simple example, hopefully these files will give you a complete sense of
 
     % Nodes
     \node (Data1) at (-3.5, 7) [RawData]{Raw WDI Data};
-    \node (Gather1) at (-3, 6) [File]{Gather1.R};
+    \node (Gather1) at (-3, 6) [File]{gather-1};
 
     \node (Data2) at (-3.5, 5) [RawData]{Raw UDS Data};
-    \node (Gather2) at (-3, 4) [File]{Gather2.R};
+    \node (gather-2) at (-3, 4) [File]{gather-2.R};
 
-    \node (MergeData) at (0.5, 5) [File]{Makefile \\ MergeData.R};
-    \node (DataFile) at (0.5, 4) [File]{MainData.csv};
+    \node (merge-data) at (0.5, 5) [File]{Makefile \\ merge-data.R};
+    \node (DataFile) at (0.5, 4) [File]{main-data.csv};
 
-    \node (Scatter) at (3.8, 4.5) [File]{ScatterUDSFert.R};
-    \node (GoogleVis) at (3.8, 3.5) [File]{GoogleVisMap.R};
+    \node (Scatter) at (3.8, 4.5) [File]{scatter-uds-fert.R};
+    \node (GoogleVis) at (3.8, 3.5) [File]{googlevis-map.R};
 
-    \node (ArticleK) at (7, 5) [File]{Article.Rnw};
-    \node (SlideshowK) at (7, 4) [File]{Slideshow.Rnw};
-    \node (WebsiteK) at (7, 3) [File]{Website.Rmd};
+    \node (ArticleK) at (7, 5) [File]{article.Rmd};
+    \node (SlideshowK) at (7, 4) [File]{slideshow.Rmd};
+    \node (WebsiteK) at (7, 3) [File]{website.Rmd};
 
-    \node (Article) at (10, 5) [File]{Article.pdf};
-    \node (Slideshow) at (10, 4) [File]{Slideshow.pdf};
-    \node (Website) at (10, 3) [File]{Website.html};
+    \node (Article) at (10, 5) [File]{article.pdf};
+    \node (Slideshow) at (10, 4) [File]{slideshow.pdf};
+    \node (Website) at (10, 3) [File]{website.html};
 
     % Lines
     \draw [->] (Data1) -- (Gather1);
-    \draw [->] (Data2) -- (Gather2);
-    \draw [->] (Gather1) -- (MergeData);
-    \draw [->] (Gather2) -- (MergeData);
-    \draw [->] (MergeData) -- (DataFile);
+    \draw [->] (Data2) -- (gather-2);
+    \draw [->] (Gather1) -- (merge-data);
+    \draw [->] (gather-2) -- (merge-data);
+    \draw [->] (merge-data) -- (DataFile);
 
     \draw [->] (DataFile) -- (Scatter);
     \draw [->] (DataFile) -- (GoogleVis);
@@ -164,7 +166,7 @@ Though a simple example, hopefully these files will give you a complete sense of
 
     \node (importData) at (-1, -1) [Links]{\texttt{download.file()} \\ \texttt{Make} \\ \texttt{merge()}\\ \texttt{WDI()} };
 
-    \node (Figs) at (3, -1) [Links]{\texttt{read.csv()}};
+    \node (Figs) at (3, -1) [Links]{\texttt{import()}};
 
     \node (knitr) at (7.5, -1) [Links]{ {\emph{knitr}} \\ \texttt{source()}};
 
@@ -177,4 +179,4 @@ Many of the reproducible research tools discussed in this book are improving rap
 
 ## Corrections {-}
 
-If you notice any corrections that should be made to fix typos, broken URLs, and so on, you can report them at: <https://github.com/christophergandrud/Rep-Res-Book/issues>. I'll post notifications of changes to an Errata page at: <http://christophergandrud.GitHub.io/RepResR-RStudio/errata.htm>.
+If you notice any corrections that should be made to fix typos, broken URLs, and so on, you can report them at: <https://github.com/christophergandrud/Rep-Res-Book/issues>. I'll post notifications of changes to an Errata page at: <http://christophergandrud.github.io/RepResR-RStudio/errata.htm>.

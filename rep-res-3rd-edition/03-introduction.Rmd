@@ -4,7 +4,7 @@
 
 # Introducing Reproducible Research{#Intro}
 
-Research is often presented in very selective containers: slideshows,
+Research is typically presented in very selective containers: slideshows,
 journal articles, books, or maybe even websites. These presentation
 documents announce a project's findings and try to convince us that the
 results are correct [@mesirov2010]. It's important to remember that
@@ -103,8 +103,7 @@ contributions to human knowledge" until they have been verified
 through replication [@stodden2009 38]. Replication "requires the
 complete and open exchange of data, procedures, and materials".
 Scientific conclusions that are not replicable should be abandoned or
-modified "when confronted with more complete or reliable
-...evidence".[^chapter1_5]
+modified "when confronted with more complete or reliable. . .evidence".[^chapter1_5]
 
 *Reproducibility enhances replicability*. If other researchers are able
 to clearly understand how a finding was originally made, then they will
@@ -305,16 +304,15 @@ more likely it is that researchers will do it.
 ### Private sector researchers
 
 Researchers in the private sector may or may not want to make their work
-easily reproducible outside of their organization. However, that does
-not mean that significant benefits cannot be gained from using the
-methods of reproducible research.
+easily reproducible outside of their organization. Data compliance legislation, such as the European Union's General Data Protection Regulation (GDPR),\index{GDPR} may even make it legally problematic to share data even within a company in order to protect personal information. However, that does not mean that significant benefits cannot be gained from using the
+methods of reproducible research, even if only in part.
 
 Even if a company has only one person doing research, they benefit from using reproducible research methods. Just with academic research this person actually does have a collaborator: their future self. As discussed above, reproducible research makes this collaboration easier.
 
 Companies with more than one researcher do (or likely should) act as a research
 community, even if public reproducibility
-is ruled out to guard proprietary information.[^chapter1_7] Making your research
-reproducible to members of your organization can spread valuable
+is ruled out to guard proprietary information.[^chapter1_7] Making as much of your research
+reproducible (e.g. your source code, but not the raw data if it contains personal information) to members of your organization can spread valuable
 information about how analyses were done and data was collected. This
 will help build your organization's knowledge and avoid effort
 duplication. Just as a lack of reproducibility hinders the spread of
@@ -376,7 +374,7 @@ Xie's *knitr* package [-@R-knitr] or the related *rmarkdown* package
     Pandoc, a program useful for converting documents from one markup
     language to another.
 
-### Why Use R, *knitr*/*rmarkdown*, and RStudio for Reproducible Research?
+### Why Use R, knitr/R Markdown, and RStudio for Reproducible Research?
 
 #### Why R? {-}
 
@@ -474,7 +472,7 @@ beautifully (see Chapter \@ref(GettingStartedRKnitr)).
 
 Finally, RStudio not only has tight integration with various markup
 languages, it also has capabilities for using other tools such as C++,
-CSS, JavaScript, and a few other programming languages. It is closely
+CSS, JavaScript, Python, and a few other programming languages. It is closely
 integrated with the version control programs Git and SVN. Both of these
 programs allow you to keep track of the changes you make to your
 documents (see Chapter \@ref(Storing)). This is important for reproducible research since
@@ -514,7 +512,7 @@ You will need to install the R package *rmarkdown* [@R-rmarkdown]\index{R packag
 install.packages("rmarkdown")
 ```
 
-If you plan to render your RMarkdown documents from the console without RStudio you will need to install Pandoc.\index{Pandoc} For instructions see Pandoc's download page: <https://pandoc.org/installing.html>.
+If you plan to render your R Markdown documents from the console without RStudio you will need to install Pandoc.\index{Pandoc} For instructions see Pandoc's download page: <https://pandoc.org/installing.html>.
 
 If you want to create LaTeX (PDF) documents you can install a TeX
 distribution.[^chapter1_18] The simplest way to get all of the LaTeX capabilities you will need for this book is to use the *tinytex*\index{R package!markdown} [@R-tinytex] R package:
@@ -525,10 +523,10 @@ tinytex::install_tinytex()
 ```
 If you want a full LaTeX distribution see <http://www.latex-project.org/ftp.html> for installation information.
 
-### GNU Make
+### GNU Make {#InstallMake}
 
 If you are using a Linux computer you already have GNU
-Make \@ref(InstallMake) installed.[^chapter1_19]
+Make installed.[^chapter1_19]
 Mac users will need to install the command-line developer tools. There
 are two ways to do this. One is go to the App Store and download Xcode
 (it's free). Once Xcode is installed, install command-line tools, which
@@ -565,7 +563,7 @@ that cover these programs in more detail.
 To that end, I can recommend a number of resources that cover more of
 the nitty-gritty:
 
--   Michael J. Crawley's [-@crawley2013] encyclopaedic R book,
+-   Michael J. Crawley's [-@crawley2013] encyclopedic R book,
     appropriately titled ***The R Book***, published by Wiley.
 
 -   Hadley Whickham [-@whickham2014book] has a great new book out from
@@ -604,7 +602,7 @@ encountered illustrative examples that included commands, variables, and
 other things that were not well explained in the texts that I was
 reading. This caused me to waste many hours trying to figure out, for
 example, what the `$` is used for (preview: it's the component selector,
-see Section \@ref(ComponentSelect). I hope to save you from this wasted time
+see Section \@ref(ComponentSelect)). I hope to save you from this wasted time
 by either providing a brief explanation of possibly frustrating and
 mysterious things and/or pointing you in the direction of good
 explanations.
@@ -636,7 +634,7 @@ skip all of Chapter \@ref(DataClean).
 If you are familiar with LaTeX you might want to skip the first part of
 Chapter \@ref(LatexChapter). The second part may be useful as it includes
 information on how to dynamically create BibTeX bibliographies with
-*knitr* and how to include *knitr* output in a Beamer slideshow.
+*knitr* and how to include *knitr*/*rmarkdown* output in a Beamer slideshow.
 
 #### Less-experienced LaTeX/Markdown users {-}
 
@@ -660,7 +658,7 @@ If you notice any errors or places where the book can be improved please
 report them on the book's GitHub Issues page:
 <https://github.com/christophergandrud/Rep-Res-Bookissues>. Corrections
 will be posted at:
-<http://christophergandrud.GitHub.io/RepResR-RStudio/errata.htm>.
+<http://christophergandrud.github.io/RepResR-RStudio/errata.htm>.
 
 ### Contents overview
 
@@ -698,7 +696,8 @@ To install key user-written packages discussed in this book, copy the following 
 
 ```{r package_install, results='hide'}
 # Packages to install
-pkg_to_install <- c("brew", "bookdown", "rio", "xfun")
+pkg_to_install <- c("brew", "bookdown", "devtools", "knitr",
+                    "rio", "rmarkdown", "tidyverse", "WDI", "xfun")
 
 
 # Check if the packages are installed, if not install them
@@ -720,7 +719,9 @@ The *xfun* package [@R-xfun]\index{xfun} contains a function called `pkg_attach2
 
 \index{R!packages|(}
 
-### Special issues for Windows and Linux Users {-}
+### Special issues {-}
+
+You may need to install ImageMagick <https://www.imagemagick.org/script/index.php>\index{ImageMagick} compile the book from source.
 
 \index{Windows|(}
 
@@ -730,14 +731,14 @@ If you are using Windows, you will also need to install *Rtools*.\index{Rtools} 
 
 \index{Linux|(}
 
-On Linux you will need to install the *RCurl* [@R-RCurl]\index{RCurl} package separately. Use your 
+On Linux you will need to install the *RCurl* [@R-RCurl]\index{RCurl} package separately. Use your
 Terminal\index{Terminal} to install these packages with the following (or similar depending on your system) code:
 
 ```{sh, eval=FALSE}
 apt-get update
 
 apt-get install libcurl4-gnutls-dev
-apt-get install r-cran-rcurl-
+apt-get install r-cran-rcurl-dev
 ```
 
 \index{Linux|(}
@@ -747,7 +748,7 @@ apt-get install r-cran-rcurl-
     opposite meanings from they way they are used in this book and many other
     disciplines such as biology, economics, and epidemiology.
 
-[^chapter1_1]: This is close to what [@lykken1968] calls "operational
+[^chapter1_1]: This is close to what @lykken1968 calls "operational
     replication".
 
 [^chapter1_2]: The really reproducible computational research originates
@@ -809,7 +810,7 @@ apt-get install r-cran-rcurl-
 
 [^chapter1_13]: A very interesting tool that is worth taking a look at for the
     Python programming language is HTML Notebooks created with Jupyter.
-    For more details see <http://jupyter.org/>. We will also discuss these in more detail in Section \@ref(JupyterIntro).
+    For more details see <http://jupyter.org/>. We will also discuss these in more detail in Section \@ref(jupyter).
 
 [^chapter1_14]: Syntax highlighting uses different colors and fonts to
     distinguish different types of text.
