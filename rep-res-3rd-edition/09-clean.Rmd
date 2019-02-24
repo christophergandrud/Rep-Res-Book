@@ -2,10 +2,10 @@
 
 Once we have gathered the raw data that we want to include in our
 statistical analyses we generally need to clean it up so that it can be
-merged into a single data file. In this chapter we will learn how to
-create the data gather and merging files we saw in the last chapter. The
-chapter also includes information on recoding and transforming
-variables. This is important for merging data and will be useful
+merged into a single data set that we can easily use for statistical analysis. 
+In this chapter we will learn how to
+create the data gather and merging files we saw in the last chapter. TThis includes recoding and transforming
+variables in the data set so that the data sets can be easily merged. This will also be useful
 information in later chapters as well. If you are very familiar with
 data transformations in R you may want to skip to the next chapter.
 
@@ -27,42 +27,38 @@ You could type a data frame object's name into the R console. This will
 print the entire data frame in your console. For data frames with more
 than a few variables and observations this is very impractical. We have
 already seen a number of functions that are useful for looking at parts
-of your data. As we saw in Chapter
-
-\@ref(GettingStartedRKnitr), the `names` function shows you the
-variable names in a data frame object. The `head` function shows the
-names plus the first few observations in a data frame. The `tail` shows
+of your data. As we saw in Chapter \@ref(GettingStartedRKnitr), the `names()`\index{R function!names} function shows you the
+variable names in a data frame object. The `head()`\index{R function!tail} function shows the
+names plus the first few observations in a data frame. `tail()`\index{R function!tail} shows
 the last few.
 
-Use the `dim` (dimensions) function to quickly see the number of
+Use the `dim()`\index{R function!names} (dimensions) function to quickly see the number of
 observations and variables (the number of rows and columns) in a data
 frame object. For example, let's use the *fert_cons_data* object we
-created in Chapter \@ref(DataGather) to test out `dim`:
+created in Chapter \@ref(DataGather) to test out `dim()`:
 
 ```{r Ch7dim}
 dim(fert_cons_data)
 ```
 
-The first number is the number of rows in the data frame () and the
-second is the number of columns (). You can also use the `nrow` function
-to find just the number of rows and `ncol` to see only the columns.
+The first number is the number of rows in the data frame (`r nrow(fert_cons_data)`) and the
+second is the number of columns (`r ncol(fert_cons_data)`). You can also use the `nrow()`\index{R function!nrow} function
+to find just the number of rows and `ncol()`\index{R function!ncol} to see only the columns.
 
-The `summary` function is especially helpful for seeing basic descriptive
+The `summary()`\index{R function!summary} function is especially helpful for seeing basic descriptive
 statistics for all of the variables in a data frame and also the
 variables' types. Here is an example:
 
 ```{r Ch7SummaryExamp}
-# Summarize fert_cons_data data frame object
-# This was loaded in Chapter 6
 summary(fert_cons_data)
 ```
 
 We can immediately see that the variables **iso2c** and **country** are
-character strings. Because `summary` is able to calculate means,
+character strings. Because `summary()` is able to calculate means,
 medians, and so on for **AG.CON.FERT.ZS** and **year**, we know they are
 numeric. Have a look over the summary to see if there is anything
 unexpected like lots of missing values (**NA's**) or unusual maximum and
-minimum values. You can of course, run `summary` on a particular
+minimum values. You can of course, run `summary()` on a particular
 variable by using the component selector (`$`):
 
 ```{r Ch7SummarizeCompSelect}
@@ -72,15 +68,30 @@ summary(fert_cons_data$AG.CON.FERT.ZS)
 
 We'll come back to why knowing this type of information is important for merging and data analysis later in this chapter.
 
-Another important function for quickly summarizing a data frame is `table`.\index{R function!table} This creates a contingency table\index{contingency table} with counts of the number of observations per combination of factor variables.
+Another important function for quickly summarizing a data frame is `table()`.\index{R function!table} This creates a contingency table\index{contingency table} with counts of the number of observations per combination of factor variables.
 
-You can view a portion of a data frame object with the `View` function.\index{R function!View} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the *Environment* tab\index{RStudio!Environment tab} and you will get something similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be able to see similar windows that you can interactively edit, use the `fix`\index{R function!fix} function in the same way that you use `View`. This can be useful for small edits, but remember that the edits are not reproducible.
+You can view a portion of a data frame object with `View()`\index{R function!View} This will open a new window that lets you see a selection of the data frame. If you are using RStudio, you can click on the data frame in the *Environment* tab\index{RStudio!Environment tab} and you will get something similar. Note that neither of these viewers are interactive in that you can't use them to manipulate the data. They are only data viewers. To be able to see similar windows that you can interactively edit, use the `fix()`\index{R function!fix} function in the same way that you use `View()`. This can be useful for small edits, but remember that the edits are not reproducible.
+
+### Tibbles {-}
+
+Most of these data summary capabilities come "for free" when you use an alternate type of data frame called a "tibble" [@R-tibble] For example,\index{R function!tibble}
+
+```{r Ch7Tibble}
+# Create example tibble data frame
+tbl_ex <- tibble::tibble(numbers = 1:26, letters = letters)
+
+tbl_ex
+```
+
+We see the condensed output, the data dimmensions, and the variable types with the first 10 entries. 
+
+Tibbles are the data structure favored by the tidy data/tidyverse R data paradigm [@wickham2014article]. We will work with other packages of the Tidyverse--e.g. dplyr and ggplot2--in later chapters. Note that these packages often also work with traditional data frames as well (or will convert data frames to tibbles).
 
 ## Reshaping data
 
 \index{R!reshaping data}
 
-Obviously it is usually a good idea if your data sets are kept in data frame type objects. See Chapter \@ref(GettingStartedRKnitr} (Section \@ref(data.frame}) for how to convert objects into data frames with the `data.frame` function.\index{R function!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in ''long'' format\index{long formatted data}.\footnote{For an excellent discussion of ideal data formats see [@wickham2014article].} This usually means that data frame columns are variables and rows are specific observations (see Table \@ref(ExampleLong}).
+Obviously it is usually a good idea if your data sets are kept in data frame type objects. See Chapter \@ref(GettingStartedRKnitr} (Section \@ref(data.frame}) for how to convert objects into data frames with the `data.frame()` function.\index{R function!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in "long" format\index{long formatted data}.[^long_format] This usually means that data frame columns are variables and rows are specific observations (see Table \@ref(ExampleLong}).
 
 \begin{table}[h!]
     \caption{Long Formatted Data Example}
@@ -702,15 +713,23 @@ R code for creating Figure
 [\[FertilizerConsumptionDens]](#FertilizerConsumptionDens){reference-type="ref"
 reference="FertilizerConsumptionDens"}:
 
-```{r Chr7FigDensity, eval=FALSE, tidy=FALSE} # Load ggplot2
+```{r Chr7FigDensity, eval=FALSE} 
+# Load ggplot2
 library(ggplot2)
 
-# Create density plot ggplot(data = GatheredFert,
-aes(FertilizerConsumption)) + geom\_density() + xlab("Fertilizer
-Consumption") + ylab("Density") + theme\_bw()
+# Set plot theme to "minimal"
+theme_set(theme_minimal())
+
+# Create density plot 
+ggplot(data = GatheredFert, aes(FertilizerConsumption)) + 
+      geom_density() + 
+      xlab("Fertilizer Consumption") + ylab("Density") + 
+      theme_bw()
 ```
 
 REMOVE
+
+[^long_format]: For an excellent discussion of ideal data formats see [@wickham2014article].
 
 [^1]: The *countrycode* package
 ```R-countrycode] is very helpful for
