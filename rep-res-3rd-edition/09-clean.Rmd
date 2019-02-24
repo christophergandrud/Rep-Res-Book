@@ -141,11 +141,11 @@ Tidying data is often the cause of much confusion and frustration. Though probab
 
 For illustration let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide, rather than long, format and is in a data frame object called \emph{SpreadFert}. It looks like this:\footnote{See the chapter's Appendix (page \pageref{WideAppendix}) for the code I used to reshape the data from long to wide format.}
 
-<<Ch7Loadfert_cons_data, include=FALSE>>=
+```{r Ch7Loadfert_cons_data, include=FALSE}
 
 ```
 
-<<Ch7WideCreate, include=FALSE>>=
+```{Ch7WideCreate, include=FALSE}
 # Reshape Wide
 SpreadFert <- spread(fert_cons_data, year, AG.CON.FERT.ZS)
 
@@ -153,7 +153,7 @@ SpreadFert <- spread(fert_cons_data, year, AG.CON.FERT.ZS)
 SpreadFert <- arrange(SpreadFert, country)
 ```
 
-<<Ch7ShowWideFert>>=
+```{Ch7ShowWideFert}
 # Show the first 5 columns
 head(SpreadFert[, 1:5])
 ```
@@ -162,7 +162,7 @@ head(SpreadFert[, 1:5])
 
 Let's think about how we want to tidy the data. We want to create two new columns from the many columns that are now labeled by year. Let's call the new columns \textbf{Year} and \textbf{Fert}. The \textbf{Year} column will clearly contain the year of each observation and \textbf{Fert} will contain the fertilizer consumption. \textbf{Year} will be what \texttt{gather} calls the ``key'' and \textbf{Fert} is the ``value''. In our \emph{SpreadFert} data we don't want the \textbf{iso2c} and \textbf{country} variables to be gathered. These variables identify the data set's subjects. So we can tell \texttt{gather} that we only want columns three through nine gathered. The third column is the first one we want to gather and the ninth--the final column in the data set--is the last.
 
-<<Ch7GatherFert, tidy=FALSE>>=
+```{Ch7GatherFert, tidy=FALSE}
 # Gather SpreadFert
 GatheredFert <- gather(SpreadFert, Year, Fert, 3:9)
 
@@ -174,7 +174,7 @@ head(GatheredFert)
 
 Frequently, in the data cleaning process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our \emph{GatheredFert} data frame has two variables--\textbf{Year} and \textbf{Fert}. Imagine, for the sake of demonstration, that we want to rename them \textbf{year} and \textbf{FertilizerConsumption}. Renaming data frame variables is straightforward with the \texttt{rename}\index{R function!rename}\index{rename variable} function in the \emph{dplyr} package \citep{R-dplyr}. To rename both \textbf{variable} and \textbf{value} with the \texttt{rename} function type:
 
-<<Ch7Rename, tidy=FALSE>>=
+```{Ch7Rename, tidy=FALSE}
 GatheredFert <- rename(GatheredFert,
                     year = Year,
                     FertilizerConsumption = Fert)
@@ -189,7 +189,7 @@ You may have noticed that as a result of gathering \emph{SpreadFert} the data is
 
 We can order observations in our data set using the \texttt{order} function.\index{R function!order}\index{sort}\index{order} For example, to order \emph{GatheredFert} by country-year we type:
 
-<<Ch7Order, tidy=FALSE>>=
+```{Ch7Order, tidy=FALSE}
 # Order GatheredFert by country-year
 GatheredFert <- GatheredFert[order(GatheredFert$country,
 GatheredFert$year), ]
@@ -200,7 +200,7 @@ head(GatheredFert)
 
 \emph{dplyr} has a function called \texttt{arrange}\index{R function!arrange} that can also be useful for ordering your data. \noindent \texttt{arrange}'s syntax is much cleaner and easier to remember for data frames than the operation we did with \texttt{order}. To arrange the \emph{GatheredFert} data as in the previous example, but with \texttt{arrange} use:
 
-<<Ch7Arrange>>=
+```{Ch7Arrange}
 GatheredFert <- arrange(GatheredFert, country, year)
 ```
 
@@ -213,7 +213,7 @@ Sometimes you may want to use only a subset of a data frame. For example, the de
 \begin{figure}
     \caption{Density Plot of Fertilizer Consumption (kilograms per hectare of arable land)}
     \label{FertilizerConsumptionDens}
-<<Ch7FertDist, echo=FALSE, warning=FALSE, fig.width=3, fig.height=3>>=
+```{Ch7FertDist, echo=FALSE, warning=FALSE, fig.width=3, fig.height=3}
 # Create density plot of GatheredFert
 
 # Load ggplot2
@@ -224,11 +224,11 @@ ggplot(data = GatheredFert, aes(FertilizerConsumption)) +
         geom_density() +
         xlab("\n Fertilizer Consumption") + ylab("Density\n") +
         theme_bw()
-        ```
+```
     {\scriptsize{See the chapter's Appendix for the source code to create this figure.}}
 \end{figure}
 
-<<Ch7SubsetOutliers, tidy=FALSE>>=
+```{Ch7SubsetOutliers, tidy=FALSE}
 # Create outlier data frame
 FertOutliers <- subset(x = GatheredFert,
                       FertilizerConsumption > 1000)
@@ -239,22 +239,22 @@ head(FertOutliers)
 
 \noindent If we want to drop these outliers from our data set we can use \texttt{subset} again.
 
-<<Ch7SubsetNoOutliers, tidy=FALSE>>=
+```{Ch7SubsetNoOutliers, tidy=FALSE}
 GatheredFertSub <- subset(x = GatheredFert,
                         FertilizerConsumption <= 1000)
                         ```
 
 In this data example, non-country units like ``Arab World'' are included. We might want to drop these units with the \texttt{subset} function as well. For example:
 
-<<Ch7DropString, tidy=FALSE>>=
+```{Ch7DropString, tidy=FALSE}
 # Drop Arab World type from GatheredFertSub
 GatheredFertSub <- subset(x = GatheredFertSub,
-                        country != "Arab World")
+                          country != "Arab World")
                         ```
 
-\noindent We can also use \texttt{subset} to remove observations with missing values (\texttt{NA}) for \textbf{FertilizerConsumption}.
+We can also use `subset` to remove observations with missing values (`NA`) for **FertilizerConsumption**.
 
-<<Ch7IsNotNA, tidy=FALSE>>=
+```{Ch7IsNotNA, tidy=FALSE}
 # Remove observations of FertilizerConsumption
 # with missing values
 GatheredFertSub <- subset(x = GatheredFertSub,
@@ -289,8 +289,7 @@ third example included the not equal operator: `!=`. In R, exclamation
 points (`!`) generally denote 'not'. We used this again in the final
 example in combination with the `is.na` function. This function indicates
 if an element is missing, so `!is.na` means "not missing". For a list of
-R's logical operators, see Table
-[\[LogicalOp\]](#LogicalOp){reference-type="ref" reference="LogicalOp"}.
+R's logical operators, see Table \@ref(table:LogicalOp).
 You can use these operators and functions when subsetting data and
 throughout R.
 
@@ -305,10 +304,9 @@ them. We need to recode values in the variables that we want to match
 our data sets on. For example, in *GatheredFertSub* the southern Korean
 country is labeled "Korea, Rep.". To recode it to "South Korea" we type:
 
-```{r Ch7RecodeString, tidy=FALSE} \# Recode country == \"Korea,
-Rep.\" to \"South Korea\"
-GatheredFertSub$country[GatheredFertSub$country == \"Korea, Rep.\"\] \<-
-\"South Korea\"
+```{r Ch7RecodeString, tidy=FALSE} 
+# Recode country == "Korea, Rep." to "South Korea"
+GatheredFertSub$country[GatheredFertSub$country == "Korea, Rep."] <- "South Korea"
 ```
 
 This code assigns "South Korea" to all values of the **country**
@@ -327,16 +325,13 @@ variable through the `log` function and assign a new variable that we'll
 call **logFertConsumption**.
 
 ```{r Ch7LogFertComsump, tidy=FALSE}
-GatheredFertSub\$logFertConsumption \<- log(
-GatheredFertSub\$FertilizerConsumption )
+GatheredFertSub$logFertConsumption <- log(GatheredFertSub$FertilizerConsumption )
 
-\# Summarize the log transformed variable
-summary(GatheredFertSub\$logFertConsumption)
+summary(GatheredFertSub$logFertConsumption)
 ```
 
-[\[Infinity\]]{#Infinity label="Infinity"}Notice that when we summarize
-the new log transformed variable that we have a minimum (and mean) value
-of `-Inf`. This indicates that by logging the variable we have created
+Notice that when we summarize the new log transformed variable that we have a minimum (and mean) value
+of `-Inf`.\index{infinity}\index{R!inf} This indicates that by logging the variable we have created
 observations with the value negative infinity. R calculates the natural
 logarithm of zero as negative infinity.[^2] We probably don't want
 negative infinity values. There are a few ways to deal with this. We
@@ -344,27 +339,24 @@ could drop all observations of **FertilizerConsumption** with the value
 zero before log transforming it. Another common solution is recoding
 zeros as some small nonnegative number like 0.001. For example:
 
-```{r Ch7LogFertComsumpAgain, tidy=FALSE} \# Recode zeros in
-Fertilizer Consumption GatheredFertSub\$FertilizerConsumption\[
-GatheredFertSub\$FertilizerConsumption == 0 \] \<- 0.001
+```{r Ch7LogFertComsumpAgain, tidy=FALSE} 
+# Recode zeros in Fertilizer Consumption 
+GatheredFertSub$FertilizerConsumption[GatheredFertSub$FertilizerConsumption == 0] <- 0.001
 
-\# Natural log transform Fertilizer Consumption
-GatheredFertSub\$logFertConsumption \<- log(
-GatheredFertSub\$FertilizerConsumption )
+# Natural log transform Fertilizer Consumption
+GatheredFertSub$logFertConsumption <- log(
+GatheredFertSub$FertilizerConsumption )
 
-\# Summarize the log transformed variable
-summary(GatheredFertSub\$logFertConsumption)
+# Summarize the log transformed variable
+summary(GatheredFertSub$logFertConsumption)
 ```
 
 Note that this example is included to demonstrate R syntax rather than
 to prescribe a certain transformation of skewed data with zeros. The
 choice of which transformation to make should ultimately be made based
-on the data, model, and context. See
-```Hyndman2010] for more information
-on various alternatives including Box-Cox
-```box1964analysis] and inverse
-hyperbolic sine transformations
-```Burbidge1988].
+on the data, model, and context. See [@Hyndman2010] for more information
+on various alternatives including Box-Cox [@box1964analysis] and inverse
+hyperbolic sine transformations [@burbidge1988].
 
   Number   Label         Value of **FertilizerConsumption**
   -------- ------------- ------------------------------------
@@ -384,41 +376,42 @@ example, we may want to turn the continuous numeric
 factor) variable. Imagine that we want to create a factor variable
 called **FertConsGroup** with four levels called 'low', 'medium low',
 'medium high', and 'high'. To do this let's first create a new numeric
-variable based on the values listed in Table
-[\[ExampleFactorRecode\]](#ExampleFactorRecode){reference-type="ref"
-reference="ExampleFactorRecode"}. Now let's use a procedure that is
+variable based on the values listed in Table \@ref(table:ExampleFactorRecode). Now let's use a procedure that is
 similar to the variable recoding we did earlier:[^3]
 
-```{r Ch7FactorNumeric, tidy=FALSE} \#\#\#\# Create numeric factor
-levels variable \#\#\#\# \# Attach GatheredFertSub data frame
+```{r Ch7FactorNumeric, tidy=FALSE} 
+#### Create numeric factor levels variable 
+#### # Attach GatheredFertSub data frame
 attach(GatheredFertSub)
 
-\# Created new FertConsGroup variable based on \# FertilizerConsumption
-GatheredFertSub\$FertConsGroup\[FertilizerConsumption \< 18\] \<- 1
-GatheredFertSub\$FertConsGroup\[FertilizerConsumption \>= 18 &
-FertilizerConsumption \< 81\] \<- 2
-GatheredFertSub\$FertConsGroup\[FertilizerConsumption \>= 81 &
-FertilizerConsumption \< 158\] \<- 3
-GatheredFertSub\$FertConsGroup\[FertilizerConsumption \>= 158\] \<- 4
-GatheredFertSub\$FertConsGroup\[is.na(FertilizerConsumption)\] \<- NA
+# Created new FertConsGroup variable based on # FertilizerConsumption
+GatheredFertSub$FertConsGroup[FertilizerConsumption < 18] <- 1
+GatheredFertSub$FertConsGroup[FertilizerConsumption >= 18 &
+FertilizerConsumption < 81] <- 2
+GatheredFertSub$FertConsGroup[FertilizerConsumption >= 81 &
+FertilizerConsumption < 158] <- 3
+GatheredFertSub$FertConsGroup[FertilizerConsumption >= 158] <- 4
+GatheredFertSub$FertConsGroup[is.na(FertilizerConsumption)] <- NA
 
-\# Detach data frame detach(GatheredFertSub)
+# Detach data frame 
+detach(GatheredFertSub)
 
-\# Summarize FertConsGroup summary(GatheredFertSub\$FertConsGroup)
+summary(GatheredFertSub$FertConsGroup)
 ```
 
 You'll notice that we don't have a factor variable yet; our new variable
 is numeric. We can use the `factor` function to convert *FertConsGroup*
 into a factor variable with the labels we want.
 
-```{r Ch7ChangetoFactor, tidy=FALSE} \# Create vector of factor level
-labels FCLabels \<- c(\"low\", \"medium low\", \"medium high\",
-\"high\")
+```{r Ch7ChangetoFactor, tidy=FALSE} 
+# Create vector of factor level labels
+FCLabels <- c("low", "medium low", "medium high", "high")
 
-\# Convert FertConsGroup to a factor GatheredFertSub\$FertConsGroup \<-
-factor(GatheredFertSub\$FertConsGroup, labels = FCLabels)
+# Convert FertConsGroup to a factor 
+GatheredFertSub$FertConsGroup <- factor(GatheredFertSub$FertConsGroup, labels = FCLabels)
 
-\# Summarize FertConsGroup summary(GatheredFertSub\$FertConsGroup)
+
+summary(GatheredFertSub$FertConsGroup)
 ```
 
 We first created a character vector with the factor-level labels and
@@ -429,12 +422,13 @@ observations per level.
 The `cut` function provides a less code-intensive way of creating
 factors from numeric ones and labeling factor levels. For example:
 
-```{r Ch7Cut, tidy=FALSE} \# Create a factor variable with the cut
-function FertFactor \<- cut(GatheredFertSub\$FertilizerConsumption,
-breaks = c(-0.01, 17.99, 80.99, 157.99, 999.99), labels = c(\"low\",
-\"medium low\", \"medium high\", \"high\"))
+```{r Ch7Cut, tidy=FALSE} 
+# Create a factor variable with the cut function 
+FertFactor <- cut(GatheredFertSub$FertilizerConsumption,
+                  breaks = c(-0.01, 17.99, 80.99, 157.99, 999.99), 
+                  labels = c("low", "medium low", "medium high", "high"))
 
-\# Summarize FertFactor summary(FertFactor)
+summary(FertFactor)
 ```
 
 The `labels` argument lets us specify the factor levels' names. The
@@ -465,8 +459,7 @@ anticipate. Changing the variables' types, especially when using `as.`,
 can introduce new errors. Make sure that the conversion made the changes
 you expected.
 
-Merging Data Sets
------------------
+## Merging Data Sets
 
 In the previous section we learned crucial skills for cleaning up data
 sets. When your data sets are (a) in the same format and (b) have
@@ -478,9 +471,7 @@ columns.
 
 ### Binding
 
-As we saw in Chapter
-
-```ref(GettingStartedRKnitr, if your data sets are in the same
+As we saw in Chapter \@ref(GettingStartedRKnitr), if your data sets are in the same
 order--rows in all of the data sets represent the same observation of
 the same subject--then you can simply use the `cbind` function to bind
 columns from the data sets together. This situation is unusual when
@@ -497,32 +488,36 @@ cautious when using this function, though it is more difficult to
 accidentally create a nonsensical data set with `rbind`. R will give you
 an error if it cannot match your objects' columns.
 
-### The merge function
+### Merging data frames
 
 Generally, the safest and most effective way to merge two data sets
-together is with the `merge` function. Imagine that we want to merge our
+together is with the `merge()` function.\index{R function!merge} Imagine that we want to merge our
 *GatheredFertSub* data frame with two other data frames we created in
 Chapter \@ref(DataGather): *FinRegulatorData* and *DispropData*. The
 simplest way to do this is to use the merge function twice, i.e.:
 
-```{r Ch7AddIsoCodes, include=FALSE} \#\# Add iso2c codes to
-FinRegulatorData and DispropData \#\# as ID variables for merging
+```{r Ch7AddIsoCodes, include=FALSE} 
+## Add iso2c codes to FinRegulatorData and DispropData 
+## as ID variables for merging
 
-\# Load countrycode library(countrycode)
+# Load countrycode 
+library(countrycode)
 
-\# FinRegulatorData FinRegulatorData\$iso2c \<-
-countrycode(FinRegulatorData\$country, origin = \"country.name\",
-destination = \"iso2c\")
+# FinRegulatorData 
+FinRegulatorData$iso2c <- countrycode(FinRegulatorData$country, 
+                                      origin = "country.name",
+                                      destination = "iso2c")
 ```
 
-```{r Ch7MergeSimple, tidy=FALSE} \# Merge FinRegulatorData and
-DispropData MergedData1 \<- merge(x = FinRegulatorData, y = DispropData,
-by = \"iso2c\", all = TRUE)
+```{r Ch7MergeSimple, tidy=FALSE} 
+# Merge FinRegulatorData and DispropData 
+MergedData1 <- merge(x = FinRegulatorData, y = DispropData,
+                     by = "iso2c", all = TRUE)
 
-\# Merge combined data set with and GatheredFertSub MergedData1 \<-
-merge(x = MergedData1, y = GatheredFertSub, by = \"iso2c\", all = TRUE)
+# Merge combined data set with and GatheredFertSub 
+MergedData1 <- merge(x = MergedData1, y = GatheredFertSub, by = "iso2c", all = TRUE)
 
-\# Show MergedData1 variables names(MergedData1)
+names(MergedData1)
 ```
 
 Let's go through this code. The `x` and `y` arguments simply specify
@@ -546,14 +541,14 @@ Afghanistan-2004 in the other) we need to add the `union` function to
 
 ```{r Ch7MergeFull, tidy=FALSE}
 # Merge FinRegulatorData and DispropData
-MergedData2 <- merge(FinRegulatorData, DispropData,
-union(\"iso2c\", \"year\"), all = TRUE)
+MergedData2 <- merge(FinRegulatorData, DispropData, union("iso2c", "year"), 
+                     all = TRUE)
 
-# Merge combined data frame with GatheredFertSub MergedData2 \<-
-merge(MergedData2, GatheredFertSub, union(\"iso2c\", \"year\"), all =
-TRUE)
+# Merge combined data frame with GatheredFertSub 
+MergedData2 <- merge(MergedData2, GatheredFertSub, union("iso2c", "year"), 
+                     all = TRUE)
 
-# Show MergedData2 variable names names(MergedData2)
+names(MergedData2)
 ```
 
 After merging data frames it is always a good idea to look at the result
@@ -567,8 +562,7 @@ to handle large data sets. The `merge` function and many of the other
 data frame manipulation functions covered so far in this chapter may not
 perform well with very large data sets. If you are using very large data
 sets it might be worth investing time learning how to use either the
-*dplyr* or *data.table* packages
-```R-data.table]. They have many
+*dplyr* or *data.table* packages [@R-data.table]. They have many
 capabilities for working efficiently with large data sets. Another
 approach is to learn SQL[^8] or another special purpose data handling
 language.[^9] Once you know how these languages work, you can
@@ -584,11 +578,12 @@ observations. For example, let's create a new object called
 *MergedData2*. Remember that **iso2c** and **year** are in the first and
 second columns of the data frame.
 
-```{r Ch7Duplicated, tidy=FALSE} \# Created a data frame of duplicated
-country-years DataDuplicates \<- MergedData2\[duplicated( MergedData2\[,
-1:2\]), \]
+```{r Ch7Duplicated, tidy=FALSE} 
+# Created a data frame of duplicated country-years 
+DataDuplicates <- MergedData2[duplicated( MergedData2[,1:2]), ]
 
-\# Show the number of rows in DataDuplicates nrow(DataDuplicates)
+# Show the number of rows in DataDuplicates 
+nrow(DataDuplicates)
 ```
 
 In this data frame there are duplicated iso2c-year observations. We know
@@ -599,9 +594,9 @@ To create a data set without duplicated observations (if there are
 duplicates) we just add an exclamation point (`!`) before
 `duplicated`--i.e. not duplicated--in the above code.
 
-```{r Ch7NotDuplicated} \# Created a data frame of unique
-country-years DataNotDuplicates \<- MergedData2\[!duplicated(
-MergedData2\[, 1:2\]), \]
+```{r Ch7NotDuplicated} 
+# Created a data frame of unique country-years 
+DataNotDuplicates <- MergedData2[!duplicated(MergedData2[, 1:2]), ]
 ```
 
 Note that if you do have duplicated values in your data set and you run
@@ -628,23 +623,24 @@ You should of course, decide what to do with these variables on a
 case-by-case basis. But if you decide to drop one of the variables and
 rename the other, you can use subscripts (as we saw in Chapter
 
-```ref(GettingStartedRKnitr). The *dplyr* package
-```R-dplyr] has a
+\ref(GettingStartedRKnitr). The *dplyr* package [@R-dplyr] has a
 useful function called `select` that can also remove variables from data
 frames. To remove variables simply write a minus sign (`-`) and then the
 variable name without quotes. For example, imagine that we want to keep
 **country.x** and drop the other variables.[^12] Let's also remove the
 **idn** variable:
 
-```{r Ch7RemoveVars, tidy=FALSE} \# Remove country.y, country, X, and
-idn FinalCleanedData \<- dplyr::select(DataNotDuplicates, -country.y,
--country, -idn)
+```{r Ch7RemoveVars, tidy=FALSE} 
+# Remove country.y, country, X, and idn 
+FinalCleanedData <- dplyr::select(DataNotDuplicates, -country.y, 
+                                  -country, -idn)
 
-\# Rename country.x = country FinalCleanedData \<-
+# Rename country.x = country FinalCleanedData <-
 dplyr::rename(FinalCleanedData, country = country.x)
 ```
 
-```{r Ch7ShowFinalCleanedDataNames} \# Show FinalCleanedData variables
+```{r Ch7ShowFinalCleanedDataNames} 
+# Show FinalCleanedData variables
 names(FinalCleanedData)
 ```
 
@@ -653,7 +649,7 @@ Alternatively, you can select specific variables to keep with the
 **Note**: if you are merging many data sets it can sometimes be good to
 cleanup duplicate columns between each `merge` call.
 
-### Chapter summary {#chapter-summary .unnumbered}
+### Chapter summary {-}
 
 This chapter has provided you with many tools for cleaning up your data
 to get it ready for statistical analysis. Before moving on to the next
@@ -672,46 +668,46 @@ the data. Including new or updated data when it becomes available will
 also be much easier if you use a series of segmented data creation
 source code files that are tied together with a makefile.
 
-Appendix {#WideAppendix .unnumbered}
---------
+# Appendix {-#WideAppendix}
 
 R code for turning *FertConsumData* into year-wide format:
 
-```{r Ch7WideCreateShow, eval=FALSE, tidy=FALSE} \# Load WDI and tidyr
+```{r Ch7WideCreateShow, eval=FALSE, tidy=FALSE} # Load WDI and tidyr
 package library(WDI) library(tidyr)
 
-\# Gather fertilizer consumption data from WDI fert_cons_data \<-
-WDI(indicator = \"AG.CON.FERT.ZS\")
+# Gather fertilizer consumption data from WDI fert_cons_data <-
+WDI(indicator = "AG.CON.FERT.ZS")
 
-\# Spread fert_cons_data to year wide format SpreadFert \<-
+# Spread fert_cons_data to year wide format SpreadFert <-
 spread(fert_cons_data, year, AG.CON.FERT.ZS)
 
-\# Order SpreadFert by country SpreadFert \<- arrange(SpreadFert,
+# Order SpreadFert by country SpreadFert <- arrange(SpreadFert,
 country)
 ```
 
 R code for creating iso2c country codes with the *countrycode*
-package:[\[CountryCodeExample\]]{#CountryCodeExample
+package:[\[CountryCodeExample]]{#CountryCodeExample
 label="CountryCodeExample"}
 
-```{r Ch7CountryCodeShow, eval=FALSE, tidy=FALSE} \# Load countrycode
-package library(countrycode)
+```{r Ch7CountryCodeShow, eval=FALSE, tidy=FALSE} 
+# Load countrycode package 
+library(countrycode)
 
-\# FinRegulatorData FinRegulatorData\$iso2c \<-
-countrycode(FinRegulatorData\$country, origin = \"country.name\",
-destination = \"iso2c\")
+# FinRegulatorData FinRegulatorData$iso2c <-
+countrycode(FinRegulatorData$country, origin = "country.name",
+destination = "iso2c")
 ```
 
 R code for creating Figure
-[\[FertilizerConsumptionDens\]](#FertilizerConsumptionDens){reference-type="ref"
+[\[FertilizerConsumptionDens]](#FertilizerConsumptionDens){reference-type="ref"
 reference="FertilizerConsumptionDens"}:
 
-```{r Chr7FigDensity, eval=FALSE, tidy=FALSE} \# Load ggplot2
+```{r Chr7FigDensity, eval=FALSE, tidy=FALSE} # Load ggplot2
 library(ggplot2)
 
-\# Create density plot ggplot(data = GatheredFert,
-aes(FertilizerConsumption)) + geom\_density() + xlab(\"Fertilizer
-Consumption\") + ylab(\"Density\") + theme\_bw()
+# Create density plot ggplot(data = GatheredFert,
+aes(FertilizerConsumption)) + geom\_density() + xlab("Fertilizer
+Consumption") + ylab("Density") + theme\_bw()
 ```
 
 REMOVE
@@ -737,7 +733,7 @@ REMOVE
 
 [^7]: You can download a modified version of this example as part of the
     makefile exercise from Chapter
-    [\[DataGather\]](#DataGather){reference-type="ref"
+    [\[DataGather]](#DataGather){reference-type="ref"
     reference="DataGather"}: <http://bit.ly/YnMKBG>.
 
 [^8]: Structured Query Language
