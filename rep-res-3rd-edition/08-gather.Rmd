@@ -340,8 +340,7 @@ a Mac. It should work on other Unix-like computers without modification.
 
 You can use Make to build almost any project from the shell, not just to
 run R source code files. It was an integral part of early reproducible
-computational research [@fomel2009;
-```Buckheit1995]. Rob Hyndman more
+computational research [@fomel2009; Buckheit1995]. Rob Hyndman more
 recently posted a description of the makefile he uses to create a
 project with R and LaTeX.[^chapter_6_14] The complete source of information on GNU
 Make is the official online manual. It is available at:
@@ -359,8 +358,7 @@ importing locally stored data files will also be important for most of
 the other methods further on.
 
 Data stored in plain-text files on your computer can be loaded into R
-using the `read.table()` function.\index{R function!read.table} For example, imagine we have a CSV file
-called *test-data.csv* stored in the current working directory. To load
+using the `read.table()` function.\index{R function!read.table} For example, imagine we have a CSV file called *test-data.csv* stored in the current working directory. To load
 the data set into R simply type:
 
 ```{r Ch6LocalReadTable, eval=FALSE}
@@ -382,7 +380,7 @@ a format created by another statistical program such as SPSS, SAS, or
 Stata, we can import it using commands in the *foreign* package. For
 example, imagine we have a data file called *data-1.dta* stored in our
 working directory. This file was created by the Stata statistical
-program. To load the data into an R data frame object called *StataData*
+program. To load the data into an R data frame object called *stata_data*
 simply type:
 
 ```{r Ch6Stata, eval=FALSE, tidy=FALSE, echo=TRUE}
@@ -395,7 +393,7 @@ stata_data <- read.dta(file = "data-1.dta")
 
 As you can see, function in the *foreign* package have similar syntax to
 `read.table()`. To see the full range of commands and file formats that
-the *foreign* package supports, use the following command:\index{R function!read.dta}
+the *foreign* package supports, use the following:\index{R function!read.dta}
 
 ```{r Ch6ForeignHelp, eval=FALSE, echo=TRUE}
 library(help = "foreign")
@@ -442,7 +440,7 @@ We already discussed the first issue in detail. You can determine if the
 data file is embedded in a website by opening the URL in your web
 browser. If you only see the raw plain-text data, you are probably good
 to go. To import the data, simply include the URL as the file's name in
-your `read.table()` function.\index{R function!read.table).
+your `read.table()` function.\index{R function!read.table}.
 
 ### Data from secure (*https*) URLs {#SecureDataDownload}
 
@@ -546,15 +544,18 @@ hectare of arable land. The indicator number for this variable is:
 it in an object called *fert_cons_data*.
 
 ```{r Ch6WDIFert, eval=TRUE}
-fert_cons_data <- WDI(indicator = "AG.CON.FERT.ZS")
+fert_cons_data <- WDI(indicator = "AG.CON.FERT.ZS",
+                      start = 2010, end = 2017)
 ```
+
+The `start` and `end` arguments allow us to set the starting and ending year of the data to download.
 
 The data we downloaded looks like this:
 
-```{r Ch6WDIFertSave, include=FALSE, eval=FALSE}
-# This ensures that the PDF will still compile even if the data is unavailable via WDI
-load(file = "Source/Children/Chapter6/FertData.RData")
-```
+<!-- ```{r Ch6WDIFertSave, include=FALSE, eval=FALSE} -->
+<!-- # This ensures that the PDF will still compile even if the data is unavailable via WDI -->
+<!-- load(file = "Source/Children/Chapter6/FertData.RData") -->
+<!-- ``` -->
 
 ```{r Ch6HeadFert}
 head(fert_cons_data)
@@ -571,14 +572,14 @@ This section briefly discusses some of R's web scraping tools and
 techniques to get you headed in the right direction to do more advanced
 data gathering.
 
-##### The general process {-}
+#### The general process {-}
 
 Simple web scraping involves downloading a file from the internet,
 parsing it (i.e. reading it), and extracting the data you are interested
 in then putting it into a data frame object. We already saw a simple
 example of this when we downloaded data from the a secure HTTPS website.
 We downloaded a website's content from a URL address into R with the
-`getURL` command. We then parsed the downloaded text as a CSV formatted
+`getURL()` function.\index{R function!getURL} We then parsed the downloaded text as a CSV formatted
 data file, extracted it, and put it into a new data frame object.
 
 This was a relatively simple process, because the webpage was very
@@ -598,7 +599,7 @@ There are more websites with APIs than R packages designed specifically
 to access each one. If an API is available, the *httr* package [@R-httr]
 may be useful.
 
-##### More tools to learn for web scraping
+#### More tools to learn for web scraping {-}
 
 Beyond learning about the various R packages that are useful for R web
 scraping, an aspiring web scraper should probably invest time learning a
@@ -625,7 +626,7 @@ number of other skills:
     a comprehensive overview. The *dplyr* [@R-dplyr] for data frame
     manipulation is also particularly useful.
 
-    Finally, [@Munzert2015] provide a comprehensive overview of web
+-   Finally, [@Munzert2015] provide a comprehensive overview of web
     scraping and text mining with R.
 
 ### Chapter summary {-}
