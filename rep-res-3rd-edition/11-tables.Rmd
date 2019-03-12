@@ -754,16 +754,19 @@ package [@R-brms] and data from the *swiss* data frame. Let's fit the
 model:
 
 ```{r Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE, echo=TRUE, cache=TRUE}
-library(brms)
+library(brms) 
 
 # Fit model
 linear_brms <- brm(Examination ~ Education,
                    data = swiss,
-                   family = gaussian(link = "identity"))
+                   family = gaussian(link = "identity"),
+                   refresh = 0)
 
 # Find linear_brms's class
 class(linear_brms)
 ```
+
+Note: I included `refresh = 0` to suppresses output about the model fitting process. 
 
 Using the `class` function we see that the model output object in
 *linear_brms* is of the `brmsfit` class. This class is not supported by
@@ -815,20 +818,22 @@ linear_brms_summary_df
 ```
 
 Now we have a data frame object *xtable* can handle. After a little
-cleaning up (see the chapter's Appendix for more details) you can use
-*NBSumdata frame* with *xtable* as before to create Table \@ref(CoefEstTable).
+cleaning up (see the chapter's Appendix for more details) you can use *xtable* as before to create Table \@ref(CoefEstTable).
 
 ```{r Ch9NBTable, echo=FALSE, message=FALSE, results='asis'}
 library(dplyr)
 
 # Change posterior summary variable names
-linear_brms_summary_df <- rename(linear_brms_summary_df, `2.5%` = `l.95..CI`)
-linear_brms_summary_df <- rename(linear_brms_summary_df, `50%` = Estimate)
-linear_brms_summary_df <- rename(linear_brms_summary_df, `97.5%` = `u.95..CI`)
+linear_brms_summary_df <- rename(linear_brms_summary_df, 
+                                 `2.5%` = `l.95..CI`)
+linear_brms_summary_df <- rename(linear_brms_summary_df, 
+                                 `50%` = Estimate)
+linear_brms_summary_df <- rename(linear_brms_summary_df, 
+                                 `97.5%` = `u.95..CI`)
 
 # Reorder variables and remove the Est. Error
 linear_brms_summary_df <- linear_brms_summary_df[, 
-                                                 c("2.5%", "50%", "97.5%")]
+                            c("2.5%", "50%", "97.5%")]
 
 # Create table
 xtable(linear_brms_summary_df,
@@ -863,11 +868,11 @@ Variable <- names(swiss)
 
 # Create variable description vector
 Description <- c("common standardized fertility measures",
-                 "% of males involved in agriculture as occupation",
-                 "% draftees receiving highest mark on army examination",
-                 "% education beyond primary school for draftees",
-                 "% catholic",
-                 "% live births who live less-than 1 year"
+            "% of males involved in agriculture as occupation",
+            "% draftees receiving highest mark on army examination",
+            "% education beyond primary school for draftees",
+            "% catholic",
+            "% live births who live less-than 1 year"
 )
 ```
 
