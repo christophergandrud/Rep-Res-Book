@@ -554,16 +554,16 @@ For example, to create an HTML version of the table summarizing *M1* and
 include it in an R Markdown document we type:
 
 ````r
-`r ''````   {r, results= asis , echo=FALSE}
+`r ''````{r, results= asis , echo=FALSE}
 library(xtable)
 
 # Create an xtable object from M1
-M1Table <- xtable(M1, caption = "Linear Regression, Dependent Variable: Exam Score",
+m1_table <- xtable(M1, caption = "Linear Regression, Dependent Variable: Exam Score",
                 label = "BasicXtableSummary",
                 digits = 1)
 
-# Create HTML summary table of M1Table
-print.xtable(M1Table, type = "html", caption.placement = "top")
+# Create HTML summary table of m1_table
+print.xtable(m1_table, type = "html", caption.placement = "top")
 ```   
 ````
 
@@ -641,10 +641,10 @@ cust_coef <- c('(Intercept)', 'Education', 'Agriculture',
 
 # Create nested regression model table
 texreg(list(M1, M2, M3, M4, M5),
-    caption = 'Nested Estimates Table with \\emph{texreg}',
-    caption.above = TRUE,
-    label = 'Basic_texregTable',
-    custom.coef.names = cust_coef)
+       caption = 'Nested Estimates Table with \\emph{texreg}',
+       caption.above = TRUE,
+       label = 'Basic_texregTable',
+       custom.coef.names = cust_coef)
 ```
 
 Notice that we placed the model objects in a list when we called

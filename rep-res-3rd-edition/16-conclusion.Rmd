@@ -1,0 +1,276 @@
+# Conclusion {#bookconclusion}
+
+> *Well, we have completed our journey. The only thing left to do now is
+> practice, practice, practice.* [@shottsjr2012 432]
+
+In this book we learned a workflow for highly reproducible computational
+research and many of the tools needed to actually do it. Hopefully, if
+you haven't already, you will begin using and benefiting from these
+tools in your own work. Though we've covered enough material in this
+book to get you well on your way, there is still a lot more to learn.
+With most things computational (possibly most things in general), one of
+the best ways to continue learning is to practice and try new things.
+Inevitably you will hit walls, but there are almost always solutions
+that can be found with curiosity and patience. The R and reproducible
+research community is extremely helpful when it comes to finding and
+sharing solutions. I highly recommend getting involved in and eventually
+contributing to this community to get the most out of reproducible
+research.[^chapter_14_1]
+
+Before ending the book, I want to briefly address five issues we have
+not covered so far that are important for reproducible research: citing
+reproducible research, licensing this research, sharing your code with R
+packages, whether or not to make your research files public before
+publishing the results, and whether or not it is possible to completely
+future-proof your research.
+
+## Citing Reproducible Research
+
+There are a number of well-established methods for citing presentation
+documents, especially published articles and books. However, as we
+discussed in the beginning, these documents are just the advertising for
+research findings rather than the actual research
+[@buckheit1995; @donoho2010 385]. If other researchers are going to use
+the data and source code used to create the findings in their own work,
+they need a way of actually citing the particular data and source code
+they used. Citing data and source code presents unique problems. Data
+and source code can change and be updated over time in a way that
+published articles and books generally are not. As such we have a much
+less developed, or at least less commonly used set of standards for
+citing these types of materials.
+
+One possibility is a standard for citing quantitative data sets laid out
+by [@altman2007] [see also @king2007]. They argue that quantitative data
+set citations should:
+
+-   allow a reader to quickly understand the nature of the cited data
+    set,
+
+-   unambiguously identify a particular version of the data set, and
+
+-   enable reliable location, retrieval, and verification of the data
+    set.
+
+The first issue can be solved by having a citation that includes the
+author, the date the data set was made public, and its title. However,
+these things do not unambiguously identify the data set as it may be
+updated or changed and it does not enable its location and retrieval. To
+solve this problem, @altman2007 suggest that these citations also
+include:
+
+-   a unique global identifier (UGI),
+
+-   a universal numeric fingerprint (UNF), and
+
+-   a bridge service.
+
+A UGI uniquely identifies the data set. Examples include Document Object
+Identifiers (DOI) and the Handel System.[^chapter_14_2] UGIs by themselves do not
+uniquely identify a particular version of a data set. This is where UNFs
+come in. They uniquely identify each version of a data set. Finally, a
+bridge service links the UGI and UNF to an actual document, usually
+posted online, so that it can be retrieved.
+
+There are many ways to register DOIs and Handel UGIs. Most of these also
+include means for creating UNFs and a bridge service. Examples of
+services that store your work and assign it DOIs are figshare[^chapter_14_3] and
+Zenodo.[^chapter_14_4] Zenodo can be integrated with GitHub so that it will store
+and create citations for a specific commit of a GitHub repository
+whenever you create a tag. For more information about integrating GitHub
+and Zenodo see: <https://guides.GitHub.com/activities/citable-code/>.
+Please see [@altman2007] for details of other services.[^chapter_14_5]
+
+Though @altman2007 are interested in data sets, their system could
+easily be applied to source code as well. UGIs could identify a source
+code file or collection of files. The UNF could identify a particular
+version and a bridge service would create a link to the actual files.
+
+## Licensing Your Reproducible Research
+
+In the United States and many other countries, research, including
+computer code made available via the internet, is automatically given
+copyright protection. However, copyright protection works against the
+scientific goals of reproducible research, because work derived from the
+research falls under the original copyright protections [@stodden2009
+36]. To solve this problem, some authors have suggested placing code
+under an open source software license like the GNU General Public
+License (GPL) [@vandewalle2007]. [@stodden2009] argues that this type of
+license is not really adequate for making available the data, code, and
+other material needed to reproduce research findings in a way that
+enables scientific validation and knowledge growth. I don't want to
+explore the intricacies of these issues here. Nonetheless, they are
+important for computational researchers to think about, especially if
+their data and source code is publicly available. Two good places to go
+for more information are [@stodden2009] and [@creativecommons2012].
+
+## Sharing Your Code in Packages
+
+Developing R functions and putting them into packages is a good way to
+enable cumulative knowledge development. Many researchers spend a
+considerable amount of time writing code to solve problems that no one
+has addressed yet, or haven't addressed in a way that they believe is
+adequate. It is very useful if they make this code publicly accessible
+so that others can perhaps adopt and use it in their own work without
+having to duplicate the effort used to create the original functions.
+Abstracting your code into functions so that they can be applied to many
+problems and distributing them in easily installed packages makes it
+much easier for other researchers to adopt and use your code to help
+solve their research problems. The active community of
+researcher/package developers is one of the main reasons that R has
+become such a widely used and useful statistical language.
+
+Many of the tools we have covered in this book provide a good basis to
+start making and distributing functions. We have discussed many of the R
+commands and concepts that are important for creating functions. We have
+also looked at Git and GitHub, which are very helpful for developing and
+distributing packages. Learning about Hadley Wickham's *devtools*
+package is probably the best next step for you to take to be able to
+develop and distribute functions in packages. He has an excellent
+introduction to *devtools* and R package development in general at
+<http://adv-r.had.co.nz/Philosophy.html#introduction-to-devtools>.
+
+RStudio Projects have excellent *devtools* integration and are certainly
+worth using. To begin creating a new package in RStudio, start a new
+project, preferably with Git version control (see Section
+[\[NewProjectGit\]](#NewProjectGit){reference-type="ref"
+reference="NewProjectGit"}). In the **New Project** window select
+`Package`. Now you will have a new Project with all of the files and
+directories you need to get started making packages that will hopefully
+be directly useful for the computational research community.
+
+## Project Development: Public or Private?
+
+Hopefully I have made a convincing case in this book that research
+results, especially in academia, should almost always be highly
+reproducible. The files used to create the results need to be publicly
+available for the research to be really reproducible.[^chapter_14_6] During the
+development of a research project, however, should files be public or
+private?
+
+On the one hand, openness encourages transparency and feedback. Other
+researchers may alert you to mistakes before a result is published. On
+the other hand, there are worries that you may be "scooped". Another
+researcher might see your files, take your idea, and publish it before
+you have a chance to. In general, this worry may be a bit overblown.
+Especially if you use a version control system that clearly dates all of
+your file versions, it would be very easy to make the case that someone
+has stolen your work. Hopefully this possibility would discourage any
+malfeasance. That being said, unlike the clear need to make research
+files available after publication, during research development there are
+good reasons for both making files public and keeping them private.
+
+Researchers should probably make this decision on a case-by-case basis.
+In general, I choose to make my research repositories public to increase
+transparency and encourage feedback. The community of researchers in my
+field is relatively small and close knit. It would be hard for someone
+to take my work and pass it off as their own. This is especially true if
+many people already know that they are my ideas, because I have made by
+research files publicly available. However, during the development of
+this book, which has a more general appeal, I kept the repository
+private to avoid being "scooped". Regardless, cloud storage systems like
+GitHub make it easy to choose whether or not to make your files public
+or private. You can easily keep a repository private while you create a
+piece of research and then make it public once the results are
+published.
+
+## Is it Possible to Completely Future-Proof Your Research?
+
+In this book we've looked at a number of ways to help future-proof your
+research so that future researchers (and you) are able to actually
+reproduce it. These included storing your research in text files,
+clearly commenting on your code, and recording information about the
+software environment you used by, for example, recording your session
+info. Are these steps enough to completely ensure that your research
+will always be reproducible? The simple answer is probably no. Software
+changes, but it is difficult to foresee what these changes will be.
+Nonetheless, beyond what we have discussed so far there are other steps
+we can take to make our reproducible research as future-proof as
+possible.
+
+One of the main obstacles to completely future-proofing your research is
+that no (or at least very few) pieces of software are complete. R
+packages are updated. R is updated. Your operating system is updated.
+These and other software programs discussed in this book may not only be
+updated, but also discontinued. Changes to the software you used to find
+your results may change the results someone reproducing your research
+gets. This problem becomes larger as you use more pieces of software in
+your research
+
+That being said, many of the software tools we have learned about in
+this book have future-proofing at their heart. TeX, the typesetting
+system that underlies LaTeX, is probably the best example. TeX was
+created in 1978 and has since been maintained with future-proofing in
+mind [@knuth1990]. Though changes and new versions continue to be made,
+we are still able to use TeX to recreate documents in their original
+intended form even if they were written over thirty years ago. We also
+saw that, though R and especially R packages change rapidly, the
+Comprehensive R Archive Network stores and makes accessible old versions
+(as the name suggests). Old versions can be downloaded by anyone wishing
+to reproduce a piece of research, provided the original researcher has
+recorded which versions they used. This is very easy using *repmis*'s
+`LoadandCite` command. This command lets you specify particular package
+versions to install and load from the CRAN package archive.[^chapter_14_7] Another
+approach is to use the *packrat* R package [@R-packrat] for managing the
+packages your project depends on. Some of the other technologies
+discussed in this book may be less reliable over time, so some caution
+should be taken if you intend to use them to create fully reproducible
+research.
+
+In addition to documenting what software you used and using software
+that archives old versions, some have suggested another step to
+future-proof reproducible research: encapsulate it in a virtual machine
+that is available on a cloud storage system. See in particular
+[@howe2012]. A virtual reproducible research machine would store a
+"snapshot [of] a researcher's entire working environment, including
+data, software, dependencies, notes, logs, scripts, and more". If the
+virtual machine is stored on a cloud server, then anyone wanting to
+reproduce the research could access the full computing environment used
+to create a piece of research [@howe2012 36]. As long as others could
+run the virtual machine and access the cloud storage system, you would
+not have to worry about changing software, because the exact versions of
+the software you used would be available in one place.
+
+We don't have space to cover the specifics of how to create a virtual
+machine in this book. However, using a virtual machine is a tool that
+can be added to the workflow discussed in this book, rather than being a
+replacement for it. Carefully documenting your steps, clearly organizing
+your files, and dynamically tying together your data gathering,
+analysis, and presentation files helps you and others understand how you
+created a result after a research project's results have been published.
+Being able to understand your research will give it higher research
+impact as others can more easily build on it. The steps covered in this
+book will still encourage you to have better work habits from the
+beginning of your research projects even if you will be using a virtual
+machine. The tools and workflow will also continue to facilitate
+collaboration and make it easier to dynamically update your research
+documents when you make changes.
+
+Now, get started with reproducible research!
+
+[^chapter_14_1]: A good point of entry into the R reproducible research community
+    is R-bloggers (<http://www.r-bloggers.com/>). The site aggregates
+    many different blogs on R-related topics from both advanced and
+    relatively new R users. I have found that beyond just consuming
+    other peoples' insights, contributing to R-bloggers--having to
+    clearly write down my steps--has sharpened my understanding of the
+    reproducible research process and enabled me to get great feedback.
+    Other really useful resources are the R Stack Overflow
+    (<http://stackoverflow.com/questions/tagged/r>) and Cross Validated
+    (<http://stats.stackexchange.com/questions/tagged/r>) sites.
+
+[^chapter_14_2]: See: <http://www.handle.net/>.
+
+[^chapter_14_3]: <http://figshare.com/>
+
+[^chapter_14_4]: <https://zenodo.org/>
+
+[^chapter_14_5]: The Dataverse Project (<http://thedata.org/>) offers a free
+    service to host files that also uses the Handel System to assign
+    UGIs, UNFs, and provides a bridge service. See [@gandrud2013] for a
+    comparison of Dataverse with GitHub and Dropbox for data storage.
+
+[^chapter_14_6]: There are obvious exceptions, such as when a study's participants'
+    identities need to remain confidential.
+
+[^chapter_14_7]: Do this by entering specific package version numbers in the
+    `versions` argument.
