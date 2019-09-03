@@ -5,7 +5,7 @@
 # Introducing Reproducible Research{#Intro}
 
 Research is typically presented in very selective containers: slideshows,
-journal articles, books, or maybe even websites. These presentation
+journal articles, books, or websites. These presentation
 documents announce a project's findings and try to convince us that the
 results are correct [@mesirov2010]. It's important to remember that
 these documents are not the research. Especially in the computational
@@ -21,7 +21,7 @@ reproducible research that weaves the principles of reproducibility
 throughout your entire research project, from data gathering to the
 statistical analysis, and the presentation of results. You will also
 learn how to use a number of computer tools that make this workflow
-possible. These tools include:
+easier and more robust. These tools include:
 
 -   the **R** statistical language that will allow you to gather data
     and analyze it;
@@ -36,19 +36,18 @@ possible. These tools include:
     analysis, and presentation documents together so that they can be
     easily reproduced;
 
--   **RStudio**, a program that brings all of these tools together in
-    one place.
+-   **RStudio**, a program that brings all of these tools together.
 
 ## What Is Reproducible Research?
 
-Though there is some debate over what are the necessary and sufficient
-conditions for a replication [@makel2014 2], research results are
+Though there is some debate over the necessary and sufficient
+conditions for a full replication [@makel2014 2], research results are
 generally considered[^chapter1_1_1] *replicable* if there is sufficient information
 available for independent researchers to make the same findings using
 the same procedures with new data.[^chapter1_1] For research that relies on
 experiments, this can mean a researcher not involved in the original
 research being able to rerun the experiment, including sampling, and
-validate that the new results are comparable to the original ones. In
+validate that the new results are comparable to the original results. In
 computational and quantitative empirical sciences, results are
 replicable if independent researchers can recreate findings by following
 the procedures originally used to gather the data and run the computer
@@ -94,8 +93,7 @@ important for scientific inquiry?
 
 *Replication* opens claims to scrutiny, allowing us to keep what works
 and discard what doesn't. Science, according to the American Physical
-Society, "is the systematic enterprise of gathering knowledge
-...organizing and condensing that knowledge into testable laws and
+Society, "is the systematic enterprise of gathering knowledge . . . organizing and condensing that knowledge into testable laws and
 theories". The "ultimate standard" for evaluating scientific claims is
 whether or not the claims can be replicated [@peng2011; @kelly2006].
 Research findings cannot even really be considered "genuine
@@ -103,7 +101,7 @@ contributions to human knowledge" until they have been verified
 through replication [@stodden2009 38]. Replication "requires the
 complete and open exchange of data, procedures, and materials".
 Scientific conclusions that are not replicable should be abandoned or
-modified "when confronted with more complete or reliable. . .evidence".[^chapter1_5]
+modified "when confronted with more complete or reliable . . . evidence".[^chapter1_5]
 
 *Reproducibility enhances replicability*. If other researchers are able
 to clearly understand how a finding was originally made, then they will
@@ -187,7 +185,7 @@ made available since beginning the project, designing your research to
 be reproducible from the start makes it much easier to change things
 later on.
 
-Dynamic reproducible documents in particular can make changing things
+Dynamic reproducible documents make changes
 much easier. Changes made to one part of a research project have a way
 of cascading through the other parts. For example, adding a new variable
 to a largely completed analysis requires gathering new data and merging
@@ -288,18 +286,15 @@ instructors.
 
 ### Editors
 
-Beyond a lack of reproducible research skills among researchers, an
-impediment to actually creating reproducible research is a lack of
-infrastructure to publish it [@peng2011]. Hopefully, this book will be
-useful for editors at academic publishers who want to be better at
-evaluating reproducible research, editing it, and developing systems to
-make it more widely available. The journal *Biostatistics* is a good
-example of a publication that is encouraging (actually requiring)
+When the first edition of this book was published, there was a worrying lack of reproduciblity in published research. The infrastructure was weak [@peng2011] and many journals did not require it. However, the situation has largely changed for the better: many journals require all analyses to be in some sense reproducible. The journal *Biostatistics* is a good example of a publication that is encouraging (actually requiring)
 reproducible research. From 2009 the journal has had an editor for
 reproducibility that ensures replication files are available and that
 results can be replicated using these files [@peng2009]. The more
 editors there are with the skills to work with reproducible research the
 more likely it is that researchers will do it.
+
+We need to maintain and continuously improve these standards. This book is useful for editors at academic publishers who want to be better at evaluating reproducible research, editing it, and developing systems to
+make it more widely available.
 
 ### Private sector researchers
 
@@ -323,10 +318,10 @@ help create robust data analysis methods that help your organization
 avoid errors that may come from cutting-and-pasting data across
 spreadsheets.[^chapter1_8]
 
-The tools of reproducible research covered in this book enable you
+<!-- The tools of reproducible research covered in this book enable you
 to create professional standardized reports that can be easily updated
 or changed when new information is available. In particular, you will
-learn how to create batch reports based on quantitative data.
+learn how to create batch reports based on quantitative data. -->
 
 ## The Tools of Reproducible Research
 
@@ -363,10 +358,7 @@ Xie's *knitr* package [-@R-knitr] or the related *rmarkdown* package
 -   **RStudio**: an integrated developer environment (IDE) for R that
     tightly combines R, *knitr*, *rmarkdown*, and markup languages.
 
--   **Cloud storage & versioning**: Services such as Dropbox and
-    Git/GitHub that can store data, code, and presentation files, save
-    previous versions of these files, and make this information widely
-    available.
+-   **Cloud storage & versioning**: Git/GitHub that can store data, code, and presentation files, save previous versions of these files, and make this information widely available.
 
 -   **Unix-like shell programs**: These tools are useful for working
     with large research projects.[^chapter1_10] They also allow us to use
@@ -403,7 +395,7 @@ presentation documents created by GUI word processing programs in a way
 that will be accessible to other researchers both now and in the future.
 I'll come back to these points in Chapter \@ref(GettingStartedRR).
 
-#### Why knitr and rmarkdown? {-}
+#### Why knitr and R Markdown? {-}
 
 Literate programming is a crucial part of reproducible quantitative
 research.[^chapter1_12] Being able to directly link your analyses, your results,
@@ -436,15 +428,15 @@ different approaches to creating presentation documents. *knitr*
 documents must be written using the markup language associated with the
 desired output. For example, with *knitr*, LaTeX must be used to create
 PDF output documents and Markdown or HTML must be used to create
-webpages. *rmarkdown* builds directly on *knitr*, the key difference
+webpages. R Markdown builds directly on knitr, the key difference
 being that it uses the straightforward Markdown markup language to
 generate PDF, HTML, and MS Word documents.[^chapter1_16]
 
-Because you write with the simple Markdown syntax, *rmarkdown* is
+Because you write with the simple Markdown syntax, R Markdown is
 generally easier to use. It has the advantage of being able to take the
 same markup document and output multiple types of presentation
 documents. Nonetheless, for complex documents like books and long
-articles or work that requires custom formatting, *knitr* LaTeX is often
+articles or work that requires custom formatting, knitr LaTeX is often
 preferable and extremely flexible, though the syntax is more
 complicated.
 
@@ -452,7 +444,7 @@ complicated.
 
 Why use the RStudio integrated development environment for reproducible
 research? R by itself has the capabilities necessary to gather data,
-analyze it, and, with a little help from *knitr*/*rmarkdown* and markup
+analyze it, and, with a little help from knitr/R Markdown and markup
 languages, present results in a way that is highly reproducible. RStudio
 allows you to do all of these things, but simplifies many of them and
 allows you to navigate through them more easily. It also is a happy
@@ -467,7 +459,7 @@ both open source and paid. But RStudio is currently the best program for
 creating reproducible LaTeX and Markdown documents. It has full syntax
 highlighting. Its syntax highlighting can even distinguish between R
 code and markup commands in the same document. It can spell check LaTeX
-and Markdown documents. It handles *knitr*/*rmarkdown* code chunks
+and Markdown documents. It handles knitr/R Markdown code chunks
 beautifully (see Chapter \@ref(GettingStartedRKnitr)).
 
 Finally, RStudio not only has tight integration with various markup
@@ -478,7 +470,7 @@ programs allow you to keep track of the changes you make to your
 documents (see Chapter \@ref(Storing)). This is important for reproducible research since
 version control programs can document many of your research steps. It
 also has a built-in ability to make HTML slideshows from
-*knitr*/*rmarkdown* documents. Basically, RStudio makes it easy to
+knitr/R Markdown documents. Basically, RStudio makes it easy to
 create and navigate through complex reproducible research documents.
 
 ## Installing the main software {#InstallR}
@@ -512,7 +504,7 @@ You will need to install the R package *rmarkdown* [@R-rmarkdown]\index{R packag
 install.packages("rmarkdown")
 ```
 
-If you plan to render your R Markdown documents from the console without RStudio you will need to install Pandoc.\index{Pandoc} For instructions see Pandoc's download page: <https://pandoc.org/installing.html>.
+If you plan to render your R Markdown documents from the console without RStudio you will need to install Pandoc.\index{Pandoc} For instructions see Pandoc's download page: <https://pandoc.org/installing.html>. If you use RStudio, this step is unnecessary as Pandoc will be installed automatically.
 
 If you want to create LaTeX (PDF) documents you can install a TeX
 distribution.[^chapter1_18] The simplest way to get all of the LaTeX capabilities you will need for this book is to use the *tinytex*\index{R package!markdown} [@R-tinytex] R package:
@@ -521,7 +513,7 @@ distribution.[^chapter1_18] The simplest way to get all of the LaTeX capabilitie
 install.packages('tinytex')
 tinytex::install_tinytex()
 ```
-If you want a full LaTeX distribution see <http://www.latex-project.org/ftp.html> for installation information.
+If you want a full LaTeX distribution see <https://www.latex-project.org/get/> for installation information.
 
 ### GNU Make {#InstallMake}
 
@@ -589,7 +581,7 @@ the nitty-gritty:
     Chapter \@ref(DirectoriesChapter)). Sean Kross' [-@kross2018] ***The Unix
     Workbench*** is also a great freely available online introduction to the topic.
 
--   The RStudio website (<http://www.rstudio.com/ide/docs/>) has a
+-   The RStudio website (<https://support.rstudio.com/hc/en-us/categories/200035113-Documentation>) has a
     number of useful tutorials on how to use *knitr* with LaTeX and
     Markdown. They also have very good documentation for *rmarkdown* at
     <https://rmarkdown.rstudio.com/>.
@@ -601,8 +593,7 @@ While learning how to use R and the other programs I personally often
 encountered illustrative examples that included commands, variables, and
 other things that were not well explained in the texts that I was
 reading. This caused me to waste many hours trying to figure out, for
-example, what the `$` is used for (preview: it's the component selector,
-see Section \@ref(ComponentSelect)). I hope to save you from this wasted time
+example, what the `$` is used for (preview: it's the component selector). I hope to save you from this wasted time
 by either providing a brief explanation of possibly frustrating and
 mysterious things and/or pointing you in the direction of good
 explanations.
@@ -674,10 +665,8 @@ covers the data gathering and file storage process. The third part
 (chapters \@ref(StatsModel), \@ref(TablesChapter), and \@ref(FiguresChapter))
 teaches you how to dynamically incorporate
 your statistical analysis, results figures, and tables into your
-presentation documents. The final part (chapters \@ref(LatexChapter), \@ref(LargeDocs),
-and \@ref(MarkdownChapter)) covers how to create reproducible
-presentation documents including LaTeX articles, books, slideshows, and
-batch reports as well as Markdown webpages and slideshows.
+presentation documents. The final part (chapters \@ref(LatexChapter) and \@ref(MarkdownChapter)) covers how to create reproducible
+presentation documents including LaTeX articles, slideshows, and webpages.
 
 
 ## Appendix: Additional R Setup {-}
@@ -690,15 +679,16 @@ In this book I discuss how to use a number of user-written R packages for reprod
 
 \index{R!packages|(}
 
-**Note:** in general you should aim to minimize the number of packages that your research depends on. Doing so will lessen the possibility that your code will ``break'' when a package is updated. This book depends on relatively many packages because of its special and unusual purpose of illustrating a variety of tools that you can use for reproducible research.
+**Note:** in general you should aim to minimize the number of packages that your research depends on. Doing so will lessen the possibility that your code will "break" when a package is updated. This book depends on relatively many packages because of its special and unusual purpose of illustrating a variety of tools that you can use for reproducible research.
 
 To install key user-written packages discussed in this book, copy the following code and paste it into your R console:
 
 ```{r package_install, results='hide'}
 # Packages to install
-pkg_to_install <- c("brew", "brms", "bookdown", "devtools", "googleVis", 
-                    "knitr", "rio", "rmarkdown", "tidyverse", "WDI", "xfun",
-                    "texreg", "xtable")
+pkg_to_install <- c("brew", "brms", "bookdown", "devtools",
+                    "googleVis", "knitr", "rio", "rmarkdown",
+                    "tidyverse", "WDI", "xfun", "texreg",
+                    "xtable")
 
 
 # Check if the packages are installed, if not install them
@@ -795,7 +785,7 @@ apt-get install r-cran-rcurl-dev
     (posted 11 February 2013).
 
 [^chapter1_9]: The book was created with R version and developer builds of
-    RStudio version 0.99.370.
+    RStudio version 1.2.1572.
 
 [^chapter1_10]: In this book I cover the Bash shell for Linux and Mac as well as
     Windows PowerShell.
@@ -811,7 +801,7 @@ apt-get install r-cran-rcurl-dev
 
 [^chapter1_13]: A very interesting tool that is worth taking a look at for the
     Python programming language is HTML Notebooks created with Jupyter.
-    For more details see <http://jupyter.org/>. We will also discuss these in more detail in Section \@ref(jupyter).
+    For more details see <http://jupyter.org/>. We will also discuss these at the end of Chapter \@ref(GettingStartedRKnitr).
 
 [^chapter1_14]: Syntax highlighting uses different colors and fonts to
     distinguish different types of text.
