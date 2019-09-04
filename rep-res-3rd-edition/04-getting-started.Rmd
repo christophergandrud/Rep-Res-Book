@@ -57,15 +57,15 @@ These functions tie your research together. For example, you can use
 API-based R packages to gather data from the internet. You can use R's
 `merge()`\index{R function!merge} function to combine data gathered from different sources into one
 data set. The `getURL()`\index{R function!getURL} function from R's *RCurl* package [@R-RCurl] and
-the `read.table()`\index{R function!read.table} function in base R or the much more versatile `import()` 
+the `read.table()`\index{R function!read.table} function in base R or the much more versatile `import()`
 function from the *rio* package [@R-rio]\index{rio}\index{R function!import} can be used to bring this data set into your statistical analyses. The *knitr* or *rmarkdown* package then
 ties your analyses into your presentation documents. This includes the
 code you used, the figures you created, and, with the help of tools such
 as the `kable()` function in the *knitr* package, tables of results. You
 can even tie multiple presentation documents together. For example, you
 can access the same figure for use in a LaTeX article and a
-Markdown-created website with the `includegraphics`\index{LaTeX command!include\_graphics} and *knitr*'s `include_graphics()`\index{R function!include\_graphics}
-functions, respectively. This helps you maintain a consistent
+Markdown-created website with the LaTeX `includegraphics`\index{LaTeX command!include\_graphics} function or *knitr*'s `include_graphics()`\index{R function!include\_graphics}
+function. This helps you maintain a consistent
 presentation of results across multiple document types. We'll cover
 these functions in detail throughout the book. See Table
 \@ref(TableTieFunctions) for an additional overview of some of the
@@ -152,7 +152,7 @@ these functions in detail throughout the book. See Table
 ### Reproducible theory
 
 An important part of the research process that I do not discuss in this
-book is theoretical stage. Ideally, if you are using a deductive
+book is the theoretical stage. If you are using a deductive
 research design, the bulk of this work will precede and guide the data
 gathering and analysis stages. Just because I don't cover this stage of
 the research process doesn't mean that theory building can't and
@@ -231,7 +231,7 @@ si
 ```
 
 Chapter \@ref(DirectoriesChapter) gives specific details about how to
-create files with dynamically included session information. If you use
+create files with dynamically included session information. If you used
 non-R tools you should also record what versions of these tools you
 used.
 
@@ -246,8 +246,7 @@ simplest file format is the humble, but versatile, text file.[^chapter2_1]
 Text files are extremely nimble. They can hold your data in, for
 example, comma-separated values (CSV) format. They can contain your
 analysis code in files. And they can be the basis for your presentations
-as markup documents like or , for LaTeX and Markdown files,
-respectively. All of these files can be opened by any program that can
+written in markup languages such as Markdown and LaTeX. All of these files can be opened by any program that can
 read text files.
 
 One reason reproducible research is best stored in text files is that
@@ -443,12 +442,10 @@ files accessible through the cloud computing services like GitHub.
         {\tt{source\_url}} & R & From the {\emph{devtools}} package. Runs an R source code file from a secure ({\tt{https}}) url like those used by GitHub. & \hfill\ref{StatsModel} \\[0.25cm]
         {\tt{kable}} & R & Creates tables from data frames that can be rendered using Markdown or LaTeX. & \hfill\ref{TablesChapter} \\[0.25cm]
         {\tt{toLaTeX}} & R & Converts R objects to LaTeX. & \hfill\ref{GettingStartedRR} \\[0.25cm]
-        {\tt{input}} & LaTeX & Includes LaTeX files inside of other LaTeX files. & \hfill\ref{LargeDocs} \\[0.25cm]
-        {\tt{include}} & LaTeX & Similar to {\tt{input}}, but puts page breaks on either side of the included text. Usually it is used for including chapters. & \hfill\ref{LargeDocs} \\[0.25cm]
         {\tt{includegraphics}} & LaTeX & Inserts a figure into a LaTeX document. & \hfill\ref{FiguresChapter} \\[0.25cm]
         {\tt{include\_graphics}} & R/R Markdown & Inserts a figure into an R Markdown document. & \hfill\ref{FiguresChapter} \\[0.25cm]
         \texttt{![]()} & Markdown & Inserts a figure into a Markdown document. & \hfill\ref{MarkdownChapter} \\  [0.25cm]
-        Pandoc & shell & A shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \hfill\ref{LargeDocs} \& \ref{MarkdownChapter} \\[0.25cm]
+        Pandoc & shell & A shell program for converting files from one markup language to another. Allows you to tie presentation documents together. & \ref{MarkdownChapter} \\[0.25cm]
         Make & shell & A shell program for automatically building many files at the same time. & \hfill\ref{DataGather} \\[0.25cm]
         \hline
     \end{tabular}

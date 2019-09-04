@@ -1,4 +1,4 @@
-# Getting Started with R, RStudio, and knitr/rmarkdown {#GettingStartedRKnitr}
+# Getting Started with R, RStudio, and knitr/R Markdown {#GettingStartedRKnitr}
 
 If you have rarely or never used R before, the first section of this
 chapter gives you enough information to be able to get started and
@@ -222,8 +222,7 @@ You can see in this example how `row.names()` can also be used
 to print the row names.[^chapter3_16] The *row.names* attribute does not behave
 like a regular data frame column. You cannot, for example, include it as
 a variable in a regression. You can use the `row.names()` function to
-assign the *row.names* values to a regular column (for an example see
-Section \@ref(RowNamesTidy)).
+assign the *row.names* values to a regular column.
 
 You will notice in the output for *string_num_df* that the strings in
 the **character_vector** column are not in quotation marks. This does
@@ -741,7 +740,7 @@ simple hierarchy. The header begins and ends with three dashes (`---`).
 Information keys--like "title" and "author"--are separated from their
 associated "values" by a colon (`:`). Sub-values of a hierarchy are
 denoted by being placed on a new line and indented.[^chapter3_31] Here is a basic
-*rmarkdown* header that indicates the document's title, author, date,
+R Markdown header that indicates the document's title, author, date,
 and that it will be turned into a PDF document (via LaTeX).
 
 ````yaml
@@ -765,7 +764,7 @@ select `File` then `R Markdown…`. A window will appear that looks like
 Figure \@ref(fig:rmarkdownWindow). In this window select the type of output document
 you want to create and click `Ok`.
 
-In addition to the header, *rmarkdown* differs from basic *knitr* files in that you
+In addition to the header, R Markdown differs from basic knitr files in that you
 can include Pandoc syntax in your R Markdown document. This can be
 useful for bibliographies as we will discuss in Chapter
 \@ref(MarkdownChapter). Nonetheless, remember that apart from the
@@ -951,8 +950,7 @@ If you want to use `opts_chunk` in a document rendered with
 *knitr* package options affect how the package itself runs.
 For example, the `progress` option can be set as either `TRUE` or `FALSE` [^chapter3_36] depending on whether or not you want a progress bar to be displayed when you knit a
 code chunk. You can use `base.dir` to set the directory where you want all of your
-figures to be saved (see Chapter \@ref(DirectoriesChapter)) or the `child.path` option
-to specify where child documents are located (see Chapter \@ref(LargeDocs)).
+figures to be saved (see Chapter \@ref(DirectoriesChapter)).
 
 You set package options in a similar way as global chunk options with `opts_knitr$set`.
 For example, include this code at the beginning of a document to turn
@@ -1008,7 +1006,7 @@ document you compile in RStudio.
 knitr::include_graphics("images/chapter_3/NotebookExample.png")
 ```
 
-In this chapter's appendix we discuss interactive Jupyter notebooks.\index{Jupyter} They are popular in the data science and tech industries and use a somewhat different logic from *rmarkdown* notebooks.
+In this chapter's appendix we discuss interactive Jupyter notebooks.\index{Jupyter} They are popular in the data science and tech industries and use a somewhat different logic from R Markdown notebooks.
 
 ```{r SourcePaneRmarkdown, echo=FALSE, fig.cap="RStudio Source Pane for an RMarkdown File", out.width="100%"}
 knitr::include_graphics("images/chapter_3/SourcePaneRmarkdown.png")
@@ -1071,7 +1069,7 @@ pdfLaTeX.\index{pdfLaTeX} Another option is XeLaTeX.\index{XeLaTeX} XeLaTeX has 
 compared to pdfLaTeX if you are using characters that are not found in
 standard English.
 
-### *knitr* & R
+### knitr & R
 
 As *knitr* is a regular R package, you can of course, knit
 documents in R (or using the console in RStudio). All of the
@@ -1133,7 +1131,7 @@ texi2pdf(file = "example.tex")
 Just like with `knit2html()`, you can simplify this process by using the
 `knit2pdf()` function to compile a PDF file from a `.Rnw` document.\index{R function!knit2html}\index{R function!knit2pdf}
 
-### *rmarkdown* and R {#rmarkdownRender}
+### R Markdown and R {#rmarkdownRender}
 
 Just as *knitr* is an R package that you can run from the console, you
 can also run *rmarkdown* from the console. Instead of the `knit`
