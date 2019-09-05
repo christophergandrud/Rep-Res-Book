@@ -9,7 +9,9 @@ storage service[^chapter_5_1] [see @howe2012]. This chapter describes in detail
 two different cloud storage services--Dropbox and GitHub--that you can
 use to make your research files easily accessible to others. Not only do
 these services enable others to reproduce your research, they also have
-a number of benefits for your research workflow. Researchers often face
+a number of benefits for your research workflow. These are certainly not the only services for remote research file storage, but discussing them does cover many common concerns of other services.
+
+Researchers often face
 a number of data management issues that, beyond making their research
 difficult to reproduce, can make doing the initial research difficult.
 
@@ -57,7 +59,7 @@ Before getting into the details of cloud-based data storage for all of
 our research files, let's consider what type of formats you should
 actually save your data in. A key issue for reproducibility is that
 others are able to not only get hold of the exact data you used in your
-analysis, but be able to understand and use the data now and in the
+analysis, but also be able to understand and use the data now and in the
 future. Some file formats make this easier than others.
 
 In general, for small to moderately-sized data sets[^chapter_5_2] plain-text
@@ -98,7 +100,7 @@ they include not only the underlying data but also other information
 like variable descriptions. If you are using plain-text files to store
 your data you will need to include a separate file, preferably in the
 same directory as the data file describing the variables and their
-sources. In Chapter \@ref(TablesChapter) (Section \@ref(VarDescriptTables)) we 
+sources. In Chapter \@ref(TablesChapter) we
 will look at how to automate the creation of variable description files.
 
 ## Storing Your Files in the Cloud: Dropbox
@@ -110,10 +112,10 @@ both meet our basic storage needs, they do so in different ways and
 require different levels of effort to set up and maintain.
 
 These two services are certainly not the only way to make your research
-files available. Research-oriented services include the Zenodo,[^chapter_5_7]
+files available. Research-oriented services include Zenodo,[^chapter_5_7]
 the Dataverse Project,[^chapter_5_8] figshare,[^chapter_5_9] and RunMyCode.[^chapter_5_10] These services include good built-in citation systems, unlike Dropbox and
-GitHub. They also aim to provide persistent URLs for your files. This helps avoid the 'link rot' that threatens reproducibility,\index{link rot} i.e. a hosting service changes their URL structure breaking existing links. These services may be a very good place to store research files once the research is completed or close to completion. Many journals now require key reproducibility files be uploaded to these sites. However, these sites' ability to store, access, collaborate on, and version control files *during* the main part of the research process is mixed. Services like Dropbox and GitHub are very capable of being
-part of the research workflow from the beginning. 
+GitHub. They also aim to provide persistent URLs for your files. This helps avoid the 'link rot' that threatens reproducibility,\index{link rot} i.e. a hosting service changes their URL structure breaking existing links. These services may be a very good place to store research files once the research is completed or close to completion. Many journals now require replication files be uploaded to these sites. However, these sites' ability to store, access, collaborate on, and version control files *during* the main part of the research process is mixed. Services like Dropbox and GitHub are very capable of being
+part of the research workflow from the beginning.
 
 Zenodo and GitHub have excellent integration, allowing you to actively develop a research project on GitHub then persist it on Zenodo.\index{Zenodo} For details see: <https://guides.github.com/activities/citable-code/>.
 
@@ -135,7 +137,7 @@ automatically syncs the directory with a similar folder on a cloud-based
 server. Typically when you sign up for the service you'll receive a
 limited amount of storage space for free, usually a few gigabytes. This
 is probably enough storage space for a number of text file-based
-research projects.
+research projects with smaller data sets.
 
 ### Accessing data {#EnablePublicFolder}
 
@@ -162,7 +164,7 @@ We changed the download (`dl`) option from false (`dl=0`) to true (`dl=1`). Now 
 
 Once you have the URL you can load the file directly into R using the
 `import()`\index{R function!import} function from the *rio* package. `import()` works for
-many different data formats and is generally more robust than `read.table(). Use the `source_url()` \index{R function!source\_url} function in the *devtools* package [@R-devtools] to download and run R source code files (see Chapter \@ref(StatsModel)).
+many different data formats and is generally more robust than `read.table()`. Use the `source_url()` \index{R function!source\_url} function in the *devtools* package [@R-devtools] to download and run R source code files (see Chapter \@ref(StatsModel)).
 
 Let's download data directly into R from Dropbox. The data set's URL is:
 <https://www.dropbox.com/s/1xapw69efofpg3b/public.fin.msm.model.csv?dl=1>.[^chapter_5_15]
@@ -262,7 +264,7 @@ hopefully convince you to get started using it:[^chapter_5_18]
 -   GitHub can create and host a website for your research project that
     you could use to present the results, not just the replication
     files.
-    
+
 -   It's close integration with Zenodo allows you to easily make your full replication material persistently accessible and citable.
 
 #### Collaboration {-}
@@ -524,7 +526,7 @@ we just committed our first full draft of a project. We want to tag it
 as version 0.1, i.e. "v0.1". To do this use Git's tag command:
 
 ````bash
-# Tag most recent commit v0.1 
+# Tag most recent commit v0.1
 git tag -a v0.1 -m "First draft"
 ````
 
@@ -532,7 +534,7 @@ The `-a` option adds the tag `v0.1` and `-m` lets us add a message. Now
 we can checkout this particular commit by using its tag, i.e.:\index{shell command!git checkout}
 
 ````bash
-# Checkout v0.1 
+# Checkout v0.1
 git checkout v0.1
 ````
 
@@ -543,7 +545,7 @@ idea to specifically name the branch using the `-b` argument.[^chapter_5_28] For
 example, to give it the name *v0.1_branch* type:
 
 ````bash
-# Checkout v0.1 as v0.1_branch 
+# Checkout v0.1 as v0.1_branch
 git checkout v0.1 -b v0.1_branch
 ````
 
@@ -563,7 +565,7 @@ version of the repo) which can be merged back into the *master* (main)
 branch. To see what branch you are using type:
 
 ```{r Ch5CheckBranch, engine='sh'}
-# Show git branch 
+# Show git branch
 git branch
 ```
 
@@ -571,7 +573,7 @@ To create a new branch use, simply enough, the `branch` command. For
 example, to create a new branch called *test*:
 
 ````bash
-# Create test branch 
+# Create test branch
 git branch test
 ````
 
@@ -579,7 +581,7 @@ You can now use `checkout` to switch to this branch.[^chapter_5_29] Here is a
 shortcut for creating and checking out the branch:
 
 ````bash
-# Create and checkout test branch 
+# Create and checkout test branch
 git checkout -b test
 ````
 
@@ -591,16 +593,16 @@ and `commit` your changes, `checkout` the *master* branch, then use the
 `merge` command.[^chapter_5_30]\index{shell command!git add}\index{shell command!git merge}
 
 ````bash
-# Add files 
+# Add files
 git add .
 
-# Commit changes to test branch 
+# Commit changes to test branch
 git commit -a -m "commit changes to test"
 
-# Checkout master branch 
+# Checkout master branch
 git checkout master
 
-# Merge master and test branches 
+# Merge master and test branches
 git merge test
 ````
 
@@ -617,7 +619,7 @@ and what to delete.
 There may be files in your repository that you do not want to keep under
 version control. Maybe this is because they are very large files or
 cached files from *knitr* or other files that are byproducts of
-compiling an R LaTeX document (see Chapter \@ref(StatsModel)). You also want to ignore files that contain private information. Make sure to **never include private information** (e.g. passwords or confidential data) in your Git history. Once they are committed it will be very difficult to definitively remove them. Once they are on GitHub, they will be publicly accessible. 
+compiling a LaTeX document (see Chapter \@ref(StatsModel)). You also want to ignore files that contain private information. Make sure to **never include private information** (e.g. passwords or confidential data) in your Git history. Once they are committed it will be very difficult to definitively remove them. Once they are on GitHub, they will be publicly accessible.
 
 To have Git ignore particular files, simply create a file called *.gitignore*.[^chapter_5_31] You can either put this file in the repository's parent directory to create a *.gitignore* file for the whole repository or in a subdirectory to ignore files in that
 subdirectory. In the *.gitignore* file, add ignore rules by simply
@@ -648,7 +650,7 @@ example, GitHub has a *.gitignore* file that is useful for ignoring files[^chapt
 vignettes/*.html
 vignettes/*.pdf
 
-# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+# OAuth2 token
 .httr-oauth
 
 # knitr and R markdown default cache directories
@@ -665,7 +667,7 @@ other words, it tells Git to look for files with any name that end with
 a specified file extension. This is faster than writing out the full
 name of every file you want to ignore individually. It also makes it
 easy to copy the rules into new repos. For example, you'll notice the `*-Ex.R` and
-`/*_cache/` rules. These tell Git to ignore all of the files with a name ending in *-Ex.R* and all files in subdirectories with a name ending in *_cache*. 
+`/*_cache/` rules. These tell Git to ignore all of the files with a name ending in *-Ex.R* and all files in subdirectories with a name ending in *_cache*.
 
 Git will not ignore files that have already been committed to a
 repository. To ignore these files you will first need to remove them
@@ -673,7 +675,7 @@ from Git with Git's `rm` (remove) command. If you wanted to remove a
 file called *example-project.tex* from version tracking type:\index{shell command!git rm}
 
 ````bash
-# Remove example-project.tex from Git version tracking 
+# Remove example-project.tex from Git version tracking
 git rm --cached example-project.tex
 ````
 
@@ -722,7 +724,7 @@ type:[^chapter_5_33]
 # Change working directory
 cd /git_repositories/
 
-# Clone example-project 
+# Clone example-project
 git clone https://GitHub.com/USER/example-project.git
 ````
 
@@ -738,10 +740,10 @@ the remote repository and `push` your files to it. Type Git's
 `https://github.com/USER/example-project.git`, then type:
 
 ````bash
-# Change working directory to existing local repo 
+# Change working directory to existing local repo
 cd /git_repositories/example-project
 
-# Add a remote (GitHub) repository to an existing repo 
+# Add a remote (GitHub) repository to an existing repo
 git remote add origin https://github.com/USER/example-project.git
 ````
 
@@ -749,7 +751,7 @@ This will tell your local repository where the remote one is. Finally,
 push the repository to GitHub:\index{shell command!git push}
 
 ````bash
-# Push local repository to GitHub for the first time 
+# Push local repository to GitHub for the first time
 git push -u origin master
 ````
 
@@ -767,7 +769,7 @@ added/committed the changes you want to include in the remote repo,
 type:
 
 ````bash
-# Add changes to the GitHub remote master branch 
+# Add changes to the GitHub remote master branch
 git push origin master
 ````
 
@@ -789,7 +791,7 @@ repository.
 
 ### Accessing on GitHub
 
-#### Downloading into R {- #GitDownload #RawGitHub} 
+#### Downloading into R {- #GitDownload #RawGitHub}
 
 In general, the process of downloading data directly into R is similar
 to what we saw earlier for loading data from Dropbox Public folders. We
@@ -802,18 +804,18 @@ URL for the raw (plain-text) version of the data is
 <https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv>.[^chapter_5_36]
 
 ```{r Ch5URLAddress, message=TRUE, tidy=FALSE}
-# Place shortened URLinto url object 
+# Place shortened URLinto url object
 url <- "http://bit.ly/14aSjxB"
 
-# Download data 
+# Download data
 disprop_data <- rio::import(url, format = "csv")
 
-# Show variable names 
+# Show variable names
 names(disprop_data)
 ```
 
 `import()` downloaded the most recent version of the file from the
-master branch. 
+master branch.
 
 We can actually use `import()` to download a particular version of a
 file--from a particular Git commit--directly into R. This makes
@@ -830,21 +832,21 @@ download it I find this particular version of the file's URL and use it
 in `import()`:
 
 ```{r Ch5sourceDataOld, tidy=FALSE, message=FALSE, warning=FALSE}
-# Create object containing the file's URL 
-old_url <- paste0("https://raw.githubusercontent.com/", 
+# Create object containing the file's URL
+old_url <- paste0("https://raw.githubusercontent.com/",
                   "christophergandrud/",
-                  "Disproportionality_Data/", 
+                  "Disproportionality_Data/",
                   "1a59d360b36eade3b183d6336a",
-                  "2262df4f9555d1/", 
+                  "2262df4f9555d1/",
                   "Disproportionality.csv")
 
-# Download old disproportionality data 
+# Download old disproportionality data
 disprop_old <- rio::import(old_url, format = "csv")
 ```
 
 In this example I did not shorten the URL, but instead used the `paste0()`\index{R function!paste0}
 function to paste it together.[^chapter_5_37] You do not have to do this. I did it
-here so that the URL would fit on the printed page. 
+here so that the URL would fit on the printed page.
 
 #### Viewing files {-}
 
@@ -883,7 +885,7 @@ push your commits to GitHub. Use the `pull` command to sync your local
 and remote repository. First add and commit your changes, then type:
 
 ````bash
-# Sync repository 
+# Sync repository
 git pull
 ````
 
@@ -1085,7 +1087,7 @@ statistical analyses.
     use, so I highly recommend the GUI version of GitHub or the repo's
     GitHub website.
 
-[^chapter_5_27]: Secure Hash Algorithm. This is a unique identifier for each commit. 
+[^chapter_5_27]: Secure Hash Algorithm. This is a unique identifier for each commit.
 
 [^chapter_5_28]: If you don't, then the new branch will have a "detached head"
     which will create problems using the branch in the future.
@@ -1118,5 +1120,5 @@ statistical analyses.
 
 [^chapter_5_38]: This is called a `pull` request in Git terminology. See the next
     section for more details.
-    
+
 [^chapter_5_github_r_ignore]: From: <https://github.com/github/gitignore/blob/master/R.gitignore> as of 26 December 2018.

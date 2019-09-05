@@ -206,6 +206,8 @@ unnecessary if you use relative file paths.
 
 Below we'll see how to RStudio Projects and the *here* [@R-here] package to automatically set working directories so that your relative file paths will transport even more easily across computers.
 
+The *ProjectTemplate* package [@R-ProjectTemplate] package provides functions to help set up a well structured research project file tree. We don't use it in the following examples, but you may find it useful in your own work.\index{R package!ProjectTemplate}
+
 ### Spaces in directory & file names
 
 It is good practice to avoid putting spaces in your file and
@@ -213,9 +215,9 @@ directory names. For example, I called the example project parent
 directory in Figure \@ref(fig:ExampleTree) "example-project" rather than "Example Project". Spaces in file and directory names can sometimes create problems for computer programs
 trying to read the file path. The program may believe that the space
 indicates that the path name has ended. To make multi-word names easily
-readable without using spaces, adopt a consistent naming convention. 
+readable without using spaces, adopt a consistent naming convention.
 
-One approach is to use a convention that contrasts with the R object naming convention you are using. For example, if we adopt the underscore method for R object names used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use em dashes (`-`) to separate words in file names. For example: `example-source.R`.
+One approach is to use a convention that contrasts with the R object naming convention you are using. A contrasting convention helps make it clear if something is an R object or a file name. For example, if we adopt the underscore method for R object names used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use em dashes (`-`) to separate words in file names. For example: `example-source.R`. This is sometimes referred to as kebab-case.\index{kebab-case}
 
 ## Organizing Your Research Project
 
@@ -229,7 +231,7 @@ child directory.
 
 The nested file structure allows you to use relative file paths. The
 knittable documents can call *analysis-1.R* with the relative path
-*analysis/analysis-1.R*. 
+*analysis/analysis-1.R*.
 
 ```{r ProjectMenu, fig.cap="An Example RStudio Project Menu", echo=FALSE, fig.align='center', out.height="30%"}
 knitr::include_graphics("images/chapter_4/ProjectMenu.png")
@@ -312,12 +314,9 @@ easily replicate your actions.
 
 To find your current working directory use the `getwd()` function:\index{R function!getwd}
 
-```{r Ch4Getwd, echo=TRUE}
+```{r Ch4Getwd, eval=FALSE}
 getwd()
 ```
-
-The example here shows you the current working directory that was used
-while knitting this chapter.
 
 #### `list.files()` {-}
 
@@ -358,7 +357,9 @@ However . . .
 
 \index{R function!here}
 
-It is *not* good practice for reproducibility (and just general convenience when using a source code file across multiple computers) to use `setwd()`. You will need to tediously set specific file paths for each system. Instead, use RStudio Projects, which automatically set the working directory to the one with the *.Rproj* file. If you are not using RStudio Projects, include `set_here()` from the *here* package at the top of your source code. This will create a file called *.here* in the current working directory. It functions similarly to *.Rproj* to automatically flag for *here* what should be the current working directory. Remember when you share your source code to also share the *.Rproj*/*.here* file.
+It is *not* good practice for reproducibility (and just general convenience when using a source code file across multiple computers) to use `setwd()` in your R source code. You, and anyone reproducing your work, will need to tediously set specific file paths for each computer.
+
+Instead, use RStudio Projects, which automatically set the working directory to the one with the *.Rproj* file. If you are not using RStudio Projects, include `set_here()` from the *here* package at the top of your source code. This will create a file called *.here* in the current working directory. It functions similarly to *.Rproj* to automatically flag for *here* what should be the current working directory. Remember when you share your source code to also share the *.Rproj*/*.here* file.
 
 #### `root.dir` in knittable documents {-}
 
@@ -479,7 +480,7 @@ large projects. Unix-like shell programs including Bash on Mac and Linux
 and Windows PowerShell give you type-able commands to interact with your
 computer's operating system.[^chapter4_7] We will especially return to shell
 commands in the next chapter when we discuss Git version control and
-makefiles for collecting data in Chapter \@ref(DataGather), as well as the command-line program[^chapter4_8] Pandoc in chapters \@ref(LargeDocs) and \@ref(MarkdownChapter)). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating
+makefiles for collecting data in Chapter \@ref(DataGather), as well as the command-line program[^chapter4_8] Pandoc in chapter \@ref(MarkdownChapter)). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating
 files. We are just going to cover some of the basic and most useful
 commands for file management. For good introductions for Unix and Mac OS
 10 computers see William E. Shotts Jr.'s [-@shottsjr2012] book on the
@@ -532,7 +533,7 @@ PowerShell.
 To find your current working directory, use the `pwd` command (present
 working directory). This is essentially the same as R's `getwd()` function.
 
-```{r Ch4pwdcmd, engine='sh', cache=TRUE}
+```{r Ch4pwdcmd, engine='sh', eval=FALSE}
 pwd
 ```
 
@@ -570,7 +571,7 @@ mkdir /new-directory
 \index{shell command!echo}
 
 There are a number of ways to create new files in Unix-like shells. One
-of the simplest is the `echo` command. This command prints its argument to the Terminal. 
+of the simplest is the `echo` command. This command prints its argument to the Terminal.
 For example:
 
 ```{r Ch4Echo1, engine='sh', echo=TRUE, cache=TRUE}
@@ -602,7 +603,7 @@ the R version of the command and I don't cover it here.
 
 \index{shell command!rm}
 
-The command `rm` removes (deletes) files or directories. 
+The command `rm` removes (deletes) files or directories.
 
 ````bash
 rm example-echo.md
@@ -695,7 +696,7 @@ files in highly reproducible ways. In the next few chapters we will
 begin to put these skills in practice when we learn how to store our
 files and create data files in reproducible ways.
 
-[^chapter_4_tree_cmd]: The command line utility *tree* is very useful for 
+[^chapter_4_tree_cmd]: The command line utility *tree* is very useful for
     visualizing your file trees. For more information see: <https://en.wikipedia.org/wiki/Tree_(command)>.\index{shell command!tree}
 
 [^chapter4_1]: To simplify things, I use the terms 'directory' and 'folder'
