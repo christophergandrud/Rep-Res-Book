@@ -10,14 +10,16 @@ independent researchers (and you) can more easily regather the data.
 Regathering data will be easiest if running your code allows you to get
 all the way back to the raw data files--the rawer the better. Of course,
 this may not always be possible. You may need to conduct interviews or
-compile information from paper based archives, for example. The best you
-can sometimes do is describe your data gathering process in detail.
+compile information from paper based archives, for example. Data hosted online may disappear 
+when the host ceases operation. The best you
+can sometimes do is describe your data gathering process in detail or 
+rehost an original data set.
 Nonetheless, R's automated data gathering capabilities for
 internet-based information is extensive. Learning how to take full
 advantage of these capabilities greatly increases reproducibility and
 can save you considerable time and effort over the long run.
 
-In this chapter we'll learn how to gather quantitative data in a fully
+In this chapter we'll learn strategies for how to gather quantitative data in a fully
 reproducible way. We'll start by learning how to use data gathering
 makefiles to organize your whole data gathering process so that it can
 be completely reproduced. Then we will learn the details of how to
@@ -38,7 +40,7 @@ later on.
 
 A key part of reproducible data gathering with R, like reproducible
 research in general, is segmenting the process into modular files that
-can all be run by a common "makefile". In this chapter we'll learn how
+can all be run in sequence by a common "makefile". In this chapter we'll learn how
 to create make-like files run exclusively from R as well as GNU Make
 makefiles,[^chapter_6_1] which you run from a shell.[^chapter_6_2] Learning how to create R
 make-like files is fairly easy. Using GNU Make does require learning
@@ -75,10 +77,10 @@ GitHub at: <https://github.com/christophergandrud/rep-res-book-v3-examples>.
 ### R Make-like files
 
 When you create make-like files in R to organize and run your data
-gathering you usually only need one or two commands, and . As we talked
-about in Chapter \@ref(DirectoriesChapter), simply tells R where to look for and
-place files. tells R to run code in an R source code file.[^chapter_6_3] Let's see
-what an R data make file might look like for a project with a file
+gathering you usually only need one or two functions, `setwd()` and `source()`.\index{R function!setwd()}\index{R function!source()}
+As we talked about in Chapter \@ref(DirectoriesChapter), `setwd()` tells R where to look for and
+place files. `source()` tells R to run code in an R source code file.[^chapter_6_3] 
+Let's see what an R data make file might look like for a project with a file
 structure similar to the example project in Figure \@ref(ExampleTree). The file paths in this example are for
 Unix-like systems and the make-like file is called *Makefile.R*.
 
@@ -88,13 +90,14 @@ Unix-like systems and the make-like file is called *Makefile.R*.
 # Updated 12 January 2019
 ################
 
-# Set working directory setwd("/example-project/data/")
+# Set working directory 
+setwd("/example-project/data/")
 
 # Gather and cleanup raw data files with a for loop
 gatherers <- c("gather-1.R", "gather-2.R", "gather-3.R")
 for (i in gatherers) source(i)
 
-# Merge cleaned data frames into data frame object CleanedData
+# Merge cleaned data frames into data frame object cleaned_data
 source("merge-data.R")
 ```
 
@@ -109,8 +112,8 @@ Markdown file with a table describing the variables and their sources.
 We'll come back to how to create tables in Chapter \@ref(TablesChapter).
 
 You can run the commands in this file one by one or run the make-like
-file by putting it through the `source()` function\index{R function!source} so that it will run it
-all at once.
+file by putting it through the `source()` function\index{R function!source} so 
+that it will run it all at once.
 
 ### GNU Make
 
@@ -261,7 +264,7 @@ The new data frame will not be added to the final merged data set. To
 overcome this problem the last two lines of code create a target called
 `cleanMerge`, this removes only the *merge-data.Rout* file.
 
-##### Running the Makefile
+##### Running the Makefile {-}
 
 To run the makefile for the first time, simply change the working
 directory to where the file is and type `make` into your shell. It will
@@ -311,7 +314,7 @@ and then run all of the R source files as need be. *merge-data.R* will
 always be run. This ensures that changes to the gathered data frames are
 updated in the final merged data set.
 
-#### Makefiles and RStudio Projects
+#### Makefiles and RStudio Projects {-}
 
 You can run makefiles from RStudio's *Build* tab. For the type of
 makefile we have been using, the main advantage of running it from
@@ -319,7 +322,7 @@ within RStudio is that you don't have to toggle between RStudio and the
 shell. Everything is in one place. Imagine that the directory with our
 makefile is an RStudio Project. If a Project already contains a
 makefile, RStudio will automatically open a *Build* tab on the
-*Environment/Historyr/Connections* pane, the same place where the *Git* tab appears
+*Environment/History/Connections* pane, the same place where the *Git* tab appears
 (see Figure \@ref(fig:Ch6BuildTab)).[^chapter_6_13]
 
 The *Build* tab has buttons you can click to `Build All` (this is
@@ -328,11 +331,11 @@ equivalent to `make all`), and, in the `More` drop-down menu,
 `make clean all`). As you can see in Figure \@ref(fig:Ch6BuildTab), the *Build*
 tab shows you the same output you get in the shell.
 
-```{r Ch6BuildTab, fig.cap="The RStudio Build", echo=FALSE, out.width="50%"}
+```{r Ch6BuildTab, fig.cap="The RStudio Build Pane", echo=FALSE, out.width="50%"}
 knitr::include_graphics("images/chapter_6/BuildTab.png")
 ```
 
-#### Other information about makefiles
+#### Other information about makefiles {-}
 
 Note that Make relies heavily on commands and syntax of the shell
 program that you are using. The above example was written and tested on
@@ -340,7 +343,7 @@ a Mac. It should work on other Unix-like computers without modification.
 
 You can use Make to build almost any project from the shell, not just to
 run R source code files. It was an integral part of early reproducible
-computational research [@fomel2009; Buckheit1995]. Rob Hyndman more
+computational research [@fomel2009; @buckheit1995]. Rob Hyndman more
 recently posted a description of the makefile he uses to create a
 project with R and LaTeX.[^chapter_6_14] The complete source of information on GNU
 Make is the official online manual. It is available at:
@@ -362,18 +365,16 @@ using the `read.table()` function.\index{R function!read.table} For example, ima
 the data set into R simply type:
 
 ```{r Ch6LocalReadTable, eval=FALSE}
-test_data <- read.table("test-data.csv", sep = ",", header = TRUE)
+test_data <- read.table("test-data.csv", sep = ",", 
+                        header = TRUE)
 ```
-
-See Section \@ref(SepHeadExplain) for a discussion of the arguments in this
-function.
 
 If you are using RStudio you can do the same thing with drop-down menus.
 To open a plain-text data file click on `Environment` `Import Dataset…`
 `From Text File…`. In the box that pops up, specify the column
 separator, whether or not you want the first line to be treated as
 variable labels, and other options. This is initially easier than using
-`read.table`. But it is much less reproducible.
+`read.table()`. But it is much less reproducible.
 
 If the data is not stored in plain-text format, but is instead saved in
 a format created by another statistical program such as SPSS, SAS, or
@@ -411,7 +412,8 @@ hand and then save the file in plain-text format. When you cleanup the
 data make sure that the first row has the variable names and that
 observations are in the following rows. Also, remove any extraneous
 information such as notes, colors, and so on that will not be part of
-the data frame. `import()` can also attempt to import *.xlsx* files. This is much easier if they are cleaned up to resemble text files.
+the data frame. `import()` can also attempt to import *.xlsx* files. 
+This is much easier if they are cleaned up to resemble text files.
 
 To aid reproducibility, locally stored data should include careful
 documentation of where the data came from and how, if at all, it was
@@ -425,12 +427,10 @@ There are many ways to import data that is stored on the internet
 directly into R. We have to use different methods depending on where and
 how the data is stored.
 
-### Data from non-secure (http) URLs
-
-[CONSIDER REMOVING SECTIONS OR MOVING CONTENT FROM CH5]
+### Data from non-secure (*http*) URLs
 
 Importing data into R that is located at a non-secure URL[^chapter_6_15]--ones
-that start with --is straightforward provided that:
+that start with *http*--is straightforward provided that:
 
 -   the data is stored in a simple format, e.g. plain-text,
 
@@ -440,13 +440,12 @@ We already discussed the first issue in detail. You can determine if the
 data file is embedded in a website by opening the URL in your web
 browser. If you only see the raw plain-text data, you are probably good
 to go. To import the data, simply include the URL as the file's name in
-your `read.table()` function.\index{R function!read.table}.
+your `read.table()` function.\index{R function!read.table}
 
 ### Data from secure (*https*) URLs {#SecureDataDownload}
 
 Storing data at non-secure URLs is now very uncommon. Services like
-Dropbox, GitHub, and Dataverse store their data at secure URLs.[^chapter_6_16] You can
-tell if the data is stored at a secure web address if it begins with
+Dropbox, GitHub, and Dataverse store their data at secure URLs.[^chapter_6_16] You can tell if the data is stored at a secure web address if it begins with
 `https` rather than `http`. We have to use a different function to
 download data from secure URLs.
 
@@ -464,19 +463,19 @@ fin_regulator <- import(fin_url, format = "csv")
 
 Sometimes data files are large, making them difficult to store and
 download without compressing them. There are a number of compression
-methods such as Zip and Tar.[^chapter_6_19] Zip files have the extension and Tar
-files use extensions such as and . In most cases[^chapter_6_20] you can download,
+methods such as Zip and Tar.[^chapter_6_19] Zip files have the extension `.zip` and Tar
+files use extensions such as `.tar` and `.gz`. In most cases[^chapter_6_20] you can download,
 decompress, and create data frame objects from these files directly in
 R. To do this you need to:[^chapter_6_21]
 
 -   create a temporary file with to store the zipped file, which you
     will later remove with the at the end,
 
--   download the file with `download.file()`,
+-   download the file with `download.file()`,\index{R fuction!download.file}
 
 -   decompress the file with one of the commands in base R,[^chapter_6_22]
 
--   read the file with `read.csv()`.
+-   read the file with `read.csv()` or `import()`.\index{R fuction!read.csv}\index{R fuction!import}
 
 The reason that we have to go through so many extra steps is that
 compressed files are more than just a single file and contain a number
@@ -487,25 +486,28 @@ Let's download a compressed file called *uds_summary.csv* from
 At the time of writing, the file's URL address is
 <http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz>.
 
-```{r Ch5ZipDownload, warning=FALSE, tidy=FALSE, cache=TRUE, size='footnotesize'}
+```{r Ch5ZipDownload, warning=FALSE, tidy=FALSE, eval=FALSE, size='footnotesize'}
 # For simplicity, store the URL in an object called 'URL'
-URL <- "http://www.unified-democracy-scores.org/files/20140312/z/uds_summary.csv.gz"
+URL <- paste0("http://www.unified-democracy-scores.org/",
+              "files/20140312/z/uds_summary.csv.gz")
 
 # Create a temporary file called 'temp' to put the zip file into.
 temp <- tempfile()
 
 # # Download the compressed file into the temporary file
-# download.file(URL, temp)
-#
+download.file(URL, temp)
+
 # # Decompress the file and convert it into a data frame
-# uds_data <- read.csv(gzfile(temp, "uds_summary.csv"))
-#
+uds_data <- read.csv(gzfile(temp, "uds_summary.csv"))
+
 # # Delete the temporary file
-# unlink(temp)
-#
+unlink(temp)
+
 # # Show variables in data
-# names(uds_data)
+names(uds_data)
 ```
+
+Note I used `paste0()`\index{R function!paste0} simply to split the URL over two lines so I could print the whole URL on this page.
 
 ### Data APIs & feeds
 
@@ -520,13 +522,16 @@ also makes replicating the data gathering process much more
 straightforward and makes it easy to update data sets when new
 information becomes available.
 
-##### API Package Example: World Bank Development Indicators {-}
+**Warning**: an R package that downloads data from an API will only work
+as long as the package maintainer keeps up with changes made to the API and the service the API calls still exists. If one of these conditions don't hold, the function call will break. It will not be possible to easily reproduce the data gathering process. Because of these threats to reproducibility, I recommend saving a copy of the data you download and considering making it available for replication.
+
+#### API R Package Example {-}
 
 Each of these packages has its own syntax and it isn't possible to go
 over all of them here. Nonetheless, let's look at an example of
 accessing World Bank data with the *WDI* to give you a sense of how
 these packages work. Imagine that we want to gather data on fertilizer
-consumption. We can use *WDI*'s `WDIsearch` command to find fertilizer
+consumption. We can use *WDI*'s `WDIsearch()` function\index{R function!WDIsearch} to find fertilizer
 consumption data available at the World Bank:
 
 ```{r Ch6WDIsearch}
@@ -537,7 +542,7 @@ library(WDI)
 WDIsearch("fertilizer consumption")
 ```
 
-This shows us a selection of indicator numbers and their names.[^chapter_6_31]
+This call returns a selection of indicator numbers and their names.[^chapter_6_31]
 Let's gather data on countries' fertilizer consumption in kilograms per
 hectare of arable land. The indicator number for this variable is:
 `AG.CON.FERT.ZS`. We can use the function `WDI()` to gather the data and put
@@ -578,20 +583,14 @@ Simple web scraping involves downloading a file from the internet,
 parsing it (i.e. reading it), and extracting the data you are interested
 in then putting it into a data frame object. We already saw a simple
 example of this when we downloaded data from the a secure HTTPS website.
-We downloaded a website's content from a URL address into R with the
-`getURL()` function.\index{R function!getURL} We then parsed the downloaded text as a CSV formatted
-data file, extracted it, and put it into a new data frame object.
 
-This was a relatively simple process, because the webpage was very
-simply formatted. It basically only contained the CSV formatted text.
-So, the process of parsing and extracting the data was very
-straightforward. You may not be so lucky with other data sources. Data
+The complexity of this process depends on how structured the data is. If the data is in a CSV file then all we need the `import()` function. Less structured data requires more effort to download and parse. For example, data
 may be stored in an HTML formatted table within a more complicated HTML
 marked up webpage. The *XML* package [@R-XML] has a number of useful
-commands such as `readHTMLTable()`\index{R function!readHTMLTable} for parsing and extracting this kind of
+functions such as `readHTMLTable()`\index{R function!readHTMLTable} for parsing and extracting this kind of
 data. The *XML* package also clearly has functions for handling XML
 formatted data.[^chapter_6_33] In addition, the helpful *rvest* [@R-rvest] package
-provides an easy to use set of functions with capabilities similar to
+provides set of functions with capabilities similar to
 and often more capable than *XML*. If the data is stored in JSON[^chapter_6_34]
 you can read it with a package like *jsonlite* [@R-jsonlite].
 
@@ -607,7 +606,7 @@ number of other skills:
 
 -   HTML: Obviously you will encounter a lot of HTML markup when web
     scraping. Having a good understanding of the HTML markup language
-    will be very helpful. W3 Schools (<http://www.w3schools.com/>) is a
+    will be very helpful. W3 Schools (<https://www.w3schools.com/>) is a
     free resource for learning HTML as well as JSON, JavaScript, XML,
     and other languages you will likely come across while web scraping.
 
@@ -622,11 +621,11 @@ number of other skills:
 
 -   Looping: Web scraping often involves applying a function to multiple
     things, e.g. tables or HTML tags. To do this in an efficient way you
-    will need to use loops and apply functions. [@matloff2011] provides
-    a comprehensive overview. The *dplyr* [@R-dplyr] for data frame
+    will need to use loops and apply functions. @matloff2011 provides
+    a comprehensive overview. The *dplyr* [@R-dplyr] and *purrr* [@R-purrr] for data frame and vector
     manipulation is also particularly useful.
 
--   Finally, [@munzert2015] provide a comprehensive overview of web
+-   Finally, @munzert2015 provide a comprehensive overview of web
     scraping and text mining with R.
 
 ### Chapter summary {-}
@@ -650,9 +649,7 @@ analyses.
     files created and run in R and the standard "makefile" for files run
     by Make.
 
-[^chapter_6_3]: We use the command more in the Chapter
-    [\[StatsModel\]](#StatsModel){reference-type="ref"
-    reference="StatsModel"}.
+[^chapter_6_3]: We use the command more in the Chapter \@ref(StatsModel).
 
 [^chapter_6_4]: GNU Make was originally developed in 1977 by Stuart Feldman as a
     way to compile computer programs from a series of files, its primary
@@ -670,7 +667,7 @@ analyses.
     to use all caps for variable names.
 
 [^chapter_6_8]: This is a kind of parameter expansion. For more information about
-    parameter expansion see [@frazier2008].
+    parameter expansion see @frazier2008.
 
 [^chapter_6_9]: Braces (`{}`) are also sometimes used for this.
 
@@ -695,7 +692,7 @@ analyses.
     the Project's root directory.
 
 [^chapter_6_14]: See his blog at:
-    <http://robjhyndman.com/researchtips/makefiles/>. Posted 31 October
+    <https://robjhyndman.com/hyndsight/makefiles/>. Posted 31 October
     2012. This method largely replicates what we do in this book with
     *knitr*. Nonetheless, it has helpful information about Make that can
     be used in other tasks. It was in fact helpful for writing this
@@ -720,17 +717,17 @@ analyses.
 
 [^chapter_6_22]: To find a full list of commands type into the R console.
 
-[^chapter_6_23]: <http://www.google.com/finance>
+[^chapter_6_23]: <https://www.google.com/finance>
 
-[^chapter_6_24]: <http://finance.yahoo.com/>
+[^chapter_6_24]: <https://finance.yahoo.com/>
 
-[^chapter_6_25]: <http://research.stlouisfed.org/fred2/>
+[^chapter_6_25]: <https://fred.stlouisfed.org/>
 
-[^chapter_6_26]: <http://treebase.org>
+[^chapter_6_26]: <https://treebase.org>
 
 [^chapter_6_27]: <https://twitter.com/>
 
-[^chapter_6_28]: <http://data.worldbank.org/data-catalog/world-development-indicators>
+[^chapter_6_28]: <https://datacatalog.worldbank.org/dataset/world-development-indicators>
 
 [^chapter_6_29]: <http://ropensci.org/>
 
@@ -742,7 +739,7 @@ analyses.
 
 [^chapter_6_32]: These are the countries' or regions' International Standards
     Organization's two-letter codes. For more details see:
-    <http://www.iso.org/iso/country_codes.htm>.
+    <https://www.iso.org/iso-3166-country-codes.html>.
 
 [^chapter_6_33]: XML stands for "Extensible Markup Language".
 

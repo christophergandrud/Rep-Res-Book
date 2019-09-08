@@ -622,8 +622,10 @@ linear_brms_2_sum_df <- rename(linear_brms_2_sum_df,
                                upper = `u.95..CI`)
 
 # Make caterpillar plot
-ggplot(data = linear_brms_2_sum_df, aes(x = reorder(Variable, lower),
-                            y = Estimate, ymin = lower, ymax = upper)) +
+ggplot(data = linear_brms_2_sum_df, 
+       aes(x = reorder(Variable, lower), 
+           y = Estimate, 
+           ymin = lower, ymax = upper)) +
                         geom_pointrange(size = 1.4) +
                         geom_hline(yintercept = 0,
                                    linetype = "dotted") +
