@@ -1,8 +1,8 @@
-# Statistical Modeling and *knitr* {#StatsModel}
+# Statistical Modeling and knitr/R Markdown {#StatsModel}
 
 When you have your data cleaned and organized you will begin to examine
 it with statistical analyses. In this book we don't look at how to do
-statistical analysis in R (a subject that would and does take up many
+statistical analysis in R (a subject that would and does take up many other
 books). Instead we focus on how to make your analyses really
 reproducible. To do this you dynamically connect your data gathering and
 analysis source code to your presentation documents. When you
@@ -15,17 +15,16 @@ presentation of your results--including tables and figures--up-to-date
 with any changes you make to your data and analyses source code files.
 
 You can dynamically tie your data gathering, statistical analyses, and
-presentation documents together with Knitr/R Markdown. In Chapter \@ref(GettingStartedRKnitr) you learned basic *knitr*/*rmarkdown*
-syntax. For the rest of the chapter I'll simply refer to it as "*knitr*
-syntax", but it applies to *rmarkdown* as well. In this chapter we will
-begin to learn *knitr* syntax in more detail, particularly code chunk
+presentation documents together with knitr/R Markdown. In Chapter \@ref(GettingStartedRKnitr) you learned basic *knitr*/*rmarkdown* package
+syntax. For the rest of the chapter I'll simply refer to it as "knitr
+syntax", but it applies to R Markdown as well when it is not specific to LaTeX. In this chapter we will begin to learn knitr syntax in more detail, particularly code chunk
 options for including dynamic code in your presentation documents. This
 includes code that is run in the background, i.e. not shown in the
 presentation document, as well as displaying the code and output in your
 presentation document both as separate blocks and inline with the text.
 We will also learn how to dynamically include code from languages other
-than R. We examine how to use *knitr* with modular source code files.
-Finally, we will look at how to create reproducible 'random' analyses
+than R. We examine how to use knitr with modular source code files.
+Finally, we will look at how to create reproducible random analyses
 and how to work with computationally intensive code chunks.
 
 The goal of this and the next two chapters--which cover dynamically
@@ -40,7 +39,7 @@ that can include *knitr* code chunks.
 analysis into your source code, it's important to reiterate something we
 discussed in Chapter \@ref(GettingStartedRR). The syntax and capabilities of R packages and R itself can change with new versions. Also, as we have seen for
 file path names, syntax can change depending on what operating system
-you are using. So it is important to have your R session info available
+you are using. So it's important to have your R session info available
 (see Section \@ref(SessionInfoHow) for details) to make your research more
 reproducible and future-proof. If someone reproducing your research has
 this information, they will be able to download your files and use the
@@ -139,11 +138,11 @@ installed or a dependent file changes. You can feed a list of conditions
 to `cache.extra`\index{knitr option!cache.extra} to do this. For instance:
 
 ```{r Ch8CacheExtra, eval=FALSE, echo=TRUE}
-cache.extra=list(file.info(Data.csv)$mtime, R.version)
+cache.extra=list(file.info(data.csv)$mtime, R.version)
 ```
 
 Here we set two conditions under which the chunk will be rerun. The
-first specifies that the chunk should be rerun whenever the *Data.csv*
+first specifies that the chunk should be rerun whenever the *data.csv*
 file is modified. The `file.info` function extracts information about
 the file and `mtime` gives the last time that the file was modified. If
 this differs from when the chunk was last run, then it will be run
@@ -157,10 +156,10 @@ rerun the chunk when the version of R is different, then use
 
 #### `size` {-}
 
-If you do want to print part or all of your code chunk into your LaTeX
+If you do want to print part or all of your code chunk into a LaTeX
 document, you may also want to resize the text. To do this, use the
-`size`\index{knitr option!size} option. By default it is set to `size='normalsize'`. You can use
-any of the LaTeX font sizes listed in Table \@ref(LaTeXFontSize) from Chapter \@ref(LatexChapter).
+`size`\index{knitr option!size} option. By default it is set to `size='normalsize'`. 
+You can use any of the LaTeX font sizes listed Chapter \@ref(LatexChapter).
 
 ### Showing code & results inline
 
@@ -197,7 +196,7 @@ equivalent to the `eval=FALSE` option for full *knitr* code chunks. To
 use the `\verb` function, pick some character you will not use in the
 inline code. For example, you could use the vertical bar (`|`). This
 will be the `\verb` delimiter. Imagine that we want to actually include
-'`\texttt`' in the text. We would type:
+`\texttt` in the text. We would type:
 
 ```
 \verb|\texttt|
@@ -211,7 +210,7 @@ in-between the delimiter characters is put in typewriter font.[^chapter_8_3]
 
 If you want to dynamically show the results of some R code in your
 *knitr* LaTeX-produced text you can use `\Sexpr`.\index{LaTeX!Sexpr} This is a pseudo LaTeX
-function; it looks like LaTeX, but is actually *knitr*.[^chapter_8_4] Its structure
+function; it looks like LaTeX, but is actually *knitr* syntax.[^chapter_8_4] Its structure
 is more like a LaTeX function's structure than *knitr*'s in that you
 enclose your R code in curly brackets (`{}`) rather than the
 `<<>>= . . . @` syntax you use for block code chunks.
@@ -231,17 +230,10 @@ The mean length of 141 major rivers in North America is
 \Sexpr{round(mean(rivers), digits = 0)} miles.
 ```
 
-This produces the sentence:
-
-````markdown
-The mean length of 141 major rivers in North America is miles.
-````
-
 R code included inline with `Sexpr` is evaluated using current R
 options. So if you want all of the output from `Sexpr` to be rounded to
 the same number of digits, for example, it might be a good idea to set
-this in a code chunk with R's `options` function. See page for more
-details.
+this in a code chunk with R's `options()` function.\index{R function!options}
 
 #### Markdown {-}
 
@@ -252,8 +244,7 @@ document, enclose the code in single backticks (`` ` . . . `  ``). For
 example:
 
 ```{r Ch8MarkdownInline, eval=FALSE, tidy=FALSE}
- This is example R
-code: 'MeanRiver <- mean(rivers)'.
+This is example R code: `MeanRiver <- mean(rivers)`.
 ```
 
 produces:[^chapter_8_5]
@@ -264,14 +255,7 @@ produces:[^chapter_8_5]
 
 Including dynamic code in the body of your R Markdown text is similar to
 including static code. The only difference is that you put the letter
-`r` after the first single backtick. For example:
-
-````markdown
-`r mean(rivers)`
-````
-
-will include the mean value of the *rivers* vector in the text of your
-Markdown document.
+`r` after the first single backtick. 
 
 ### Dynamically including non-R code in code chunks
 
@@ -290,7 +274,7 @@ print "Reproducible Research"
 
 In the final HTML file you will get:[^chapter_8_6]
 
-```{r Ch8PythonOutput, fig.cap="Output from Python Engin in HTML Markdown", echo=FALSE, out.width="25%"}
+```{r Ch8PythonOutput, fig.cap="Output from Python Engine in HTML Markdown", echo=FALSE, out.width="25%"}
 knitr::include_graphics("images/chapter_8/PythonRR.png")
 ```
 
@@ -380,18 +364,18 @@ running the makefiles in our example project would look like this:
 
 ````markdown
 <<r engine='bash', include=FALSE>>=
-# Change working directory to /example-project/Analysis/Data
-cd /example-project/Analysis/Data/
+# Change working directory to /example-project/analysis/Data
+cd /example-project/analysis/Data/
 
 # Run makefile
 make cleanMerge all
 
-# Change to working directory to /example-project/Analysis/
-cd /example-project/Analysis/
+# Change to working directory to /example-project/analysis/
+cd /example-project/analysis/
 @
 ````
 
-Please Chapter \@ref(DataGather) for details on the `make` command arguments used here.
+Please see Chapter \@ref(DataGather) for details on the `make` command arguments used here.
 
 You can of course, also use R's `source()`\index{R function!source} function to run an R make-like
 data gathering file. Unlike GNU Make, this will rerun all of the data
@@ -399,7 +383,7 @@ gathering files, even if they have not been updated. This may become
 very time consuming depending on the size of your data sets and how they
 are manipulated.
 
-One final note on including makefiles in your *knitr* presentation
+One final note on including makefiles in your knitr presentation
 document source code: it is important to place the code chunk with the
 makefile before code chunks containing statistical analyses that depend
 on the data file it creates. Placing the makefile first will keep the
@@ -425,7 +409,7 @@ source_url("http://bit.ly/1D5p1w6")
 
 You can also use the *devtools* function `source_gist()` \index{R function!source\_gist} in a similar way
 to source GitHub Gists. Gists are a handy way to share code over the
-internet. For more details see: <https://gist.GitHub.com/>.
+internet. For more details see: <https://gist.github.com/>.
 
 Similar to what we saw in Chapter \@ref(Storing)
 if you would like to use a particular version of a file stored on
@@ -445,10 +429,10 @@ page's URL and use it in `source_url()`.
 
 \index{R function!set.seed}
 
-If you are including simulations in your analysis it is often a good
+If you  include simulations in your analysis it is often a good
 idea to specify the random number generator state you used. This will
 allow others to exactly replicate your 'randomly'--really
-pseudo-randomly--generated simulation results. Use the `set.seed()`
+pseudo-randomly--generated simulation results. Use the `set.seed()`\index{R function!set.seed}
 function in your source code files or code chunks to do this. For
 example, use the following code to set the random number generator
 state[^chapter_8_10] and randomly draw 1,000 numbers from a standard normal
@@ -482,12 +466,12 @@ summary(draw_2)
 ## Computationally Intensive Analyses
 
 Sometimes you may want to include computationally intensive analyses
-that take a long time to run as part of a *knitr* document. This can
+that take a long time to run as part of a knitr document. This can
 make writing the document frustrating because it will take a long time
 to knit it each time you make changes. There are at least two solutions
 to this problem: the `cache` chunk option and makefiles. We discussed
 makefiles in Chapter \@ref(DataGather), so let's look at how to work with the `cache`
-option.
+option.\index{knitr option!cache}
 
 When you set `cache=TRUE` for the code chunk that contains the analysis,
 the code chunk will only be run when the chunk's contents change[^chapter_8_11] or the chunk options change. This is a very easy solution to the problem.
@@ -541,11 +525,11 @@ dynamically created tables and figures.
 [^chapter_8_2]: See: <http://cran.r-project.org/src/base/>.
 
 [^chapter_8_3]: For more details see the LaTeX Wikibooks page:
-    <http://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_Text>
-    (accessed 24 November 2012). Also, for help troubleshooting see the
+    <https://en.wikibooks.org/wiki/LaTeX/Paragraph_Formatting#Verbatim_text>
+    (accessed 21 September 2019). Also, for help troubleshooting see the
     UK List of Frequently Asked Questions:
-    <http://www.tex.ac.uk/cgi-bin/texfaq2html?label=verbwithin>
-    (accessed 4 January 2012).
+    <https://texfaq.org/FAQ-verbwithin>
+    (accessed 21 September 2019).
 
 [^chapter_8_4]: The function directly descends from *Sweave*.
 
@@ -555,7 +539,7 @@ dynamically created tables and figures.
 
 [^chapter_8_6]: Again, this was created using RStudio's default CSS style file.
 
-[^chapter_8_7]: We used the `source` function in Chapter \@ref(DataGather) in our make-like data gathering file.
+[^chapter_8_7]: We used the `source()` function in Chapter \@ref(DataGather) in our make-like data gathering file.
 
 [^chapter_8_8]: You can also make the replication code accessible for download and
     either instruct others to change the working directory to the
@@ -578,11 +562,11 @@ dynamically created tables and figures.
     cases where it is important to rerun a chunk when a prior chunk
     changes.
 
-[^chapter_8_12]: It's true that when `knitr` caches a code chunk it saves the
+[^chapter_8_12]: It's true that when *knitr* caches a code chunk it saves the
     chunk's objects to an `.RData` file. However, it is difficult to
     load this file directly because the file name changes every time the
     cached chunk is rerun.
 
-[^chapter_8_13]: For reference, *Sample* was created by using the `rnorm` function
+[^chapter_8_13]: For reference, *Sample* was created by using the `rnorm()` function
     to take a random sample of size 1,000 from a normal distribution
     with a mean of five and standard deviation of two.
