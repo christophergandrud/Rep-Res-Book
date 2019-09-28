@@ -375,7 +375,8 @@ URL to: <http://bit.ly/TE0gTc>. Let's look at the syntax for knitting
 this into an R Markdown file:
 
 ````r
-`r ''````{r, echo=FALSE, warning=FALSE, message=FALSE, out.width='500px', out.height='500px'}
+`r ''````{r, echo=FALSE, warning=FALSE, message=FALSE, 
+out.width='500px', out.height='500px'}
 # Create scatterplot matrix from main-data.csv
 devtools::source_url("http://bit.ly/TE0gTc")
 ```
@@ -469,7 +470,8 @@ data:
 library(tidyr)
 
 # Gather inflation_data
-inflation_gathered <- gather(inflation_data, variable, value, 2:3)
+inflation_gathered <- gather(inflation_data, variable, value, 
+                             2:3)
 
 head(inflation_gathered)
 ```
@@ -496,9 +498,9 @@ line_plot <- ggplot(data = inflation_gathered,
                         color = variable, linetype = variable)) +
                     geom_line() +
                     scale_color_discrete(name = "",
-                                         labels = c("Actual", "Estimated")) +
+                              labels = c("Actual", "Estimated")) +
                     scale_linetype(name = "",
-                                   labels = c("Actual", "Estimated")) +
+                              labels = c("Actual", "Estimated")) +
                     xlab("Quarter") + ylab("Inflation") +
                     theme_bw(base_size = 15)
 
@@ -524,7 +526,8 @@ All of the code required to create this graph is on GitHub at:
 
 ```
 \begin{figure}[ht]
-\caption{Example Multi-line Time Series Plot Created with \emph{ggplot2}} \label{ggplot2Line}
+\caption{Example Multi-line Time Series Plot Created with 
+  \emph{ggplot2}} \label{ggplot2Line}
     \begin{center}
         <<echo=FALSE, message=FALSE, warning=FALSE, out.width= 10cm , out.height= 8cm >>= # Create plot
             devtools::source_url("https://bit.ly/2FaMkOJ")
@@ -685,14 +688,16 @@ subset(data_sub, fert_cons > 0.1)
 
 # Find the natural logarithm of fert_cons
 ## Round the results to one decimal digit.
-data_sub$fert_cons_log <- round(log(data_sub$fert_cons), digits = 1)
+data_sub$fert_cons_log <- round(log(data_sub$fert_cons), 
+                                digits = 1)
 
 # Make a map of Fertilizer Consumption
 fc_map <- gvisGeoChart(data = data_sub,
                        locationvar = "iso2c",
                        colorvar = "LogConsumption",
                        options = list(
-                            colors = "['#ECE7F2', '#A6BDDB', '#2B8CBE']",
+                            colors = "['#ECE7F2', '#A6BDDB', 
+                                       '#2B8CBE']",
                             width = "780px", height = "500px")
 )
 ```
@@ -745,7 +750,7 @@ devtools::source_url("https://bit.ly/2CfXWOs")
 ```
 ````
 
-##### Note for Motion Charts
+#### Note for Motion Charts {-}
 
 You may notice that Google motion charts[^chapter_10_32] do not show up in the
 RStudio **Preview HTML** window or even in your web browser when you
@@ -791,7 +796,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 ```vanbelle2008 [-@vanbelle2008 Ch. 9] argues that a few
     numbers should be listed in a sentence, many numbers shown in
     tables, and relationships between numbers are best shown with
-    graphs. Similarly, [@tufte2001] argues that tables tend to
+    graphs. Similarly, @tufte2001 argues that tables tend to
     outperform graphics for displaying 20 or fewer numbers. Graphics
     often outperform tables for showing larger data sets and
     relationships within the data.
