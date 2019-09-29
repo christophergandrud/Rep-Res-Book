@@ -202,6 +202,9 @@ tell *knitr* where to save the images with the `fig.path` option. Simply
 use the file path naming conventions suitable for your system and
 include the new path in quotation marks.
 
+Note if you use *rmarkdowm* to compile to HTML, by default the graphic will not be saved
+in a separate file, but instead converted to a format that is embedded directly the HTML markup document. 
+
 \index{knitr options!fig.path|)}
 
 #### `out.height` {-}
@@ -248,11 +251,9 @@ caption as we did in the example above.
 The previous options are probably the most commonly used ways of
 adjusting figures with *knitr*. However, *knitr* has many other chunk
 options to help you adjust your figures so that they are incorporated
-into your presentation documents the way that you want. The option
-`fig.cap` allows you to set a figure's LaTeX caption and `fig.lb` allows
-you to set the label.[^chapter_10_11] As we will see below, you can use the `dev` option to choose the figure's output file format, e.g. PDF, PNG,
+into your presentation documents the way that you want. For example, the option `fig.lb` allows you to set the label.[^chapter_10_11] As we will see below, you can use the `dev` option to choose the figure's output file format, e.g. PDF, PNG,
 JPEG. Please see the official *knitr* code chunk options webpage for
-more information on figure chunk options: <http://yihui.name/knitr/options#chunk_options>.
+more information on figure chunk options: <https://yihui.name/knitr/options/#chunk_options>.
 
 ### Global options
 
@@ -268,22 +269,21 @@ opts_chunk$set.(fig.align = "center",
 ````
 
 You can also set some global figure options, such as `fig_height` and
-`fig_width` in your *rmarkdown* YAML header.
+`fig_width` in your *rmarkdown* YAML header.\index{YAML}
 
 ## Knitting R's Default Graphics
 
 R's *graphics* package--loaded by default--includes functions to create
 numerous plot types. These include `hist()`\index{R function!hist} for histograms, `pairs()`\index{R function!pairs} for
 scatterplot matrices, `boxplot()`\index{R function!boxplot} for creating boxplots, and the versatile
-`plot()`\index{R function!plot} for creating x-y plots--including scatterplots and bar charts
-depending on the data's type.
+`plot()`\index{R function!plot} for creating x-y plots--including scatterplots and bar charts depending on the data's type.
 
 There are many useful resources for learning how to fully utilize R's
 default graphics capabilities. These include Paul Murrell's
-[-@murrell2011] very comprehensive *R Graphics* book. The Cookbook for
-R[^chapter_10_12] and Quick-R[^chapter_10_13] websites are also very helpful. Winston Chang,
+[-@murrell2011] comprehensive *R Graphics* book. The Cookbook for
+R[^chapter_10_12] and Quick-R[^chapter_10_13] websites are also helpful. Winston Chang,
 the maintainer of the Cookbook for R, also has a full book devoted to
-creating R graphics [-@chang2012]. Kieran Healy [-@healy2018data] also provides a strong intoduction to data visualisation in general with R examples.
+creating R graphics [-@chang2012]. Kieran Healy [-@healy2018data] is a strong intoduction to data visualisation in general with R examples.
 
 In this section we are going to see how to include R's default graphics
 in our LaTeX and Markdown presentation documents. We will also see an
@@ -294,11 +294,13 @@ section is exclusively about using static graphics with
 *knitr*/*rmarkdown*. Later in the chapter we will discuss how to knit
 interactive graphics.
 
-Let's look at an example we first saw at the end of Chapter \@ref(StatsModel) (Section \@ref(SourceCarsGraph)). Remember that we accessed an R source
+Let's look at an example we first saw at the end of Chapter \@ref(StatsModel). Remember that we accessed an R source
 code file stored on GitHub to create a simple scatterplot of cars' speed
 and stopping distances using R's *cars* data set, which is loaded by
 default. We haven't yet seen the code in the R source file that created
-the plot. The variable **speed** contains the stopping speed and
+the plot. 
+
+In the *cars* data frame, the variable **speed** contains the stopping speed and
 **dist** contains the stopping distances. Here is the code to create the
 plot:
 
@@ -311,8 +313,7 @@ plot(x = cars$speed, y = cars$dist,
 ```
 
 We select the variables from *cars* to plot on the $x$ and $y$ axes of
-our graph with the component selector (`$`). Then we use the `xlab` and
-`ylab` arguments to specify the $x$ and $y$ axis labels. We could have
+our graph with the component selector (`$`).\index{component selector} Then we use the `xlab` and `ylab` arguments to specify the $x$ and $y$ axis labels. We could have
 added a title for the plot using the `main` argument. We didn't do this
 because we will give the plot a title in the LaTeX `figure` environment.\index{LaTex!figure}
 The `cex.lab` argument increased the labels' font size. The argument
@@ -322,24 +323,29 @@ size. 1.5 means 50 percent larger than the default.
 Now let's see how to create this plot with *knitr* and include it in a
 LaTeX `figure` environment.
 
-```
+````latex
 \begin{figure}[ht]
     \caption{Example Simple Scatter Plot Using \texttt{plot}}
     \label{BasicFigureExample}
-<<echo=FALSE, fig.align= center , out.width= 8cm , out.height= 8cm >>= plot(x = cars$speed, y = cars$dist,
-     xlab = "Speed (mph)",
-     ylab = "Stopping Distance (ft)",
-     cex.lab = 1.5)
-@
+`r ''````{r echo=FALSE, fig.align='center', out.width='8cm'} 
+    plot(x = cars$speed, y = cars$dist,
+         xlab = "Speed (mph)",
+         ylab = "Stopping Distance (ft)",
+         cex.lab = 1.5)
+```
 \end{figure}
-```
+````
 
-```{r Ch10PlotBasic, echo=FALSE, fig.align='center', out.width='8cm', out.height='8cm'}
-plot(x = cars$speed, y = cars$dist,
-     xlab = "Speed (mph)",
-     ylab = "Stopping Distance (ft)",
-     cex.lab = 1.5)
+\begin{figure}[ht]
+    \caption{Example Simple Scatter Plot Using \texttt{plot}}
+    \label{fig:BasicFigureExample}
+```{r echo=FALSE, fig.align='center', out.width='8cm'} 
+    plot(x = cars$speed, y = cars$dist,
+         xlab = "Speed (mph)",
+         ylab = "Stopping Distance (ft)",
+         cex.lab = 1.5)
 ```
+\end{figure}
 
 This code produces Figure \@ref(fig:BasicFigureExample).[^chapter_10_14] If you are familiar with R
 graphics you will notice that we did not need to tell *knitr* to save
@@ -356,14 +362,12 @@ presentation document's file size. Using a bitmap format like PNG will
 create smaller files than PDFs, though lower-quality images.
 
 We could, of course, simply link to the original R source code file
-stored on GitHub with the `source_url` function. Let's look at an example
+stored on GitHub with the `source_url()` function.\index{R function:source\_url} Let's look at an example
 of this with a different source code file. Remember in Chapter \@ref(DataGather) we used a makefile to gather data from three
 different sources on the internet. The CSV is called *main-data.csv* and
-is stored on GitHub at: <http://bit.ly/V0ldsf>.[^chapter_10_15] We can download this data into R and make a scatterplot matrix with this code:
+is stored on GitHub at: <http://bit.ly/V0ldsf>.[^chapter_10_15] We can download this data into R and make the following scatterplot matrix with this code:
 
-NEED TO FIX URL AND EXAMPLE
-
-```{r Ch10ScatterPlotMatrix, eval=FALSE, tidy=FALSE}
+```{r Ch10ScatterPlotMatrix, tidy=FALSE, fig.cap='Example of a Scatterplot Matrix', fig.lb='ScatterMatrix'}
 # Download data
 main_data <- rio::import("http://bit.ly/V0ldsf",
                         format = "csv" )
@@ -393,32 +397,23 @@ URL to: <http://bit.ly/TE0gTc>. Let's look at the syntax for knitting
 this into an R Markdown file:
 
 ````r
-`r ''````{r, echo=FALSE, warning=FALSE, message=FALSE,
-out.width='500px', out.height='500px'}
+`r ''````{r echo=FALSE, fig.cap='Example of a Scatterplot Matrix'}
 # Create scatterplot matrix from main-data.csv
 devtools::source_url("http://bit.ly/TE0gTc")
 ```
 ````
 
-This code creates the plot that we see in Figure \@ref(fig:MarkdownScatterMatrix). Because we have linked all the way
+Because we have linked all the way
 back to the original data set *main-data*, any time it is updated by
 the makefile, the update will automatically cascade all the way through
 to our final presentation document the next time we knit it.
-
-\begin{figure}
-    \caption{Example of a Scatterplot Matrix in a Markdown Document}
-    \label{MarkdownScatterMatrix}
-        \begin{center}
-            \includegraphics[width=0.7\textwidth]{images/chapter_10/MarkdownScatterMatrix.png}
-        \end{center}
-\end{figure}
 
 ## Including *ggplot2* Graphics
 
 \index{ggplot2|(}\index{R function!ggplot|(}
 
 The *ggplot2* package[^chapter_10_17] [@R-ggplot2] is probably one of the most
-popular recent developments in R graphics. It greatly expands the
+popular packages for making graphics with R. It greatly expands the
 aesthetic and substantive tools R has for displaying quantitative
 information. Figures created with *ggplot2* are (generally) static,[^chapter_10_18]
 so they are included in knitted documents the same way as most of R's
@@ -478,20 +473,20 @@ data so that the inflation variables are in long format like this:
 \end{tabular}
 \vspace{0.5cm}
 
-We can use the `gather` function from *tidyr* that we first saw in
-Chapter \@ref(DataClean) (Section \@ref(GatherReshape)) to reshape the data. The variable identifying the observations in this case is `Quarter`. The
+We can use the `pivot_longer` function from *tidyr* that we first saw in
+Chapter \@ref(DataClean) to reshape the data. The variable identifying the observations in this case is `Quarter`. The
 **ActualInflation** and **EstimatedInflation** variables (in columns two
-and three) are the variables that we want to gather. So let's gather the
+and three) are the variables that we want to pivot So let's pivot the
 data:
 
-```{r Ch10GatherInflation}
+```{r Ch10GatherInflation, message=FALSE}
 library(tidyr)
 
-# Gather inflation_data
-inflation_gathered <- gather(inflation_data, variable, value,
-                             2:3)
+# Pivot inflation_data
+inflation_long <- pivot_longer(inflation_data, cols = 2:3,
+                               names_to = "variable")
 
-head(inflation_gathered)
+inflation_long
 ```
 
 Now we have a data set we can use to create our line graph with
@@ -501,60 +496,61 @@ Let's cover a few basic *ggplot2* ideas that will help us understand the
 following code better. First, plots are composed of layers including the
 coordinate system, points, labels, and so on. Each layer has aesthetics,
 including the variables plotted on the $x$ and $y$ axes, label sizes,
-colors, and shapes. Aesthetic elements are defined by the `aes`
+colors, and shapes. Aesthetic elements are defined by the `aes()`
 argument. Finally, the main layer types are called geometrics, including
-lines, points, bars, and text. Commands that set geometrics usually
+lines, points, bars, and text. Functions that set geometrics usually
 begin with `geom`. For example, the geometric to create lines is
-`geom_line`.
+`geom_line()`.\index{R function!geom\_line}\index{R function!ggplot}
 
 ```{r Ch10ggplot2Lines, eval=FALSE, tidy=FALSE}
 library(ggplot2)
 
 # Create plot
-line_plot <- ggplot(data = inflation_gathered,
+line_plot <- ggplot(data = inflation_long,
                     aes(x = Quarter, y = value,
-                        color = variable, linetype = variable)) +
+                      color = variable, linetype = variable)) +
                     geom_line() +
                     scale_color_discrete(name = "",
-                              labels = c("Actual", "Estimated")) +
+                           labels = c("Actual", "Estimated")) +
                     scale_linetype(name = "",
-                              labels = c("Actual", "Estimated")) +
+                           labels = c("Actual", "Estimated")) +
                     xlab("Quarter") + ylab("Inflation") +
                     theme_bw(base_size = 15)
-
-print(line_plot)
 ```
+
+\index{R function!scale\_color\_discrete}\index{R function!scale\_linetype}\index{R function!xlab}\index{R function!ylab}\index{R function!aes}
 
 You can see we set the $x$ and $y$ axes using the **Quarter** and
 **value** variables. We told *ggplot* that elements in the geometric
 layer should have lines with different colors and line types (dashed,
 dotted, and so on) based on the value of **variable** that they
 represent. `geom_line` specifies that we want to add a line geometric
-layer.[^chapter_10_23] `scale_color_discrete` and `scale_linetype` are used here to
+layer.[^chapter_10_23] `scale_color_discrete()` and `scale_linetype()` are used here to
 hide the plot's legend title with `name = ""` and customize the legend's
 labels with `labels = . . .`. You can also use them to determine the
-specific colors and line types you would like to use. `xlab` and `ylab`
+specific colors and line types you would like to use. `xlab()` and `ylab()`
 set the axes' labels. You can add a title with `ggtitle`. Finally, I
-added `theme_bw` so that the plot would use a simple black-and-white
+added `theme_bw()` so that the plot would use a simple black-and-white
 theme. We added the argument `base_size = 15` to increase the plot's
 font size.
 
 All of the code required to create this graph is on GitHub at:
-<https://bit.ly/2FaMkOJ>.[^chapter_10_24] So to knit the graph like Figure \@ref(fig:ggplot2line) into an R Sweave-style LaTeX document we type:
+<https://bit.ly/2FaMkOJ>.[^chapter_10_24] So to knit the graph like into a LaTeX document manually specifying the figure environment we type:
 
-```
+````latex
 \begin{figure}[ht]
 \caption{Example Multi-line Time Series Plot Created with
   \emph{ggplot2}} \label{ggplot2Line}
     \begin{center}
-        <<echo=FALSE, message=FALSE, warning=FALSE, out.width= 10cm , out.height= 8cm >>= # Create plot
-            devtools::source_url("https://bit.ly/2FaMkOJ")
-        @
+`r ''````{r echo=FALSE, out.width='10cm'out.height='8cm'} 
+    # Create plot
+    devtools::source_url("https://bit.ly/2FaMkOJ")
+```
     \end{center}
 \end{figure}
-```
+````
 
-```{r Ch10MultiLines, echo=FALSE, message = FALSE, warning=FALSE, out.width='10cm', out.height='8cm'}
+```{r Ch10MultiLines, echo=FALSE, message = FALSE, warning=FALSE, out.width='10cm', out.height='8cm', fig.cap='\\emph{ggplot2} time series line plot'}
 # Create plot
 devtools::source_url("https://bit.ly/2FaMkOJ")
 ```
@@ -566,7 +562,7 @@ Markdown document is the same as we saw for default R graphics.
 
 Many packages that estimate statistical models from data in R have
 built-in plotting capabilities. For example, the *survival* package
-[@R-survival] has a `plot.survfit`\index{R function!plot.survfit} function for plotting survival curves
+[@R-survival] has the `plot.survfit()`\index{R function!plot.survfit} function for plotting survival curves
 created using event history analysis. These plots can Of course, be
 knitted into presentation documents like the plots we have seen already.
 
@@ -576,12 +572,11 @@ plotting model results the way you want to and/or you want to use
 by default. In either case you can almost always create the plot that
 you want by first breaking into the model results object, extracting
 what you want, then plotting it with *ggplot2*. The process is very
-similar to what we did in Chapter \@ref(TablesChapter) to create custom tables (see Section \@ref(NonSupportedClasses)).
+similar to what we did in Chapter \@ref(TablesChapter) to create custom tables.
 
-To illustrate how this can work, let's create a caterpillar plot, like
-Figure \@ref(fig:CatPlot), showing the mean coefficient estimates and the
+To illustrate how this can work, let's create a caterpillar plot, like the following figure, showing the mean coefficient estimates and the
 uncertainty surrounding them from a Bayesian normal linear regression
-model using the *swiss* data frame. Here is our model:
+model using the *swiss* data frame.[^chapter_10_bayesplot] Here is our model:
 
 ```{r Ch10SwissModel, message=FALSE, error=FALSE, warning=FALSE, cache=TRUE}
 # Fit model
@@ -633,8 +628,8 @@ that enables easier interpretation.
 
 Now we can create our caterpillar plot.
 
-```{r Ch10CatPlot, eval=FALSE, tidy=FALSE, message=FALSE}
-library(ggplot2)
+```{r Ch10CatPlot, tidy=FALSE, message=FALSE, fig.cap='Example Caterpiller Plot'}
+library(dplyr)
 
 # Rename variables to make them easier for ggplot2 to work with
 linear_brms_2_sum_df <- rename(linear_brms_2_sum_df,
@@ -657,10 +652,10 @@ ggplot(data = linear_brms_2_sum_df,
 
 There are some new pieces of code in here, so let's take a look. First,
 the data frame is reordered from the highest to lowest value of
-**l.95..CI** using the `reorder` function. We renamed this column "lower" so that it would be easier to work with in `ggplot()`. Reordering by these values make the plot easier to
+**l.95..CI** using the `reorder` function. We renamed this column "lower" so that it would be easier to work with in `ggplot()`.\index(R function!ggplot2) Reordering by these values make the plot easier to
 read. The middle point of the point range is set with `y` and the lower
-and upper bounds with `ymin` and `ymax`. The `geom_hline` function used
-here creates a dotted horizontal line at 0, i.e. no effect. `coord_flip`
+and upper bounds with `ymin` and `ymax`. The `geom_hline()`\index{R function!geom\_hline} function used
+here creates a dotted horizontal line at 0, i.e. no effect. `coord_flip()`\index{R function!cord\_flip}
 flips the plot's coordinates so that the variable names are on the $y$
 axis. We can include this plot in a knitted document the same way as
 before.
@@ -764,30 +759,8 @@ document we type:
 `r ''````{r}, echo=FALSE, message=FALSE, results='asis'}
  # Create and print geo map
 devtools::source_url("https://bit.ly/2CfXWOs")
-
 ```
 ````
-
-#### Note for Motion Charts {-}
-
-You may notice that Google motion charts[^chapter_10_32] do not show up in the
-RStudio **Preview HTML** window or even in your web browser when you
-open the knitted HTML version of the file. You just see a big blank
-space where you had hoped the chart would be. It will show up, however,
-if you use the `plot` function on a `gvis` motion chart object in the
-console. Motion charts can only be displayed when they are hosted on a
-web server or located in a directory 'trusted' by Flash Player.[^chapter_10_33]
-
-The `plot` function opens a local server, but simply opening the HTML
-file and the RStudio **Preview HTML** window do not. An easy way to
-solve this problem is to save the HTML file in your Dropbox *Public*
-folder and access it through the associated public URL link (see Chapter \@ref(Storing)).
-Publishing a motion chart on GitHub Pages also works well (see Chapter
-\@ref(MarkdownChapter)). For information on how to set a directory
-as 'trusted' by Flash Player see:
-<http://www.macromedia.com/support/documentation/en/flashplayer/help/settings_manager04.html>.
-
-IS THIS STILL RELEVANT?
 
 ### JavaScript Graphs with *htmlwidgets*-based packages
 
@@ -864,7 +837,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 [^chapter_10_10]: File names are based on the code chunk label where they were
     created.
 
-[^chapter_10_11]: In this chapter we will set these options in the markup rather
+[^chapter_10_11]: In this chapter we will set this option in the markup rather
     than the code chunk. I prefer doing this because *knitr* options
     need to be on the same line and so can sometimes result in very long
     lists of options that are difficult to read.
@@ -897,13 +870,10 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 [^chapter_10_21]: Note that everything we do here with *ggplot2* can also be done
     with R's default graphics, though the appearance will be different.
 
-[^chapter_10_22]: This data is from [@gandrudgrafstrom2012]. The example here
+[^chapter_10_22]: This data is from @gandrudgrafstrom2012. The example here
     partially recreates Figure 1 from that paper.
 
-[^chapter_10_23]: Remember from Chapter
-    [[GettingStartedRKnitr]](#GettingStartedRKnitr){reference-type="ref"
-    reference="GettingStartedRKnitr"} that functions must be followed by
-    parentheses. These layers are functions so they need to be followed
+[^chapter_10_23]: Remember from Chapter \@ref(GettingStartedRKnitr) that functions must be followed by parentheses. These layers are functions so they need to be followed
     by parentheses.
 
 [^chapter_10_24]: The full URL is:
@@ -922,9 +892,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 
 [^chapter_10_28]: You'll notice in the code below that we remove all values of
     **fert_cons** less-than 0.1. This is so that we can
-    calculate integer values with the natural logarithm. See Section
-    [[Infinity]](#Infinity){reference-type="ref" reference="Infinity"}
-    for more details.
+    calculate integer values with the natural logarithm.
 
 [^chapter_10_29]: You can also use hexadecimal values in *ggplot2*. The Color
     Brewer 2 website (<http://colorbrewer2.org/>) is very helpful for
@@ -944,3 +912,4 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
     on Flash, unlike the other Google visualizations. For more
     information see Markus Gesmann's blog post at:
     <http://www.magesblog.com/2012/05/interactive-reports-in-r-with-knitr-and.html>.
+  
