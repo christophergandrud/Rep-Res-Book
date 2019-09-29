@@ -6,7 +6,7 @@ displaying information with graphics is often a much more effective way
 of presenting both descriptive statistics and analysis results than the
 tables we covered in the last chapter.[^chapter_10_1]
 
-Nonetheless, dynamically incorporating figures with *knitr*/*rmarkdown*
+Nonetheless, dynamically incorporating figures with knitr/R Markdown
 has many of the same benefits as dynamically including tables,
 especially the ability to have data set or analysis changes
 automatically cascade into your presentation documents. The basic
@@ -15,8 +15,8 @@ very similar to including tables, though there are some important extra
 considerations we need to makes to properly size the figures and be able
 to include interactive visualizations in our presentation documents.
 
-In this chapter we will first briefly learn how to include non-knitted
-graphics in LaTeX and Markdown documents before turning to look at how
+In this chapter we will first learn how to include non-knitted
+graphics in LaTeX and Markdown documents before turning
 to dynamically knit R graphics into presentation documents. In the
 remainder of the chapter we will look at how to actually create graphics
 with R including some of the fundamentals of R's default graphics
@@ -34,20 +34,16 @@ paste figures into your document. Instead you link to an image file
 outside of your markup document. Typically these image files are in
 formats such as *PDF*, *PNG*, and *JPEG*.[^chapter_10_2]\index{PNG}\index{JPEG}
 
-There are three advantages to this method of including graphics over cut
-and paste. The first is that whenever the image files are changed, the
+While you lose the flexibility of drag and drop, there are advantages to this method of including graphics. The first is that whenever the image files are changed, the
 changes are updated in the final presentation document when it is
 compiled, no recopying and pasting. The second advantage is that the
 images are sized and placed with the markup code rather than pointing
 and clicking. This is tedious at first, but saves considerable time and
 frustration when a document becomes larger. It also makes it easy to
-consistently format multiple images in a document. Finally, because the
-image is not actually loaded in the markup file, you won't notice any
-sluggishness while editing the markup document that you get in a
-traditional word processor if there are many images.
+consistently format multiple images in a document. 
 
 If the image files are in the same directory as the markup document, we
-don't need to specify the image's file path, only its name. If they are
+don't need to specify the image's full file path, only its name. If they are
 in another directory, we need to include additional file path
 information. Remember to use relative paths when possible. In this
 section we will learn how to include graphics files in documents created
@@ -56,16 +52,16 @@ with LaTeX and Markdown.
 ### Including graphics in LaTeX
 
 The main way to include graphics (graphs, photos, and so on) in LaTeX
-documents is to use the `includegraphics` function to link to image
+documents is to use the `includegraphics` function\index{LaTeX!includegraphics} to link to image
 files. To have the full range of features for `includegraphics`, make
-sure to load the *graphicx* package in your document's preamble. Imagine
+sure to load the *graphicx* package in your document's preamble.\index{graphicx}Imagine
 that we wanted to include an image of butterflies stored in a file
 called *HeliconiusMimicry.png* in a LaTeX-produced document.[^chapter_10_3] We
 type:
 
-```
+````latex
 \includegraphics[scale=0.8]{HeliconiusMimicry.png}
-```
+````
 
 In the square brackets you'll notice `scale=0.8`. This formats the image
 to be included at 80 percent of its actual size. You can use other
@@ -76,8 +72,8 @@ than hard coding the width in exact centimeters, you can determine its
 width as a proportion of the text width using `\textwidth`.[^chapter_10_4]\index{LaTeX!textwidth} For
 example, to set our image at 80 percent of the text width we can type:
 
-````markdown
-![image](HeliconiusMimicry.png){width="80%"}
+````latex
+\includegraphics[scale=0.8\textwidth]{HeliconiusMimicry.png}
 ````
 
 #### `figure` float environment {-}
@@ -85,39 +81,38 @@ example, to set our image at 80 percent of the text width we can type:
 \index{LaTeX!float|(}
 
 Most often you will want to include LaTeX figures in a `figure` float
-environment.\index{LaTeX!figure} The *figure* environment works almost exactly the same way
-as the `table` environment we saw in the last chapter. It allows you to
+environment.\index{LaTeX!figure environment} The *figure* environment works almost exactly the same way as the `table` environment we saw in the last chapter. It allows you to
 separate the figure from the text, add a caption, and label the figure.
 We begin the environment with `\begin{figure}[POSITION_SPEC]`.
 `POSITION_SPEC` can have the same values as we saw earlier with tables
-(page ). We can then include a `caption` and `label` function. The
-environment is closed with `\end{figure}`. For example, to create Figure \@ref(fig:ExampleLaTeXFigure), I used the following code:[^chapter_10_5]
+(page ). We can then include a `caption` and `label` function.\index{LaTeX!label}\index{LaTeX!caption} The
+environment is closed with `\end{figure}`. For example, to create Figure \@ref(fig:ExampleLaTeXFigure) exactly as is, I used the following code:[^chapter_10_5]
 
-```
+````latex
 \begin{figure}[ht]
     \caption{An Example Figure in LaTeX}
     \label{ExampleLaTeXFigure}
         \begin{center}
-            \includegraphics[scale=0.8]{HeliconiusMimicry.png}
+            \includegraphics{HeliconiusMimicry.png}
         \end{center}
     {\scriptsize{Source: \cite{meyer2006}}}
 \end{figure}
-```
+````
 
 Notice that after the call to end the `center` environment we include
-`{\scriptsize{Source: \cite{meyer2006}}}`. This simply includes a note
+`{\scriptsize{Source: \cite{meyer2006}}}`. This includes a note
 in the figure environment giving the image's source. The note moves with
-the figure and is separate from the text. The `scriptsize` function
-transforms the text to smaller than normal size font. See Chapter \@ref(LaTeXChapter) (Section \@ref(FontSize))
+the figure and is separate from the text. The `scriptsize` function\index{LaTeX!scriptsize}
+transforms the text to smaller than normal size font. See Chapter \@ref(LatexChapter)
 for more details on LaTeX font sizes. The function `\cite{meyer2006}`
-inserts a citation from the bibliography for [@meyer2006]. We will
-discuss bibliographies in more detail in the next chapter (Section \@ref(BibTeXBib)).\index{LaTeX!cite}
+inserts a citation from the bibliography for @meyer2006. We will
+also discuss bibliographies in more detail in Chapter \@ref(LatexChapter).\index{LaTeX!cite}
 
 \begin{figure}[ht]
     \caption{An Example Figure in LaTeX}
-    \label{ExampleLaTeXFigure}
+    \label{fig:ExampleLaTeXFigure}
         \begin{center}
-            \includegraphics[scale=0.8]{images/chapter_10/HeliconiusMimicry.png}
+            \includegraphics{images/chapter_10/HeliconiusMimicry.png}
         \end{center}
     {\scriptsize{Source: \cite{meyer2006}}}
 \end{figure}
@@ -129,8 +124,8 @@ discuss bibliographies in more detail in the next chapter (Section \@ref(BibTeXB
 Markdown has a similar function as LaTeX's `includegraphics`. It goes
 like this: `![ALT_TEXT](FILE_PATH)`. This syntax may seem strange now,
 but it will hopefully make more sense when we cover Markdown hyperlinks
-in Chapter \@ref(MarkdownChapter (Section \@ref(MarkdownLinks)) as this is what it is intended to imitate.
-`ALT_TEXT` refers to HTML's `alt` (alternative text) attribute. This
+in Chapter \@ref(MarkdownChapter) as this is what it is intended to imitate.
+`ALT_TEXT` refers to HTML's `alt` (alternative text) attribute.\index{HTML!alt} This
 should be a very short description of the image that will appear if it
 fails to load in a web browser. `FILE_PATH` specifies the image's file
 path.[^chapter_10_6] Here is an example using the image we worked with
@@ -141,12 +136,12 @@ before.
 ````
 
 Note that the file path can be a URL. You may, for example, store an
-image in the Dropbox Public folder or on GitHub and use its URL to link
+image on GitHub and use its raw URL to link
 to it in the Markdown document.[^chapter_10_7]
 
-Markdown does not include ways to resize or re-position an image, so
-that the syntax would stay simple. If you want to resize or position
-your image you will have to use HTML markup. Probably the simplest way
+Markdown does not easily include ways to resize or re-position an image. 
+If you want to resize or position
+your image it is often most straightforward use HTML markup. Probably the simplest way
 to include images with HTML is by using the `img` (image)\index{HTML!img} element tag.\index{HTML!tag}
 To create the equivalent of what we just did in Markdown with HTML we
 type:
@@ -156,23 +151,39 @@ type:
 ````
 
 The `src` (script)\index{HTML!src} attribute specifies the file path. To change the width and height of the image we can use the `width` and `height`
-attributes. For example:
+attributes.\index{HTML!width}\index{HTML!height} For example:
 
 ````html
 <img src="HeliconiusMimicry.png" alt="ButterflyImage"
-      width="100px" height="100px"></img>
+     width="100px" height="100px">
+</img>
 ````
 
-creates an image that is 100 pixels (`px`) wide by 100 pixels high.[^chapter_10_8] It is also possible to specify the alignment of figures in Markdown with a custom CSS\index{CSS} style file. I don't cover how to do that here.
+creates an image that is 100 pixels (`px`) wide by 100 pixels high.[^chapter_10_8]\index{HTML!px} It is also possible to specify the alignment of figures in Markdown with a custom CSS\index{CSS} style file. I don't cover how to do that here.
+
+### Non-knitted graphics with *knitr*/*rmarkdown*
+
+Now that we've seen how LaTeX, Markdown, and HTML include non-dynamically generated graphics it raises a question: how do we include these graphics in a document that we intend to use *R Markdown* to compile to more than one of these formats? *knitr* includes the 
+`include_graphics()` function just for this purpose.\index{R function!include\_graphics}
+
+For example, in a code chunch we could place:
+
+````r
+`r ''````{r fig.cap="An Example Figure"}
+knitr::include_graphics('HeliconiusMimicry.png')
+```
+````
+
+Now the figure will be included regardless of which markup language we compile to. 
+Notice in the code chunk options `fig.cap`. In the next section we dicuss these types of *knitr* options in detail.
 
 ## Basic *knitr*/*rmarkdown* Figure Options
 
-So far we have looked at how to include images that have already been
-created into our LaTeX and Markdown documents. *knitr*, and by extension
+In addition to including precompiled images with the  `include_graphics()` function, *knitr*, and by extension
 *rmarkdown*, allow us to combine a figure's creation by R with its
 inclusion in a presentation document. They are tied together and update
 together. We use *knitr* chunk options to specify how the figure will
-look in the presentation document and where it will be saved. Let's
+look in the presentation document and where it will be saved. We can also use them to specify captions.  Let's
 learn some of the more important chunk options for figures.
 
 ### Chunk options
@@ -225,6 +236,13 @@ You can set a knitted figure's alignment using `fig.align`. The option
 can be set to `left`, `center`, or `right`. To center a figure, add
 `fig.align='center'`.
 
+#### `fig.cap` {-}
+
+\index{knitr options!fig.cap)}
+
+If your document compiles to LaTeX, you can use the `fig.cap` option to set the figure's
+caption as we did in the example above.
+
 #### Other figure chunk options {-}
 
 The previous options are probably the most commonly used ways of
@@ -244,7 +262,7 @@ of your document with `opts_chunk$set`. Imagine that we are making an R
 LaTeX Sweave-style document and want all of our figures to be center
 aligned and 80 percent of the text width. We type:
 
-````
+````r
 opts_chunk$set.(fig.align = "center",
                 out.width = "0.8\\textwidth")
 ````
@@ -375,7 +393,7 @@ URL to: <http://bit.ly/TE0gTc>. Let's look at the syntax for knitting
 this into an R Markdown file:
 
 ````r
-`r ''````{r, echo=FALSE, warning=FALSE, message=FALSE, 
+`r ''````{r, echo=FALSE, warning=FALSE, message=FALSE,
 out.width='500px', out.height='500px'}
 # Create scatterplot matrix from main-data.csv
 devtools::source_url("http://bit.ly/TE0gTc")
@@ -470,7 +488,7 @@ data:
 library(tidyr)
 
 # Gather inflation_data
-inflation_gathered <- gather(inflation_data, variable, value, 
+inflation_gathered <- gather(inflation_data, variable, value,
                              2:3)
 
 head(inflation_gathered)
@@ -526,7 +544,7 @@ All of the code required to create this graph is on GitHub at:
 
 ```
 \begin{figure}[ht]
-\caption{Example Multi-line Time Series Plot Created with 
+\caption{Example Multi-line Time Series Plot Created with
   \emph{ggplot2}} \label{ggplot2Line}
     \begin{center}
         <<echo=FALSE, message=FALSE, warning=FALSE, out.width= 10cm , out.height= 8cm >>= # Create plot
@@ -625,9 +643,9 @@ linear_brms_2_sum_df <- rename(linear_brms_2_sum_df,
                                upper = `u.95..CI`)
 
 # Make caterpillar plot
-ggplot(data = linear_brms_2_sum_df, 
-       aes(x = reorder(Variable, lower), 
-           y = Estimate, 
+ggplot(data = linear_brms_2_sum_df,
+       aes(x = reorder(Variable, lower),
+           y = Estimate,
            ymin = lower, ymax = upper)) +
                         geom_pointrange(size = 1.4) +
                         geom_hline(yintercept = 0,
@@ -663,7 +681,7 @@ PDFs. The *animation* package [@R-animation] does have some limited
 features for including interactive visualizations in PDFs (as well as
 HTML documents) and is worth investigating if you want to do this. The *gganimate* package allows you to annimate *ggplot2* graphics as GIFs.\index{GIF} However, these cannot be included in PDFs.
 
-##### Basic googleVis figures
+### Basic googleVis figures 
 
 Let's briefly look at how to make one type of figure with *googleVis*: a
 choropleth map. This is created with the `gvisGeoChart()`\index{R function!gvisGeoChart} function. We
@@ -688,7 +706,7 @@ subset(data_sub, fert_cons > 0.1)
 
 # Find the natural logarithm of fert_cons
 ## Round the results to one decimal digit.
-data_sub$fert_cons_log <- round(log(data_sub$fert_cons), 
+data_sub$fert_cons_log <- round(log(data_sub$fert_cons),
                                 digits = 1)
 
 # Make a map of Fertilizer Consumption
@@ -696,7 +714,7 @@ fc_map <- gvisGeoChart(data = data_sub,
                        locationvar = "iso2c",
                        colorvar = "LogConsumption",
                        options = list(
-                            colors = "['#ECE7F2', '#A6BDDB', 
+                            colors = "['#ECE7F2', '#A6BDDB',
                                        '#2B8CBE']",
                             width = "780px", height = "500px")
 )
@@ -730,7 +748,7 @@ the required JavaScript files from the Google Visualization API.
         \end{center}
 \end{figure}
 
-##### Including *googleVis* in knitted documents
+### Including *googleVis* in knitted documents
 
 Typing `print(fc_map, tag = "chart")`\index{R function!print} in a knittable document would print
 the entire JavaScript code needed to create the map. Much like we saw
@@ -792,8 +810,7 @@ how to create the LaTeX and Markdown presentation documents we use to
 present the tables we created in Chapter \@ref(TablesChapter) and the figures we created in this chapter.
 
 [^chapter_10_1]: There are, of course, a number of exceptions to this rule of
-    thumb.
-```vanbelle2008 [-@vanbelle2008 Ch. 9] argues that a few
+    thumb. @vanbelle2008 [Ch. 9] argues that a few
     numbers should be listed in a sentence, many numbers shown in
     tables, and relationships between numbers are best shown with
     graphs. Similarly, @tufte2001 argues that tables tend to
@@ -815,13 +832,13 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
     worse and can often look very pixelated. For more information,
     Wikipedia has a comprehensive comparison of graphics file formats
     at:
-    <http://en.wikipedia.org/wiki/Comparison_of_graphics_file_formats>.
+    <https://en.wikipedia.org/wiki/Comparison_of_graphics_file_formats>.
 
-[^chapter_10_3]: The image used here is from [@meyer2006].
+[^chapter_10_3]: The image used here is from @meyer2006.
 
 [^chapter_10_4]: Note there are a number of other ways to set the size of a figure
-    relative to a page element. See: LaTeX Wiki Book for more details:
-    <http://en.wikibooks.org/wiki/LaTeX/Page_Layout>.
+    relative to a page element. See the LaTeX Wiki Book for more details:
+    <https://en.wikibooks.org/wiki/LaTeX/Page_Layout>.
 
 [^chapter_10_5]: For simplicity, this code does not include the full image's actual
     file path.
@@ -839,7 +856,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 
 [^chapter_10_8]: A pixel is the smallest discrete part of images displayed on a
     screen. See the "pixel" Wikipedia page for more details:
-    <http://en.wikipedia.org/wiki/Pixel>.
+    <https://en.wikipedia.org/wiki/Pixel>.
 
 [^chapter_10_9]: If a code chunk creates more than one figure, *knitr*
     automatically saves each into its own file in the same directory.
