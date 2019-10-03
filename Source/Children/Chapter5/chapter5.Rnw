@@ -110,7 +110,7 @@ Note that with a free Dropbox account, previous versions of a file are only stor
 
 Dropbox adequately meets our four basic criteria for reproducible data storage. It is easy to set up and use. GitHub meets the criteria and more, especially when it comes to version control. It is, however, less straightforward at first. In this section we will learn enough of the basics to get you started using GitHub to store, access, collaborate on, and version control your research.
 
-GitHub is an interface and cloud hosting service built on top of the Git\index{Git} version control system.\footnote{I used Git version 1.7.9.6 for this book.} Git does the version control. GitHub stores the data remotely as well as providing a number of other features, some of which we look at below. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded'' computer programs--in what Git calls ``repositories''\index{Git!repository}--repos\index{GitHub!repo}\index{repo} for short--by making it easy for a number of collaborators to work together to build computer programs. This seems very far from reproducible research.
+GitHub is an interface and cloud hosting service built on top of the Git\index{Git} version control system.\footnote{I used Git version 1.7.9.6 for this book.} Git does the version control. GitHub stores the data remotely as well as providing a number of other features, some of which we look at below. GitHub was not explicitly designed to host research projects or even data. It was designed to host ``socially coded'' computer programs--in what Git calls ``repositories''\index{git!repository}--repos\index{GitHub!repo}\index{repo} for short--by making it easy for a number of collaborators to work together to build computer programs. This seems very far from reproducible research.
 
 Remember that as reproducible researchers, we are building projects out of interconnected text files. In important ways, this is exactly the same as building a computer program. Computer programs are also basically large collections of interconnected text files. Like computer programmers, we need ways to store, version control, access, and collaborate on our text files. Because GitHub is very actively used by people with similar needs (who are also really good programmers), the interface offers many highly developed and robust features for reproducible researchers.
 
@@ -158,7 +158,7 @@ GitHub's extensive features and heart in the computer programming community mean
 
 There are at least three ways to use Git/GitHub on your computer. You can use the command-line version of Git. It's available for Mac and Linux (in the Terminal\index{Terminal}) as well as Windows through Git Bash\index{Git Bash}.\footnote{The interface for Git Bash looks a lot like the Terminal or Windows PowerShell.} You can also use the Graphical User Interface GitHub program. Currently, it's only available for Windows and Mac.  RStudio also has GUI-style Git functionality for RStudio Projects.\index{RStudio!Projects} In this section I focus on how to use the command-line version, because it will help you understand what the GUI versions are doing and allow you to better explore more advanced Git features not covered in this book. In the next section I will mention how to use Git with RStudio Projects.
 
-The first thing to do to set up Git and GitHub is go to the GitHub website (\url{https://GitHub.com/}) and sign up for an account. Second, you should go to the following website for instructions on setting up GitHub:\index{Git!install} \url{https://help.GitHub.com/articles/set-up-git}. The instructions on that website are very comprehensive, so I'll direct you there for the full setup information. Note that installing the GUI version of GitHub also installs Git and, on Windows, Git Bash.
+The first thing to do to set up Git and GitHub is go to the GitHub website (\url{https://GitHub.com/}) and sign up for an account. Second, you should go to the following website for instructions on setting up GitHub:\index{git!install} \url{https://help.GitHub.com/articles/set-up-git}. The instructions on that website are very comprehensive, so I'll direct you there for the full setup information. Note that installing the GUI version of GitHub also installs Git and, on Windows, Git Bash.
 
 \subsection{Version control with Git}
 
@@ -166,7 +166,7 @@ Git is primarily a version control system, so we will start our discussion of ho
 
 \paragraph{Setting up Git repositories locally}
 
-You can setup a Git repo on your computer with the command-line.\footnote{Much of the discussion of the command-line in this section is inspired by Nick Farina's blog post on Git (see \url{http://nfarina.com/post/9868516270/git-is-simpler}, posted 7 September 2012).} I keep my repositories\index{Git!repository} in a folder called {\emph{git\_repositories}},\footnote{To follow along with this code you will first need to create a folder called {\emph{git\_repositories}} in your root directory. Note also that throughout this section I use Unix file path conventions.} though you can use Git with almost any directory you like. The \emph{git\_repositories} directory has the root folder as its parent. Imagine that we want to set up a repository in this directory for a project called {\emph{ExampleProject}}. Initially it will have one README file called {\emph{README.md}}. To do this, we would first type into the Terminal for Mac and Linux computers:
+You can setup a Git repo on your computer with the command-line.\footnote{Much of the discussion of the command-line in this section is inspired by Nick Farina's blog post on Git (see \url{http://nfarina.com/post/9868516270/git-is-simpler}, posted 7 September 2012).} I keep my repositories\index{git!repository} in a folder called {\emph{git\_repositories}},\footnote{To follow along with this code you will first need to create a folder called {\emph{git\_repositories}} in your root directory. Note also that throughout this section I use Unix file path conventions.} though you can use Git with almost any directory you like. The \emph{git\_repositories} directory has the root folder as its parent. Imagine that we want to set up a repository in this directory for a project called {\emph{ExampleProject}}. Initially it will have one README file called {\emph{README.md}}. To do this, we would first type into the Terminal for Mac and Linux computers:
 
 <<Ch5CLGitRep, eval=FALSE, engine='sh'>>=
 # Make new directory 'ExampleProject'
@@ -253,14 +253,14 @@ git status -s
 
 \paragraph{Checkout}\index{Git command!checkout}
 
-It is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}}, folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{objects}}. Commit objects\index{Git!commit object}\footnote{Other Git objects include trees\index{Git!tree} (sort of like directories), tags\index{Git!tag} (bookmarks for important points in a repo's history), and blobs\index{Git!blob} (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
+It is useful to step back for a second and try to understand what Git is doing when you commit your changes. In the hidden {\emph{.git}}, folder Git is saving all of the information in compressed form from each of your commits into a sub-folder called {\emph{objects}}. Commit objects\index{git!commit object}\footnote{Other Git objects include trees\index{git!tree} (sort of like directories), tags\index{git!tag} (bookmarks for important points in a repo's history), and blobs\index{git!blob} (individual files).} are everything from a particular commit. I mean everything. If you delete all of the files in your repository (except for the {\emph{.git}} folder) you can completely recover all of the files from your most recent commit with the \texttt{checkout} command:
 
 <<Ch5CheckoutBasic, eval=FALSE, engine='sh'>>=
 # Checkout latest commit
 git checkout -- .
 @
 
-\noindent Note that there is a space between the two dashed lines and the period. You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|--| with the commit reference.\index{Git!commit reference} Note that the period at the end is still very important to include after the commit reference. The commit reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage} (see below for more information on how to create a GitHub webpage).\footnote{You can also search your commit history and roll back to a previous commit using only the command-line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage, see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the left-hand side of the repo's webpage. This will show you all of the commits. A portion of this book's commit history is shown in Figure \ref{BookHistory}. By clicking on the {\tt{Browse Code}} icon (\includegraphics[scale=0.4]{Children/Chapter5/images5/BrowseCodeIcon.png}) you can see what the files at any commit looked like. Next to this button is another with a series of numbers and letters. This is the commit's SHA-1 hash.\footnote{Secure Hash Algorithm}\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file.
+\noindent Note that there is a space between the two dashed lines and the period. You can also change to any other commit or any committed version of a particular file with \texttt{checkout}. Simply replace the \verb|--| with the commit reference.\index{git!commit reference} Note that the period at the end is still very important to include after the commit reference. The commit reference is easy to find and copy from a repository's GitHub webpage\index{GitHub!repository webpage} (see below for more information on how to create a GitHub webpage).\footnote{You can also search your commit history and roll back to a previous commit using only the command-line. To see the commit history use the \texttt{log}\index{Git command!log} command (more details at \url{http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History}). When a repo has many commits, this can be a very tedious command to use, so I highly recommend the GUI version of GitHub or the repo's GitHub website.} For an example of a GitHub repo webpage, see Figure \ref{BookRepository}. Click on the link that lists the number of repo commits on the left-hand side of the repo's webpage. This will show you all of the commits. A portion of this book's commit history is shown in Figure \ref{BookHistory}. By clicking on the {\tt{Browse Code}} icon (\includegraphics[scale=0.4]{Children/Chapter5/images5/BrowseCodeIcon.png}) you can see what the files at any commit looked like. Next to this button is another with a series of numbers and letters. This is the commit's SHA-1 hash.\footnote{Secure Hash Algorithm}\index{SHA-1 hash} For our purposes, it is the commit's reference number. Click on the {\tt{Copy SHA}} button to the left of the SHA to copy it. You can then paste it as an argument to your {\tt{git checkout}} command. This will revert you to that particular commit. Also include the file name if you want to revert to a particular version of a particular file.
 
 \begin{figure}[t]
     \caption{Part of this Book's GitHub Repository Commit History Page}
@@ -272,7 +272,7 @@ git checkout -- .
 
 \paragraph{Tags}
 
-SHA-1 hashes are a bit cumbersome to use as references. What was the hash number for that one commit? To solve this problem you can add bookmarks, known as ``tags'',\index{Git!tag}\index{Git command!tag} to particularly important commits. Imagine we just committed our first full draft of a project. We want to tag it as version 0.1, i.e. ``v0.1''. To do this use Git's tag command:
+SHA-1 hashes are a bit cumbersome to use as references. What was the hash number for that one commit? To solve this problem you can add bookmarks, known as ``tags'',\index{git!tag}\index{Git command!tag} to particularly important commits. Imagine we just committed our first full draft of a project. We want to tag it as version 0.1, i.e. ``v0.1''. To do this use Git's tag command:
 
 <<Ch5TagMake, eval=FALSE, engine='sh'>>=
 # Tag most recent commit v0.1
@@ -297,7 +297,7 @@ git checkout v0.1 -b v0.1Branch
 
 \paragraph{Branches}
 
-Sometimes you may want to work on an alternative version of your project and then merge changes made to this version back into the main one. For example, the main version could be the most stable current copy of your research, while the alternative version could be a place where you test out new ideas. Git allows you to create a new \emph{branch}\index{Git!branch}\index{Git command!branch} (alternative version of the repo) which can be merged back into the \emph{master} (main) branch. To see what branch you are using type:
+Sometimes you may want to work on an alternative version of your project and then merge changes made to this version back into the main one. For example, the main version could be the most stable current copy of your research, while the alternative version could be a place where you test out new ideas. Git allows you to create a new \emph{branch}\index{git!branch}\index{Git command!branch} (alternative version of the repo) which can be merged back into the \emph{master} (main) branch. To see what branch you are using type:
 
 <<Ch5CheckBranch, engine='sh'>>=
 # Show git branch
@@ -320,7 +320,7 @@ git checkout -b Test
 
 \noindent The \texttt{-b} (branch) option for \texttt{checkout} creates the new \emph{Test} branch before switching to it.
 
-To merge\index{Git command!merge} changes you commit in the \emph{Test} branch to the \emph{master}, \texttt{add} and \texttt{commit} your changes, \texttt{checkout} the \emph{master} branch, then use the \texttt{merge}\index{merge}\index{Git!merge} command.\footnote{Any uncommitted changes are merged with a branch when it is checked out.}
+To merge\index{Git command!merge} changes you commit in the \emph{Test} branch to the \emph{master}, \texttt{add} and \texttt{commit} your changes, \texttt{checkout} the \emph{master} branch, then use the \texttt{merge}\index{merge}\index{git!merge} command.\footnote{Any uncommitted changes are merged with a branch when it is checked out.}
 
 <<ChMergeBrances, eval=FALSE, engine='sh'>>=
 # Add files
@@ -340,7 +340,7 @@ git merge Test
 
 \paragraph{Having Git ignore files}
 
-There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files or cached files from \emph{knitr} or other files that are byproducts of compiling an R LaTeX document (see Chapter \ref{StatsModel}). To have Git ignore particular files, simply create a file called \emph{.gitignore}.\footnote{Note that like \emph{.git}, \emph{.gitignore} files are hidden.}\index{Git!.gitignore}\index{Git!ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository or in a subdirectory to ignore files in that subdirectory. In the \emph{.gitignore} file, add ignore rules by simply including the names of the files that you want to have Git ignore. For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling an R LaTeX file would look something like this:
+There may be files in your repository that you do not want to keep under version control. Maybe this is because they are very large files or cached files from \emph{knitr} or other files that are byproducts of compiling an R LaTeX document (see Chapter \ref{StatsModel}). To have Git ignore particular files, simply create a file called \emph{.gitignore}.\footnote{Note that like \emph{.git}, \emph{.gitignore} files are hidden.}\index{git!.gitignore}\index{git!ignore files} You can either put this file in the repository's parent directory to create a \emph{.gitignore} file for the whole repository or in a subdirectory to ignore files in that subdirectory. In the \emph{.gitignore} file, add ignore rules by simply including the names of the files that you want to have Git ignore. For example, a \emph{.gitignore} file that is useful for ignoring files that are the byproduct of compiling an R LaTeX file would look something like this:
 
 <<Ch5gitignore, eval=FALSE, engine='sh'>>=
 # Ignore LaTeX compile byproduct files #
@@ -378,7 +378,7 @@ To create a new repository on GitHub go to your main GitHub account webpage and 
 
 \paragraph{Clone a new remote repository}
 
-If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{Git!clone} The repo's GitHub page contains a button called \texttt{Clone in Desktop}. Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Imagine that the URL for a repo called \emph{Example Project} is \texttt{https://GitHub.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage the URL to copy is under \texttt{HTTPS clone URL}.}\label{GitClone}
+If you are working with a new repository and do not have an existing version on your computer you need to ``clone'' the GitHub repo to your computer.\index{git!clone} The repo's GitHub page contains a button called \texttt{Clone in Desktop}. Clicking this will open GUI GitHub (if it is installed) and prompt you to specify what directory on your computer you would like to clone the repository into. You can also use the \texttt{clone}\index{Git command!clone} command in the shell. Imagine that the URL for a repo called \emph{Example Project} is \texttt{https://GitHub.com/USERNAME/ExampleProject.git}. To clone it into the \emph{/git\_repositories} directory type:\footnote{If you are on the repo's webpage the URL to copy is under \texttt{HTTPS clone URL}.}\label{GitClone}
 
 <<Ch5Clone, eval=FALSE, engine='sh'>>=
 # Change working directory
@@ -409,7 +409,7 @@ git remote add origin https://GitHub.com/USERNAME/ExampleProject.git
 git push -u origin master
 @
 
-\noindent The \texttt{-u} (upstream tracking)\index{Git!upstream tracking} option adds a tracking reference for the upstream (GitHub) repository branches.
+\noindent The \texttt{-u} (upstream tracking)\index{git!upstream tracking} option adds a tracking reference for the upstream (GitHub) repository branches.
 
 \paragraph{Pushing commits to a GitHub repo}
 
@@ -524,7 +524,7 @@ When you open a Project\index{RStudio!Project}\index{RStudio} with a Git reposit
 
 \subsection{Setting up Git/GitHub with Projects}
 
-You can Git initialize new RStudio Projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do any of these things RStudio automatically adds a \emph{.gitignore}\index{Git!.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory}, and \emph{.RData} files.
+You can Git initialize new RStudio Projects, Git initialize existing projects, and create RStudio Projects\index{RStudio!Projects} from cloned repos. When you do any of these things RStudio automatically adds a \emph{.gitignore}\index{git!.gitignore} file telling Git to ignore \emph{.Rproj.user}, \emph{.Rhistory}, and \emph{.RData} files.
 
 \paragraph{Git with a new project}\label{NewProjectGit}
 
