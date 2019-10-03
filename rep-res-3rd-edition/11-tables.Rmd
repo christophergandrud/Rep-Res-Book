@@ -86,11 +86,11 @@ executed. A simple environment is the `center`\index{LaTeX!centre} environment.[
 Everything placed in a center environment is, unsurprisingly, centered.
 Typing:
 
-```
+````latex
 \begin{center}
     This is a center environment.
 \end{center}
-```
+````
 
 creates the following text in the PDF output:
 
@@ -100,12 +100,12 @@ creates the following text in the PDF output:
 
 LaTeX environments all follow the same general syntax:
 
-```
+````latex
 \begin{ENVIRONMENT_NAME}
     ...
     ...
 \end{ENVIRONMENT_NAME}
-```
+````
 
 You do not have to indent the contents of an environment. Indentations
 neither affect how the document is compiled nor show up in the final
@@ -129,9 +129,9 @@ each column. For example, to create a table with three columns, the
 first of which is left-justified and the latter two center-justified we
 type:
 
-```
+````latex
 \begin{tabular}{l c c}
-```
+````
 
 The `l` argument creates a left-justified column, `c` creates a centered
 one. If we wanted a right-justified column we would use `r`.[^chapter_9_8] Finally, we can add a horizontal line between columns by adding a vertical bar
@@ -139,9 +139,9 @@ one. If we wanted a right-justified column we would use `r`.[^chapter_9_8] Final
 line between the first and second column in our example table we would
 type:
 
-```
+````latex
 \begin{tabular}{l | c c}
-```
+````
 
 Now let’s enter content into our table. We saw earlier how CSV files
 delimit individual columns with commas. In LaTeX’s `tabular`
@@ -149,30 +149,30 @@ environment, columns are delimited with ampersands (`&`).[^chapter_9_10]\index{L
 tables, new lines are delimited by starting a new line. In LaTeX tables
 you use two backslashes (`\\`).[^chapter_9_11] Here is a simple example of the first two lines of a table:
 
-```
+````latex
 \begin{tabular}{l | c c}
     Observation & Variable1 & Variable2 \\
     Subject1 & a & b \\
-```
+````
 
 It is common to demarcate the row with a table’s column names–the first
 row–with horizontal lines. A horizontal line also often visually
 demarcates a table’s end. You can add horizontal lines in the `tabular`
 environment with the `\hline` command.
 
-```
+````latex
 \begin{tabular}{l | c c}
     \hline
     Observation & Variable1 & Variable2 \\
     \hline \hline
     Subject1 & a & b \\
     \hline
-```
+````
 
 Finally, we close the `tabular` environment with `\end{tabular}`. The
 full code (with a few extra rows added) is:
 
-```
+````latex
 \begin{tabular}{l | c c}
     \hline
     Observation & Variable1 & Variable2 \\
@@ -183,7 +183,7 @@ full code (with a few extra rows added) is:
     Subject4 & g & h \\
     \hline
 \end{tabular}
-```
+````
 This produces the following table:
 
 \begin{tabular}{l | c c}
@@ -215,7 +215,7 @@ the text. You can also declare a cross-reference key for the table with
 the `\label` command.[^chapter_9_17] A `table` environment is Of course, closed
 with `\end{table}`. Let's see a full example.
 
-```
+````latex
 \begin{table}[t]
     \caption{Example Simple LaTeX Table}
     \label{ExLaTeXTable}
@@ -232,7 +232,7 @@ with `\end{table}`. Let's see a full example.
         \end{tabular}
     \end{center}
 \end{table}
-```
+````
 
 \begin{table}[t]
     \caption{Example Simple LaTeX Table}
@@ -501,7 +501,7 @@ To find a full list of object classes that *xtable* supports, type
 Let's look at how to create LaTeX tables with *xtable* by creating a
 table summarizing the estimates from the *M1* model object.
 
-````
+````latex
 <<results=asis, echo=FALSE>>=
 library(xtable)
 
