@@ -40,7 +40,7 @@ compiled, no recopying and pasting. The second advantage is that the
 images are sized and placed with the markup code rather than pointing
 and clicking. This is tedious at first, but saves considerable time and
 frustration when a document becomes larger. It also makes it easy to
-consistently format multiple images in a document. 
+consistently format multiple images in a document.
 
 If the image files are in the same directory as the markup document, we
 don't need to specify the image's full file path, only its name. If they are
@@ -139,7 +139,7 @@ Note that the file path can be a URL. You may, for example, store an
 image on GitHub and use its raw URL to link
 to it in the Markdown document.[^chapter_10_7]
 
-Markdown does not easily include ways to resize or re-position an image. 
+Markdown does not easily include ways to resize or re-position an image.
 If you want to resize or position
 your image it is often most straightforward use HTML markup. Probably the simplest way
 to include images with HTML is by using the `img` (image)\index{HTML!img} element tag.\index{HTML!tag}
@@ -163,7 +163,7 @@ creates an image that is 100 pixels (`px`) wide by 100 pixels high.[^chapter_10_
 
 ### Non-knitted graphics with *knitr*/*rmarkdown*
 
-Now that we've seen how LaTeX, Markdown, and HTML include non-dynamically generated graphics it raises a question: how do we include these graphics in a document that we intend to use *R Markdown* to compile to more than one of these formats? *knitr* includes the 
+Now that we've seen how LaTeX, Markdown, and HTML include non-dynamically generated graphics it raises a question: how do we include these graphics in a document that we intend to use *R Markdown* to compile to more than one of these formats? *knitr* includes the
 `include_graphics()` function just for this purpose.\index{R function!include\_graphics}
 
 For example, in a code chunch we could place:
@@ -174,7 +174,7 @@ knitr::include_graphics('HeliconiusMimicry.png')
 ```
 ````
 
-Now the figure will be included regardless of which markup language we compile to. 
+Now the figure will be included regardless of which markup language we compile to.
 Notice in the code chunk options `fig.cap`. In the next section we dicuss these types of *knitr* options in detail.
 
 ## Basic *knitr*/*rmarkdown* Figure Options
@@ -190,7 +190,7 @@ learn some of the more important chunk options for figures.
 
 #### `fig.path` {-}
 
-\index{knitr options!fig.path|(}
+\index{knitr option!fig.path|(}
 
 When you use *knitr* to create and include figures in your presentation
 documents it (1) runs the code you give it to create the figure, (2)
@@ -203,13 +203,13 @@ use the file path naming conventions suitable for your system and
 include the new path in quotation marks.
 
 Note if you use *rmarkdowm* to compile to HTML, by default the graphic will not be saved
-in a separate file, but instead converted to a format that is embedded directly the HTML markup document. 
+in a separate file, but instead converted to a format that is embedded directly the HTML markup document.
 
-\index{knitr options!fig.path|)}
+\index{knitr option!fig.path|)}
 
 #### `out.height` {-}
 
-\index{knitr options!out.height)}
+\index{knitr option!out.height}
 
 To set the height that a figure will be in the final presentation
 document use the `out.height` option. In R LaTeX documents you can set
@@ -220,7 +220,7 @@ pixels use `out.height='200px'`.
 
 #### `out.width` {-}
 
-\index{knitr options!out.width)}
+\index{knitr option!out.width}
 
 Similarly, we can set the width of a *knitr* created figure using the
 `out.width` option. The same rules apply as with `out.width`. For
@@ -233,7 +233,7 @@ the backslash escape character, i.e. use two backslashes.
 
 #### `fig.align` {-}
 
-\index{knitr options!fig.align)}
+\index{knitr option!fig.align}
 
 You can set a knitted figure's alignment using `fig.align`. The option
 can be set to `left`, `center`, or `right`. To center a figure, add
@@ -241,7 +241,7 @@ can be set to `left`, `center`, or `right`. To center a figure, add
 
 #### `fig.cap` {-}
 
-\index{knitr options!fig.cap)}
+\index{knitr option!fig.cap}
 
 If your document compiles to LaTeX, you can use the `fig.cap` option to set the figure's
 caption as we did in the example above.
@@ -298,7 +298,7 @@ Let's look at an example we first saw at the end of Chapter \@ref(StatsModel). R
 code file stored on GitHub to create a simple scatterplot of cars' speed
 and stopping distances using R's *cars* data set, which is loaded by
 default. We haven't yet seen the code in the R source file that created
-the plot. 
+the plot.
 
 In the *cars* data frame, the variable **speed** contains the stopping speed and
 **dist** contains the stopping distances. Here is the code to create the
@@ -327,7 +327,7 @@ LaTeX `figure` environment.
 \begin{figure}[ht]
     \caption{Example Simple Scatter Plot Using \texttt{plot}}
     \label{BasicFigureExample}
-`r ''````{r echo=FALSE, fig.align='center', out.width='8cm'} 
+`r ''````{r echo=FALSE, fig.align='center', out.width='8cm'}
     plot(x = cars$speed, y = cars$dist,
          xlab = "Speed (mph)",
          ylab = "Stopping Distance (ft)",
@@ -339,7 +339,7 @@ LaTeX `figure` environment.
 \begin{figure}[ht]
     \caption{Example Simple Scatter Plot Using \texttt{plot}}
     \label{fig:BasicFigureExample}
-```{r echo=FALSE, fig.align='center', out.width='8cm'} 
+```{r echo=FALSE, fig.align='center', out.width='8cm'}
     plot(x = cars$speed, y = cars$dist,
          xlab = "Speed (mph)",
          ylab = "Stopping Distance (ft)",
@@ -535,14 +535,14 @@ theme. We added the argument `base_size = 15` to increase the plot's
 font size.
 
 All of the code required to create this graph is on GitHub at:
-<https://bit.ly/2FaMkOJ>.[^chapter_10_24] So to knit the graph like into a LaTeX document manually specifying the figure environment we type:
+<https://bit.ly/2FaMkOJ>.[^chapter_10_24] So to knit the graph like into a LaTeX document manually specifying the figure environment we type:\index{LaTeX environment!figure}
 
 ````latex
 \begin{figure}[ht]
 \caption{Example Multi-line Time Series Plot Created with
   \emph{ggplot2}} \label{ggplot2Line}
     \begin{center}
-`r ''````{r echo=FALSE, out.width='10cm'out.height='8cm'} 
+`r ''````{r echo=FALSE, out.width='10cm'out.height='8cm'}
     # Create plot
     devtools::source_url("https://bit.ly/2FaMkOJ")
 ```
@@ -676,7 +676,7 @@ PDFs. The *animation* package [@R-animation] does have some limited
 features for including interactive visualizations in PDFs (as well as
 HTML documents) and is worth investigating if you want to do this. The *gganimate* package allows you to annimate *ggplot2* graphics as GIFs.\index{GIF} However, these cannot be included in PDFs.
 
-### Basic googleVis figures 
+### Basic googleVis figures
 
 Let's briefly look at how to make one type of figure with *googleVis*: a
 choropleth map. This is created with the `gvisGeoChart()`\index{R function!gvisGeoChart} function. We
@@ -912,4 +912,3 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
     on Flash, unlike the other Google visualizations. For more
     information see Markus Gesmann's blog post at:
     <http://www.magesblog.com/2012/05/interactive-reports-in-r-with-knitr-and.html>.
-  

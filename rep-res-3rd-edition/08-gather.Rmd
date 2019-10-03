@@ -10,9 +10,9 @@ independent researchers (and you) can more easily regather the data.
 Regathering data will be easiest if running your code allows you to get
 all the way back to the raw data files--the rawer the better. Of course,
 this may not always be possible. You may need to conduct interviews or
-compile information from paper based archives, for example. Data hosted online may disappear 
+compile information from paper based archives, for example. Data hosted online may disappear
 when the host ceases operation. The best you
-can sometimes do is describe your data gathering process in detail or 
+can sometimes do is describe your data gathering process in detail or
 rehost an original data set.
 Nonetheless, R's automated data gathering capabilities for
 internet-based information is extensive. Learning how to take full
@@ -79,7 +79,7 @@ GitHub at: <https://github.com/christophergandrud/rep-res-book-v3-examples>.
 When you create make-like files in R to organize and run your data
 gathering you usually only need one or two functions, `setwd()` and `source()`.\index{R function!setwd()}\index{R function!source()}
 As we talked about in Chapter \@ref(DirectoriesChapter), `setwd()` tells R where to look for and
-place files. `source()` tells R to run code in an R source code file.[^chapter_6_3] 
+place files. `source()` tells R to run code in an R source code file.[^chapter_6_3]
 Let's see what an R data make file might look like for a project with a file
 structure similar to the example project in Figure \@ref(ExampleTree). The file paths in this example are for
 Unix-like systems and the make-like file is called *Makefile.R*.
@@ -90,7 +90,7 @@ Unix-like systems and the make-like file is called *Makefile.R*.
 # Updated 12 January 2019
 ################
 
-# Set working directory 
+# Set working directory
 setwd("/example-project/data/")
 
 # Gather and cleanup raw data files with a for loop
@@ -112,7 +112,7 @@ Markdown file with a table describing the variables and their sources.
 We'll come back to how to create tables in Chapter \@ref(TablesChapter).
 
 You can run the commands in this file one by one or run the make-like
-file by putting it through the `source()` function\index{R function!source} so 
+file by putting it through the `source()` function\index{R function!source} so
 that it will run it all at once.
 
 ### GNU Make
@@ -365,7 +365,7 @@ using the `read.table()` function.\index{R function!read.table} For example, ima
 the data set into R simply type:
 
 ```{r Ch6LocalReadTable, eval=FALSE}
-test_data <- read.table("test-data.csv", sep = ",", 
+test_data <- read.table("test-data.csv", sep = ",",
                         header = TRUE)
 ```
 
@@ -412,7 +412,7 @@ hand and then save the file in plain-text format. When you cleanup the
 data make sure that the first row has the variable names and that
 observations are in the following rows. Also, remove any extraneous
 information such as notes, colors, and so on that will not be part of
-the data frame. `import()` can also attempt to import *.xlsx* files. 
+the data frame. `import()` can also attempt to import *.xlsx* files.
 This is much easier if they are cleaned up to resemble text files.
 
 To aid reproducibility, locally stored data should include careful
@@ -471,11 +471,11 @@ R. To do this you need to:[^chapter_6_21]
 -   create a temporary file with to store the zipped file, which you
     will later remove with the at the end,
 
--   download the file with `download.file()`,\index{R fuction!download.file}
+-   download the file with `download.file()`,\index{R function!download.file}
 
 -   decompress the file with one of the commands in base R,[^chapter_6_22]
 
--   read the file with `read.csv()` or `import()`.\index{R fuction!read.csv}\index{R fuction!import}
+-   read the file with `read.csv()` or `import()`.\index{R function!read.csv}\index{R function!import}
 
 The reason that we have to go through so many extra steps is that
 compressed files are more than just a single file and contain a number
