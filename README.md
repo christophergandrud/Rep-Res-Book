@@ -1,10 +1,9 @@
 
 # [Reproducible Research with R and RStudio (Third Edition)](http://christophergandrud.GitHub.io/RepResR-RStudio/)
 
-[<img src="http://4.bp.blogspot.com/-p0c-0swxJ_8/VV7sxxgQ4UI/AAAAAAAAHTQ/hji_MT68PZ4/s1600/2ndEd_rep_res.jpg" align="right" />](http://amzn.com/1498715370)
+[<img src="img/re-res-book-cover-3rd.png" align="right" />](http://amzn.com/1498715370)
 
-[Christopher
-Gandrud](http://christophergandrud.blogspot.com/p/biocontact.html)
+Christopher Gandrud
 
 [CRC Press/Chapman &
 Hall](http://www.tandf.net/books/details/9781498715379/)
@@ -25,13 +24,13 @@ The current version of the book manuscript was compiled with
 [RStudio](http://www.rstudio.com/) (v. 1.2.1194 preview build) with the
 following R session:
 
-    ## R version 3.5.1 (2018-07-02)
+    ## R version 3.6.1 (2019-07-05)
     ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-    ## Running under: macOS  10.14.2
+    ## Running under: macOS Mojave 10.14.6
     ## 
     ## Matrix products: default
-    ## BLAS: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRblas.0.dylib
-    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.5/Resources/lib/libRlapack.dylib
+    ## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+    ## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
     ## 
     ## locale:
     ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -40,10 +39,10 @@ following R session:
     ## [1] stats     graphics  grDevices utils     datasets  methods   base     
     ## 
     ## loaded via a namespace (and not attached):
-    ##  [1] compiler_3.5.1  magrittr_1.5    tools_3.5.1     htmltools_0.3.6
-    ##  [5] yaml_2.2.0      Rcpp_1.0.0      stringi_1.2.4   rmarkdown_1.11 
-    ##  [9] knitr_1.21      stringr_1.3.1   xfun_0.4        digest_0.6.18  
-    ## [13] evaluate_0.12
+    ##  [1] compiler_3.6.1  magrittr_1.5    tools_3.6.1     htmltools_0.4.0
+    ##  [5] yaml_2.2.0      Rcpp_1.0.3      stringi_1.4.3   rmarkdown_1.17 
+    ##  [9] knitr_1.26      stringr_1.4.0   xfun_0.11       digest_0.6.23  
+    ## [13] rlang_0.4.2     evaluate_0.14
 
 -----
 
