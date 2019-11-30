@@ -1,3 +1,5 @@
+# (PART) Presentation Documents {-}
+
 # Presenting with LaTeX {#LatexChapter}
 
 We have already begun to see how LaTeX works for presenting research
@@ -18,7 +20,7 @@ will help you debug issues you might encounter when using *rmarkdown*
 with LaTeX that would otherwise be mysterious if you were only familiar
 with Markdown. Second, R Markdown has limited capabilities for creating
 more complex documents such as books and documents with highly
-customizable formatting needs.[^chapter_11_bookdown] Using *knitr* LaTeX or including LaTeX syntax 
+customizable formatting needs.[^chapter_11_bookdown] Using *knitr* LaTeX or including LaTeX syntax
 directly in you R Markdown documents can be useful in these situations.
 
 In this chapter we will learn about basic LaTeX document structures and
@@ -85,7 +87,7 @@ There are a number of places to find comprehensive lists of LaTeX
 commands. The Netherlands TeX users group has compiled one:
 <http://www.ntg.nl/doc/biemesderfer/ltxcrib.pdf>.
 
-### The LaTeX preamble & body {#LaTeXPreamble}
+### The LaTeX preamble and body {#LaTeXPreamble}
 
 All LaTeX documents require a preamble. The preamble goes at the very
 beginning of the document. The preamble usually starts with the
@@ -207,22 +209,22 @@ Zalando SE\thanks{Email: \href{mailto:christopher.gandrud@zalando
 
 %%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
-  Here is an example of a knittable article class LaTeX 
+  Here is an example of a knittable article class LaTeX
   document.
 \end{abstract}
 
 %%%%%%%%%%% Article Main Text %%%%%%%%%%%%%
 \section{The Graph}
 
-I gathered data from \cite{Pemstein2010} on countries' democracy 
-level. They call their democracy measure the Unified Democracy 
-Score (UDS). Figure \ref{DemPlot} shows the mean UDS scores 
+I gathered data from \cite{Pemstein2010} on countries' democracy
+level. They call their democracy measure the Unified Democracy
+Score (UDS). Figure \ref{DemPlot} shows the mean UDS scores
 over time for all of the countries in their sample.
 
 \begin{figure}
   \caption{Mean UDS Scores}
   \label{DemPlot}
-<<echo=FALSE, message=FALSE, warning=FALSE, out.width='7cm', 
+<<echo=FALSE, message=FALSE, warning=FALSE, out.width='7cm',
 out.height='7cm'>>=
 # Graph UDS scores
     ggplot(uds_data, aes(x = year, y = mean)) +
@@ -236,14 +238,14 @@ out.height='7cm'>>=
 %%%%%%%%%%% Reproducing the Document %%%%%
 \section*{Appendix: Reproducing the Document}
 
-This document was created using the R version 
+This document was created using the R version
 \Sexpr{paste0(version$major, ".",
-version$minor)} and the R package \emph{knitr} 
-\citep{R-knitr}. 
+version$minor)} and the R package \emph{knitr}
+\citep{R-knitr}.
 
-It also relied on the R packages \emph{ggplot2} and 
-\citep{R-ggplot2}. The document can be completely 
-reproduced from source files available on GitHub 
+It also relied on the R packages \emph{ggplot2} and
+\citep{R-ggplot2}. The document can be completely
+reproduced from source files available on GitHub
 at: \url{https://github.com/christophergandrud/
 rep-res-book-v3-examples}.
 
@@ -264,7 +266,7 @@ Using it to comment your markup can make it easier to read. Second, as
 we saw in Chapter
 \@ref(TablesChapter), double backslashes (`\\`), like those after
 the author's name, force a new line in LaTeX. We will discuss the `emph`
-command in a moment.\index{LaTeX command!emph} Third, using the `thanks`\index{LaTeX command!thanks} 
+command in a moment.\index{LaTeX command!emph} Third, using the `thanks`\index{LaTeX command!thanks}
 command allows us to create a footnote for author contact information[^chapter_11_6] that is not numbered like the other footnotes (see below). Finally, you'll notice
 `\href{mailto: . . . .org}}`. This creates an email address in the final
 document that will open the reader's default email program when clicked.\index{LaTeX command!href}
@@ -287,7 +289,7 @@ an unnumbered section, place an asterisk in it like this:
 use `chapter` to create new chapters and `part` for collections of
 chapters.\index{LaTeX command!section}\index{LaTeX command!subsection}\index{LaTeX command!paragraph}\index{LaTeX command!subparagraph}\index{LaTeX command!chapter}\index{LaTeX command!part}
 
-### Paragraphs & spacing
+### Paragraphs and spacing
 
 In LaTeX, paragraphs are simply created by adding a blank line between
 lines. It will format all of the tabs for the beginning of paragraphs
@@ -437,7 +439,7 @@ gives us:
 -   The third item.
 
 To create a numbered list use the `enumerate` environment instead of
-`itemize`. 
+`itemize`.
 
 You can create sublists simply by nesting lists inside of
 lists like this:\index{LaTeX environment!enumerate}
@@ -833,7 +835,7 @@ LaTeX documents--articles and slideshows--that we can embed our
 reproducible research in using *knitr*. In the next chapter we look at
 how to use R Markdown to expand the type of presentation documents we can create reproducibly.
 
-[^chapter_11_bookdown]: The *bookdown* [@R-bookdown] R package greatly improved the ability to created book-like documents with R Markdown. The third edition of this book is written in Bookdown. 
+[^chapter_11_bookdown]: The *bookdown* [@R-bookdown] R package greatly improved the ability to created book-like documents with R Markdown. The third edition of this book is written in Bookdown.
 
 [^chapter_11_1]: Wikipedia has collated a table that comprehensively compares many of these editors: <https://en.wikipedia.org/wiki/List_of_text_editors>.
 
