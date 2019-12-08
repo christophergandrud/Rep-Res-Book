@@ -15,24 +15,24 @@ they access in files you make available: data files, analysis files, and
 presentation files. If these files are well organized and the way they
 are tied together is clear, replication will be much easier. File
 management is also important for you as a researcher, because if your
-files are well organized you will be able to more easily make changes,
+files are well organized, you will be able to more easily make changes,
 benefit from work you have already done, and collaborate with others.
 
 Using tools such as R, knitr/R Markdown, and markup languages like
 LaTeX requires fairly detailed knowledge of where files are stored in
 your computer. Handling files to enable reproducibility may require you
 to use command-line tools to access and organize your files. R and
-Unix-like shell programs allow you to control files-creating, deleting,
-relocating-in powerful and really reproducible ways. By typing these
+Unix-like shell programs allow you to control files---creating, deleting,
+relocating---in powerful and really reproducible ways. By typing these
 commands you are documenting every step you take. This is a major
 advantage over graphical user interface-type systems where you organize
 files by clicking and dragging them with the cursor. However, typed
-commands require you to know your files' specific addresses--their file
+commands require you to know your files' specific addresses, their file
 paths.
 
 In this chapter we discuss how a reproducible research project may be
 organized and cover the basics of file path naming conventions in
-Unix-like operating systems, such as Mac OS X and Linux, and
+Unix-like operating systems, such as macOS and Linux, and
 Windows. We then learn how to organize them with RStudio Projects.
 We'll cover some basic R and Unix-like shell commands for
 manipulating files as well as how to navigate through files in RStudio
@@ -41,7 +41,7 @@ heavily used in the next chapter (Chapter \@ref(Storing)) and
 throughout the book.
 
 In this chapter we work with locally stored files, i.e. files stored on
-your computer. In the next chapter we will discuss various ways to store
+your computer. In the next chapter, we will discuss various ways to store
 and access files remotely stored in the cloud.
 
 ## File Paths and Naming Conventions
@@ -60,7 +60,7 @@ are sub-directories of the root directory.\index{root directory}
 
 On Windows computers you can have multiple root directories, one for
 each storage device or partition of a storage device. The root directory
-is given a drive letter assignment. If you use Windows regularly you
+is given a drive letter assignment. If you use Windows regularly, you
 will most likely be familiar with `C:\` used to denote the C partition
 of the hard drive. This is a root directory. On Unix-like systems,
 including Macs and Linux computers, the root directory is simply denoted
@@ -69,17 +69,17 @@ by a forward slash (`/`) with nothing before it.
 ### Sub-directories and parent directories
 
 You will probably not store all of your files in the root directory.
-This would get very messy. Instead you will store your files in
+This would get very messy. Instead, you will store your files in
 sub-directories of the root directory. Inside of these sub-directories may
 be further sub-directories and so on. A directory inside of another
 directory is referred to as a child directory of a parent
 directory.\index{child directory}\index{parent directory}
 
-On Windows computers separate sub-directories are indicated with a back
+On Windows computers, separate sub-directories are indicated with a back
 slash (`\`). For example, if we have a folder called *data* inside of a
-folder called *example-project* which is located in the C root directory
+folder called *example-project* which is located in the C root directory,
 it has the address `C:\example-project\data`.[^chapter4_2] When you type Windows
-file paths into R you need to use two backslashes rather than one: e.g.
+file paths into R, you need to use two backslashes rather than one: e.g.
 `C:\\example-project\\data`. This is because the `\` is an escape
 character in R.[^chapter4_3]\index{escape character} Escape characters tell R to interpret the next character or sequence of characters differently. For example, in Section \@ref(TSVEscape)
 you'll see how `\t` can be interpreted by R as a tab rather than the
@@ -98,8 +98,8 @@ of the root. In the latter, *example-project* is a sub-directory of the
 current working directory (see below for details about working
 directories). This is also true in Windows.
 
-In this chapter I switch between the two file system naming conventions
-to expose you to both. In subsequent chapters I use Unix-like
+In this chapter, I switch between the two file system naming conventions
+to expose you to both. In subsequent chapters, I use Unix-like
 file paths. When you use relative paths (see below), these will work across
 operating systems in R. We'll get to relative paths in a moment.
 
@@ -110,7 +110,7 @@ this book, it is important to keep in mind what your current working
 directory is. The working directory is the directory where the program
 automatically looks for files and other directories, unless you tell it
 to look elsewhere. It is also where it will save files. Later in this
-chapter we will cover functions for finding and changing the working
+chapter, we will cover functions for finding and changing the working
 directory.\index{working directory}
 
 ```{r ExampleTree, engine = "tikz", fig.cap = "Example Research Project File Tree", cache=TRUE, echo=FALSE, fig.ext=if (knitr:::is_latex_output()) 'pdf' else 'png'}
@@ -184,7 +184,7 @@ For reproducible research, collaborative research, and even if you ever
 change the computer you work on, it is a good idea to use relative
 rather than absolute file paths. Absolute file paths give the entire
 path of a given file or directory on a specific system. For example,
-`/example-project/data` is an absolute path as it specifies the path of
+`/example-project/data` is an absolute path. It specifies the path of
 the *data* child directory all the way back to the root directory.
 However, if our current working directory is *example-project* and we
 want to link to the *data* child directory or a file in it, we don't
@@ -195,8 +195,8 @@ It is good practice to use relative paths and organize
 your files such that using relative paths is easy. This makes your code
 less dependent on the particular file structure of a particular
 computer. For example, imagine you use `C:\\example-project\\data` in
-your source code to link to the *data* directory. If someone--a
-collaborator, a researcher reproducing your work, or even you--then
+your source code to link to the *data* directory. If someone---a
+collaborator, a researcher reproducing your work, or even you---then
 tries to run the code on a different computer, the code will break if
 they are, for instance, using a Unix-like system or have placed
 *example-project* in a different partition of their hard drive. This can
@@ -204,7 +204,7 @@ be fixed relatively by changing the file path in the
 source. However, this is tedious (often not well documented) and
 unnecessary if you use relative file paths.
 
-Below we'll see how to RStudio Projects and the *here* package [@R-here] to automatically set working directories so that your relative file paths will transport even more easily across computers.
+Below we'll see how to use RStudio Projects and also the *here* package [@R-here] to automatically set working directories so that your relative file paths will transport even more easily across computers.
 
 The *ProjectTemplate* package [@R-ProjectTemplate] package provides functions to help set up a well structured research project file tree. We don't use it in the following examples, but you may find it useful in your own work.\index{R package!ProjectTemplate}
 
@@ -217,7 +217,7 @@ trying to read the file path. The program may believe that the space
 indicates that the path name has ended. To make multi-word names easily
 readable without using spaces, adopt a consistent naming convention.
 
-One approach is to use a convention that contrasts with the R object naming convention you are using. A contrasting convention helps make it clear if something is an R object or a file name. For example, if we adopt the underscore method for R object names used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use em dashes (`-`) to separate words in file names. For example: `example-source.R`. This is sometimes referred to as kebab-case.\index{kebab-case}
+One approach is to use a convention that contrasts with the R object naming convention you are using. A contrasting convention helps make it clear if something is an R object or a file name. For example, if we adopt the underscore method for R object names used in Chapter \@ref(GettingStartedRKnitr) (e.g. `health_data`) we could use hyphens (`-`) to separate words in file names. For example: `example-source.R`. This is sometimes called kebab-case.\index{kebab-case}
 
 ## Organizing Your Research Project
 
@@ -225,7 +225,7 @@ Figure \@ref(fig:ExampleTree) gives an example of how the files in a simple
 reproducible research project could be organized. The project's parent
 directory is called *example-project*. Inside this directory are the
 primary knittable documents (*paper.Rmd* *slideshow.Rmd*, and
-*website.Rmd*). In addition there is an *analysis* sub-directory with
+*website.Rmd*). In addition, there is an *analysis* sub-directory with
 the R files to run the statistical analyses followed by a further *data*
 child directory.
 
@@ -237,14 +237,14 @@ knittable documents can call *analysis-1.R* with the relative path
 knitr::include_graphics("images/chapter_4/ProjectMenu.png")
 ```
 
-In addition to the main files and sub-directories in *example-project* you
+In addition to the main files and sub-directories in *example-project*, you
 will notice a files called *README.md* and *example-project.Rproj*. We'll discuss the *example-project.Rproj* file in the next section. The *README.md* file
 is a human readable overview of all the files in the project. It should briefly
 describe the project including things like its title, author(s), topic,
 any copyright information, and so on. It should also indicate how the
 folders in the project are organized and give instructions for how to
 reproduce the project. The README file should be in the main project
-folder--in our example this is called *example-project*--so that it is
+folder---in our example this is called *example-project*---so that it is
 easy to find. If you are storing your project as a GitHub repository
 (see Chapter \@ref(Storing)) and the file is called *README*, its contents will
 automatically be displayed on the repository's main page. If the
@@ -252,7 +252,7 @@ automatically be displayed on the repository's main page. If the
 be properly formatted. Figure \@ref(fig:BookRepository) shows an example of this.
 
 It is good practice to dynamically include the system information for
-the R session you used to create the project. To do this you can write
+the R session you used to create the project. To do this, you can write
 your README file with R Markdown. Simply include the `sessionInfo()`
 function in a *knitr* code chunk in the R Markdown document. If you knit
 this file immediately after knitting your presentation document, it will
@@ -271,13 +271,13 @@ toLatex(sessionInfo())
 If you are using RStudio, you may want to organize your files as
 Projects. You can turn a normal directory into an
 RStudio Project by clicking on `File` in the RStudio menu bar and
-selecting `New Project…`. A new window will pop-up. Select the option
+selecting `New Project…`. A new window will pop up. Select the option
 `Existing Directory`. Find the directory you want to turn into an
 RStudio Project by clicking on the `Browse` button. Finally, select
 `Create Project`. You will also notice in the Create Project pop-up
 window that you can build new project directories and create a project
 from a directory already under version control (we'll do this at the end
-of Chapter \@ref(Storing)). When you create a new project you will see that
+of Chapter \@ref(Storing)). When you create a new project, you will see that
 RStudio has put a file with the extension `.Rproj` into the directory, like *example-project.Rproj* in Figure \@ref(fig:ExampleTree).
 
 Making your research project directories RStudio Projects is useful for
@@ -286,22 +286,22 @@ a number of reasons:
 -   The project is listed in RStudio's Project menu where it can be
     opened easily (see Figure \@ref(fig:ProjectMenu)).
 
--   When you open the project in RStudio it automatically sets the
+-   When you open the project in RStudio, it automatically sets the
     working directory to the project's directory and can load the
     source code files you were last working on.
 
 -   You can set project specific options like whether PDF presentation
     documents should be compiled with *Sweave* or *knitr*.
 
--   When you close the project your R workspace and history are saved in
-    the project directory if you want (though avoid saving your workspace as this could make reproducibility harder).
+-   When you close the project, your R workspace and history are saved in
+    the project directory if you want. However, avoid saving your workspace as this could make reproducibility harder.
 
 -   It helps you version control your files.
 
--   You can build your Project--run the files in a specific way--with
+-   You can build your Project---run the files in a specific way---with
     makefiles.
 
--   Gives you an easy-to-use interface for managing the R packages that
+-   It gives you an easy-to-use interface for managing the R packages that
     your project depends on.
 
 ## R File Manipulation Functions
@@ -336,7 +336,7 @@ list.files() %>% head()
 
 \index{R function!setwd}
 
-The `setwd()` function is the base R way to set the current working directory. For example, if we are on a Mac or other Unix-like computer we can set the working directory to
+The `setwd()` function is the base R way to set the current working directory. For example, if we are on a Mac or other Unix-like computer, we can set the working directory to
 the *analysis* directory in our Example Project (see Figure \@ref(fig:ExampleTree)) like this:
 
 ````r
@@ -365,7 +365,7 @@ Instead, use RStudio Projects, which automatically set the working directory to 
 
 \index{root.dir}
 
-By default the root (or working) directory for all of the code chunks in
+By default, the root (or working) directory for all of the code chunks in
 a knittable document is the directory where this document is located.
 You can reset the directory by feeding a new file path to the `root.dir`
 option. We can set this globally[^chapter4_4] for all of the chunks in the
@@ -384,8 +384,8 @@ directory for all of the chunks in our presentation document.
 
 \index{R function!dir.create}
 
-Sometimes you may want to create a new directory. You can use the `dir.create()` function to do this.[^chapter4_5] For example, to create a *example-project* file
-in the root *C* directory on a Windows computer type:
+Sometimes you may want to create a new directory. You can use the `dir.create()` function to do this.[^chapter4_5] For example, to create an *example-project* file
+in the root *C* directory on a Windows computer, type:
 
 ````r
 dir.create("C:\\example-project")
@@ -397,7 +397,7 @@ dir.create("C:\\example-project")
 
 Similarly, you can create a new blank file with the `file.create()`
 function. To add a blank R source code file called *source-code.R* to the
-*example-project* directory on the *C* drive use:
+*example-project* directory on the *C* drive, use:
 
 ````r
 file.create("C:\\example-project\\source-code.R")
@@ -407,7 +407,7 @@ file.create("C:\\example-project\\source-code.R")
 
 \index{R function!cat}
 
-If you want to create a new file and put text into it use the `cat()`
+If you want to create a new file and put text into it, use the `cat()`
 (concatenate and print) function. For example, to create a new file in
 the current working directory called *example-cat.md* that includes the
 text "Reproducible Research with R and RStudio" type:
@@ -424,7 +424,7 @@ file, and so on.
 
 You can use `cat()` to print the contents of one or more objects to a
 file. **Warning:** the `cat()` function will overwrite existing files with
-the new contents. To add the text to existing files use the
+the new contents. To add the text to existing files, use the
 `append = TRUE` argument.
 
 ````r
@@ -464,7 +464,7 @@ file.rename(from = "C:\\example-project\\example-cat.md",
 \index{R function!file.copy}
 
 `file.rename()` fully moves a file from one directory to another. To
-copy the file to another directory use the `file.copy()` function. It has
+copy the file to another directory, use the `file.copy()` function. It has
 the same syntax as `file.rename()`:
 
 ````r
@@ -474,16 +474,15 @@ file.copy(from = "C:\\example-project\\example-cat.md",
 
 ## Unix-like Shell Commands for File Management
 
-Though this book is mostly focused on using R for reproducible research
+Though this book is mostly focused on using R for reproducible research,
 it can be useful to use a Unix-like shell program to manipulate files in
-large projects. Unix-like shell programs including Bash on Mac and Linux
-and Windows PowerShell give you type-able commands to interact with your
+large projects. Unix-like shell programs, including Bash on Linux (and Mac before macOS Catalina), Zsh on Mac (from macOS Catalina onwards),\index{Zsh}
+and Windows PowerShell, give you type-able commands to interact with your
 computer's operating system.[^chapter4_7] We will especially return to shell
 commands in the next chapter when we discuss Git version control and
-makefiles for collecting data in Chapter \@ref(DataGather), as well as the command-line program[^chapter4_8] Pandoc in chapter \@ref(MarkdownChapter)). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating
+makefiles for collecting data in Chapter \@ref(DataGather), as well as the command-line program[^chapter4_8] Pandoc in Chapter \@ref(MarkdownChapter). We don't have enough space to fully introduce shell programs or even all of the commands for manipulating
 files. We are just going to cover some of the basic and most useful
-commands for file management. For good introductions for Unix and Mac OS
-10 computers see William E. Shotts Jr.'s [-@shottsjr2012] book on the
+commands for file management. For good introductions for Unix and macOS computers, see William E. Shotts Jr.'s [-@shottsjr2012] book on the
 Linux command-line. For Windows users, Microsoft maintains a tutorial on
 Windows PowerShell at
 <http://technet.microsoft.com/en-us/library/hh848793>. The commands
@@ -491,9 +490,7 @@ discussed in this chapter should work in both Unix-like shells and
 Windows PowerShell.
 
 It's important at this point to highlight a key difference between R and
-Unix-like shell syntax. In shell commands you don't need to put
-parentheses around your arguments. For example, if I want to change my
-working directory to my Mac Desktop in a shell using the `cd` command I
+Unix-like shell syntax. Shell command arguments don't have parentheses. For example, if I want to change my working directory to my Mac Desktop in a shell using the `cd` command, I
 simply type:[^chapter4_9]
 
 ````bash
@@ -506,8 +503,7 @@ In this example `cgandrud` is my user name.
 
 \index{shell command!cd}
 
-As we just saw, to change the working directory in the shell just use
-the `cd` (change directory) command. Here is an example of changing the
+As we just saw, use the `cd` (change directory) command to change the working directory in the shell. Here is an example of changing the
 directory in Windows PowerShell to `C:/`:
 
 ````bash
@@ -522,7 +518,7 @@ cd -
 ````
 
 If, for example, our current working directory is */User/Me/Desktop* and
-we typed `cd` followed by a minus sign (`cd -`) then the working
+we typed `cd` followed by a minus sign (`cd -`), then the working
 directory would change to */User/Me*. Note this will not work in
 PowerShell.
 
@@ -609,7 +605,7 @@ The command `rm` removes (deletes) files or directories.
 rm example-echo.md
 ````
 
-If you want to delete a directory you will need to add the `d` (directory) option. Note that options are like arguments in an R function.\index{shell command!options} For example:
+Add the `d` (directory) option to delete a directory. Note that options are like arguments in an R function.\index{shell command!options} For example:
 
 ````bash
 rm -d example-dir
@@ -628,15 +624,14 @@ files from your working directory.
 
 To move a file from one directory to another from a shell, use the
 `mv` (move) command. For example, to move the file *example-echo.md* from
-*example-project* to *markdown-files* use the following code and imagine
+*example-project* to *markdown-files*, use the following code and imagine
 both directories are in the root directory:[^chapter4_10]
 
 ````bash
 mv /example-project/example-echo.md/markdown-files
 ````
 
-Note that the *markdown-files* directory must already exist, otherwise it
-will simply rename the file. This command is similar to the R function
+Note that the *markdown-files* directory must already exist. If it does not exist, the file will just be renamed. This is similar to the R function
 `file.rename()`.
 
 #### `cp` {-}
@@ -668,12 +663,12 @@ The RStudio *Files* pane allows us to navigate our file tree and do some
 basic file manipulations. Figure \@ref(fig:FilesPane)
 shows us what this pane looks like. The pane allows us to navigate to
 specific files and folders and delete and rename files. To select a
-folder as the working directory tick the dialog box next to the file
-then click the `More` button and select `Set As Working Directory`.
-Under the `More` button you will also find
+folder as the working directory, tick the dialog box next to the file.
+Then click the `More` button and select `Set As Working Directory`.
+Under the `More` button, you will also find
 options to `Move` and `Copy` files (see Figure \@ref(fig:FilesPaneMore)).
 
-The *Files* pane is a GUI, so our actions in the *Files* pane are not recorded as such are not as easily reproducible as the commands we learned earlier in this chapter.
+The *Files* pane is a Graphical User Interface (GUI), so our actions in the *Files* pane are not recorded, as such are not as easily reproducible as the commands we learned earlier in this chapter.
 
 ```{r FilesPane, fig.cap="The RStudio Files Pane", echo=FALSE, fig.align='center', out.height="30%"}
 knitr::include_graphics("images/chapter_4/RStudioFiles.png")
@@ -688,21 +683,21 @@ knitr::include_graphics("images/chapter_4/MoreMore.png")
 In this chapter we've learned how to organize our research files to
 enable dynamic replication. This included not only how they can be
 ordered in a computer's file system, but also the file path naming
-conventions-the addresses-that computers use to locate files. Once we
-know how these addresses work we can use R and shell commands to refer
+conventions---the addresses---that computers use to locate files. Once we
+know how these addresses work, we can use R and shell commands to refer
 to and manipulate our files. This skill is particularly useful because
 it allows us to place code in text-based files to manipulate our project
-files in highly reproducible ways. In the next few chapters we will
-begin to put these skills in practice when we learn how to store our
+files in highly reproducible ways. In the next few chapters, we will
+put these skills into practice. We will learn how to store our
 files and create data files in reproducible ways.
 
 [^chapter_4_tree_cmd]: The command line utility *tree* is very useful for
-    visualizing your file trees. For more information see: <https://en.wikipedia.org/wiki/Tree_(command)>.\index{shell command!tree}
+    visualizing your file trees. For more information, see <https://en.wikipedia.org/wiki/Tree_(command)>.\index{shell command!tree}
 
 [^chapter4_1]: To simplify things, I use the terms 'directory' and 'folder'
     interchangeably in this book.
 
-[^chapter4_2]: For more information on Windows file path names see this helpful
+[^chapter4_2]: For more information on Windows file path names, see this helpful
     website:
     <http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247(v=vs.85).aspx>
 
@@ -716,20 +711,20 @@ files and create data files in reproducible ways.
     do this.
 
 [^chapter4_6]: The `file.rename()` function won't create new directories. To move a
-    file to a new directory you will need to create the directory first
+    file to a new directory, you will need to create the directory first
     with `dir.create()`.\index{R function!dir.create}
 
-[^chapter4_7]: You can access Bash via the Terminal program on Mac OS 10 and
-    Linux computers. It is the default shell on Mac and Linux, so it
+[^chapter4_7]: You can access Bash via the Terminal program on macOS and
+    Linux computers. It is the default shell on Mac (before macOS Catalina) and Linux, so it
     loads automatically when you open the Terminal. Windows PowerShell
     comes installed with Windows.
 
 [^chapter4_8]: A command-line program is just a program you run from a shell.
 
 [^chapter4_9]: Many shell code examples in other sources include the shell
-    prompt, like the `$` in Bash or `>` in PowerShell. These are like
+    prompt, like the `$` in Bash, or `>` in PowerShell. These are like
     R's `>` prompt. I don't include the prompt in code examples in this
     book because you don't type them.
 
-[^chapter4_10]: If they were not in the root directory we would not place a
+[^chapter4_10]: If they were not in the root directory, we would not place a
     forward slash at the beginning.
