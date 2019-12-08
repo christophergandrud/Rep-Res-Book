@@ -5,10 +5,10 @@
 In addition to being well organized, your research files need to be
 accessible for other researchers to be able to reproduce your findings.
 A useful way to make your files accessible is to store them on a cloud
-storage service[^chapter_5_1] [see @howe2012]. This chapter describes in detail
-two different cloud storage services--Dropbox and GitHub--that you can
+storage service[^chapter_5_1] [@howe2012]. This chapter describes in detail
+two different cloud storage services, Dropbox and GitHub, that you can
 use to make your research files easily accessible to others. Not only do
-these services enable others to reproduce your research, they also have
+these services enable others to reproduce your research, but they also have
 a number of benefits for your research workflow. These are certainly not the only services for remote research file storage, but discussing them does cover many common concerns of other services.
 
 Researchers often face
@@ -16,15 +16,15 @@ a number of data management issues that, beyond making their research
 difficult to reproduce, can make doing the initial research difficult.
 
 First, there is the problem of **storing** data so that it is protected
-against computer failure--virus infections, spilling coffee on your
-laptop, and so on. Storing data locally--on your computer--or on a flash
+against computer failure---virus infections, spilling coffee on your
+laptop, and so on. Storing data locally on your computer or on a flash
 drive is generally more prone to loss than on remote servers in the
 cloud.
 
 Second, we may work on a project with different computers and mobile
 devices. For example, we may use a computer at work to run
 computationally intensive analysis, while editing our presentation
-document on a tablet while riding the train to the office. So,
+document on a tablet, while riding the train to the office. So,
 we need to be able to **access** our files from multiple devices in
 different locations. We often need a way for our **collaborators** to
 access and edit research files as well.
@@ -36,13 +36,13 @@ particularly important issue in data management where we may transform
 our data in unintended ways and want to go back to earlier versions.
 Also, when working on a collaborative project, one of the authors may
 accidentally delete something in a file that another author needed. To
-deal with these issues we need to store our data in a system that has
+deal with these issues, we need to store our data in a system that has
 **version control**. Version control systems keep track of changes we
 make to our files and allows us to access previous versions if we want
 to.
 
 You can solve all of these problems in a couple of different ways using
-free or low cost cloud-based storage formats. In this chapter we will
+free or low cost cloud-based storage formats. In this chapter, we will
 learn how to use Dropbox and Git/GitHub for research files:
 
 -   storage,
@@ -71,11 +71,11 @@ These formats are not dependent on a specific program. Any program that
 can open text files can open them, including a wide variety of
 statistical programs other than R as well as spreadsheet programs like
 Microsoft Excel. Using text file formats helps future-proof your
-research. Version control systems that track changes to text--like
-Git--are also very effective version control systems for these types of
+research. Version control systems that track changes to text, like
+Git, are also very effective version control systems for these types of
 files.
 
-The `write.table()` function\index{R function!write.table} is one way to save data in plain-text formats from R. For example, to save a data frame called *data* as a CSV file called *main-data.csv* in our example *data* directory (see Figure \@ref(fig:ExampleTree)):
+The `write.table()` function\index{R function!write.table} is one way to save data in plain-text formats from R. For example, to save a data frame called *data* as a comma-separated-value (CSV) file called *main-data.csv* in our example *data* directory (see Figure \@ref(fig:ExampleTree)):
 
 ```{r Ch5WriteTable, eval=FALSE, tidy=FALSE}
 write.table(Data, "/example-project/data/main-data.csv",
@@ -85,7 +85,7 @@ write.table(Data, "/example-project/data/main-data.csv",
 
 `row.names = FALSE` prevents R from including the row names in the
 output file.[^chapter_5_4] The `sep = ","` argument specifies that we want to use
-commas to separate values into columns. For CSV files you can use a
+commas to separate values into columns. For CSV files, you can use a
 modified version of this command called `write.csv()`.\index{R function!write.csv} This function makes it so that you don't have to write `sep = ","`.[^chapter_5_5]\index{comma separated file format}\index{CSV}
 
 If you want to save your data with values separated by tabs, rather than
@@ -95,10 +95,10 @@ to `.tsv`.\index{tab separated file format}
 R is able to save data in a wide variety of other file formats, mostly
 through the *foreign* or *rio* [@R-rio] packages (see Chapter \@ref(DataGather)). These formats may be less future-proof than simple text-formatted data files.
 
-One advantage of many other statistical programs' file formats is that
-they include not only the underlying data but also other information
+One advantage of many other statistical program file formats is that
+they include not only the underlying data, but also other information
 like variable descriptions. If you are using plain-text files to store
-your data you will need to include a separate file, preferably in the
+your data, you will need to include a separate file, preferably in the
 same directory as the data file describing the variables and their
 sources. In Chapter \@ref(TablesChapter) we
 will look at how to automate the creation of variable description files.
@@ -114,10 +114,10 @@ require different levels of effort to set up and maintain.
 These two services are certainly not the only way to make your research
 files available. Research-oriented services include Zenodo,[^chapter_5_7]
 the Dataverse Project,[^chapter_5_8] figshare,[^chapter_5_9] and RunMyCode.[^chapter_5_10] These services include good built-in citation systems, unlike Dropbox and
-GitHub. They also aim to provide persistent URLs for your files. This helps avoid the 'link rot' that threatens reproducibility,\index{link rot} i.e. a hosting service changes their URL structure breaking existing links. These services may be a very good place to store research files once the research is completed or close to completion. Many journals now require replication files be uploaded to these sites. However, these sites' ability to store, access, collaborate on, and version control files *during* the main part of the research process is mixed. Services like Dropbox and GitHub are very capable of being
+GitHub. They also aim to provide persistent URLs for your files. This helps avoid the 'link rot' that threatens reproducibility,\index{link rot} i.e. a hosting service changes its URL structure breaking existing links. These services may be a very good place to store research files once the research is completed or close to completion. Many journals now require replication files be uploaded to these sites. However, these sites' ability to store, access, collaborate on, and version control files *during* the main part of the research process is mixed. Services like Dropbox and GitHub are very capable of being
 part of the research workflow from the beginning.
 
-Zenodo and GitHub have excellent integration, allowing you to actively develop a research project on GitHub then persist it on Zenodo.\index{Zenodo} For details see: <https://guides.github.com/activities/citable-code/>.
+Zenodo and GitHub have excellent integration, allowing you to actively develop a research project on GitHub then persist it on Zenodo.\index{Zenodo} For details, see <https://guides.github.com/activities/citable-code/>.
 
 The easiest types of cloud storage for your research are services like
 Dropbox[^chapter_5_11] and Google Drive.[^chapter_5_12]\index{Google Drive}\index{Dropbox} These services not only store your
@@ -130,11 +130,11 @@ may be different on mobile devices.
 
 ### Storage
 
-When you sign up for Dropbox and install the program[^chapter_5_13] it creates a
+When you sign up for Dropbox and install the program,[^chapter_5_13] it creates a
 directory on your computer's hard drive. When you place new files and
 folders in this directory and make changes to them, Dropbox
 automatically syncs the directory with a similar folder on a cloud-based
-server. Typically when you sign up for the service you'll receive a
+server. Typically when you sign up for the service, you'll receive a
 limited amount of storage space for free, usually a few gigabytes. This
 is probably enough storage space for a number of text file-based
 research projects with smaller data sets.
@@ -144,7 +144,7 @@ research projects with smaller data sets.
 All files stored on Dropbox have a URL address through which they can be
 accessed from a computer connected to the internet. To access a Dropbox file or directory's URL so that it can be downloaded, right-click on the file
 icon in your Dropbox folder on your computer. Then click
-`Copy Drobbox Link`. This copies the URL into your clipboard.
+`Copy Dropbox Link`. This copies the URL into your clipboard.
 
 You need to make one small change to the link so that it can be programmatically downloaded. By default, the link will point to the Dropbox website page for the file/directory. To be able to programmatically download it, you need to change the last `0` in the URL to a `1`. For example, change:
 
@@ -162,7 +162,7 @@ csv?dl=1
 
 We changed the download (`dl`) option from false (`dl=0`) to true (`dl=1`). Now you can use the link to download data in your R source code, for example.
 
-Once you have the URL you can load the file directly into R using the
+Once you have the URL, you can load the file directly into R using the
 `import()`\index{R function!import} function from the *rio* package. `import()` works for
 many different data formats and is generally more robust than `read.table()`. Use the `source_url()` \index{R function!source\_url} function in the *devtools* package [@R-devtools] to download and run R source code files (see Chapter \@ref(StatsModel)).
 
@@ -192,14 +192,14 @@ The argument `format = "csv"` tells `import()` what format the file is in. This 
 Though others can easily access your data and files with Dropbox URL
 links, you cannot save files through the link. You must save files in
 the Dropbox folder on your computer or upload them through the website.
-If you would like collaborators to be able to modify the research files
-you will need to 'share' the Dropbox folder with them. Once you create a Dropbox folder you
+If you would like collaborators to be able to modify the research files,
+you will need to 'share' the Dropbox folder with them. Once you create a Dropbox folder, you
 can share it with your collaborators by
 right-clicking on the folder's name. Then select
 `Share`. Enter your collaborator's email address
 when prompted and select `Can Edit` from the permissions dropdown menu.
 They will be sent an email that will allow them to accept
-the share request and, if they don't already have an account, sign up
+the share request and, if they don't already have an account, they can sign up
 for Dropbox.
 
 ### Version control
@@ -207,31 +207,31 @@ for Dropbox.
 Dropbox has a simple version control system. Every time you save a
 document a new version is created on Dropbox. To view a previous
 version, navigate to the file on the Dropbox website. Then click
-on the file. In the upper-right there is a menu where you can select `Version history`. This
+on the file. In the upper-right corner, there is a menu where you can select `Version history`. This
 will take you to a page listing previous versions of the file, who
 created the version, and when it was created. A new version of a file is
 created every time you save a file and it is synced to the Dropbox cloud
 service.
 
 Note that with a free Dropbox account, previous versions of a file are
-only stored for **30 days**. To be able to save previous versions for
-more than 30 days you will need a paid account.[^chapter_5_16]
+only stored for **30 days**. You need a paid account to save previous versions for
+more than 30 days.[^chapter_5_16]
 
 ## Storing Your Files in the Cloud: GitHub {#GitHubMain}
 
 Dropbox minimally meets our four basic criteria for reproducible data
 storage. It is easy to set up and use. GitHub meets the criteria and
 more, especially when it comes to version control. It is, however, less
-straightforward at first. In this section we will learn enough of the
+straightforward at first. In this section, we will learn enough of the
 basics to get you started using GitHub to store, access, collaborate on,
 and version control your research.
 
 GitHub is an interface and cloud hosting service built on top of the Git
 version control system.[^chapter_5_17] Git does the version control. GitHub stores
-the data remotely as well as providing a number of other features, some
+the data remotely, as well as provides a number of other features, some
 of which we look at below. GitHub was not explicitly designed to host
 research projects or even data. It was designed to host "socially coded"
-computer programs--in what Git calls "repositories"--repos for short--by
+computer programs---in what Git calls "repositories", repos for short---by
 making it easy for a number of collaborators to work together to build
 computer programs. This seems very far from reproducible research.\index{git!repo}\index{git!repository}
 
@@ -265,7 +265,7 @@ hopefully convince you to get started using it:[^chapter_5_18]
     you could use to present the results, not just the replication
     files.
 
--   It's close integration with Zenodo allows you to easily make your full replication material persistently accessible and citable.
+-   Its close integration with Zenodo allows you to easily make your full replication material persistently accessible and citable.
 
 #### Collaboration {-}
 
@@ -291,7 +291,7 @@ hopefully convince you to get started using it:[^chapter_5_18]
 
 #### Version control {-}
 
--   Dropbox's version control system only lets you see files' names, the
+-   Dropbox's version control system only lets you see file names, the
     times they were created, who created them, and revert back to
     specific versions. Git tracks every change you make. The GitHub
     website and GUI programs for Mac and Windows provide nice interfaces
@@ -329,10 +329,10 @@ can use the command-line version of Git. It's available for Mac and
 Linux (in the Terminal) as well as Windows through Git Bash.[^chapter_5_21] You
 can also use the Graphical User Interface GitHub program. Currently,
 it's only available for Windows and Mac. RStudio also has GUI-style Git
-functionality for RStudio Projects. In this section I focus on how to
+functionality for RStudio Projects. In this section, I focus on how to
 use the command-line version, because it will help you understand what
-the GUI versions are doing and allow you to better explore more advanced
-Git features not covered in this book. In the next section I will
+the GUI versions are doing and will allow you to better explore more advanced
+Git features not covered in this book. In the next section, I will
 mention how to use Git with RStudio Projects.
 
 The first thing to do to set up Git and GitHub is go to the GitHub
@@ -354,7 +354,7 @@ repositories.
 \index{git!repositories}
 \index{git!repos}
 
-You can setup a Git repo on your computer with the command-line.[^chapter_5_22] I
+You can set up a Git repo on your computer with the command-line.[^chapter_5_22] I
 keep my repositories in a folder called *git_repositories*,[^chapter_5_23] though
 you can use Git with almost any directory you like. The
 *git_repositories* directory has the root folder as its parent. Imagine
@@ -374,7 +374,7 @@ cd /git_repositories/example-project
 echo "# An Example Repository" > README.md
 ````
 
-So far we have only made the new directory and set it as our working
+So far, we have only made the new directory and set it as our working
 directory (see Chapter \@ref(DirectoriesChapter)). All of the examples in this section
 assume your current working directory is set to the repo. Then, with the
 `echo` shell command we created a new file named *README.md* that
@@ -420,7 +420,7 @@ changes to the repository.\index{shell command!git commit}
 git commit -a -m "First Commit, created README file"
 ````
 
-Note: the files won't appear on GitHub yet. Later in the chapter we will
+Note: the files won't appear on GitHub yet. Later in the chapter, we will
 learn how to push commits to your remote GitHub repository. The `-a`
 (all) option commits changes made to all of the files that have been
 added to the repository. You can include a message with the commit using
@@ -480,7 +480,7 @@ doing when you commit your changes. In the hidden *.git*, folder Git is
 saving all of the information in compressed form from each of your
 commits into a sub-folder called *objects*. Commit objects[^chapter_5_25] are
 everything from a particular commit. I mean everything. If you delete
-all of the files in your repository (except for the *.git* folder) you
+all of the files in your repository (except for the *.git* folder), you
 can completely recover all of the files from your most recent commit
 with the `checkout` command: \index{shell command!git checkout}
 
@@ -501,7 +501,7 @@ Click on the link that lists the number of repo commits on the left-hand
 side of the repo's webpage. This will show you all of the commits. A
 portion of this book's commit history is shown in Figure \@ref(fig:BookHistory). By
 clicking on the code icon
-(**<>**) you can see
+(**<>**), you can see
 what the files at any commit looked like. Next to this button is another
 with a series of numbers and letters. This is the commit's SHA-1
 hash.[^chapter_5_27] For our purposes, it is the commit's reference number. Click
@@ -523,7 +523,7 @@ SHA-1 hashes are a bit cumbersome to use as references. What was the
 hash number for that one commit? To solve this problem you can add
 bookmarks, known as "tags", to particularly important commits. Imagine
 we just committed our first full draft of a project. We want to tag it
-as version 0.1, i.e. "v0.1". To do this use Git's tag command:
+as version 0.1, i.e. "v0.1". To do this, use Git's `tag` command:
 
 ````bash
 # Tag most recent commit v0.1
@@ -531,7 +531,7 @@ git tag -a v0.1 -m "First draft"
 ````
 
 The `-a` option adds the tag `v0.1` and `-m` lets us add a message. Now
-we can checkout this particular commit by using its tag, i.e.: \index{shell command!git checkout}
+we can check out this particular commit by using its tag, i.e.: \index{shell command!git checkout}
 
 ````bash
 # Checkout v0.1
@@ -540,7 +540,7 @@ git checkout v0.1
 
 This will create a new "branch" with a generic name *(detached from
 v0.1)* where you can make changes and commit them. If you plan to
-checkout a previous tagged version and make changes to it, it is a good
+check out a previous tagged version and make changes to it, it is a good
 idea to specifically name the branch using the `-b` argument.[^chapter_5_28] For
 example, to give it the name *v0.1_branch* type:
 
@@ -562,7 +562,7 @@ example, the main version could be the most stable current copy of your
 research, while the alternative version could be a place where you test
 out new ideas. Git allows you to create a new *branch* (alternative
 version of the repo) which can be merged back into the *master* (main)
-branch. To see what branch you are using type:
+branch. To see what branch you are using, type:
 
 ```{r Ch5CheckBranch, engine='sh'}
 # Show git branch
@@ -606,7 +606,7 @@ git checkout master
 git merge test
 ````
 
-Note, when you merge a branch you may encounter conflicts in the files
+Note, when you merge a branch, you may encounter conflicts in the files
 that make it impossible to smoothly merge the files together. Git will
 tell you what and where these are; you then need to decide what to keep
 and what to delete.
@@ -619,10 +619,10 @@ and what to delete.
 There may be files in your repository that you do not want to keep under
 version control. Maybe this is because they are very large files or
 cached files from *knitr* or other files that are byproducts of
-compiling a LaTeX document (see Chapter \@ref(StatsModel)). You also want to ignore files that contain private information. Make sure to **never include private information** (e.g. passwords or confidential data) in your Git history. Once they are committed it will be very difficult to definitively remove them. Once they are on GitHub, they will be publicly accessible.
+compiling a LaTeX document (see Chapter \@ref(StatsModel)). You also want to ignore files that contain private information. Make sure to **never include private information** (e.g. passwords or confidential data) in your Git history. Once they are committed, it will be very difficult to definitively remove them. Once they are on GitHub, they will be publicly accessible.
 
-To have Git ignore particular files, simply create a file called *.gitignore*.[^chapter_5_31] You can either put this file in the repository's parent directory to create a *.gitignore* file for the whole repository or in a subdirectory to ignore files in that
-subdirectory. In the *.gitignore* file, add ignore rules by simply
+To have Git ignore particular files, simply create a file called *.gitignore*.[^chapter_5_31] You can either put this file in the repository's parent directory to create a *.gitignore* file for the whole repository or in a sub-directory to ignore files in that
+sub-directory. In the *.gitignore* file, add ignore rules by simply
 including the names of the files that you want to have Git ignore. For
 example, GitHub has a *.gitignore* file that is useful for ignoring files[^chapter_5_github_r_ignore] that we often don't want to commit to our git history when using R and R Markdown:
 
@@ -667,10 +667,10 @@ other words, it tells Git to look for files with any name that end with
 a specified file extension. This is faster than writing out the full
 name of every file you want to ignore individually. It also makes it
 easy to copy the rules into new repos. For example, you'll notice the `*-Ex.R` and
-`/*_cache/` rules. These tell Git to ignore all of the files with a name ending in *-Ex.R* and all files in subdirectories with a name ending in *_cache*.
+`/*_cache/` rules. These tell Git to ignore all of the files with a name ending in *-Ex.R* and all files in subdirectories with a name ending in *\_cache*.
 
 Git will not ignore files that have already been committed to a
-repository. To ignore these files you will first need to remove them
+repository. To ignore these files, you will first need to remove them
 from Git with Git's `rm` (remove) command. If you wanted to remove a
 file called *example-project.tex* from version tracking type: \index{shell command!git rm}
 
@@ -691,16 +691,16 @@ So far we've been using repos stored locally. Let's now look at how to
 also store a repository remotely on GitHub. You can either create a new
 repository on GitHub and download (`clone`) it to your computer or
 upload (`push`) an existing repository to a new GitHub remote repo. In
-both cases you need to create a new repository on GitHub.
+both cases, you need to create a new repository on GitHub.
 
-To create a new repository on GitHub go to your main GitHub account
+To create a new repository on GitHub, go to your main GitHub account
 webpage and click the `New repository` button. On the next page that
 appears, give the repository a name, brief description, and choose
 whether to make it public or private. If you want to store an existing
-repository on GitHub give it the same name as the one that already
+repository on GitHub, give it the same name as the one that already
 exists on your computer. If you already have files in your local
 repository do not check the boxes for creating *README.md*, *LICENSE*,
-and *.gitignore* files. When you then click `Create Repository` you will
+and *.gitignore* files. When you then click `Create Repository`, you will
 be directed to the repository's GitHub
 webpage.[^chapter_5_32]
 
@@ -710,7 +710,7 @@ webpage.[^chapter_5_32]
 \index{git!clone}
 
 If you are working with a new repository and do not have an existing
-version on your computer you need to "clone" the GitHub repo to your
+version on your computer, you need to "clone" the GitHub repo to your
 computer. The repo's GitHub page contains a button called
 `Clone in Desktop`. Clicking this will open GUI GitHub (if it is
 installed) and prompt you to specify what directory on your computer you
@@ -762,7 +762,7 @@ upstream (GitHub) repository branches.
 
 \index{shell command!git push}
 
-Once you have your local repository connected to GitHub you can add new
+Once you have your local repository connected to GitHub, you can add new
 commits with the `push` command. For example, if your current working
 directory is the Git repo you want to push and you have already
 added/committed the changes you want to include in the remote repo,
@@ -778,14 +778,14 @@ The `origin` is simply the remotely stored repository on GitHub and
 you'd like. If you have not set up password caching[^chapter_5_34] you will now be
 prompted to give your GitHub user name and password.
 
-You can also push your tags to GitHub. To push all of the tags to GitHub
+You can also push your tags to GitHub. To push all of the tags to GitHub,
 type:
 
 ````bash
 git push --tags
 ````
 
-Now on the repo's GitHub page there will be a `Tags` section that will
+Now on the repo's GitHub page, there will be a `Tags` section that will
 allow you to view and download the files in each tagged version of the
 repository.
 
@@ -795,7 +795,7 @@ repository.
 
 In general, the process of downloading data directly into R is similar
 to what we saw earlier for loading data from Dropbox Public folders. We
-can simply use the `import()` function.\index{R function!import} First we need to find our
+can simply use the `import()` function.\index{R function!import} First, we need to find our
 plain-text data file's *raw* URL. To do this, go to your repository's
 GitHub site, navigate to the file you want to load, and click the `Raw`
 button on the right just above the file preview. I have data in
@@ -818,8 +818,8 @@ names(disprop_data)
 master branch.
 
 We can actually use `import()` to download a particular version of a
-file--from a particular Git commit--directly into R. This makes
-reproducing a specific result much easier. To do this you just need to
+file---from a particular Git commit---directly into R. This makes
+reproducing a specific result much easier. To do this, you just need to
 use a file's raw URL from a particular commit. To find a file's
 particular commit raw URL first click on the file on GitHub's website.
 Then click the `History` button. This will take you
@@ -828,7 +828,7 @@ the version of the file that you want to use. Then click `View file` and finally
 page's URL address and use it with `import()`.
 
 For example, I have an old version of the disproportionality data. To
-download it I find this particular version of the file's URL and use it
+download it, I find this particular version of the file's URL and use it
 in `import()`:
 
 ```{r Ch5sourceDataOld, tidy=FALSE, message=FALSE, warning=FALSE}
@@ -869,7 +869,7 @@ Anyone with a GitHub account can be a collaborator. To add a
 collaborator to a repository you created, click on the `Settings` button
 on the repository's website (see Figure \@ref(fig:BookRepository)). Then click the `Collaborators` button on the left-hand side of the page. You will be given a box to enter your collaborator's GitHub user name. If your collaborator doesn't have a
 GitHub account, they will have to create a new one. Once you add someone
-as a collaborator they can clone the repository onto their computer as
+as a collaborator, they can clone the repository onto their computer as
 you did earlier and push changes.
 
 #### Syncing a repository {-}
@@ -885,11 +885,10 @@ push your commits to GitHub. Use the `pull` command to sync your local
 and remote repository. First add and commit your changes, then type:
 
 ````bash
-# Sync repository
 git pull
 ````
 
-If the files you are pulling conflict with your local files you will
+If the files you are pulling conflict with your local files, you will
 probably want to resolve these in the individual files and commit the
 changes. When there are merge conflicts, Git adds both versions of a
 piece of text to the file. You then open the file and decide which
@@ -921,14 +920,14 @@ knitr::include_graphics("images/chapter_5/NewProject_NewDirectory.png")
 
 ## RStudio and GitHub
 
-When you open a Project with a Git repository in RStudio you will see a
-new *Git* tab next to *Environment*, *History*, and *Connections* (see Figure \@ref(fig:GitTab)). From here you can do many of the things we covered in the previous section. Let's look at how to set up and use Git in RStudio Projects.
+When you open a Project with a Git repository in RStudio, you will see a
+new *Git* tab next to *Environment*, *History*, and *Connections* (see Figure \@ref(fig:GitTab)). From here, you can do many of the things we covered in the previous section. Let's look at how to set up and use Git in RStudio Projects.
 
 ### Setting up Git/GitHub with Projects
 
 You can Git initialize new RStudio Projects, Git initialize existing
 projects, and create RStudio Projects from cloned repos. When you do any
-of these things RStudio automatically adds a *.gitignore* file telling
+of these things, RStudio automatically adds a *.gitignore* file telling
 Git to ignore *.Rproj.user*, *.Rhistory*, and *.RData* files.
 
 #### Git with a new project {- #NewProjectGit}
@@ -988,8 +987,7 @@ RStudio's *Git* tab.
 
 If you are using a GitHub repo that is associated with a remote
 repository on GitHub, you can push and pull it with the `Pull Branches`
-and `Push Branch` buttons in Git menu bar (the blue and green arrows,
-respectively). You can use the same buttons in the **Review Changes**
+and `Push Branch` buttons in Git menu bar (the blue down arrow and green up arrow). You can use the same buttons in the **Review Changes**
 window. The *Git* tab also allows you to change branches, revert to
 previous commits, add files to `.gitignore`, and view your commit
 history. You can always use the `More -> Shell…` option to open a new
@@ -1001,14 +999,14 @@ other Git task you might want to do.
 In this chapter we have primarily learned how to store text-based
 reproducible research files in ways that allow us and others to access
 them easily from many locations, enable collaboration, and keep a record
-of previous versions. In the next chapter we will learn how to use
+of previous versions. In the next chapter, we will learn how to use
 text-based files to reproducibly gather data that we can use in our
 statistical analyses.
 
 [^chapter_5_1]: These services store your data on remote servers.
 
 [^chapter_5_2]: I don't cover methods for storing and handling very large data
-    sets--with high hundreds of thousands and more observations. For
+    sets, with high hundreds of thousands and more observations. For
     information on large data and R, not just storage, one place to look
     is this blog post from RDataMining:
     <http://rdatamining.wordpress.com/2012/05/06/online-resources-for-handling-big-data-and-parallel-computing-in-r/>
@@ -1024,7 +1022,7 @@ statistical analyses.
 
 [^chapter_5_6]: Dropbox provides a minimum amount of storage for free, above which
     they charge a fee. GitHub lets you create publicly accessible
-    repositories--kind of like project folders--for free, but they
+    repositories---kind of like project folders---for free, but they
     charge for private repositories.
 
 [^chapter_5_7]: <https://zenodo.org/>
@@ -1068,7 +1066,7 @@ statistical analyses.
     <http://nfarina.com/post/9868516270/git-is-simpler>, posted 7
     September 2012).
 
-[^chapter_5_23]: To follow along with this code you will first need to create a
+[^chapter_5_23]: To follow along with this code, you will first need to create a
     folder called *git_repositories* in your root directory. Note also
     that throughout this section I use Unix file path conventions.
 
@@ -1081,7 +1079,7 @@ statistical analyses.
 
 [^chapter_5_26]: You can also search your commit history and roll back to a
     previous commit using only the command-line. To see the commit
-    history use the `log` command (more details at
+    history, use the `log` command (more details at
     <http://git-scm.com/book/en/Git-Basics-Viewing-the-Commit-History>).
     When a repo has many commits, this can be a very tedious command to
     use, so I highly recommend the GUI version of GitHub or the repo's
@@ -1092,7 +1090,7 @@ statistical analyses.
 [^chapter_5_28]: If you don't, then the new branch will have a "detached head"
     which will create problems using the branch in the future.
 
-[^chapter_5_29]: To delete the *Test* branch use the `-d` argument, i.e.
+[^chapter_5_29]: To delete the *test* branch, use the `-d` argument, i.e.
     `git branch -d Test`.
 
 [^chapter_5_30]: Any uncommitted changes are merged with a branch when it is
