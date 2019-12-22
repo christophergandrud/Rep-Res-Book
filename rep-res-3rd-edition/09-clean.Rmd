@@ -1,36 +1,36 @@
 # Preparing Data for Analysis {#DataClean}
 
 Once we have gathered the raw data that we want to include in our
-statistical analyses we generally need to clean it up so that it can be
-merged into a single data set that we can easily use for statistical analysis. 
+statistical analyses, we generally need to clean it up so that it can be
+merged into a single data set that we can easily use for statistical analysis.
 In this chapter we will learn how to
-create the data gather and merging files we saw in the last chapter. This includes recoding and transforming
+create the data gathering and merging files we saw in the last chapter. This includes recoding and transforming
 variables in the data set so that the data sets can be easily merged. This will also be useful
 information in later chapters as well. If you are very familiar with
-data transformations in R you may want to skip to the next chapter.
+data transformations in R, you may want to skip to the next chapter.
 
 ## Cleaning Data for Merging
 
-In order to successfully merge two or more data frames we need to make
+In order to successfully merge two or more data frames, we need to make
 sure that they are in the same format. Let's look at some of the
 important formatting issues and how to reformat your data frames so that
 they can be easily merged.
 
 ### Get a handle on your data
 
-Before doing anything to your data it is a good idea to take a look at
-it and see what needs to be done. Taking a little time to become
+Before doing anything to your data, it is a good idea to 'look at
+it' to see what needs to be done. Taking a little time to become
 acquainted with your data will help you avoid many error messages and
 much frustration.
 
 You could type a data frame object's name into the R console. This will
 print the entire data frame in your console. For data frames with more
-than a few variables and observations this is very impractical. We have
+than a few variables and observations, this is impractical. We have
 already seen a number of functions that are useful for looking at parts
 of your data. As we saw in Chapter \@ref(GettingStartedRKnitr), the `names()`\index{R function!names} function shows you the
 variable names in a data frame object. The `head()`\index{R function!tail} function shows the
 names plus the first few observations in a data frame. `tail()`\index{R function!tail} shows
-the last few. `str()`\index{R function!str} returns a summary of a data frame, includuing the number of observations and variables as well as the variables' types.
+the last few. `str()`\index{R function!str} returns a summary of a data frame, including the number of observations and variables as well as the variable types.
 
 Use the `dim()`\index{R function!names} (dimensions) function to quickly see the number of
 observations and variables (the number of rows and columns) in a data
@@ -41,13 +41,13 @@ created in Chapter \@ref(DataGather):
 dim(fert_cons_data)
 ```
 
-The first number is the number of rows in the data frame (`r nrow(fert_cons_data)`) and the
+The first number is the number of rows in the data frame (`r nrow(fert_cons_data)`), and the
 second is the number of columns (`r ncol(fert_cons_data)`). You can also use the `nrow()`\index{R function!nrow} function
 to find just the number of rows and `ncol()`\index{R function!ncol} to see only the columns.
 
 The `summary()`\index{R function!summary} function is especially helpful for seeing basic descriptive
 statistics for all of the variables in a data frame and also the
-variables' types. Here is an example:
+variable types. Here is an example:
 
 ```{r Ch7SummaryExamp}
 summary(fert_cons_data)
@@ -82,18 +82,18 @@ tbl_ex <- tibble::tibble(numbers = 1:26, letters = letters)
 tbl_ex
 ```
 
-Entering a tibble's object name in the console returns the condensed output, the data dimmensions, and the variable types with the first 10 entries. 
+Entering a tibble's object name in the console returns the condensed output, the data dimmensions, and the variable types with the first 10 entries.
 
-Tibbles are the data structure favored by the tidy data/tidyverse R data paradigm [@wickham2014article]. We will work with other packages of the Tidyverse--e.g. dplyr and ggplot2--in later chapters.\index{Tidyverse} Note that these packages often also work with traditional data frames as well (or will convert data frames to tibbles automatically).
+Tibbles are the data structure favored by the tidy data/tidyverse R data paradigm [@wickham2014article]. We will work with other packages of the Tidyverse, e.g. *dplyr* and *ggplot2*, in later chapters.\index{Tidyverse} Note that these packages often work with traditional data frames as well (or will convert data frames to tibbles automatically).
 
 ### Reshaping data {#GatherReshape}
 
 \index{R!reshaping data}
 
-It often a good idea if your data sets are kept in data frame type objects if that is the format you will use for analysis. See Chapter \@ref(GettingStartedRKnitr) for how to convert objects into data frames with the `data.frame()` function.\index{R function!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in "long" format\index{long formatted data}. For an excellent discussion of ideal data formats for statistical analysis see [@wickham2014article]. Long formatted data usually has columns that represent variables. Rows contain specific observations. For example:
+It is often a good idea if your data sets are kept in data frame type objects if that is the format you will use for analysis. See Chapter \@ref(GettingStartedRKnitr) for how to convert objects into data frames with the `data.frame()` function.\index{R function!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in "long" format\index{long formatted data}. For an excellent discussion of ideal data formats for statistical analysis, see @wickham2014article. Long formatted data usually has columns that represent variables. Rows contain specific observations. For example:
 
 \begin{table}[h!]
-    \caption{Long Formatted Data Example}
+    \caption{Long-formatted Data Example}
     \label{ExampleLong}
     \begin{tabular}{l c}
         \\[0.15cm]
@@ -108,10 +108,10 @@ It often a good idea if your data sets are kept in data frame type objects if th
     \end{tabular}
 \end{table}
 
-In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long-format. Long formatted TSCS data is simply a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \@ref(ExampleTSCSLong)). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
+In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long format. Long-formatted TSCS data is simply a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \@ref(ExampleTSCSLong)). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
 
  \begin{table}[h!]
-    \caption{Long Formatted Time-Series Cross-Sectional Data Example}
+    \caption{Long-formatted Time-Series Cross-Sectional Data Example}
     \label{ExampleTSCSLong}
     \begin{tabular}{l c c}
         \\[0.15cm]
@@ -129,10 +129,10 @@ In this chapter we will mostly use examples of time-series cross-sectional data 
     \end{tabular}
 \end{table}
 
-If one of our raw data sets is not in this format then we will need to reshape or, using Wickham's [-@wickham2014article] terminology, "tidy" it.\index{reshape data}\index{tidy data} Some data sets are in "wide" format,\index{wide formatted data} where one of the columns in what would be long formatted data is "widened" to cover multiple columns. This is confusing to imagine without an example. Table \@ref(ExampleWide) shows how the Table \@ref(ExampleTSCSLong) looks when we widen the time variable.
+If one of our raw data sets is not in this format, then we will need to reshape or, using Wickham's [-@wickham2014article] terminology, "tidy" it.\index{reshape data}\index{tidy data} Some data sets are in "wide" format,\index{wide formatted data} where one of the columns in what would be long formatted data is "widened" to cover multiple columns. This is confusing to imagine without an example. Table \@ref(ExampleWide) shows how Table \@ref(ExampleTSCSLong) looks when we widen the time variable.
 
 \begin{table}[h!]
-    \caption{Wide Formatted Data Example}
+    \caption{Wide-formatted Data Example}
     \label{ExampleWide}
     \begin{tabular}{l c c c}
         \\[0.15cm]
@@ -146,14 +146,14 @@ If one of our raw data sets is not in this format then we will need to reshape o
     \end{tabular}
 \end{table}
 
-The process of tidying data often causes confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose function (`t()`)[^chapter_7_transpose]\index{matrix transpose} and the `reshape()`\index{R function!reshape} function, both are loaded in R by default. *tidyr* [@R-tidyr] is a very helpful package for reshaping data.\index{tidyr} This package has more general tools for reshaping data and is worth investing some time to learn well. In this section we will look at *tidyr*'s `pivot_longer()`\index{R function!pivot\_longer} function and use it to reshape a TSCS data frame from wide to long format. We will also encounter this function again in Chapter \@ref(FiguresChapter) when we want to transform data so that it can be graphed. Note that if you want to go from long to wide format, use *tidyr*'s `pivot_wider()`\index{R function!pivot\_wider} function.
+The process of tidying data often causes confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose function (`t()`)[^chapter_7_transpose]\index{matrix transpose} and the `reshape()`\index{R function!reshape} function, both are loaded in R by default. *tidyr* [@R-tidyr] is a very helpful package for reshaping data.\index{tidyr} This package has more general tools for reshaping data and is worth investing some time to learn well. In this section, we will look at *tidyr*'s `pivot_longer()`\index{R function!pivot\_longer} function and use it to reshape a TSCS data frame from wide to long format. We will also encounter this function again in Chapter \@ref(FiguresChapter) when we want to transform data so that it can be graphed. Note that if you want to go from long to wide format, use *tidyr*'s `pivot_wider()`\index{R function!pivot\_wider} function.
 
-For illustration let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide, rather than long, format and is in a data frame object called *fert_wide*. It looks like this:
+For illustration, let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide, rather than long, format and is in a data frame object called *fert_wide*. It looks like this:
 
 ```{r Ch7WideCreate, include=FALSE}
 # Reshape wide
-fert_wide <- tidyr::pivot_wider(fert_cons_data, 
-                             names_from = year, 
+fert_wide <- tidyr::pivot_wider(fert_cons_data,
+                             names_from = year,
                              values_from = AG.CON.FERT.ZS)
 
 # Order by country
@@ -164,15 +164,15 @@ fert_wide <- dplyr::arrange(fert_wide, country)
 fert_wide[, 1:4]
 ```
 
-See the chapter's Appendix for the code I used to reshape the data from long to wide format.
+See the chapter's Appendix for the full code I used to reshape the data from long to wide format.
 
-Let's think about how we want to tidy the data. We want to create two new columns from the many columns that are now labeled by year. Let's call the new columns **Year** and **Fert**. The **Year** column will clearly contain the year of each observation and **Fert** will contain the fertilizer consumption. **Year** will be what `pivot_longer()` calls the variable's "name" and **Fert** is the "value". In our *fert_wide* data we don't want the **iso2c** and **country** variables to be gathered. These variables identify the data set's subjects. So we can tell `pivot_longer()` that we only want the columns with the between **2016** and **2010** to be used for the long variable. Note that the back ticks in the code below allow us to specify numeric values as column names.
+Let's think about how we want to tidy the data. We want to create two new columns from the many columns that are now labeled by year. Let's call the new columns **Year** and **Fert**. The **Year** column will clearly contain the year of each observation and **Fert** will contain the fertilizer consumption. **Year** will be what `pivot_longer()` calls the variable's "name" and **Fert** is the "value". In our *fert_wide* data, we don't want the **iso2c** and **country** variables to be gathered. These variables identify the data set's subjects. So we can tell `pivot_longer()` that we only want the columns with the between **2016** and **2010** to be used for the long variable. Note that the back ticks in the code below allow us to specify numeric values as column names.
 
 ```{r Ch7GatherFert, tidy=FALSE}
 # Gather fert_wide
-fert_long <- tidyr::pivot_longer(fert_wide, 
-                                 cols = `2016`:`2010`, 
-                                 names_to = "Year", 
+fert_long <- tidyr::pivot_longer(fert_wide,
+                                 cols = `2016`:`2010`,
+                                 names_to = "Year",
                                  values_to = "Fert")
 
 fert_long
@@ -182,10 +182,10 @@ fert_long
 
 \index{R!renaming variables}
 
-Frequently, in the data cleaning process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our `fert_long` data frame has two variables--**Year** and **Fert**. Imagine, for the sake of demonstration, that we want to rename them **year** and **fert_cons**. Renaming data frame variables is straightforward with the `rename()`\index{R function!rename}\index{rename variable} function in the `dplyr` package \citep{R-dplyr}. To rename both **variable** and **value** with the `rename` function type:
+Frequently, in the data cleaning process we want to change the names of our variables. This will make our data easier to understand and may even be necessary to properly combine data sets (see below). In the previous example, for instance, our `fert_long` data frame has two variables: **Year** and **Fert**. Imagine, for the sake of demonstration, that we want to rename them **year** and **fert_cons**. Renaming data frame variables is straightforward with the `rename()`\index{R function!rename}\index{rename variable} function in the *dplyr* package \citep{R-dplyr}. To rename both **variable** and **value** with the `rename()` function type:
 
 ```{r Ch7Rename, tidy=FALSE}
-fert_long <- dplyr::rename(fert_long, 
+fert_long <- dplyr::rename(fert_long,
                            year = Year,
                            fert_cons = Fert)
 
@@ -196,9 +196,9 @@ fert_long
 
 \index{R!ordering data}
 
-You may have noticed that as a result of gathering *fert_wide* the data is now ordered by country-year. Imagine that for some substantive reason that makes the data easier to read, we rather want it ordered by year-country. Though not required for merging in R, some statistical analyses assume that the data is ordered in a specific way. 
+You may have noticed that as a result of gathering *fert_wide* the data is now ordered by country-year. Imagine that for some substantive reason that makes the data easier to read, we rather want it ordered by year-country. Though not required for merging in R, some statistical analyses assume that the data is ordered in a specific way.
 
-We can order observations in our data set using the `order()` function.\index{R function!order}\index{sort}\index{order} For example, to order *fert_long* by year-country we type:
+We can order observations in our data set using the `order()` function.\index{R function!order}\index{sort}\index{order} For example, to order *fert_long* by year-country, we type:
 
 ```{r Ch7Order, tidy=FALSE}
 # Order fert_long by year-country
@@ -231,7 +231,7 @@ ggplot2::ggplot(data = fert_long, aes(fert_cons)) +
         theme_bw()
 ```
 
-We can use the `subset()`\index{subset}\index{R function!subset} function to examine these outliers,\index{outliers} for example, countries that have fertilizer consumption greater-than 1000 kilograms per hectare.
+We can use the `subset()`\index{subset}\index{R function!subset} function to examine these outliers,\index{outliers} for example, countries that have fertilizer consumption greater than 1000 kilograms per hectare.
 
 ```{r Ch7SubsetOutliers, tidy=FALSE}
 # Create outlier data frame
@@ -241,7 +241,7 @@ fert_outliers <- subset(x = fert_long,
 fert_outliers
 ```
 
-If we want to drop these outliers from our data set we can use `subset()` again:
+If we want to drop these outliers from our data set, we can use `subset()` again:
 
 ```{r Ch7SubsetNoOutliers, tidy=FALSE}
 fert_long_sub <- subset(x = fert_long,
@@ -275,11 +275,11 @@ summary(fert_long_sub$fert_cons)
         \hline\vspace{0.15cm}
         Operator & Meaning \\
         \hline\hline \\
-        \verb|<| & less-than \\
-        \verb|>| & greater-than \\
+        \verb|<| & less than \\
+        \verb|>| & greater than \\
         \verb|==| & equal to \\
-        \verb|<=| & less-than or equal to \\
-        \verb|>=| & greater-than or equal to \\
+        \verb|<=| & less than or equal to \\
+        \verb|>=| & greater than or equal to \\
         \verb|!=| & not equal to \\
         \verb+a | b + & a or b \\
         \verb|a & b| & a \& b \\
@@ -296,8 +296,8 @@ summary(fert_long_sub$fert_cons)
 
 Let's step back. I've introduced a number of new logical
 operators and a new function in the subsetting examples. The first
-example included the greater-than sign (`>`). The
-second example included the less-than or equal to operator: `<=`. The
+example included the greater than sign (`>`). The
+second example included the less than or equal to operator: `<=`. The
 third example included the not equal operator: `!=`. In R, exclamation
 points (`!`) generally denote 'not'. We used this again in the final
 example in combination with the `is.na` function. This function indicates
@@ -308,17 +308,17 @@ throughout R.
 ### Recoding string/numeric variables
 
 You may want to recode your variables. In particular, when you merge
-data sets together you need to have **identical** identification values
-that R can use to match each observation on. If in one data set
+data sets you need to have **identical** identification values
+that R can use to match each observation. If in one data set
 observations for the Republic of Korea are referred to as "Korea, Rep."
 and in another they are labeled "South Korea", R will not know to merge
 them. We need to recode values in the variables that we want to match
 our data sets on. For example, in *fert_long_sub* the southern Korean
-country is labeled "Korea, Rep.". To recode it to "South Korea" we type:
+country is labeled "Korea, Rep.". To recode it to "South Korea", type:
 
-```{r Ch7RecodeString, tidy=FALSE} 
+```{r Ch7RecodeString, tidy=FALSE}
 # Recode country == "Korea, Rep." to "South Korea"
-fert_long_sub$country[fert_long_sub$country == 
+fert_long_sub$country[fert_long_sub$country ==
                             "Korea, Rep."] <- "South Korea"
 ```
 
@@ -331,9 +331,9 @@ later.
 ### Creating new variables from old
 
 As part of your data cleanup process (or later during statistical
-analysis) you may want to create new variables based on existing
+analysis), you may want to create new variables based on existing
 variables. For example, we could create a new variable that is the
-natural logarithm of **fert_cons**. To do this we run the
+natural logarithm of **fert_cons**. To do this, we run the
 variable through the `log()` function and assign a new variable that we'll
 call **fert_cons_log**.
 
@@ -352,9 +352,9 @@ could drop all observations of **fert_cons** with the value
 zero before log transforming it. Another common solution is recoding
 zeros as some small nonnegative number like 0.001. For example:
 
-```{r Ch7LogFertComsumpAgain, tidy=FALSE, eval=FALSE} 
-# Recode zeros in Fertilizer Consumption 
-fert_long_sub$fert_cons[fert_long_sub$fert_cons == 
+```{r Ch7LogFertComsumpAgain, tidy=FALSE, eval=FALSE}
+# Recode zeros in Fertilizer Consumption
+fert_long_sub$fert_cons[fert_long_sub$fert_cons ==
                               0] <- 0.001
 
 # Natural log transform Fertilizer Consumption
@@ -364,7 +364,7 @@ fert_long_sub$fert_cons_log <- log(fert_long_sub$fert_cons)
 Note that this example is included to demonstrate R syntax rather than
 to prescribe a certain transformation of skewed data with zeros. The
 choice of which transformation to make should ultimately be made based
-on the data, model, and context. See [@hyndman2010] for more information
+on the data, model, and context. See @hyndman2010 for more information
 on various alternatives including Box-Cox [@box1964analysis] and inverse
 hyperbolic sine transformations [@burbidge1988].
 
@@ -377,8 +377,8 @@ hyperbolic sine transformations [@burbidge1988].
             Number & Label & Value of \textbf{FertilizerConsumption} \\
             \hline\hline
             1 & low & $< 18$ \\
-            2 & medium low & $\ge 18$ \& $< 81$ \\
-            3 & medium high & $\ge 81$ \& $< 158$ \\
+            2 & medium low & $\ge 18$ and $< 81$ \\
+            3 & medium high & $\ge 81$ and $< 158$ \\
             4 & high & $\ge 158$ \\
             \hline
         \end{tabular}
@@ -392,26 +392,26 @@ example, we may want to turn the continuous numeric
 **fert_cons** variable into an ordered categorical (i.e.
 factor) variable. Imagine that we want to create a factor variable
 called **fert_cons_group** with four levels called 'low', 'medium low',
-'medium high', and 'high'. To do this let's first create a new numeric
+'medium high', and 'high'. To do this, let's first create a new numeric
 variable based on the values listed in Table \@ref(ExampleFactorRecode). Now let's use a procedure that is
 similar to the variable recoding we did earlier:[^chapter_7_3]
 
-```{r Ch7FactorNumeric, tidy=FALSE, warning=FALSE} 
-# Create numeric factor levels variable 
+```{r Ch7FactorNumeric, tidy=FALSE, warning=FALSE}
+# Create numeric factor levels variable
 
 # Attach fert_long_sub data frame
 attach(fert_long_sub)
 
 # Created new fert_cons_group variable based on # fert_cons
 fert_long_sub$fert_cons_group[fert_cons < 18] <- 1
-fert_long_sub$fert_cons_group[fert_cons >= 18 & 
+fert_long_sub$fert_cons_group[fert_cons >= 18 &
                                     fert_cons < 81] <- 2
-fert_long_sub$fert_cons_group[fert_cons >= 81 & 
+fert_long_sub$fert_cons_group[fert_cons >= 81 &
                                     fert_cons < 158] <- 3
 fert_long_sub$fert_cons_group[fert_cons >= 158] <- 4
 fert_long_sub$fert_cons_group[is.na(fert_cons)] <- NA
 
-# Detach data frame 
+# Detach data frame
 detach(fert_long_sub)
 
 summary(fert_long_sub$fert_cons_group)
@@ -421,13 +421,13 @@ You'll notice that we don't have a factor variable yet; our new variable
 is numeric. We can use the `factor()`\index{R function!factor} function to convert *fert_cons_group*
 into a factor variable with the labels we want.
 
-```{r Ch7ChangetoFactor, tidy=FALSE} 
+```{r Ch7ChangetoFactor, tidy=FALSE}
 # Create vector of factor level labels
 fc_labels <- c("low", "medium low", "medium high", "high")
 
-# Convert fert_cons_group to a factor 
-fert_long_sub$fert_cons_group <- 
-                    factor(fert_long_sub$fert_cons_group, 
+# Convert fert_cons_group to a factor
+fert_long_sub$fert_cons_group <-
+                    factor(fert_long_sub$fert_cons_group,
                            labels = fc_labels)
 
 summary(fert_long_sub$fert_cons_group)
@@ -441,11 +441,11 @@ observations per level.
 The `cut()`\index{R function!cut} function provides a less code-intensive way of creating
 factors from numeric ones and labeling factor levels. For example:
 
-```{r Ch7Cut, tidy=FALSE} 
-# Create a factor variable with the cut function 
+```{r Ch7Cut, tidy=FALSE}
+# Create a factor variable with the cut function
 fert_factor <- cut(fert_long_sub$fert_cons,
-                   breaks = c(-0.01, 17.99, 80.99, 
-                              157.99, 999.99), 
+                   breaks = c(-0.01, 17.99, 80.99,
+                              157.99, 999.99),
                    labels = fc_labels)
 
 summary(fert_factor)
@@ -456,7 +456,7 @@ The `labels` argument lets us specify the factor levels' names. The
 levels. Note that we set the first break as `-0.01`, not because any
 country had negative fertilizer consumption, but because the intervals
 created by `break()` exclude the left value and include the right
-value.[^chapter_7_4] If we had used `0` then all of the observations where a
+value.[^chapter_7_4] If we had used `0`, then all of the observations where a
 country used effectively no fertilizer would be excluded from the "low"
 category.
 
@@ -464,34 +464,34 @@ category.
 
 Sometimes a variable will have the wrong type. For example, a numeric
 variable may be incorrectly made a character string when a data set is
-imported from Excel. You can change variables' types with a number of
+imported from Excel. You can change variable types with a number of
 functions. We already saw how to convert a numeric variable to a factor
 variable with the `factor()` function. Unsurprisingly, to convert a
-variable to a character use `character()` and `numeric()`\index{R function!character}\index{R function!factor}\index{R function!numberic} to convert it to a numeric type variable. We can place `as.` before these functions (e.g.
+variable to a character, use `character()` and `numeric()`\index{R function!character}\index{R function!factor}\index{R function!numberic} to convert it to a numeric type variable. We can place `as.` before these functions (e.g.
 `as.factor()`)\index{R function!as.factor} as a way of coercing a change in type.
 
 **Warning:** Though these functions have straightforward names, a word of
 caution is necessary. Always try to understand why a variable is not of
-the type you would expect. Oftentimes variables have unexpected types
+the type you would expect. Often variables have unexpected types
 because they are coded (or miscoded) in a way that you didn't
-anticipate. Changing the variables' types, especially when using `as.`,
+anticipate. Changing the variable types, especially when using `as.`,
 can introduce new errors. Make sure that the conversion made the changes
 you expected.
 
 ## Merging Data Sets
 
-In the previous section we learned crucial skills for cleaning up data
+In the previous section, we learned crucial skills for cleaning up data
 sets. When your data sets are (a) in the same format and (b) have
 variables with identically matching ID values, you can merge your data
-sets together. In this section we'll look at two different ways to merge
+sets. In this section, we'll look at two different ways to merge
 data sets: binding and the `merge()`\index{R function!merge} function. We'll also look at ways to address a common issue when merging data: duplicated observations and
 columns.
 
 ### Binding
 
 As we saw in Chapter \@ref(GettingStartedRKnitr), if your data sets are in the same
-order--rows in all of the data sets represent the same observation of
-the same subject--then you can simply use the `cbind()`\index{R function!cbind} function to bind
+order---rows in all of the data sets represent the same observation of
+the same subject---then you can simply use the `cbind()`\index{R function!cbind} function to bind
 columns from the data sets together. This situation is unusual when
 merging real-world data. If your data sets are not in exactly the same
 order you will create a data set with nonsensical rows that combine data
@@ -499,7 +499,7 @@ from multiple observations. Therefore, you should avoid using `cbind()`
 for merging most real-world data.
 
 If you have data sets with the exact same columns and variable types and
-you just want to attach one under the other you can use the `rbind()`
+you just want to attach one under the other, you can use the `rbind()`
 function. It binds the rows in one object to the rows in another.[^chapter_7_5] It
 has the same syntax as `cbind()`. Again, you should be
 cautious when using this function, though it is more difficult to
@@ -508,32 +508,31 @@ an error if it cannot match your objects' columns.
 
 ### Merging data frames
 
-Generally, the safest and most effective way to merge two data sets
-together is with the `merge()` function.\index{R function!merge} Imagine that we want to merge our
+Generally, the `merge()` function is the safest and most effective way to merge two data sets.\index{R function!merge} Imagine that we want to merge our
 *fert_long_sub* data frame with two other data frames we created in
 Chapter \@ref(DataGather): *fin_regulator* and *disprop_data*. The
 simplest way to do this is to use the merge function twice, i.e.:
 
-```{r Ch7AddIsoCodes, include=FALSE} 
-# Add iso2c codes to fin_regulator and disprop_data 
+```{r Ch7AddIsoCodes, include=FALSE}
+# Add iso2c codes to fin_regulator and disprop_data
 # as ID variables for merging
 
-# Load countrycode 
+# Load countrycode
 library(countrycode)
 
-# fin_regulator 
-fin_regulator$iso2c <- countrycode(fin_regulator$country, 
+# fin_regulator
+fin_regulator$iso2c <- countrycode(fin_regulator$country,
                                       origin = "country.name",
                                       destination = "iso2c")
 ```
 
-```{r Ch7MergeSimple} 
-# Merge fin_regulator and disprop_data 
+```{r Ch7MergeSimple}
+# Merge fin_regulator and disprop_data
 merged_data_1 <- merge(x = fin_regulator, y = disprop_data,
                      by = "iso2c", all = TRUE)
 
-# Merge combined data set with and fert_long_sub 
-merged_data_1 <- merge(x = merged_data_1, y = fert_long_sub, 
+# Merge combined data set with and fert_long_sub
+merged_data_1 <- merge(x = merged_data_1, y = fert_long_sub,
                        by = "iso2c", all = TRUE)
 
 names(merged_data_1)
@@ -541,50 +540,49 @@ names(merged_data_1)
 
 Let's go through this code. The `x` and `y` arguments simply specify
 which data frames we want to merge. The `by` argument specifies what
-variable in the two frames identify the observations so that we can
-match them. In this example we are merging by countries' ISO country
+variable(s) in the two frames identify the observations so that we can
+match them. In this example, we are merging by countries' ISO country
 two-letter codes.[^chapter_7_6] We set the argument `all = TRUE` so that we keep
 all of the observations from both of the data frames. If the argument is
-set to `FALSE` only observations that are common to both data frames
+set to `FALSE`, only observations that are common to both data frames
 will be included in the merged data frame. The others will not be
 included.
 
 You might have noticed that this isn't actually the merge that we want
 to accomplish with these data frames. Remember that observations are not
 simply identified in this time-series cross-section data by one country
-name or other country code variable. Instead they are identified by both
+name or other country code variable. Instead, they are identified by both
 country and year variables. To merge data frames based on the overlap of
 two variables (e.g. match Afghanistan-2010 in one data frame with
-Afghanistan-2010 in the other) we need to add the `union()`\index{R function!union} function to `merge`'s `by` argument. Here is a full example:
+Afghanistan-2010 in the other), we need to add the `union()`\index{R function!union} function to `merge`'s `by` argument. Here is a full example:
 
 ```{r Ch7MergeFull, tidy=FALSE}
 # Merge fin_regulator and disprop_data
-merged_data_2 <- merge(fin_regulator, disprop_data, 
-                       union("iso2c", "year"),  
+merged_data_2 <- merge(fin_regulator, disprop_data,
+                       union("iso2c", "year"),
                        all = TRUE)
 
-# Merge combined data frame with fert_long_sub 
-merged_data_2 <- merge(merged_data_2, fert_long_sub, 
-                       union("iso2c", "year"),  
+# Merge combined data frame with fert_long_sub
+merged_data_2 <- merge(merged_data_2, fert_long_sub,
+                       union("iso2c", "year"),
                        all = TRUE)
 
 names(merged_data_2)
 ```
 
-After merging data frames it is always a good idea to look at the result
+After merging data frames, it is always a good idea to look at the result
 and make sure it is what you expected. Some post-merging cleanup may be
 required to get the data frame ready for statistical analysis.
 
 ### Bigger data {-}
 
-Before discussing post-merge cleanup it is important to highlight ways
+Before discussing post-merge cleanup, it is important to highlight ways
 to handle large data sets. The `merge()` function and many of the other
 data frame manipulation functions covered so far in this chapter may not
 perform well with very large data sets. If you are using very large data
-sets it might be worth investing time learning how to use either the
-*dbplyr* [@R-dbplyr] or *data.table* packages [@R-data.table]. They have many
-capabilities for working efficiently with large data sets. Another
-approach is to learn SQL[^chapter_7_8] or another special purpose data handling
+sets, it might be worth investing time learning how to use packages like
+*dbplyr* [@R-dbplyr] and *data.table* packages [@R-data.table]. They have many
+capabilities for working efficiently with large data sets. Likely, if you have very large data, you will need to learn SQL (Structured Query Language) or another special purpose data handling
 language.[^chapter_7_9] Once you know how these languages work, you can
 incorporate them into your R workflow with R packages like *dbplyr*.
 
@@ -598,25 +596,25 @@ observations. For example, let's create a new object called
 *merged_data_2*. Remember that **iso2c** and **year** are in the first and
 second columns of the data frame.
 
-```{r Ch7Duplicated, tidy=FALSE} 
-# Created a data frame of duplicated country-years 
+```{r Ch7Duplicated, tidy=FALSE}
+# Created a data frame of duplicated country-years
 data_duplicates <- merged_data_2[
                       duplicated(merged_data_2[, 1:2]), ]
 
-# Show the number of rows in data_duplicates 
+# Show the number of rows in data_duplicates
 nrow(data_duplicates)
 ```
 
-In this data frame there are duplicated iso2c-year observations. We know
+In this data frame, there are duplicated iso2c-year observations. We know
 this because `nrow` tells us that the data frame with the duplicated
 values has rows, i.e. observations.
 
 To create a data set without duplicated observations (if there are
-duplicates) we just add an exclamation point (`!`) before
-`duplicated`--i.e. not duplicated--in the above code.
+duplicates), add an exclamation point (`!`) before
+`duplicated`, i.e. not duplicated, in the above code.
 
-```{r Ch7NotDuplicated} 
-# Created a data frame of unique country-years 
+```{r Ch7NotDuplicated}
+# Created a data frame of unique country-years
 data_not_duplicates <- merged_data_2[
                           !duplicated(merged_data_2[, 1:2]), ]
 ```
@@ -627,7 +625,7 @@ lower order in the data frame. To keep the lowest ordered value and drop
 duplicates higher in the data set, use `duplicated`'s `fromLast`
 argument like this: `fromLast = TRUE`.
 
-**Warning:** look over your data set and the source code that created
+**Warning:** Look over your data set and the source code that created
 the data set to try to understand why duplicates occurred. There may be
 a fundamental problem in the way you are handling your data that
 resulted in the duplicated observations.
@@ -637,36 +635,36 @@ resulted in the duplicated observations.
 Another common post-merge cleanup issue is duplicate columns, i.e.
 variables. These are variables from the two data frames with the same
 name that were not included in `merge`'s `by` argument. For example, in
-our previous merged data examples there are three country name
+our previous merged data examples, there are three country name
 variables: **country.x**, **country.y**, and **country** to signify
 which data frame they are from.[^chapter_7_11]
 
-You should of course, decide what to do with these variables on a
+You should decide what to do with these variables on a
 case-by-case basis. But if you decide to drop one of the variables and
-rename the other, you can use subscripts (as we saw in Chapter \@ref(GettingStartedRKnitr). The *dplyr* package has a
-useful function called `select()`\index{R function!select} that can also remove variables from data frames. To remove variables simply write a minus sign (`-`) and then the
+rename the other, you can use subscripts (as we saw in Chapter \@ref(GettingStartedRKnitr)). The *dplyr* package has a
+useful function called `select()`\index{R function!select} that can also remove variables from data frames. To remove variables, simply write a minus sign (`-`) and then the
 variable name without quotes. For example, imagine that we want to keep
 **country.x** and drop the other variables.[^chapter_7_12] Let's also remove the
 **idn** variable:
 
-```{r Ch7RemoveVars, tidy=FALSE} 
-# Remove country.y, country, X, and idn 
-final_cleaned <- dplyr::select(data_not_duplicates, -country.y, 
+```{r Ch7RemoveVars, tidy=FALSE}
+# Remove country.y, country, X, and idn
+final_cleaned <- dplyr::select(data_not_duplicates, -country.y,
                                -country, -idn)
 
-# Rename country.x = country 
-final_cleaned <- dplyr::rename(final_cleaned, 
+# Rename country.x = country
+final_cleaned <- dplyr::rename(final_cleaned,
                                country = country.x)
 ```
 
-```{r Ch7Showfinal_cleanedNames} 
+```{r Ch7Showfinal_cleanedNames}
 names(final_cleaned)
 ```
 
 Alternatively, you can select specific variables to keep with the
 `select` function by writing the variables' names without a minus sign.
-**Note**: if you are merging many data sets it can sometimes be good to
-cleanup duplicate columns between each `merge()` call.
+**Note**: If you are merging many data sets, it can sometimes be good to
+clean up duplicate columns between each `merge()` call.
 
 ### Chapter summary {-}
 
@@ -691,46 +689,46 @@ source code files that are tied together with a makefile.
 
 R code for turning *fert_cons_data* into year-wide format:
 
-```{r Ch7WideCreateShow, eval=FALSE, tidy=FALSE} 
-library(WDI) 
+```{r Ch7WideCreateShow, eval=FALSE, tidy=FALSE}
+library(WDI)
 library(tidyr)
 library(dplyr)
 
 # Gather fertilizer consumption data from WDI
 fert_cons_data <- WDI(indicator = "AG.CON.FERT.ZS")
 
-# Reshape fert_cons_data to year wide format 
-fert_wide <- tidyr::pivot_wider(fert_cons_data, 
-                             names_from = year, 
+# Reshape fert_cons_data to year wide format
+fert_wide <- tidyr::pivot_wider(fert_cons_data,
+                             names_from = year,
                              values_from = AG.CON.FERT.ZS)
 
-# Order fert_wide by country 
+# Order fert_wide by country
 fert_wide <- arrange(fert_wide, country)
 ```
 
 R code for creating iso2c country codes with the *countrycode*
 package:
 
-```{r Ch7CountryCodeShow, eval=FALSE, tidy=FALSE} 
+```{r Ch7CountryCodeShow, eval=FALSE, tidy=FALSE}
 library(countrycode)
 
-fin_regulator$iso2c <- countrycode(fin_regulator$country, 
+fin_regulator$iso2c <- countrycode(fin_regulator$country,
                                    origin = "country.name",
                                    destination = "iso2c")
 ```
 
 R code for creating the chapter's density plot:
 
-```{r Chr7FigDensity, eval=FALSE} 
+```{r Chr7FigDensity, eval=FALSE}
 library(ggplot2)
 
 # Set plot theme to "minimal"
 theme_set(theme_minimal())
 
-# Create density plot 
-ggplot(data = fert_long, aes(fert_cons)) + 
-      geom_density() + 
-      xlab("Fertilizer Consumption") + ylab("Density") + 
+# Create density plot
+ggplot(data = fert_long, aes(fert_cons)) +
+      geom_density() +
+      xlab("Fertilizer Consumption") + ylab("Density") +
       theme_bw()
 ```
 
@@ -741,10 +739,10 @@ ggplot(data = fert_long, aes(fert_cons)) +
 
 [^chapter_7_2]: R denotes positive infinity with `Inf`.
 
-[^chapter_7_3]: In this code I attached the data frame *fert_long_sub* so that
+[^chapter_7_3]: In this code, I attached the data frame *fert_long_sub* so that
     it is easier to read.
 
-[^chapter_7_4]: In mathematical notation the "low" level includes all values in
+[^chapter_7_4]: In mathematical notation, the "low" level includes all values in
     the interval $(-0.01,\:17.99]$.
 
 [^chapter_7_5]: Some programming languages and statistical programs refer to this
@@ -753,8 +751,6 @@ ggplot(data = fert_long, aes(fert_cons)) +
 [^chapter_7_6]: Please see this chapter's Appendix for details on how I created an
     ISO country two-letter code variable in the *fin_regulator* data
     frame.
-
-[^chapter_7_8]: Structured Query Language
 
 [^chapter_7_9]: w3schools has an online SQL tutorial at:
     <http://www.w3schools.com/sql/default.asp>.
@@ -765,7 +761,7 @@ ggplot(data = fert_long, aes(fert_cons)) +
 
 [^chapter_7_11]: The former two were created in the first merge between
     *fin_regulator* and *disprop_data*. When the second merge was
-    completed there were no variables named **country** in the
+    completed, there were no variables named **country** in the
     MergeData2 data frame, so **country** did not need to be renamed in
     the new merged data set.
 
