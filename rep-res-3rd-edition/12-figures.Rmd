@@ -30,7 +30,7 @@ Understanding how *knitr*/*rmarkdown* dynamically include figures is
 easier if you understand how figures are normally included in LaTeX and
 Markdown. Unlike a word processing program like Microsoft Word, in
 LaTeX, Markdown, HTML, and other markup languages you don't copy and
-paste figures into your document. Instead you link to an image file
+paste figures into your document. Instead, you link to an image file
 outside of your markup document. Typically these image files are in
 formats such as *PDF*, *PNG*, and *JPEG*.[^chapter_10_2]\index{PNG}\index{JPEG}
 
@@ -54,7 +54,7 @@ with LaTeX and Markdown.
 The main way to include graphics (graphs, photos, and so on) in LaTeX
 documents is to use the `includegraphics` function\index{LaTeX!includegraphics} to link to image
 files. To have the full range of features for `includegraphics`, make
-sure to load the *graphicx* package in your document's preamble.\index{graphicx}Imagine
+sure to load the *graphicx* package in your document's preamble.\index{graphicx} Imagine
 that we wanted to include an image of butterflies stored in a file
 called *HeliconiusMimicry.png* in a LaTeX-produced document.[^chapter_10_3] We
 type:
@@ -63,7 +63,7 @@ type:
 \includegraphics[scale=0.8]{HeliconiusMimicry.png}
 ````
 
-In the square brackets you'll notice `scale=0.8`. This formats the image
+In the square brackets, you'll notice `scale=0.8`. This formats the image
 to be included at 80 percent of its actual size. You can use other
 options such as `height` to specify the height, `width` to specify the
 width, and `angle` to specify the angle at which to rotate the image.
@@ -85,17 +85,17 @@ environment.\index{LaTeX!figure environment} The *figure* environment works almo
 separate the figure from the text, add a caption, and label the figure.
 We begin the environment with `\begin{figure}[POSITION_SPEC]`.
 `POSITION_SPEC` can have the same values as we saw earlier with tables
-(page ). We can then include a `caption` and `label` function.\index{LaTeX!label}\index{LaTeX!caption} The
+in Chapter \@ref(TablesChapter). We can then include a `caption` and `label` function.\index{LaTeX!label}\index{LaTeX!caption} The
 environment is closed with `\end{figure}`. For example, to create Figure \@ref(fig:ExampleLaTeXFigure) exactly as is, I used the following code:[^chapter_10_5]
 
 ````latex
 \begin{figure}[ht]
-    \label{ExampleLaTeXFigure}
         \begin{center}
             \includegraphics{HeliconiusMimicry.png}
         \end{center}
     \caption{An Example Figure in LaTeX}
-    {\scriptsize{Source: \cite{meyer2006}}}
+    {\scriptsize{Image source: \cite{meyer2006}}}
+    \label{ExampleLaTeXFigure}
 \end{figure}
 ````
 
@@ -109,12 +109,12 @@ inserts a citation from the bibliography for @meyer2006. We will
 also discuss bibliographies in more detail in Chapter \@ref(LatexChapter).\index{LaTeX!cite}
 
 \begin{figure}[ht]
-    \caption{An Example Figure in LaTeX}
-    \label{fig:ExampleLaTeXFigure}
         \begin{center}
             \includegraphics{images/chapter_10/HeliconiusMimicry.png}
         \end{center}
-    {\scriptsize{Source: \cite{meyer2006}}}
+    \caption{An Example Figure in LaTeX}
+    {\scriptsize{Image source: \cite{meyer2006}}}
+    \label{fig:ExampleLaTeXFigure}
 \end{figure}
 
 \index{LaTeX!float|)}
@@ -124,7 +124,7 @@ also discuss bibliographies in more detail in Chapter \@ref(LatexChapter).\index
 Markdown has a similar function as LaTeX's `includegraphics`. It goes
 like this: `![ALT_TEXT](FILE_PATH)`. This syntax may seem strange now,
 but it will hopefully make more sense when we cover Markdown hyperlinks
-in Chapter \@ref(MarkdownChapter) as this is what it is intended to imitate.
+in Chapter \@ref(MarkdownChapter). This is what it is intended to imitate.
 `ALT_TEXT` refers to HTML's `alt` (alternative text) attribute.\index{HTML!alt} This
 should be a very short description of the image that will appear if it
 fails to load in a web browser. `FILE_PATH` specifies the image's file
@@ -139,18 +139,17 @@ Note that the file path can be a URL. You may, for example, store an
 image on GitHub and use its raw URL to link
 to it in the Markdown document.[^chapter_10_7]
 
-Markdown does not easily include ways to resize or re-position an image.
-If you want to resize or position
-your image it is often most straightforward use HTML markup. Probably the simplest way
+Markdown does not easily include ways to resize or reposition an image.
+If you want to resize or reposition
+your image, it is often most straightforward to use HTML markup. Probably the simplest way
 to include images with HTML is by using the `img` (image)\index{HTML!img} element tag.\index{HTML!tag}
-To create the equivalent of what we just did in Markdown with HTML we
-type:
+To create the equivalent of what we just did in Markdown with HTML, type:
 
 ````html
 <img src="HeliconiusMimicry.png" alt="ButterflyImage"></img>
 ````
 
-The `src` (script)\index{HTML!src} attribute specifies the file path. To change the width and height of the image we can use the `width` and `height`
+The `src` (script)\index{HTML!src} attribute specifies the file path. To change the width and height of the image, use the `width` and `height`
 attributes.\index{HTML!width}\index{HTML!height} For example:
 
 ````html
@@ -163,10 +162,10 @@ creates an image that is 100 pixels (`px`) wide by 100 pixels high.[^chapter_10_
 
 ### Non-knitted graphics with *knitr*/*rmarkdown*
 
-Now that we've seen how LaTeX, Markdown, and HTML include non-dynamically generated graphics it raises a question: how do we include these graphics in a document that we intend to use *R Markdown* to compile to more than one of these formats? *knitr* includes the
+Now that we've seen how LaTeX, Markdown, and HTML include non-dynamically generated graphics, it raises a question: how do we include these graphics in a document that we intend to use *R Markdown* to compile to more than one of these formats? *knitr* includes the
 `include_graphics()` function just for this purpose.\index{R function!include\_graphics}
 
-For example, in a code chunch we could place:
+For example, in a code chunck place:
 
 ````r
 `r ''````{r fig.cap="An Example Figure"}
@@ -175,12 +174,12 @@ knitr::include_graphics('HeliconiusMimicry.png')
 ````
 
 Now the figure will be included regardless of which markup language we compile to.
-Notice in the code chunk options `fig.cap`. In the next section we dicuss these types of *knitr* options in detail.
+Notice the code chunk option `fig.cap`. In the next section, we dicuss this type of *knitr* options in detail.
 
 ## Basic *knitr*/*rmarkdown* Figure Options
 
 In addition to including precompiled images with the  `include_graphics()` function, *knitr*, and by extension
-*rmarkdown*, allow us to combine a figure's creation by R with its
+*rmarkdown*, allows us to combine a figure's creation by R with its
 inclusion in a presentation document. They are tied together and update
 together. We use *knitr* chunk options to specify how the figure will
 look in the presentation document and where it will be saved. We can also use them to specify captions.  Let's
@@ -193,17 +192,17 @@ learn some of the more important chunk options for figures.
 \index{knitr option!fig.path|(}
 
 When you use *knitr* to create and include figures in your presentation
-documents it (1) runs the code you give it to create the figure, (2)
+documents, it (1) runs the code you give it to create the figure, (2)
 automatically saves it into a particular directory,[^chapter_10_9] and (3) includes
 the necessary LaTeX or Markdown code to include the figure in the final
-presentation document. By default *knitr* saves images into a folder (it
+presentation document. By default, *knitr* saves images into a folder (it
 creates) called *figure* located in the working directory.[^chapter_10_10] You can
 tell *knitr* where to save the images with the `fig.path` option. Simply
 use the file path naming conventions suitable for your system and
 include the new path in quotation marks.
 
 Note if you use *rmarkdowm* to compile to HTML, by default the graphic will not be saved
-in a separate file, but instead converted to a format that is embedded directly the HTML markup document.
+in a separate file, but instead converted to a format that is embedded directly in the HTML markup document.
 
 \index{knitr option!fig.path|)}
 
@@ -212,11 +211,11 @@ in a separate file, but instead converted to a format that is embedded directly 
 \index{knitr option!out.height}
 
 To set the height that a figure will be in the final presentation
-document use the `out.height` option. In R LaTeX documents you can set
+document, use the `out.height` option. In R LaTeX documents, you can set
 the width using centimeters, inches, or as a proportion of a page
-element. In R Markdown documents you use pixels to set the height. For
+element. In R Markdown documents, you use pixels to set the height. For
 example, to set a figure's height in an R Markdown document to 200
-pixels use `out.height='200px'`.
+pixels, use `out.height='200px'`.
 
 #### `out.width` {-}
 
@@ -225,7 +224,7 @@ pixels use `out.height='200px'`.
 Similarly, we can set the width of a *knitr* created figure using the
 `out.width` option. The same rules apply as with `out.width`. For
 example, to have a figure shown up at 80 percent of the text width in an
-R LaTeX document use: `out.width='0.8\\textwidth'`.\index{LaTeX!textwidth} Notice that that
+R LaTeX document, use: `out.width='0.8\\textwidth'`.\index{LaTeX!textwidth} Notice that
 there are two backslashes before `textwidth`. As we saw earlier, the
 LaTeX function only has one. However, all *knitr* code chunk options must
 be written as they would be in R. We need to escape the backslash with
@@ -257,8 +256,8 @@ more information on figure chunk options: <https://yihui.name/knitr/options/#chu
 
 ### Global options
 
-If you want all of your figures to share the same options--e.g. same
-height and alignment--you can set global figure options at the beginning
+If you want all of your figures to share the same options---e.g. same
+height and alignment---you can set global figure options at the beginning
 of your document with `opts_chunk$set`. Imagine that we are making an R
 LaTeX Sweave-style document and want all of our figures to be center
 aligned and 80 percent of the text width. We type:
@@ -273,17 +272,17 @@ You can also set some global figure options, such as `fig_height` and
 
 ## Knitting R's Default Graphics
 
-R's *graphics* package--loaded by default--includes functions to create
+R's *graphics* package, loaded by default, includes functions to create
 numerous plot types. These include `hist()`\index{R function!hist} for histograms, `pairs()`\index{R function!pairs} for
 scatterplot matrices, `boxplot()`\index{R function!boxplot} for creating boxplots, and the versatile
-`plot()`\index{R function!plot} for creating x-y plots--including scatterplots and bar charts depending on the data's type.
+`plot()`\index{R function!plot} for creating x-y plots, including scatterplots and bar charts depending on the data's type.
 
 There are many useful resources for learning how to fully utilize R's
 default graphics capabilities. These include Paul Murrell's
 [-@murrell2011] comprehensive *R Graphics* book. The Cookbook for
-R[^chapter_10_12] and Quick-R[^chapter_10_13] websites are also helpful. Winston Chang,
+R[^chapter_10_12] and Quick-R[^chapter_10_13] websites are also helpful. Winston Chang [-@chang2012],
 the maintainer of the Cookbook for R, also has a full book devoted to
-creating R graphics [-@chang2012]. Kieran Healy [-@healy2018data] is a strong intoduction to data visualisation in general with R examples.
+creating R graphics. Kieran Healy [-@healy2018data] is a strong intoduction to data visualisation in general with R examples.
 
 In this section we are going to see how to include R's default graphics
 in our LaTeX and Markdown presentation documents. We will also see an
@@ -291,7 +290,7 @@ example of how to source the creation of a graph from a segmented
 analysis file. Most of R's default graphics capabilities create static
 graphics. They are not animations or interactive. The discussion in this
 section is exclusively about using static graphics with
-*knitr*/*rmarkdown*. Later in the chapter we will discuss how to knit
+*knitr*/*rmarkdown*. Later in the chapter, we will discuss how to knit
 interactive graphics.
 
 Let's look at an example we first saw at the end of Chapter \@ref(StatsModel). Remember that we accessed an R source
@@ -300,7 +299,7 @@ and stopping distances using R's *cars* data set, which is loaded by
 default. We haven't yet seen the code in the R source file that created
 the plot.
 
-In the *cars* data frame, the variable **speed** contains the stopping speed and
+In the *cars* data frame, the variable **speed** contains the stopping speed, and
 **dist** contains the stopping distances. Here is the code to create the
 plot:
 
@@ -312,60 +311,60 @@ plot(x = cars$speed, y = cars$dist,
      cex.lab = 1.5)
 ```
 
-We select the variables from *cars* to plot on the $x$ and $y$ axes of
-our graph with the component selector (`$`).\index{component selector} Then we use the `xlab` and `ylab` arguments to specify the $x$ and $y$ axis labels. We could have
+We select the variables from *cars* to plot on the $x$- and $y$-axes of
+our graph with the component selector (`$`).\index{component selector} Then we use the `xlab` and `ylab` arguments to specify the $x$- and $y$-axes labels. We could have
 added a title for the plot using the `main` argument. We didn't do this
 because we will give the plot a title in the LaTeX `figure` environment.\index{LaTeX!figure}
 The `cex.lab` argument increased the labels' font size. The argument
 specifically determines how to scale the labels relative to the default
-size. 1.5 means 50 percent larger than the default.
+size: 1.5 means 50 percent larger than the default.
 
 Now let's see how to create this plot with *knitr* and include it in a
 LaTeX `figure` environment.
 
 ````latex
 \begin{figure}[ht]
-    \caption{Example Simple Scatter Plot Using \texttt{plot}}
-    \label{BasicFigureExample}
 `r ''````{r echo=FALSE, fig.align='center', out.width='8cm'}
     plot(x = cars$speed, y = cars$dist,
          xlab = "Speed (mph)",
          ylab = "Stopping Distance (ft)",
          cex.lab = 1.5)
 ```
+    \caption{Example Simple Scatterplot Using \texttt{plot}}
+    \label{BasicFigureExample}
 \end{figure}
 ````
 
 \begin{figure}[ht]
-    \caption{Example Simple Scatter Plot Using \texttt{plot}}
-    \label{fig:BasicFigureExample}
 ```{r echo=FALSE, fig.align='center', out.width='8cm'}
     plot(x = cars$speed, y = cars$dist,
          xlab = "Speed (mph)",
          ylab = "Stopping Distance (ft)",
          cex.lab = 1.5)
 ```
+  \caption{Example Simple Scatter Plot Using \texttt{plot}}
+  \label{fig:BasicFigureExample}
 \end{figure}
 
 This code produces Figure \@ref(fig:BasicFigureExample).[^chapter_10_14] If you are familiar with R
-graphics you will notice that we did not need to tell *knitr* to save
+graphics, you will notice that we did not need to tell *knitr* to save
 the file in a particular format. Instead, behind the scenes it
 automatically saves the plot as a PDF file in a folder called *figure*
 that is a child of the current working directory. You can choose the
 figure file's format with the `dev` (graphical device) chunk
 option.\index{knitr option!dev} For example, to save the
-figure in a PNG formatted file simply add the chunk option `dev='PNG'`.
+figure in a PNG formatted file, add the chunk option `dev='PNG'`.
 You can choose any graphical device format supported by R. For a full
-list of R's graphical devices type `?Devices` into your console. One
+list of R's graphical devices, type `?Devices` into your console. One
 reason you might want to change the format is to reduce your
 presentation document's file size. Using a bitmap format like PNG will
 create smaller files than PDFs, though lower-quality images.
 
-We could, of course, simply link to the original R source code file
+We could, of course, link to the original R source code file
 stored on GitHub with the `source_url()` function.\index{R function:source\_url} Let's look at an example
 of this with a different source code file. Remember in Chapter \@ref(DataGather) we used a makefile to gather data from three
 different sources on the internet. The CSV is called *main-data.csv* and
-is stored on GitHub at: <http://bit.ly/V0ldsf>.[^chapter_10_15] We can download this data into R and make the following scatterplot matrix with this code:
+is stored on GitHub at: <http://bit.ly/V0ldsf>.[^chapter_10_15] We can download this data into R and make the following scatterplot matrix (Figure \@ref(fig:BasicFigureExample)) with this code:
 
 ```{r Ch10ScatterPlotMatrix, tidy=FALSE, fig.cap='Example of a Scatterplot Matrix', fig.lb='ScatterMatrix'}
 # Download data
@@ -425,7 +424,7 @@ There are a number of very good resources for learning how to use
 *ggplot2* website[^chapter_10_19] has up-to-date information. I've also found the
 Cookbook for R website helpful.[^chapter_10_20]
 
-Given that there is already extensive good documentation on *ggplot2* we
+Given that there is already extensive good documentation on *ggplot2*, we
 are not going to learn the full details of how to use the package here.
 Instead, let's look at some examples of how to manipulate a data frame
 and a regression results object so that they can be graphed with
@@ -455,9 +454,9 @@ inflation_data <- rio::import(inflation_url, format = "csv")
 names(inflation_data)
 ```
 
-We want to create a plot with **Quarter** as the $x$ axis, inflation as
-the $y$ axis, and two lines. One line will represent **ActualInflation**
-and the other **EstimatedInflation**. To do this we need to reshape our
+We want to create a plot with **Quarter** as the $x$-axis, inflation as
+the $y$-axis, and two lines. One line will represent **ActualInflation**
+and the other **EstimatedInflation**. To do this, we need to reshape our
 data so that the inflation variables are in long format like this:
 
 \begin{tabular}{l l l}
@@ -476,7 +475,7 @@ data so that the inflation variables are in long format like this:
 We can use the `pivot_longer` function from *tidyr* that we first saw in
 Chapter \@ref(DataClean) to reshape the data. The variable identifying the observations in this case is `Quarter`. The
 **ActualInflation** and **EstimatedInflation** variables (in columns two
-and three) are the variables that we want to pivot So let's pivot the
+and three) are the variables that we want to pivot. So let's pivot the
 data:
 
 ```{r Ch10GatherInflation, message=FALSE}
@@ -495,7 +494,7 @@ Now we have a data set we can use to create our line graph with
 Let's cover a few basic *ggplot2* ideas that will help us understand the
 following code better. First, plots are composed of layers including the
 coordinate system, points, labels, and so on. Each layer has aesthetics,
-including the variables plotted on the $x$ and $y$ axes, label sizes,
+including the variables plotted on the $x$-and $y$-axes, label sizes,
 colors, and shapes. Aesthetic elements are defined by the `aes()`
 argument. Finally, the main layer types are called geometrics, including
 lines, points, bars, and text. Functions that set geometrics usually
@@ -520,7 +519,7 @@ line_plot <- ggplot(data = inflation_long,
 
 \index{R function!scale\_color\_discrete}\index{R function!scale\_linetype}\index{R function!xlab}\index{R function!ylab}\index{R function!aes}
 
-You can see we set the $x$ and $y$ axes using the **Quarter** and
+You can see we set the $x$- and $y$-axes using the **Quarter** and
 **value** variables. We told *ggplot* that elements in the geometric
 layer should have lines with different colors and line types (dashed,
 dotted, and so on) based on the value of **variable** that they
@@ -535,7 +534,7 @@ theme. We added the argument `base_size = 15` to increase the plot's
 font size.
 
 All of the code required to create this graph is on GitHub at:
-<https://bit.ly/2FaMkOJ>.[^chapter_10_24] So to knit the graph like into a LaTeX document manually specifying the figure environment we type: \index{LaTeX environment!figure}
+<https://bit.ly/2FaMkOJ>.[^chapter_10_24] To knit the graph into a LaTeX document manually specifying the figure environment, type: \index{LaTeX environment!figure}
 
 ````latex
 \begin{figure}[ht]
@@ -550,7 +549,7 @@ All of the code required to create this graph is on GitHub at:
 \end{figure}
 ````
 
-```{r Ch10MultiLines, echo=FALSE, message = FALSE, warning=FALSE, out.width='10cm', out.height='8cm', fig.cap='\\emph{ggplot2} time series line plot'}
+```{r Ch10MultiLines, echo=FALSE, message = FALSE, warning=FALSE, out.width='10cm', out.height='8cm', fig.cap='\\emph{ggplot2} Time Series Line Plot'}
 # Create plot
 devtools::source_url("https://bit.ly/2FaMkOJ")
 ```
@@ -563,20 +562,20 @@ Markdown document is the same as we saw for default R graphics.
 Many packages that estimate statistical models from data in R have
 built-in plotting capabilities. For example, the *survival* package
 [@R-survival] has the `plot.survfit()`\index{R function!plot.survfit} function for plotting survival curves
-created using event history analysis. These plots can Of course, be
+created using event history analysis. These plots can be
 knitted into presentation documents like the plots we have seen already.
 
 However, sometimes either a package doesn't have built-in functions for
 plotting model results the way you want to and/or you want to use
 *ggplot2* to improve the aesthetic quality of the plots they do create
-by default. In either case you can almost always create the plot that
+by default. In either case, you can almost always create the plot that
 you want by first breaking into the model results object, extracting
 what you want, then plotting it with *ggplot2*. The process is very
 similar to what we did in Chapter \@ref(TablesChapter) to create custom tables.
 
 To illustrate how this can work, let's create a caterpillar plot, like the following figure, showing the mean coefficient estimates and the
 uncertainty surrounding them from a Bayesian normal linear regression
-model using the *swiss* data frame.[^chapter_10_bayesplot] Here is our model:
+model using the *swiss* data frame. Here is our model:
 
 ```{r Ch10SwissModel, message=FALSE, error=FALSE, warning=FALSE, cache=TRUE}
 # Fit model
@@ -604,7 +603,7 @@ We want to use *ggplot2* to create credibility intervals for each
 variable with **l.95..CI** as the minimum value and **u.95..CI** as the
 maximum value. These are the lower and upper bounds of the middle 95
 percent of the estimates' marginal posterior distributions, i.e. the 95
-percent credibility intervals.[^chapter_10_25] We will also create a point at the **mean** of each estimate. To do this we will use *ggplot2*'s
+percent credibility intervals.[^chapter_10_25] We will also create a point at the **mean** of each estimate. To do this, we will use *ggplot2*'s
 `geom_pointrange`\index{R function!geom\_pointrange} function.
 
 First we need to do a little tidying up.
@@ -620,13 +619,13 @@ linear_brms_2_sum_df <- subset(linear_brms_2_sum_df,
 ```
 
 The first line of executable code creates a proper variable out of the
-data frame's row.names attribute. In this case row.names contains the
+data frame's row.names attribute. In this case, `row.names` contains the
 names of the variables included in the regression. The second
-executable line removes the estimate *Intercept* estimates. This
+executable line removes the *Intercept* estimates. This
 allows the variable's coefficient estimates to be plotted on a scale
 that enables easier interpretation.
 
-Now we can create our caterpillar plot.
+Now we can create our caterpillar plot (Figure \@ref(fig:Ch10CatPlot)).
 
 ```{r Ch10CatPlot, tidy=FALSE, message=FALSE, fig.cap='Example Caterpiller Plot'}
 library(dplyr)
@@ -652,24 +651,23 @@ ggplot(data = linear_brms_2_sum_df,
 
 There are some new pieces of code in here, so let's take a look. First,
 the data frame is reordered from the highest to lowest value of
-**l.95..CI** using the `reorder()` function.\index{R function!reorder} We renamed this column "lower" so that it would be easier to work with in `ggplot()`.\index{R function!ggplot2} Reordering by these values make the plot easier to
+**l.95..CI** using the `reorder()` function.\index{R function!reorder} We renamed this column "lower" so that it would be easier to work with in `ggplot()`.\index{R function!ggplot2} Reordering by these values makes the plot easier to
 read. The middle point of the point range is set with `y` and the lower
 and upper bounds with `ymin` and `ymax`. The `geom_hline()`\index{R function!geom\_hline} function used
 here creates a dotted horizontal line at 0, i.e. no effect. `coord_flip()`\index{R function!cord\_flip}
-flips the plot's coordinates so that the variable names are on the $y$
-axis. We can include this plot in a knitted document the same way as
+flips the plot's coordinates so that the variable names are on the $y$-axis. We can include this plot in a knitted document the same way as
 before.
 
-Note that we create this example to help you understand the power of *ggplot2* to create new graphics from complex objects. This particular task--creating caterpillar plots from *brms* objects--has been packaged into the `stanplot()`\index{R function!stanplot} function that comes with *brms*.
+Note that we create this example to help you understand the power of *ggplot2* to create new graphics from complex objects. This particular task---creating caterpillar plots from *brms* objects---has been packaged into the `stanplot()`\index{R function!stanplot} function that comes with *brms*.
 
 \index{ggplot2|)}\index{R function!ggplot|)}
 
 ## JavaScript Graphs with *googleVis*
 
-Markus Gesmann and Diego de Castillo's *googleVis* package
-[-@R-googleVis] allows us to use Google's Visualization API from within
+Markus Gesmann and Diego de Castillo's [-@R-googleVis] *googleVis* package
+ allows us to use Google's Visualization API from within
 R to create interactive tables, plots, and maps with Google Chart Tools.
-Because the visualizations are written in JavaScript they can be
+Because the visualizations are written in JavaScript, they can be
 included in HTML presentation documents created by R Markdown.
 Unfortunately, they cannot be directly[^chapter_10_26] included in LaTeX-produced
 PDFs. The *animation* package [@R-animation] does have some limited
@@ -724,23 +722,23 @@ characteristics such as the map's width, height, and colors. The colors
 here are written using hexadecimal values. This is a commonly used
 format for specifying colors on websites.[^chapter_10_29]
 
-To view the figure on your computer simply use *googleVis*'s `plot`
-function. For example, to view our map we type:
+To view the figure on your computer, use *googleVis*'s `plot()`
+function. For example, to view our map, type:
 
 ```{r Ch10ViewGoogleVisMapPlot, eval=FALSE}
 plot(fc_map)
 ```
 
 Note that you need to be connected to the internet to view figures
-created by *googleVis*, otherwise your image will not be able to access
+created by *googleVis*; otherwise, your image will not be able to access
 the required JavaScript files from the Google Visualization API.
 
 \begin{figure}
-    \caption{Screenshot of a \emph{googleVis} Geo Chart}
-    \label{GeoMapImage}
         \begin{center}
             \includegraphics[width=\textwidth]{images/chapter_10/GeoChartScreenShot.png}
         \end{center}
+        \caption{Screenshot of a \emph{googleVis} Geo Chart}
+        \label{GeoMapImage}
 \end{figure}
 
 ### Including *googleVis* in knitted documents
@@ -750,10 +748,10 @@ the entire JavaScript code needed to create the map. Much like we saw
 with tables produced with *xtable* and *texreg* in Chapter \@ref(TablesChapter), we need to change the code chunk `results`
 option to include the map as a map rather than as JavaScript markup. To
 have the visualization show up in your HTML output, rather than the code
-block, simply set the code chunk option to `results='asis'`.[^chapter_10_30] For
+block, set the code chunk option to `results='asis'`.[^chapter_10_30] For
 example, the full code needed to create and print *fc_map* is available
 at: <https://bit.ly/2CfXWOs>.[^chapter_10_31] To knit the map into an R Markdown
-document we type:
+document, type:
 
 ````r
 `r ''````{r}, echo=FALSE, message=FALSE, results='asis'}
@@ -767,18 +765,17 @@ devtools::source_url("https://bit.ly/2CfXWOs")
 The number of tools for creating JavaScript graphs from R that can be
 knitted into HTML files is growing rapidly. The *htmlwidgets*
 [@R-htmlwidgets] framework is especially making the development of these
-tools easier. As of this writing there are tools built on *htmlwidgets*
+tools easier. There are tools built on *htmlwidgets*
 for creating maps, network graphs, time series graphs, and interactive
 tables, among others. Though the syntax of each of these tools differs,
-they can all easily be included into R Markdown documents. Often you
-simply run their core functions in a code chunk, without needing to use
+they can all easily be included into R Markdown documents. Often you run their core functions in a code chunk, without needing to use
 an additional call to `print` or `plot`.
 
 ### Chapter summary {-}
 
 In this chapter we have learned how to take results from our statistical
 analyses and other information from our data and dynamically present
-them in figures. In the next three chapters we will learn the details of
+them in figures. In the next chapters, we will learn the details of
 how to create the LaTeX and Markdown presentation documents we use to
 present the tables we created in Chapter \@ref(TablesChapter) and the figures we created in this chapter.
 
@@ -793,8 +790,8 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 
 [^chapter_10_2]: PDF: Portable Document Format, PNG: Portable Network Graphic,
     JPEG: Joint Photographic Experts Group.\
-    A quick note about file formats: By default *knitr* creates PDF
-    formatted figure files when knitting R LaTeX documents. These
+    A quick note about file formats: By default, *knitr* creates PDF-formatted
+    figure files when knitting R LaTeX documents. These
     figures, generally built with vector graphics, allow you to zoom in
     on them by any amount without them becoming pixelated. This means
     that your images will be crisp in PDF presentation documents. For
@@ -819,13 +816,13 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 [^chapter_10_6]: You can also include a title in quotation marks after the file
     path. This specifies the HTML `title` attribute. However, this
     attribute does not create a title for the image in the way that
-    `caption` does for LaTeX float figures. Instead it creates a
+    `caption` does for LaTeX float figures. Instead, it creates a
     tooltip, a small box that appears when you place your cursor over
     the image. Specifying descriptive alt text is very useful for screen
     readers that help visually impaired people access web content.
 
-[^chapter_10_7]: For images stored on GitHub use the URL for the raw version of the
-    file.
+[^chapter_10_7]: Use the URL for the raw version of the
+    file for images stored on GitHub.
 
 [^chapter_10_8]: A pixel is the smallest discrete part of images displayed on a
     screen. See the "pixel" Wikipedia page for more details:
@@ -839,7 +836,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 
 [^chapter_10_11]: In this chapter we will set this option in the markup rather
     than the code chunk. I prefer doing this because *knitr* options
-    need to be on the same line and so can sometimes result in very long
+    need to be on the same line and so they can sometimes result in very long
     lists of options that are difficult to read.
 
 [^chapter_10_12]: <http://www.cookbook-r.com/Graphs/>
@@ -860,7 +857,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 
 [^chapter_10_18]: It is possible to combine a series of figures created with
     *ggplot2* into an animation. For a nice example of an animation
-    using *ggplot2* see Jerzy Wieczorek's animation of 2012 US
+    using *ggplot2*, see Jerzy Wieczorek's animation of 2012 US
     presidential campaigning: <http://bit.ly/UUVKka>.
 
 [^chapter_10_19]: <http://docs.ggplot2.org/current/>
@@ -884,14 +881,14 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
     the confidence intervals. One useful function for doing this is
     `confint`.
 
-[^chapter_10_26]: The example in this chapter is a from a screenshot.
+[^chapter_10_26]: The example in this chapter is from a screenshot.
 
 [^chapter_10_27]: For demonstrations of the full range of plotting functions
     available, visit the *googleVis* website:
     <http://code.google.com/p/google-motion-charts-with-r/wiki/GadgetExamples#googleVis_Examples>.
 
 [^chapter_10_28]: You'll notice in the code below that we remove all values of
-    **fert_cons** less-than 0.1. This is so that we can
+    **fert_cons** less than 0.1. This is so that we can
     calculate integer values with the natural logarithm.
 
 [^chapter_10_29]: You can also use hexadecimal values in *ggplot2*. The Color
@@ -906,7 +903,7 @@ present the tables we created in Chapter \@ref(TablesChapter) and the figures we
 [^chapter_10_31]: The full URL is:
     <https://raw.githubusercontent.com/christophergandrud/Rep-Res-Examples/master/Graphs/GoogleVisMap.R>.
 
-[^chapter_10_32]: You can use the `gvisMotionChart` function to make these.
+[^chapter_10_32]: You can use the `gvisMotionChart()` function to make these.
 
 [^chapter_10_33]: This is because motion charts and annotated time line charts rely
     on Flash, unlike the other Google visualizations. For more
