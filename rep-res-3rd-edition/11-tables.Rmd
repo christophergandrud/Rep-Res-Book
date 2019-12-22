@@ -28,7 +28,7 @@ package, and the *texreg* package [@R-texreg]. `kable()` can create tables
 from data frames for both LaTeX and Markdown/HTML documents. *xtable*
 does the same, but is much more customizable. *texreg* produces
 publication-quality tables from objects containing statistical model
-results--model objects. It allows you to combine results from multiple
+results, or model objects. It allows you to combine results from multiple
 models into one table. Unfortunately *texreg* is less flexible with
 objects of classes it does not support.[^chapter_9_3]
 
@@ -64,15 +64,15 @@ your LaTeX or Markdown output you should set `results='asis'` or
 markup form of the table into the presentation document, not as a
 highlighted code chunk, but as markup. It is then compiled as table
 markup with the rest of the document. `markup` uses an output hook to
-mark up the results in a predefined way. In this chapter we will work
+mark up the results in a predefined way. In this chapter, we will work
 with examples using the `asis` option.
 
 ## Table Basics
 
-Before getting into the details of how to create tables from R objects, 
+Before getting into the details of how to create tables from R objects,
 it is useful to first learn how generic tables are created in LaTeX and
 Markdown/HTML. If you are not familiar with basic LaTeX or Markdown
-syntax you might want to skip ahead to chapters \@ref(LatexChapter) and
+syntax, you might want to skip ahead to Chapters \@ref(LatexChapter) and
 \@ref(MarkdownChapter), respectively, before coming back to learn
 about making tables in these languages.
 
@@ -136,7 +136,7 @@ type:
 The `l` argument creates a left-justified column, `c` creates a centered
 one. If we wanted a right-justified column we would use `r`.[^chapter_9_8] Finally, we can add a horizontal line between columns by adding a vertical bar
 `|` between the column arguments.[^chapter_9_9] For example, to place a vertical
-line between the first and second column in our example table we would
+line between the first and second columns in our example table, we would
 type:
 
 ````latex
@@ -155,8 +155,8 @@ you use two backslashes (`\\`).[^chapter_9_11] Here is a simple example of the f
     Subject1 & a & b \\
 ````
 
-It is common to demarcate the row with a table’s column names–the first
-row–with horizontal lines. A horizontal line also often visually
+It is common to demarcate the row with a table’s column names, the first
+row, with horizontal lines. A horizontal line also often visually
 demarcates a table’s end. You can add horizontal lines in the `tabular`
 environment with the `\hline` command.
 
@@ -205,14 +205,14 @@ You might notice that the table we created so far lacks a title and is
 bunched very closely to the surrounding text. In LaTeX we can create a
 `table` float environment to solve this problem. Float environments
 allow us to separate a table from the text, specify its location, and
-give it a caption.[^chapter_9_16] To begin a `table` float environment use
+give it a caption.[^chapter_9_16] To begin a `table` float environment, use
 `\begin{table}[POSITION_SPEC]`. The argument allows us to determine the location of the table. It can be set
 to `h` for here, i.e. where the table is written in the text. It can
 also be `t` to place it on the top of a page or `b` for the bottom of
-the page. To set a title for the table use the `\caption` command.\index{LaTeX!caption} LaTeX
+the page. To set a title for the table, use the `\caption` command.\index{LaTeX!caption} LaTeX
 automatically determines the table's number, so you only need to enter
 the text. You can also declare a cross-reference key for the table with
-the `\label` command.[^chapter_9_17] A `table` environment is Of course, closed
+the `\label` command.[^chapter_9_17] A `table` environment is closed
 with `\end{table}`. Let's see a full example.
 
 ````latex
@@ -252,14 +252,14 @@ with `\end{table}`. Let's see a full example.
 \end{table}
 
 Notice that the `tabular` environment is further nested in the `center`
-environment.\index{LaTeX!center} This centers the table while leaving the table's title
+environment.\index{LaTeX!center} This centers the table, while leaving the table's title
 left-justified. The final result is Table \@ref(ExLaTeXTable). One final tip: to have the caption placed at
 the bottom rather than the top of the table in the final document,
 simply put the `caption` command after the `tabular` environment is
 closed.
 
 You can see how typing out a table in LaTeX gets very tedious very fast.
-For all but the simplest tables it is best to try to have R do the
+For all but the simplest tables, it is best to try to have R do the
 table-making work for you.
 
 ### Tables in Markdown/HTML
@@ -277,9 +277,9 @@ readable. Nonetheless, larger tables can still be tedious to create.
 You do not need to declare any new environments to start creating a
 Markdown table. Just start typing in the content. Columns are delimited
 in Markdown tables with a vertical bar (`|`). Rows are started with a
-new line. To indicate the head of the table--usually the row(s)
-containing the column names--separate it from the body of the table with
-a row of dashes (e.g. `----`). Here is an example based on the table we
+new line. To indicate the head of the table, usually the row(s)
+containing the column names, separate it from the body of the table with
+a row of dashes (e.g. `-----`). Here is an example based on the table we
 created in the previous section:
 
 ````markdown
@@ -304,7 +304,7 @@ Subject3    | e         | f
 Subject4    | g         | c
 ````
 
-To create a left-justified column simply use a colon on only the left
+To create a left-justified column, use a colon on only the left
 side of the dashes.
 
 The ultimate look of a Markdown table is highly dependent on the CSS
@@ -315,11 +315,11 @@ this:
 
 ![](images/chapter_9/RStudioDefaultTableExample.png)
 
-Using a different CSS style file[^chapter_9_18] we can get something like this:
+Using a different CSS style file,[^chapter_9_18] we can get something like this:
 
 ![](images/chapter_9/MarkedTableExample.png)
 
-In basic Markdown you can add a caption with the heading syntax (see
+In basic Markdown, you can add a caption with the heading syntax (see
 Section \@ref(MarkdownHeader)). In this example the three hashes (`###`)
 create the header:
 
@@ -344,9 +344,9 @@ tables.
 HTML uses element "tags"\index{HTML!tags} to begin and end tables. The main element we
 use to create tables is, well, the `tables` element. This is very
 similar to LaTeX's `tabular` environment. An HTML element generally
-begins with a start tag and ends with an end tag. This is 
+begins with a start tag and ends with an end tag. This is
 similar to LaTeX's `\begin{}` and `\end{}` commands. Begin tags are
-encapsulated in a greater-than and less-than sign and include the
+encapsulated in a greater than and less than sign and include the
 element tag name (`<TAG>`). End tags are similar, but include a forward
 slash like this `</TAG>`. The content of the element goes between the
 start and end tags. For example:
@@ -358,12 +358,12 @@ start and end tags. For example:
 </table>
 ````
 
-As in LaTeX you are not required to tab the content of a table element;
+As in LaTeX, you are not required to tab the content of a table element;
 however, it does make the markup document easier to read and, as the
 number of tags proliferates, easier to write.
 
 You can specify element attributes inside of start tags.[^chapter_9_19] For
-example, to add a border to the table use: `<table border="1">`.[^chapter_9_20]\index{HTML!table border}
+example, to add a border to the table, use: `<table border="1">`.[^chapter_9_20]\index{HTML!table border}
 
 Table rows are put inside of `tr` (table rows) element tags. Individual
 cells are delimited with `td` (standard cell) tags. Here is what the
@@ -411,8 +411,8 @@ dependent on the style files you use.
 ## Creating Tables from Supported Class R Objects
 
 Just as the `write.csv()`\index{R function!write.csv} function turns an R data frame into a CSV formatted text file, there are a number of methods in R to take an
-object--e.g. a matrix, data frame--the output from a statistical
-analysis, and so on--and turn them into LaTeX and HTML tables. `kable()`,
+object, e.g. a matrix, data frame, the output from a statistical
+analysis, and so on, and turn them into LaTeX and HTML tables. `kable()`,
 *xtable*, and *texreg* each work most easily with specific object
 classes that their designers explicitly supported.
 
@@ -435,26 +435,26 @@ kable_ex <- data.frame(
 )
 ```
 
-Then simply place this data frame into a `kable()` call:
+Then place this data frame into a `kable()` call:
 
 ```{r Ch9kableBasic, eval=FALSE}
 kable(kable_ex, caption = "Example kable Table")
 ```
 
-Beyond setting the tables caption with `caption`, there are a few other
+Beyond setting the table's caption with `caption`, there are a few other
 alterations that can be made with `kable` arguments. You can specify new
 column and row names by passing character vectors to `col.names` and
-`row.names`, respectively. These are very useful as it can be difficult,
+`row.names`, respectively. These are very useful, as it can be difficult,
 or at least irritating, for your readers to try to decode the names you
 give to your data frame rows and columns in R. Another useful argument
 is `digits`. This will round numbers in the table to a specified number
-of digits after the decimal place. To effectively convey your results
-you should *at the least* only include digits that are significant in
+of digits after the decimal place. To effectively convey your results,
+you should *at least* only include digits that are significant in
 that they meaningfully vary in the data [@ehrenberg1977 281].
 
 You can also change the markup language that the table is created in
 using the `format` argument. For example, to create a LaTeX formatted
-table use `format = 'latex'`. In general, you do not need to specify the
+table, use `format = 'latex'`. In general, you do not need to specify the
 format if you are using *knitr* or *rmarkdown* to include the table in a
 presentation document. This will be done automatically.
 
@@ -484,10 +484,10 @@ M1 <- lm(Examination ~  Education, data = swiss)
 class(M1)
 ```
 
-By using the `class` function we can see that *M1* is of the `lm` class.
+By using the `class` function, we can see that *M1* is of the `lm` class.
 *M1* contains items estimated by the linear regression model[^chapter_9_22] such
 as the coefficient estimates and their standard errors. To get a summary
-of a model object's contents use the `summary()`\index{R function!summary} function like this:
+of a model object's contents, use the `summary()`\index{R function!summary} function like this:
 
 ```{r Ch9SimpleSwissSummary}
 summary(M1)
@@ -506,7 +506,7 @@ table summarizing the estimates from the *M1* model object.
 library(xtable)
 
 # Create LaTeX table from M1 and show the output markup
-xtable(M1, 
+xtable(M1,
        caption = "Linear Regression, DV: Exam Score",
        label = "BasicXtableSummary",
        digits = 1)
@@ -519,41 +519,44 @@ a table exactly like Table \@ref(BasicXtableSummary).
 Let's go through this code, working from the outside in. First you'll
 notice that we've set two *knitr* code chunk options. As we discussed
 earlier, `results='asis'`\index{knitr option!results} allows us to include the LaTeX formatted table
-created by *xtable*. The next option `echo=FALSE`\index{knitr option!echo} hides the code from being shown in our final document. The *xtable* function creates the
+created by *xtable*. The next option `echo=FALSE`\index{knitr option!echo} hides the code from being shown in our final document. The `xtable()` function creates the
 summary table of our *M1* model object. Not only does it produce both
 complete `tabular` and `table` environments,\index{LaTeX!tabular}\index{LaTeX!table} but also through the
 `caption` and `label` arguments it automatically adds in the table's
 title and cross-reference label, respectively. Finally, notice that I
-added the `digits = 1` argument. As in `kable`, this specifies that I
+added the `digits = 1` argument. As in `kable()`, this specifies that I
 want numbers in the table to be rounded to one decimal digit.
 
 ```{r Ch9xtableSummaryPrint, results='asis', echo=FALSE, message=FALSE}
 library(xtable)
+options(xtable.comment = FALSE)
 
 # Create LaTeX table from M1 and show the output markup
-xtable(M1, caption.above = TRUE,
+xtable(M1,
        caption = "Linear Regression, DV: Exam Score",
        label = "BasicXtableSummary",
        digits = 1)
 ```
 
+The caption is printed below the table by default.
+
 #### *xtable* for Markdown/HTML {-}
 
 We can use *xtable* and the `print.xtable()` function[^chapter_9_23] to also create tables for Markdown and HTML documents. The *xtable* function produces,
-unsurprisingly, `xtable` class objects. We can run these through the
+unsurprisingly, `xtable()` class objects. We can run these through the
 `print()`\index{R function!print} function and add arguments to customize how the table is
 formatted. By default, `print.xtable()`'s\index{R function!print.xtable} `type` argument is set to
 `"latex"`. To create an HTML table that can be inserted into Markdown
 and HTML documents, set the `type` argument from `"latex"` to `"html"`.
 For example, to create an HTML version of the table summarizing *M1* and
-include it in an R Markdown document we type:
+include it in an R Markdown document, type:
 
 ````r
 `r ''````{r results='asis', echo=FALSE}
 library(xtable)
 
 # Create an xtable object from M1
-m1_table <- xtable(M1, 
+m1_table <- xtable(M1,
                 caption = "Linear Regression, DV: Exam Score",
                 label = "BasicXtableSummary",
                 digits = 1)
@@ -563,10 +566,10 @@ print.xtable(m1_table, type = "html", caption.placement = "top")
 ```   
 ````
 
-If you intend to include multiple tables in your R Markdown document you
+If you intend to include multiple tables in your R Markdown document, you
 will want to set all of the tables to be printed in HTML. You can place
 `options("xtable.type" = "html")` in a code chunk near the beginning of
-your document.[^chapter_9_24] This simply makes it so that you don't need to
+your document.[^chapter_9_24] This makes it so that you don't need to
 include `type = "html"` every time you use `print`.
 
 Notice in the previous code example that we also added the
@@ -576,7 +579,7 @@ documentation[^chapter_9_25] for the full list of `print.xtable()` options.
 
 \index{R function!xtable|)}
 
-### *texreg* for LaTeX and HTML {-}
+### *texreg* for LaTeX and HTML
 
 `kable()` and *xtable* are limited when it comes to creating tables from
 statistical model objects. `kable` only works with matrices and data
@@ -591,8 +594,8 @@ object types than *xtable*.
 
 Imagine we want to show the estimates from a number of nested regression
 models in LaTeX as the next table. For example, to estimate nested
-regression models from the remaining variables in the *swiss* data set
-we would type:
+regression models from the remaining variables in the *swiss* data set,
+we type:
 
 ```{r Ch9EstimateNested}
 # Estimate nested regression models
@@ -648,13 +651,13 @@ and reference label with the `caption` and `label` arguments,
 respectively. By default, the caption is placed below the table, so we
 used `caption.above = TRUE` to place it on top. Finally, we created
 custom coefficient names with `custom.coef.names` that are a bit tidier
-than the variable names in our R dataset. Your readers will appreciate
+than the variable names in our R data set. Your readers will appreciate
 easily discernible coefficient names.
 
-In the LaTeX caption you'll notice `\\emph{texreg}`. In LaTeX the `emph`
+In the LaTeX caption, you'll notice `\\emph{texreg}`. In LaTeX the `emph`
 command italicizes text (we'll see this again in Chapter \@ref(LatexChapter)). We added an additional escape character `\`
 so that R would not try to interpret the `e` and instead feed it to
-LaTeX. By default, `texreg` uses `stars = c(0.001, 0.01, 0.05)` to
+LaTeX. By default, `texreg()` uses `stars = c(0.001, 0.01, 0.05)` to
 determine at what p-values to display statistical significance stars.
 This is the same as the `lm` model summary default showing three sets of
 statistical significance stars. You can define the significance levels
@@ -678,7 +681,7 @@ htmlreg(list(M1, M2, M3, M4, M5),
         caption.above = TRUE, custom.coef.names = cust_coef)
 ```
 
-Notice that we did not include the `label` argument as this is not
+Notice that we did not include the `label`, argument as this is not
 available in HTML. The resulting table looks like this:
 
 ![](images/chapter_9/htmlregExample.png)
@@ -708,12 +711,12 @@ the table. Finally, close the `landscape` environment with
 In addition, the `scalebox` command from the *graphics*\index{LaTeX package!graphics} package could be
 useful for fitting large tables onto a PDF page. This command expands or
 shrinks the text in the table. `texreg` actually has a `scalebox`
-argument. If you use `scalebox = 0.5` it will halve the size of the
+argument. If you use `scalebox = 0.5`, it will halve the size of the
 table; `scalebox = 2` doubles it.
 
 More generally, to rescale a table use:
 
-`\scalebox{HORIZONTAL_SCALE}``[``VERTICAL_SCALE``]``{TABLE}`
+`\scalebox{HORIZONTAL_SCALE}[VERTICAL_SCALE]{TABLE}`
 
 `HORIZONTAL_SCALE` is how much to scale the table horizontally.
 `VERTICAL_SCALE` is how much to scale vertically and `TABLE` is the
@@ -722,14 +725,14 @@ table or R code chunk to create the table.
 ### *xtable* with non-supported class objects {#NonSupportedClasses}
 
 The `kable`, *texreg*, and *xtable* packages are very convenient for
-model objects they know how to handle. With supported class objects the
+model objects they know how to handle. With supported class objects, the
 functions in these packages know where to look for the vectors
-containing the things--coefficient names, standard errors, and so
-on--that they need to create tables. With unsupported classes, however,
-they don't know where to look for these things. Luckily, there is a work
-around. You tell `xtable` where to find elements you want to include in
-your table. `xtable` can handle matrix and data frame class objects. The
-rows of these objects become table rows and the columns become the table
+containing the things---coefficient names, standard errors, and so
+on---that they need to create tables. With unsupported classes, however,
+they don't know where to look for these things. Luckily, there is a work-around.
+You tell `xtable()` where to find elements you want to include in
+your table. `xtable()` can handle matrix and data frame class objects. The
+rows of these objects become the table rows and the columns become the table
 columns. So, to create tables with non-supported class objects you need
 to:
 
@@ -748,7 +751,7 @@ package [@R-brms] and data from the *swiss* data frame. Let's fit the
 model: \index{brms}\index{R function!brm}
 
 ```{r Ch9MCMC, message=FALSE, warning=FALSE, tidy=FALSE, echo=TRUE, cache=TRUE}
-library(brms) 
+library(brms)
 
 # Fit model
 linear_brms <- brm(Examination ~ Education,
@@ -760,15 +763,15 @@ linear_brms <- brm(Examination ~ Education,
 class(linear_brms)
 ```
 
-Note: I included `refresh = 0` to suppresses output about the model fitting process. 
+Note: I included `refresh = 0` to suppress output about the model fitting process.
 
-Using the `class` function we see that the model output object in
+Using the `class()` function, we see that the model output object in
 *linear_brms* is of the `brmsfit` class. This class is not supported by
 *xtable*. If you try to create a table summarizing the estimates in
-*linear_brms_table* you will return an error telling you the object's class 
+*linear_brms_table*, you will return an error telling you the object's class
 is not supported.
 
-With unsupported class objects you have to create the summary yourself
+With unsupported class objects, you have to create the summary yourself
 and extract the elements that you want from it manually. A good
 knowledge of vectors, matrices, and component selection is very handy
 for this (see Chapter \@ref(GettingStartedRKnitr)).
@@ -780,12 +783,12 @@ linear_brms_summary <- summary(linear_brms)
 ```
 
 This creates a new object of the class `brmssummary`. We're still not
-there yet as this object contains not just the covariate names and so on
+there yet as this object contains not just the covariate names and so on,
 but also information we don't want to include in the results table, like
 the estimation formula. The second step is to extract a matrix from
 inside *linear_brms_summary* called *summary* with the component
-selector (`$`). Remember that to find the components of an object use
-the `names` command.
+selector (`$`). Remember that to find the components of an object, use
+the `names()` function.
 
 ```{r Ch9MCMCSummaryNames, echo=TRUE}
 names(linear_brms_summary)
@@ -812,23 +815,25 @@ cleaning up (see the chapter's Appendix for more details) you can use *xtable* a
 library(dplyr)
 
 # Change posterior summary variable names
-linear_brms_summary_df <- rename(linear_brms_summary_df, 
+linear_brms_summary_df <- rename(linear_brms_summary_df,
                                  `2.5%` = `l.95..CI`)
-linear_brms_summary_df <- rename(linear_brms_summary_df, 
+linear_brms_summary_df <- rename(linear_brms_summary_df,
                                  `50%` = Estimate)
-linear_brms_summary_df <- rename(linear_brms_summary_df, 
+linear_brms_summary_df <- rename(linear_brms_summary_df,
                                  `97.5%` = `u.95..CI`)
 
 # Reorder variables and remove the Est. Error
-linear_brms_summary_df <- linear_brms_summary_df[, 
+linear_brms_summary_df <- linear_brms_summary_df[,
                             c("2.5%", "50%", "97.5%")]
 
 # Create table
-xtable(linear_brms_summary_df,
+brms_table <- xtable(linear_brms_summary_df,
        caption = "Coefficient Estimates Predicting
                   Examination Scores in Swiss Cantons
                   (1888) Found Using Bayesian Linear Regression",
        label = "CoefEstTable")
+
+print(brms_table, caption.placement = "top")
 ```
 
 It may take some hunting to find what you want, but a similar process
@@ -864,8 +869,8 @@ Description <- c("common standardized fertility measures",
 )
 ```
 
-In the first line we use the `names` command to create a vector of the
-*swiss* data frame's column names. Then we simply create a vector of
+In the first line we use the `names()` function to create a vector of the
+*swiss* data frame's column names. Then we create a vector of
 descriptions with the combine function (`c()`).\index{R function!c} Now we can combine these vectors into a matrix and use it to create an HTML table.
 
 ```{r Ch9CbindDescript, results='hide'}
@@ -897,20 +902,20 @@ information on the *swiss* data frame's source. We then include the HTML
 table in the *descript_table* object and save it to a file called
 *swiss-variable-descriptions.md*.
 
-It is convenient to simply include the creation of this table in your
+It is convenient to include the creation of this table in your
 data gathering makefiles and have it saved into the same directory as
 your data. This way it will be easy to update as you update your data
-and easy to find. If you are storing your data on GitHub it will
+and easy to find. If you are storing your data on GitHub, it will
 automatically render the variable description Markdown file and make it
 easy for others to read. See this book's makefile example for more
 information: <https://bit.ly/2UtvOys>.[^chapter_9_28]
 
 ### Chapter summary {-}
 
-In this chapter we have learned how to take the results from our
+In this chapter, we have learned how to take the results from our
 statistical analyses and other information from our data and dynamically
 present it in LaTeX and Markdown documents with knitr/R Markdown. In
-the next chapter we will do the same thing with figures.
+the next chapter, we will do the same thing with figures.
 
 ## Appendix {-}
 
@@ -922,15 +927,15 @@ library(dplyr)
 library(xtable)
 
 # Change posterior summary variable names
-linear_brms_summary_df <- rename(linear_brms_summary_df, 
+linear_brms_summary_df <- rename(linear_brms_summary_df,
     `2.5%` = `l.95..CI`)
-linear_brms_summary_df <- rename(linear_brms_summary_df, 
+linear_brms_summary_df <- rename(linear_brms_summary_df,
     `50%` = Estimate)
-linear_brms_summary_df <- rename(linear_brms_summary_df, 
+linear_brms_summary_df <- rename(linear_brms_summary_df,
     `97.5%` = `u.95..CI`)
 
 # Reorder variables and remove the Est. Error
-linear_brms_summary_df <- linear_brms_summary_df[, 
+linear_brms_summary_df <- linear_brms_summary_df[,
     c("2.5%", "50%", "97.5%")]
 
 # Create table
@@ -956,8 +961,8 @@ and has special characters like the percent sign.
     coefficient estimate tables that are sometimes descriptively called
     'train schedule' tables.
 
-[^chapter_9_2]: For example, in a replication of Reinhart and Rogoff's much cited
-    [-@rr2010] study of economic growth and public debt, @herndon2014
+[^chapter_9_2]: For example, in a replication of Reinhart and Rogoff's [-@rr2010] much cited
+    study of economic growth and public debt, @herndon2014
     found a number of apparent transcription errors. Analysis results in
     the original spreadsheets appear to not have been entered into the
     paper's tables accurately.
@@ -968,7 +973,7 @@ and has special characters like the percent sign.
     to *texreg* and is particularly good for showing results from
     multiple models estimated using different model types in one table.
 
-[^chapter_9_5]: For a comprehensive list of LaTeX environments see:
+[^chapter_9_5]: For a comprehensive list of LaTeX environments, see
     <https://latex.wikia.org/wiki/List_of_LaTeX_environments>.
 
 [^chapter_9_6]: An aside: the `tabbing` environment is a useful way to create
@@ -986,14 +991,14 @@ and has special characters like the percent sign.
     can replace the `m` with either `p` or `b`. `p` vertically aligns
     the text at the top, `b` aligns it at the bottom.
 
-[^chapter_9_9]: If you add two vertical bars (`||`) you will get two lines.
+[^chapter_9_9]: If you add two vertical bars (`||`), you will get two lines.
 
 [^chapter_9_10]: If you want to include an ampersand in the text of your LaTeX
-    document you need to escape it like this: `\&`.
+    document, you need to escape it like this: `\&`.
 
 [^chapter_9_11]: You can use two backslashes outside of the `tabular` environment
     as well to force a new line. Also, to increase the space between the
-    line you can add a vertical width argument to the double
+    line, you can add a vertical width argument to the double
     backslashes. For example, `\[3cm]` will give you a 3-centimeter gap
     between the current line and the next one.
 
@@ -1034,21 +1039,21 @@ and has special characters like the percent sign.
 [^chapter_9_20]: Whether or not a border appears is determined by whether or not
     the style sheet you are using includes borders.
 
-[^chapter_9_21]: For a description of these variables type `?swiss` into the
-    console
+[^chapter_9_21]: For a description of these variables, type `?swiss` into the
+    console.
 
 [^chapter_9_22]: If you are unfamiliar with the syntax of R statistical estimation
-    models the previous code might be confusing. In general 'response'
+    models, the previous code might be confusing. In general 'response'
     ($Y$) variables are written first and are separated from the
     'explanatory' ($X$) variables by a tilde (`\sim`). Crawley
     [-@crawley2005 107] notes that you can read $Y \sim X$ as '$Y$ is
     modeled as a function of $X$'. In later examples we will see that
     individual explanatory variables are generally separated by plus
     signs (`+`), indicating that they are included in the model, not
-    that they are added. For more information see Crawley [-@crawley2005
+    that they are added. For more information, see Crawley [-@crawley2005
     Ch. 7].
 
-[^chapter_9_23]: Note: you can abbreviate `print.xtable` simply as `print`.
+[^chapter_9_23]: Note: you can abbreviate `print.xtable()` as `print()`.
 
 [^chapter_9_24]: Of course, you will probably want to use the `include=FALSE`
     *knitr* option with this code chunk.
@@ -1056,7 +1061,7 @@ and has special characters like the percent sign.
 [^chapter_9_25]: <https://cran.r-project.org/web/packages/xtable/xtable.pdf>
 
 [^chapter_9_26]: Use the `center = FALSE` argument to override centering. If you
-    would like to only create the `tabular` environment use the argument
+    would like to only create the `tabular` environment, use the argument
     `table = FALSE`. Creating your own `table` environment can be useful
     in situations where you want more customizability.
 
