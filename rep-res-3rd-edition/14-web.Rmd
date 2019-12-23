@@ -21,17 +21,17 @@ XHTML[^chapter_web_1]) using a syntax that is human readable and possibly
 publishable without compiling. For example, compare the Markdown table
 syntax in Chapter \@ref(TablesChapter) to the HTML syntax for virtually the same
 table.[^chapter_web_2] That being said, to make Markdown simple, it does not have as
-many capabilities as HTML. To get around this problem you can still use
+many capabilities as HTML. To get around this problem, you can still use
 HTML in Markdown, though note that Markdown syntax cannot be used
-between HTML element tags. Pandoc and R Markdown* extend Markdown
+between HTML element tags. Pandoc and R Markdown extend Markdown
 so that it can be used to create reproducible PDF and MS Word documents.
 
-**Note:** if you are using *rmarkdown* to compile a document to PDF or
+**Note:** If you are using *rmarkdown* to compile a document to PDF or
 Word, using raw HTML syntax will often not work as intended, if at all.
 As a rule, syntax specific to LaTeX or HTML that is included in an R
 Markdown document can only be properly compiled to a PDF or HTML
 document, respectively. Similarly, you are only able to include graphics
-that are of types supported by the output format. You are not be able to
+that are of types supported by the output format. You are not able to
 include a JavaScript plot directly in a PDF. R Markdown has been continuously improving its ability to interoperate between the different formats. For example, the `kable()` function\index{R function!kable} creates tables without having to worry too much about the output format. The *knitr* code chunck option `fig.ext` (figure extension)\index{knitr option!fig.ext} allows you to more dynamically set the output format of a dynamically created figure so that it will be compilable to multiple formats.
 
 ### Getting started with Markdown editors
@@ -39,7 +39,7 @@ include a JavaScript plot directly in a PDF. R Markdown has been continuously im
 RStudio functions as a very good editor for R Markdown
 documents and regular non-knittable Markdown documents as well. To
 create a new R Markdown document in RStudio, click `File` in the menu
-bar then `New` `R Markdown`. You will then be able to select what output
+bar, then `New` `R Markdown`. You will then be able to select what output
 format you would like. RStudio has full syntax highlighting for code
 chunks and can compile *.Rmd* files into *.md*, then render them in
 *.html*, for example, with one click of the `Knit HTML` button. As we saw in
@@ -49,14 +49,14 @@ HTML documents by opening them with your web browser. You can do this
 directly from RStudio's **Preview HTML** window by clicking the
 `Open in Browser` button.
 
-```{r echo=FALSE, fig.cap='R Markdown Compile Dropdown Menu', fig.lb='Rmarkdrop', out.width='2cm', out.height='5cm'}
+```{r echo=FALSE, fig.cap='R Markdown Compile Dropdown Menu', fig.lb='Rmarkdrop', out.width='2cm', out.height='6cm'}
 knitr::include_graphics("images/chapter_web/rmarkdownOutputOptions.png")
 ```
 
-If you click on the downward arrow next to `Knit HTML` you will see the
-above drop-down menu. This allows you to also compile the
+If you click on the downward arrow next to `Knit HTML`, you will see the
+above dropdown menu. This allows you to also compile the
 document to PDF or MS Word, regardless of which format you originally
-chose when you created the document. As with HTML you will be given a
+chose when you created the document. As with HTML, you will be given a
 preview of the PDF or Word document when it is compiled.
 
 Being plain-text, you can also use any other text editor to modify
@@ -106,7 +106,7 @@ sessionInfo()
 Headings in Markdown are simple. Note that Markdown *headings* and R
 Markdown *headers* are not the same thing. The latter gives instructions
 for how to render the document, the former are section titles in the
-text. To create a line in the topmost heading style--maybe a title--just
+text. To create a line in the topmost heading style---maybe a title---just
 place one hash mark (`#`) at the beginning of the line. The second-tier
 heading gets two hashes (`##`) and so on. You can also put the hash
 mark(s) at the end of the heading, but this is not necessary. Here is an
@@ -121,8 +121,8 @@ example of the three headings:
 ````
 
 There are six heading levels in Markdown. You can also create a
-level-one heading by following a line of text with equal signs.
-Level-two headings can be created by following a line of text with
+level one heading by following a line of text with equal signs.
+Level two headings can be created by following a line of text with
 dashes:
 
 ````markdown
@@ -136,7 +136,7 @@ A level two heading
 ### Horizontal lines
 
 If you would like to create horizontal lines that run the width of the
-page in Markdown, simply place three or more equal signs or dashes
+page in Markdown, place three or more equal signs or dashes
 separated by text from above by one blank line:
 
 ````markdown
@@ -165,18 +165,18 @@ Separating lines with a blank line places a blank line\index{Markdown!new line} 
 \index{Markdown!italics}\index{Markdown!bold}
 
 To *italicize* a word in Markdown, place it between two
-asterisks, e.g. `*Iitalicize these words*`. To make words **bold**, place
+asterisks, e.g. `*italicize these words*`. To make words **bold**, place
 them between four asterisks, two on either side:
 `**make these words bold**`.
 
 ### Links {#MarkdownLinks}
 
-To create hyper-links in Markdown, use the `[LINK_TEXT](URL)`
-syntax.[^chapter_web_4] `LINK_TEXT` is the text that you would like to show up as the hyper-link text. When you click on this text it will take you to the linked site specified by `URL`. If you want to show only a URL as the
+To create hyperlinks in Markdown, use the `[LINK_TEXT](URL)`
+syntax.[^chapter_web_4] `LINK_TEXT` is the text that you would like to show up as the hyperlink text. When you click on this text, it will take you to the linked site specified by `URL`. If you want to show only a URL as the
 text, type it in both the square brackets and parentheses. This is a
 little tedious, so in RStudio you can just type the URL and it will be
-hyper-linked. In regular Markdown, place the URL between less-than and
-greater-than signs (`<URL>`).
+hyperlinked. In regular Markdown, place the URL between less than and
+greater than signs (`<URL>`).
 
 ### Special characters and font customization {-}
 
@@ -191,7 +191,7 @@ CSS, which I don't cover here, though below we will look at how to use a custom 
 
 ### Lists
 
-To create itemized lists in Markdown, simply place the items after one
+To create itemized lists in Markdown, place the items after one
 dash:
 
 ````markdown
@@ -213,10 +213,10 @@ To create a numbered list, use numbers and periods rather than dashes.
 Markdown, like LaTeX and R, uses a backslash (`\`) as an escape
 character. For example, if you want to have an asterisk in the text of
 your document (rather than start to italicize your text, e.g.
-`*some italicized text*`), type: `\*`. Two characters--ampersand (`&`)
-and the less-than sign (`<`)--have special meanings in HTML.[^chapter_web_5] So, to
-have them printed literally in your text you have to use the HTML code
-for the characters. Ampersands are created with `&amp`. Less-than signs
+`*some italicized text*`), type: `\*`. Two characters---ampersand (`&`)
+and the less-than sign (`<`)---have special meanings in HTML.[^chapter_web_5] So, to
+have them printed literally in your text, you have to use the HTML code
+for the characters. Ampersands are created with `&amp`. Less than signs
 are created with `&lt`.
 
 ### Math with MathJax
@@ -232,7 +232,7 @@ may need to take extra steps to link to MathJax. For more details, see
 
 Because backslashes are Markdown escape characters, in many Markdown
 editors you will have to use two backslashes to create math environments
-with MathJax. For example, in LaTeX and RStudio's Markdown you can
+with MathJax. For example, in LaTeX and RStudio's Markdown, you can
 create a display equation like this:
 
 $$s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}$$
@@ -243,7 +243,7 @@ by typing:[^chapter_web_7]
 $$s^{2} = \frac{\sum(x - \bar{x})^2}{n - 1}$$
 ````
 
-But, in other Markdown programs you may have to use:
+But, in other Markdown programs, you may have to use:
 
 ````markdown
 \\[
@@ -286,7 +286,7 @@ We also have the option to include other formatting options, many of
 which we would include in a *knitr* LaTeX document's preamble.\index{LaTeX!preamble} You
 include these at the top level, i.e. without being tabbed. R Markdown
 refers to these options as "metadata". For example, to change the font
-size to 11-point we could use:
+size to 11 point we could use:
 
 ````yaml
 ---
@@ -349,17 +349,6 @@ documents.
 If you want to also enable the creation of a Microsoft Word document,
 include `output: word_document` in the header.
 
-  Markup                       Result
-  ---------------------------- ---------------------------
-  `[@donoho2009]`              (Donoho 2009)
-  `[-@donoho2009]`             (2009)
-  `[see @donoho2009]`          (see Donoho 2009)
-  `[see @donoho2009, 10-11]`   (see Donoho 2009, 10--11)
-  `[@donoho2009; @Box1973]`    (Donoho 2009; Box 1973)
-  `@donoho2009 [10-11]`        Donoho (2009, 10--11)
-
-  : A Selection of Pandoc In-text Citations
-
 #### Bibliographies with Pandoc {-}
 
 \index{bibliography}
@@ -379,12 +368,23 @@ Pandoc uses *natbib*\index{LaTeX package!natbib}\index{bibliography}\index{in-te
 appear as (Donoho et al., 2009). To add text before and after the
 citation inside of the parentheses, use something like this:
 `[see @donoho2009, 10]`; which creates: (see Donoho et al. 2009, 10). If you do not want the parentheses around the entire citation (only the
-year) then omit the square brackets. To include only the year and not
+year) then omit the square brackets. To include only the year, and not
 the authors' surnames, add a minus sign, e.g. `[-@donoho2009]`. See the table above for more options.
 
 Full bibliographic information for each item that is cited in the text
 will be produced at the end of the output document. I suggest placing a
 heading like `# References` at the very end of your document so that the bibliography will be differentiated from the document's text.
+
+Markup                       Result
+---------------------------- ---------------------------
+`[@donoho2009]`              (Donoho 2009)
+`[-@donoho2009]`             (2009)
+`[see @donoho2009]`          (see Donoho 2009)
+`[see @donoho2009, 10-11]`   (see Donoho 2009, 10--11)
+`[@donoho2009; @Box1973]`    (Donoho 2009; Box 1973)
+`@donoho2009 [10-11]`        Donoho (2009, 10--11)
+
+: A Selection of Pandoc In-text Citations
 
 #### Footnotes with Pandoc {-}
 
@@ -392,12 +392,12 @@ heading like `# References` at the very end of your document so that the bibliog
 
 You can also include footnotes in documents rendered with *rmarkdown* by
 using Pandoc's footnote syntax. In the text where you would like a
-footnote to be located use: `[^NOTE_KEY]`. Then at the end of your
+footnote to be located, use: `[^NOTE_KEY]`. Then at the end of your
 document, place `[^NOTE_KEY]: The footnote text`.[^chapter_web_9]
 `NOTE_KEY`s generally follow the same rules as BibTeX citation keys, so no spaces.
 The footnotes will be numbered sequentially when rendered.
 
-To sum up, here is an example of document that can be rendered in HTML
+To sum up, here is an example of a document that can be rendered in HTML
 or PDF using R Markdown. It includes footnotes and a bibliography.
 
 ````markdown
@@ -428,7 +428,7 @@ This is a citation [see @donoho2009, 10].
 
 We have only covered a small proportion of Pandoc's capabilities that
 you can take advantage of with *rmarkdown*. For full range of Pandoc's
-abilities see: <https://pandoc.org/MANUAL.html>.
+abilities, see <https://pandoc.org/MANUAL.html>.
 
 ### CSS style files and Markdown
 
@@ -461,7 +461,7 @@ output:
 ````
 
 If you are using the *knitr* package to render an R Markdown document to
-HTML you can also include a custom CSS file. First use `knit` to knit
+HTML, you can also include a custom CSS file. First use `knit` to knit
 the document to a plain Markdown file. Then use the `markdownToHTML()`\index{R function!markdownToHTML}
 function from the *markdown* package [@R-markdown] to render the plain
 Markdown document in HTML, including the `stylesheet` argument with the
@@ -469,7 +469,7 @@ path to the CSS file.
 
 ## Slideshows with Markdown, R Markdown, and HTML
 
-Because R Markdown documents can be compiled into HTML files it is
+Because R Markdown documents can be compiled into HTML files, it is
 possible to use them to create HTML5\index{HTML5} slideshows.[^chapter_web_12] There are a number
 of advantages to creating HTML presentations with Markdown:
 
@@ -488,10 +488,10 @@ beamer presentations.
 
 #### HTML5 frameworks {-}
 
-Before getting into the details of how to use R Markdown for presentations and R Presentations, let's briefly look more into what an HTML5\index{HTML5} slideshow is and the frameworks that make them possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, including CSS,\index{CSS} and JavaScript\index{JavaScript} to create a website that behaves like a LaTeX beamer\index{beamer} or PowerPoint\index{PowerPoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly as key components are often located remotely. Most browsers have `Full Screen` mode you can use to view presentations.
+Before getting into the details of how to use R Markdown for presentations and R Presentations, let's briefly look more into what an HTML5\index{HTML5} slideshow is and the frameworks that make it possible. HTML5 slideshows rely on a number of web technologies in addition to HTML5, including CSS,\index{CSS} and JavaScript\index{JavaScript} to create a website that behaves like a LaTeX beamer\index{beamer} or PowerPoint\index{PowerPoint} presentation. They run in your web browser and you may need to be connected to the internet for them to work properly, as key components are often located remotely. Most browsers have `Full Screen` mode you can use to view presentations.
 
 There are a number of different HTML5 slideshow frameworks that let you
-create and style your slideshows. In all of the frameworks you view the
+create and style your slideshows. In all of the frameworks, you view the
 slideshow in your web browser and advance through slides with the
 forward arrow key on your keyboard. You can go back with the back arrow.
 Despite these similarities, the frameworks have different looks and
@@ -526,7 +526,7 @@ will be brought in incrementally because we used `incremental: true`
 under `output: ioslides_presentation`. Bullets are created using
 Markdown list syntax.
 
-![*rmarkdown*/IO Slides Example Title
+![R Markdown/IO Slides Example Title
 Slide[]{label="BasicIO"}](images/chapter_web/rmarkdownIo_slidesExample.png){#BasicIO}
 
 Use three dashes (`---`) to delineate a new slide without a header. You
@@ -538,7 +538,7 @@ RStudio by selecting `File` `R Markdown...` then `Presentation` in the
 menu on the left of the window (see figure below). Finally, click `HTML (ioslides)` or
 `HTML (Slidy)`.
 
-![Create New *rmarkdown* Presentation in
+![Create New R Markdown Presentation in
 RStudio[]{label="rmarkdownPresRStudio"}](images/chapter_web/rmarkdownPresRStudio.png){#rmarkdownPresRStudio}
 
 ### LaTeX Beamer slideshows with *rmarkdown* {#rmarkdownBeamer}
@@ -581,7 +581,7 @@ with RStudio's R Presentation documents.\index{R Presentation}\index{RStudio!R P
 and click `File`, `New`, then `R Presentation`. RStudio will then ask you to
 give the presentation a name and save it in a particular file. The
 reason RStudio does this is because an R Presentation is not just one
-file. Instead it includes:
+file. Instead, it includes:
 
 -   A *.Rpres* file, which is very similar to a *knitr* Markdown *.Rmd*
     file.
@@ -596,7 +596,7 @@ file. Instead it includes:
 You change the presentation's content by editing the *.Rpres* file using
 the normal *knitr* Markdown syntax we've covered. The only difference is
 how you create new slides. Luckily, the syntax for this is very simple.
-Just type the slide's title then at least three equal signs (`===`). For example,
+Type the slide's title, then at least three equal signs (`===`). For example,
 
 ````markdown
 This is an Example .Rpres Slide Title
@@ -648,12 +648,12 @@ devtools::source\_url("http://bit.ly/VNnZxS")
 This example includes four slides and three code chunks. The last code
 chunk uses the *googleVis* package to create the global map of
 fertilizer consumption we saw earlier. Because the slideshow we are creating is in
-HTML, the map will be fully dynamic. Note that like before you will not
+HTML, the map will be fully dynamic. Note that, like before, you will not
 be able to see the map in the RStudio preview, only in a web browser.
 
 To compile the slideshow, either click the `Preview` button or save the
 *.Rpres* document. When you do this, you can view your updated slideshow in the *Presentation* pane.\index{RStudio!Presentation pane} You can navigate through the slideshow using the arrow buttons at the bottom right of the *Presentation* pane. If you click the magnifying glass icon at the top of the
-*Presentation* pane you will get a much larger view of the slideshow.
+*Presentation* pane, you will get a much larger view of the slideshow.
 You can also view the slideshow in your web browser by clicking on the
 `More` icon, then
 `View in Browser`.
@@ -663,9 +663,9 @@ You can also view the slideshow in your web browser by clicking on the
 You can of course, view your slideshows locally. To share your
 presentation with others, you probably want to either publish the
 presentation to a standalone HTML file and host it (e.g. with a service like Netlify <https://www.netlify.com/>\index{Netlify}) or publish it directly to RPubs. For R
-Presentations, create a standalone HTML file by simply clicking the
+Presentations, create a standalone HTML file by clicking the
 `More` button in the *Presentation* pane, then `Save as Webpage...`.
-Under the `More` button you can also choose the option
+Under the `More` button, you can also choose the option
 `Publish to RPubs...`.
 
 ![RStudio R Presentation
@@ -680,11 +680,11 @@ which are often used for blogging. In this section we will look at how to publis
 
 ### Standalone HTML files {-}
 
-Of course, you can simply open the HTML file rendered from any R
+You can open the HTML file rendered from any R
 Markdown document in your web browser. If the HTML file contains the
-full information for the page as they generally do when created by
+full information for the page as is generally does when created by
 *rmarkdown*, e.g. the file does not depend on any auxiliary files, you
-can simply share this file via email or whatnot and anyone with a web
+can share this file via email or other means and anyone with a web
 browser can open it. We can of course, also send auxiliary files if need
 be, but this can get unwieldy.
 
@@ -696,11 +696,11 @@ GitHub also offers a free hosting service for webpages. These can be
 much more complex than a single HTML file. The simplest way to create
 one of these pages is to create a repository with a file called
 *README.Rmd*. You can `knit` this file and then create your GitHub Page
-with it. To do this, go to the `Settings` then `GitHub Pages` on your
+with it. To do this, go to the `Settings`, then `GitHub Pages` on your
 repository's main GitHub website. Then click `Automatic Page Generator`. This places the contents of your *README.md* file in the page and provides you with formatting options. Click `Publish` and you will have a new website.
 
 Clicking `Publish` creates a new orphan branch[^chapter_web_19] called *gh-pages*.
-When these branches are pushed to GitHub it will create a website based
+When these branches are pushed to GitHub, it will create a website based
 on a file called *index.html* that you include in the branch. This will
 be the website's main page.
 
@@ -731,7 +731,7 @@ git push origin gh-pages
 ````
 
 A new webpage will be created at: *USERNAME.github.io/REPO\_NAME* You
-can also add custom domain names. For details see:
+can also add custom domain names. For details, see
 <https://help.github.com/en/articles/using-a-custom-domain-with-github-pages>.
 
 ### Further information on R Markdown
@@ -743,24 +743,24 @@ information. Another tool to look into for interactive results
 presentation is the *shiny* package [@R-shiny].\index{shiny} It gives R the
 capability to create interactive web applications, not just the static
 websites that we have covered in this chapter. This package is well
-integrated with RStudio. For more information please see:
+integrated with RStudio. For more information, please see
 <http://shiny.rstudio.com/>.
 
 ### Chapter summary {-}
 
 In this chapter we learned a number of tools for dynamically presenting
-our reproducible research on the web as well as how to create PDFs with
+our reproducible research on the web, as well as how to create PDFs with
 the simple R Markdown syntax. Though LaTeX and PDFs will likely remain
 the main tools for presenting research in published journals and books
 for some time to come, choosing to also make your research available in
 online native formats can make it more accessible to general readers. It
 also allows you to take advantage of interactive tools for presenting
-your research. *rmarkdown* also makes it easy to create documents in a
+your research. R Markdown also makes it easy to create documents in a
 variety of formats.
 
-[^chapter_web_1]: Extensible HyperText Markup Language
+[^chapter_web_1]: Extensible HyperText Markup Language.
 
-[^chapter_web_2]: For more information see John Gruber's website:
+[^chapter_web_2]: For more information, see John Gruber's website:
     <https://daringfireball.net/projects/markdown/>.
 
 [^chapter_web_4]: You can also include a `title` attribute after the URL, though this is generally not very useful.
@@ -781,7 +781,7 @@ variety of formats.
     to organize the footnotes when they are placed at the end.
 
 [^chapter_web_10]: For more information on how to access and use Developer Tools in
-    Chrome see: <https://developers.google.com/chrome-developer-tools/>.
+    Chrome see: <https://developers.google.com/chrome-developer-ools/>.
 
 [^chapter_web_11]: One small note: when you create a new style sheet or copy an old
     one, make sure the final line is blank. Otherwise you may get an
@@ -797,10 +797,10 @@ variety of formats.
 
 [^chapter_web_15]: You can create sections with one hash.
 
-[^chapter_web_16]: As of this writing it is a blue slide with white letters.
+[^chapter_web_16]: As of this writing, it is a blue slide with white letters.
 
 [^chapter_web_17]: <https://wordpress.com/>
 
 [^chapter_web_19]: An orphan branch is a branch with a different root from other
-    repository branches. Another way of thinking about this is that they
+    repository branches. Another way of thinking about this is that orphan branches
     have their own history.
