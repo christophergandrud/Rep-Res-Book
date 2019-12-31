@@ -108,7 +108,7 @@ It is often a good idea if your data sets are kept in data frame type objects if
     \end{tabular}
 \end{table}
 
-In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long format. Long-formatted TSCS data is simply a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \@ref(ExampleTSCSLong)). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
+In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long format. Long-formatted TSCS data is a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \@ref(ExampleTSCSLong)). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
 
  \begin{table}[h!]
     \caption{Long-formatted Time-Series Cross-Sectional Data Example}
@@ -146,7 +146,7 @@ If one of our raw data sets is not in this format, then we will need to reshape 
     \end{tabular}
 \end{table}
 
-The process of tidying data often causes confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose function (`t()`)[^chapter_7_transpose]\index{matrix transpose} and the `reshape()`\index{R function!reshape} function, both are loaded in R by default. *tidyr* [@R-tidyr] is a very helpful package for reshaping data.\index{tidyr} This package has more general tools for reshaping data and is worth investing some time to learn well. In this section, we will look at *tidyr*'s `pivot_longer()`\index{R function!pivot\_longer} function and use it to reshape a TSCS data frame from wide to long format. We will also encounter this function again in Chapter \@ref(FiguresChapter) when we want to transform data so that it can be graphed. Note that if you want to go from long to wide format, use *tidyr*'s `pivot_wider()`\index{R function!pivot\_wider} function.
+The process of tidying data often causes confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose function (`t()`)[^chapter_7_transpose]\index{matrix transpose} and the `reshape()`\index{R function!reshape} function, both are loaded in R by default. *tidyr* [@R-tidyr] is a very helpful package for reshaping data.\index{R package!tidyr} This package has more general tools for reshaping data and is worth investing some time to learn well. In this section, we will look at *tidyr*'s `pivot_longer()`\index{R function!pivot\_longer} function and use it to reshape a TSCS data frame from wide to long format. We will also encounter this function again in Chapter \@ref(FiguresChapter) when we want to transform data so that it can be graphed. Note that if you want to go from long to wide format, use *tidyr*'s `pivot_wider()`\index{R function!pivot\_wider} function.
 
 For illustration, let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide, rather than long, format and is in a data frame object called *fert_wide*. It looks like this:
 
@@ -198,7 +198,7 @@ fert_long
 
 You may have noticed that as a result of gathering *fert_wide* the data is now ordered by country-year. Imagine that for some substantive reason that makes the data easier to read, we rather want it ordered by year-country. Though not required for merging in R, some statistical analyses assume that the data is ordered in a specific way.
 
-We can order observations in our data set using the `order()` function.\index{R function!order}\index{sort}\index{order} For example, to order *fert_long* by year-country, we type:
+We can order observations in our data set using the `order()` function.\index{R function!order}\index{R!sort}\index{R!order} For example, to order *fert_long* by year-country, we type:
 
 ```{r Ch7Order, tidy=FALSE}
 # Order fert_long by year-country
@@ -231,7 +231,7 @@ ggplot2::ggplot(data = fert_long, aes(fert_cons)) +
         theme_bw()
 ```
 
-We can use the `subset()`\index{subset}\index{R function!subset} function to examine these outliers,\index{outliers} for example, countries that have fertilizer consumption greater than 1000 kilograms per hectare.
+We can use the `subset()`\index{R!subset}\index{R function!subset} function to examine these outliers,\index{outliers} for example, countries that have fertilizer consumption greater than 1000 kilograms per hectare.
 
 ```{r Ch7SubsetOutliers, tidy=FALSE}
 # Create outlier data frame
@@ -491,7 +491,7 @@ columns.
 
 As we saw in Chapter \@ref(GettingStartedRKnitr), if your data sets are in the same
 order---rows in all of the data sets represent the same observation of
-the same subject---then you can simply use the `cbind()`\index{R function!cbind} function to bind
+the same subject---then you can use the `cbind()`\index{R function!cbind} function to bind
 columns from the data sets together. This situation is unusual when
 merging real-world data. If your data sets are not in exactly the same
 order you will create a data set with nonsensical rows that combine data
@@ -538,7 +538,7 @@ merged_data_1 <- merge(x = merged_data_1, y = fert_long_sub,
 names(merged_data_1)
 ```
 
-Let's go through this code. The `x` and `y` arguments simply specify
+Let's go through this code. The `x` and `y` arguments specify
 which data frames we want to merge. The `by` argument specifies what
 variable(s) in the two frames identify the observations so that we can
 match them. In this example, we are merging by countries' ISO country
@@ -550,7 +550,7 @@ included.
 
 You might have noticed that this isn't actually the merge that we want
 to accomplish with these data frames. Remember that observations are not
-simply identified in this time-series cross-section data by one country
+identified in this time-series cross-section data by one country
 name or other country code variable. Instead, they are identified by both
 country and year variables. To merge data frames based on the overlap of
 two variables (e.g. match Afghanistan-2010 in one data frame with
@@ -581,7 +581,7 @@ to handle large data sets. The `merge()` function and many of the other
 data frame manipulation functions covered so far in this chapter may not
 perform well with very large data sets. If you are using very large data
 sets, it might be worth investing time learning how to use packages like
-*dbplyr* [@R-dbplyr] and *data.table* packages [@R-data.table]. They have many
+*dbplyr* [@R-dbplyr]\index{R package!dbplyr} and *data.table* packages [@R-data.table].\index{R package!data.table} They have many
 capabilities for working efficiently with large data sets. Likely, if you have very large data, you will need to learn SQL (Structured Query Language) or another special purpose data handling
 language.[^chapter_7_9] Once you know how these languages work, you can
 incorporate them into your R workflow with R packages like *dbplyr*.
@@ -642,7 +642,7 @@ which data frame they are from.[^chapter_7_11]
 You should decide what to do with these variables on a
 case-by-case basis. But if you decide to drop one of the variables and
 rename the other, you can use subscripts (as we saw in Chapter \@ref(GettingStartedRKnitr)). The *dplyr* package has a
-useful function called `select()`\index{R function!select} that can also remove variables from data frames. To remove variables, simply write a minus sign (`-`) and then the
+useful function called `select()`\index{R function!select} that can also remove variables from data frames. To remove variables, write a minus sign (`-`) and then the
 variable name without quotes. For example, imagine that we want to keep
 **country.x** and drop the other variables.[^chapter_7_12] Let's also remove the
 **idn** variable:

@@ -139,10 +139,9 @@ raw data in Chapter \@ref(DataClean) and make tables in Chapter
 
 #### Vectors {-}
 
-Vectors are the "fundamental data type" in R [@matloff2011]. They are
-simply an ordered group of numbers, character strings, and so on.[^chapter3_11]
+Vectors are the "fundamental data type" in R [@matloff2011]. They are an ordered group of numbers, character strings, and so on.[^chapter3_11]
 It may be useful to think of most data in R as composed of
-vectors. For example, data frames\index{data.frame} are basically collections
+vectors. For example, data frames\index{R function!data.frame}\index{R!data frame} are basically collections
 of vectors of the same length, i.e. they have the same number of rows, attached
 together to form columns.
 
@@ -236,7 +235,7 @@ mean(string_num_df$character_vector)
 
 #### Component selection {- #ComponentSelect}
 
-The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (`$`) between the name of our data frame object name and the `character_vector` variable? The dollar sign is called the component selector.\index{R!component selector}\index{R!\$, component selector} It's also sometimes called the element name operator. Either way, it extracts a part, component, of an object. In the previous example, it extracted the **character_vector** column from the *string_num_df* so that it could be fed to
+The last bit of code we just saw will probably be confusing. Why do we have a dollar sign (`$`) between the name of our data frame object name and the `character_vector` variable? The dollar sign is called the component selector.\index{R!component selector}\index{R function!\$} It's also sometimes called the element name operator. Either way, it extracts a part, component, of an object. In the previous example, it extracted the **character_vector** column from the *string_num_df* so that it could be fed to
 the `mean()` function.
 
 We can use the component selector to create new objects with parts of other objects. Imagine that we have *string_num_df* and want an object with only the information in the **numeric_vector** column. Let's use the following code:
@@ -363,7 +362,7 @@ Remember our *numeric_vector* object from before:
 numeric_vector
 ```
 
-To find the mean of this object, simply type:
+To find the mean of this object, type:
 
 ```{r numeric_vector_mean, echo=TRUE}
 mean(x = numeric_vector)
@@ -990,7 +989,7 @@ presenting your source code and results. It will include all of the code
 from an R source file as well as the output. This can be useful for quickly presenting the steps you took to do an analysis. You can see an example
 RStudio Notebook in Figure \@ref(fig:NotebookExample).
 
-If you want to create a Notebook from an open R source code file simply
+If you want to create a Notebook from an open R source code file
 click the `Compile Notebook` icon
 (![image](images/chapter_3/CompileNotebook.png)) in the
 *Source* pane's top bar.[^chapter3_38] Then in the window that pops up select the
@@ -1010,7 +1009,7 @@ knitr::include_graphics("images/chapter_3/NotebookExample.png")
 
 In this chapter's appendix we discuss interactive Jupyter notebooks.\index{Jupyter} They are popular in the data science and tech industries and use a somewhat different logic from R Markdown notebooks.
 
-My current tech team tends to use either Jupyter notebooks or R Markdown Notebooks to present our detailed analyses. We host and share these via GitHub.\index{GitHub}\index{GitHub Markdown} GitHub compiles both document types nicely for online access. For R Markdown Notebooks, use `output: github_document` in the header to ensure that the output file is compiled properly on GitHub.
+My current tech team tends to use either Jupyter notebooks or R Markdown Notebooks to present our detailed analyses. We host and share these via GitHub.\index{GitHub}\index{GitHub!Markdown} GitHub compiles both document types nicely for online access. For R Markdown Notebooks, use `output: github_document` in the header to ensure that the output file is compiled properly on GitHub.
 
 ```{r SourcePaneRmarkdown, echo=FALSE, fig.cap="RStudio Source Pane for an RMarkdown File", out.width="100%"}
 knitr::include_graphics("images/chapter_3/SourcePaneRmarkdown.png")
@@ -1363,7 +1362,7 @@ create a new TeX Code block, select `Insert` from the menu bar, then
     though this is a misnomer.
 
 [^chapter3_28]: If you are only running one line of code, you don't need to
-    highlight the code; you can simply put your cursor on that line.
+    highlight the code; you can put your cursor on that line.
 
 [^chapter3_29]: Note that you can also create an *rmarkdown* document without a
     header. *rmarkdown* will just use the default settings when knitting.
