@@ -93,7 +93,7 @@ Tibbles are the data structure favored by the tidy data/tidyverse R data paradig
 It is often a good idea if your data sets are kept in data frame type objects if that is the format you will use for analysis. See Chapter \@ref(GettingStartedRKnitr) for how to convert objects into data frames with the `data.frame()` function.\index{R function!data.frame}\index{R!data frame} Not only do data sets (generally) need to be stored in data frame objects, they also need to have the same layout before they can be merged. Most R statistical analysis tools assume that your data is in "long" format\index{long formatted data}. For an excellent discussion of ideal data formats for statistical analysis, see @wickham2014article. Long formatted data usually has columns that represent variables. Rows contain specific observations. For example:
 
 \begin{table}[h!]
-    \caption{Long-formatted Data Example}
+    \caption{Long-Formatted Data Example}
     \label{ExampleLong}
     \begin{tabular}{l c}
         \\[0.15cm]
@@ -108,10 +108,10 @@ It is often a good idea if your data sets are kept in data frame type objects if
     \end{tabular}
 \end{table}
 
-In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long format. Long-formatted TSCS data is a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \@ref(ExampleTSCSLong)). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
+In this chapter we will mostly use examples of time-series cross-sectional data (TSCS)\index{time-series cross-sectional}\index{TSCS} that we want to have in long-format. Long-formatted TSCS data is a data frame where rows identify observations of a particular subject at particular points in time and there are multiple observations per subject (see Table \@ref(ExampleTSCSLong)). In this chapter our TSCS data is specifically going to be countries that are observed in multiple years.
 
  \begin{table}[h!]
-    \caption{Long-formatted Time-Series Cross-Sectional Data Example}
+    \caption{Long-Formatted Time-Series Cross-Sectional Data Example}
     \label{ExampleTSCSLong}
     \begin{tabular}{l c c}
         \\[0.15cm]
@@ -132,7 +132,7 @@ In this chapter we will mostly use examples of time-series cross-sectional data 
 If one of our raw data sets is not in this format, then we will need to reshape or, using Wickham's [-@wickham2014article] terminology, "tidy" it.\index{reshape data}\index{tidy data} Some data sets are in "wide" format,\index{wide formatted data} where one of the columns in what would be long formatted data is "widened" to cover multiple columns. This is confusing to imagine without an example. Table \@ref(ExampleWide) shows how Table \@ref(ExampleTSCSLong) looks when we widen the time variable.
 
 \begin{table}[h!]
-    \caption{Wide-formatted Data Example}
+    \caption{Wide-Formatted Data Example}
     \label{ExampleWide}
     \begin{tabular}{l c c c}
         \\[0.15cm]
@@ -146,7 +146,7 @@ If one of our raw data sets is not in this format, then we will need to reshape 
     \end{tabular}
 \end{table}
 
-The process of tidying data often causes confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide format to long and vice versa. These include the matrix transpose function (`t()`)[^chapter_7_transpose]\index{matrix transpose} and the `reshape()`\index{R function!reshape} function, both are loaded in R by default. *tidyr* [@R-tidyr] is a very helpful package for reshaping data.\index{R package!tidyr} This package has more general tools for reshaping data and is worth investing some time to learn well. In this section, we will look at *tidyr*'s `pivot_longer()`\index{R function!pivot\_longer} function and use it to reshape a TSCS data frame from wide to long format. We will also encounter this function again in Chapter \@ref(FiguresChapter) when we want to transform data so that it can be graphed. Note that if you want to go from long to wide format, use *tidyr*'s `pivot_wider()`\index{R function!pivot\_wider} function.
+The process of tidying data often causes confusion and frustration. Though probably never easy, there are a number of useful R functions for changing data from wide-format to long and vice versa. These include the matrix transpose function (`t()`)[^chapter_7_transpose]\index{matrix transpose} and the `reshape()`\index{R function!reshape} function, both are loaded in R by default. *tidyr* [@R-tidyr] is a very helpful package for reshaping data.\index{R package!tidyr} This package has more general tools for reshaping data and is worth investing some time to learn well. In this section, we will look at *tidyr*'s `pivot_longer()`\index{R function!pivot\_longer} function and use it to reshape a TSCS data frame from wide- to long-format. We will also encounter this function again in Chapter \@ref(FiguresChapter) when we want to transform data so that it can be graphed. Note that if you want to go from long to wide-format, use *tidyr*'s `pivot_wider()`\index{R function!pivot\_wider} function.
 
 For illustration, let's imagine that the fertilizer consumption data we previously downloaded from the World Bank is in wide, rather than long, format and is in a data frame object called *fert_wide*. It looks like this:
 
@@ -164,7 +164,7 @@ fert_wide <- dplyr::arrange(fert_wide, country)
 fert_wide[, 1:4]
 ```
 
-See the chapter's Appendix for the full code I used to reshape the data from long to wide format.
+See the chapter's Appendix for the full code I used to reshape the data from long- to wide-format.
 
 Let's think about how we want to tidy the data. We want to create two new columns from the many columns that are now labeled by year. Let's call the new columns **Year** and **Fert**. The **Year** column will clearly contain the year of each observation and **Fert** will contain the fertilizer consumption. **Year** will be what `pivot_longer()` calls the variable's "name" and **Fert** is the "value". In our *fert_wide* data, we don't want the **iso2c** and **country** variables to be gathered. These variables identify the data set's subjects. So we can tell `pivot_longer()` that we only want the columns with the between **2016** and **2010** to be used for the long variable. Note that the back ticks in the code below allow us to specify numeric values as column names.
 
@@ -248,7 +248,7 @@ fert_long_sub <- subset(x = fert_long,
                             fert_cons <= 1000)
 ```
 
-In this example, non-country units like "Arab World'' are included. We might also want to drop these units with `subset()`. For example:
+In this example, non-country units like "Arab World" are included. We might also want to drop these units with `subset()`. For example:
 
 ```{r Ch7DropString, tidy=FALSE}
 fert_long_sub <- subset(x = fert_long_sub,
@@ -282,7 +282,7 @@ summary(fert_long_sub$fert_cons)
         \verb|>=| & greater than or equal to \\
         \verb|!=| & not equal to \\
         \verb+a | b + & a or b \\
-        \verb|a & b| & a \& b \\
+        \verb|a & b| & a and b \\
         \verb|isTRUE(a)| & determine if a is TRUE \\
         \hline \\
         \verb|is.na| & missing\\
@@ -687,7 +687,7 @@ source code files that are tied together with a makefile.
 
 # Appendix {-}
 
-R code for turning *fert_cons_data* into year-wide format:
+R code for turning *fert_cons_data* into year-wide-format:
 
 ```{r Ch7WideCreateShow, eval=FALSE, tidy=FALSE}
 library(WDI)
@@ -697,7 +697,7 @@ library(dplyr)
 # Gather fertilizer consumption data from WDI
 fert_cons_data <- WDI(indicator = "AG.CON.FERT.ZS")
 
-# Reshape fert_cons_data to year wide format
+# Reshape fert_cons_data to year wide-format
 fert_wide <- tidyr::pivot_wider(fert_cons_data,
                              names_from = year,
                              values_from = AG.CON.FERT.ZS)
